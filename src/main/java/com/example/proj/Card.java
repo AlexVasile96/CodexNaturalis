@@ -9,7 +9,7 @@ public class Card {
         private Corner BL; //BottomLeftCorner
         private Corner BR; //BottomRightCorner
 
-        public Card (int id, SpecificSeed type, int value, Corner TL, Corner TR,Corner BL, Corner BR){ //Constructor
+        public Card (int id, SpecificSeed type, int value, Corner TL, Corner TR,Corner BL, Corner BR){ //Card constructor
             this.id=id;
             this.type=type;
             this.valueWhenPlaced=value;
@@ -32,7 +32,7 @@ public class Card {
                     '}';    }
 
 
-        //Different Getter
+        //Different Getters
         public int getId() {
             return id;
         }

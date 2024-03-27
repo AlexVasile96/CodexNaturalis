@@ -23,9 +23,9 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         //launch();
-       CardConstructor resourceCardConstructor= new CardConstructor();
+       CardConstructor resourceCardConstructor= new CardConstructor(); //create resource cards
        resourceCardConstructor.createCards();
-       GoldCardConstructor goldcardConstructor= new GoldCardConstructor();
+       GoldCardConstructor goldcardConstructor= new GoldCardConstructor(); //create gold cards
        goldcardConstructor.createCards();
        //CardConstructor initialCradConstructor= new CardConstructor();
        //initialCradConstructor.createCards();

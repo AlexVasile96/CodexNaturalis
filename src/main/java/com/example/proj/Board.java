@@ -27,7 +27,7 @@ public class Board {
     public void printBoard() { //printBoardmethod
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes[i].length; j++) {
-                System.out.print(nodes[i][j].getSpecificNodeSeed() + " " + i + " " + j+ ", valore:" + nodes[i][j].getValueCounter() + " |");
+                System.out.print(nodes[i][j].getSpecificNodeSeed() + "\t" + i + "\t" + j+ ", valore:" + nodes[i][j].getValueCounter() + " |");
             }
             System.out.println();
         }

@@ -13,7 +13,7 @@ public class Deck {
 
     public void shuffle() {
         Collections.shuffle(cards);
-    }
+    } //shuffle the deck
 
     public void printDeck() {
         for (Card card : cards) {

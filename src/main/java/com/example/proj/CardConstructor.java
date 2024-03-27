@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardConstructor {
-    public void createCards()
+    public void createCards() //method to create cards
     {
         List<Card> resourceCardsList = null;
         try {
@@ -18,20 +18,20 @@ public class CardConstructor {
             JSONArray mazzoRisorse = jsonObject.getJSONArray("risorse"); //json array
             resourceCardsList = new ArrayList<>(); //creating a new arryalist that contains all the cards
             for (int i = 0; i < mazzoRisorse.length(); i++) { //for cicle in order to get all the json information
-                JSONObject carta = mazzoRisorse.getJSONObject(i);
-                int id = carta.getInt("id"); //card id
-                SpecificSeed type = SpecificSeed.valueOf(carta.getString("type")); //card specific seed (plant,animal...)
-                int value = carta.getInt("value"); //that's the point the cart can have when placed
-                SpecificSeed giacomo = SpecificSeed.valueOf(carta.getString("TL"));
-                SpecificSeed pippo = SpecificSeed.valueOf(carta.getString("TR"));
-                SpecificSeed pluto = SpecificSeed.valueOf(carta.getString("BL"));
-                SpecificSeed paperino = SpecificSeed.valueOf(carta.getString("BR"));
-                Corner TL= new Corner(giacomo);
-                Corner TR= new Corner(pippo);
-                Corner BL= new Corner(pluto);
-                Corner BR= new Corner(paperino);
-                Card card = new Card(id, type, value, TL, TR, BL, BR); //creating all the resource cards
-                resourceCardsList.add(card); //adding card to the arraylist previously created
+                JSONObject card = mazzoRisorse.getJSONObject(i);
+                int id = card.getInt("id"); //card id
+                SpecificSeed type = SpecificSeed.valueOf(card.getString("type")); //card specific seed (plant,animal...)
+                int value = card.getInt("value"); //that's the point the cart can have when placed
+                SpecificSeed topLeft = SpecificSeed.valueOf(card.getString("TL")); //get the top left corner attribute
+                SpecificSeed topRight = SpecificSeed.valueOf(card.getString("TR")); //get the top right corner attribute
+                SpecificSeed bottomLeft = SpecificSeed.valueOf(card.getString("BL")); //get the bottom left corner attribute
+                SpecificSeed bottomRight = SpecificSeed.valueOf(card.getString("BR")); //get the bottom right corner attribute
+                Corner TL= new Corner(topLeft);
+                Corner TR= new Corner(topRight);
+                Corner BL= new Corner(bottomLeft);
+                Corner BR= new Corner(bottomRight);
+                Card cards = new Card(id, type, value, TL, TR, BL, BR); //creating all the resource cards
+                resourceCardsList.add(cards); //adding card to the arraylist previously created
             }
             reader.close();
 
@@ -41,7 +41,7 @@ public class CardConstructor {
         ResourceDeck resourceDeck = new ResourceDeck(resourceCardsList);
         //deck.shuffle();
         resourceDeck.printDeck();
-        System.out.println("\n\n\ncarta pescata: "+ resourceDeck.drawCard()+"\n\n\n");
+        System.out.println("\n\n\ncarta pescata: "+ resourceDeck.drawCard()+"\n\n\n"); //print the drown card
         //System.out.println("\n\n\ncarta pescata: "+ resourceDeck.drawCard()+"\n\n\n");
         //System.out.println("\n\n\ncarta pescata: "+ resourceDeck.drawCard()+"\n\n\n");
         resourceDeck.printDeck();
