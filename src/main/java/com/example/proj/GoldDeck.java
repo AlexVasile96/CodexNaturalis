@@ -8,6 +8,7 @@ public class GoldDeck extends Deck {
 
     public GoldDeck(List<Card> cards) {
         super(cards);
+        this.goldCards=cards;
     }
 
     public void shuffle() {
@@ -16,9 +17,10 @@ public class GoldDeck extends Deck {
 
     public void printDeck() {
         for (Card card : goldCards) {
-            System.out.println(goldCards);
+            System.out.println(card);
         }
     }
+
 
     public Card drawCard() {
         if (goldCards.isEmpty()) {

@@ -9,15 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardConstructor {
-    public void createResourceCards()
+    public void createCards()
     {
         List<Card> resourceCardsList = null;
         try {
-
-            /*
-            this makes possible to save all the resource information in our cards
-            */
-
             FileReader reader = new FileReader("src/main/resources/carte.json"); //Reading json file
             JSONObject jsonObject = new JSONObject(new JSONTokener(reader)); //converting json file
             JSONArray mazzoRisorse = jsonObject.getJSONArray("risorse"); //json array

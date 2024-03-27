@@ -12,7 +12,7 @@ public class GoldCard extends Card{
 
     @Override
     public String toString() { //overridden ToStringMethod
-        return "GoldCard{" +
+        return " GoldCard{" +
                 "id=" + getId()+
                 ", type=" + getType() +
                 ", value=" + getValueWhenPlaced() +
