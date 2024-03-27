@@ -1,5 +1,6 @@
 package com.example.proj;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,6 +10,7 @@ public class ResourceDeck extends Deck{
 
     public ResourceDeck(List<Card> cards) {
         super(cards);
+        this.cards= cards;
     }
 
     public void shuffle() {

@@ -24,48 +24,16 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
-        List<Card> carteResource = null;
-        try {
+        //launch();
+       CardConstructor cx= new CardConstructor();
+       cx.createResourceCards();
 
-            /*
-            this makes possible to save all the resource information in our cards
-            */
 
-            FileReader reader = new FileReader("src/main/resources/carte.json"); //Reading json file
-            JSONObject jsonObject = new JSONObject(new JSONTokener(reader)); //converting json file
-            JSONArray mazzoRisorse = jsonObject.getJSONArray("risorse"); //json array
-            carteResource = new ArrayList<>(); //creating a new arryalist that contains all the cards
-            for (int i = 0; i < mazzoRisorse.length(); i++) { //for cicle in order to get all the json information
-                JSONObject carta = mazzoRisorse.getJSONObject(i);
-                int id = carta.getInt("id"); //card id
-                SpecificSeed type = SpecificSeed.valueOf(carta.getString("type")); //card specific seed (plant,animal...)
-                int value = carta.getInt("value"); //that's the point the cart can have when placed
-                SpecificSeed giacomo = SpecificSeed.valueOf(carta.getString("TL"));
-                SpecificSeed pippo = SpecificSeed.valueOf(carta.getString("TR"));
-                SpecificSeed pluto = SpecificSeed.valueOf(carta.getString("BL"));
-                SpecificSeed paperino = SpecificSeed.valueOf(carta.getString("BR"));
-                Corner TL= new Corner(giacomo);
-                Corner TR= new Corner(pippo);
-                Corner BL= new Corner(pluto);
-                Corner BR= new Corner(paperino);
 
-                Card card = new Card(id, type, value, TL, TR, BL, BR); //creating all the resource cards
-                carteResource.add(card); //adding card to th arraylist previously created
-            }
-            reader.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Deck deck = new Deck(carteResource);
-        //deck.shuffle();
-        deck.printDeck();
-        System.out.println("\n\n\ncarta pescata: "+ deck.drawCard()+"\n\n\n");
-        //System.out.println("\n\n\ncarta pescata: "+ deck.drawCard()+"\n\n\n");
-        //System.out.println("\n\n\ncarta pescata: "+ deck.drawCard()+"\n\n\n");
-        deck.printDeck();
-        List<Card> carteGold = null;
+
+
+        /*List<Card> carteGold = null;
 
         try {
             // Leggi il file JSON
@@ -109,18 +77,15 @@ public class HelloApplication extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Deck deck2 = new Deck(carteGold);
-        deck2.printDeck();
-        System.out.println("\n\n\ncarta pescata: "+ deck2.drawCard()+"\n\n\n");
-        System.out.println("\n\n\ncarta pescata: "+ deck2.drawCard()+"\n\n\n");
-        deck2.printDeck();
+        GoldDeck goldDeck = new GoldDeck(carteGold);
+        goldDeck.printDeck();
+        System.out.println("\n\n\ncarta pescata: "+ goldDeck.drawCard()+"\n\n\n");
+        System.out.println("\n\n\ncarta pescata: "+ goldDeck.drawCard()+"\n\n\n");
+        goldDeck.printDeck();
 
-        List<Card> cartaIniziale = null;
-        try {
+        List<Card> cartaIniziale = null;*/
+        /*try {
 
-            /*
-            this makes possible to save all the resource information in our cards
-            */
 
             FileReader reader = new FileReader("src/main/resources/initcard.json"); //Reading json file
             JSONObject jsonObject = new JSONObject(new JSONTokener(reader)); //converting json file
@@ -154,13 +119,13 @@ public class HelloApplication extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Deck deck3 = new Deck(cartaIniziale);
+        InitialCardDeck initialCardDeck = new InitialCardDeck(cartaIniziale);
         //deck.shuffle();
-        deck3.printDeck();
-        System.out.println("\n\n\ncarta pescata: "+ deck3.drawCard()+"\n\n\n");
+        initialCardDeck.printDeck();
+        System.out.println("\n\n\ncarta pescata: "+ initialCardDeck.drawCard()+"\n\n\n");
         //System.out.println("\n\n\ncarta pescata: "+ deck.drawCard()+"\n\n\n");
         //System.out.println("\n\n\ncarta pescata: "+ deck.drawCard()+"\n\n\n");
-        deck3.printDeck();
+        initialCardDeck.printDeck();*/
 
     }
 }
