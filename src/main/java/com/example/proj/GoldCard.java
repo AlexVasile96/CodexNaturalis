@@ -1,17 +1,17 @@
 package com.example.proj;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class GoldCard extends Card{
-    List<SpecificSeed> requirementsForPlacing = new ArrayList<SpecificSeed>();
+    private List<SpecificSeed> requirementsForPlacing; //This is a list of different SpecifcSeeds needed to place the Gold card on the Board
     public GoldCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, List<SpecificSeed> requirements) {
         super(id, type, value, TL, TR, BL, BR);
         this.requirementsForPlacing=requirements;
     }
 
     @Override
-    public String toString() {
+    public String toString() { //overridden ToStringMethod
         return "GoldCard{" +
                 "id=" + getId()+
                 ", type=" + getType() +

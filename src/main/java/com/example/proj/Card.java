@@ -1,16 +1,15 @@
 package com.example.proj;
 
 public class Card {
+        private int id; //id which identifies the specific card
+        private SpecificSeed type; //specificCardType
+        private int valueWhenPlaced; //value to the player_score when placed
+        private Corner TL; //TopLeftCorner
+        private Corner TR; //TopRightCorner
+        private Corner BL; //BottomLeftCorner
+        private Corner BR; //BottomRightCorner
 
-        private int id;
-        private SpecificSeed type;
-        private int valueWhenPlaced;
-        private Corner TL;
-        private Corner TR;
-        private Corner BL;
-        private Corner BR;
-
-        public Card (int id, SpecificSeed type, int value, Corner TL, Corner TR,Corner BL, Corner BR){
+        public Card (int id, SpecificSeed type, int value, Corner TL, Corner TR,Corner BL, Corner BR){ //Constructor
             this.id=id;
             this.type=type;
             this.valueWhenPlaced=value;
@@ -32,6 +31,8 @@ public class Card {
                     ", BR=" + BR +
                     '}';    }
 
+
+        //Different Getter
         public int getId() {
             return id;
         }
