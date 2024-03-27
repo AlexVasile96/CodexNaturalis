@@ -4,16 +4,14 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HelloApplication extends Application {
     @Override
@@ -71,7 +69,7 @@ public class HelloApplication extends Application {
 
         try {
             // Leggi il file JSON
-            FileReader reader = new FileReader("src/main/resources/gold_card.json");
+            FileReader reader = new FileReader("src/main/resources/goldcard.json");
 
             // Converti il file JSON in un oggetto JSONObject
             JSONObject jsonObject = new JSONObject(new JSONTokener(reader));
@@ -124,7 +122,7 @@ public class HelloApplication extends Application {
             this makes possible to save all the resource information in our cards
             */
 
-            FileReader reader = new FileReader("src/main/resources/init_card.json"); //Reading json file
+            FileReader reader = new FileReader("src/main/resources/initcard.json"); //Reading json file
             JSONObject jsonObject = new JSONObject(new JSONTokener(reader)); //converting json file
             JSONArray mazzoInit = jsonObject.getJSONArray("init_cards"); //json array
             cartaIniziale = new ArrayList<>(); //creating a new arryalist that contains all the cards
