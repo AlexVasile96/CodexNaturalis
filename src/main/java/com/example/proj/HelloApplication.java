@@ -109,11 +109,11 @@ public class HelloApplication extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Deck deck2 = new Deck(carteGold);
-        deck2.printDeck();
-        System.out.println("\n\n\ncarta pescata: "+ deck2.drawCard()+"\n\n\n");
-        System.out.println("\n\n\ncarta pescata: "+ deck2.drawCard()+"\n\n\n");
-        deck2.printDeck();
+        GoldDeck goldDeck = new GoldDeck(carteGold);
+        goldDeck.printDeck();
+        System.out.println("\n\n\ncarta pescata: "+ goldDeck.drawCard()+"\n\n\n");
+        System.out.println("\n\n\ncarta pescata: "+ goldDeck.drawCard()+"\n\n\n");
+        goldDeck.printDeck();
 
         List<Card> cartaIniziale = null;
         try {
@@ -154,13 +154,13 @@ public class HelloApplication extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Deck deck3 = new Deck(cartaIniziale);
+        InitialCardDeck initialCardDeck = new InitialCardDeck(cartaIniziale);
         //deck.shuffle();
-        deck3.printDeck();
-        System.out.println("\n\n\ncarta pescata: "+ deck3.drawCard()+"\n\n\n");
+        initialCardDeck.printDeck();
+        System.out.println("\n\n\ncarta pescata: "+ initialCardDeck.drawCard()+"\n\n\n");
         //System.out.println("\n\n\ncarta pescata: "+ deck.drawCard()+"\n\n\n");
         //System.out.println("\n\n\ncarta pescata: "+ deck.drawCard()+"\n\n\n");
-        deck3.printDeck();
+        initialCardDeck.printDeck();
 
     }
 }
