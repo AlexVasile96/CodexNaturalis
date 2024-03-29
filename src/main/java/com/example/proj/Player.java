@@ -8,6 +8,7 @@ public class Player {
     private int playerScore;
     private Dot dot;
     private Board board;
+    //private InitialCard initialCard;
     private ArrayList <Card> playerCards;
     public Player(String nickName, int playerScore, Dot dot, Board board){
         this.nickName = nickName;

@@ -24,17 +24,21 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         //launch();
         CardConstructor resourceCardConstructor = new CardConstructor(); //create resource cards
-
         Deck resourceDeck = resourceCardConstructor.createCards();
 
         GoldCardConstructor goldcardConstructor = new GoldCardConstructor(); //create gold cards
-
         Deck goldDeck = goldcardConstructor.createCards();
 
         Board board = new Board(50, 50);
-        Player player = new Player("Calla", 0, Dot.GREEN, board);
 
-        System.out.println("\n" + player.getPlayerCards());
+        Player player = new Player("Calla", 0, Dot.GREEN, board);
+        FirstThreeCards firstThreeCards= new FirstThreeCards(player, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
+        firstThreeCards.yourThreeCards(); //deck inizializzato
+        player.visualizePlayerCards(player.getPlayerCards());
+
+        //dare una carta iniziale al bro
+
+        /*System.out.println("\n" + player.getPlayerCards());
 
         player.drawResourceCard((ResourceDeck) resourceDeck);
         System.out.println("\n" + player.getPlayerCards());
@@ -63,7 +67,7 @@ public class HelloApplication extends Application {
 
 
         //CardConstructor initialCradConstructor= new CardConstructor();
-        //initialCradConstructor.createCards();
+        //initialCradConstructor.createCards();*/
 
     }
 }

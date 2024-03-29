@@ -2,6 +2,7 @@ package com.example.proj;
 
 public class Board {
     private Node[][] nodes;
+    private InitialCard initialCard;
     private int numOfEmpty; //int that counts all the empty SpecficSeed on the Board
     private SpecificSeed initEmptyValue; //this helps us initializing all the nodes to empty as start
 
