@@ -12,15 +12,14 @@ public class GoldCard extends Card{
 
     @Override
     public String toString() { //overridden ToStringMethod
-        return " GoldCard{" +
-                "id=" + getId()+
+        return "GoldCard->" +
+                " id=" + getId()+
                 ", type=" + getType() +
                 ", value=" + getValueWhenPlaced() +
                 ", TL=" + getTL() +
                 ", TR=" + getTR() +
                 ", BL=" + getBL() +
                 ", BR=" + getBR() +
-                ", REQUISITI=" + requirementsForPlacing +
-                '}';
+                ", REQUISITI=" + requirementsForPlacing;
     }
 }

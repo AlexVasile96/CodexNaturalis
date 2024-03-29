@@ -2,6 +2,7 @@ package com.example.proj;
 
 public class Node {
     private SpecificSeed specificNodeSeed;
+    private Corner corner;
     private int coordX;
     private int coordY;
     private int valueCounter;
@@ -26,5 +27,16 @@ public class Node {
 
     public int getValueCounter() {
         return valueCounter;
+    }
+
+    public void setSpecificNodeSeed(SpecificSeed specificNodeSeed) {
+        this.specificNodeSeed = specificNodeSeed;
+    }
+    public void setCorner(Corner corner) {
+        this.corner = corner;
+    }
+
+    public Corner getCorner() {
+        return corner;
     }
 }

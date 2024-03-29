@@ -21,15 +21,14 @@ public class Card {
 
         @Override
         public String toString() {
-            return "Card{" +
-                    "id=" + id +
+            return "Card->" +
+                    " id=" + id +
                     ", type=" + type +
                     ", value=" + valueWhenPlaced +
                     ", TL=" + TL +
                     ", TR=" + TR +
                     ", BL=" + BL +
-                    ", BR=" + BR +
-                    '}';    }
+                    ", BR=" + BR;    }
 
 
         //Different Getters

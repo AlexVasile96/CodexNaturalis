@@ -3,7 +3,6 @@ package com.example.proj;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;

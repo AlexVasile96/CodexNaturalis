@@ -48,10 +48,7 @@ public class GoldCardConstructor extends CardConstructor{
             e.printStackTrace();
         }
         GoldDeck goldDeck = new GoldDeck(goldCards);
-        /*goldDeck.printDeck();
-        System.out.println("\n\n\ncarta pescata: "+ goldDeck.drawCard()+"\n\n\n");
-        //System.out.println("\n\n\ncarta pescata: "+ goldDeck.drawCard()+"\n\n\n");
-        goldDeck.printDeck();*/
+
 
         return goldDeck;
     }

@@ -8,6 +8,7 @@ public class Player {
     private int playerScore;
     private Dot dot;
     private Board board;
+    //private InitialCard initialCard;
     private ArrayList <Card> playerCards;
     public Player(String nickName, int playerScore, Dot dot, Board board){
         this.nickName = nickName;
@@ -15,19 +16,6 @@ public class Player {
         this.dot = dot;
         this.board = board;
         this.playerCards = new ArrayList<Card>(3);
-    }
-
-    public static Drawing getDrawing(String cardType){
-        if(cardType==null){
-            return null;
-        }
-        if (cardType.equalsIgnoreCase("RESOURCE")){
-            return new DrowingResourceCard();
-        }
-        if (cardType.equalsIgnoreCase("GOLD")){
-            return new DrawingGoldCard();
-        }
-        return null;
     }
 
     public void visualizePlayerCards(List<Card> cards){

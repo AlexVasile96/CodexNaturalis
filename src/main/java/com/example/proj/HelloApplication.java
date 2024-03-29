@@ -24,46 +24,28 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         //launch();
         CardConstructor resourceCardConstructor = new CardConstructor(); //create resource cards
-
-        Deck resourceDeck = resourceCardConstructor.createCards();
+        Deck resourceDeck = resourceCardConstructor.createCards(); //create Deck for resourcesCards
+        resourceDeck.shuffle(); //SHUFFLING THE RESOURCEDECK
 
         GoldCardConstructor goldcardConstructor = new GoldCardConstructor(); //create gold cards
+        Deck goldDeck = goldcardConstructor.createCards(); //create Deck for goldCards
+        goldDeck.shuffle(); //SHUFFLING THE GOLDDECK
 
-        Deck goldDeck = goldcardConstructor.createCards();
+        InitCardConstructor initCardConstructor= new InitCardConstructor(); //CREATIN INITIAL CARDS
+        InitialCardDeck initialCardDeck= initCardConstructor.createCards(); //creating Deck for the six first card
 
-        Board board = new Board(50, 50);
-        Player player = new Player("Calla", 0, Dot.GREEN, board);
+        //CREATING OBJECTIVE CARDS
+        Board board = new Board(100, 100); //creating the board which is NOT shared by all the players
 
-        System.out.println("\n" + player.getPlayerCards());
-
-        player.drawResourceCard((ResourceDeck) resourceDeck);
-        System.out.println("\n" + player.getPlayerCards());
-
-        player.drawGoldCard((GoldDeck) goldDeck);
-        System.out.println("\n" + player.getPlayerCards());
-
-        player.drawResourceCard((ResourceDeck) resourceDeck);
-        System.out.println("\n" + player.getPlayerCards() + "\n");
-
-        player.visualizePlayerCards(player.getPlayerCards());
-
-        player.drawResourceCard((ResourceDeck) resourceDeck);
-        System.out.println("\n" + player.getPlayerCards());
-
-        player.drawResourceCard((ResourceDeck) resourceDeck);
-        System.out.println("\n" + player.getPlayerCards());
-
-        player.drawResourceCard((ResourceDeck) resourceDeck);
-
-
-        //resourceDeck.printDeck();
-
-
-        System.out.println("\n" + player.getPlayerCards());
-
-
-        //CardConstructor initialCradConstructor= new CardConstructor();
-        //initialCradConstructor.createCards();
+        Player player = new Player("Calla", 0, Dot.GREEN, board); //creating a player
+        FirstThreeCards firstThreeCards= new FirstThreeCards(player, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
+        firstThreeCards.yourThreeCards(); //Player Deck initialized
+        player.visualizePlayerCards(player.getPlayerCards()); //METHOD TO VISUALIZE THE 3 CARDS THE PLAYER RANDOMLY DREW
+        InitialCard initialCard = initialCardDeck.firstCardForEachPlayer(player); //THE SHUFFLE IS ALREADY IMPLEMENTED IN THIS METHOD
+        System.out.println(initialCard.toString()); //PRINTING THE INITIAL CARD
+        board.placeInitialCard(initialCard);        //PLACING THE INITIAL CARD ON THE BOARD, THIS IS WHERE THE GAME STARTS
+        board.placeInitialCard(initialCard);        //JUST CHECKING IF THE METHOD ACTUALLY PREVENTS FROM PLACING 2 INITIAL CARDS
+        board.printCornerCoordinates();             //GETTING THE INITIAL CARD COORDINATES
 
     }
 }
