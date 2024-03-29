@@ -1,35 +1,43 @@
 package com.example.proj;
 
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class ResourceDeck extends Deck{
-    private List<Card> cards;
+    private List<Card> resourceCards;
 
     public ResourceDeck(List<Card> cards) {
         super(cards);
-        this.cards= cards;
+        this.resourceCards = cards;
     }
 
     public void shuffle() {
-        Collections.shuffle(cards);
+        Collections.shuffle(resourceCards);
     }
 
     public void printDeck() {
-        for (Card card : cards) {
+        for (Card card : resourceCards) {
             System.out.println(card);
         }
     }
-    public Card drawCard() {
-        if (cards.isEmpty()) {
+    @Override
+    public Card drawCard(Player player) {
+        if (resourceCards.isEmpty()) {
             return null; // Mazzo vuoto
         }
-        return cards.remove(0);
+        if(player.getPlayerCards().size()<3) {
+            Card drownCard = resourceCards.remove(0);
+            player.getPlayerCards().add(drownCard);
+            return drownCard;
+        }
+        else{
+            throw new RuntimeException();
+        }
     }
 
+
     public void addCard(Card card) {
-        cards.add(card);
+        resourceCards.add(card);
     }
 }

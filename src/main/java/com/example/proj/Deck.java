@@ -20,11 +20,18 @@ public class Deck {
             System.out.println(card);
         }
     }
-    public Card drawCard() {
+    public Card drawCard(Player player) {
         if (cards.isEmpty()) {
             return null; // Mazzo vuoto
         }
-        return cards.remove(0);
+        if(player.getPlayerCards().size()<3){
+            Card drownCard = cards.remove(0);
+            player.getPlayerCards().add(drownCard);
+            return drownCard;
+        }
+        else{
+            throw new RuntimeException();
+        }
     }
 
     public void addCard(Card card) {

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class GoldCardConstructor extends CardConstructor{
     @Override
-    public void createCards() {
+    public Deck createCards() {
         List<Card> goldCards = null;
         try {
             FileReader reader = new FileReader("src/main/resources/goldcard.json"); //read from JSON file
@@ -48,10 +48,11 @@ public class GoldCardConstructor extends CardConstructor{
             e.printStackTrace();
         }
         GoldDeck goldDeck = new GoldDeck(goldCards);
-        goldDeck.printDeck();
+        /*goldDeck.printDeck();
         System.out.println("\n\n\ncarta pescata: "+ goldDeck.drawCard()+"\n\n\n");
         //System.out.println("\n\n\ncarta pescata: "+ goldDeck.drawCard()+"\n\n\n");
-        goldDeck.printDeck();
+        goldDeck.printDeck();*/
 
+        return goldDeck;
     }
 }

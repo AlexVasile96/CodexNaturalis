@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardConstructor {
-    public void createCards() //method to create cards
+    public Deck createCards() //method to create cards
     {
         List<Card> resourceCardsList = null;
         try {
@@ -38,12 +38,15 @@ public class CardConstructor {
         } catch (Exception e) { //catching exceptions
             e.printStackTrace();
         }
+        //return resourceCardsList; PORCODIO
         ResourceDeck resourceDeck = new ResourceDeck(resourceCardsList);
+        return resourceDeck;
+        /*
         //deck.shuffle();
         resourceDeck.printDeck();
         System.out.println("\n\n\ncarta pescata: "+ resourceDeck.drawCard()+"\n\n\n"); //print the drown card
         //System.out.println("\n\n\ncarta pescata: "+ resourceDeck.drawCard()+"\n\n\n");
         //System.out.println("\n\n\ncarta pescata: "+ resourceDeck.drawCard()+"\n\n\n");
-        resourceDeck.printDeck();
+        resourceDeck.printDeck();*/
     }
 }

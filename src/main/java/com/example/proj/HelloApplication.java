@@ -23,12 +23,50 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         //launch();
-       CardConstructor resourceCardConstructor= new CardConstructor(); //create resource cards
-       resourceCardConstructor.createCards();
-       GoldCardConstructor goldcardConstructor= new GoldCardConstructor(); //create gold cards
-       goldcardConstructor.createCards();
-       //CardConstructor initialCradConstructor= new CardConstructor();
-       //initialCradConstructor.createCards();
+        CardConstructor resourceCardConstructor = new CardConstructor(); //create resource cards
+
+        Deck resourceDeck = resourceCardConstructor.createCards();
+
+        GoldCardConstructor goldcardConstructor = new GoldCardConstructor(); //create gold cards
+
+        Deck goldDeck = goldcardConstructor.createCards();
+
+        Board board = new Board(50, 50);
+        Player player = new Player("Calla", 0, Dot.GREEN, board);
+
+        System.out.println("\n" + player.getPlayerCards());
+
+        player.drawResourceCard((ResourceDeck) resourceDeck);
+        System.out.println("\n" + player.getPlayerCards());
+
+        player.drawGoldCard((GoldDeck) goldDeck);
+        System.out.println("\n" + player.getPlayerCards());
+
+        player.drawResourceCard((ResourceDeck) resourceDeck);
+        System.out.println("\n" + player.getPlayerCards() + "\n");
+
+        player.visualizePlayerCards(player.getPlayerCards());
+
+        player.drawResourceCard((ResourceDeck) resourceDeck);
+        System.out.println("\n" + player.getPlayerCards());
+
+        player.drawResourceCard((ResourceDeck) resourceDeck);
+        System.out.println("\n" + player.getPlayerCards());
+
+        player.drawResourceCard((ResourceDeck) resourceDeck);
+
+
+        //resourceDeck.printDeck();
+
+
+        System.out.println("\n" + player.getPlayerCards());
+
+
+        //CardConstructor initialCradConstructor= new CardConstructor();
+        //initialCradConstructor.createCards();
+
+    }
+}
 
 
 
@@ -80,7 +118,7 @@ public class HelloApplication extends Application {
         System.out.println("\n\n\ncarta pescata: "+ initialCardDeck.drawCard()+"\n\n\n");
         //System.out.println("\n\n\ncarta pescata: "+ deck.drawCard()+"\n\n\n");
         //System.out.println("\n\n\ncarta pescata: "+ deck.drawCard()+"\n\n\n");
-        initialCardDeck.printDeck();*/
+        initialCardDeck.printDeck();
 
     }
-}
+}*/

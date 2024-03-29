@@ -22,11 +22,18 @@ public class GoldDeck extends Deck {
     }
 
 
-    public Card drawCard() {
+    public Card drawCard(Player player) {
         if (goldCards.isEmpty()) {
             return null; // Mazzo vuoto
         }
-        return goldCards.remove(0);
+        if(player.getPlayerCards().size()<3) {
+            Card drownCard = goldCards.remove(0);
+            player.getPlayerCards().add(drownCard);
+            return drownCard;
+        }
+        else{
+            throw new RuntimeException();
+        }
     }
 
     public void addCard(Card card) {
