@@ -1,22 +1,12 @@
 package com.example.proj;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class InitialCard{
-    private int id;
-    private Corner TL;
-    private Corner TR;
-    private Corner BL;
-    private Corner BR;
-    private List<SpecificSeed> attribute; //This list has all the specificSeed needed to have more points at the end of the game if you are able to get the specific objectives
-
-    public InitialCard(int id, Corner TL, Corner TR, Corner BL, Corner BR, List<SpecificSeed> attribute) {
-        this.id = id;
-        this.TL = TL;
-        this.TR = TR;
-        this.BL = BL;
-        this.BR = BR;
+public class InitialCard extends Card{
+    private int indexOnTheBoard;
+    private List<SpecificSeed> attribute;
+    public InitialCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, List<SpecificSeed> attirbutes) {
+        super(id, type, value, TL, TR, BL, BR);
         this.attribute = attribute;
     }
 
@@ -40,6 +30,14 @@ public class InitialCard{
         return BR;
     }
 
+    public int getIndexOnTheBoard() {
+        return indexOnTheBoard;
+    }
+
+    public void setIndexOnTheBoard(int indexOnTheBoard) {
+        this.indexOnTheBoard = indexOnTheBoard;
+    }
+
     public List<SpecificSeed> getAttribute() {
         return attribute;
     }
@@ -54,6 +52,22 @@ public class InitialCard{
                 ", BR=" + BR +
                 ", attribute=" + attribute +
                 '}';
+    }
+
+    public void setTL(Corner TL) {
+        this.TL = TL;
+    }
+
+    public void setTR(Corner TR) {
+        this.TR = TR;
+    }
+
+    public void setBL(Corner BL) {
+        this.BL = BL;
+    }
+
+    public void setBR(Corner BR) {
+        this.BR = BR;
     }
 }
 

@@ -19,6 +19,8 @@ public class InitCardConstructor{
             for (int i = 0; i < initMats.length(); i++) { //for cicle in order to get all the json information
                 JSONObject card = initMats.getJSONObject(i);
                 int id = card.getInt("id"); //card id
+                SpecificSeed type = SpecificSeed.valueOf(card.getString("type")); //card specific seed (plant,animal...)
+                int value = card.getInt("value"); //that's the point the cart can have when placed
                 SpecificSeed topLeft = SpecificSeed.valueOf(card.getString("TL")); //get the top left corner attribute
                 SpecificSeed topRight = SpecificSeed.valueOf(card.getString("TR")); //get the top right corner attribute
                 SpecificSeed bottomLeft = SpecificSeed.valueOf(card.getString("BL")); //get the bottom left corner attribute
@@ -32,7 +34,7 @@ public class InitCardConstructor{
                 for (int j = 0; j < requirementsArray.length(); j++) {
                     attributes.add(SpecificSeed.valueOf(requirementsArray.getString(j)));
                 }
-                InitialCard cards = new InitialCard(id, TL, TR, BL, BR, attributes); //creating all the resource cards
+                InitialCard cards = new InitialCard(id,type, value, TL, TR, BL, BR,attributes); //creating all the resource cards
                 initCardList.add(cards); //adding card to the arraylist previously created
             }
             reader.close();

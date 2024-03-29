@@ -39,4 +39,9 @@ public class Node {
     public Corner getCorner() {
         return corner;
     }
+
+    public void setValueCounter(int valueCounter) {
+        this.valueCounter = valueCounter;
+    }
+
 }

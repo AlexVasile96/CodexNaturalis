@@ -1,13 +1,16 @@
 package com.example.proj;
 
+import java.util.List;
+
 public class Card {
-        private int id; //id which identifies the specific card
-        private SpecificSeed type; //specificCardType
-        private int valueWhenPlaced; //value to the player_score when placed
-        private Corner TL; //TopLeftCorner
-        private Corner TR; //TopRightCorner
-        private Corner BL; //BottomLeftCorner
-        private Corner BR; //BottomRightCorner
+        protected int id; //id which identifies the specific card
+        protected SpecificSeed type; //specificCardType
+        protected int valueWhenPlaced; //value to the player_score when placed
+        protected Corner TL; //TopLeftCorner
+        protected Corner TR; //TopRightCorner
+        protected Corner BL; //BottomLeftCorner
+        protected Corner BR; //BottomRightCorner
+
 
         public Card (int id, SpecificSeed type, int value, Corner TL, Corner TR,Corner BL, Corner BR){ //Card constructor
             this.id=id;

@@ -31,6 +31,9 @@ public class Player {
         deck.drawCard(this);
     }
 
+    //public void playCard()
+
+
     public String getNickName() {
         return nickName;
     }
@@ -46,6 +49,16 @@ public class Player {
     public Board getBoard() {
         return board;
     }
+
+    public Card chooseCard(int index) {
+        if (index < 0 || index >= playerCards.size()) {
+            System.out.println("Indice non valido.");
+            return null;
+        }
+
+        return playerCards.get(index);
+    }
+
 
     public List<Card> getPlayerCards() {
         return playerCards;

@@ -1,12 +1,18 @@
 package com.example.proj;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
     private Node[][] nodes;
     private InitialCard initialCard;
+    private ArrayList<Card> cardsOnTheBoardList;
+
     private int numOfEmpty; //int that counts all the empty SpecficSeed on the Board
     private SpecificSeed initEmptyValue; //this helps us initializing all the nodes to empty as start
 
     public Board(int rows, int cols) { //initializing all the nodes using the constructor
+        cardsOnTheBoardList = new ArrayList<>();
         nodes = new Node[rows][cols];
         this.initEmptyValue =SpecificSeed.EMPTY;
         for (int i = 0; i < rows; i++) {
@@ -43,7 +49,6 @@ public class Board {
         centralCoordinates[0][1] = cols / 2 - 1; // y
         centralCoordinates[1][0] = rows / 2;     // x
         centralCoordinates[1][1] = cols / 2;     // y
-
         return centralCoordinates;
     }
 
@@ -52,30 +57,52 @@ public class Board {
         int centerX = centralCoordinates[0][0];
         int centerY = centralCoordinates[0][1];
         //IS THE INITIAL CARD ALREADY BEEN PLACED?
-        if (getNode(centerX, centerY).getCorner() != null /*||
-                getNode(centerX, centerY + 1).getCorner() != null ||
-                getNode(centerX + 1, centerY).getCorner() != null ||
-                getNode(centerX + 1, centerY + 1).getCorner() != null*/) {
+        if (getNode(centerX, centerY).getCorner() != null ) {
             System.out.println("Already Placed!");
         }
 
         //CHECKING IF I CAN PLACE THE CARD IN THE BOARD
-        if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) {
-            //SETTING CORRECT NODES
-            getNode(centerX, centerY).setCorner(initialCard.getTL());
-            getNode(centerX, centerY + 1).setCorner(initialCard.getTR());
-            getNode(centerX + 1, centerY).setCorner(initialCard.getBL());
-            getNode(centerX + 1, centerY + 1).setCorner(initialCard.getBR());
+        if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) { //SETTING CORRECT NODES
+            Corner TOPLEFT= initialCard.getTL();
+            SpecificSeed TOPLEFTING= TOPLEFT.getSpecificCornerSeed();
+            getNode(centerX, centerY).setSpecificNodeSeed(TOPLEFTING);
+            getNode(centerX, centerY).setValueCounter(getNode(centerX,centerY).getValueCounter()-1); //METTE A MENO 1 Il VALUE COUNTER DELLA BOARD
+
+            Corner TOPRIGHT= initialCard.getTR();
+            SpecificSeed TOPRIGHTING= TOPRIGHT.getSpecificCornerSeed();
+            getNode(centerX, centerY+1).setSpecificNodeSeed(TOPRIGHTING);
+            getNode(centerX, centerY+1).setValueCounter(getNode(centerX,centerY+1).getValueCounter()-1);
+
+            Corner BOTTOMLEFT= initialCard.getBL();
+            SpecificSeed BOTTOMLEFTING= BOTTOMLEFT.getSpecificCornerSeed();
+            getNode(centerX+1,centerY).setSpecificNodeSeed(BOTTOMLEFTING);
+            getNode(centerX+1, centerY).setValueCounter(getNode(centerX+1,centerY).getValueCounter()-1);
+
+            Corner BOTTOMRIGHT= initialCard.getBR();
+            SpecificSeed BOTTOMRIGHITING= BOTTOMRIGHT.getSpecificCornerSeed();
+            getNode(centerX+1,centerY+1).setSpecificNodeSeed(BOTTOMRIGHITING);
+            getNode(centerX+1, centerY+1).setValueCounter(getNode(centerX+1,centerY+1).getValueCounter()-1);
+            this.numOfEmpty=numOfEmpty-4;
+            initialCard.setIndexOnTheBoard(1); //la prima carta piazzata
+            cardsOnTheBoardList.add(initialCard);
+            for(Card card : cardsOnTheBoardList)
+            {
+                System.out.println(card);
+            }
+
+
+
         } else {
             System.out.println("You can't place the initial card here");
         }
     }
 
+
+
     public void printCornerCoordinates() {
         int[][] centralCoordinates = getCentralCoordinates();
         int centerX = centralCoordinates[0][0];
         int centerY = centralCoordinates[0][1];
-
         // PRINTING THE COORDINATES JUST TO DEBUG
         System.out.println("Initial card coordinates:");
         System.out.println("TL: (" + centerX + ", " + centerY + ")");
@@ -83,6 +110,38 @@ public class Board {
         System.out.println("BL: (" + (centerX + 1) + ", " + centerY + ")");
         System.out.println("BR: (" + (centerX + 1) + ", " + (centerY + 1) + ")");
     }
+
+    //VOGLIO METTERE LA PRIMA CARTA SULL'ANGOLO IN ALTO  DESTRA DELLA CARTA INIZIALE (1)
+    //VOGLIO METTERE LA PRIMA CARTA SULL'ANGOLO IN ALTO  DESTRA DELLA CARTA APPENA PIAZZATA (2)
+    /*public void placeCard(Player player, Card card, int x, int y) {
+        player.chooseCard(0);
+        if (x >= 0 && x < nodes.length && y >= 0 && y < nodes[0].length) { // Verifica che le coordinate siano valide
+            // Verifica che la posizione sulla tavola sia vuota
+            if (nodes[x][y].getSpecificNodeSeed() == SpecificSeed.EMPTY) {
+                // Imposta i semi specifici nelle celle della tavola
+                nodes[x][y].setSpecificNodeSeed(card.getTL().getSpecificCornerSeed());
+                nodes[x][y + 1].setSpecificNodeSeed(card.getTR().getSpecificCornerSeed());
+                nodes[x + 1][y].setSpecificNodeSeed(card.getBL().getSpecificCornerSeed());
+                nodes[x + 1][y + 1].setSpecificNodeSeed(card.getBR().getSpecificCornerSeed());
+
+                // Aggiorna i contatori di valore delle celle della tavola
+                nodes[x][y].setValueCounter(getNode(x, y).getValueCounter()-1);
+                nodes[x][y+1].setValueCounter(getNode(x, y+1).getValueCounter()-1);
+                nodes[x+1][y].setValueCounter(getNode(x+1, y).getValueCounter()-1);
+                nodes[x+1][y+1].setValueCounter(getNode(x+1, y+1).getValueCounter()-1);//METTE A MENO 1 Il VALUE COUNTER DELLA BOARD
+
+                // Aggiorna il numero di celle vuote sulla tavola
+                numOfEmpty -= 4;
+
+                // Rimuovi la carta dalla lista delle carte del giocatore
+                player.getPlayerCards().remove(card);
+            } else {
+                System.out.println("You can't place your card here");
+            }
+        } else {
+            System.out.println("You cant place your card here");
+        }
+    }*/
 
 
 }

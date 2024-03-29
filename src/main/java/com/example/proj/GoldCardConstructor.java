@@ -48,8 +48,6 @@ public class GoldCardConstructor extends CardConstructor{
             e.printStackTrace();
         }
         GoldDeck goldDeck = new GoldDeck(goldCards);
-
-
         return goldDeck;
     }
 }
