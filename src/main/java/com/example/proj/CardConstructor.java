@@ -25,10 +25,10 @@ public class CardConstructor {
                 SpecificSeed topRight = SpecificSeed.valueOf(card.getString("TR")); //get the top right corner attribute
                 SpecificSeed bottomLeft = SpecificSeed.valueOf(card.getString("BL")); //get the bottom left corner attribute
                 SpecificSeed bottomRight = SpecificSeed.valueOf(card.getString("BR")); //get the bottom right corner attribute
-                Corner TL= new Corner(topLeft);
-                Corner TR= new Corner(topRight);
-                Corner BL= new Corner(bottomLeft);
-                Corner BR= new Corner(bottomRight);
+                Corner TL= new Corner(topLeft,0,0);
+                Corner TR= new Corner(topRight,0,0);
+                Corner BL= new Corner(bottomLeft,0,0);
+                Corner BR= new Corner(bottomRight,0,0);
                 Card cards = new Card(id, type, value, TL, TR, BL, BR); //creating all the resource cards
                 resourceCardsList.add(cards); //adding card to the arraylist previously created
             }

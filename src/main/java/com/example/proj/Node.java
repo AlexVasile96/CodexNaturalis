@@ -44,4 +44,11 @@ public class Node {
         this.valueCounter = valueCounter;
     }
 
+    public void setCoordX(int coordX) {
+        this.coordX = coordX;
+    }
+
+    public void setCoordY(int coordY) {
+        this.coordY = coordY;
+    }
 }

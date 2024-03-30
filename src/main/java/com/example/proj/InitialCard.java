@@ -5,10 +5,12 @@ import java.util.List;
 public class InitialCard extends Card{
     private int indexOnTheBoard;
     private List<SpecificSeed> attribute;
+    private Node node;
     public InitialCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, List<SpecificSeed> attirbutes) {
         super(id, type, value, TL, TR, BL, BR);
         this.attribute = attirbutes;
     }
+
 
     public int getId() {
         return id;
@@ -68,6 +70,20 @@ public class InitialCard extends Card{
 
     public void setBR(Corner BR) {
         this.BR = BR;
+    }
+
+    public void setAttribute(List<SpecificSeed> attribute) {
+        this.attribute = attribute;
+    }
+
+    @Override
+    public Node getNode() {
+        return node;
+    }
+
+    @Override
+    public void setNode(Node node) {
+        this.node = node;
     }
 }
 

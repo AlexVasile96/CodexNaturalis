@@ -29,10 +29,10 @@ public class GoldCardConstructor extends CardConstructor{
                 SpecificSeed topRight = SpecificSeed.valueOf(card.getString("TR"));
                 SpecificSeed bottomLeft = SpecificSeed.valueOf(card.getString("BL"));
                 SpecificSeed bottomRight = SpecificSeed.valueOf(card.getString("BR"));
-                Corner TL= new Corner(topLeft);
-                Corner TR= new Corner(topRight);
-                Corner BL= new Corner(bottomLeft);
-                Corner BR= new Corner(bottomRight);
+                Corner TL= new Corner(topLeft,0,0);
+                Corner TR= new Corner(topRight,0,0);
+                Corner BL= new Corner(bottomLeft,0,0);
+                Corner BR= new Corner(bottomRight,0,0);
                 JSONArray requirementsArray = card.getJSONArray("requirements");
                 List<SpecificSeed> requirements = new ArrayList<>();
                 for (int j = 0; j < requirementsArray.length(); j++) {

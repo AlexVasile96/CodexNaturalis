@@ -34,7 +34,8 @@ public class Board {
     public void printBoard() { //printBoardmethod
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes[i].length; j++) {
-                System.out.print(nodes[i][j].getSpecificNodeSeed() + "\t" + i + "\t" + j+ ", valore:" + nodes[i][j].getValueCounter() + " |");
+                    System.out.print(nodes[i][j].getSpecificNodeSeed() + "\t" + i + "\t" + j + ", valore:" + nodes[i][j].getValueCounter() + " |");
+
             }
             System.out.println();
         }
@@ -68,11 +69,13 @@ public class Board {
             SpecificSeed TOPLEFTING= TOPLEFT.getSpecificCornerSeed();
             getNode(centerX, centerY).setSpecificNodeSeed(TOPLEFTING);
             getNode(centerX, centerY).setValueCounter(getNode(centerX,centerY).getValueCounter()-1); //METTE A MENO 1 Il VALUE COUNTER DELLA BOARD
+            initialCard.setNode(getNode(centerX,centerY));
 
             Corner TOPRIGHT= initialCard.getTR();
             SpecificSeed TOPRIGHTING= TOPRIGHT.getSpecificCornerSeed();
             getNode(centerX, centerY+1).setSpecificNodeSeed(TOPRIGHTING);
             getNode(centerX, centerY+1).setValueCounter(getNode(centerX,centerY+1).getValueCounter()-1);
+
 
             Corner BOTTOMLEFT= initialCard.getBL();
             SpecificSeed BOTTOMLEFTING= BOTTOMLEFT.getSpecificCornerSeed();
@@ -87,7 +90,7 @@ public class Board {
             this.numOfEmpty=numOfEmpty-4;
             initialCard.setIndexOnTheBoard(1); //SETTING THE INDEX ON THE FIRST CARD PLACED
             cardsOnTheBoardList.add(initialCard); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARD PLACED ON THE BOARD ****STORICO****
-            System.out.println("Le carte che sono ora presenti sulla board sono:"); //PLN
+            System.out.println("Cards on the board are:"); //PLN
             for(Card card : cardsOnTheBoardList)
             {
                 System.out.println(card);
@@ -98,16 +101,14 @@ public class Board {
         }
     }
 
-    public List<Corner> getAvailableCorners() { //I WANNA SAVE ALL THE FREE CORNERS I HAVE ON MY BOARD
-        List<Corner> availableCorners = new ArrayList<>();
-
+    public List<Node> getAvailableCorners() { //I WANNA SAVE ALL THE FREE CORNERS I HAVE ON MY BOARD
+        List<Node> availableCorners = new ArrayList<>();
         for (Card card : cardsOnTheBoardList) {
             availableCorners.add(card.getTL());
             availableCorners.add(card.getTR());
             availableCorners.add(card.getBL());
             availableCorners.add(card.getBR());
         }
-
         return availableCorners;
     }
 

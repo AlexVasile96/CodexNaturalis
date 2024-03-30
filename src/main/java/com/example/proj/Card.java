@@ -11,9 +11,10 @@ public class Card {
         protected Corner BL; //BottomLeftCorner
         protected Corner BR; //BottomRightCorner
         private int indexOnTheBoard;
+        private Node node;
 
 
-        public Card (int id, SpecificSeed type, int value, Corner TL, Corner TR,Corner BL, Corner BR){ //Card constructor
+    public Card (int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR){ //Card constructor
             this.id=id;
             this.type=type;
             this.valueWhenPlaced=value;
@@ -98,5 +99,13 @@ public class Card {
 
     public int getIndexOnTheBoard() {
         return indexOnTheBoard;
+    }
+
+    public Node getNode() {
+        return node;
+    }
+
+    public void setNode(Node node) {
+        this.node = node;
     }
 }

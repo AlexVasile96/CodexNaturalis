@@ -1,10 +1,17 @@
 package com.example.proj;
 
-public class Corner {
+public class Corner extends Node{
     private boolean isThisCornerFree;
     private SpecificSeed specificCornerSeed;
     private int x;
     private int y;
+
+    public Corner(SpecificSeed specificNodeSeed, int coordX, int coordY) {
+        super(specificNodeSeed, coordX, coordY);
+        this.isThisCornerFree=true;
+        this.specificCornerSeed=specificNodeSeed;
+
+    }
 
     public void setThisCornerFree(boolean thisCornerFree) {
         isThisCornerFree = thisCornerFree;
@@ -14,13 +21,13 @@ public class Corner {
         this.specificCornerSeed = specificCornerSeed;
     }
 
-    public Corner(SpecificSeed s) //public Corner Constructor
+    /*public Corner(SpecificSeed s) //public Corner Constructor
     {
         this.isThisCornerFree=true;
         this.specificCornerSeed=s;
 
 
-    }
+    }*/
     public boolean isThisCornerFree() {
         return isThisCornerFree;
     }
@@ -34,8 +41,6 @@ public class Corner {
                 specificCornerSeed
                 ;
     }
-
-
     public int getX() {
         return x;
     }
