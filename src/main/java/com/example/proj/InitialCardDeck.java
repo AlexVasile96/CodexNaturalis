@@ -3,16 +3,16 @@ package com.example.proj;
 import java.util.Collections;
 import java.util.List;
 
-public class InitialCardDeck {
-    private List<InitialCard> initialCards;
+public class InitialCardDeck extends Deck {
+    private List<Card> initialCards;
 
-    public InitialCardDeck(List<InitialCard> cards) {
-
+    public InitialCardDeck(List<Card> cards) {
+        super(cards);
         this.initialCards = cards;
     }
 
     public void printDeck() {
-        for (InitialCard card : initialCards) {
+        for (Card card : initialCards) {
             System.out.println(card);
         }
     }
@@ -20,13 +20,11 @@ public class InitialCardDeck {
     public InitialCard firstCardForEachPlayer (Player player)
     {
         Collections.shuffle(initialCards);
-        InitialCard drownCard = initialCards.remove(0);
+        InitialCard drownCard = (InitialCard) initialCards.remove(0);
         return drownCard;
     }
-    public List<InitialCard> getInitialCards() {
+
+    public List<Card> getInitialCards() {
         return initialCards;
     }
-
-
-
 }

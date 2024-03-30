@@ -7,7 +7,7 @@ public class InitialCard extends Card{
     private List<SpecificSeed> attribute;
     public InitialCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, List<SpecificSeed> attirbutes) {
         super(id, type, value, TL, TR, BL, BR);
-        this.attribute = attribute;
+        this.attribute = attirbutes;
     }
 
     public int getId() {
@@ -50,7 +50,7 @@ public class InitialCard extends Card{
                 ", TR=" + TR +
                 ", BL=" + BL +
                 ", BR=" + BR +
-                ", attribute=" + attribute +
+                ", attributes=" + attribute +
                 '}';
     }
 

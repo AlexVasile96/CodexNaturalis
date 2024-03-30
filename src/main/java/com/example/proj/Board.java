@@ -57,8 +57,9 @@ public class Board {
         int centerX = centralCoordinates[0][0];
         int centerY = centralCoordinates[0][1];
         //IS THE INITIAL CARD ALREADY BEEN PLACED?
-        if (getNode(centerX, centerY).getCorner() != null ) {
+        if (getNode(centerX, centerY).getValueCounter()<2 ) {
             System.out.println("Already Placed!");
+            return;
         }
 
         //CHECKING IF I CAN PLACE THE CARD IN THE BOARD
@@ -82,19 +83,32 @@ public class Board {
             SpecificSeed BOTTOMRIGHITING= BOTTOMRIGHT.getSpecificCornerSeed();
             getNode(centerX+1,centerY+1).setSpecificNodeSeed(BOTTOMRIGHITING);
             getNode(centerX+1, centerY+1).setValueCounter(getNode(centerX+1,centerY+1).getValueCounter()-1);
+
             this.numOfEmpty=numOfEmpty-4;
-            initialCard.setIndexOnTheBoard(1); //la prima carta piazzata
-            cardsOnTheBoardList.add(initialCard);
+            initialCard.setIndexOnTheBoard(1); //SETTING THE INDEX ON THE FIRST CARD PLACED
+            cardsOnTheBoardList.add(initialCard); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARD PLACED ON THE BOARD ****STORICO****
+            System.out.println("Le carte che sono ora presenti sulla board sono:"); //PLN
             for(Card card : cardsOnTheBoardList)
             {
                 System.out.println(card);
             }
-
-
-
+            System.out.println("Carte Finite"); //I PRINTED ALL THE CARDS I HAVE ON MY BOARD
         } else {
             System.out.println("You can't place the initial card here");
         }
+    }
+
+    public List<Corner> getAvailableCorners() { //I WANNA SAVE ALL THE FREE CORNERS I HAVE ON MY BOARD
+        List<Corner> availableCorners = new ArrayList<>();
+
+        for (Card card : cardsOnTheBoardList) {
+            availableCorners.add(card.getTL());
+            availableCorners.add(card.getTR());
+            availableCorners.add(card.getBL());
+            availableCorners.add(card.getBR());
+        }
+
+        return availableCorners;
     }
 
 
@@ -111,37 +125,43 @@ public class Board {
         System.out.println("BR: (" + (centerX + 1) + ", " + (centerY + 1) + ")");
     }
 
-    //VOGLIO METTERE LA PRIMA CARTA SULL'ANGOLO IN ALTO  DESTRA DELLA CARTA INIZIALE (1)
-    //VOGLIO METTERE LA PRIMA CARTA SULL'ANGOLO IN ALTO  DESTRA DELLA CARTA APPENA PIAZZATA (2)
-    /*public void placeCard(Player player, Card card, int x, int y) {
-        player.chooseCard(0);
-        if (x >= 0 && x < nodes.length && y >= 0 && y < nodes[0].length) { // Verifica che le coordinate siano valide
-            // Verifica che la posizione sulla tavola sia vuota
-            if (nodes[x][y].getSpecificNodeSeed() == SpecificSeed.EMPTY) {
-                // Imposta i semi specifici nelle celle della tavola
-                nodes[x][y].setSpecificNodeSeed(card.getTL().getSpecificCornerSeed());
-                nodes[x][y + 1].setSpecificNodeSeed(card.getTR().getSpecificCornerSeed());
-                nodes[x + 1][y].setSpecificNodeSeed(card.getBL().getSpecificCornerSeed());
-                nodes[x + 1][y + 1].setSpecificNodeSeed(card.getBR().getSpecificCornerSeed());
+    public void setNodes(Node[][] nodes) {
+        this.nodes = nodes;
+    }
 
-                // Aggiorna i contatori di valore delle celle della tavola
-                nodes[x][y].setValueCounter(getNode(x, y).getValueCounter()-1);
-                nodes[x][y+1].setValueCounter(getNode(x, y+1).getValueCounter()-1);
-                nodes[x+1][y].setValueCounter(getNode(x+1, y).getValueCounter()-1);
-                nodes[x+1][y+1].setValueCounter(getNode(x+1, y+1).getValueCounter()-1);//METTE A MENO 1 Il VALUE COUNTER DELLA BOARD
+    public void setInitialCard(InitialCard initialCard) {
+        this.initialCard = initialCard;
+    }
 
-                // Aggiorna il numero di celle vuote sulla tavola
-                numOfEmpty -= 4;
+    public void setCardsOnTheBoardList(ArrayList<Card> cardsOnTheBoardList) {
+        this.cardsOnTheBoardList = cardsOnTheBoardList;
+    }
 
-                // Rimuovi la carta dalla lista delle carte del giocatore
-                player.getPlayerCards().remove(card);
-            } else {
-                System.out.println("You can't place your card here");
-            }
-        } else {
-            System.out.println("You cant place your card here");
-        }
-    }*/
+    public void setNumOfEmpty(int numOfEmpty) {
+        this.numOfEmpty = numOfEmpty;
+    }
 
+    public void setInitEmptyValue(SpecificSeed initEmptyValue) {
+        this.initEmptyValue = initEmptyValue;
+    }
 
+    public Node[][] getNodes() {
+        return nodes;
+    }
+
+    public InitialCard getInitialCard() {
+        return initialCard;
+    }
+
+    public ArrayList<Card> getCardsOnTheBoardList() {
+        return cardsOnTheBoardList;
+    }
+
+    public int getNumOfEmpty() {
+        return numOfEmpty;
+    }
+
+    public SpecificSeed getInitEmptyValue() {
+        return initEmptyValue;
+    }
 }

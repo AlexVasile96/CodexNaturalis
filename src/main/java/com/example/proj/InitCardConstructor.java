@@ -8,15 +8,16 @@ import java.util.List;
 
 
 public class InitCardConstructor{
-    public InitialCardDeck createCards() //method to create cards
+    public Deck createCards() //method to create cards
     {
-        List<InitialCard> initCardList = null;
+        List<Card> initCardList = null;
         try {
             FileReader reader = new FileReader("src/main/resources/initcard.json"); //Reading json file
             JSONObject jsonObject = new JSONObject(new JSONTokener(reader)); //converting json file
             JSONArray initMats = jsonObject.getJSONArray("init_cards"); //json array
             initCardList = new ArrayList<>(); //creating a new arryalist that contains all the cards
             for (int i = 0; i < initMats.length(); i++) { //for cicle in order to get all the json information
+
                 JSONObject card = initMats.getJSONObject(i);
                 int id = card.getInt("id"); //card id
                 SpecificSeed type = SpecificSeed.valueOf(card.getString("type")); //card specific seed (plant,animal...)
@@ -42,8 +43,8 @@ public class InitCardConstructor{
         } catch (Exception e) { //catching exceptions
             e.printStackTrace();
         }
-        InitialCardDeck initialCardDeck = new InitialCardDeck(initCardList);
-        return initialCardDeck;
+        InitialCardDeck initialDeck = new InitialCardDeck(initCardList);
+        return initialDeck;
 
     }
 }

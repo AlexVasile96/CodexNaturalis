@@ -1,10 +1,10 @@
 {
   "init_cards": [
-    {"id": "81", "type": "MUSHROOM","value": "0","attributes": ["INSECT"], "TL": "EMPTY", "TR": "PLANT", "BL": "INSECT", "BR": "EMPTY"},
-    {"id": "82","type": "MUSHROOM", "value": "0","attributes": ["MUSHROOM"], "TL": "ANIMAL", "TR": "EMPTY", "BL": "EMPTY", "BR": "MUSHROOM"},
-    {"id": "83", "type": "MUSHROOM","value": "0","attributes": ["PLANT", "MUSHROOM"], "TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY"},
-    {"id": "84","type": "MUSHROOM", "value": "0","attributes": ["ANIMAL", "INSECT"], "TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY"},
-    {"id": "85", "type": "MUSHROOM","value": "0","attributes": ["ANIMAL", "INSECT", "PLANT"], "TL": "EMPTY", "TR": "EMPTY", "BL": "NOTTOBEPLACEDON", "BR": "NOTTOBEPLACEDON"},
-    {"id": "86", "type": "MUSHROOM","value": "0","attributes": ["PLANT", "ANIMAL", "MUSHROOM"], "TL": "EMPTY", "TR": "EMPTY", "BL": "NOTTOBEPLACEDON", "BR": "NOTTOBEPLACEDON"}
+    {"id": "81", "type": "MUSHROOM","value": "0", "TL": "EMPTY", "TR": "PLANT", "BL": "INSECT", "BR": "EMPTY", "attributes": ["INSECT"]},
+    {"id": "82","type": "MUSHROOM", "value": "0", "TL": "ANIMAL", "TR": "EMPTY", "BL": "EMPTY", "BR": "MUSHROOM","attributes": ["MUSHROOM"]},
+    {"id": "83", "type": "MUSHROOM","value": "0", "TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY","attributes": ["PLANT", "MUSHROOM"]},
+    {"id": "84","type": "MUSHROOM", "value": "0", "TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "attributes": ["ANIMAL", "INSECT"]},
+    {"id": "85", "type": "MUSHROOM","value": "0", "TL": "EMPTY", "TR": "EMPTY", "BL": "NOTTOBEPLACEDON", "BR": "NOTTOBEPLACEDON", "attributes": ["ANIMAL", "INSECT", "PLANT"]},
+    {"id": "86", "type": "MUSHROOM","value": "0", "TL": "EMPTY", "TR": "EMPTY", "BL": "NOTTOBEPLACEDON", "BR": "NOTTOBEPLACEDON", "attributes": ["PLANT", "ANIMAL", "MUSHROOM"]}
   ]
 }
