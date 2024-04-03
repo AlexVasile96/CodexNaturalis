@@ -10,8 +10,13 @@ public class Card {
         protected Corner TR; //TopRightCorner
         protected Corner BL; //BottomLeftCorner
         protected Corner BR; //BottomRightCorner
+        private Corner TLBack;
+        private Corner TRBack;
+        private Corner BLBack;
+        private Corner BRBack;
         private int indexOnTheBoard;
         private Node node;
+        private boolean isCardBack;
 
 
     public Card (int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR){ //Card constructor
@@ -22,6 +27,16 @@ public class Card {
             this.TR=TR;
             this.BL=BL;
             this.BR=BR;
+            this.isCardBack=false;
+            this.TLBack = new Corner(SpecificSeed.EMPTY,0,0);
+            this.TRBack = new Corner(SpecificSeed.EMPTY,0,0);
+            this.BLBack = new Corner(SpecificSeed.EMPTY,0,0);
+            this.BRBack = new Corner(SpecificSeed.EMPTY,0,0);
+            //BACKUPORIGINAL CORNERS
+            this.TLBack.setSpecificCornerSeed(TL.getSpecificCornerSeed());
+            this.TRBack.setSpecificCornerSeed(TR.getSpecificCornerSeed());
+            this.BLBack.setSpecificCornerSeed(BL.getSpecificCornerSeed());
+            this.BRBack.setSpecificCornerSeed(BR.getSpecificCornerSeed());
         }
 
         @Override
@@ -108,4 +123,48 @@ public class Card {
     public void setNode(Node node) {
         this.node = node;
     }
+
+
+    public boolean isCardBack() {
+        return isCardBack;
+    }
+
+    public void setCardBack(boolean cardBack) {
+        isCardBack = cardBack;
+    }
+
+    public Corner getTLBack() {
+        return TLBack;
+    }
+
+    public void setTLBack(Corner TLBack) {
+        this.TLBack = TLBack;
+    }
+
+    public Corner getTRBack() {
+        return TRBack;
+    }
+
+    public void setTRBack(Corner TRBack) {
+        this.TRBack = TRBack;
+    }
+
+    public Corner getBLBack() {
+        return BLBack;
+    }
+
+    public void setBLBack(Corner BLBack) {
+        this.BLBack = BLBack;
+    }
+
+    public Corner getBRBack() {
+        return BRBack;
+    }
+
+    public void setBRBack(Corner BRBack) {
+        this.BRBack = BRBack;
+    }
+
 }
+
+

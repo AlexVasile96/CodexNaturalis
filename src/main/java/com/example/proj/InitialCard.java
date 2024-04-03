@@ -6,9 +6,11 @@ public class InitialCard extends Card{
     private int indexOnTheBoard;
     private List<SpecificSeed> attribute;
     private Node node;
+    private boolean isCardBack;
     public InitialCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, List<SpecificSeed> attirbutes) {
         super(id, type, value, TL, TR, BL, BR);
         this.attribute = attirbutes;
+        this.isCardBack=false;
     }
 
 

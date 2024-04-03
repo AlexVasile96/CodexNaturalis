@@ -42,7 +42,6 @@ public class HelloApplication extends Application {
         FirstThreeCards firstThreeCards= new FirstThreeCards(player, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
         firstThreeCards.yourThreeCards(); //Player Deck initialized
         player.visualizePlayerCards(player.getPlayerCards()); //METHOD TO VISUALIZE THE 3 CARDS THE PLAYER RANDOMLY DREW
-
         InitialCard initialCard = initialCardDeck.firstCardForEachPlayer(player); //THE SHUFFLE IS ALREADY IMPLEMENTED IN THIS METHOD
         System.out.println(initialCard.toString());                 //PRINTING THE INITIAL CARD
         board.placeInitialCard(initialCard);                        //PLACING THE INITIAL CARD ON THE BOARD, THIS IS WHERE THE GAME STARTS
@@ -53,6 +52,11 @@ public class HelloApplication extends Application {
         player.playCard(board,0);                           //Player places his cards
         board.printBoard();                                         //printing the board
         System.out.println(board.getCardsOnTheBoardList());           //printing the cards on the board
+        player.drawResourceCard((ResourceDeck) resourceDeck);
+        player.visualizePlayerCards(player.getPlayerCards());
+        player.playCard(board,0);
+        board.printBoard();                                         //printing the board
+        System.out.println(board.getCardsOnTheBoardList());
     }
 }
 

@@ -9,7 +9,7 @@ public class Player {
     private int playerScore;
     private Dot dot;
     private Board board;
-    //private InitialCard initialCard;
+    private boolean isCardBack;
     private ArrayList <Card> playerCards;
     public Player(String nickName, int playerScore, Dot dot, Board board){
         this.nickName = nickName;
@@ -17,6 +17,7 @@ public class Player {
         this.dot = dot;
         this.board = board;
         this.playerCards = new ArrayList<Card>(3);
+        this.isCardBack=false;
     }
 
     public void visualizePlayerCards(List<Card> cards){
@@ -99,13 +100,14 @@ public class Player {
             System.out.println("You can't place your card here");
             return;
         }
-        Node selectedCorner = availableCorners.get(cornerIndex - 1);
+
         int x= cardPlayerChoose.getNode().getCoordX();
         int y= cardPlayerChoose.getNode().getCoordY();
 
         if(cornerIndex==1){//We are in Top Left corner case
             board.getNode(x-1, y-1).setSpecificNodeSeed(selectedCard.getTL().getSpecificCornerSeed());
             board.getNode(x-1, y-1).setValueCounter(board.getNode(x-1, y-1).getValueCounter() - 1); // Decrease the value
+            selectedCard.setNode(board.getNode(x-1,y-1));
 
             board.getNode(x-1, y).setSpecificNodeSeed(selectedCard.getTR().getSpecificCornerSeed());
             board.getNode(x-1, y).setValueCounter(board.getNode(x-1, y).getValueCounter() - 1); // Decrease the value
@@ -119,6 +121,7 @@ public class Player {
         if(cornerIndex==2){//We are in Top Right corner case
             board.getNode(x-1, y+1).setSpecificNodeSeed(selectedCard.getTL().getSpecificCornerSeed());
             board.getNode(x-1, y+1).setValueCounter(board.getNode(x-1, y+1).getValueCounter() - 1); // Decrease the value
+            selectedCard.setNode(board.getNode(x-1,y+1));
 
             board.getNode(x-1, y +2).setSpecificNodeSeed(selectedCard.getTR().getSpecificCornerSeed());
             board.getNode(x-1, y +2).setValueCounter(board.getNode(x-1, y +2).getValueCounter() - 1); // Decrease the value
@@ -132,6 +135,7 @@ public class Player {
         if(cornerIndex==3){//We are in Bottom Left corner case
             board.getNode(x+1, y-1).setSpecificNodeSeed(selectedCard.getTL().getSpecificCornerSeed());
             board.getNode(x+1, y-1).setValueCounter(board.getNode(x+1, y-1).getValueCounter() - 1); // Decrease the value
+            selectedCard.setNode(board.getNode(x+1,y-1));
 
             board.getNode(x+1, y).setSpecificNodeSeed(selectedCard.getTR().getSpecificCornerSeed());
             board.getNode(x+1, y).setValueCounter(board.getNode(x+1, y).getValueCounter() - 1); // Decrease the value
@@ -145,6 +149,7 @@ public class Player {
         if(cornerIndex==4){//We are in Bottom Right corner case
             board.getNode(x+1, y+1).setSpecificNodeSeed(selectedCard.getTL().getSpecificCornerSeed());
             board.getNode(x+1, y+1).setValueCounter(board.getNode(x+1, y+1).getValueCounter() - 1); // Decrease the value
+            selectedCard.setNode(board.getNode(x+1,y+1));
 
             board.getNode(x+1, y+2).setSpecificNodeSeed(selectedCard.getTR().getSpecificCornerSeed());
             board.getNode(x+1, y+2).setValueCounter(board.getNode(x+1, y+2).getValueCounter() - 1); // Decrease the value
@@ -160,6 +165,8 @@ public class Player {
         // Add the selected card to the board
         selectedCard.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new index
         board.getCardsOnTheBoardList().add(selectedCard);
+        this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
+        board.setNumOfEmpty(board.getNumOfEmpty()-3);
 
     }
 
@@ -182,6 +189,25 @@ public class Player {
     public void setPlayerCards(ArrayList<Card> playerCards) {
         this.playerCards = playerCards;
     }
+
+    public void turnYourCard(Card card)
+    {
+        if (!card.isCardBack()) {
+            card.setCardBack(true); //CARD IS NOW ON HER BACK
+            card.getTL().setSpecificCornerSeed(SpecificSeed.EMPTY); //SETTING ALL THE CORNERS AS EMPTY
+            card.getTR().setSpecificCornerSeed(SpecificSeed.EMPTY);
+            card.getBL().setSpecificCornerSeed(SpecificSeed.EMPTY);
+            card.getBR().setSpecificCornerSeed(SpecificSeed.EMPTY);
+        } else {
+            card.setCardBack(false); //CARD IS ON HER ORIGINAL CONFIGURATION
+            card.getTL().setSpecificCornerSeed(card.getTLBack().getSpecificCornerSeed()); //BACKUPPING
+            card.getTR().setSpecificCornerSeed(card.getTRBack().getSpecificCornerSeed());
+            card.getBL().setSpecificCornerSeed(card.getBLBack().getSpecificCornerSeed());
+            card.getBR().setSpecificCornerSeed(card.getBRBack().getSpecificCornerSeed());
+        }
+    }
+
+
 
     public List<Card> getPlayerCards() {
         return playerCards;
