@@ -99,7 +99,7 @@ public class Player {
             System.out.println("You can't place your card here");
             return;
         }
-        Node selectedCorner = availableCorners.get(cornerIndex - 1);
+
         int x= cardPlayerChoose.getNode().getCoordX();
         int y= cardPlayerChoose.getNode().getCoordY();
 
