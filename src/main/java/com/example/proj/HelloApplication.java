@@ -34,10 +34,17 @@ public class HelloApplication extends Application {
         InitCardConstructor initCardConstructor= new InitCardConstructor(); //CREATING INITIAL CARDS
         InitialCardDeck initialCardDeck= (InitialCardDeck) initCardConstructor.createCards(); //creating Deck for the six first card, casting because in the costrcutor i provided a deck class
 
+        ObjectiveCardConstructor objectiveCardConstructor= new ObjectiveCardConstructor(); //CREATING OBJECTIVE CARDS
+        Deck objectiveDeck= objectiveCardConstructor.createCards(); //creating deck for objective cards
+        objectiveDeck.shuffle();
+        ObjectiveCard firstCommonObjective= objectiveDeck.firstCardForEachPlayer();
+        ObjectiveCard secondCommonObjective= objectiveDeck.firstCardForEachPlayer();
+        System.out.println("il primoobiettivo è" + firstCommonObjective);
+
+
         //CREATING OBJECTIVE CARDS
 
         Board board = new Board(50, 50); //creating the board which is NOT shared by all the players
-
         Player player = new Player("Calla", 0, Dot.GREEN, board); //creating a player
         FirstThreeCards firstThreeCards= new FirstThreeCards(player, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
         firstThreeCards.yourThreeCards(); //Player Deck initialized

@@ -3,30 +3,32 @@ package com.example.proj;
 import java.util.Collections;
 import java.util.List;
 
-public class ObjectiveDeck {
-    private List<ObjectiveCard> objectiveCards;
+public class ObjectiveDeck extends Deck {
+    private List<Card> objectiveCards;
 
-    public ObjectiveDeck(List<ObjectiveCard> cards) {
-
+    public ObjectiveDeck(List<Card> cards) {
+        super(cards);
         this.objectiveCards = cards;
     }
 
     public void printDeck() {
-        for (ObjectiveCard card : objectiveCards) {
+        for (Card card : objectiveCards) {
             System.out.println(card);
         }
     }
 
-    public ObjectiveCard firstCardForEachPlayer (Player player)
+    public ObjectiveCard firstCardForEachPlayer ()
     {
-        Collections.shuffle(objectiveCards);
-        ObjectiveCard drownCard = objectiveCards.remove(0);
+        ObjectiveCard drownCard = (ObjectiveCard) objectiveCards.remove(0);
         return drownCard;
     }
-    public List<ObjectiveCard> getInitialCards() {
+    public List<Card> getInitialCards() {
         return objectiveCards;
     }
-
-
-
+    public List<Card> getObjectiveCards() {
+        return objectiveCards;
+    }
+    public void setObjectiveCards(List<Card> objectiveCards) {
+        this.objectiveCards = objectiveCards;
+    }
 }

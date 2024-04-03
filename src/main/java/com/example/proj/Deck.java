@@ -34,4 +34,7 @@ public class Deck {
         cards.add(card);
     } //METHOD TO ADD THE CARD TO PLAYER LIST
 
+    public ObjectiveCard firstCardForEachPlayer() {
+        return null;
+    }
 }

@@ -1,20 +1,23 @@
 package com.example.proj;
 
-public class ObjectiveCard{
+public class ObjectiveCard extends Card{
     private int value;
     private int id;
     private SpecificSeed specificSeedType;
     private int numberOfWhenTheGameEnds;
     private ObjectiveSpecificTypeOfCard objectiveSpecificTypeOfCard; //ENUM
 
-
-    public ObjectiveCard(int value, int id, SpecificSeed specificSeedType, int numberOfWhenTheGameEnds, ObjectiveSpecificTypeOfCard objectiveSpecificTypeOfCard) {
+    public ObjectiveCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, int numberOfWhenTheGameEnds, ObjectiveSpecificTypeOfCard objectiveSpecificTypeOfCard) {
+        super(id, type, value, TL, TR, BL, BR);
         this.value = value;
         this.id = id;
         this.specificSeedType = specificSeedType;
         this.numberOfWhenTheGameEnds = numberOfWhenTheGameEnds;
         this.objectiveSpecificTypeOfCard = objectiveSpecificTypeOfCard;
     }
+
+
+
 
 
    /* public ObjectiveCard understandWhichObjectiveCardDoYouHave()

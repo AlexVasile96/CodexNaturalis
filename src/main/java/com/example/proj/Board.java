@@ -7,9 +7,8 @@ public class Board {
     private Node[][] nodes;
     private InitialCard initialCard;
     private ArrayList<Card> cardsOnTheBoardList;
-
     private int numOfEmpty; //int that counts all the empty SpecficSeed on the Board
-    private SpecificSeed initEmptyValue; //this helps us initializing all the nodes to empty as start
+    private SpecificSeed initEmptyValue; //this helps us to initialize all the nodes as empty at the start
 
     public Board(int rows, int cols) { //initializing all the nodes using the constructor
         cardsOnTheBoardList = new ArrayList<>();
@@ -18,32 +17,21 @@ public class Board {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 nodes[i][j] = new Node(SpecificSeed.EMPTY, i, j);
-                this.numOfEmpty++;
+                this.numOfEmpty++; //NumOfEmpty is an int that checks if we doing things correctly
             }
         }
-    }
-
-    public Node getNode(int x, int y) { //getnode method
-        return nodes[x][y];
-    }
-
-    public void setNode(int x, int y, Node node) {
-        nodes[x][y] = node;
-    }
-
+    } // BOARD CONSTRUCTOR
     public void printBoard() { //printBoardmethod
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes[i].length; j++) {
                 if (nodes[i][j].getValueCounter() < 2){
-                    System.out.print(nodes[i][j].getSpecificNodeSeed() + "\t" + j + "\t" + i + ", valore:" + nodes[i][j].getValueCounter() + " |");
-            }
+                    System.out.print(nodes[i][j].getSpecificNodeSeed() + "\t" + j + "\t" + i + ", value:" + nodes[i][j].getValueCounter() + " |");
+                }
             }
             System.out.println();
         }
-    }
-
-
-    public int[][] getCentralCoordinates() { //these coordinates are going to be the deafult-initialcards-coordinates
+    } //PRINTING THE BOARD
+    public int[][] getCentralCoordinates() {
         int rows = nodes.length;
         int cols = nodes[0].length;
         int[][] centralCoordinates = new int[2][2];
@@ -52,41 +40,35 @@ public class Board {
         centralCoordinates[1][0] = rows / 2;     // x
         centralCoordinates[1][1] = cols / 2;     // y
         return centralCoordinates;
-    }
-
+    } //these coordinates are going to be the deafult-initialcards-coordinates (middle of the board)
     public void placeInitialCard(InitialCard initialCard) { //METHOD TO PLACE THE FIRST CARD WHICH IS CHOOSEN RANDOMLY
-        int[][] centralCoordinates = getCentralCoordinates();
+        int[][] centralCoordinates = getCentralCoordinates(); //GETTING THE CENTRAL COORDINATES OF THE BOARD
         int centerX = centralCoordinates[0][0];
         int centerY = centralCoordinates[0][1];
         //IS THE INITIAL CARD ALREADY BEEN PLACED?
-        if (getNode(centerX, centerY).getValueCounter()<2 ) {
+        if (getNode(centerX, centerY).getValueCounter()<2 ) { //USING VALUECOUNTER TO CHECK IF A INITIAL CARD HAD ALREADY BEEN PLACED
             System.out.println("Already Placed!");
             return;
         }
-
-        //CHECKING IF I CAN PLACE THE CARD IN THE BOARD
-        if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) { //SETTING CORRECT NODES
-            Corner TOPLEFT= initialCard.getTL();
+        //CHECKING IF I CAN PLACE THE CARD ON THE BOARD
+        if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) {
+            Corner TOPLEFT= initialCard.getTL();                            //TOPLEFT
             SpecificSeed TOPLEFTING= TOPLEFT.getSpecificCornerSeed();
             getNode(centerX, centerY).setSpecificNodeSeed(TOPLEFTING);
-            getNode(centerX, centerY).setValueCounter(getNode(centerX,centerY).getValueCounter()-1); //METTE A MENO 1 Il VALUE COUNTER DELLA BOARD
-            initialCard.setNode(getNode(centerX,centerY));
-
-            Corner TOPRIGHT= initialCard.getTR();
+            getNode(centerX, centerY).setValueCounter(getNode(centerX,centerY).getValueCounter()-1); //VALUECOUNTER OF THE SPECIFIC NODE -1
+            initialCard.setNode(getNode(centerX,centerY)); //SETTING THE COORDINATE OF THE INITIAL CARD
+            Corner TOPRIGHT= initialCard.getTR();                           //TOPRIGHT
             SpecificSeed TOPRIGHTING= TOPRIGHT.getSpecificCornerSeed();
             getNode(centerX, centerY+1).setSpecificNodeSeed(TOPRIGHTING);
-            getNode(centerX, centerY+1).setValueCounter(getNode(centerX,centerY+1).getValueCounter()-1);
-
-
-            Corner BOTTOMLEFT= initialCard.getBL();
+            getNode(centerX, centerY+1).setValueCounter(getNode(centerX,centerY+1).getValueCounter()-1); //VALUECOUNTER OF THE SPECIFIC NODE -1
+            Corner BOTTOMLEFT= initialCard.getBL();                          //BOTTOMLEFT
             SpecificSeed BOTTOMLEFTING= BOTTOMLEFT.getSpecificCornerSeed();
             getNode(centerX+1,centerY).setSpecificNodeSeed(BOTTOMLEFTING);
-            getNode(centerX+1, centerY).setValueCounter(getNode(centerX+1,centerY).getValueCounter()-1);
-
-            Corner BOTTOMRIGHT= initialCard.getBR();
+            getNode(centerX+1, centerY).setValueCounter(getNode(centerX+1,centerY).getValueCounter()-1);//VALUECOUNTER OF THE SPECIFIC NODE -1
+            Corner BOTTOMRIGHT= initialCard.getBR();                        //BOTTOMRIGHT
             SpecificSeed BOTTOMRIGHITING= BOTTOMRIGHT.getSpecificCornerSeed();
             getNode(centerX+1,centerY+1).setSpecificNodeSeed(BOTTOMRIGHITING);
-            getNode(centerX+1, centerY+1).setValueCounter(getNode(centerX+1,centerY+1).getValueCounter()-1);
+            getNode(centerX+1, centerY+1).setValueCounter(getNode(centerX+1,centerY+1).getValueCounter()-1);//VALUECOUNTER OF THE SPECIFIC NODE -1
 
             this.numOfEmpty=numOfEmpty-4;
             initialCard.setIndexOnTheBoard(1); //SETTING THE INDEX ON THE FIRST CARD PLACED
@@ -96,25 +78,12 @@ public class Board {
             {
                 System.out.println(card);
             }
-            System.out.println("Carte Finite"); //I PRINTED ALL THE CARDS I HAVE ON MY BOARD
+            System.out.println("Card finished"); //I PRINTED ALL THE CARDS I HAVE ON MY BOARD
         } else {
             System.out.println("You can't place the initial card here");
         }
+        System.out.println("Initial Card correctly placed"); //THE CARD HAD BEEN PLACED CORRECTLY
     }
-
-    public List<Node> getAvailableCorners() { //I WANNA SAVE ALL THE FREE CORNERS I HAVE ON MY BOARD
-        List<Node> availableCorners = new ArrayList<>();
-        for (Card card : cardsOnTheBoardList) {
-            availableCorners.add(card.getTL());
-            availableCorners.add(card.getTR());
-            availableCorners.add(card.getBL());
-            availableCorners.add(card.getBR());
-        }
-        return availableCorners;
-    }
-
-
-
     public void printCornerCoordinates() {
         int[][] centralCoordinates = getCentralCoordinates();
         int centerX = centralCoordinates[0][0];
@@ -125,45 +94,44 @@ public class Board {
         System.out.println("TR: (" + centerX + ", " + (centerY + 1) + ")");
         System.out.println("BL: (" + (centerX + 1) + ", " + centerY + ")");
         System.out.println("BR: (" + (centerX + 1) + ", " + (centerY + 1) + ")");
-    }
+    } //METHOD TO PRINT THE COORDINATES OF THE CENTRAL COORDINATES
+
+    //GETTER AND SETTER
 
     public void setNodes(Node[][] nodes) {
         this.nodes = nodes;
     }
-
     public void setInitialCard(InitialCard initialCard) {
         this.initialCard = initialCard;
     }
-
     public void setCardsOnTheBoardList(ArrayList<Card> cardsOnTheBoardList) {
         this.cardsOnTheBoardList = cardsOnTheBoardList;
     }
-
     public void setNumOfEmpty(int numOfEmpty) {
         this.numOfEmpty = numOfEmpty;
     }
-
     public void setInitEmptyValue(SpecificSeed initEmptyValue) {
         this.initEmptyValue = initEmptyValue;
     }
-
     public Node[][] getNodes() {
         return nodes;
     }
-
     public InitialCard getInitialCard() {
         return initialCard;
     }
-
     public ArrayList<Card> getCardsOnTheBoardList() {
         return cardsOnTheBoardList;
     }
-
     public int getNumOfEmpty() {
         return numOfEmpty;
     }
-
     public SpecificSeed getInitEmptyValue() {
         return initEmptyValue;
+    }
+    public Node getNode(int x, int y) { //getnode method
+        return nodes[x][y];
+    }
+    public void setNode(int x, int y, Node node) {
+        nodes[x][y] = node;
     }
 }

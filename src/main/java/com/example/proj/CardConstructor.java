@@ -10,13 +10,13 @@ import java.util.List;
 public class CardConstructor {
     public Deck createCards() //method to create cards
     {
-        List<Card> resourceCardsList = null;
+        List<Card> resourceCardsList = null; //INITIALIZING THE CONSTRUCTOR
         try {
-            FileReader reader = new FileReader("src/main/resources/carte.json"); //Reading json file
-            JSONObject jsonObject = new JSONObject(new JSONTokener(reader)); //converting json file
-            JSONArray mazzoRisorse = jsonObject.getJSONArray("risorse"); //json array
-            resourceCardsList = new ArrayList<>(); //creating a new arryalist that contains all the cards
-            for (int i = 0; i < mazzoRisorse.length(); i++) { //for cicle in order to get all the json information
+            FileReader reader = new FileReader("src/main/resources/carte.json");    //Reading json file
+            JSONObject jsonObject = new JSONObject(new JSONTokener(reader));                //converting json file
+            JSONArray mazzoRisorse = jsonObject.getJSONArray("risorse");                //json array
+            resourceCardsList = new ArrayList<>();                                           //creating a new arraylist that contains all the cards
+            for (int i = 0; i < mazzoRisorse.length(); i++) {                               //for cicle in order to get all the json information
                 JSONObject card = mazzoRisorse.getJSONObject(i);
                 int id = card.getInt("id"); //card id
                 SpecificSeed type = SpecificSeed.valueOf(card.getString("type")); //card specific seed (plant,animal...)
@@ -29,15 +29,15 @@ public class CardConstructor {
                 Corner TR= new Corner(topRight,0,0);
                 Corner BL= new Corner(bottomLeft,0,0);
                 Corner BR= new Corner(bottomRight,0,0);
-                Card cards = new Card(id, type, value, TL, TR, BL, BR); //creating all the resource cards
-                resourceCardsList.add(cards); //adding card to the arraylist previously created
+                Card cards = new Card(id, type, value, TL, TR, BL, BR);                 //creating all the resource cards
+                resourceCardsList.add(cards);                                           //adding card to the arraylist previously created
             }
             reader.close();
 
         } catch (Exception e) { //catching exceptions
             e.printStackTrace();
         }
-        ResourceDeck resourceDeck = new ResourceDeck(resourceCardsList);
-        return resourceDeck;
+        ResourceDeck resourceDeck = new ResourceDeck(resourceCardsList); //creating the resource deck
+        return resourceDeck;                                             //returning the resource deck
     }
 }

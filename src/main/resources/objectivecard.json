@@ -1,20 +1,20 @@
 {
   "objective": [
-    {"id": "87", "type": "MUSHROOM", "value": "2", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "STAIRS"},
-    {"id": "88", "type": "PLANT", "value": "2", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "STAIRS"},
-    {"id": "89", "type": "ANIMAL", "value": "2", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "STAIRS"},
-    {"id": "90", "type": "INSECT", "value": "2", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "STAIRS"},
-    {"id": "91", "type": "MUSHROOM", "value": "3", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "L"},
-    {"id": "92", "type": "PLANT", "value": "3", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "L"},
-    {"id": "93", "type": "ANIMAL", "value": "3", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "L"},
-    {"id": "94", "type": "INSECT", "value": "3", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "L"},
-    {"id": "95", "type": "MUSHROOM", "value": "2", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "TRIS"},
-    {"id": "96", "type": "PLANT", "value": "2", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "TRIS"},
-    {"id": "97", "type": "ANIMAL", "value": "2", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "TRIS"},
-    {"id": "98", "type": "INSECT", "value": "2", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "TRIS"},
-    {"id": "99", "type": "MIX", "value": "3", "numberOfWhenTheGameEnds": "1", "objectiveSpecificTypeOfCard": "MIX"},
-    {"id": "100", "type": "PARCHMENT", "value": "2", "numberOfWhenTheGameEnds": "2", "objectiveSpecificTypeOfCard": "BIS"},
-    {"id": "101", "type": "INKWELL", "value": "2", "numberOfWhenTheGameEnds": "2", "objectiveSpecificTypeOfCard": "BIS"},
-    {"id": "102", "type": "FEATHER", "value": "2", "numberOfWhenTheGameEnds": "2", "objectiveSpecificTypeOfCard": "BIS"}
+    {"id": "87", "type": "MUSHROOM", "value": "2","TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY","numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "STAIRS"},
+    {"id": "88", "type": "PLANT", "value": "2","TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "STAIRS"},
+    {"id": "89", "type": "ANIMAL", "value": "2","TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "STAIRS"},
+    {"id": "90", "type": "INSECT", "value": "2","TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "STAIRS"},
+    {"id": "91", "type": "MUSHROOM", "value": "3","TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "L"},
+    {"id": "92", "type": "PLANT", "value": "3", "TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY","numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "L"},
+    {"id": "93", "type": "ANIMAL", "value": "3","TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "L"},
+    {"id": "94", "type": "INSECT", "value": "3", "TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY","numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "L"},
+    {"id": "95", "type": "MUSHROOM", "value": "2","TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "TRIS"},
+    {"id": "96", "type": "PLANT", "value": "2","TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "TRIS"},
+    {"id": "97", "type": "ANIMAL", "value": "2","TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "TRIS"},
+    {"id": "98", "type": "INSECT", "value": "2","TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "numberOfWhenTheGameEnds": "3", "objectiveSpecificTypeOfCard": "TRIS"},
+    {"id": "99", "type": "MIX", "value": "3","TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "numberOfWhenTheGameEnds": "1", "objectiveSpecificTypeOfCard": "MIX"},
+    {"id": "100", "type": "PARCHMENT", "value": "2", "TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY","numberOfWhenTheGameEnds": "2", "objectiveSpecificTypeOfCard": "BIS"},
+    {"id": "101", "type": "INKWELL", "value": "2","TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "numberOfWhenTheGameEnds": "2", "objectiveSpecificTypeOfCard": "BIS"},
+    {"id": "102", "type": "FEATHER", "value": "2", "TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "numberOfWhenTheGameEnds": "2", "objectiveSpecificTypeOfCard": "BIS"}
   ]
 }
