@@ -1,4 +1,4 @@
-Sono 2 giorni che nn dormo il mio corpo e pieno di cocaina
+
 |Functionality|Status|
 |-------------|------|
 |MODEL|✅|
