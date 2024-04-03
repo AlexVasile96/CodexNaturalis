@@ -13,15 +13,12 @@ public class GoldDeck extends Deck {
 
     public void shuffle() {
         Collections.shuffle(goldCards);
-    }
-
+    } //METHOD TO SHUFFLE THE CARDS
     public void printDeck() {
         for (Card card : goldCards) {
             System.out.println(card);
         }
     }
-
-
     public Card drawCard(Player player) {
         if (goldCards.isEmpty()) {
             return null; // Mazzo vuoto
@@ -35,7 +32,6 @@ public class GoldDeck extends Deck {
             throw new RuntimeException();
         }
     }
-
     public void addCard(Card card) {
         goldCards.add(card);
     }

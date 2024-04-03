@@ -48,6 +48,7 @@ public class HelloApplication extends Application {
         board.placeInitialCard(initialCard);                        //JUST CHECKING IF THE METHOD ACTUALLY PREVENTS FROM PLACING 2 INITIAL CARDS
         board.printCornerCoordinates();
         board.printBoard();                                         //GETTING THE INITIAL CARD COORDINATES
+
         //Player choose the first card he has on his deck, in this case we talking about a resource card
         player.playCard(board,0);                           //Player places his cards
         board.printBoard();                                         //printing the board
