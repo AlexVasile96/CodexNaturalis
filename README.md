@@ -17,7 +17,7 @@ Legenda <br>
 ✅: Implementats  ⛔: Not implementats ⚙️ Testing    ⏱ Developig
 
 <b>Team</b> <br>
-Pietro Callandrone   - thomas.paletti@mail.polimi.it <br>
-Thomas Paletti       - vlad.lexandru.vasile@mail.polimi.it <br>
-Mohammed Hajjioui    - pietro.callandrone@mail.polimi.it <br>
-Vlad Alexandru Vasile - mohammed.hajjioui@mail.polimi.it <br>
+Pietro Callandrone   - pietro.callandrone@mail.polimi.it <br>
+Thomas Paletti       - thomas.paletti@mail.polimi.it <br>
+Mohammed Hajjioui    - mohammed.hajjioui@mail.polimi.it <br>
+Vlad Alexandru Vasile - vlad.lexandru.vasile@mail.polimi.it <br>
