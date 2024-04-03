@@ -102,17 +102,60 @@ public class Player {
         Node selectedCorner = availableCorners.get(cornerIndex - 1);
         int x= cardPlayerChoose.getNode().getCoordX();
         int y= cardPlayerChoose.getNode().getCoordY();
-        board.getNode(x, y).setSpecificNodeSeed(selectedCard.getTL().getSpecificCornerSeed());
-        board.getNode(x, y).setValueCounter(board.getNode(x, y).getValueCounter() - 1); // Decrease the value
 
-        board.getNode(x, y + 1).setSpecificNodeSeed(selectedCard.getTR().getSpecificCornerSeed());
-        board.getNode(x, y + 1).setValueCounter(board.getNode(x, y + 1).getValueCounter() - 1); // Decrease the value
+        if(cornerIndex==1){//We are in Top Left corner case
+            board.getNode(x-1, y-1).setSpecificNodeSeed(selectedCard.getTL().getSpecificCornerSeed());
+            board.getNode(x-1, y-1).setValueCounter(board.getNode(x-1, y-1).getValueCounter() - 1); // Decrease the value
 
-        board.getNode(x + 1, y).setSpecificNodeSeed(selectedCard.getBL().getSpecificCornerSeed());
-        board.getNode(x + 1, y).setValueCounter(board.getNode(x + 1, y).getValueCounter() - 1); // Decrease the value
+            board.getNode(x-1, y).setSpecificNodeSeed(selectedCard.getTR().getSpecificCornerSeed());
+            board.getNode(x-1, y).setValueCounter(board.getNode(x-1, y).getValueCounter() - 1); // Decrease the value
 
-        board.getNode(x + 1, y + 1).setSpecificNodeSeed(selectedCard.getBR().getSpecificCornerSeed());
-        board.getNode(x + 1, y + 1).setValueCounter(board.getNode(x + 1, y + 1).getValueCounter() - 1); // Decrease the value
+            board.getNode(x, y-1).setSpecificNodeSeed(selectedCard.getBL().getSpecificCornerSeed());
+            board.getNode(x, y-1).setValueCounter(board.getNode(x, y-1).getValueCounter() - 1); // Decrease the value
+
+            board.getNode(x, y).setSpecificNodeSeed(selectedCard.getBR().getSpecificCornerSeed());
+            board.getNode(x, y).setValueCounter(board.getNode(x, y).getValueCounter() - 1); // Decrease the value
+        }
+        if(cornerIndex==2){//We are in Top Right corner case
+            board.getNode(x-1, y+1).setSpecificNodeSeed(selectedCard.getTL().getSpecificCornerSeed());
+            board.getNode(x-1, y+1).setValueCounter(board.getNode(x-1, y+1).getValueCounter() - 1); // Decrease the value
+
+            board.getNode(x-1, y +2).setSpecificNodeSeed(selectedCard.getTR().getSpecificCornerSeed());
+            board.getNode(x-1, y +2).setValueCounter(board.getNode(x-1, y +2).getValueCounter() - 1); // Decrease the value
+
+            board.getNode(x, y+1).setSpecificNodeSeed(selectedCard.getBL().getSpecificCornerSeed());
+            board.getNode(x, y+1).setValueCounter(board.getNode(x, y+1).getValueCounter() - 1); // Decrease the value
+
+            board.getNode(x, y+2).setSpecificNodeSeed(selectedCard.getBR().getSpecificCornerSeed());
+            board.getNode(x, y+2).setValueCounter(board.getNode(x, y+2).getValueCounter() - 1); // Decrease the value
+        }
+        if(cornerIndex==3){//We are in Bottom Left corner case
+            board.getNode(x+1, y-1).setSpecificNodeSeed(selectedCard.getTL().getSpecificCornerSeed());
+            board.getNode(x+1, y-1).setValueCounter(board.getNode(x+1, y-1).getValueCounter() - 1); // Decrease the value
+
+            board.getNode(x+1, y).setSpecificNodeSeed(selectedCard.getTR().getSpecificCornerSeed());
+            board.getNode(x+1, y).setValueCounter(board.getNode(x+1, y).getValueCounter() - 1); // Decrease the value
+
+            board.getNode(x+2, y-1).setSpecificNodeSeed(selectedCard.getBL().getSpecificCornerSeed());
+            board.getNode(x+2, y-1).setValueCounter(board.getNode(x+2, y-1).getValueCounter() - 1); // Decrease the value
+
+            board.getNode(x+2, y).setSpecificNodeSeed(selectedCard.getBR().getSpecificCornerSeed());
+            board.getNode(x+2, y).setValueCounter(board.getNode(x+2, y).getValueCounter() - 1); // Decrease the value
+        }
+        if(cornerIndex==4){//We are in Bottom Right corner case
+            board.getNode(x+1, y+1).setSpecificNodeSeed(selectedCard.getTL().getSpecificCornerSeed());
+            board.getNode(x+1, y+1).setValueCounter(board.getNode(x+1, y+1).getValueCounter() - 1); // Decrease the value
+
+            board.getNode(x+1, y+2).setSpecificNodeSeed(selectedCard.getTR().getSpecificCornerSeed());
+            board.getNode(x+1, y+2).setValueCounter(board.getNode(x+1, y+2).getValueCounter() - 1); // Decrease the value
+
+            board.getNode(x+2, y+1).setSpecificNodeSeed(selectedCard.getBL().getSpecificCornerSeed());
+            board.getNode(x+2, y+1).setValueCounter(board.getNode(x+2, y+1).getValueCounter() - 1); // Decrease the value
+
+            board.getNode(x+2, y+2).setSpecificNodeSeed(selectedCard.getBR().getSpecificCornerSeed());
+            board.getNode(x+2, y+2).setValueCounter(board.getNode(x+2, y+2).getValueCounter() - 1); // Decrease the value
+        }
+
 
         // Add the selected card to the board
         selectedCard.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new index

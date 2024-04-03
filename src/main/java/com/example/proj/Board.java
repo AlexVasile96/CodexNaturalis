@@ -34,8 +34,9 @@ public class Board {
     public void printBoard() { //printBoardmethod
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes[i].length; j++) {
-                    System.out.print(nodes[i][j].getSpecificNodeSeed() + "\t" + i + "\t" + j + ", valore:" + nodes[i][j].getValueCounter() + " |");
-
+                if (nodes[i][j].getValueCounter() < 2){
+                    System.out.print(nodes[i][j].getSpecificNodeSeed() + "\t" + j + "\t" + i + ", valore:" + nodes[i][j].getValueCounter() + " |");
+            }
             }
             System.out.println();
         }
