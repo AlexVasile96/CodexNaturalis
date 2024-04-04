@@ -1,7 +1,7 @@
 package com.example.proj;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Board {
     private Node[][] nodes;
@@ -95,6 +95,32 @@ public class Board {
         System.out.println("BL: (" + (centerX + 1) + ", " + centerY + ")");
         System.out.println("BR: (" + (centerX + 1) + ", " + (centerY + 1) + ")");
     } //METHOD TO PRINT THE COORDINATES OF THE CENTRAL COORDINATES
+
+    public ExtendExtendExtend createSpecificSecretCard( ObjectiveCard card) //INTERFACCIA E STAIRS IMPLEMENTA L'I
+    {
+        if(card.getObjectiveSpecificTypeOfCard().equals("STAIRS"))
+        {
+            return new StairsObjectiveCard(); //TRIKKI RISOLTO
+        }
+        if(card.getObjectiveSpecificTypeOfCard().equals("L"))
+        {
+            return new LObjectiveCard(); //TRIKKI DA RISOLVERE
+        }
+        if(card.getObjectiveSpecificTypeOfCard().equals("MIX"))
+    {
+        return new MixObjectiveCard(); //TRIKKI EASY
+    }
+        if(card.getObjectiveSpecificTypeOfCard().equals("TRIS"))
+        {
+            return new TrisObjectiveCard();
+        }
+        if(card.getObjectiveSpecificTypeOfCard().equals("BIS"))
+        {
+            return new BisObjectiveCard();
+        }
+
+        return null;
+    }
 
     //GETTER AND SETTER
 

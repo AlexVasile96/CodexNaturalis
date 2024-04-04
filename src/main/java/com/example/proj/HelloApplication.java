@@ -5,11 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
+import java.util.HashMap;
+import java.util.Map;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HelloApplication extends Application {
     @Override
@@ -23,6 +26,7 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         //launch();
+        Map<SpecificSeed, Integer> seedCountMap = new HashMap<>();
         CardConstructor resourceCardConstructor = new CardConstructor(); //create resource cards
         Deck resourceDeck = resourceCardConstructor.createCards(); //create Deck for resourcesCards
         resourceDeck.shuffle(); //SHUFFLING THE RESOURCEDECK
@@ -39,13 +43,26 @@ public class HelloApplication extends Application {
         objectiveDeck.shuffle();
         ObjectiveCard firstCommonObjective= objectiveDeck.firstCardForEachPlayer();
         ObjectiveCard secondCommonObjective= objectiveDeck.firstCardForEachPlayer();
-        System.out.println("il primoobiettivo è" + firstCommonObjective);
+        System.out.println("Il primo obiettivo è: " + firstCommonObjective);
+        System.out.println("Il secondo obiettivo comune è: "+ secondCommonObjective);
+        BoardPoints boardPoints= new BoardPoints();
 
 
         //CREATING OBJECTIVE CARDS
 
         Board board = new Board(50, 50); //creating the board which is NOT shared by all the players
+        boardPoints.countPoints(board);
         Player player = new Player("Calla", 0, Dot.GREEN, board); //creating a player
+        ObjectiveCard firstChoiceSecret = (ObjectiveCard) objectiveDeck.drawCard(player);
+        ObjectiveCard secondChoiceSecret = (ObjectiveCard) objectiveDeck.drawCard(player);
+
+        List <ObjectiveCard> secretCards=new ArrayList<>();
+        secretCards.add(firstChoiceSecret);
+        secretCards.add(secondChoiceSecret);
+
+        player.chooseSecretCard(secretCards); //player choooses his card
+        board.createSpecificSecretCard(player.getSecretChosenCard());
+
         FirstThreeCards firstThreeCards= new FirstThreeCards(player, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
         firstThreeCards.yourThreeCards(); //Player Deck initialized
         player.visualizePlayerCards(player.getPlayerCards()); //METHOD TO VISUALIZE THE 3 CARDS THE PLAYER RANDOMLY DREW
@@ -54,7 +71,9 @@ public class HelloApplication extends Application {
         board.placeInitialCard(initialCard);                        //PLACING THE INITIAL CARD ON THE BOARD, THIS IS WHERE THE GAME STARTS
         board.placeInitialCard(initialCard);                        //JUST CHECKING IF THE METHOD ACTUALLY PREVENTS FROM PLACING 2 INITIAL CARDS
         board.printCornerCoordinates();
-        board.printBoard();                                         //GETTING THE INITIAL CARD COORDINATES
+        board.printBoard();//GETTING THE INITIAL CARD COORDINATES
+        boardPoints.countPoints(board);
+
 
         //Player choose the first card he has on his deck, in this case we talking about a resource card
         player.playCard(board,0);                           //Player places his cards
@@ -65,6 +84,10 @@ public class HelloApplication extends Application {
         player.playCard(board,0);
         board.printBoard();                                         //printing the board
         System.out.println(board.getCardsOnTheBoardList());
+        boardPoints.countPoints(board);
+        TrisObjectiveCard trisObjectiveCard= new TrisObjectiveCard();
+        trisObjectiveCard.checkPattern(board,SpecificSeed.MUSHROOM,player); //Funziona!
+
     }
 }
 

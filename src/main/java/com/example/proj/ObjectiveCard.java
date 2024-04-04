@@ -16,33 +16,37 @@ public class ObjectiveCard extends Card{
         this.objectiveSpecificTypeOfCard = objectiveSpecificTypeOfCard;
     }
 
+    @Override
+    public String toString() {
+        return "ObjectiveCard{" +
+                "value=" + value +
+                ", id=" + id +
+                ", specificSeedType=" + specificSeedType +
+                ", numberOfWhenTheGameEnds=" + numberOfWhenTheGameEnds +
+                ", objectiveSpecificTypeOfCard=" + objectiveSpecificTypeOfCard +
+                '}';
+    }
 
+    public void setValue(int value) {
+        this.value = value;
+    }
 
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public void setSpecificSeedType(SpecificSeed specificSeedType) {
+        this.specificSeedType = specificSeedType;
+    }
 
-   /* public ObjectiveCard understandWhichObjectiveCardDoYouHave()
-    {
-        if(this.objectiveSpecificTypeOfCard.equals("STAIRS"))
-        {
-            return stairsObjectiveCard();
-        }
-        if(this.objectiveSpecificTypeOfCard.equals("L"))
-        {
-            return stairsObjectiveCard();
-        }
-        if(this.objectiveSpecificTypeOfCard.equals("MIX"))
-        {
-            return stairsObjectiveCard();
-        }
-        if(this.objectiveSpecificTypeOfCard.equals("BIS"))
-        {
-            return stairsObjectiveCard();
-        }
-        if(this.objectiveSpecificTypeOfCard.equals("TRIS"))
-        {
-            return stairsObjectiveCard();
-        }
-    }*/
+    public void setNumberOfWhenTheGameEnds(int numberOfWhenTheGameEnds) {
+        this.numberOfWhenTheGameEnds = numberOfWhenTheGameEnds;
+    }
+
+    public void setObjectiveSpecificTypeOfCard(ObjectiveSpecificTypeOfCard objectiveSpecificTypeOfCard) {
+        this.objectiveSpecificTypeOfCard = objectiveSpecificTypeOfCard;
+    }
 
     /*public ObjectiveCard stairsObjectiveCard(){
         SpecificSeed specificSeedPointsGiver= this.getSpecificSeedType(); //prendiamo il tipo della carta ch da punti
