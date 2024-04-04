@@ -39,13 +39,24 @@ public class HelloApplication extends Application {
         objectiveDeck.shuffle();
         ObjectiveCard firstCommonObjective= objectiveDeck.firstCardForEachPlayer();
         ObjectiveCard secondCommonObjective= objectiveDeck.firstCardForEachPlayer();
-        System.out.println("il primoobiettivo è" + firstCommonObjective);
+        System.out.println("Il primoobiettivo è: " + firstCommonObjective);
+        System.out.println("Il secondo obiettivo comune è: "+ secondCommonObjective);
+
 
 
         //CREATING OBJECTIVE CARDS
 
         Board board = new Board(50, 50); //creating the board which is NOT shared by all the players
         Player player = new Player("Calla", 0, Dot.GREEN, board); //creating a player
+        ObjectiveCard firstChoiceSecret = (ObjectiveCard) objectiveDeck.drawCard(player);
+        ObjectiveCard secondChoiceSecret = (ObjectiveCard) objectiveDeck.drawCard(player);
+
+        List <ObjectiveCard> secretCards=new ArrayList<>();
+        secretCards.add(firstChoiceSecret);
+        secretCards.add(secondChoiceSecret);
+
+        player.chooseSecretCard(secretCards);
+
         FirstThreeCards firstThreeCards= new FirstThreeCards(player, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
         firstThreeCards.yourThreeCards(); //Player Deck initialized
         player.visualizePlayerCards(player.getPlayerCards()); //METHOD TO VISUALIZE THE 3 CARDS THE PLAYER RANDOMLY DREW
@@ -54,7 +65,9 @@ public class HelloApplication extends Application {
         board.placeInitialCard(initialCard);                        //PLACING THE INITIAL CARD ON THE BOARD, THIS IS WHERE THE GAME STARTS
         board.placeInitialCard(initialCard);                        //JUST CHECKING IF THE METHOD ACTUALLY PREVENTS FROM PLACING 2 INITIAL CARDS
         board.printCornerCoordinates();
-        board.printBoard();                                         //GETTING THE INITIAL CARD COORDINATES
+        board.printBoard();//GETTING THE INITIAL CARD COORDINATES
+
+
 
         //Player choose the first card he has on his deck, in this case we talking about a resource card
         player.playCard(board,0);                           //Player places his cards

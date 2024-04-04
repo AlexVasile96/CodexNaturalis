@@ -22,6 +22,18 @@ public class ObjectiveDeck extends Deck {
         ObjectiveCard drownCard = (ObjectiveCard) objectiveCards.remove(0);
         return drownCard;
     }
+    public ObjectiveCard drawCard(Player player){
+        if (objectiveCards.isEmpty()) { //CHECKING IF THE CARD IS MADE IN THE CORRECT WAY
+            return null;
+        }
+        if(player.getPlayerCards().size()<3){
+            ObjectiveCard drownCard = (ObjectiveCard)objectiveCards.remove(0); //REMOVING THE CHOSEN CARD FROM THE DECK
+            return drownCard;                          //RETURING THE CHOSEN CARD
+        }
+        else{
+            throw new RuntimeException("Player's deck is already full");
+        }
+    }
     public List<Card> getInitialCards() {
         return objectiveCards;
     }

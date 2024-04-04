@@ -11,6 +11,7 @@ public class Player {
     private Board board;
     private boolean isCardBack;
     private ArrayList <Card> playerCards;
+    private ObjectiveCard secretChosenCard;
     public Player(String nickName, int playerScore, Dot dot, Board board){ //PLAYER CONSTRUCTOR
         this.nickName = nickName;
         this.playerScore = playerScore;
@@ -38,6 +39,24 @@ public class Player {
         }
         return playerCards.get(index);
     }  //METHOD TO CHOOSE WHICH CARD THE PLAYER WANTS TO PLACE ON THE BOARD
+
+    public void chooseSecretCard(List <ObjectiveCard> secretCards){
+
+        for (int i = 0; i < secretCards.size(); i++) {
+            Card card = secretCards.get(i);
+            System.out.println((i + 1) + ". " + card);
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Inserisci il numero della carta obiettivo SEGRETA che vuoi pescare: ");
+        int selectedCardIndex = scanner.nextInt();
+        if (selectedCardIndex < 1 || selectedCardIndex > secretCards.size()) {
+            System.out.println("Not valid index");
+        }
+
+        this.secretChosenCard=secretCards.get(selectedCardIndex - 1);
+        System.out.println(secretChosenCard);
+    }
 
     public void playCard(Board board, int cardIndex) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
         Card selectedCard = chooseCard(cardIndex); //SELECTEDCARD IS THE CARD CHOSEN FROM THE PLAYER DECK
