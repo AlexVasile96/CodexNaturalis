@@ -24,10 +24,6 @@ class DeckTest {
     }*/
 
     @Test
-    void shuffle() {
-    }
-
-    @Test
     void printDeck() {
     }
 

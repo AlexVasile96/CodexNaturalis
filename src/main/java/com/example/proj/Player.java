@@ -17,7 +17,7 @@ public class Player {
         this.playerScore = playerScore;
         this.dot = dot;
         this.board = board;
-        this.playerCards = new ArrayList<Card>(3);
+        this.playerCards = new ArrayList<>(3);
         this.isCardBack=false;
     }
 
@@ -80,7 +80,7 @@ public class Player {
         if(selectedCard instanceof GoldCard)
         {
           boolean checker=   board.placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing()); //CHECKING IF THE REQUIRMENTS ARE RESPECTED
-          if (checker==false) return;
+          if (!checker) return; //checker==false
         }
         List<Card> cardsPlayerCanChooseFrom = board.getCardsOnTheBoardList(); //VISUALIZING ALL THE CARDS ON THE BOARD SO THE PLAYER CAN CHOOSE ONE OF THEM
         System.out.println("Cards on the board are:");
@@ -252,8 +252,13 @@ public class Player {
         board.getCardsOnTheBoardList().add(selectedCard); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
         this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
         board.setNumOfEmpty(board.getNumOfEmpty()-3);
-        playerScore= playerScore+ selectedCard.getValueWhenPlaced();
+        playerScore= playerScore+ selectedCard.getValueWhenPlaced(); //UPDATING PLAYER SCORE
         System.out.println("Your new score is " + playerScore + "points");
+        if(playerScore>=20)
+        {
+            System.out.println("Player " + getNickName() + "wins!\n");
+            EndGame endGame= new EndGame();
+        }
     }
 
     public void turnYourCard(Card card) //METHOD TO TURN YOUR CARD IN CASE THE PLAYER WANTS TO PLACE THE CARD ON HER BACK
