@@ -5,9 +5,7 @@ import org.json.JSONTokener;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-
-
-public class InitCardConstructor{
+public class InitCardConstructor implements CardConstructor{
     public Deck createCards() //method to create cards
     {
         List<Card> initCardList = null;

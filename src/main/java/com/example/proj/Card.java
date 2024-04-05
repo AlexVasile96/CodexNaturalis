@@ -1,7 +1,5 @@
 package com.example.proj;
 
-import java.util.List;
-
 public class Card {
         protected int id; //id which identifies the specific card
         protected SpecificSeed type; //specificCardType
@@ -31,7 +29,7 @@ public class Card {
             this.TRBack = new Corner(SpecificSeed.EMPTY,0,0);
             this.BLBack = new Corner(SpecificSeed.EMPTY,0,0);
             this.BRBack = new Corner(SpecificSeed.EMPTY,0,0);
-            //BACKUPORIGINAL CORNERS
+            //BACKUP-ORIGINAL CORNERS
             this.TLBack.setSpecificCornerSeed(TL.getSpecificCornerSeed());
             this.TRBack.setSpecificCornerSeed(TR.getSpecificCornerSeed());
             this.BLBack.setSpecificCornerSeed(BL.getSpecificCornerSeed());
@@ -48,7 +46,7 @@ public class Card {
                     ", TR=" + TR +
                     ", BL=" + BL +
                     ", BR=" + BR ;
-    } //TOSTRING METHOD
+    } //TO-STRING METHOD
 
 
         //GETTER AND SETTER

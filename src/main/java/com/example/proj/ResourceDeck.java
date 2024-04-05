@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ResourceDeck implements Deck{
-    private List<Card> resourceCards;
+    private final List<Card> resourceCards; //FINAL TO KEEP HER THREAD SAFE AND IT HAS TO BE INITIALED ONE TIME ONLY
     public ResourceDeck(List<Card> cards) {
         this.resourceCards = cards;
     }

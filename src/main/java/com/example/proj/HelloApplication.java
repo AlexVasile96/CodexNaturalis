@@ -27,7 +27,7 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         //launch();
         //Map<SpecificSeed, Integer> seedCountMap = new HashMap<>();
-        CardConstructor resourceCardConstructor = new CardConstructor(); //create resource cards
+        ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor(); //create resource cards
         Deck resourceDeck = resourceCardConstructor.createCards(); //create Deck for resourcesCards
         resourceDeck.shuffle(); //SHUFFLING THE RESOURCEDECK
 
@@ -43,9 +43,9 @@ public class HelloApplication extends Application {
         objectiveDeck.shuffle();
         ObjectiveCard firstCommonObjective= objectiveDeck.firstCardForEachPlayer();
         ObjectiveCard secondCommonObjective= objectiveDeck.firstCardForEachPlayer();
-        System.out.println("Il primo obiettivo è: " + firstCommonObjective);
-        System.out.println("Il secondo obiettivo comune è: "+ secondCommonObjective);
-        BoardPoints boardPoints= new BoardPoints();
+        System.out.println("First common objective is " + firstCommonObjective);
+        System.out.println("Second common objective is "+ secondCommonObjective);
+        BoardPoints boardPoints= new BoardPoints(); //INITIALIZING THE BOARD
 
 
         //CREATING OBJECTIVE CARDS

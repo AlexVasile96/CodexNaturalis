@@ -11,7 +11,6 @@ public class ObjectiveCard extends Card{
         super(id, type, value, TL, TR, BL, BR);
         this.value = value;
         this.id = id;
-        this.specificSeedType = specificSeedType;
         this.numberOfWhenTheGameEnds = numberOfWhenTheGameEnds;
         this.objectiveSpecificTypeOfCard = objectiveSpecificTypeOfCard;
     }
@@ -47,29 +46,6 @@ public class ObjectiveCard extends Card{
     public void setObjectiveSpecificTypeOfCard(ObjectiveSpecificTypeOfCard objectiveSpecificTypeOfCard) {
         this.objectiveSpecificTypeOfCard = objectiveSpecificTypeOfCard;
     }
-
-    /*public ObjectiveCard stairsObjectiveCard(){
-        SpecificSeed specificSeedPointsGiver= this.getSpecificSeedType(); //prendiamo il tipo della carta ch da punti
-        if(specificSeedPointsGiver.equals("MUSHROOMS") || specificSeedPointsGiver.equals("ANIMAL"))
-        {
-
-        }
-        else if(specificSeedPointsGiver.equals("PLANT") || specificSeedPointsGiver.equals("INSECT"))
-        {
-
-        }
-        else
-        {
-            return null;
-        }
-    }
-    public ObjectiveCard lObjectiveCard(){}
-    public ObjectiveCard mixObjectiveCard(){}
-    public ObjectiveCard trisObjectiveCard(){}
-    public ObjectiveCard bisObjectiveCard(){}*/
-
-
-
 
     public int getValue() {
         return value;

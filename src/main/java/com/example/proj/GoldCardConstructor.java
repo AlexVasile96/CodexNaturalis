@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoldCardConstructor extends CardConstructor{
+public class GoldCardConstructor implements CardConstructor{
     @Override
     public Deck createCards() {
         List<Card> goldCards = null;
@@ -47,7 +47,6 @@ public class GoldCardConstructor extends CardConstructor{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        GoldDeck goldDeck = new GoldDeck(goldCards);
-        return goldDeck;
+        return new GoldDeck(goldCards);
     }
 }

@@ -40,9 +40,6 @@ public class ObjectiveCardConstructor {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ObjectiveDeck objectiveDeck= new ObjectiveDeck(objectiveCardList);
-        return objectiveDeck;
-
-
+        return new ObjectiveDeck(objectiveCardList);
     }
 }

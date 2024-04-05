@@ -9,6 +9,5 @@ public enum SpecificSeed {
     PARCHMENT,
     FEATHER,
     EMPTY,
-    NOTTOBEPLACEDON,
-    MIX
+    NOTTOBEPLACEDON
 }

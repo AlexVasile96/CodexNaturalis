@@ -1,5 +1,4 @@
 package com.example.proj;
-
 public class MixObjectiveCard implements ExtendExtendExtend{
     @Override
     public boolean checkPattern(Board board, SpecificSeed seed, Player player) {

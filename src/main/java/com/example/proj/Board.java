@@ -10,7 +10,7 @@ public class Board {
     private Node[][] nodes;
     private InitialCard initialCard;
     private ArrayList<Card> cardsOnTheBoardList;
-    private int numOfEmpty; //int that counts all the empty SpecficSeed on the Board
+    private int numOfEmpty; //int that counts all the empty SpecificSeed on the Board
     private SpecificSeed initEmptyValue; //this helps us to initialize all the nodes as empty at the start
 
     public Board(int rows, int cols) { //initializing all the nodes using the constructor
@@ -20,11 +20,11 @@ public class Board {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 nodes[i][j] = new Node(SpecificSeed.EMPTY, i, j);
-                this.numOfEmpty++; //NumOfEmpty is an int that checks if we doing things correctly
+                this.numOfEmpty++; //NumOfEmpty is an int that checks if we're doing things correctly
             }
         }
     } // BOARD CONSTRUCTOR
-    public void printBoard() { //printBoardmethod
+    public void printBoard() { //printBoard method
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes[i].length; j++) {
                 if (nodes[i][j].getValueCounter() < 2){
@@ -43,43 +43,61 @@ public class Board {
         centralCoordinates[1][0] = rows / 2;     // x
         centralCoordinates[1][1] = cols / 2;     // y
         return centralCoordinates;
-    } //these coordinates are going to be the deafult-initialcards-coordinates (middle of the board)
-    public void placeInitialCard(InitialCard initialCard) { //METHOD TO PLACE THE FIRST CARD WHICH IS CHOOSEN RANDOMLY
+    } //these coordinates are going to be the default-initial cards-coordinates (middle of the board)
+    public boolean placeGoldCard( List<SpecificSeed> requirementsForPlacing) {
+        BoardPoints boardPoints = new BoardPoints(); //CREATING THE BOARD-POINTS TO COUNT ALL THE SPECIFIED ON THE BOARD
+        Map<SpecificSeed, Integer> seedCountMap = boardPoints.countPoints(this); //PASSING THE BOARD
+        Map<SpecificSeed, Integer> requiredCountMap = new HashMap<>(); //CREATING A MAP TO CHECK THE ATTRIBUTES
+        for (SpecificSeed seed : requirementsForPlacing) {
+            requiredCountMap.put(seed, requiredCountMap.getOrDefault(seed, 0) + 1); //COUNTING
+        }
+        for (Map.Entry<SpecificSeed, Integer> entry : requiredCountMap.entrySet()) {
+            SpecificSeed requiredSeed = entry.getKey(); //GET KEY TAKES THE SPECIFIED IN THE REQUIREMENTS
+            int requiredCount = entry.getValue();       //GET VALUE TAKES THE NUMBER OF THE ATTRIBUTES
+            int actualCount = seedCountMap.getOrDefault(requiredSeed, 0); //HOW MANY SPECIFIED DO WE HAVE ACTUALLY ON THE BOARD
+            if (actualCount < requiredCount) { //IN CASO CORREGGERE IL SEGNO
+                System.out.println("Not enough" + requiredSeed + "on the board.");
+                return false;
+            }
+        }
+        return true;
+    } //method to see if the attributes are on the board for the gold cards
+    public void placeInitialCard(InitialCard initialCard) { //METHOD TO PLACE THE FIRST CARD WHICH IS CHOSEN RANDOMLY
         int[][] centralCoordinates = getCentralCoordinates(); //GETTING THE CENTRAL COORDINATES OF THE BOARD
         int centerX = centralCoordinates[0][0];
         int centerY = centralCoordinates[0][1];
         //IS THE INITIAL CARD ALREADY BEEN PLACED?
-        if (getNode(centerX, centerY).getValueCounter()<2 ) { //USING VALUECOUNTER TO CHECK IF A INITIAL CARD HAD ALREADY BEEN PLACED
+        if (getNode(centerX, centerY).getValueCounter()<2 ) { //USING VALUE-COUNTER TO CHECK IF A INITIAL CARD HAD ALREADY BEEN PLACED
             System.out.println("Already Placed!");
             return;
         }
         //CHECKING IF I CAN PLACE THE CARD ON THE BOARD
         if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) {
-            Corner TOPLEFT= initialCard.getTL();                            //TOPLEFT
+            Corner TOPLEFT= initialCard.getTL();                            //TOP LEFT
             SpecificSeed TOPLEFTING= TOPLEFT.getSpecificCornerSeed();
             getNode(centerX, centerY).setSpecificNodeSeed(TOPLEFTING);
             getNode(centerX,centerY).setFirstPlacement(TOPLEFTING);
-            getNode(centerX, centerY).setValueCounter(getNode(centerX,centerY).getValueCounter()-1); //VALUECOUNTER OF THE SPECIFIC NODE -1
+            getNode(centerX, centerY).setValueCounter(getNode(centerX,centerY).getValueCounter()-1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
             initialCard.setNode(getNode(centerX,centerY)); //SETTING THE COORDINATE OF THE INITIAL CARD
-            Corner TOPRIGHT= initialCard.getTR();                           //TOPRIGHT
+            Corner TOPRIGHT= initialCard.getTR();                           //UPRIGHT
             SpecificSeed TOPRIGHTING= TOPRIGHT.getSpecificCornerSeed();
             getNode(centerX, centerY+1).setSpecificNodeSeed(TOPRIGHTING);
             getNode(centerX,centerY+1).setFirstPlacement(TOPRIGHTING);
-            getNode(centerX, centerY+1).setValueCounter(getNode(centerX,centerY+1).getValueCounter()-1); //VALUECOUNTER OF THE SPECIFIC NODE -1
-            Corner BOTTOMLEFT= initialCard.getBL();                          //BOTTOMLEFT
+            getNode(centerX, centerY+1).setValueCounter(getNode(centerX,centerY+1).getValueCounter()-1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
+            Corner BOTTOMLEFT= initialCard.getBL();                          //BOTTOMLESS
             SpecificSeed BOTTOMLEFTING= BOTTOMLEFT.getSpecificCornerSeed();
             getNode(centerX+1,centerY).setSpecificNodeSeed(BOTTOMLEFTING);
             getNode(centerX+1,centerY).setFirstPlacement(BOTTOMLEFTING);
-            getNode(centerX+1, centerY).setValueCounter(getNode(centerX+1,centerY).getValueCounter()-1);//VALUECOUNTER OF THE SPECIFIC NODE -1
-            Corner BOTTOMRIGHT= initialCard.getBR();                        //BOTTOMRIGHT
+            getNode(centerX+1, centerY).setValueCounter(getNode(centerX+1,centerY).getValueCounter()-1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
+            Corner BOTTOMRIGHT= initialCard.getBR();                        //BOTTOM-RIGHT
             SpecificSeed BOTTOMRIGHITING= BOTTOMRIGHT.getSpecificCornerSeed();
             getNode(centerX+1,centerY+1).setSpecificNodeSeed(BOTTOMRIGHITING);
             getNode(centerX+1,centerY+1).setFirstPlacement(BOTTOMRIGHITING);
-            getNode(centerX+1, centerY+1).setValueCounter(getNode(centerX+1,centerY+1).getValueCounter()-1);//VALUECOUNTER OF THE SPECIFIC NODE -1
+            getNode(centerX+1, centerY+1).setValueCounter(getNode(centerX+1,centerY+1).getValueCounter()-1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
 
             this.numOfEmpty=numOfEmpty-4;
             initialCard.setIndexOnTheBoard(1); //SETTING THE INDEX ON THE FIRST CARD PLACED
-            cardsOnTheBoardList.add(initialCard); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARD PLACED ON THE BOARD ****STORICO****
+            cardsOnTheBoardList.add(initialCard); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARD PLACED ON THE BOARD ****HISTORIC****
             System.out.println("Cards on the board are:"); //PLN
             for(Card card : cardsOnTheBoardList)
             {
@@ -90,7 +108,7 @@ public class Board {
             System.out.println("You can't place the initial card here");
         }
         System.out.println("Initial Card correctly placed"); //THE CARD HAD BEEN PLACED CORRECTLY
-    }
+    } //method to place the first card
     public void printCornerCoordinates() {
         int[][] centralCoordinates = getCentralCoordinates();
         int centerX = centralCoordinates[0][0];
@@ -103,19 +121,19 @@ public class Board {
         System.out.println("BR: (" + (centerX + 1) + ", " + (centerY + 1) + ")");
     } //METHOD TO PRINT THE COORDINATES OF THE CENTRAL COORDINATES
 
-    public ExtendExtendExtend createSpecificSecretCard( ObjectiveCard card) //INTERFACCIA E STAIRS IMPLEMENTA L'I
+    public ExtendExtendExtend createSpecificSecretCard( ObjectiveCard card) //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
     {
         if(card.getObjectiveSpecificTypeOfCard().equals("STAIRS"))
         {
-            return new StairsObjectiveCard(); //TRIKKI RISOLTO
+            return new StairsObjectiveCard();
         }
         if(card.getObjectiveSpecificTypeOfCard().equals("L"))
         {
-            return new LObjectiveCard(); //TRIKKI DA RISOLVERE
+            return new LObjectiveCard();
         }
         if(card.getObjectiveSpecificTypeOfCard().equals("MIX"))
     {
-        return new MixObjectiveCard(); //TRIKKI EASY
+        return new MixObjectiveCard();
     }
         if(card.getObjectiveSpecificTypeOfCard().equals("TRIS"))
         {
@@ -169,29 +187,6 @@ public class Board {
         nodes[x][y] = node;
     }
 
-    public boolean placeGoldCard(GoldCard selectedCard, List<SpecificSeed> requirementsForPlacing) {
-        BoardPoints boardPoints = new BoardPoints();
-        Map<SpecificSeed, Integer> seedCountMap = boardPoints.countPoints(this);
 
-        // Creazione di una mappa per tenere traccia dei conteggi degli attributi richiesti
-        Map<SpecificSeed, Integer> requiredCountMap = new HashMap<>();
-        for (SpecificSeed seed : requirementsForPlacing) {
-            requiredCountMap.put(seed, requiredCountMap.getOrDefault(seed, 0) + 1);
-        }
-
-        // Confronto dei conteggi
-        for (Map.Entry<SpecificSeed, Integer> entry : requiredCountMap.entrySet()) {
-            SpecificSeed requiredSeed = entry.getKey();
-            int requiredCount = entry.getValue();
-
-            int actualCount = seedCountMap.getOrDefault(requiredSeed, 0);
-
-            if (actualCount < requiredCount) { //IN CASO CORREGGERE IL SEGNO
-                System.out.println("Non ci sono abbastanza " + requiredSeed + " nella mappa.");
-                return false;
-            }
-        }
-        return true;
-    }
 
 }

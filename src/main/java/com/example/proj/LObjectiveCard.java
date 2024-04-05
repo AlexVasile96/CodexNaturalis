@@ -1,5 +1,4 @@
 package com.example.proj;
-
 public class LObjectiveCard implements ExtendExtendExtend {
     public boolean checkColumnPattern(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2) {
         Node[][] nodes = board.getNodes();
@@ -41,7 +40,7 @@ public class LObjectiveCard implements ExtendExtendExtend {
     }
 
     @Override
-    public boolean checkPattern(Board board, SpecificSeed seed, Player player, SpecificSeed sburuuuuuus) {
+    public boolean checkPattern(Board board, SpecificSeed seed, Player player, SpecificSeed specificSeed) {
         return false;
     }
 }

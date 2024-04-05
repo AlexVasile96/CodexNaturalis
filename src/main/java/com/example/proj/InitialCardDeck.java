@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class InitialCardDeck implements Deck {
-    private List<Card> initialCards;
+    private final List<Card> initialCards;
     public InitialCardDeck(List<Card> cards) {
         this.initialCards = cards;
     }

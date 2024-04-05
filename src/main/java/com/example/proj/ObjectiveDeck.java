@@ -1,11 +1,8 @@
 package com.example.proj;
-
-import java.util.Collections;
 import java.util.List;
 
 public class ObjectiveDeck implements Deck {
     private List<Card> objectiveCards;
-
     public ObjectiveDeck(List<Card> cards) {
         this.objectiveCards = cards;
     }
@@ -23,16 +20,15 @@ public class ObjectiveDeck implements Deck {
 
     public ObjectiveCard firstCardForEachPlayer ()
     {
-        ObjectiveCard drownCard = (ObjectiveCard) objectiveCards.remove(0);
-        return drownCard;
+        return (ObjectiveCard) objectiveCards.remove(0); //ObjectiveCard drownCard = (ObjectiveCard) objectiveCards.remove(0);
+                                                                //return drownCard;
     }
     public ObjectiveCard drawCard(Player player){
         if (objectiveCards.isEmpty()) { //CHECKING IF THE CARD IS MADE IN THE CORRECT WAY
             return null;
         }
         if(player.getPlayerCards().size()<3){
-            ObjectiveCard drownCard = (ObjectiveCard)objectiveCards.remove(0); //REMOVING THE CHOSEN CARD FROM THE DECK
-            return drownCard;                          //RETURING THE CHOSEN CARD
+            return (ObjectiveCard)objectiveCards.remove(0);                          //RETURING THE CHOSEN CARD
         }
         else{
             throw new RuntimeException("Player's deck is already full");

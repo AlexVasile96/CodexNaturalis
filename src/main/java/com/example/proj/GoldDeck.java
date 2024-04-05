@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class GoldDeck implements Deck {
-    private List<Card> goldCards;
+    private final List<Card> goldCards;
     public GoldDeck(List<Card> cards) {
         this.goldCards=cards;
     }

@@ -1,5 +1,4 @@
 package com.example.proj;
-
 public class FirstThreeCards {
     private Player player;
     private ResourceDeck resourceDeck;
@@ -11,12 +10,10 @@ public class FirstThreeCards {
         this.resourceDeck=resourceDeck;
         this.goldDeck= goldDeck;
     }
-
-
     public void yourThreeCards()
     {
-        player.drawResourceCard((ResourceDeck) resourceDeck);
-        player.drawResourceCard((ResourceDeck) resourceDeck);
-        player.drawGoldCard((GoldDeck) goldDeck);
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+        player.drawGoldCard(goldDeck);
     }
 }

@@ -1,5 +1,4 @@
 package com.example.proj;
-
 import java.util.Map;
 
 public class BisObjectiveCard implements ExtendExtendExtend{
@@ -8,9 +7,9 @@ public class BisObjectiveCard implements ExtendExtendExtend{
         BoardPoints boardPoints = new BoardPoints();
         Map<SpecificSeed, Integer> seedCountMap = boardPoints.countPoints(board);
         int numberOfSpecificSeed = seedCountMap.get(seed); //5
-        int valuedaattribuire= (numberOfSpecificSeed/2)*2;
+        int redistributable= (numberOfSpecificSeed/2)*2;
         System.out.println("Number of " + seed + " SpecificSeed: " + numberOfSpecificSeed);
-        player.setPlayerScore(player.getPlayerScore()+ valuedaattribuire);
+        player.setPlayerScore(player.getPlayerScore()+ redistributable);
         System.out.println("Player score: " + player.getPlayerScore());
         if (numberOfSpecificSeed >= 3) {
             return true;
@@ -20,7 +19,7 @@ public class BisObjectiveCard implements ExtendExtendExtend{
     }
 
     @Override
-    public boolean checkPattern(Board board, SpecificSeed seed, Player player, SpecificSeed sburuuuuuus) {
+    public boolean checkPattern(Board board, SpecificSeed seed, Player player, SpecificSeed specificSeed) {
         return false;
     }
 }

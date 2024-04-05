@@ -57,12 +57,10 @@ public class Player {
     }  //METHOD TO CHOOSE WHICH CARD THE PLAYER WANTS TO PLACE ON THE BOARD
 
     public void chooseSecretCard(List <ObjectiveCard> secretCards){
-
         for (int i = 0; i < secretCards.size(); i++) {
             Card card = secretCards.get(i);
             System.out.println((i + 1) + ". " + card);
         }
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Inserisci il numero della carta obiettivo SEGRETA che vuoi pescare: ");
         int selectedCardIndex = scanner.nextInt();
@@ -72,17 +70,17 @@ public class Player {
 
         this.secretChosenCard=secretCards.get(selectedCardIndex - 1);
         System.out.println(secretChosenCard);
-    }
+    } //METHOD TO CHOOSE THE SECRET CARD (THE PLAYER HAS A CHOICE BETWEEN 2 CARDS)
 
     public void playCard(Board board, int cardIndex) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
         Card selectedCard = chooseCard(cardIndex); //SELECTEDCARD IS THE CARD CHOSEN FROM THE PLAYER DECK
-        if (selectedCard == null) {
+        if (selectedCard == null) { //CHECKING IF THE CARD EXISTS, IN CASE RETURN
             return;
         }
         if(selectedCard instanceof GoldCard)
         {
-          boolean gigi=   board.placeGoldCard((GoldCard) selectedCard,((GoldCard) selectedCard).getRequirementsForPlacing());
-          if (gigi==false) return;
+          boolean checker=   board.placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing()); //CHECKING IF THE REQUIRMENTS ARE RESPECTED
+          if (checker==false) return;
         }
         List<Card> cardsPlayerCanChooseFrom = board.getCardsOnTheBoardList(); //VISUALIZING ALL THE CARDS ON THE BOARD SO THE PLAYER CAN CHOOSE ONE OF THEM
         System.out.println("Cards on the board are:");
@@ -98,28 +96,26 @@ public class Player {
             System.out.println("Not valid index");
             return;
         }
-        Card cardPlayerChoose = cardsPlayerCanChooseFrom.get(selectedCardIndex - 1);
+        Card cardPlayerChoose = cardsPlayerCanChooseFrom.get(selectedCardIndex - 1); //INDEX GOES FROM 1 TO 4, SO WE DECREASE THE VALUE OF THE INDEX
         System.out.println("Card correctly chosen"); //THE CARD CHOSEN IS OKAY
-        List<Corner> omofobo= new ArrayList<>();
-        omofobo.add(cardPlayerChoose.getTL());
-        omofobo.add(cardPlayerChoose.getTR());
-        omofobo.add(cardPlayerChoose.getBL());
-        omofobo.add(cardPlayerChoose.getBR());
+        List<Corner> corner= new ArrayList<>();
+        corner.add(cardPlayerChoose.getTL());
+        corner.add(cardPlayerChoose.getTR());
+        corner.add(cardPlayerChoose.getBL());
+        corner.add(cardPlayerChoose.getBR());
         List<Corner> availableCorners = new ArrayList<>(); //SAVING THE CORNERS OF THE CHOSEN CARD ON THE BOARD
         availableCorners.add(cardPlayerChoose.getTL());
         availableCorners.add(cardPlayerChoose.getTR());
         availableCorners.add(cardPlayerChoose.getBL());
         availableCorners.add(cardPlayerChoose.getBR());
         for(int i=0; i<3; i++) {
-            if (omofobo.get(i).getSpecificCornerSeed() == SpecificSeed.NOTTOBEPLACEDON) {
+            if (corner.get(i).getSpecificCornerSeed() == SpecificSeed.NOTTOBEPLACEDON) { //IF THE CORNER IS NOTTOBEPLACEDON, YOU CAN'T PLACE THE CARD THERE
                 availableCorners.remove(i);
-                System.out.println("eleiiminato dalla facccia della terra angolo " + i);
             }
         }
-        String[]n= {"TL","TR","BL","BR"};
         System.out.println("Free Corners on the board: ");
         for (int i = 0; i < availableCorners.size(); i++) {
-            System.out.println((i + 1) + ". " + availableCorners.get(i) +" di posizione " + n[i]);
+            System.out.println((i + 1) + ". " + availableCorners.get(i));
         }
 
         System.out.print("Choose the corner you want to place the card on: ");
@@ -256,6 +252,8 @@ public class Player {
         board.getCardsOnTheBoardList().add(selectedCard); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
         this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
         board.setNumOfEmpty(board.getNumOfEmpty()-3);
+        playerScore= playerScore+ selectedCard.getValueWhenPlaced();
+        System.out.println("Your new score is " + playerScore + "points");
     }
 
     public void turnYourCard(Card card) //METHOD TO TURN YOUR CARD IN CASE THE PLAYER WANTS TO PLACE THE CARD ON HER BACK
@@ -307,6 +305,4 @@ public class Player {
     public Board getBoard() {
         return board;
     }
-
-
 }
