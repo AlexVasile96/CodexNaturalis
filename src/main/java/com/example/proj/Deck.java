@@ -10,8 +10,9 @@ public interface Deck {
     public Card drawCard(Player player);
     public void addCard(Card card);
     public ObjectiveCard firstCardForEachPlayer ();
+}
 
-    /*private List<Card> cards;
+/*private List<Card> cards;
     public Deck(List<Card> cards) {
         this.cards = cards;
     } //DECK CONSTRUCTOR
@@ -43,4 +44,3 @@ public interface Deck {
     public ObjectiveCard firstCardForEachPlayer() {
         return null;
     }*/
-}
