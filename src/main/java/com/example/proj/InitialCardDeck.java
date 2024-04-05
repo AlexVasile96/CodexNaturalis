@@ -3,18 +3,37 @@ package com.example.proj;
 import java.util.Collections;
 import java.util.List;
 
-public class InitialCardDeck extends Deck {
+public class InitialCardDeck implements Deck {
     private List<Card> initialCards;
 
     public InitialCardDeck(List<Card> cards) {
-        super(cards);
         this.initialCards = cards;
+    }
+
+    @Override
+    public void shuffle() {
+
     }
 
     public void printDeck() {
         for (Card card : initialCards) {
             System.out.println(card);
         }
+    }
+
+    @Override
+    public Card drawCard(Player player) {
+        return null;
+    }
+
+    @Override
+    public void addCard(Card card) {
+
+    }
+
+    @Override
+    public ObjectiveCard firstCardForEachPlayer() {
+        return null;
     }
 
     public InitialCard firstCardForEachPlayer (Player player)

@@ -9,7 +9,7 @@ public class BisObjectiveCard implements ExtendExtendExtend{
         Map<SpecificSeed, Integer> seedCountMap = boardPoints.countPoints(board);
         int numberOfSpecificSeed = seedCountMap.get(seed); //5
         int valuedaattribuire= (numberOfSpecificSeed/2)*2;
-        System.out.println("Number of " + seed + " sbleurus: " + numberOfSpecificSeed);
+        System.out.println("Number of " + seed + " SpecificSeed: " + numberOfSpecificSeed);
         player.setPlayerScore(player.getPlayerScore()+ valuedaattribuire);
         System.out.println("Player score: " + player.getPlayerScore());
         if (numberOfSpecificSeed >= 3) {

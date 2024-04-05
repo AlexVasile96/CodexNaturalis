@@ -4,11 +4,10 @@ package com.example.proj;
 import java.util.Collections;
 import java.util.List;
 
-public class ResourceDeck extends Deck{
+public class ResourceDeck implements Deck{
     private List<Card> resourceCards;
 
     public ResourceDeck(List<Card> cards) {
-        super(cards);
         this.resourceCards = cards;
     }
 
@@ -35,9 +34,12 @@ public class ResourceDeck extends Deck{
             throw new RuntimeException();
         }
     }
-
-
     public void addCard(Card card) {
         resourceCards.add(card);
+    }
+
+    @Override
+    public ObjectiveCard firstCardForEachPlayer() {
+        return null;
     }
 }

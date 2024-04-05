@@ -3,11 +3,10 @@ package com.example.proj;
 import java.util.Collections;
 import java.util.List;
 
-public class GoldDeck extends Deck {
+public class GoldDeck implements Deck {
     private List<Card> goldCards;
 
     public GoldDeck(List<Card> cards) {
-        super(cards);
         this.goldCards=cards;
     }
 
@@ -34,5 +33,10 @@ public class GoldDeck extends Deck {
     }
     public void addCard(Card card) {
         goldCards.add(card);
+    }
+
+    @Override
+    public ObjectiveCard firstCardForEachPlayer() {
+        return null;
     }
 }

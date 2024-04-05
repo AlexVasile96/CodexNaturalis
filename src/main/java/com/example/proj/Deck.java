@@ -4,8 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Deck {
-    private List<Card> cards;
+public interface Deck {
+    public void shuffle();
+    public void printDeck();
+    public Card drawCard(Player player);
+    public void addCard(Card card);
+    public ObjectiveCard firstCardForEachPlayer ();
+
+    /*private List<Card> cards;
     public Deck(List<Card> cards) {
         this.cards = cards;
     } //DECK CONSTRUCTOR
@@ -36,5 +42,5 @@ public class Deck {
 
     public ObjectiveCard firstCardForEachPlayer() {
         return null;
-    }
+    }*/
 }

@@ -3,12 +3,16 @@ package com.example.proj;
 import java.util.Collections;
 import java.util.List;
 
-public class ObjectiveDeck extends Deck {
+public class ObjectiveDeck implements Deck {
     private List<Card> objectiveCards;
 
     public ObjectiveDeck(List<Card> cards) {
-        super(cards);
         this.objectiveCards = cards;
+    }
+
+    @Override
+    public void shuffle() {
+
     }
 
     public void printDeck() {
@@ -34,6 +38,12 @@ public class ObjectiveDeck extends Deck {
             throw new RuntimeException("Player's deck is already full");
         }
     }
+
+    @Override
+    public void addCard(Card card) {
+
+    }
+
     public List<Card> getInitialCards() {
         return objectiveCards;
     }
