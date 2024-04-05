@@ -1,20 +1,15 @@
 package com.example.proj;
-
-
 import java.util.Collections;
 import java.util.List;
 
 public class ResourceDeck implements Deck{
     private List<Card> resourceCards;
-
     public ResourceDeck(List<Card> cards) {
         this.resourceCards = cards;
     }
-
     public void shuffle() {
         Collections.shuffle(resourceCards);
     }
-
     public void printDeck() {
         for (Card card : resourceCards) {
             System.out.println(card);
@@ -37,7 +32,6 @@ public class ResourceDeck implements Deck{
     public void addCard(Card card) {
         resourceCards.add(card);
     }
-
     @Override
     public ObjectiveCard firstCardForEachPlayer() {
         return null;

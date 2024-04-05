@@ -1,15 +1,12 @@
 package com.example.proj;
-
 import java.util.Collections;
 import java.util.List;
 
 public class GoldDeck implements Deck {
     private List<Card> goldCards;
-
     public GoldDeck(List<Card> cards) {
         this.goldCards=cards;
     }
-
     public void shuffle() {
         Collections.shuffle(goldCards);
     } //METHOD TO SHUFFLE THE CARDS
@@ -34,7 +31,6 @@ public class GoldDeck implements Deck {
     public void addCard(Card card) {
         goldCards.add(card);
     }
-
     @Override
     public ObjectiveCard firstCardForEachPlayer() {
         return null;
