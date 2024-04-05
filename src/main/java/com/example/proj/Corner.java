@@ -5,6 +5,7 @@ public class Corner extends Node{
     private SpecificSeed specificCornerSeed;
     private int x;
     private int y;
+    private Card card;
 
     public Corner(SpecificSeed specificNodeSeed, int coordX, int coordY) {
         super(specificNodeSeed, coordX, coordY);

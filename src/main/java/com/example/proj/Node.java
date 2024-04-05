@@ -6,11 +6,15 @@ public class Node {
     private int coordX;
     private int coordY;
     private int valueCounter;
+    private  SpecificSeed firstPlacement;
+    private  SpecificSeed secondPlacement;
     public Node(SpecificSeed specificNodeSeed, int coordX, int coordY){
         this.specificNodeSeed=specificNodeSeed;
         this.coordX=coordX;
         this.coordY=coordY;
         this.valueCounter=2;
+        this.firstPlacement= SpecificSeed.EMPTY;
+        this.secondPlacement= SpecificSeed.EMPTY;
     }
 
     public SpecificSeed getSpecificNodeSeed() {
@@ -50,5 +54,21 @@ public class Node {
 
     public void setCoordY(int coordY) {
         this.coordY = coordY;
+    }
+
+    public SpecificSeed getFirstPlacement() {
+        return firstPlacement;
+    }
+
+    public void setFirstPlacement(SpecificSeed firstPlacement) {
+        this.firstPlacement = firstPlacement;
+    }
+
+    public SpecificSeed getSecondPlacement() {
+        return secondPlacement;
+    }
+
+    public void setSecondPlacement(SpecificSeed secondPlacement) {
+        this.secondPlacement = secondPlacement;
     }
 }

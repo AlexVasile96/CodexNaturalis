@@ -1,6 +1,9 @@
 package com.example.proj;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class Board {
@@ -55,19 +58,23 @@ public class Board {
             Corner TOPLEFT= initialCard.getTL();                            //TOPLEFT
             SpecificSeed TOPLEFTING= TOPLEFT.getSpecificCornerSeed();
             getNode(centerX, centerY).setSpecificNodeSeed(TOPLEFTING);
+            getNode(centerX,centerY).setFirstPlacement(TOPLEFTING);
             getNode(centerX, centerY).setValueCounter(getNode(centerX,centerY).getValueCounter()-1); //VALUECOUNTER OF THE SPECIFIC NODE -1
             initialCard.setNode(getNode(centerX,centerY)); //SETTING THE COORDINATE OF THE INITIAL CARD
             Corner TOPRIGHT= initialCard.getTR();                           //TOPRIGHT
             SpecificSeed TOPRIGHTING= TOPRIGHT.getSpecificCornerSeed();
             getNode(centerX, centerY+1).setSpecificNodeSeed(TOPRIGHTING);
+            getNode(centerX,centerY+1).setFirstPlacement(TOPRIGHTING);
             getNode(centerX, centerY+1).setValueCounter(getNode(centerX,centerY+1).getValueCounter()-1); //VALUECOUNTER OF THE SPECIFIC NODE -1
             Corner BOTTOMLEFT= initialCard.getBL();                          //BOTTOMLEFT
             SpecificSeed BOTTOMLEFTING= BOTTOMLEFT.getSpecificCornerSeed();
             getNode(centerX+1,centerY).setSpecificNodeSeed(BOTTOMLEFTING);
+            getNode(centerX+1,centerY).setFirstPlacement(BOTTOMLEFTING);
             getNode(centerX+1, centerY).setValueCounter(getNode(centerX+1,centerY).getValueCounter()-1);//VALUECOUNTER OF THE SPECIFIC NODE -1
             Corner BOTTOMRIGHT= initialCard.getBR();                        //BOTTOMRIGHT
             SpecificSeed BOTTOMRIGHITING= BOTTOMRIGHT.getSpecificCornerSeed();
             getNode(centerX+1,centerY+1).setSpecificNodeSeed(BOTTOMRIGHITING);
+            getNode(centerX+1,centerY+1).setFirstPlacement(BOTTOMRIGHITING);
             getNode(centerX+1, centerY+1).setValueCounter(getNode(centerX+1,centerY+1).getValueCounter()-1);//VALUECOUNTER OF THE SPECIFIC NODE -1
 
             this.numOfEmpty=numOfEmpty-4;
@@ -122,6 +129,7 @@ public class Board {
         return null;
     }
 
+
     //GETTER AND SETTER
 
     public void setNodes(Node[][] nodes) {
@@ -160,4 +168,30 @@ public class Board {
     public void setNode(int x, int y, Node node) {
         nodes[x][y] = node;
     }
+
+    public boolean placeGoldCard(GoldCard selectedCard, List<SpecificSeed> requirementsForPlacing) {
+        BoardPoints boardPoints = new BoardPoints();
+        Map<SpecificSeed, Integer> seedCountMap = boardPoints.countPoints(this);
+
+        // Creazione di una mappa per tenere traccia dei conteggi degli attributi richiesti
+        Map<SpecificSeed, Integer> requiredCountMap = new HashMap<>();
+        for (SpecificSeed seed : requirementsForPlacing) {
+            requiredCountMap.put(seed, requiredCountMap.getOrDefault(seed, 0) + 1);
+        }
+
+        // Confronto dei conteggi
+        for (Map.Entry<SpecificSeed, Integer> entry : requiredCountMap.entrySet()) {
+            SpecificSeed requiredSeed = entry.getKey();
+            int requiredCount = entry.getValue();
+
+            int actualCount = seedCountMap.getOrDefault(requiredSeed, 0);
+
+            if (actualCount < requiredCount) { //IN CASO CORREGGERE IL SEGNO
+                System.out.println("Non ci sono abbastanza " + requiredSeed + " nella mappa.");
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

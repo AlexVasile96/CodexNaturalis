@@ -20,4 +20,9 @@ public class TrisObjectiveCard implements ExtendExtendExtend{
             return false;
         }
     }
+
+    @Override
+    public boolean checkPattern(Board board, SpecificSeed seed, Player player, SpecificSeed sburuuuuuus) {
+        return false;
+    }
 }

@@ -26,7 +26,7 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         //launch();
-        Map<SpecificSeed, Integer> seedCountMap = new HashMap<>();
+        //Map<SpecificSeed, Integer> seedCountMap = new HashMap<>();
         CardConstructor resourceCardConstructor = new CardConstructor(); //create resource cards
         Deck resourceDeck = resourceCardConstructor.createCards(); //create Deck for resourcesCards
         resourceDeck.shuffle(); //SHUFFLING THE RESOURCEDECK
