@@ -5,7 +5,7 @@
 |SERVER CONTROLLER|⏱|
 |CLIENT CONTROLLER|⏱|
 |SERVER NETWORK|⏱|
-|CLIENT NETWORK|⚙️|
+|CLIENT NETWORK|⏱|
 |CLIENT CLI|⏱|
 |CLIENT GUI|⏱|
 |MULTI MATCH|⏱|
@@ -14,7 +14,7 @@
 |PERSISTENCE|⏱|
 
 Legenda <br>
-✅: Implementats  ⛔: Not implementats ⚙️ Testing    ⏱ Developig
+✅: Implemented  ⛔: Not implemented ⚙️ Testing    ⏱ Developig
 
 <b>Team</b> <br>
 Pietro Callandrone   - pietro.callandrone@mail.polimi.it <br>
