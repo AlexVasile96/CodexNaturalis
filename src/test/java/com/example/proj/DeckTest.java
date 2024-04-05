@@ -13,7 +13,7 @@ class DeckTest {
     private Deck deck;
     private Player player;
 
-    @BeforeEach
+    /*@BeforeEach
     void setUp() {
         List<Card> cards = new ArrayList<>();
         cards.add(new Card("Spades", "Ace"));
@@ -21,7 +21,7 @@ class DeckTest {
         cards.add(new Card("Diamonds", "Queen"));
         deck = new Deck(cards);
         player = new Player();
-    }
+    }*/
 
     @Test
     void shuffle() {
