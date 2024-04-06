@@ -124,8 +124,6 @@ public class Player {
             System.out.println("You can't place your card here");
             return;
         }
-
-
         int x= cardPlayerChoose.getNode().getCoordX(); //SAVING THE TOPLEFT COORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
         int y= cardPlayerChoose.getNode().getCoordY();
         if(cornerIndex==1){//We are in Top Left corner case

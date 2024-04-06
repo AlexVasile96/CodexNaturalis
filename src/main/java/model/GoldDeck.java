@@ -35,4 +35,17 @@ public class GoldDeck implements Deck {
     public ObjectiveCard firstCardForEachPlayer() {
         return null;
     }
+    @Override
+    public List<Card> drawCard(List<Card> pozzo) {
+        if (goldCards.isEmpty()) {
+            return null; //empty deck
+        }
+        try {
+            Card drownCard = goldCards.remove(0);
+            pozzo.add(drownCard);
+            return pozzo;
+        } catch(Exception e) {
+            throw new IllegalStateException("Il giocatore ha già tre carte nella mano."); // Eccezione specifica
+        }
+    }
 }

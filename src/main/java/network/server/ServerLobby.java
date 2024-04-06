@@ -1,4 +1,4 @@
 package network.server;
-public class SocketServer{
 
+public class ServerLobby {
 }

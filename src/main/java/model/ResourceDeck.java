@@ -31,6 +31,18 @@ public class ResourceDeck implements Deck{
         }
         return null;
     }
+    public List<Card> drawCard(List<Card> pozzo) { //METHOD TO PLACE CARDS ON THE POZZO
+        if (resourceCards.isEmpty()) {
+            return null; //empty deck
+        }
+        try {
+                Card drownCard = resourceCards.remove(0);
+                pozzo.add(drownCard);
+                return pozzo;
+        } catch(Exception e) {
+            throw new IllegalStateException("Il giocatore ha già tre carte nella mano."); // Eccezione specifica
+        }
+    }
 
     public void addCard(Card card) {
         resourceCards.add(card);

@@ -26,6 +26,12 @@ public class InitialCardDeck implements Deck {
     public ObjectiveCard firstCardForEachPlayer() {
         return null;
     }
+
+    @Override
+    public List<Card> drawCard(List<Card> pozzo) {
+        return null;
+    }
+
     public InitialCard firstCardForEachPlayer (Player player)
     {
         Collections.shuffle(initialCards);

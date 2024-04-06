@@ -21,13 +21,23 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         //launch();
+        List<Card> pozzo= new ArrayList<>();
         ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor(); //create resource cards
         Deck resourceDeck = resourceCardConstructor.createCards(); //create Deck for resourcesCards
         resourceDeck.shuffle(); //SHUFFLING THE RESOURCEDECK
+        resourceDeck.drawCard(pozzo);
+        resourceDeck.drawCard(pozzo);
 
         GoldCardConstructor goldcardConstructor = new GoldCardConstructor(); //create gold cards
         Deck goldDeck = goldcardConstructor.createCards(); //create Deck for goldCards
         goldDeck.shuffle(); //SHUFFLING THE GOLDDECK
+        goldDeck.drawCard(pozzo);
+        goldDeck.drawCard(pozzo);
+        System.out.println("Pozzo:");
+        for(Card card: pozzo) {
+            System.out.println(card);
+        }
+        System.out.println("\n");
 
         InitCardConstructor initCardConstructor= new InitCardConstructor(); //CREATING INITIAL CARDS
         InitialCardDeck initialCardDeck= (InitialCardDeck) initCardConstructor.createCards(); //creating Deck for the six first card, casting because in the costrcutor i provided a deck class

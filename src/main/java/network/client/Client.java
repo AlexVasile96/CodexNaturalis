@@ -1,4 +1,4 @@
 package network.client;
+public abstract class Client{
 
-public class Client {
 }

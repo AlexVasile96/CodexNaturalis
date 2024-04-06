@@ -23,6 +23,12 @@ public class ObjectiveDeck implements Deck {
         return (ObjectiveCard) objectiveCards.remove(0); //ObjectiveCard drownCard = (ObjectiveCard) objectiveCards.remove(0);
                                                                 //return drownCard;
     }
+
+    @Override
+    public List<Card> drawCard(List<Card> pozzo) {
+        return null;
+    }
+
     public ObjectiveCard drawCard(Player player){
         if (objectiveCards.isEmpty()) { //CHECKING IF THE CARD IS MADE IN THE CORRECT WAY
             return null;
