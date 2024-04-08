@@ -145,7 +145,7 @@ public class Player {
         for (int i = 0; i < availableCorners.size(); i++) {
             Corner corner = availableCorners.get(i);
             String cornerLabel = cornerLabels.get(corner);
-            System.out.println((i + 1) + ". " + corner + " -> " + cornerLabel);
+            System.out.println((i + 1) + ". " + corner + " -> " + cornerLabel + "|Please press " +cornerLabel + " to select the corner ");
         }
 
         System.out.print("Choose the corner you want to place the card on: ");
