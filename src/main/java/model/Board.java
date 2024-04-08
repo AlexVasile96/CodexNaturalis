@@ -1,5 +1,7 @@
 package model;
 
+import Exceptions.CantPlaceYourCardHere;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +54,7 @@ public class Board {
             requiredCountMap.put(seed, requiredCountMap.getOrDefault(seed, 0) + 1); //COUNTING
         }
         for (Map.Entry<SpecificSeed, Integer> entry : requiredCountMap.entrySet()) {
-            SpecificSeed requiredSeed = entry.getKey(); //GET KEY TAKES THE SPECIFIED IN THE REQUIREMENTS
+            SpecificSeed requiredSeed = entry.getKey(); //GET KEY TAKES THE SPECIFIC SEED IN THE REQUIREMENTS
             int requiredCount = entry.getValue();       //GET VALUE TAKES THE NUMBER OF THE ATTRIBUTES
             int actualCount = seedCountMap.getOrDefault(requiredSeed, 0); //HOW MANY SPECIFIED DO WE HAVE ACTUALLY ON THE BOARD
             if (actualCount < requiredCount) { //IN CASO CORREGGERE IL SEGNO
@@ -71,41 +73,48 @@ public class Board {
             System.out.println("Already Placed!");
             return;
         }
-        //CHECKING IF I CAN PLACE THE CARD ON THE BOARD
-        if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) {
-            Corner TOPLEFT= initialCard.getTL();                            //TOP LEFT
-            SpecificSeed TOPLEFTING= TOPLEFT.getSpecificCornerSeed();
-            getNode(centerX, centerY).setSpecificNodeSeed(TOPLEFTING);
-            getNode(centerX,centerY).setFirstPlacement(TOPLEFTING);
-            getNode(centerX, centerY).setValueCounter(getNode(centerX,centerY).getValueCounter()-1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
-            initialCard.setNode(getNode(centerX,centerY)); //SETTING THE COORDINATE OF THE INITIAL CARD
-            Corner TOPRIGHT= initialCard.getTR();                           //UPRIGHT
-            SpecificSeed TOPRIGHTING= TOPRIGHT.getSpecificCornerSeed();
-            getNode(centerX, centerY+1).setSpecificNodeSeed(TOPRIGHTING);
-            getNode(centerX,centerY+1).setFirstPlacement(TOPRIGHTING);
-            getNode(centerX, centerY+1).setValueCounter(getNode(centerX,centerY+1).getValueCounter()-1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
-            Corner BOTTOMLEFT= initialCard.getBL();                          //BOTTOMLESS
-            SpecificSeed BOTTOMLEFTING= BOTTOMLEFT.getSpecificCornerSeed();
-            getNode(centerX+1,centerY).setSpecificNodeSeed(BOTTOMLEFTING);
-            getNode(centerX+1,centerY).setFirstPlacement(BOTTOMLEFTING);
-            getNode(centerX+1, centerY).setValueCounter(getNode(centerX+1,centerY).getValueCounter()-1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
-            Corner BOTTOMRIGHT= initialCard.getBR();                        //BOTTOM-RIGHT
-            SpecificSeed BOTTOMRIGHITING= BOTTOMRIGHT.getSpecificCornerSeed();
-            getNode(centerX+1,centerY+1).setSpecificNodeSeed(BOTTOMRIGHITING);
-            getNode(centerX+1,centerY+1).setFirstPlacement(BOTTOMRIGHITING);
-            getNode(centerX+1, centerY+1).setValueCounter(getNode(centerX+1,centerY+1).getValueCounter()-1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
+        try {
+            if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) { //CHECKING IF I CAN PLACE THE CARD ON THE BOARD
+                Corner TOPLEFT = initialCard.getTL();                            //TOP LEFT
+                SpecificSeed TOPLEFTING = TOPLEFT.getSpecificCornerSeed();
+                getNode(centerX, centerY).setSpecificNodeSeed(TOPLEFTING);       //Setting the node of the initial Card
+                getNode(centerX, centerY).setFirstPlacement(TOPLEFTING);             //Keeping trace of the history on the board
+                getNode(centerX, centerY).setValueCounter(getNode(centerX, centerY).getValueCounter() - 1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
+                initialCard.setNode(getNode(centerX, centerY));                     //SETTING THE COORDINATE OF THE INITIAL CARD
+                TOPLEFT.setValueCounter(TOPLEFT.getValueCounter()-1);               //DECREASING ALSO THE CORNER VALUE
 
-            this.numOfEmpty=numOfEmpty-4;
-            initialCard.setIndexOnTheBoard(1); //SETTING THE INDEX ON THE FIRST CARD PLACED
-            cardsOnTheBoardList.add(initialCard); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARD PLACED ON THE BOARD ****HISTORIC****
-            System.out.println("Cards on the board are:"); //PLN
-            for(Card card : cardsOnTheBoardList)
-            {
-                System.out.println(card);
+                Corner TOPRIGHT = initialCard.getTR();                           //UPRIGHT
+                SpecificSeed TOPRIGHTING = TOPRIGHT.getSpecificCornerSeed();
+                getNode(centerX, centerY + 1).setSpecificNodeSeed(TOPRIGHTING); //Setting the node of the initial Card
+                getNode(centerX, centerY + 1).setFirstPlacement(TOPRIGHTING);      //Keeping trace of the history on the board
+                getNode(centerX, centerY + 1).setValueCounter(getNode(centerX, centerY + 1).getValueCounter() - 1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
+                TOPRIGHT.setValueCounter(TOPRIGHT.getValueCounter()-1);               //DECREASING ALSO THE CORNER VALUE
+
+                Corner BOTTOMLEFT = initialCard.getBL();                             //BOTTOMLEFT
+                SpecificSeed BOTTOMLEFTING = BOTTOMLEFT.getSpecificCornerSeed();
+                getNode(centerX + 1, centerY).setSpecificNodeSeed(BOTTOMLEFTING);  //Setting the node of the initial Card
+                getNode(centerX + 1, centerY).setFirstPlacement(BOTTOMLEFTING);    //Keeping trace of the history on the board
+                getNode(centerX + 1, centerY).setValueCounter(getNode(centerX + 1, centerY).getValueCounter() - 1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
+                BOTTOMLEFT.setValueCounter(BOTTOMLEFT.getValueCounter()-1);               //DECREASING ALSO THE CORNER VALUE
+
+                Corner BOTTOMRIGHT = initialCard.getBR();                                    //BOTTOM-RIGHT
+                SpecificSeed BOTTOMRIGHITING = BOTTOMRIGHT.getSpecificCornerSeed();
+                getNode(centerX + 1, centerY + 1).setSpecificNodeSeed(BOTTOMRIGHITING);      //Setting the node of the initial Card
+                getNode(centerX + 1, centerY + 1).setFirstPlacement(BOTTOMRIGHITING);        //Keeping trace of the history on the board
+                getNode(centerX + 1, centerY + 1).setValueCounter(getNode(centerX + 1, centerY + 1).getValueCounter() - 1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
+                BOTTOMRIGHT.setValueCounter(BOTTOMRIGHT.getValueCounter()-1);               //DECREASING ALSO THE CORNER VALUE
+
+                this.numOfEmpty = numOfEmpty - 4;
+                initialCard.setIndexOnTheBoard(1); //SETTING THE INDEX ON THE FIRST CARD PLACED
+                cardsOnTheBoardList.add(initialCard); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARD PLACED ON THE BOARD ****HISTORIC****
+                System.out.println("Cards on the board are:"); //PLN
+                for (Card card : cardsOnTheBoardList) {
+                    System.out.println(card);
+                }
+                System.out.println("Card finished"); //I PRINTED ALL THE CARDS I HAVE ON MY BOARD
             }
-            System.out.println("Card finished"); //I PRINTED ALL THE CARDS I HAVE ON MY BOARD
-        } else {
-            System.out.println("You can't place the initial card here");
+        } catch (Exception e) {
+            throw new CantPlaceYourCardHere("Can't Place your card",e);
         }
         System.out.println("Initial Card correctly placed"); //THE CARD HAD BEEN PLACED CORRECTLY
     } //method to place the first card
@@ -120,6 +129,7 @@ public class Board {
         System.out.println("BL: (" + (centerX + 1) + ", " + centerY + ")");
         System.out.println("BR: (" + (centerX + 1) + ", " + (centerY + 1) + ")");
     } //METHOD TO PRINT THE COORDINATES OF THE CENTRAL COORDINATES
+
 
     public ExtendExtendExtend createSpecificSecretCard( ObjectiveCard card) //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
     {

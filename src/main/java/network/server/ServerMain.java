@@ -2,13 +2,18 @@ package network.server;
 
 
 import com.google.gson.Gson;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,13 +25,24 @@ import java.util.concurrent.Executors;
 public class ServerMain {
         public static void main(String[] args) {
 
-            //Initialize portNumber
-            Gson gson = new Gson();
-            Reader reader = new InputStreamReader(ServerMain.class.getResourceAsStream("/json/HostAndPort.json"), StandardCharsets.UTF_8);
-            Map map = gson.fromJson(reader, Map.class);
-            int portNumber = ((Double) map.get("portNumber")).intValue();
-            //Start the server
-            startServer(portNumber);
+            try {
+                FileReader reader = new FileReader("src/main/resources/HostAndPort.json"); // Leggi da file JSON
+                JSONObject jsonObject = new JSONObject(new JSONTokener(reader));
+                JSONArray hostAndPortArray = jsonObject.getJSONArray("hostandport");
+
+                for (int i = 0; i < hostAndPortArray.length(); i++) {
+                    JSONObject hostAndPort = hostAndPortArray.getJSONObject(i);
+                    String hostName = hostAndPort.getString("hostName");
+                    int portNumber = hostAndPort.getInt("portNumber");
+
+                    System.out.println("HostName: " + hostName);
+                    System.out.println("PortNumber: " + portNumber);
+                    startServer(portNumber);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         //PRIVATE METHODS
