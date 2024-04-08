@@ -68,21 +68,21 @@ public class HelloApplication extends Application {
         System.out.println(initialCard.toString());                 //PRINTING THE INITIAL CARD
         board.placeInitialCard(initialCard);                        //PLACING THE INITIAL CARD ON THE BOARD, THIS IS WHERE THE GAME STARTS
         board.placeInitialCard(initialCard);                        //JUST CHECKING IF THE METHOD ACTUALLY PREVENTS FROM PLACING 2 INITIAL CARDS
-        //board.printCornerCoordinates();
-        //board.printBoard();//GETTING THE INITIAL CARD COORDINATES
-        //boardPoints.countPoints(board);
+        board.printCornerCoordinates();
+        board.printBoard();//GETTING THE INITIAL CARD COORDINATES
+        boardPoints.countPoints(board);
 
 
         //Player choose the first card he has on his deck, in this case we talking about a resource card
         player.playCard(board,0);                           //Player places his cards
-        //board.printBoard();                                         //printing the board
-        //System.out.println(board.getCardsOnTheBoardList());           //printing the cards on the board
+        board.printBoard();                                         //printing the board
+        System.out.println(board.getCardsOnTheBoardList());           //printing the cards on the board
         player.drawResourceCard((ResourceDeck) resourceDeck);
         player.visualizePlayerCards(player.getPlayerCards());
         player.playCard(board,0);
-        //board.printBoard();                                         //printing the board
-        //System.out.println(board.getCardsOnTheBoardList());
-        //boardPoints.countPoints(board);
+        board.printBoard();                                         //printing the board
+        System.out.println(board.getCardsOnTheBoardList());
+        boardPoints.countPoints(board);
         TrisObjectiveCard trisObjectiveCard= new TrisObjectiveCard();
         trisObjectiveCard.checkPattern(board,SpecificSeed.MUSHROOM,player); //Funziona!
     }
