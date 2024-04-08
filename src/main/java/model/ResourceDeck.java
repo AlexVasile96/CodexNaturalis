@@ -16,7 +16,7 @@ public class ResourceDeck implements Deck{
         }
     }
     @Override
-    public Card drawCard(Player player) {
+    public Card drawCard(Player player) {  //DRAWING CARD FROM THE DECK
         if (resourceCards.isEmpty()) {
             return null; //empty deck
         }
