@@ -2,8 +2,10 @@ module com.example.proj {
     requires javafx.controls;
     requires javafx.fxml;
     requires org.json;
+    requires java.logging;
+    requires com.google.gson;
 
 
-    opens com.example.proj to javafx.fxml;
-    exports com.example.proj;
+    opens model to javafx.fxml;
+    exports model;
 }

@@ -1,0 +1,8 @@
+{
+  "hostandport": [
+    {
+      "hostName": "localhost",
+      "portNumber": 1234
+    }
+  ]
+}
