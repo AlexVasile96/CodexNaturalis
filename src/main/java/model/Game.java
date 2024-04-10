@@ -8,20 +8,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-public class HelloApplication extends Application {
-    @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
+public class Game{
+
+    public Game(Set<String> playerName) {
     }
 
     public static void main(String[] args) {
-        //launch();
-        List<Card> cardsWell= new ArrayList<>();
+        List<Card> cardsWell= new ArrayList<>(); //cardwell is the 4 cards pot in the middle.
         ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor(); //create resource cards
         Deck resourceDeck = resourceCardConstructor.createCards(); //create Deck for resourcesCards
         resourceDeck.shuffle(); //SHUFFLING THE RESOURCEDECK
