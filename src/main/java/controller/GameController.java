@@ -1,12 +1,12 @@
 package controller;
 
-import Exceptions.GameFullException;
-import Exceptions.UnknownPlayerNumberException;
-import Exceptions.UsernameAlreadyExistsException;
+import Exceptions.*;
+import model.Game;
+import network.JsonUtils;
+import network.message.Command;
 import network.message.MessageSender;
 import network.message.MessagesEnum;
-import network.JsonUtils; // Importa la classe JsonUtils
-
+import com.google.gson.Gson;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +16,8 @@ public class GameController {
     private final Map<String, PrintWriter> players;
     int size;
     boolean isGameOver;
+    Gson gson;
+    private Game game;
 
     //CONSTRUCTORS
 
@@ -24,12 +26,48 @@ public class GameController {
         this.size = 0;
         this.isGameOver = false;
         players.put(username, userOut);
+        this.gson = new Gson();
+        playerMessage(username, MessagesEnum.CONFIRM_USERNAME, username);
     }
 
     public int getNumOfPlayers() {
         return players.size();
     }
+    public synchronized void readCommand(String username, String commandString) {
+        if (game == null) {
 
+            playerMessage(username, MessagesEnum.ERROR, "The game has not yet started, as some players are still missing.");
+            System.out.println("Player tried sending a command before the game start.");
+
+        } else if (!username.equals(getCurrentPlayerUsername())) {
+
+            playerMessage(username, MessagesEnum.ERROR, "It is not your turn to act.");
+            System.out.println("Wrong player tried to send a command.");
+
+        } else if (isGameOver) {
+
+            playerMessage(username, MessagesEnum.ERROR, "The game has already ended");
+            System.out.println("Player tried to send a command after the end of the game.");
+
+        } else {
+            try {
+
+                Command command = gson.fromJson(commandString, Command.class);
+
+                String result = command.runCommand(game);
+
+                if (result != null) {
+                    playerMessage(username, MessagesEnum.ERROR, result);
+                    System.out.println("Error: " + result);
+                }
+
+            } catch (Exception ex) {
+
+                playerMessage(username, MessagesEnum.ERROR, "The message is not in json format.");
+                System.out.println("Player sent a message that was not a json.");
+            }
+        }
+    }
     public void addPlayer(String username, PrintWriter userOut) throws GameFullException, UnknownPlayerNumberException, UsernameAlreadyExistsException {
         if (size == 0)
             throw new UnknownPlayerNumberException();
@@ -46,7 +84,17 @@ public class GameController {
 
         preparationForStartingGame();
     }
+    public void choosePlayerNumber(int number) throws PlayerNumberAlreadySetException, ParametersNotValidException {
+        if (size > 0) {
+            throw new PlayerNumberAlreadySetException();
+        }
 
+        if (number < 1 || number > 4) {
+            throw new ParametersNotValidException();
+        }
+        size = number;
+        preparationForStartingGame();
+    }
     private void preparationForStartingGame() {
         if (players.size() != size) {
             broadcastMessage(MessagesEnum.WAIT_PLAYERS, "One player has joined, waiting for more players...");
@@ -92,4 +140,11 @@ public class GameController {
 
     public void setDisconnectedStatus(String username) {
     }
+    public String getCurrentPlayerUsername() {
+        if (game == null) {
+            return null;
+        }
+        return game.getCurrentPlayer().getNickName();
+    }
+
 }

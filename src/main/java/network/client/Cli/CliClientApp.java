@@ -46,13 +46,13 @@ public class CliClientApp {
 
 
         //Kills the writer thread
-        HandlingPlayerInputsThreadClient.doClose();
+        //HandlingPlayerInputsThreadClient.doClose();
 
     } catch (IOException ex) {
         System.out.println("Uh-oh, there's been an IO problem!");
     }
 
-        System.out.println("Shut down.");
+        //System.out.println("Shut down.");
 }
 
 
