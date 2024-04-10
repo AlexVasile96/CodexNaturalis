@@ -4,11 +4,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
     ArrayList <Card> playerCards = new ArrayList<>(3);
@@ -27,14 +29,6 @@ public void setUp(){
 
 }
     @Test
-    void isCardBack() {
-    }
-
-    @Test
-    void setCardBack() {
-    }
-
-    @Test
     void drawResourceCard() {
 
     }
@@ -51,54 +45,82 @@ public void setUp(){
         resourceDeck.drawCard(cardsFromWell);
         goldDeck.drawCard(cardsFromWell);
         goldDeck.drawCard(cardsFromWell);
-        System.out.println(cardsFromWell);
-        //Provo a pescare una carta avente Id presente nelle carte del pozzo
 
-        String input = "1";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        player.chooseCardFromWell(cardsFromWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
-        System.out.println("\n\nPlayer Cards: " + player.getPlayerCards().size());
-        assertFalse(player.getPlayerCards().isEmpty());
-
-        input = "2";
-        in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        player.chooseCardFromWell(cardsFromWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
-        System.out.println("\n\nPlayer Cards: " + player.getPlayerCards().size());
-        assertFalse(player.getPlayerCards().isEmpty());
-
-        input = "3";
-        in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        player.chooseCardFromWell(cardsFromWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
-        System.out.println("\n\nPlayer Cards: " + player.getPlayerCards().size());
-        assertFalse(player.getPlayerCards().isEmpty());
-
-        input = "4";
-        in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        player.chooseCardFromWell(cardsFromWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
-        System.out.println("\n\nPlayer Cards: " + player.getPlayerCards().size());
-        assertFalse(player.getPlayerCards().isEmpty());
-
-
+        //Provo a pescare 4 carte dal pozzo, dovrebbe pescarne al massimo 3
+        for(int i = 1; i < 5; i++){
+            String input = String.valueOf(i);
+            InputStream in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+            player.chooseCardFromWell(cardsFromWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
+            assertFalse(player.getPlayerCards().isEmpty());
+        }
+        assertEquals(3,player.getPlayerCards().size());
     }
 
 
 
     @Test //controllo che il player possa giocare solo le carte che ha in mano
     void chooseCard() {
+        ObjectiveCard firstChoiceSecret = (ObjectiveCard) objectiveDeck.drawCard(player);
+        ObjectiveCard secondChoiceSecret = (ObjectiveCard) objectiveDeck.drawCard(player);
+        List <ObjectiveCard> secretCards = new ArrayList<>();
+        secretCards.add(firstChoiceSecret);
+        secretCards.add(secondChoiceSecret);
+    for(int i = 0; i<3; i++) {
+        resourceDeck.drawCard(player);
+        }
+        //System.out.println(player.getPlayerCards());
+        //Verifico che il metodo ritorni null se si sceglie una carta non presente nella mano del player
+        assertNull(player.chooseCard(3));
 
     }
 
-    @Test
+    @Test //Verifica che non si possa scegliere una carta non presente nell'array delle carte obiettivo segreto
+    //verifico che la carta scelta sia effettivamente quella giusta
     void chooseSecretCard() {
-    }
+        ObjectiveCard firstChoiceSecret = (ObjectiveCard) objectiveDeck.drawCard(player);
+        ObjectiveCard secondChoiceSecret = (ObjectiveCard) objectiveDeck.drawCard(player);
+        List <ObjectiveCard> secretCards = new ArrayList<>();
+        secretCards.add(firstChoiceSecret);
+        secretCards.add(secondChoiceSecret);
+
+        /*PROVO A SELEZIONARE UNA CARTA IL CUI INDICE NON E' VALIDO*/
+        String input = "4";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        ByteArrayOutputStream stampa = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(stampa));
+        assertThrows(IndexOutOfBoundsException.class, ()->{
+            player.chooseSecretCard(secretCards);
+            });
+
+
+        /*CONTROLLO CHE IL METODO SCELGA LA CARTA CORRETTA PASSANDOGLI 1 COME SCELTA*/
+        String input2 = "1";
+        InputStream in2 = new ByteArrayInputStream(input2.getBytes());
+        System.setIn(in2);
+        player.chooseSecretCard(secretCards);
+        //System.out.println(player.getSecretChosenCard().getId());
+        assertEquals(firstChoiceSecret.getId(),player.getSecretChosenCard().getId());
+
+
+}
 
     @Test
     void playCard() {
+        List<Card> cardsFromWell= new ArrayList<>(3);
+        resourceDeck.drawCard(cardsFromWell);
+        resourceDeck.drawCard(cardsFromWell);
+        goldDeck.drawCard(cardsFromWell);
+        goldDeck.drawCard(cardsFromWell);
+        String input = "1";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        player.chooseCardFromWell(cardsFromWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
+        int index = player.getPlayerCards().getFirst().id;
+        assertEquals(1,index);
+
     }
 
     @Test
