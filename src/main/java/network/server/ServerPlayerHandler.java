@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import controller.GameController;
 import network.message.MessageSender;
-import network.message.Messages;
+import network.message.MessagesEnum;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -60,7 +60,7 @@ public class ServerPlayerHandler implements Runnable {
 
         try {
             System.out.println("Logging in player...");
-            sendMessage(Messages.INFO, "Please, set your username:");
+            sendMessage(MessagesEnum.INFO, "Please, set your username:");
             String messageString; //Reading client message
             while (true) {
                 messageString = in.nextLine();
@@ -71,7 +71,7 @@ public class ServerPlayerHandler implements Runnable {
         }
     }
 
-    private void sendMessage(Messages type, String message) {
+    private void sendMessage(MessagesEnum type, String message) {
         out.println(
                 gson.toJson(
                         new MessageSender(type, message)));

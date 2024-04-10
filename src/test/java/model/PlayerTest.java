@@ -1,6 +1,5 @@
 package model;
 
-import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class PlayerTest {
-    ArrayList <Card> playerCards = new ArrayList<>();
+    ArrayList <Card> playerCards = new ArrayList<>(3);
     Board board = new Board(50,50);
     Player player = new Player("Calla",0,Dot.GREEN,board);
     ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor();
@@ -23,8 +22,6 @@ class PlayerTest {
     Deck objectiveDeck = objectiveCardConstructor.createCards();
 @BeforeEach
 public void setUp(){
-
-
 
 }
     @Test
@@ -37,7 +34,6 @@ public void setUp(){
 
     @Test
     void drawResourceCard() {
-
     }
 
     @Test
@@ -47,7 +43,7 @@ public void setUp(){
     @Test
     void chooseCardFromWell() {
     //Creo il pozzo e ci piazzo dentro due care risorsa e due carte gold
-        List<Card> cardsFromWell= new ArrayList<>();
+        List<Card> cardsFromWell= new ArrayList<>(3);
         resourceDeck.drawCard(cardsFromWell);
         resourceDeck.drawCard(cardsFromWell);
         goldDeck.drawCard(cardsFromWell);
@@ -59,17 +55,31 @@ public void setUp(){
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
-        player.chooseCardFromWell(cardsFromWell);
-        System.out.println("Il mio input: "+ input);
-        System.out.println("\n\nPlayer Cards: " + playerCards.size());
-        assertFalse(playerCards.isEmpty());
+        player.chooseCardFromWell(cardsFromWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
+        System.out.println("\n\nPlayer Cards: " + player.getPlayerCards().size());
+        assertFalse(player.getPlayerCards().isEmpty());
 
+        input = "2";
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        player.chooseCardFromWell(cardsFromWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
+        System.out.println("\n\nPlayer Cards: " + player.getPlayerCards().size());
+        assertFalse(player.getPlayerCards().isEmpty());
 
-        //////////////////////////////////////////////////////////////////////////////////
-        //Provo a pescare una carta dal pozzo vuoto e non lancia l'eccezione --PROBLEMA--
-        //assertThrows(IllegalStateException.class, () -> {
-         //   player.chooseCardFromWell(cardsFromWell);
-        //}); */
+        input = "3";
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        player.chooseCardFromWell(cardsFromWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
+        System.out.println("\n\nPlayer Cards: " + player.getPlayerCards().size());
+        assertFalse(player.getPlayerCards().isEmpty());
+
+        input = "4";
+        in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        player.chooseCardFromWell(cardsFromWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
+        System.out.println("\n\nPlayer Cards: " + player.getPlayerCards().size());
+        assertFalse(player.getPlayerCards().isEmpty());
+
 
     }
 
