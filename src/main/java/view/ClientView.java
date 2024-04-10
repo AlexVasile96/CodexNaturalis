@@ -2,7 +2,7 @@ package view;
 
 import model.Game;
 
-//CLASSE CHE MANTIENE TUTTE LE INFORMAZIONI DEL SINGOLO CLIENT
+//CLASSE CHE MANTIENE TUTTE LE INFORMAZIONI DEL SINGOLO CLIENT/PLAYER
 public class ClientView {
     String userName;
     public String  getUsername() {

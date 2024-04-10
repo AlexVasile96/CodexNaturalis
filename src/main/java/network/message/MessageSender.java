@@ -7,22 +7,16 @@ package network.message;
 
 public class MessageSender {
     private MessagesEnum messagesEnum;
-    private String toSend;
-    public MessageSender(MessagesEnum messagesEnum, String toSend) {
+    private String messageToSend;
+    public MessageSender(MessagesEnum messagesEnum, String messageToSend) {
         this.messagesEnum = messagesEnum;
-        this.toSend = toSend;
+        this.messageToSend = messageToSend;
     }
     public MessagesEnum getMessages() {
         return messagesEnum;
     }
-    public void setMessages(MessagesEnum messagesEnum) {
-        this.messagesEnum = messagesEnum;
-    }
-    public String getToSend() {
-        return toSend;
-    }
-    public void setToSend(String toSend) {
-        this.toSend = toSend;
-    }
 
+    public String getMessageToSend() {
+        return messageToSend;
+    }
 }

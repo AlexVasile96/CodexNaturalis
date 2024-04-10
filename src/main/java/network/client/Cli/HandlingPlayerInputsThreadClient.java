@@ -82,6 +82,7 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
                 case "actions" -> printActions();
 
                 //The following methods are used to run game actions
+                case "showCards" -> showCards();
 
 
                 case "endTurn", "18" -> runEndTurn();
@@ -115,6 +116,9 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
     private void printActions(){}
     private void printStatus(){}
     private void runEndTurn(){}
+    private void showCards() {
+        sendMessageToServer(MessagesEnum.GET_CARDS, "");
+    }
     //pesca carta risorsa
     //pesca carta gold
     //piazza una carta-> playcard->scegli angolo->fine turno

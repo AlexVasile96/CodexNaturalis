@@ -14,5 +14,10 @@ public enum MessagesEnum {
     WAIT_PLAYERS,
     GAME_START,
     NUM_OF_PLAYERS,
-    USERNAME
+    USERNAME,
+    CARDS,
+    GET_CARDS,
+    COMMAND,
+    PING,
+    ERROR
 }

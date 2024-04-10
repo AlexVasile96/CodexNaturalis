@@ -26,5 +26,8 @@ public class ServerLobby {
             }
         }
     }
+
+    public void abortGame(GameController controller) {
+    }
 }
 
