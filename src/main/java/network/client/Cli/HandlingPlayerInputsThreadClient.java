@@ -28,7 +28,6 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
     @Override
     public void run() {
         String userInput;
-
         while (!doClose) {
             try {
                 userInput = stdIn.readLine();
@@ -43,6 +42,7 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
                 System.out.println("IO exception");
             }
         }
+
     }
 
     public void sendMessageToServer(MessagesEnum type, String content) {

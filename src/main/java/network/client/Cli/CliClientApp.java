@@ -1,7 +1,7 @@
 package network.client.Cli;
 
 
-import network.client.Gui.ClientReader;
+import network.client.ClientReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;

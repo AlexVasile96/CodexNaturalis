@@ -55,8 +55,6 @@ public class ServerPlayerHandler implements Runnable {
             ex.printStackTrace();
             return;
         }
-
-
         try {
             System.out.println("Logging in player...");
             sendMessageToClient(MessagesEnum.INFO, "Please, set your username.");
