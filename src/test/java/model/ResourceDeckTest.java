@@ -1,36 +1,39 @@
-package com.example.proj;
+package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 class ResourceDeckTest {
     private Player player1;
     private Board board;
-    private ResourceDeck resourceDeck;
     private GoldDeck goldDeck;
-    private List<Card> cards;
+    ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor(); //create resource cards
+    Deck resourceDeck = resourceCardConstructor.createCards();
+
+
     @BeforeEach
-    public void setUp() {
-        CardConstructor resourceCardConstructor = new CardConstructor();
+    void setUp() {
+        CardConstructor resourceCardConstructor = new ResourceCardConstructor();
         board = new Board(10,10);
         player1 = new Player("Player1",0,Dot.GREEN,board);
-        resourceDeck = new ResourceDeck(cards);
-        resourceDeck = (ResourceDeck) resourceCardConstructor.createCards();
     }
 
-
-   @Test
+    @Test
     void drawCard() {
-        for(int i = 0; i <3; i++){
-            player1.drawResourceCard((ResourceDeck) resourceDeck);
+            for(int i = 0; i <4; i++){
+                resourceDeck.drawCard(player1);
+            }
+            Exception exception =  assertThrows(IllegalStateException.class, () -> {
+                resourceDeck.drawCard(player1);
+            });
+            assertEquals("Il giocatore ha già tre carte nella mano",exception.getMessage() );
         }
-        assertThrows(RuntimeException.class, () -> {
-            player1.drawResourceCard((ResourceDeck) resourceDeck);
-        });
+
+
+    @Test
+    void testDrawCard() {
     }
 
     @Test

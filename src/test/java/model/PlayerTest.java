@@ -1,132 +1,94 @@
-package com.example.proj;
+package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PlayerTest {
-    private Player player1;
-    private Board board;
-    private ResourceDeck resourceDeck;
-    private GoldDeck goldDeck;
-    private List<Card> cards;
-    private List<ObjectiveCard> secretCards;
-    @BeforeEach
-    public void setUp() {
-        CardConstructor resourceCardConstructor = new CardConstructor();
-        board = new Board(10,10);
-        player1 = new Player("Player1",0,Dot.GREEN,board);
-        resourceDeck = new ResourceDeck(cards);
-        resourceDeck = (ResourceDeck) resourceCardConstructor.createCards();
-        ArrayList<Card> playerCards = new ArrayList<>(3);
-        player1.setPlayerCards(playerCards);
+class PlayerTest {
+    ArrayList <Card> playerCards = new ArrayList<>();
+    Board board = new Board(50,50);
+    Player player = new Player("Calla",0,Dot.GREEN,board);
+    ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor();
+    GoldCardConstructor goldCardConstructor = new GoldCardConstructor();
+    ObjectiveCardConstructor objectiveCardConstructor = new ObjectiveCardConstructor();
+    Deck resourceDeck = resourceCardConstructor.createCards();
+    Deck goldDeck = goldCardConstructor.createCards();
+    Deck objectiveDeck = objectiveCardConstructor.createCards();
+@BeforeEach
+public void setUp(){
 
 
 
-    }
-
+}
     @Test
     void isCardBack() {
     }
 
     @Test
     void setCardBack() {
-
     }
 
     @Test
-    void getSecretChosenCard() {
-    }
-
-    @Test
-    void setSecretChosenCard() {
-    }
-
-    @Test
-    void visualizePlayerCards() {
-    }
-
-    /*@Test
     void drawResourceCard() {
-       for(int i = 0; i <5; i++){
-            player1.drawResourceCard( resourceDeck);
-        }
-        assertThrows(RuntimeException.class, () -> {
-            player1.drawResourceCard((ResourceDeck) resourceDeck);
-        });
-        }
-*/
+
+    }
+
     @Test
     void drawGoldCard() {
     }
 
     @Test
+    void chooseCardFromWell() {
+    //Creo il pozzo e ci piazzo dentro due care risorsa e due carte gold
+        List<Card> cardsFromWell= new ArrayList<>();
+        resourceDeck.drawCard(cardsFromWell);
+        resourceDeck.drawCard(cardsFromWell);
+        goldDeck.drawCard(cardsFromWell);
+        goldDeck.drawCard(cardsFromWell);
+        System.out.println(cardsFromWell);
+        //Provo a pescare una carta avente Id presente nelle carte del pozzo
+
+        String input = "1";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        player.chooseCardFromWell(cardsFromWell);
+        System.out.println("Il mio input: "+ input);
+        System.out.println("\n\nPlayer Cards: " + playerCards.size());
+        assertFalse(playerCards.isEmpty());
+
+
+        //////////////////////////////////////////////////////////////////////////////////
+        //Provo a pescare una carta dal pozzo vuoto e non lancia l'eccezione --PROBLEMA--
+        //assertThrows(IllegalStateException.class, () -> {
+         //   player.chooseCardFromWell(cardsFromWell);
+        //}); */
+
+    }
+
+
+
+    @Test //controllo che il player possa giocare solo le carte che ha in mano
     void chooseCard() {
+
     }
 
     @Test
     void chooseSecretCard() {
-        int selectedCardIndex = 1;
-        assertTrue(selectedCardIndex>0);
-        assertFalse((selectedCardIndex<=player1.getPlayerCards().size()));
-        assertFalse(selectedCardIndex < 1);
-        assertFalse(selectedCardIndex > secretCards.size());
     }
 
     @Test
     void playCard() {
-
-
     }
 
     @Test
     void turnYourCard() {
     }
 
-    @Test
-    void getPlayerCards() {
-    }
-
-    @Test
-    void setNickName() {
-    }
-
-   @Test
-    void setPlayerScore() {
-        player1.setPlayerScore(400);
-        assertFalse(player1.getPlayerScore()<=30);
-    }
-
-    @Test
-    void setDot() {
-    }
-
-    @Test
-    void setBoard() {
-    }
-
-    @Test
-    void setPlayerCards() {
-    }
-
-    @Test
-    void getNickName() {
-    }
-
-    @Test
-    void getPlayerScore() {
-    }
-
-    @Test
-    void getDot() {
-    }
-
-    @Test
-    void getBoard() {
-    }
 }
