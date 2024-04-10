@@ -1,6 +1,6 @@
 package network.message;
 
-public enum Messages {
+public enum MessagesEnum {
     GAME_STATUS,
     PLAYER_SCORE,
     PLAYER_BOARD,
@@ -12,5 +12,12 @@ public enum Messages {
     CONFIRM_USERNAME,
     CONFIRM_PASSWORD,
     WAIT_PLAYERS,
-    GAME_START
+    GAME_START,
+    NUM_OF_PLAYERS,
+    USERNAME,
+    CARDS,
+    GET_CARDS,
+    COMMAND,
+    PING,
+    ERROR
 }

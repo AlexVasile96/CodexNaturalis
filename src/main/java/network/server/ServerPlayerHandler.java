@@ -1,17 +1,19 @@
 package network.server;
 
+import Exceptions.OperationCancelledException;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import controller.GameController;
+import model.Card;
+import network.JsonUtils;
 import network.message.MessageSender;
-import network.message.Messages;
+import network.message.MessagesEnum;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Scanner;
-import java.util.Timer;
+import java.util.*;
 
 /**
  * This class handles the server's connection with a single client
@@ -45,9 +47,106 @@ public class ServerPlayerHandler implements Runnable {
             System.err.println("Warning: couldn't set socket timeout in ServerPlayerHandler");
             e.printStackTrace();
         }
-
         //CREATING INPUT AND OUTPUT
+
         try {
+            in = new Scanner(socket.getInputStream());
+            out = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return;
+        }
+
+
+        try {
+            System.out.println("Logging in player...");
+
+            sendMessageToClient(MessagesEnum.INFO, "Please, set your username.");
+
+            //Reads the client's message
+            String messageString;
+            while (true) {
+
+                messageString = in.nextLine();
+                System.out.println("Received message from client: " + messageString); // Print received message for debugging
+
+                MessageSender message = gson.fromJson(messageString, MessageSender.class);
+
+                switch (message.getMessages()) {
+                    case USERNAME -> loginPlayer(message.getMessageToSend());
+                    /*case NUM_OF_PLAYERS -> setGameSize(message.getMessageToSend());
+                    case COMMAND -> runCommand(message.getMessageToSend());*/
+                    case PING -> {
+                        //does nothing, it only resets the connection timer
+                    }
+                    default -> {
+                        System.out.println("Client sent an unexpected message: ");
+                        System.out.println(message.getMessages());
+                        sendMessageToClient(MessagesEnum.ERROR, "This type of message is not supported.");
+                    }
+                }
+            }
+
+        } catch (NoSuchElementException | IllegalStateException ex) {
+            if (controller == null) {
+                System.out.println("The connection with a player in login phase was lost.");
+            } else if (!controller.isSizeSet()) {
+                System.out.println("The connection with player " + username + " was lost during game size setting phase.");
+                lobby.abortGame(controller);
+            } else {
+                System.out.println("The connection with player " + username + " was lost during the game.");
+                controller.setDisconnectedStatus(username);
+            }
+        }
+
+    }
+    private void loginPlayer(String messageContent) throws NoSuchElementException {
+
+        //If the player has not already logged in
+        if (controller == null) {
+            //Ask the lobby to validate username
+            try {
+
+                controller = lobby.login(messageContent, out);
+                this.username = messageContent;
+
+                if (!controller.isSizeSet())
+                    sendMessageToClient(MessagesEnum.INFO, "Please, choose the game's number of players.");
+
+            } catch (Exception ex) {
+                sendMessageToClient(MessagesEnum.ERROR, ex.getMessage());
+                ex.printStackTrace();
+            }
+
+        } else {
+            System.out.println("Player attempted to login after already choosing a username.");
+            sendMessageToClient(MessagesEnum.ERROR, "You have already chosen a username.");
+        }
+    }
+
+    private void actionsInput(String userInput) {
+        try {
+            switch (userInput) {
+                // ...
+
+                case "getCards" -> sendCardsToClient();
+
+                // ...
+            }
+        } catch (OperationCancelledException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    private void sendCardsToClient() {
+        List<Card> cards = new ArrayList<>(); // Assume che tu abbia una lista di carte da inviare
+        String json = JsonUtils.toJson(cards);
+        sendMessageToClient(MessagesEnum.CARDS, json);
+    }
+    private void sendMessageToClient(MessagesEnum type, String content) {
+        out.println(JsonUtils.toJson(new MessageSender(type, content)));
+    }
+
+    /*try {
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream(), true);
         } catch (IOException ex) {
@@ -60,7 +159,7 @@ public class ServerPlayerHandler implements Runnable {
 
         try {
             System.out.println("Logging in player...");
-            sendMessage(Messages.INFO, "Please, set your username:");
+            sendMessageToClient(MessagesEnum.INFO, "Please, set your username:");
             String messageString; //Reading client message
             while (true) {
                 messageString = in.nextLine();
@@ -68,12 +167,10 @@ public class ServerPlayerHandler implements Runnable {
             }
         } catch (JsonSyntaxException e) {
             throw new RuntimeException(e);
-        }
-    }
+        }*/
 
-    private void sendMessage(Messages type, String message) {
-        out.println(
-                gson.toJson(
-                        new MessageSender(type, message)));
-    }
+
+    /*private void sendMessage(MessagesEnum type, String message) {
+        out.println(gson.toJson(new MessageSender(type, message)));
+    }*/
 }

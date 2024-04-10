@@ -1,6 +1,9 @@
 package codex;
-import network.client.cli.Cli;
+
+import network.client.Cli.CliClientApp;
 import network.server.ServerMain;
+
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -10,7 +13,7 @@ import java.util.Scanner;
 
 public class Codex {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println("Hi! Welcome to Codex!!!\nWhat do you want to launch?");
         System.out.println(
                 """
@@ -31,7 +34,7 @@ public class Codex {
             case 0 -> ServerMain.main(null);
             case 1 -> {
                 System.out.println("You selected the CLI interface, have fun!\nStarting...");
-                Cli.main(null); }
+                CliClientApp.main(null); }
             case 2 -> {
                 System.out.println("You selected the GUI interface, have fun!\nStarting...");
                 //GUI.main(null);

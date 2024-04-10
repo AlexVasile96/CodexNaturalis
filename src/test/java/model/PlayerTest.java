@@ -25,12 +25,9 @@ class PlayerTest {
 @BeforeEach
 public void setUp(){
 
-
-
 }
     @Test
     void drawResourceCard() {
-
     }
 
     @Test

@@ -6,23 +6,17 @@ package network.message;
  */
 
 public class MessageSender {
-    private Messages messages;
-    private String toSend;
-    public MessageSender(Messages messages, String toSend) {
-        this.messages = messages;
-        this.toSend = toSend;
+    private MessagesEnum messagesEnum;
+    private String messageToSend;
+    public MessageSender(MessagesEnum messagesEnum, String messageToSend) {
+        this.messagesEnum = messagesEnum;
+        this.messageToSend = messageToSend;
     }
-    public Messages getMessages() {
-        return messages;
-    }
-    public void setMessages(Messages messages) {
-        this.messages = messages;
-    }
-    public String getToSend() {
-        return toSend;
-    }
-    public void setToSend(String toSend) {
-        this.toSend = toSend;
+    public MessagesEnum getMessages() {
+        return messagesEnum;
     }
 
+    public String getMessageToSend() {
+        return messageToSend;
+    }
 }

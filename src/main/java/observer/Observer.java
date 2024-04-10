@@ -1,4 +1,7 @@
 package observer;
 
-public class Observer {
+public interface Observer {
+
+    void update(Object observable);
+    void updateSinglePlayer(String username);
 }

@@ -1,8 +1,11 @@
 package model;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+
 import java.util.*;
 
-public class Player {
+public class Player implements Observable {
     private String nickName;
     private int playerScore;
     private Dot dot;
@@ -396,5 +399,15 @@ public class Player {
     }
     public Board getBoard() {
         return board;
+    }
+
+    @Override
+    public void addListener(InvalidationListener invalidationListener) {
+
+    }
+
+    @Override
+    public void removeListener(InvalidationListener invalidationListener) {
+
     }
 }
