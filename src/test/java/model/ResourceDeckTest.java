@@ -1,13 +1,12 @@
 package model;
 
-import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
 class ResourceDeckTest {
-    private Player player1;
+    private Player player;
     private Board board;
     private GoldDeck goldDeck;
     ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor(); //create resource cards
@@ -18,23 +17,22 @@ class ResourceDeckTest {
     void setUp() {
         CardConstructor resourceCardConstructor = new ResourceCardConstructor();
         board = new Board(10,10);
-        player1 = new Player("Player1",0,Dot.GREEN,board);
+        player = new Player("Player1",0,Dot.GREEN,board);
     }
 
-    @Test
-    void drawCard() {
-            for(int i = 0; i <4; i++){
-                resourceDeck.drawCard(player1);
+    @Test //Test del metodo che fa pescare una carta al player dal deck risorse
+    void drawCard() {//verifico che il player non possa avere più di tre carte in mano
+            for(int i = 0; i <5; i++){
+                resourceDeck.drawCard(player);
             }
-            Exception exception =  assertThrows(IllegalStateException.class, () -> {
-                resourceDeck.drawCard(player1);
-            });
-            assertEquals("Il giocatore ha già tre carte nella mano",exception.getMessage() );
+             assertEquals(3, player.getPlayerCards().size());
         }
 
 
-    @Test
+    @Test //Test del metodo che aggiunge una carta risorse dal deck carte risorse alle carte del pozzo
+    //NE DEVO PARLARE CON GLI ALTRI PERCHè NON HO CAPITO BENE STA COSA
     void testDrawCard() {
+
     }
 
     @Test
