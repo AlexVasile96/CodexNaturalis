@@ -1,11 +1,5 @@
 package model;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -71,7 +65,7 @@ public class Game{
         board.printBoard();                                                //printing the board
         System.out.println(board.getCardsOnTheBoardList());             //printing the cards on the board
         //player.drawResourceCard((ResourceDeck) resourceDeck);
-        player.chooseCardFromWell(cardsWell);
+        player.chooseCardFromWell(cardsWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
         player.visualizePlayerCards(player.getPlayerCards());
         player.playCard(board,0);
         board.printBoard();                                         //printing the board

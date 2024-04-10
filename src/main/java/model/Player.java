@@ -46,32 +46,43 @@ public class Player {
     public void drawGoldCard(GoldDeck deck) {
         deck.drawCard(this);
     } //DRAWING GOLD CARD
-    public List<Card> chooseCardFromWell(List<Card>cardwell)
-    {
-        if (cardwell.isEmpty()) {
-            return null; //empty well
-        }
-        try {
-            for(Card card: cardwell) {
-                System.out.println(card);
+    public List<Card> chooseCardFromWell(List<Card>cardwell,ResourceDeck rc, GoldDeck gd) {
+            if (this.playerCards.size() < 3) {
+                if (cardwell.isEmpty()) {
+                    return null; //empty well
+                }
+                try {
+                    for (Card card : cardwell) {
+                        System.out.println(card);
+                    }
+                    System.out.println("\n");
+                    System.out.print("Select a card from the well ");
+                    Scanner scanner = new Scanner(System.in);
+                    int selectedCardIndex = scanner.nextInt();
+                    if (selectedCardIndex < 1 || selectedCardIndex > cardwell.size()) {
+                        System.out.println("Not valid index");
+                        return null;
+                    }
+                    int realIndex = selectedCardIndex - 1;
+                    Card drownCard = cardwell.remove(realIndex);
+                    playerCards.add(drownCard);
+                    if (drownCard.getId() >= 1 && drownCard.getId() <= 40) {
+                        rc.drawCard(cardwell);
+                    }
+                    if (drownCard.getId() >= 41 && drownCard.getId() <= 80) {
+                        gd.drawCard(cardwell);
+                    }
+                    return cardwell;
+                } catch (Exception e) {
+                    throw new IllegalStateException("Well is empty"); // Eccezione specifica
+                }
             }
-            System.out.println("\n");
-            System.out.print("Select a card from the well ");
-            Scanner scanner = new Scanner(System.in);
-            int selectedCardIndex = scanner.nextInt();
-            if (selectedCardIndex < 1 || selectedCardIndex > cardwell.size()) {
-                System.out.println("Not valid index");
-                return null ;
+            else {
+                System.out.println("Player's deck already has 3 cards\n");
+                return cardwell;
             }
-            int realIndex= selectedCardIndex -1;
-            Card drownCard = cardwell.remove(realIndex);
-            playerCards.add(drownCard);
-            //AGGIUNGO UNA CARTA AL POZZO, SE LA CARTA ERA RESOURCE DEVO RIMETTERE UNA CARTA RISORSA  O NO?
-            return cardwell;
-        } catch(Exception e) {
-            throw new IllegalStateException("Well is empty"); // Eccezione specifica
         }
-    }
+
     public Card chooseCard(int index) {
         if (index < 0 || index >= playerCards.size()) {
             System.out.println("Not valid index"); //INDEX GOES FROM 1 TO 3
