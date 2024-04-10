@@ -39,8 +39,6 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
                     initializePlayer(userInput);
                     actionsInput(userInput); //switch case gioco iniziato
                 }
-
-
             } catch (IOException eE) {
                 System.out.println("IO exception");
             }
@@ -130,6 +128,9 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
     //visualizza board degli altri
 
 
-
+    public void doClose() {
+        doClose = true;
+        System.out.println("Server connection lost, press any key to terminate.");
+    }
 
 }

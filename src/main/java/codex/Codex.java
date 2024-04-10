@@ -1,5 +1,4 @@
 package codex;
-
 import network.client.Cli.CliClientApp;
 import network.server.ServerMain;
 

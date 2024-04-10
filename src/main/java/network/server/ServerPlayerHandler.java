@@ -2,7 +2,6 @@ package network.server;
 
 import Exceptions.OperationCancelledException;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import controller.GameController;
 import model.Card;
 import network.JsonUtils;
@@ -60,7 +59,6 @@ public class ServerPlayerHandler implements Runnable {
 
         try {
             System.out.println("Logging in player...");
-
             sendMessageToClient(MessagesEnum.INFO, "Please, set your username.");
 
             //Reads the client's message
@@ -146,31 +144,4 @@ public class ServerPlayerHandler implements Runnable {
         out.println(JsonUtils.toJson(new MessageSender(type, content)));
     }
 
-    /*try {
-            in = new Scanner(socket.getInputStream());
-            out = new PrintWriter(socket.getOutputStream(), true);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return;
-        }
-
-
-        //createPinger();
-
-        try {
-            System.out.println("Logging in player...");
-            sendMessageToClient(MessagesEnum.INFO, "Please, set your username:");
-            String messageString; //Reading client message
-            while (true) {
-                messageString = in.nextLine();
-                MessageSender message = gson.fromJson(messageString, MessageSender.class); //GETTING THE MESSAGE FROM THE MESSAGSENDER
-            }
-        } catch (JsonSyntaxException e) {
-            throw new RuntimeException(e);
-        }*/
-
-
-    /*private void sendMessage(MessagesEnum type, String message) {
-        out.println(gson.toJson(new MessageSender(type, message)));
-    }*/
 }

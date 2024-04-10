@@ -1,20 +1,14 @@
 package network.server;
 
 
-import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -54,7 +48,6 @@ public class ServerMain {
          */
         private static void startServer(int port) {
             ExecutorService executor = Executors.newCachedThreadPool();
-
             System.out.println("Server started!");
 
             //Creates connection socket
@@ -65,7 +58,6 @@ public class ServerMain {
                 System.err.println(ex.getMessage());
                 return;
             }
-
             System.out.println("Server ready for connections!");
 
             //Creates the lobby for this server
