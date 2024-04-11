@@ -28,7 +28,6 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
     @Override
     public void run() {
         String userInput;
-
         while (!doClose) {
             try {
                 userInput = stdIn.readLine();
@@ -39,12 +38,11 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
                     initializePlayer(userInput);
                     actionsInput(userInput); //switch case gioco iniziato
                 }
-
-
             } catch (IOException eE) {
                 System.out.println("IO exception");
             }
         }
+
     }
 
     public void sendMessageToServer(MessagesEnum type, String content) {
@@ -130,6 +128,9 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
     //visualizza board degli altri
 
 
-
+    private void doClose() {
+        doClose = true;
+        System.out.println("Server connection lost, press any key to terminate.");
+    }
 
 }

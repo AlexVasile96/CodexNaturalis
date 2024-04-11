@@ -1,8 +1,8 @@
 package network.server;
 
 import Exceptions.OperationCancelledException;
+import Exceptions.ParametersNotValidException;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import controller.GameController;
 import model.Card;
 import network.JsonUtils;
@@ -42,7 +42,7 @@ public class ServerPlayerHandler implements Runnable {
 
         //Sets a 10 second timeout for the socket reader
         try {
-            socket.setSoTimeout(10 * 1000);
+            socket.setSoTimeout(10 );
         } catch (SocketException e) {
             System.err.println("Warning: couldn't set socket timeout in ServerPlayerHandler");
             e.printStackTrace();
@@ -56,17 +56,14 @@ public class ServerPlayerHandler implements Runnable {
             ex.printStackTrace();
             return;
         }
-
-
         try {
             System.out.println("Logging in player...");
-
             sendMessageToClient(MessagesEnum.INFO, "Please, set your username.");
+            System.out.println("ciao");
 
             //Reads the client's message
             String messageString;
             while (true) {
-
                 messageString = in.nextLine();
                 System.out.println("Received message from client: " + messageString); // Print received message for debugging
 
@@ -106,7 +103,6 @@ public class ServerPlayerHandler implements Runnable {
         if (controller == null) {
             //Ask the lobby to validate username
             try {
-
                 controller = lobby.login(messageContent, out);
                 this.username = messageContent;
 
@@ -142,35 +138,41 @@ public class ServerPlayerHandler implements Runnable {
         String json = JsonUtils.toJson(cards);
         sendMessageToClient(MessagesEnum.CARDS, json);
     }
-    private void sendMessageToClient(MessagesEnum type, String content) {
+    public void sendMessageToClient(MessagesEnum type, String content) {
         out.println(JsonUtils.toJson(new MessageSender(type, content)));
     }
+    private void setGameSize(String messageContent) throws NoSuchElementException {
 
-    /*try {
-            in = new Scanner(socket.getInputStream());
-            out = new PrintWriter(socket.getOutputStream(), true);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return;
-        }
+        //If controller number of players has not been decided
+        if (!controller.isSizeSet()) {
 
+            //Tries to set controller's number of players
+            try {
 
-        //createPinger();
+                int size = Integer.parseInt(messageContent);
+                controller.choosePlayerNumber(size);
 
-        try {
-            System.out.println("Logging in player...");
-            sendMessageToClient(MessagesEnum.INFO, "Please, set your username:");
-            String messageString; //Reading client message
-            while (true) {
-                messageString = in.nextLine();
-                MessageSender message = gson.fromJson(messageString, MessageSender.class); //GETTING THE MESSAGE FROM THE MESSAGSENDER
+            } catch (NumberFormatException ex) {
+                sendMessageToClient(MessagesEnum.ERROR, "Game's number of players must be an integer.");
+            } catch (Exception ex) {
+                sendMessageToClient(MessagesEnum.ERROR, ex.getMessage());
+            } catch (ParametersNotValidException e) {
+                throw new RuntimeException(e);
             }
-        } catch (JsonSyntaxException e) {
-            throw new RuntimeException(e);
-        }*/
+        } else {
+            System.out.println("Player attempted to choose game's number of players without needing to.");
+            sendMessageToClient(MessagesEnum.ERROR, "The game's number of players has already been decided.");
+        }
+    }
+    private void runCommand(String messageContent) throws NoSuchElementException {
 
+        //If player has logged in and their game's number of players has been decided
+        if (controller != null && controller.isSizeSet()) {
 
-    /*private void sendMessage(MessagesEnum type, String message) {
-        out.println(gson.toJson(new MessageSender(type, message)));
-    }*/
+            //Forward player command to controller
+            System.out.println("Received command: " + messageContent);
+            controller.readCommand(username, messageContent);
+        }
+    }
+
 }

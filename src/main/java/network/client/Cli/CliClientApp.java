@@ -1,6 +1,7 @@
 package network.client.Cli;
 
 
+import network.client.ClientReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -9,12 +10,7 @@ import view.ClientView;
 import java.io.*;
 import java.net.Socket;
 
-
 public class CliClientApp {
-    private static final String SERVER_ADDRESS = "localhost"; //127.0.0.1
-    private static final int PORT = 1234;
-    private int threadId;
-
     public static void main(String[] args) throws IOException {
         FileReader reader = new FileReader("src/main/resources/HostAndPort.json"); // READING JSON FILE
         JSONObject jsonObject = new JSONObject(new JSONTokener(reader));
@@ -31,17 +27,34 @@ public class CliClientApp {
             System.out.println("PortNumber: " + portNumber);
         }
         Socket socket = new Socket(hostName,portNumber); //CREATING THE SOCKET
+        System.out.println("Client connected!");
         startCLI(socket, stdIn);
     }
     private static void startCLI(Socket clientSocket, BufferedReader stdIn) throws IOException { //Start the Command Line Interface
+        try{
         System.out.println("Creazione del client in corso...\n");
         PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        ClientView clientView= new ClientView();                //Class that saves player informations
-        HandlingPlayerInputsThreadClient handlingPlayerInputsThreadClient = new HandlingPlayerInputsThreadClient(in,out,clientView); //handling player inputs
-        Thread thread = new Thread(handlingPlayerInputsThreadClient); //parte il thread
+        ClientView ClientView= new ClientView();                //Class that saves player informations
+        HandlingPlayerInputsThreadClient HandlingPlayerInputsThreadClient = new HandlingPlayerInputsThreadClient(in,out,ClientView); //handling player inputs
+        Thread thread = new Thread(HandlingPlayerInputsThreadClient); //parte il thread
         thread.start();
+        //Creates the thread that processes messages from the server
+        ClientReader ClientReader = new ClientReader(in,HandlingPlayerInputsThreadClient, ClientView);
+        Thread readerThread= new Thread(ClientReader);
+        readerThread.start();
+
+
+        //Kills the writer thread
+        //HandlingPlayerInputsThreadClient.doClose();
+
+    } catch (IOException ex) {
+        System.out.println("Uh-oh, there's been an IO problem!");
     }
+
+        //System.out.println("Shut down.");
+}
+
 
 
 }
