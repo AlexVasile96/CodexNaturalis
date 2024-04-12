@@ -11,11 +11,13 @@ public class StairsObjectiveCard implements ExtendExtendExtend{
                 if (nodes[row][columns].getSpecificNodeSeed() == seed &&
                         nodes[row+1][columns+1].getSpecificNodeSeed() == seed &&
                         nodes[row+2][columns+2].getSpecificNodeSeed() == seed) {
+                        player.setPlayerScore(player.getPlayerScore()+2);
                     return true;
                 }
                 if (nodes[row][columns+2].getSpecificNodeSeed() == seed &&
                         nodes[row+1][columns+1].getSpecificNodeSeed() == seed &&
                         nodes[row+2][columns].getSpecificNodeSeed() == seed) {
+                        player.setPlayerScore(player.getPlayerScore()+2);
                     return true;
                 }// Check diagonal pattern from top right to bottom left
             }
