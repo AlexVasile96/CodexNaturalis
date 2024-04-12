@@ -33,12 +33,15 @@ public class ObjectiveDeck implements Deck {
         if (objectiveCards.isEmpty()) { //CHECKING IF THE CARD IS MADE IN THE CORRECT WAY
             return null;
         }
-        if(player.getPlayerCards().size()<3){
-            return (ObjectiveCard)objectiveCards.remove(0);                          //RETURING THE CHOSEN CARD
+
+        try {
+            if(player.getPlayerCards().size()<3){
+                return (ObjectiveCard)objectiveCards.remove(0);                          //RETURING THE CHOSEN CARD
+            }
+        } catch(Exception e) {
+            throw new IllegalStateException("Il giocatore ha già tre carte nella mano."); // Eccezione specifica
         }
-        else{
-            throw new RuntimeException("Player's deck is already full");
-        }
+        return null;
     }
 
     @Override
@@ -54,5 +57,10 @@ public class ObjectiveDeck implements Deck {
     }
     public void setObjectiveCards(List<Card> objectiveCards) {
         this.objectiveCards = objectiveCards;
+    }
+
+    //serve per il test
+    public int carteRimaste(){
+        return objectiveCards.size();
     }
 }

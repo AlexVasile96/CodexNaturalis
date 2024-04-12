@@ -51,4 +51,9 @@ public class ResourceDeck implements Deck{
     public ObjectiveCard firstCardForEachPlayer() {
         return null;
     }
+
+    //serve per il test
+    public int carteRimaste(){
+        return resourceCards.size();
+    }
 }
