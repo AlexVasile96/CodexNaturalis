@@ -11,11 +11,7 @@ public class BisObjectiveCard implements ExtendExtendExtend{
         System.out.println("Number of " + seed + " SpecificSeed: " + numberOfSpecificSeed);
         player.setPlayerScore(player.getPlayerScore()+ redistributable);
         System.out.println("Player score: " + player.getPlayerScore());
-        if (numberOfSpecificSeed >= 3) {
-            return true;
-        } else {
-            return false;
-        }
+        return numberOfSpecificSeed >= 3;
     }
 
     @Override
