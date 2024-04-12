@@ -19,14 +19,16 @@ public class GoldDeck implements Deck {
         if (goldCards.isEmpty()) {
             return null; // Mazzo vuoto
         }
-        if(player.getPlayerCards().size()<3) {
-            Card drownCard = goldCards.remove(0);
-            player.getPlayerCards().add(drownCard);
-            return drownCard;
+        try {
+            if(player.getPlayerCards().size()<3) {
+                Card drownCard = goldCards.remove(0);
+                player.getPlayerCards().add(drownCard);
+                return drownCard;
+            }
+        } catch(Exception e) {
+            throw new IllegalStateException("Il giocatore ha già tre carte nella mano."); // Eccezione specifica
         }
-        else{
-            throw new RuntimeException();
-        }
+        return null;
     }
     public void addCard(Card card) {
         goldCards.add(card);
@@ -47,5 +49,10 @@ public class GoldDeck implements Deck {
         } catch(Exception e) {
             throw new IllegalStateException("Il giocatore ha già tre carte nella mano."); // Eccezione specifica
         }
+    }
+
+    //serve per il test
+    public int carteRimaste(){
+        return goldCards.size();
     }
 }
