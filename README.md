@@ -38,4 +38,4 @@ Legenda <br>
 Pietro Callandrone   - pietro.callandrone@mail.polimi.it <br>
 Thomas Paletti       - thomas.paletti@mail.polimi.it <br>
 Mohammed Hajjioui    - mohammed.hajjioui@mail.polimi.it <br>
-Vlad Alexandru Vasile - vlad.lexandru.vasile@mail.polimi.it <br>
+Vlad Alexandru Vasile - vladalexandru.vasile@mail.polimi.it <br>
