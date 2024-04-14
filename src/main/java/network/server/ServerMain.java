@@ -18,9 +18,9 @@ import java.util.concurrent.Executors;
 
 public class ServerMain {
         public static void main(String[] args) {
-
+            //Try-catch block to read the IP address and the port number from a JSON file
             try {
-                FileReader reader = new FileReader("src/main/resources/HostAndPort.json"); // Leggi da file JSON
+                FileReader reader = new FileReader("src/main/resources/HostAndPort.json");
                 JSONObject jsonObject = new JSONObject(new JSONTokener(reader));
                 JSONArray hostAndPortArray = jsonObject.getJSONArray("hostandport");
 
@@ -41,16 +41,18 @@ public class ServerMain {
 
         //PRIVATE METHODS
 
-        /**
-         * Reads connections from the given port and creates new threads to handle them
-         *
-         * @param port the port from which to take connections
-         */
+
+    /**
+     * Starts the server on the given port.
+     *
+     * @param port The port number to start the server on.
+     */
+         
         private static void startServer(int port) {
             ExecutorService executor = Executors.newCachedThreadPool();
             System.out.println("Server started!");
 
-            //Creates connection socket
+            // Creates a ServerSocket for handling connections
             ServerSocket serverSocket;
             try {
                 serverSocket = new ServerSocket(port);
@@ -63,7 +65,7 @@ public class ServerMain {
             //Creates the lobby for this server
             ServerLobby lobby = new ServerLobby();
 
-            //Creates connections with clients on new threads
+            //Accepts connections from clients on new threads
             while (true) {
                 try {
                     Socket socket = serverSocket.accept();

@@ -6,6 +6,8 @@ import view.ClientView;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+//This class represents a thread responsible for reading messages from the server in the client-side.
+
 public class ClientReader implements Runnable {
     private BufferedReader in;
     private  ClientView clientView;
@@ -13,7 +15,7 @@ public class ClientReader implements Runnable {
     private HandlingPlayerInputsThreadClient handlingPlayerInputsThreadClient;
 
 
-    //CLI CONSTRUCTOR, DOVREMO POI CAPIRE COME FARE UN GUI CONSTRUCTOR
+    //CLI constructor, we'll figure out how to make a GUI constructor later.
     public ClientReader(BufferedReader in, HandlingPlayerInputsThreadClient handlingPlayerInputsThreadClient, ClientView clientView) {
         this.in = in;
         this.handlingPlayerInputsThreadClient = handlingPlayerInputsThreadClient;
@@ -23,7 +25,7 @@ public class ClientReader implements Runnable {
     public void run() {
         String response;
         while (true) {
-            try {                                                //If the server disconnects, interrupt the client
+            try {//If the server disconnects, interrupt the client
                 response = in.readLine();
             } catch (IOException ex) {
                 System.err.println("Server connection lost.");
@@ -37,8 +39,14 @@ public class ClientReader implements Runnable {
             elaborateResponse(response);
         }
     }
+    /**
+     * Elaborates on the response received from the server.
+     *
+     * @param response The response received from the server.
+     */
 
-    private void elaborateResponse(String response) {
+    private void elaborateResponse(String response){
+        // Method for processing the server response will be implemented here.
     }
 }
 
