@@ -36,7 +36,7 @@ public void setUp(){
 
     @Test
     void chooseCardFromWell() {
-    //Creo il pozzo e ci piazzo dentro due care risorsa e due carte gold
+    //Creo il pozzo e ci piazzo dentro due carte risorsa e due carte gold
         List<Card> cardsFromWell= new ArrayList<>(3);
         resourceDeck.drawCard(cardsFromWell);
         resourceDeck.drawCard(cardsFromWell);
