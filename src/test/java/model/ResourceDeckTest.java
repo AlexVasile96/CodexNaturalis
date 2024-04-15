@@ -60,8 +60,5 @@ class ResourceDeckTest {
         resourceDeck.addCard(cartaBomba);
         assertThrows(Exceptions.AlredyInException.class, () -> resourceDeck.addCard(cartaBomba));
 
-        //provo ad inserire una carta nel mazzo pieno
-        //assertThrows(Exceptions.FullDeckExeption.class, () -> resourceDeck.addCard(cartaBomba), "Il mazzo ha raggiunto la capacità massima di 40 carte.");
-
     }
 }

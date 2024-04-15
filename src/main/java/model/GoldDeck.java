@@ -1,4 +1,9 @@
 package model;
+import Exceptions.AlredyInException;
+import Exceptions.FullDeckExeption;
+import Exceptions.IllegalAddException;
+import Exceptions.UknownWhyException;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -31,7 +36,27 @@ public class GoldDeck implements Deck {
         return null;
     }
     public void addCard(Card card) {
-        goldCards.add(card);
+        // Verifica se il mazzo ha già raggiunto la capacità massima
+        if (goldCards.size() >= 40) {
+            throw new FullDeckExeption("Il mazzo ha raggiunto la capacità massima di 40 carte.");
+        }
+
+        // Verifico che la carta appartiene al mazzo Resource
+        if (card.getId() <= 40 || card.getId() > 81) {
+            throw new IllegalAddException("La carta non appartiene al mazzo Resource.");
+        }
+
+        // Verifica se la carta è già presente nel mazzo
+        for (Card card2 : goldCards) {
+            if (card.id == card2.id) throw new AlredyInException("La carta è già presente nel mazzo.");
+        }
+
+        // provo ad aggiungere la carta
+        try {
+            goldCards.add(card);
+        } catch(Exception e) {
+            throw new UknownWhyException("Non riesco ad aggiungere la carta.", e);
+        }
     }
     @Override
     public ObjectiveCard firstCardForEachPlayer() {

@@ -53,7 +53,7 @@ public class ResourceDeck implements Deck{
         }
 
         // Verifico che la carta appartiene al mazzo Resource
-        if (card.getId() >= 40) {
+        if (card.getId() > 40) {
             throw new IllegalAddException("La carta non appartiene al mazzo Resource.");
         }
 

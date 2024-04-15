@@ -45,15 +45,17 @@ class GoldDeckTest {
 
     @Test
     void addCard() {
-        goldDeck.drawCard(player2);
-        Card cartaBomba = player2.getPlayerCards().get(0);
+        Player player2 = new Player("Goku",0,Dot.GREEN,board);
+        Card cartaBomba = goldDeck.drawCard(player2);
+
+        //provo ad inserire una carta di un'altro deck
+        Card cartaBomba2 = resourceDeck.drawCard(player);
+        assertThrows(Exceptions.IllegalAddException.class, () -> goldDeck.addCard(cartaBomba2), "La carta non appartiene al mazzo gold");
+
+        //provo ad inserire un duplicato
+        Card cartaBomba3 = goldDeck.drawCard(player2);
         goldDeck.addCard(cartaBomba);
-        assertEquals(40, goldDeck.carteRimaste());//OK LA CARTA VIENE AGGIUNTA NEL MAZZO
-        //caso in cui si faccia confusione con i deck RISORSA
-        resourceDeck.drawCard(player2);
-        cartaBomba = player2.getPlayerCards().get(1);
-        goldDeck.addCard(cartaBomba);
-        //ERRORE, NON DOVREBBE PERMETTERE UNA CARTA RISORSA NEL DECK ED INOLTRE A PRESCINDERE NON DOVREBBE SUPERARE LE 40 A MAZZO
-        assertEquals(40, goldDeck.carteRimaste());
+        assertThrows(Exceptions.AlredyInException.class, () -> goldDeck.addCard(cartaBomba));
+
     }
 }
