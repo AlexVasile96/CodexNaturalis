@@ -5,17 +5,33 @@ import model.Game;
 //CLASSE CHE MANTIENE TUTTE LE INFORMAZIONI DEL SINGOLO CLIENT/PLAYER
 public class ClientView {
     String userName=null;
+    Game game;
     boolean waitPlayers=false;
-    public String  getUsername() {
-        return null;
+    public String getUsername() {
+        return userName;
+    }
+    public boolean getWaitPlayers() {
+        return false;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Game getGame() {
-        return null;
+        return game;
     }
 
-    public boolean getWaitPlayers() {
-        return false;
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public boolean isWaitPlayers() {
+        return waitPlayers;
     }
 
     public void setUsername(String username) {

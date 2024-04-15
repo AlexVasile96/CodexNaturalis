@@ -21,17 +21,17 @@ public class CliClientApp {
         JSONObject jsonObject = new JSONObject(new JSONTokener(reader));
         JSONArray hostAndPortArray = jsonObject.getJSONArray("hostandport");
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-        String hostName=null;           //INITIALIZING
-        int portNumber=0;               //INITIALIZING
+        String hostName=null;         //INITIALIZING
+        int portNumber=0;       //INITIALIZING
 
         // Iterating through the JSONArray to extract host names and port numbers.
         for (int i = 0; i < hostAndPortArray.length(); i++) {
             // Get the JSONObject representing a host and port combination.
             JSONObject hostAndPort = hostAndPortArray.getJSONObject(i);
             // Extract the host name from the JSONObject.
-            hostName = hostAndPort.getString("hostName");
+           hostName = hostAndPort.getString("hostName");
             // Extract the port number from the JSONObject.
-            portNumber = hostAndPort.getInt("portNumber");
+           portNumber = hostAndPort.getInt("portNumber");
 
             System.out.println("HostName: " + hostName);
             System.out.println("PortNumber: " + portNumber);
@@ -47,7 +47,7 @@ public class CliClientApp {
         System.out.println("Creazione del client in corso...\n");
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-        ClientView ClientView= new ClientView(); //Class that saves player informations
+        ClientView ClientView= new ClientView(); //Class that saves player information
         HandlingPlayerInputsThreadClient HandlingPlayerInputsThreadClient = new HandlingPlayerInputsThreadClient(in,out,ClientView); //handling player inputs
         Thread thread = new Thread(HandlingPlayerInputsThreadClient); //Start the thread
         thread.start();

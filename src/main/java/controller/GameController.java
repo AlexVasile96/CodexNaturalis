@@ -27,6 +27,7 @@ public class GameController {
         this.isGameOver = false;
         players.put(username, userOut);
         this.gson = new Gson();
+        this.game=new Game();
         playerMessage(username, MessagesEnum.CONFIRM_USERNAME, username);
     }
 
@@ -107,7 +108,7 @@ public class GameController {
         }
 
         broadcastMessage(MessagesEnum.GAME_START, "The last player has joined, the game will now commence...");
-        game = new Game(players.keySet());
+        game = new Game();
         // Ora il gioco può iniziare
         System.out.println("The game will now start.");
     }
