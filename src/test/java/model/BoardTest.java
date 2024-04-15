@@ -7,14 +7,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
-    Board board;
-    BoardPoints boardPoints;
+    private Board board;
     private Player player;
+    private InitCardConstructor initCardConstructor= new InitCardConstructor();
 
     @BeforeEach
     void setUp() {
-        board = new Board(50, 50); //creating the board which is NOT shared by all the players
-        boardPoints = new BoardPoints();
+        board = new Board(50, 50);
         player = new Player("Vegeta", 0, Dot.YELLOW, board);
     }
 
@@ -49,6 +48,15 @@ class BoardTest {
 
     @Test
     void placeInitialCard() {
+        InitialCardDeck initialCardDeck= (InitialCardDeck) initCardConstructor.createCards();
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
+
+        //prima carta dovrebbe essere consentita
+        assertTrue(board.placeInitialCard(initialCard));
+
+        // Attempt to place a second initial card
+        InitialCard initialCard2 = initialCardDeck.firstCardForPlayer(player);
+        assertFalse(board.placeInitialCard(initialCard2));
     }
 
     @Test

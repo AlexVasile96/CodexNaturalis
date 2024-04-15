@@ -35,7 +35,7 @@ public class Card {
             this.TRBack.setSpecificCornerSeed(TR.getSpecificCornerSeed());
             this.BLBack.setSpecificCornerSeed(BL.getSpecificCornerSeed());
             this.BRBack.setSpecificCornerSeed(BR.getSpecificCornerSeed());
-            this.attribute=attribute=attribute;
+            this.attribute=attribute;
         }
 
         @Override

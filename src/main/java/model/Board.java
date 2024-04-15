@@ -64,14 +64,14 @@ public class Board {
         }
         return true;
     } //method to see if the attributes are on the board for the gold cards
-    public void placeInitialCard(InitialCard initialCard) { //METHOD TO PLACE THE FIRST CARD WHICH IS CHOSEN RANDOMLY
+    public boolean placeInitialCard(InitialCard initialCard) { //METHOD TO PLACE THE FIRST CARD WHICH IS CHOSEN RANDOMLY
         int[][] centralCoordinates = getCentralCoordinates(); //GETTING THE CENTRAL COORDINATES OF THE BOARD
         int centerX = centralCoordinates[0][0];
         int centerY = centralCoordinates[0][1];
         //IS THE INITIAL CARD ALREADY BEEN PLACED?
         if (getNode(centerX, centerY).getValueCounter()<2 ) { //USING VALUE-COUNTER TO CHECK IF A INITIAL CARD HAD ALREADY BEEN PLACED
             System.out.println("Already Placed!");
-            return;
+            return false;
         }
         try {
             if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) { //CHECKING IF I CAN PLACE THE CARD ON THE BOARD
@@ -117,6 +117,7 @@ public class Board {
             throw new CantPlaceYourCardHere("Can't Place your card",e);
         }
         System.out.println("Initial Card correctly placed"); //THE CARD HAD BEEN PLACED CORRECTLY
+        return true;
     } //method to place the first card
     public void printCornerCoordinates() {
         int[][] centralCoordinates = getCentralCoordinates();
@@ -132,7 +133,7 @@ public class Board {
 
 
     public ExtendExtendExtend createSpecificSecretCard( ObjectiveCard card) //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
-    {
+    {//Momo nota:"avvisatemi se il metodo diventa operativo cosi faccio il test. oppure fatelo voi :p "
         if(card.getObjectiveSpecificTypeOfCard().equals("STAIRS"))
         {
             return new StairsObjectiveCard();
@@ -141,10 +142,9 @@ public class Board {
         {
             return new LObjectiveCard();
         }
-        if(card.getObjectiveSpecificTypeOfCard().equals("MIX"))
-    {
-        return new MixObjectiveCard();
-    }
+        if(card.getObjectiveSpecificTypeOfCard().equals("MIX")) {
+            return new MixObjectiveCard();
+        }
         if(card.getObjectiveSpecificTypeOfCard().equals("TRIS"))
         {
             return new TrisObjectiveCard();
