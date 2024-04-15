@@ -63,12 +63,15 @@ public void setUp(){
         List <ObjectiveCard> secretCards = new ArrayList<>();
         secretCards.add(firstChoiceSecret);
         secretCards.add(secondChoiceSecret);
-    for(int i = 0; i<3; i++) {
+        for(int i = 0; i<6; i++) {
         resourceDeck.drawCard(player);
         }
-        //System.out.println(player.getPlayerCards());
+
         //Verifico che il metodo ritorni null se si sceglie una carta non presente nella mano del player
-        assertNull(player.chooseCard(3));
+        assertNull(player.chooseCard(5));
+        //assertThrows(IndexOutOfBoundsException.class,() ->{
+        //player.chooseCard(4);
+        //});
 
     }
 
@@ -97,8 +100,9 @@ public void setUp(){
         String input2 = "1";
         InputStream in2 = new ByteArrayInputStream(input2.getBytes());
         System.setIn(in2);
+        assertDoesNotThrow(() ->{
         player.chooseSecretCard(secretCards);
-        //System.out.println(player.getSecretChosenCard().getId());
+        });
         assertEquals(firstChoiceSecret.getId(),player.getSecretChosenCard().getId());
 
 
@@ -111,7 +115,7 @@ public void setUp(){
         resourceDeck.drawCard(cardsFromWell);
         goldDeck.drawCard(cardsFromWell);
         goldDeck.drawCard(cardsFromWell);
-        String input = "1";
+        String input = "1\ntl";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         player.chooseCardFromWell(cardsFromWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);

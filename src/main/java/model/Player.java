@@ -1,5 +1,6 @@
 package model;
 
+import Exceptions.InvalidCornerException;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 
@@ -87,10 +88,16 @@ public class Player implements Observable {
         }
 
     public Card chooseCard(int index) {
+        try{
         if (index < 0 || index >= playerCards.size()) {
-            System.out.println("Not valid index"); //INDEX GOES FROM 1 TO 3
+            throw new IndexOutOfBoundsException("Not a valid index");
+        }
+        }
+    catch (IndexOutOfBoundsException e)
+            {System.out.println(e.getMessage()); //INDEX GOES FROM 1 TO 3
             return null;
         }
+
         return playerCards.get(index);
     }  //METHOD TO CHOOSE WHICH CARD THE PLAYER WANTS TO PLACE ON THE BOARD
 
@@ -102,8 +109,12 @@ public class Player implements Observable {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Inserisci il numero della carta obiettivo SEGRETA che vuoi pescare: ");
         int selectedCardIndex = scanner.nextInt();
-        if (selectedCardIndex < 1 || selectedCardIndex > secretCards.size()) {
-            System.out.println("Not valid index");
+        try {
+            if (selectedCardIndex < 1 || selectedCardIndex > secretCards.size()) {
+                throw new IndexOutOfBoundsException("Not a valid index");
+            }
+        }catch (IndexOutOfBoundsException e){
+                System.out.println(e.getMessage());
         }
 
         this.secretChosenCard=secretCards.get(selectedCardIndex - 1);
@@ -130,9 +141,13 @@ public class Player implements Observable {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Select a card on your board you want to place the card from your deck on: ");
         int selectedCardIndex = scanner.nextInt();
-
+        try{
         if (selectedCardIndex < 1 || selectedCardIndex > cardsPlayerCanChooseFrom.size()) {
-            System.out.println("Not valid index");
+            throw new IndexOutOfBoundsException("Not a valid index");}
+
+        }
+        catch (IndexOutOfBoundsException e){
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -184,10 +199,16 @@ public class Player implements Observable {
 
         System.out.print("Choose the corner you want to place the card on: ");
         String selectedCorner = scanner.next().toUpperCase();
-        if (!selectedCorner.equals("TL") && !selectedCorner.equals("TR") && !selectedCorner.equals("BL") && !selectedCorner.equals("BR")) {
-            System.out.println("Invalid corner selection.");
+        try{
+            if (!selectedCorner.equals("TL") && !selectedCorner.equals("TR") && !selectedCorner.equals("BL") && !selectedCorner.equals("BR")) {
+                throw new InvalidCornerException("Invalid corner selection.");
+            }
+         }  catch (InvalidCornerException e){
+            System.out.println(e.getMessage());
             return;
         }
+
+
         int cornerIndex = -1;
         switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECLTY
             case "TL":
