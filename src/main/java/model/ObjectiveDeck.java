@@ -1,4 +1,8 @@
 package model;
+import Exceptions.AlreadyThreeCardsException;
+import Exceptions.EmptyDeckException;
+import Exceptions.UknownWhyException;
+
 import java.util.List;
 
 public class ObjectiveDeck implements Deck {
@@ -18,10 +22,16 @@ public class ObjectiveDeck implements Deck {
         }
     }
 
-    public ObjectiveCard firstCardForEachPlayer ()
-    {
-        return (ObjectiveCard) objectiveCards.remove(0); //ObjectiveCard drownCard = (ObjectiveCard) objectiveCards.remove(0);
-                                                                //return drownCard;
+    public ObjectiveCard firstCardForEachPlayer () {
+        if (objectiveCards.isEmpty()) {
+            throw new EmptyDeckException("Deck obbiettivo vuoto");
+        }
+        try {
+            //ObjectiveCard drownCard = (ObjectiveCard) objectiveCards.remove(0);
+            return (ObjectiveCard) objectiveCards.remove(0); //return drownCard;
+        } catch (Exception e){
+            throw new UknownWhyException("Operazione di estrazione di Objective Card non riuscita", e);
+        }
     }
 
     @Override
@@ -39,7 +49,7 @@ public class ObjectiveDeck implements Deck {
                 return (ObjectiveCard)objectiveCards.remove(0);                          //RETURING THE CHOSEN CARD
             }
         } catch(Exception e) {
-            throw new IllegalStateException("Il giocatore ha già tre carte nella mano."); // Eccezione specifica
+            throw new AlreadyThreeCardsException("Il giocatore ha già tre carte nella mano.",e); // Eccezione specifica
         }
         return null;
     }

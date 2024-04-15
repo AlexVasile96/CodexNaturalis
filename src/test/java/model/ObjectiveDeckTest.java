@@ -30,6 +30,11 @@ class ObjectiveDeckTest {
     void firstCardForEachPlayer() {
         ObjectiveCard firstCommonObjective= objectiveDeck.firstCardForEachPlayer();
         assertEquals(15, objectiveDeck.carteRimaste());
+
+        for(int i =0; i<15; i++){
+            firstCommonObjective= objectiveDeck.firstCardForEachPlayer();
+        }
+        assertThrows(Exceptions.EmptyDeckException.class, ()->objectiveDeck.firstCardForEachPlayer(), "già estratto tutte le carte");
     }
 
     @Test
@@ -40,13 +45,16 @@ class ObjectiveDeckTest {
     //CHE SENSO HA?? IL GIOCATORE NON PUò PESCARE DA QUESTO MAZZO DURANTE IL GIOCO!!
     @Test
     void DrawCardPlayer() {
-    objectiveDeck.drawCard(player);
-    assertEquals(10, objectiveDeck.carteRimaste());//messo valore errato per attirare l'attenzione
+        objectiveDeck.drawCard(player);
+        assertEquals(15, objectiveDeck.carteRimaste());
+        objectiveDeck.drawCard(player);
+        objectiveDeck.drawCard(player);
+        objectiveDeck.drawCard(player);
+        assertEquals(13, objectiveDeck.carteRimaste());
     }
 
     //DA IMPLEMENTARE
     @Test
     void addCard() {
-        assertEquals(0,1);
     }
 }

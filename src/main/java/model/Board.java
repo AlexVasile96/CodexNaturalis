@@ -1,6 +1,8 @@
 package model;
 
 import Exceptions.CantPlaceYourCardHere;
+import Exceptions.IllegalPlacementException;
+import Exceptions.InitialCardAlreadyPlacedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,8 +60,7 @@ public class Board {
             int requiredCount = entry.getValue();       //GET VALUE TAKES THE NUMBER OF THE ATTRIBUTES
             int actualCount = seedCountMap.getOrDefault(requiredSeed, 0); //HOW MANY SPECIFIED DO WE HAVE ACTUALLY ON THE BOARD
             if (actualCount < requiredCount) { //IN CASO CORREGGERE IL SEGNO
-                System.out.println("Not enough" + requiredSeed + "on the board.");
-                return false;
+                throw new IllegalPlacementException("Not enough "+ requiredSeed + " on the board!");
             }
         }
         return true;
@@ -70,8 +71,7 @@ public class Board {
         int centerY = centralCoordinates[0][1];
         //IS THE INITIAL CARD ALREADY BEEN PLACED?
         if (getNode(centerX, centerY).getValueCounter()<2 ) { //USING VALUE-COUNTER TO CHECK IF A INITIAL CARD HAD ALREADY BEEN PLACED
-            System.out.println("Already Placed!");
-            return false;
+            throw new InitialCardAlreadyPlacedException("Initial card id:" +initialCard.id+ " Already Placed!");
         }
         try {
             if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) { //CHECKING IF I CAN PLACE THE CARD ON THE BOARD

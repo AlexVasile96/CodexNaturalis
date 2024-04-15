@@ -29,7 +29,7 @@ public class ResourceDeck implements Deck{
                 return drownCard;
             }
         } catch(Exception e) {
-            throw new AlreadyThreeCardsExeption("Il giocatore ha già tre carte nella mano.", e); // Eccezione specifica
+            throw new AlreadyThreeCardsException("Il giocatore ha già tre carte nella mano.", e); // Eccezione specifica
         }
         return null;
     }

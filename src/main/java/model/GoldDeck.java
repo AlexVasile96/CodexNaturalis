@@ -55,7 +55,7 @@ public class GoldDeck implements Deck {
         try {
             goldCards.add(card);
         } catch(Exception e) {
-            throw new UknownWhyException("Non riesco ad aggiungere la carta.", e);
+            throw new UknownWhyException("Operazione 'addCard' non riuscita.", e);
         }
     }
     @Override

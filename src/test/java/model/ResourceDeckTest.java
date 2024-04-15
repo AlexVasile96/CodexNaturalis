@@ -29,7 +29,7 @@ class ResourceDeckTest {
     }
 
     @Test //Test del metodo che fa pescare una carta al player dal deck risorse
-    void drawCardPlayerNonDeveAverePiuDiTre() {//verifico che il player non possa avere più di tre carte in mano
+    void drawCardPlayer() {//verifico che il player non possa avere più di tre carte in mano
         for(int i = 0; i <5; i++){
             resourceDeck.drawCard(player);
         }

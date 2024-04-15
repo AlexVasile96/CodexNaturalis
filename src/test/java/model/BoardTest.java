@@ -42,8 +42,7 @@ class BoardTest {
         assertTrue(result, "Il posizionamento della carta oro dovrebbe essere possibile");
 
         // False test
-        result = board.placeGoldCard( List.of(SpecificSeed.MUSHROOM, SpecificSeed.MUSHROOM, SpecificSeed.MUSHROOM));
-        assertFalse( result, "Il posizionamento della carta oro non dovrebbe essere possibile");
+        assertThrows(Exceptions.IllegalPlacementException.class, ()->board.placeGoldCard( List.of(SpecificSeed.MUSHROOM, SpecificSeed.MUSHROOM, SpecificSeed.MUSHROOM)));
     }
 
     @Test
@@ -56,7 +55,7 @@ class BoardTest {
 
         // Attempt to place a second initial card
         InitialCard initialCard2 = initialCardDeck.firstCardForPlayer(player);
-        assertFalse(board.placeInitialCard(initialCard2));
+        assertThrows(Exceptions.InitialCardAlreadyPlacedException.class, ()->board.placeInitialCard(initialCard2));
     }
 
     @Test
