@@ -7,7 +7,7 @@ public enum MessagesEnum {
     RESOURCEDECK,
     GOLDDECK,
     COMMON_OBJECTIVE_CARDS,
-    INFO,
+    INFO, //fai sto trikki qua signor client perfavore
     PLAYER_CONNECTED,
     CONFIRM_USERNAME,
     CONFIRM_PASSWORD,

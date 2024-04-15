@@ -6,8 +6,8 @@ package network.message;
  */
 
 public class MessageSender {
-    private MessagesEnum messagesEnum;
-    private String messageToSend;
+    protected final MessagesEnum messagesEnum;
+    protected final String messageToSend;
     public MessageSender(MessagesEnum messagesEnum, String messageToSend) {
         this.messagesEnum = messagesEnum;
         this.messageToSend = messageToSend;
