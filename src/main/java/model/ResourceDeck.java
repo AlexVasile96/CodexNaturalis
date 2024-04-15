@@ -1,4 +1,6 @@
 package model;
+import Exceptions.*;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class ResourceDeck implements Deck{
                 return drownCard;
             }
         } catch(Exception e) {
-            throw new IllegalStateException("Il giocatore ha già tre carte nella mano."); // Eccezione specifica
+            throw new AlreadyThreeCardsExeption("Il giocatore ha già tre carte nella mano.", e); // Eccezione specifica
         }
         return null;
     }
@@ -40,12 +42,32 @@ public class ResourceDeck implements Deck{
                 pozzo.add(drownCard);
                 return pozzo;
         } catch(Exception e) {
-            throw new IllegalStateException("Il giocatore ha già tre carte nella mano."); // Eccezione specifica
+            throw new PozzoUnrechableExeption("Coudn't place card in the pozzo",e); // Eccezione specifica
         }
     }
 
     public void addCard(Card card) {
-        resourceCards.add(card);
+        // Verifica se il mazzo ha già raggiunto la capacità massima
+        if (resourceCards.size() >= 40) {
+            throw new FullDeckExeption("Il mazzo ha raggiunto la capacità massima di 40 carte.");
+        }
+
+        // Verifico che la carta appartiene al mazzo Resource
+        if (card.getId() >= 40) {
+            throw new IllegalAddException("La carta non appartiene al mazzo Resource.");
+        }
+
+        // Verifica se la carta è già presente nel mazzo
+        for (Card card2 : resourceCards) {
+            if (card.id == card2.id) throw new AlredyInException("La carta è già presente nel mazzo.");
+        }
+
+        // provo ad aggiungere la carta
+        try {
+            resourceCards.add(card);
+        } catch(Exception e) {
+            throw new UknownWhyException("Non riesco ad aggiungere la carta.", e);
+        }
     }
     @Override
     public ObjectiveCard firstCardForEachPlayer() {

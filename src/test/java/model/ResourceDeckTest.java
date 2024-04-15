@@ -8,13 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ResourceDeckTest {
     private Player player;
     Board board;
-    private GoldDeck goldDeck;
     ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor(); //create resource cards
     ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards();
+    GoldCardConstructor goldCardConstructor = new GoldCardConstructor(); //create resource cards
+    GoldDeck goldDeck = (GoldDeck) goldCardConstructor.createCards();
+    ResourceCardConstructor resourceCardConstructor2 = new ResourceCardConstructor(); //create resource cards
+    ResourceDeck resourceDeck2 = (ResourceDeck) resourceCardConstructor2.createCards();
 
 
     @BeforeEach
@@ -45,13 +49,19 @@ class ResourceDeckTest {
     @Test
     void addCard() {
         Player player2 = new Player("Goku",0,Dot.GREEN,board);
-        resourceDeck.drawCard(player2);
-        assertEquals(39, resourceDeck.carteRimaste());
-        Card cartaBomba = player2.getPlayerCards().get(0);
+        Card cartaBomba = resourceDeck.drawCard(player2);
+
+        //provo ad inserire una carta di un'altro deck
+        Card cartaBomba2 = goldDeck.drawCard(player);
+        assertThrows(Exceptions.IllegalAddException.class, () -> resourceDeck.addCard(cartaBomba2), "La carta non appartiene al mazzo Resource");
+
+        //provo ad inserire un duplicato
+        Card cartaBomba3 = resourceDeck.drawCard(player2);
         resourceDeck.addCard(cartaBomba);
-        assertEquals(40, resourceDeck.carteRimaste());
-        //ERRORE NON DOVREBBE PERMETTERE L'INSERIMENTO DI CARTA GOLD NELLE RISORSE, E A PRESCINDERE SUPERARE LE 40 PER MAZZO
-        resourceDeck.addCard(cartaBomba);
-        assertEquals(40, resourceDeck.carteRimaste());
+        assertThrows(Exceptions.AlredyInException.class, () -> resourceDeck.addCard(cartaBomba));
+
+        //provo ad inserire una carta nel mazzo pieno
+        //assertThrows(Exceptions.FullDeckExeption.class, () -> resourceDeck.addCard(cartaBomba), "Il mazzo ha raggiunto la capacità massima di 40 carte.");
+
     }
 }
