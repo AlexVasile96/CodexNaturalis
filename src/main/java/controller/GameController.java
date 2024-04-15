@@ -68,22 +68,27 @@ public class GameController {
             }
         }
     }
+
+
     public void addPlayer(String username, PrintWriter userOut) throws GameFullException, UnknownPlayerNumberException, UsernameAlreadyExistsException {
         if (size == 0)
             throw new UnknownPlayerNumberException();
+
         if (!players.containsKey(username)) {
             if (players.size() >= size || isGameOver) {
                 throw new GameFullException();
-            }else{
-                broadcastMessage(MessagesEnum.PLAYER_CONNECTED, username);
-                players.put(username, userOut);
-                playerMessage(username, MessagesEnum.CONFIRM_USERNAME, username);
-                System.out.println("Added player: " + username + " to current game.");
             }
+        } else {
+            throw new UsernameAlreadyExistsException();
         }
+        broadcastMessage(MessagesEnum.PLAYER_CONNECTED, username);
+        players.put(username, userOut);
+        playerMessage(username, MessagesEnum.CONFIRM_USERNAME, username);
+        System.out.println("Added player: " + username + " to current game.");
 
         preparationForStartingGame();
     }
+
     public void choosePlayerNumber(int number) throws PlayerNumberAlreadySetException, ParametersNotValidException {
         if (size > 0) {
             throw new PlayerNumberAlreadySetException();
@@ -102,7 +107,7 @@ public class GameController {
         }
 
         broadcastMessage(MessagesEnum.GAME_START, "The last player has joined, the game will now commence...");
-
+        game = new Game(players.keySet());
         // Ora il gioco può iniziare
         System.out.println("The game will now start.");
     }
@@ -118,7 +123,7 @@ public class GameController {
         }
     }
 
-    public Set<String> getConnectedPlayersUsernames() {
+    public Set<String> getConnectedPlayerUsername() {
         return players.keySet();
     }
 

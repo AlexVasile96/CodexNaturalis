@@ -45,8 +45,8 @@ public class CliClientApp {
     private static void startCLI(Socket clientSocket, BufferedReader stdIn) throws IOException { //Start the Command Line Interface
         try{
         System.out.println("Creazione del client in corso...\n");
-        PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
         ClientView ClientView= new ClientView(); //Class that saves player informations
         HandlingPlayerInputsThreadClient HandlingPlayerInputsThreadClient = new HandlingPlayerInputsThreadClient(in,out,ClientView); //handling player inputs
         Thread thread = new Thread(HandlingPlayerInputsThreadClient); //Start the thread
