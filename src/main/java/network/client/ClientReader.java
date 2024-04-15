@@ -14,47 +14,45 @@ import java.io.IOException;
 public class ClientReader implements Runnable {
     private final BufferedReader in;
     private final ClientView clientView;
-
     private final HandlingPlayerInputsThreadClient handlingPlayerInputsThreadClient;
 
 
     //CLI constructor, we'll figure out how to make a GUI constructor later.
     public ClientReader(BufferedReader in, HandlingPlayerInputsThreadClient handlingPlayerInputsThreadClient, ClientView clientView) {
-        this.in = in;
+        this.in =in;
         this.handlingPlayerInputsThreadClient = handlingPlayerInputsThreadClient;
         this.clientView = clientView;
     }
 
     @Override
     public void run() {
-        String response;
         while (true) {
             try {//If the server disconnects, interrupt the client
-                response = in.readLine();
+                //System.out.println("SERVER CONNESSO");
+                String response = in.readLine();
+                System.out.println(response);
+                if (response == null) {
+                    System.err.println("Server connection lost.");
+                    break;
+                }
+                //Elaborate the message from the server
+                elaborateResponse(response);
             } catch (IOException ex) {
                 System.err.println("Server connection lost.");
                 break;
             }
-            if (response == null) {
-                System.err.println("Server connection lost.");
-                break;
-            }
-            //Elaborate the message from the server
-            elaborateResponse(response);
         }
     }
 
-    private void elaborateResponse(String jsonMessage){
+
+    public void elaborateResponse(String jsonMessage){
         // Method for processing the server response will be implemented here.
+        //System.out.println("Sono in eleaborate Response Del Clientreader");
         Gson gson = new Gson();
         MessageSender response = gson.fromJson(jsonMessage, MessageSender.class);
-
         try {
-
             switch (response.getMessages()) {
-
                 //Information
-
                 case INFO -> {
                     System.out.println(response.getMessageToSend());
                 }

@@ -12,10 +12,6 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * This class represents the executable for the game on the server machine
- */
-
 public class ServerMain {
         public static void main(String[] args) {
             //Try-catch block to read the IP address and the port number from a JSON file
@@ -40,14 +36,6 @@ public class ServerMain {
         }
 
         //PRIVATE METHODS
-
-
-    /**
-     * Starts the server on the given port.
-     *
-     * @param port The port number to start the server on.
-     */
-         
         private static void startServer(int port) {
             ExecutorService executor = Executors.newCachedThreadPool();
             System.out.println("Server started!");
@@ -64,13 +52,13 @@ public class ServerMain {
 
             //Creates the lobby for this server
             ServerLobby lobby = new ServerLobby();
-
             //Accepts connections from clients on new threads
             while (true) {
                 try {
                     Socket socket = serverSocket.accept();
-                    System.out.println("Creating new connection...");
-                    executor.submit(new ServerPlayerHandler(socket, lobby));
+                    String clientAddress = socket.getInetAddress().getHostAddress();
+                    System.out.println("Client connected from IP: " + clientAddress);
+                    executor.submit(new ServerPlayerHandler(socket, lobby)); //HAndling singol player client
                 } catch (IOException ex) {
                     System.err.println(ex.getMessage());
                     break;

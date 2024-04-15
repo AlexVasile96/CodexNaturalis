@@ -39,42 +39,39 @@ public class ServerPlayerHandler implements Runnable {
     //MULTITHREADING METHODS
 
     public void run() { //METHOD TO LOGIN THE CLIENT
-
         //Sets a 10 second timeout for the socket reader
         try {
-            socket.setSoTimeout(10 );
+            socket.setSoTimeout(10*1000 );
         } catch (SocketException e) {
             System.err.println("Warning: couldn't set socket timeout in ServerPlayerHandler");
             e.printStackTrace();
         }
         //CREATING INPUT AND OUTPUT
-
         try {
             in = new Scanner(socket.getInputStream());
+            System.out.println("In Scanner created");
             out = new PrintWriter(socket.getOutputStream(), true);
+            System.out.println("OUt PrintWriter created");
+            out.println("ciao, sono il server!");
         } catch (IOException ex) {
             ex.printStackTrace();
             return;
         }
         try {
-            System.out.println("Logging in player...");
+            System.out.println("Logging player...");
             sendMessageToClient(MessagesEnum.INFO, "Please, set your username.");
-            System.out.println("ciao");
-
             //Reads the client's message
-            String messageString;
+
             while (true) {
-                messageString = in.nextLine();
+                //System.out.println("siamo dentro?");
+                String messageString = in.nextLine();
                 System.out.println("Received message from client: " + messageString); // Print received message for debugging
-
                 MessageSender message = gson.fromJson(messageString, MessageSender.class);
-
                 switch (message.getMessages()) {
                     case USERNAME -> loginPlayer(message.getMessageToSend());
-                    /*case NUM_OF_PLAYERS -> setGameSize(message.getMessageToSend());
-                    case COMMAND -> runCommand(message.getMessageToSend());*/
+                    case NUM_OF_PLAYERS -> setGameSize(message.getMessageToSend());
+                    case COMMAND -> runCommand(message.getMessageToSend());
                     case PING -> {
-                        //does nothing, it only resets the connection timer
                     }
                     default -> {
                         System.out.println("Client sent an unexpected message: ");
@@ -84,8 +81,8 @@ public class ServerPlayerHandler implements Runnable {
                 }
             }
 
-        } catch (NoSuchElementException | IllegalStateException ex) {
-            if (controller == null) {
+        } catch (RuntimeException e) {}
+           /* if (controller == null) {
                 System.out.println("The connection with a player in login phase was lost.");
             } else if (!controller.isSizeSet()) {
                 System.out.println("The connection with player " + username + " was lost during game size setting phase.");
@@ -93,10 +90,10 @@ public class ServerPlayerHandler implements Runnable {
             } else {
                 System.out.println("The connection with player " + username + " was lost during the game.");
                 controller.setDisconnectedStatus(username);
-            }
+            }*/
         }
 
-    }
+
     private void loginPlayer(String messageContent) throws NoSuchElementException {
 
         //If the player has not already logged in
@@ -138,9 +135,19 @@ public class ServerPlayerHandler implements Runnable {
         String json = JsonUtils.toJson(cards);
         sendMessageToClient(MessagesEnum.CARDS, json);
     }
-    public void sendMessageToClient(MessagesEnum type, String content) {
-        out.println(JsonUtils.toJson(new MessageSender(type, content)));
+    private synchronized void sendMessageToClient(MessagesEnum type, String content) {
+        try {
+            if (out != null) {
+                out.println(gson.toJson(new MessageSender(type, content)));
+            } else {
+                System.err.println("PrintWriter is null, message not sent.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error sending message to client: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
     private void setGameSize(String messageContent) throws NoSuchElementException {
 
         //If controller number of players has not been decided

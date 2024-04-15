@@ -15,15 +15,6 @@ public class ServerLobby {
         currentGames = new ArrayList<>();
     }
 
-
-        /**
-         * Allows a player to log in to the lobby.
-         *
-         * @param username The username of the player trying to log in.
-         * @param userOut  The PrintWriter associated with the player's output stream.
-         * @return The GameController object associated with the logged-in player.
-         */
-
     public synchronized GameController login(String username, PrintWriter userOut) throws UnknownPlayerNumberException, UsernameAlreadyExistsException {
 
         //Checks if the given username is already taken, and attempts to add the player to the first game that isn't full or to the one they belonged before disconnection

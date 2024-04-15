@@ -1,19 +1,19 @@
 package network.client.Cli;
 
 import Exceptions.OperationCancelledException;
-import model.Player;
+import com.google.gson.Gson;
 import network.message.MessageSender;
 import network.message.MessagesEnum;
 import view.ClientView;
-import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
 public class HandlingPlayerInputsThreadClient implements Runnable {
 
-    private BufferedReader stdIn;
-    private PrintWriter out;
+    public BufferedReader stdIn;
+    public PrintWriter out;
     private ClientView clientView;
     private boolean doClose;
     private Gson gson;
@@ -28,6 +28,13 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("SONO ENTRATO IN HANDLINGPLAYERINPUTS !!!");
+        try {
+            String welcome= stdIn.readLine();
+            System.out.println(welcome);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         String userInput;
         while (!doClose) {
             try {
@@ -60,15 +67,12 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
         //scelta della carta obiettivo
         //inizializzazione dei punti(=0)
         //creazione della sua tabella dei punti -> piazzamento del dot
-
-
     }
 
 
     private void actionsInput(String userInput) throws IOException { //GAME STARTED
         try {
             switch (userInput) {
-
                 //Display the player's commands options
                 case "help" -> printHelp();
 
