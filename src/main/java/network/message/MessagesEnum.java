@@ -19,5 +19,10 @@ public enum MessagesEnum {
     GET_CARDS,
     COMMAND,
     PING,
-    ERROR
+    ERROR,
+    SELECTED_CARD,
+    PLACE_SELECTED_CARD,
+    SELECTED_CORNER,
+    CHOSEN_CARD_FROM_HAND,
+    SECRET_OBJECTIVE_CARD
 }
