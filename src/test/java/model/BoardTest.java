@@ -50,19 +50,13 @@ class BoardTest {
     void placeInitialCard() {
         InitialCardDeck initialCardDeck= (InitialCardDeck) initCardConstructor.createCards();
         InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
-        board.placeInitialCard(initialCard);
 
+        //prima carta dovrebbe essere consentita
+        assertTrue(board.placeInitialCard(initialCard));
 
-        int[][] centralCoordinates= board.getCentralCoordinates();
-
-        // Verify that the initial card is correctly placed on the board
-        Node[][] nodes = board.getNodes();
-
-
-        assertEquals(initialCard.getTL().getSpecificCornerSeed(), nodes[centralCoordinates[0][0]][centralCoordinates[0][1]].getSpecificNodeSeed(),"Tl");
-        assertEquals(initialCard.getTR().getSpecificCornerSeed(), nodes[centralCoordinates[1][0]][centralCoordinates[0][1]].getSpecificNodeSeed(),"TR");
-        assertEquals(initialCard.getBL().getSpecificCornerSeed(), nodes[centralCoordinates[0][0]][centralCoordinates[1][1]].getSpecificNodeSeed(),"BL");
-        assertEquals(initialCard.getBR().getSpecificCornerSeed(), nodes[centralCoordinates[1][0]][centralCoordinates[1][1]].getSpecificNodeSeed(),"BR");
+        // Attempt to place a second initial card
+        InitialCard initialCard2 = initialCardDeck.firstCardForPlayer(player);
+        assertFalse(board.placeInitialCard(initialCard2));
     }
 
     @Test

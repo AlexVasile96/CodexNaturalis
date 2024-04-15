@@ -41,4 +41,9 @@ public class InitialCardDeck implements Deck {
     public List<Card> getInitialCards() {
         return initialCards;
     }
+
+    //per i test
+    public int carteRimaste(){
+        return initialCards.size();
+    }
 }
