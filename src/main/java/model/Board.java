@@ -19,9 +19,9 @@ public class Board {
         cardsOnTheBoardList = new ArrayList<>();
         nodes = new Node[rows][cols];
         this.initEmptyValue =SpecificSeed.EMPTY;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                nodes[i][j] = new Node(SpecificSeed.EMPTY, i, j);
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < cols; column++) {
+                nodes[row][column] = new Node(SpecificSeed.EMPTY, row, column);
                 this.numOfEmpty++; //NumOfEmpty is an int that checks if we're doing things correctly
             }
         }
