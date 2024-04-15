@@ -32,7 +32,7 @@ public class InitialCardDeck implements Deck {
         return null;
     }
 
-    public InitialCard firstCardForEachPlayer (Player player)
+    public InitialCard firstCardForPlayer(Player player)
     {
         Collections.shuffle(initialCards);
         InitialCard drownCard = (InitialCard) initialCards.remove(0);

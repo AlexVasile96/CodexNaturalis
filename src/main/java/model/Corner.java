@@ -49,4 +49,8 @@ public class Corner extends Node{
     public void setY(int y) {
         this.y = y;
     }
+
+    //per i test
+
+
 }

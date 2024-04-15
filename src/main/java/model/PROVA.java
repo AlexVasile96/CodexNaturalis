@@ -49,7 +49,7 @@ public class PROVA {
         FirstThreeCards firstThreeCards = new FirstThreeCards(player, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
         firstThreeCards.yourThreeCards(); //Player Deck initialized
         player.visualizePlayerCards(player.getPlayerCards()); //METHOD TO VISUALIZE THE 3 CARDS THE PLAYER RANDOMLY DREW
-        InitialCard initialCard = initialCardDeck.firstCardForEachPlayer(player); //THE SHUFFLE IS ALREADY IMPLEMENTED IN THIS METHOD
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player); //THE SHUFFLE IS ALREADY IMPLEMENTED IN THIS METHOD
         System.out.println(initialCard.toString());                 //PRINTING THE INITIAL CARD
         board.placeInitialCard(initialCard);                        //PLACING THE INITIAL CARD ON THE BOARD, THIS IS WHERE THE GAME STARTS
         board.placeInitialCard(initialCard);                        //JUST CHECKING IF THE METHOD ACTUALLY PREVENTS FROM PLACING 2 INITIAL CARDS

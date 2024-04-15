@@ -12,7 +12,7 @@ public class InitialCard extends Card{
     private Corner BLBack;
     private Corner BRBack;
     public InitialCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, List<SpecificSeed> attirbutes) {
-        super(id, type, value, TL, TR, BL, BR);
+        super(id, type, value, TL, TR, BL, BR, type);
         this.attribute = attirbutes;
         this.isCardBack=false;
         this.isCardBack=false;
