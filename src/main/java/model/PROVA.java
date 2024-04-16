@@ -48,18 +48,18 @@ public class PROVA {
 
         FirstThreeCards firstThreeCards = new FirstThreeCards(player, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
         firstThreeCards.yourThreeCards(); //Player Deck initialized
-        player.visualizePlayerCards(player.getPlayerCards()); //METHOD TO VISUALIZE THE 3 CARDS THE PLAYER RANDOMLY DREW
-        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player); //THE SHUFFLE IS ALREADY IMPLEMENTED IN THIS METHOD
-        System.out.println(initialCard.toString());                 //PRINTING THE INITIAL CARD
-        board.placeInitialCard(initialCard);                        //PLACING THE INITIAL CARD ON THE BOARD, THIS IS WHERE THE GAME STARTS
-        board.placeInitialCard(initialCard);                        //JUST CHECKING IF THE METHOD ACTUALLY PREVENTS FROM PLACING 2 INITIAL CARDS
+        player.visualizePlayerCards(player.getPlayerCards());                       //METHOD TO VISUALIZE THE 3 CARDS THE PLAYER RANDOMLY DREW
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);       //THE SHUFFLE IS ALREADY IMPLEMENTED IN THIS METHOD
+        System.out.println(initialCard.toString());                                 //PRINTING THE INITIAL CARD
+        board.placeInitialCard(initialCard);                                        //PLACING THE INITIAL CARD ON THE BOARD, THIS IS WHERE THE GAME STARTS
+        board.placeInitialCard(initialCard);                                        //JUST CHECKING IF THE METHOD ACTUALLY PREVENTS FROM PLACING 2 INITIAL CARDS
         board.printCornerCoordinates();
-        board.printBoard();                                             //GETTING THE INITIAL CARD COORDINATES
+        board.printBoard();                                                         //GETTING THE INITIAL CARD COORDINATES
         boardPoints.countPoints(board);
-        //Player choose the first card he has on his deck, in this case we're talking about a resource card
-        player.playCard(board, 0);                               //Player places his cards
-        board.printBoard();                                                //printing the board
-        System.out.println(board.getCardsOnTheBoardList());             //printing the cards on the board
+                                                                                    //Player choose the first card he has on his deck, in this case we're talking about a resource card
+        player.playCard(board, 0);                                         //Player places his cards
+        board.printBoard();                                                         //printing the board
+        System.out.println(board.getCardsOnTheBoardList());                          //printing the cards on the board
         //player.drawResourceCard((ResourceDeck) resourceDeck);
         player.chooseCardFromWell(cardsWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
         player.visualizePlayerCards(player.getPlayerCards());
