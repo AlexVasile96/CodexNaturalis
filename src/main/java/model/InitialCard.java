@@ -15,7 +15,6 @@ public class InitialCard extends Card{
         super(id, type, value, TL, TR, BL, BR, type);
         this.attribute = attirbutes;
         this.isCardBack=false;
-        this.isCardBack=false;
         this.TLBack = new Corner(SpecificSeed.EMPTY,0,0);
         this.TRBack = new Corner(SpecificSeed.EMPTY,0,0);
         this.BLBack = new Corner(SpecificSeed.EMPTY,0,0);
@@ -40,6 +39,16 @@ public class InitialCard extends Card{
                 ", BR=" + BR +
                 ", attributes=" + attribute +
                 '}';
+    }
+
+    @Override
+    public boolean isCardBack() {
+        return isCardBack;
+    }
+
+    @Override
+    public void setCardBack(boolean cardBack) {
+        isCardBack = cardBack;
     }
 
     //GETTER AND SETTER

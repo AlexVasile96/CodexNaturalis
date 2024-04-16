@@ -71,7 +71,8 @@ public class Board {
         int centerY = centralCoordinates[0][1];
         //IS THE INITIAL CARD ALREADY BEEN PLACED?
         if (getNode(centerX, centerY).getValueCounter()<2 ) { //USING VALUE-COUNTER TO CHECK IF A INITIAL CARD HAD ALREADY BEEN PLACED
-            throw new InitialCardAlreadyPlacedException("Initial card id:" +initialCard.id+ " Already Placed!");
+            System.out.printf("Initial card id:" +initialCard.id+ " Already Placed!");
+            return false;
         }
         try {
             if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) { //CHECKING IF I CAN PLACE THE CARD ON THE BOARD
@@ -134,8 +135,7 @@ public class Board {
 
     public ExtendExtendExtend createSpecificSecretCard( ObjectiveCard card) //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
     {//Momo nota:"avvisatemi se il metodo diventa operativo cosi faccio il test. oppure fatelo voi :p "
-        if(card.getObjectiveSpecificTypeOfCard().equals("STAIRS"))
-        {
+        if(card.getObjectiveSpecificTypeOfCard().equals("STAIRS")) {
             return new StairsObjectiveCard();
         }
         if(card.getObjectiveSpecificTypeOfCard().equals("L"))

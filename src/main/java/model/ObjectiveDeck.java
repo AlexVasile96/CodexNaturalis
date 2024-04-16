@@ -3,6 +3,7 @@ import Exceptions.AlreadyThreeCardsException;
 import Exceptions.EmptyDeckException;
 import Exceptions.UknownWhyException;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ObjectiveDeck implements Deck {
@@ -13,7 +14,7 @@ public class ObjectiveDeck implements Deck {
 
     @Override
     public void shuffle() {
-
+        Collections.shuffle(objectiveCards);
     }
 
     public void printDeck() {
