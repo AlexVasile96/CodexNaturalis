@@ -1,7 +1,7 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BoardPoints {
@@ -13,6 +13,16 @@ public class BoardPoints {
         for (SpecificSeed seed : SpecificSeed.values()) {
             seedCountMap.put(seed, 0);
         }
+        //is card back
+        for(Card card : board.getCardsOnTheBoardList()){
+            if(card.isCardBack()){
+                List<SpecificSeed> cardSeed = card.getAttributes();
+                for (SpecificSeed seed : cardSeed) {
+                    seedCountMap.put(seed, seedCountMap.get(seed) + 1);
+                }
+            }
+        }
+
         for (int i = 0; i < board.getNodes().length; i++) {
             for (int j = 0; j < board.getNodes()[i].length; j++) {
                 SpecificSeed seed = board.getNodes()[i][j].getSpecificNodeSeed();

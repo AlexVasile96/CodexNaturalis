@@ -8,7 +8,7 @@ public class ObjectiveCard extends Card{
     private ObjectiveSpecificTypeOfCard objectiveSpecificTypeOfCard; //ENUM
 
     public ObjectiveCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, int numberOfWhenTheGameEnds, ObjectiveSpecificTypeOfCard objectiveSpecificTypeOfCard) {
-        super(id, type, value, TL, TR, BL, BR, type);
+        super(id, type, value, TL, TR, BL, BR);
         this.value = value;
         this.id = id;
         this.numberOfWhenTheGameEnds = numberOfWhenTheGameEnds;

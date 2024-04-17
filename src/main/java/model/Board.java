@@ -151,11 +151,6 @@ public class Board {
                     this.numOfEmpty = numOfEmpty - 4;
                     initialCard.setIndexOnTheBoard(1); //SETTING THE INDEX ON THE FIRST CARD PLACED
                     cardsOnTheBoardList.add(initialCard); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARD PLACED ON THE BOARD ****HISTORIC****
-                    System.out.println("Cards on the board are:"); //PLN
-                    for (Card card : cardsOnTheBoardList) {
-                        System.out.println(card);
-                    }
-                    System.out.println("Card finished"); //I PRINTED ALL THE CARDS I HAVE ON MY BOARD
                 }
             } catch (Exception e) {
                 throw new CantPlaceYourCardHere("Can't Place your card", e);
@@ -207,6 +202,14 @@ public class Board {
         }
 
         return null;
+    }
+
+    public void printCardsOnTheBoard() {
+        System.out.println("Cards on the board are:"); //PLN
+        for (Card card : cardsOnTheBoardList) {
+            System.out.println(card);
+        }
+        System.out.println("Card finished"); //I PRINTED ALL THE CARDS I HAVE ON MY BOARD
     }
 
 

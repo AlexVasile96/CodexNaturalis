@@ -1,4 +1,5 @@
 package model;
+import Exceptions.CantCreateCardsException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -28,13 +29,13 @@ public class ResourceCardConstructor implements CardConstructor{
                 Corner TR= new Corner(topRight,0,0);
                 Corner BL= new Corner(bottomLeft,0,0);
                 Corner BR= new Corner(bottomRight,0,0);
-                Card cards = new Card(id, type, value, TL, TR, BL, BR, type);                 //creating all the resource cards
+                Card cards = new Card(id, type, value, TL, TR, BL, BR);                 //creating all the resource cards
                 resourceCardsList.add(cards);                                           //adding card to the arraylist previously created
             }
             reader.close();
 
         } catch (Exception e) { //catching exceptions
-            e.printStackTrace();
+            throw new CantCreateCardsException("Coudn't create cards.", e);
         }
         return new ResourceDeck(resourceCardsList);                                             //returning the resource deck (INTELLIJ SUGGESTION)
     }
