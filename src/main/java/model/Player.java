@@ -414,7 +414,7 @@ public class Player implements Observable {
                 updater.updatePlayerPoints(selectedCardFromTheDeck, this, board);
 
             }
-            System.out.println("Your new score is " + playerScore + "points");
+            System.out.println("Your new score is " + playerScore + " points");
             if (playerScore >= 20) {
                 System.out.println("Player " + getNickName() + "wins!\n");
                 EndGame endGame = new EndGame();

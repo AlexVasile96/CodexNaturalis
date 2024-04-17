@@ -8,97 +8,105 @@ import java.util.Scanner;
 public class PROVA {
     public static void main(String[] args) {
         //INITIALIZING THE BOARD
-        BoardPoints boardPoints = new BoardPoints();
-        //creating the board which is NOT shared by all the players
+        BoardPoints boardPoints = new BoardPoints(); //creating the board which is NOT shared by all the players
         Board board = new Board(50, 50);
-        //creating a player
-        Player player = new Player("Calla", 0, Dot.GREEN, board);
-        int numOfMush=0;
-
-        //creazione deck
+        Player player = new Player("Calla", 0, Dot.GREEN, board); //creating a player
+        //int numOfMush=0;
         ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor(); //create resource cards
-        Deck resourceDeck = resourceCardConstructor.createCards(); //create Deck for resourcesCards
-        resourceDeck.shuffle(); //SHUFFLING THE RESOURCEDECK
-        GoldCardConstructor goldcardConstructor = new GoldCardConstructor(); //create gold cards
-        Deck goldDeck = goldcardConstructor.createCards(); //create Deck for goldCards
-        goldDeck.shuffle(); //SHUFFLING THE GOLDDECK
-        ObjectiveCardConstructor objectiveCardConstructor = new ObjectiveCardConstructor(); //CREATING OBJECTIVE CARDS
-        Deck objectiveDeck = objectiveCardConstructor.createCards(); //creating deck for objective cards
+        Deck resourceDeck = resourceCardConstructor.createCards();                      //create Deck for resourcesCards
+        resourceDeck.shuffle();                                                          //SHUFFLING THE RESOURCEDECK
+        GoldCardConstructor goldcardConstructor = new GoldCardConstructor();                //create gold cards
+        Deck goldDeck = goldcardConstructor.createCards();                                      //create Deck for goldCards
+        goldDeck.shuffle();                                                                      //SHUFFLING THE GOLDDECK
+        ObjectiveCardConstructor objectiveCardConstructor = new ObjectiveCardConstructor();     //CREATING OBJECTIVE CARDS
+        Deck objectiveDeck = objectiveCardConstructor.createCards();                            //creating deck for objective cards
         objectiveDeck.shuffle();
         InitCardConstructor initCardConstructor = new InitCardConstructor(); //CREATING INITIAL CARDS
-        InitialCardDeck initialCardDeck = (InitialCardDeck) initCardConstructor.createCards(); //creating Deck for the six first card, casting because in the costrcutor i provided a deck class
+        InitialCardDeck initialCardDeck = (InitialCardDeck) initCardConstructor.createCards(); //creating Deck for the six first card, casting because in the constructor I provided a deck class
 
-        //carte comuni a tutti
-        List<Card> cardsWell = new ArrayList<>();
-        //piazzo nel pozzo 2 risorse e due gold
+        //common cards for every player
+        List<Card> cardsWell = new ArrayList<>(); //placing 2 golds cards and 2 golds resources in the well
         resourceDeck.drawCard(cardsWell);
         resourceDeck.drawCard(cardsWell);
         goldDeck.drawCard(cardsWell);
         goldDeck.drawCard(cardsWell);
-        System.out.println("Common Cards: ");
+        System.out.println("Common Cards in the well: ");
         for (Card card : cardsWell) {
             System.out.println(card);
         }
         System.out.println("\n");
 
-        //carte obbiettivo comuni a tutti
-        ObjectiveCard firstCommonObjective = objectiveDeck.firstCardForEachPlayer();
+        ObjectiveCard firstCommonObjective = objectiveDeck.firstCardForEachPlayer(); //common objective cards
         ObjectiveCard secondCommonObjective = objectiveDeck.firstCardForEachPlayer();
-        System.out.println("First common objective is " + firstCommonObjective);
-        System.out.println("Second common objective is " + secondCommonObjective);
+        System.out.println("First common objective card is " + firstCommonObjective);
+        System.out.println("Second common objective card is " + secondCommonObjective);
 
         //creazione carte segrete personali
         List<ObjectiveCard> secretCards = new ArrayList<>();
         secretCards.add((ObjectiveCard) objectiveDeck.drawCard(player));
         secretCards.add((ObjectiveCard) objectiveDeck.drawCard(player));
-        player.chooseSecretCard(secretCards); //player choooses his card //non specifica il tipo di "stairs"
-        board.createSpecificSecretCard(player.getSecretChosenCard(), player);
-
-        //
-
-        FirstThreeCards firstThreeCards = new FirstThreeCards(player, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
-        firstThreeCards.yourThreeCards(); //Player Deck initialized
-        player.visualizePlayerCards(player.getPlayerCards()); //METHOD TO VISUALIZE THE 3 CARDS THE PLAYER RANDOMLY DREW
+        player.chooseSecretCard(secretCards); //player chooses his card //DA FINIRE STAIRS//
+        //board.createSpecificSecretCard(player.getSecretChosenCard(), player);
+        FirstThreeCards firstThreeCards = new FirstThreeCards(player, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck); //GIVING THE FIRST THREE CARDS TO THE PLAYER
+        firstThreeCards.yourThreeCards();                                                                               //Player Deck initialized
+        player.visualizePlayerCards(player.getPlayerCards());                                                           //METHOD TO VISUALIZE THE 3 CARDS THE PLAYER RANDOMLY DREW
         InitialCard initialCard = initialCardDeck.firstCardForPlayer(player); //THE SHUFFLE IS ALREADY //aggiungere opzione gira carta
         System.out.println("\n" +initialCard.toString());                 //PRINTING THE INITIAL CARD
-
-        System.out.println("\nFlip the card?\n");
-        System.out.println("1 = YES    2 = NO\n");
-
+        boolean towhileloop= false;                                  //boolean to check the while loop
         Scanner scanner = new Scanner(System.in);
-        int turnCard = scanner.nextInt();
-        if(turnCard == 1){
-            initialCard.setCardBack(true);
+        System.out.println("Now your card corners are the front ones");
+        while(towhileloop==false) {                                 //looping to be sure a client chooses 1 or 2
+            System.out.println("\nFlip the card?\n");
+            System.out.println("1 = YES    2 = NO\n");
+            int turnCard = scanner.nextInt();
+            if (turnCard == 1) {
+                initialCard.setCardBack(true);
+                System.out.println("OKay, placing initial card!");
+                towhileloop=true;
+            } else if (turnCard == 2) {
+                initialCard.setCardBack(false);
+                System.out.println("OKay, placing initial card!");
+                towhileloop=true;
+            }
+            else{
+                System.out.println("The index you chose is incorrect, please choose 1 or 2");
+            }
         }
-
-
 
         board.placeInitialCard(initialCard);                        //PLACING THE INITIAL CARD ON THE BOARD, THIS IS WHERE THE GAME STARTS
         board.printCardsOnTheBoard();
-        //board.printCornerCoordinates(); //GETTING THE INITIAL CARD COORDINATES
+        board.printBoard();                                          //printing the board
+        boardPoints.countPoints(board);                             //telling the player how many specificseeds he got
+        //NOW PLAYER HAS TO CHOOSE WHICH CARDS HE WANTS TO PLAY
+        System.out.println("Which card do you want to place on the board?");
+        player.visualizePlayerCards(player.getPlayerCards());
+        System.out.println("If you wanto to play the first card, please type 1\nIf you wanto to play the second card, please type 2\nIf you wanto to play the third card, please type 3\n");
+        int cardChosenFromHisDeck= scanner.nextInt()-1;
+        switch (cardChosenFromHisDeck)
+        {
+            case 0:
+                player.playCard(board,0);
+                    break;
+            case 1:
+                player.playCard(board,1);
+                break;
+            case 2:
+                player.playCard(board,2);
+                break;
+        }
         board.printBoard();
-        boardPoints.countPoints(board);
-        //Player choose the first card he has on his deck, in this case we're talking about a resource card
-        //Player places his cards
-        //player.playCard(board, 0);
-        //printing the board
-        //board.printBoard();
-        //printing the cards on the board
-        //System.out.println(board.getCardsOnTheBoardList());
-        //player.drawResourceCard((ResourceDeck) resourceDeck);
 
-        System.out.println("Common Cards: ");
-
+        System.out.println("Common Cards in the well: ");
         for (Card card : cardsWell) {
             System.out.println(card);
         }
         System.out.println("\n");
         boolean presente = false;
         do {
-            System.out.println("What kind of card you want: 1-Resources 2-Gold");
+            System.out.println("What kind of card you want?\n 1-Resources 2-Gold");
             int cardChoice = scanner.nextInt();
             if (cardChoice == 1) {
-                System.out.println("From resource deck or from well: resource deck = 0; well: select card id\n");
+                System.out.println("From resource deck or from well?\n Resource deck = 0; Well: select card id\n");
                 cardChoice = scanner.nextInt();
                 if (cardChoice == 0) {
                     resourceDeck.drawCard(player);

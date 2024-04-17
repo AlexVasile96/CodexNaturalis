@@ -70,7 +70,7 @@ public class Board {
             System.out.printf("Initial card id:" + initialCard.id + " Already Placed!");
             return false;
         }
-        if (initialCard.isCardBack()) {
+        if (initialCard.isCardBack()) { //initial card shows back corners cause the attribute is true
             try {
                 if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) { //CHECKING IF I CAN PLACE THE CARD ON THE BOARD
                     Corner TOPLEFT = initialCard.getTLIBack();                            //TOP LEFT BACK
