@@ -16,8 +16,7 @@ public class BoardPoints {
         //is card back
         for(Card card : board.getCardsOnTheBoardList()){
             if(card.isCardBack()){
-                List<SpecificSeed> cardSeed = card.getAttributes();
-                for (SpecificSeed seed : cardSeed) {
+                for (SpecificSeed seed : card.getAttributes()) {
                     seedCountMap.put(seed, seedCountMap.get(seed) + 1);
                 }
             }
