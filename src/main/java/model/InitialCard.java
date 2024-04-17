@@ -6,7 +6,7 @@ public class InitialCard extends Card{
     private int indexOnTheBoard;
     private List<SpecificSeed> attribute;
     private Node node;
-    private boolean isCardBack;
+    private boolean isCardBack = false;
     private Corner TLBack;
     private Corner TRBack;
     private Corner BLBack;
@@ -40,16 +40,16 @@ public class InitialCard extends Card{
     @Override
     public String toString() {
         return "InitialCard{" +
-                "id=" + id +
-                ", TL=" + TL +
+                " id=" + id +
+                ", attributes=" + attribute +
+                "\n     Front:  TL=" + TL +
                 ", TR=" + TR +
                 ", BL=" + BL +
                 ", BR=" + BR +
-                ", TLBack=" + TLIBack +
+                "\n     Retro:  TLBack=" + TLIBack +
                 ", TRBack=" + TRIBack +
                 ", BLBack=" + BLIBack +
                 ", BRBack=" + BRIBack +
-                ", attributes=" + attribute +
                 '}';
     }
 
