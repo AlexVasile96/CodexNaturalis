@@ -59,7 +59,7 @@ public class HelloApplication extends Application {
         secretCards.add(firstChoiceSecret);
         secretCards.add(secondChoiceSecret);
         player.chooseSecretCard(secretCards); //player choooses his card
-        board.createSpecificSecretCard(player.getSecretChosenCard());
+        board.createSpecificSecretCard(player.getSecretChosenCard(), player);
 
         FirstThreeCards firstThreeCards= new FirstThreeCards(player, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
         firstThreeCards.yourThreeCards(); //Player Deck initialized

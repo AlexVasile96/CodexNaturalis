@@ -50,7 +50,7 @@ public class PROVA {
         secretCards.add((ObjectiveCard) objectiveDeck.drawCard(player));
         secretCards.add((ObjectiveCard) objectiveDeck.drawCard(player));
         player.chooseSecretCard(secretCards); //player choooses his card //non specifica il tipo di "stairs"
-        board.createSpecificSecretCard(player.getSecretChosenCard());
+        board.createSpecificSecretCard(player.getSecretChosenCard(), player);
 
         //
 

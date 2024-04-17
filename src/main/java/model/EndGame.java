@@ -2,15 +2,11 @@ package model;
 import java.util.List;
 
 public class EndGame {
-    private List<Player> players;
-    private Board board;
-    private ResourceDeck resourceDeck;
-    private GoldDeck goldDeck;
-    private ObjectiveCard firstCommonObjective;
-    private ObjectiveCard secondCommonObjective;
-    //le due carte obiettivo comuni a tutte
-    //carta segreta di ogni player
-
-    public void finishGame(){}
-    public void countObjectiveCards(){}
+    public void finishGame(Player player, Board board){
+        //il gioco finisce quando qualcuno raggiunge 20 punti
+        ObjectiveCard secretPlayerObjective = player.getSecretChosenCard();
+        board.createSpecificSecretCard(secretPlayerObjective, player);
+        System.out.println("Punteggio player: " + player.getPlayerScore());
+        System.out.println("GAME ENDED");
+    }
 }

@@ -4,10 +4,7 @@ import Exceptions.CantPlaceYourCardHere;
 import Exceptions.IllegalPlacementException;
 import Exceptions.InitialCardAlreadyPlacedException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class Board {
@@ -181,25 +178,33 @@ public class Board {
     } //METHOD TO PRINT THE COORDINATES OF THE CENTRAL COORDINATES
 
 
-    public ExtendExtendExtend createSpecificSecretCard( ObjectiveCard card) //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
+    public ExtendExtendExtend createSpecificSecretCard( ObjectiveCard card, Player player) //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
     {//Momo nota:"avvisatemi se il metodo diventa operativo cosi faccio il test. oppure fatelo voi :p "
-        if(card.getObjectiveSpecificTypeOfCard().equals("STAIRS")) {
-            return new StairsObjectiveCard();
+        if(Objects.equals(card.getObjectiveSpecificTypeOfCard(), "STAIRS")) {
+
+            StairsObjectiveCard stairsObjectiveCard=new StairsObjectiveCard();
+            stairsObjectiveCard.checkPattern(this, card.getType(), player);
         }
-        if(card.getObjectiveSpecificTypeOfCard().equals("L"))
+        if(Objects.equals(card.getObjectiveSpecificTypeOfCard(), "L"))
         {
-            return new LObjectiveCard();
+            LObjectiveCard lObjectiveCard=new LObjectiveCard();
+            lObjectiveCard.checkPattern(this, card.getType(), player);
         }
-        if(card.getObjectiveSpecificTypeOfCard().equals("MIX")) {
-            return new MixObjectiveCard();
+        if(Objects.equals(card.getObjectiveSpecificTypeOfCard(), "MIX")) {
+
+            MixObjectiveCard mixObjectiveCard=new MixObjectiveCard();
+            mixObjectiveCard.checkPattern(this, card.getType(), player);
         }
-        if(card.getObjectiveSpecificTypeOfCard().equals("TRIS"))
+        if(Objects.equals(card.getObjectiveSpecificTypeOfCard(), "TRIS"))
         {
-            return new TrisObjectiveCard();
+
+            TrisObjectiveCard trisObjectiveCard=new TrisObjectiveCard();
+            trisObjectiveCard.checkPattern(this, card.getType(), player);
         }
-        if(card.getObjectiveSpecificTypeOfCard().equals("BIS"))
+        if(Objects.equals(card.getObjectiveSpecificTypeOfCard(), "BIS"))
         {
-            return new BisObjectiveCard();
+            BisObjectiveCard bisObjectiveCard=new BisObjectiveCard();
+            bisObjectiveCard.checkPattern(this, card.getType(), player);
         }
 
         return null;
