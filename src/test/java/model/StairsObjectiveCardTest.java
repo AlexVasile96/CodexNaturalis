@@ -20,7 +20,6 @@ class StairsObjectiveCardTest {
 
     private StairsObjectiveCard stairsObjectiveCard = new StairsObjectiveCard();
 
-
     @Test
     void checkPattern() {
 
@@ -43,27 +42,27 @@ class StairsObjectiveCardTest {
 
         //OK
     }
-       @Test
-        void checkPattern2() {
+    @Test
+    void checkPattern2() {
         /*
         I PLACE A TRIPLET OF MUSHROOM DIAGONALLY, FROM THE LEFT GOING UP TO THE RIGHT
          */
 
-            board.setNode(2, 2, node);
-            board.setNode(1, 3, node);
-            board.setNode(0, 4, node);
+        board.setNode(2, 2, node);
+        board.setNode(1, 3, node);
+        board.setNode(0, 4, node);
 
        /*
         THE METHOD SHOULD RETURN TRUE BECAUSE THE CARDS BELONG TO A SPECIFIC SEED
         THAT MUST BE PLACED DIAGONALLY FROM THE LEFT GOING UP TO THE RIGHT
         */
-            assertTrue(stairsObjectiveCard.checkPattern(board, specificSeed, player));
-            //SHOULD GIVE 2 POINTS TO THE PLAYER
-            assertEquals(2, player.getPlayerScore());
-            //OK
-        }
-        @Test
-        void checkPatter3() {
+        assertTrue(stairsObjectiveCard.checkPattern(board, specificSeed, player));
+        //SHOULD GIVE 2 POINTS TO THE PLAYER
+        assertEquals(2, player.getPlayerScore());
+        //OK
+    }
+    @Test
+    void checkPatter3() {
         /*
             I PLACE TWO TRIPLETS OF PLANT FROM THE LEFT GOING DOWN DIAGONALLY TO THE RIGHT
         */
@@ -101,7 +100,9 @@ class StairsObjectiveCardTest {
         assertFalse(stairsObjectiveCard.checkPattern(board,specificSeed2,player));
         //SHOULD GIVE 0 POINTS TO THE PLAYER
         assertEquals(0,player.getPlayerScore());
-        //TO BE FIXED
+        //FIXED, ALEX SUCA
     }
+
+
 
 }

@@ -8,6 +8,7 @@ public class Node {
     private int valueCounter;
     private  SpecificSeed firstPlacement;
     private  SpecificSeed secondPlacement;
+    private boolean alreadyChecked;
     public Node(SpecificSeed specificNodeSeed, int coordX, int coordY){
         this.specificNodeSeed=specificNodeSeed;
         this.coordX=coordX;
@@ -15,6 +16,7 @@ public class Node {
         this.valueCounter=2;
         this.firstPlacement= SpecificSeed.EMPTY;
         this.secondPlacement= SpecificSeed.EMPTY;
+        this.alreadyChecked=false;
     }
 
     public SpecificSeed getSpecificNodeSeed() {
@@ -70,5 +72,13 @@ public class Node {
 
     public void setSecondPlacement(SpecificSeed secondPlacement) {
         this.secondPlacement = secondPlacement;
+    }
+
+    public boolean isAlreadyChecked() {
+        return alreadyChecked;
+    }
+
+    public void setAlreadyChecked(boolean alreadyChecked) {
+        this.alreadyChecked = alreadyChecked;
     }
 }
