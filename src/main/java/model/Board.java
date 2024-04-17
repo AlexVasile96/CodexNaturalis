@@ -2,7 +2,6 @@ package model;
 
 import Exceptions.CantPlaceYourCardHere;
 import Exceptions.IllegalPlacementException;
-import Exceptions.InitialCardAlreadyPlacedException;
 
 import java.util.*;
 
@@ -67,41 +66,41 @@ public class Board {
         int centerX = centralCoordinates[0][0];
         int centerY = centralCoordinates[0][1];
         //IS THE INITIAL CARD ALREADY BEEN PLACED?
-        if (getNode(centerX, centerY).getValueCounter()<2 ) { //USING VALUE-COUNTER TO CHECK IF A INITIAL CARD HAD ALREADY BEEN PLACED
-            System.out.printf("Initial card id:" +initialCard.id+ " Already Placed!");
+        if (getNode(centerX, centerY).getValueCounter() < 2) { //USING VALUE-COUNTER TO CHECK IF A INITIAL CARD HAD ALREADY BEEN PLACED
+            System.out.printf("Initial card id:" + initialCard.id + " Already Placed!");
             return false;
         }
-        if(getInitialCard().isCardBack()){
+        if (initialCard.isCardBack()) {
             try {
                 if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) { //CHECKING IF I CAN PLACE THE CARD ON THE BOARD
-                    Corner TOPLEFT = initialCard.getTLIBack();                            //TOP LEFT
+                    Corner TOPLEFT = initialCard.getTLIBack();                            //TOP LEFT BACK
                     SpecificSeed TOPLEFTING = TOPLEFT.getSpecificCornerSeed();
                     getNode(centerX, centerY).setSpecificNodeSeed(TOPLEFTING);       //Setting the node of the initial Card
                     getNode(centerX, centerY).setFirstPlacement(TOPLEFTING);             //Keeping trace of the history on the board
                     getNode(centerX, centerY).setValueCounter(getNode(centerX, centerY).getValueCounter() - 1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
                     initialCard.setNode(getNode(centerX, centerY));                     //SETTING THE COORDINATE OF THE INITIAL CARD
-                    TOPLEFT.setValueCounter(TOPLEFT.getValueCounter()-1);               //DECREASING ALSO THE CORNER VALUE
+                    TOPLEFT.setValueCounter(TOPLEFT.getValueCounter() - 1);               //DECREASING ALSO THE CORNER VALUE
 
                     Corner TOPRIGHT = initialCard.getTRIBack();                           //UPRIGHT
                     SpecificSeed TOPRIGHTING = TOPRIGHT.getSpecificCornerSeed();
                     getNode(centerX, centerY + 1).setSpecificNodeSeed(TOPRIGHTING); //Setting the node of the initial Card
                     getNode(centerX, centerY + 1).setFirstPlacement(TOPRIGHTING);      //Keeping trace of the history on the board
                     getNode(centerX, centerY + 1).setValueCounter(getNode(centerX, centerY + 1).getValueCounter() - 1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
-                    TOPRIGHT.setValueCounter(TOPRIGHT.getValueCounter()-1);               //DECREASING ALSO THE CORNER VALUE
+                    TOPRIGHT.setValueCounter(TOPRIGHT.getValueCounter() - 1);               //DECREASING ALSO THE CORNER VALUE
 
                     Corner BOTTOMLEFT = initialCard.getBLIBack();                             //BOTTOMLEFT
                     SpecificSeed BOTTOMLEFTING = BOTTOMLEFT.getSpecificCornerSeed();
                     getNode(centerX + 1, centerY).setSpecificNodeSeed(BOTTOMLEFTING);  //Setting the node of the initial Card
                     getNode(centerX + 1, centerY).setFirstPlacement(BOTTOMLEFTING);    //Keeping trace of the history on the board
                     getNode(centerX + 1, centerY).setValueCounter(getNode(centerX + 1, centerY).getValueCounter() - 1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
-                    BOTTOMLEFT.setValueCounter(BOTTOMLEFT.getValueCounter()-1);               //DECREASING ALSO THE CORNER VALUE
+                    BOTTOMLEFT.setValueCounter(BOTTOMLEFT.getValueCounter() - 1);               //DECREASING ALSO THE CORNER VALUE
 
                     Corner BOTTOMRIGHT = initialCard.getBRIBack();                                    //BOTTOM-RIGHT
                     SpecificSeed BOTTOMRIGHITING = BOTTOMRIGHT.getSpecificCornerSeed();
                     getNode(centerX + 1, centerY + 1).setSpecificNodeSeed(BOTTOMRIGHITING);      //Setting the node of the initial Card
                     getNode(centerX + 1, centerY + 1).setFirstPlacement(BOTTOMRIGHITING);        //Keeping trace of the history on the board
                     getNode(centerX + 1, centerY + 1).setValueCounter(getNode(centerX + 1, centerY + 1).getValueCounter() - 1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
-                    BOTTOMRIGHT.setValueCounter(BOTTOMRIGHT.getValueCounter()-1);               //DECREASING ALSO THE CORNER VALUE
+                    BOTTOMRIGHT.setValueCounter(BOTTOMRIGHT.getValueCounter() - 1);               //DECREASING ALSO THE CORNER VALUE
 
                     this.numOfEmpty = numOfEmpty - 4;
                     initialCard.setIndexOnTheBoard(1); //SETTING THE INDEX ON THE FIRST CARD PLACED
@@ -113,58 +112,58 @@ public class Board {
                     System.out.println("Card finished"); //I PRINTED ALL THE CARDS I HAVE ON MY BOARD
                 }
             } catch (Exception e) {
-                throw new CantPlaceYourCardHere("Can't Place your card",e);
+                throw new CantPlaceYourCardHere("Can't Place your card", e);
+            }
+            System.out.println("Initial Card correctly placed"); //THE CARD HAD BEEN PLACED CORRECTLY
+            return true;
+        } else {
+            try {
+                if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) { //CHECKING IF I CAN PLACE THE CARD ON THE BOARD
+                    Corner TOPLEFT = initialCard.getTL();                            //TOP LEFT
+                    SpecificSeed TOPLEFTING = TOPLEFT.getSpecificCornerSeed();
+                    getNode(centerX, centerY).setSpecificNodeSeed(TOPLEFTING);       //Setting the node of the initial Card
+                    getNode(centerX, centerY).setFirstPlacement(TOPLEFTING);             //Keeping trace of the history on the board
+                    getNode(centerX, centerY).setValueCounter(getNode(centerX, centerY).getValueCounter() - 1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
+                    initialCard.setNode(getNode(centerX, centerY));                     //SETTING THE COORDINATE OF THE INITIAL CARD
+                    TOPLEFT.setValueCounter(TOPLEFT.getValueCounter() - 1);               //DECREASING ALSO THE CORNER VALUE
+
+                    Corner TOPRIGHT = initialCard.getTR();                           //UPRIGHT
+                    SpecificSeed TOPRIGHTING = TOPRIGHT.getSpecificCornerSeed();
+                    getNode(centerX, centerY + 1).setSpecificNodeSeed(TOPRIGHTING); //Setting the node of the initial Card
+                    getNode(centerX, centerY + 1).setFirstPlacement(TOPRIGHTING);      //Keeping trace of the history on the board
+                    getNode(centerX, centerY + 1).setValueCounter(getNode(centerX, centerY + 1).getValueCounter() - 1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
+                    TOPRIGHT.setValueCounter(TOPRIGHT.getValueCounter() - 1);               //DECREASING ALSO THE CORNER VALUE
+
+                    Corner BOTTOMLEFT = initialCard.getBL();                             //BOTTOMLEFT
+                    SpecificSeed BOTTOMLEFTING = BOTTOMLEFT.getSpecificCornerSeed();
+                    getNode(centerX + 1, centerY).setSpecificNodeSeed(BOTTOMLEFTING);  //Setting the node of the initial Card
+                    getNode(centerX + 1, centerY).setFirstPlacement(BOTTOMLEFTING);    //Keeping trace of the history on the board
+                    getNode(centerX + 1, centerY).setValueCounter(getNode(centerX + 1, centerY).getValueCounter() - 1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
+                    BOTTOMLEFT.setValueCounter(BOTTOMLEFT.getValueCounter() - 1);               //DECREASING ALSO THE CORNER VALUE
+
+                    Corner BOTTOMRIGHT = initialCard.getBR();                                    //BOTTOM-RIGHT
+                    SpecificSeed BOTTOMRIGHITING = BOTTOMRIGHT.getSpecificCornerSeed();
+                    getNode(centerX + 1, centerY + 1).setSpecificNodeSeed(BOTTOMRIGHITING);      //Setting the node of the initial Card
+                    getNode(centerX + 1, centerY + 1).setFirstPlacement(BOTTOMRIGHITING);        //Keeping trace of the history on the board
+                    getNode(centerX + 1, centerY + 1).setValueCounter(getNode(centerX + 1, centerY + 1).getValueCounter() - 1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
+                    BOTTOMRIGHT.setValueCounter(BOTTOMRIGHT.getValueCounter() - 1);               //DECREASING ALSO THE CORNER VALUE
+
+                    this.numOfEmpty = numOfEmpty - 4;
+                    initialCard.setIndexOnTheBoard(1); //SETTING THE INDEX ON THE FIRST CARD PLACED
+                    cardsOnTheBoardList.add(initialCard); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARD PLACED ON THE BOARD ****HISTORIC****
+                    System.out.println("Cards on the board are:"); //PLN
+                    for (Card card : cardsOnTheBoardList) {
+                        System.out.println(card);
+                    }
+                    System.out.println("Card finished"); //I PRINTED ALL THE CARDS I HAVE ON MY BOARD
+                }
+            } catch (Exception e) {
+                throw new CantPlaceYourCardHere("Can't Place your card", e);
             }
             System.out.println("Initial Card correctly placed"); //THE CARD HAD BEEN PLACED CORRECTLY
             return true;
         }
-
-        try {
-            if (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length) { //CHECKING IF I CAN PLACE THE CARD ON THE BOARD
-                Corner TOPLEFT = initialCard.getTL();                            //TOP LEFT
-                SpecificSeed TOPLEFTING = TOPLEFT.getSpecificCornerSeed();
-                getNode(centerX, centerY).setSpecificNodeSeed(TOPLEFTING);       //Setting the node of the initial Card
-                getNode(centerX, centerY).setFirstPlacement(TOPLEFTING);             //Keeping trace of the history on the board
-                getNode(centerX, centerY).setValueCounter(getNode(centerX, centerY).getValueCounter() - 1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
-                initialCard.setNode(getNode(centerX, centerY));                     //SETTING THE COORDINATE OF THE INITIAL CARD
-                TOPLEFT.setValueCounter(TOPLEFT.getValueCounter()-1);               //DECREASING ALSO THE CORNER VALUE
-
-                Corner TOPRIGHT = initialCard.getTR();                           //UPRIGHT
-                SpecificSeed TOPRIGHTING = TOPRIGHT.getSpecificCornerSeed();
-                getNode(centerX, centerY + 1).setSpecificNodeSeed(TOPRIGHTING); //Setting the node of the initial Card
-                getNode(centerX, centerY + 1).setFirstPlacement(TOPRIGHTING);      //Keeping trace of the history on the board
-                getNode(centerX, centerY + 1).setValueCounter(getNode(centerX, centerY + 1).getValueCounter() - 1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
-                TOPRIGHT.setValueCounter(TOPRIGHT.getValueCounter()-1);               //DECREASING ALSO THE CORNER VALUE
-
-                Corner BOTTOMLEFT = initialCard.getBL();                             //BOTTOMLEFT
-                SpecificSeed BOTTOMLEFTING = BOTTOMLEFT.getSpecificCornerSeed();
-                getNode(centerX + 1, centerY).setSpecificNodeSeed(BOTTOMLEFTING);  //Setting the node of the initial Card
-                getNode(centerX + 1, centerY).setFirstPlacement(BOTTOMLEFTING);    //Keeping trace of the history on the board
-                getNode(centerX + 1, centerY).setValueCounter(getNode(centerX + 1, centerY).getValueCounter() - 1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
-                BOTTOMLEFT.setValueCounter(BOTTOMLEFT.getValueCounter()-1);               //DECREASING ALSO THE CORNER VALUE
-
-                Corner BOTTOMRIGHT = initialCard.getBR();                                    //BOTTOM-RIGHT
-                SpecificSeed BOTTOMRIGHITING = BOTTOMRIGHT.getSpecificCornerSeed();
-                getNode(centerX + 1, centerY + 1).setSpecificNodeSeed(BOTTOMRIGHITING);      //Setting the node of the initial Card
-                getNode(centerX + 1, centerY + 1).setFirstPlacement(BOTTOMRIGHITING);        //Keeping trace of the history on the board
-                getNode(centerX + 1, centerY + 1).setValueCounter(getNode(centerX + 1, centerY + 1).getValueCounter() - 1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
-                BOTTOMRIGHT.setValueCounter(BOTTOMRIGHT.getValueCounter()-1);               //DECREASING ALSO THE CORNER VALUE
-
-                this.numOfEmpty = numOfEmpty - 4;
-                initialCard.setIndexOnTheBoard(1); //SETTING THE INDEX ON THE FIRST CARD PLACED
-                cardsOnTheBoardList.add(initialCard); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARD PLACED ON THE BOARD ****HISTORIC****
-                System.out.println("Cards on the board are:"); //PLN
-                for (Card card : cardsOnTheBoardList) {
-                    System.out.println(card);
-                }
-                System.out.println("Card finished"); //I PRINTED ALL THE CARDS I HAVE ON MY BOARD
-            }
-        } catch (Exception e) {
-            throw new CantPlaceYourCardHere("Can't Place your card",e);
-        }
-        System.out.println("Initial Card correctly placed"); //THE CARD HAD BEEN PLACED CORRECTLY
-        return true;
-    } //method to place the first card
+    }//method to place the first card
     public void printCornerCoordinates() {
         int[][] centralCoordinates = getCentralCoordinates();
         int centerX = centralCoordinates[0][0];

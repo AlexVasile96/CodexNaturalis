@@ -6,7 +6,7 @@ public class InitialCard extends Card{
     private int indexOnTheBoard;
     private List<SpecificSeed> attribute;
     private Node node;
-    private boolean isCardBack;
+    private boolean isCardBack = false;
     private Corner TLBack;
     private Corner TRBack;
     private Corner BLBack;
@@ -45,7 +45,8 @@ public class InitialCard extends Card{
                 ", TR=" + TR +
                 ", BL=" + BL +
                 ", BR=" + BR +
-                ", TLBack=" + TLIBack +
+                "\nRetro:" +
+                " TLBack=" + TLIBack +
                 ", TRBack=" + TRIBack +
                 ", BLBack=" + BLIBack +
                 ", BRBack=" + BRIBack +
