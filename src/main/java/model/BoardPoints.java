@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardPoints {
-    private ArrayList<SpecificSeed> pointsOnTheBoard;
-    private int pointss;
     public Map<SpecificSeed, Integer> countPoints(Board board) {
         int INKWELLCount=0;
         int PARCHMENTCount=0;
@@ -18,6 +16,7 @@ public class BoardPoints {
         for (int i = 0; i < board.getNodes().length; i++) {
             for (int j = 0; j < board.getNodes()[i].length; j++) {
                 SpecificSeed seed = board.getNodes()[i][j].getSpecificNodeSeed();
+
                 seedCountMap.put(seed, seedCountMap.get(seed) + 1);
                 if(board.getNodes()[i][j].getSpecificNodeSeed() == SpecificSeed.INKWELL) {
                     INKWELLCount++;
@@ -78,27 +77,5 @@ public class BoardPoints {
             }
         }
         return seedCount;
-    }
-
-
-
-
-
-
-
-
-
-
-    public ArrayList<SpecificSeed> getPointsOnTheBoard() {
-        return pointsOnTheBoard;
-    }
-    public void setPointsOnTheBoard(ArrayList<SpecificSeed> pointsOnTheBoard) {
-        this.pointsOnTheBoard = pointsOnTheBoard;
-    }
-    public int getPointss() {
-        return pointss;
-    }
-    public void setPointss(int pointss) {
-        this.pointss = pointss;
     }
 }
