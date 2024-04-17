@@ -95,6 +95,39 @@ public class InitialCard extends Card{
     public Corner getBR() {
         return BR;
     }
+
+    public Corner getTLIBack() {
+        return TLIBack;
+    }
+
+    public void setTLIBack(Corner TLIBack) {
+        this.TLIBack = TLIBack;
+    }
+
+    public Corner getTRIBack() {
+        return TRIBack;
+    }
+
+    public void setTRIBack(Corner TRIBack) {
+        this.TRIBack = TRIBack;
+    }
+
+    public Corner getBLIBack() {
+        return BLIBack;
+    }
+
+    public void setBLIBack(Corner BLIBack) {
+        this.BLIBack = BLIBack;
+    }
+
+    public Corner getBRIBack() {
+        return BRIBack;
+    }
+
+    public void setBRIBack(Corner BRIBack) {
+        this.BRIBack = BRIBack;
+    }
+
     @Override
     public Node getNode() {
         return node;
