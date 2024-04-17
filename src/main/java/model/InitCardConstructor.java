@@ -24,16 +24,24 @@ public class InitCardConstructor implements CardConstructor{
                 SpecificSeed topRight = SpecificSeed.valueOf(card.getString("TR")); //get the top right corner attribute
                 SpecificSeed bottomLeft = SpecificSeed.valueOf(card.getString("BL")); //get the bottom left corner attribute
                 SpecificSeed bottomRight = SpecificSeed.valueOf(card.getString("BR")); //get the bottom right corner attribute
+                SpecificSeed TL_INIT_BACK = SpecificSeed.valueOf(card.getString("TL_INIT_BACK"));
+                SpecificSeed TR_INIT_BACK = SpecificSeed.valueOf(card.getString("TR_INIT_BACK"));
+                SpecificSeed BL_INIT_BACK = SpecificSeed.valueOf(card.getString("BL_INIT_BACK"));
+                SpecificSeed BR_INIT_BACK = SpecificSeed.valueOf(card.getString("BR_INIT_BACK"));
                 Corner TL = new Corner(topLeft,0,0);
                 Corner TR = new Corner(topRight,0,0);
                 Corner BL = new Corner(bottomLeft,0,0);
                 Corner BR = new Corner(bottomRight,0,0);
+                Corner TL_I_BACK= new Corner(TL_INIT_BACK, 0, 0);
+                Corner TR_I_BACK= new Corner(TR_INIT_BACK, 0, 0);
+                Corner BL_I_BACK= new Corner(BL_INIT_BACK, 0, 0);
+                Corner BR_I_BACK= new Corner(BR_INIT_BACK, 0, 0);
                 JSONArray requirementsArray = card.getJSONArray("attributes");
                 List<SpecificSeed> attributes = new ArrayList<>();
                 for (int j = 0; j < requirementsArray.length(); j++) {
                     attributes.add(SpecificSeed.valueOf(requirementsArray.getString(j)));
                 }
-                InitialCard cards = new InitialCard(id,type, value, TL, TR, BL, BR,attributes); //creating all the resource cards
+                InitialCard cards = new InitialCard(id,type, value, TL, TR, BL, BR,TL_I_BACK, TR_I_BACK, BL_I_BACK, BR_I_BACK,attributes); //creating all the resource cards
                 initCardList.add(cards); //adding card to the arraylist previously created
             }
             reader.close();

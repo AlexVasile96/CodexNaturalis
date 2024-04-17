@@ -11,7 +11,11 @@ public class InitialCard extends Card{
     private Corner TRBack;
     private Corner BLBack;
     private Corner BRBack;
-    public InitialCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, List<SpecificSeed> attirbutes) {
+    private Corner TLIBack;
+    private Corner TRIBack;
+    private Corner BLIBack;
+    private Corner BRIBack;
+    public InitialCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, Corner TLIBack, Corner TRIBack, Corner BLIBack, Corner BRIBack, List<SpecificSeed> attirbutes) {
         super(id, type, value, TL, TR, BL, BR, type);
         this.attribute = attirbutes;
         this.isCardBack=false;
@@ -24,6 +28,10 @@ public class InitialCard extends Card{
         this.TRBack.setSpecificCornerSeed(TR.getSpecificCornerSeed());
         this.BLBack.setSpecificCornerSeed(BL.getSpecificCornerSeed());
         this.BRBack.setSpecificCornerSeed(BR.getSpecificCornerSeed());
+        this.TLIBack=TLIBack;
+        this.TRIBack=TRIBack;
+        this.BLIBack=BLIBack;
+        this.BRIBack=BRIBack;
     }
 
 
@@ -37,6 +45,10 @@ public class InitialCard extends Card{
                 ", TR=" + TR +
                 ", BL=" + BL +
                 ", BR=" + BR +
+                ", TLBack=" + TLIBack +
+                ", TRBack=" + TRIBack +
+                ", BLBack=" + BLIBack +
+                ", BRBack=" + BRIBack +
                 ", attributes=" + attribute +
                 '}';
     }
