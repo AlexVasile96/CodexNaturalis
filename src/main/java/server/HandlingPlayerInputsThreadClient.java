@@ -32,10 +32,11 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
     public void run() {
 
         try {
-            while(true)
+            while(true) //ciò che succede in ogni singolo client ch3e cerca di connettersi
             {
+                out.println("ciao! Devi fare il login");
                 String request= stdIn.readLine();
-                if(request.contains("name"))
+                if(request.contains("login"))
                 {
                     out.println("Paolo");
                 }
