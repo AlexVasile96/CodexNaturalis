@@ -61,7 +61,7 @@ public class PROVA {
         InitialCard initialCard = initialCardDeck.firstCardForPlayer(player); //THE SHUFFLE IS ALREADY //aggiungere opzione gira carta
         System.out.println("\n" +initialCard.toString());                 //PRINTING THE INITIAL CARD
 
-        System.out.println("Flip the card?\n");
+        System.out.println("\nFlip the card?\n");
         System.out.println("1 = YES    2 = NO\n");
 
         Scanner scanner = new Scanner(System.in);
@@ -73,19 +73,17 @@ public class PROVA {
 
 
         board.placeInitialCard(initialCard);                        //PLACING THE INITIAL CARD ON THE BOARD, THIS IS WHERE THE GAME STARTS
-
-        board.placeInitialCard(initialCard);                        //JUST CHECKING IF THE METHOD ACTUALLY PREVENTS FROM PLACING 2 INITIAL CARDS
-        board.printCornerCoordinates();
-        //GETTING THE INITIAL CARD COORDINATES
+        board.printCardsOnTheBoard();
+        //board.printCornerCoordinates(); //GETTING THE INITIAL CARD COORDINATES
         board.printBoard();
         boardPoints.countPoints(board);
         //Player choose the first card he has on his deck, in this case we're talking about a resource card
         //Player places his cards
-        player.playCard(board, 0);
+        //player.playCard(board, 0);
         //printing the board
-        board.printBoard();
+        //board.printBoard();
         //printing the cards on the board
-        System.out.println(board.getCardsOnTheBoardList());
+        //System.out.println(board.getCardsOnTheBoardList());
         //player.drawResourceCard((ResourceDeck) resourceDeck);
 
         System.out.println("Common Cards: ");
