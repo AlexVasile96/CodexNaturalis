@@ -115,6 +115,7 @@ public class Board {
                 throw new CantPlaceYourCardHere("Can't Place your card", e);
             }
             System.out.println("Initial Card correctly placed"); //THE CARD HAD BEEN PLACED CORRECTLY
+
             return true;
         } else {
             try {
@@ -251,7 +252,5 @@ public class Board {
     public void setNode(int x, int y, Node node) {
         nodes[x][y] = node;
     }
-
-
 
 }

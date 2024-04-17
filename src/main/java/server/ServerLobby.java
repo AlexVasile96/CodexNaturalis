@@ -1,4 +1,4 @@
-package network.server;
+package server;
 
 import Exceptions.GameFullException;
 import Exceptions.UnknownPlayerNumberException;

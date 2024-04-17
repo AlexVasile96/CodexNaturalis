@@ -13,6 +13,7 @@ public class PROVA {
         Board board = new Board(50, 50);
         //creating a player
         Player player = new Player("Calla", 0, Dot.GREEN, board);
+        int numOfMush=0;
 
         //creazione deck
         ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor(); //create resource cards
@@ -122,5 +123,6 @@ public class PROVA {
         boardPoints.countPoints(board);
         TrisObjectiveCard trisObjectiveCard = new TrisObjectiveCard();
         trisObjectiveCard.checkPattern(board, SpecificSeed.MUSHROOM, player); //Funziona!
+
     }
 }

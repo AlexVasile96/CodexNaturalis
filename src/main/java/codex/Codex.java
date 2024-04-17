@@ -1,6 +1,6 @@
 package codex;
-import network.client.Cli.CliClientApp;
-import network.server.ServerMain;
+import server.CliClientApp;
+import server.ServerMain;
 
 import java.io.IOException;
 import java.util.InputMismatchException;

@@ -1,4 +1,4 @@
-package network.client.Cli;
+package server;
 
 import Exceptions.OperationCancelledException;
 import com.google.gson.Gson;
@@ -6,57 +6,71 @@ import network.message.MessageSender;
 import network.message.MessagesEnum;
 import view.ClientView;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.net.Socket;
+import java.util.*;
 
 public class HandlingPlayerInputsThreadClient implements Runnable {
-
     public BufferedReader stdIn;
     public PrintWriter out;
     private ClientView clientView;
     private boolean doClose;
     private Gson gson;
+    private Socket clientSocket;
 
-    public HandlingPlayerInputsThreadClient(BufferedReader stdIn, PrintWriter out, ClientView clientView) { //Costructor
-        this.stdIn = stdIn;
-        this.out = out;
+    public HandlingPlayerInputsThreadClient( Socket socket) throws IOException { //Costructor
+        this.clientSocket= socket;
+        stdIn= new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        out= new PrintWriter(clientSocket.getOutputStream(), true);
         this.clientView = clientView;
         this.doClose = false;
         this.gson = new Gson();
+
     }
 
     @Override
     public void run() {
-        System.out.println("SONO ENTRATO IN HANDLINGPLAYERINPUTS !!!");
+
         try {
-            String welcome= stdIn.readLine();
-            System.out.println(welcome);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        String userInput;
-        while (!doClose) {
-            try {
-                userInput = stdIn.readLine();
-                if (clientView.getUsername() == null) {
-                    //If player doesn't yet have a username
-                    sendMessageToServer(MessagesEnum.USERNAME, userInput);
-                }else
+            while(true)
+            {
+                String request= stdIn.readLine();
+                if(request.contains("name"))
                 {
-                    initializePlayer(userInput);
-                    actionsInput(userInput); //switch case gioco iniziato
+                    out.println("Paolo");
                 }
-            } catch (IOException eE) {
-                System.out.println("IO exception");
+                else{
+                    out.println("Type tell me a name to get a random name");
+                }
+            }
+
+
+        } catch (IOException e) {
+            System.err.println("Io exception client handler");
+        }
+        finally {
+            out.close();
+            try {
+                stdIn.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
-
     }
 
-    public void sendMessageToServer(MessagesEnum type, String content) {
-        out.println(gson.toJson(new MessageSender(type, content)));
-    }
+
+
+
+
+
+
+
+
+
+        /*public void sendMessageToServer (MessagesEnum type, String content) throws IOException {
+            out.writeObject(gson.toJson(new MessageSender(type, content)));
+        }
+
 
 
     private void initializePlayer(String userInput)
@@ -105,7 +119,7 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
 
                 default -> {
                     if (clientView.getGame() == null)
-                        out.println(userInput);
+                        out.writeObject(userInput);
                     else
                         System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
                 }
@@ -147,31 +161,31 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
         System.out.println("\n"+clientView.getGame());
     }
     private void runEndTurn(){}
-    private void showCards() {
+    private void showCards() throws IOException {
         sendMessageToServer(MessagesEnum.GET_CARDS, "");
     }
-    private void chosenHandCard() {
+    private void chosenHandCard() throws IOException {
         sendMessageToServer(MessagesEnum.CHOSEN_CARD_FROM_HAND, "");
     }
-    private void selectedBoardCard() {
+    private void selectedBoardCard() throws IOException {
         sendMessageToServer(MessagesEnum.SELECTED_CARD, "");
     }
-    private void selectedCorner() {
+    private void selectedCorner() throws IOException {
         sendMessageToServer(MessagesEnum.SELECTED_CORNER, "");
     }
-    private void placeSelectedCard() {
+    private void placeSelectedCard() throws IOException {
         sendMessageToServer(MessagesEnum.PLACE_SELECTED_CARD, "");
     }
-    private void visualizeCommonObjective() {
+    private void visualizeCommonObjective() throws IOException {
         sendMessageToServer(MessagesEnum.COMMON_OBJECTIVE_CARDS, "");
     }
-    private void visualizeSecretObjective() {
+    private void visualizeSecretObjective() throws IOException {
         sendMessageToServer(MessagesEnum.SECRET_OBJECTIVE_CARD,"");
     }
-    private void showBoard() {
+    private void showBoard() throws IOException {
         sendMessageToServer(MessagesEnum.PLAYER_BOARD,"");
     }
-    private void showPoints() {
+    private void showPoints() throws IOException {
         sendMessageToServer(MessagesEnum.PLAYER_SCORE,"");
     }
 
@@ -192,6 +206,6 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
     private void doClose() {
         doClose = true;
         System.out.println("Server connection lost, press any key to terminate.");
-    }
+    }*/
 
 }

@@ -1,24 +1,24 @@
 package network.client;
 
 import com.google.gson.Gson;
-import network.client.Cli.HandlingPlayerInputsThreadClient;
+import server.HandlingPlayerInputsThreadClient;
 import network.message.MessageSender;
 import network.message.MessagesEnum;
 import view.ClientView;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 //This class represents a thread responsible for reading messages from the server in the client-side.
 
 public class ClientReader implements Runnable {
-    private final BufferedReader in;
+    private final ObjectInputStream in;
     private final ClientView clientView;
     private final HandlingPlayerInputsThreadClient handlingPlayerInputsThreadClient;
 
 
     //CLI constructor, we'll figure out how to make a GUI constructor later.
-    public ClientReader(BufferedReader in, HandlingPlayerInputsThreadClient handlingPlayerInputsThreadClient, ClientView clientView) {
+    public ClientReader(ObjectInputStream in, HandlingPlayerInputsThreadClient handlingPlayerInputsThreadClient, ClientView clientView) {
         this.in =in;
         this.handlingPlayerInputsThreadClient = handlingPlayerInputsThreadClient;
         this.clientView = clientView;

@@ -1,4 +1,4 @@
-package network.client.Cli;
+package server;
 
 
 import network.client.ClientReader;
@@ -38,32 +38,20 @@ public class CliClientApp {
         }
         // Creating the socket and connecting to the server
         Socket socket = new Socket(hostName,portNumber); //CREATING THE SOCKET
+        BufferedReader input= new BufferedReader(new InputStreamReader(socket.getInputStream()));
         System.out.println("Client connected!");
-        startCLI(socket, stdIn);
+        startCLI(socket, stdIn, input);
     }
     // Start the Command Line Interface
-    private static void startCLI(Socket clientSocket, BufferedReader stdIn) throws IOException { //Start the Command Line Interface
-        try{
-        System.out.println("Creazione del client in corso...\n");
-        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-        ClientView ClientView= new ClientView(); //Class that saves player information
-        HandlingPlayerInputsThreadClient HandlingPlayerInputsThreadClient = new HandlingPlayerInputsThreadClient(in,out,ClientView); //handling player inputs
-        Thread thread = new Thread(HandlingPlayerInputsThreadClient); //Start the thread
-        thread.start();
-        //Creates the thread that processes messages from the server
-        ClientReader ClientReader = new ClientReader(in,HandlingPlayerInputsThreadClient, ClientView);
-        Thread readerThread= new Thread(ClientReader);
-        readerThread.start();
-
-
-        //Kills the writer thread
-        //HandlingPlayerInputsThreadClient.doClose();
-
-    } catch (IOException ex) {
-        System.out.println("Uh-oh, there's been an IO problem!");
+    private static void startCLI(Socket clientSocket, BufferedReader stdIn, BufferedReader input) throws IOException { //Start the Command Line Interface
+    PrintWriter out= new PrintWriter(clientSocket.getOutputStream(),true);
+    while(true) {
+        System.out.println("<");
+        String command = stdIn.readLine();
+        out.println(command);
+        String serverResponse = input.readLine();
+        System.out.println("Server says: " + serverResponse);
     }
-
         //System.out.println("Shut down.");
 }
 
