@@ -93,26 +93,54 @@ public class PROVA {
             System.out.println(card);
         }
         System.out.println("\n");
-        System.out.println("What kind of card you want: 1-Resources 2-Gold");
-        int cardChoice = scanner.nextInt();
-        if(cardChoice == 1){
-            System.out.println("From resource deck or from well: resource deck = 0; well: select card id\n");
-            int chosenCard = scanner.nextInt();
-            if(chosenCard == 0){
-                resourceDeck.drawCard(player);
-            }
-            else{
-                Card tempCard;
-                for(Card card : cardsWell){
-                    if(chosenCard == card.id){
-                        tempCard = card;
-                        player.getPlayerCards().add(tempCard);
-                        cardsWell.remove(card.id);
-                        resourceDeck.drawCard(cardsWell);
+        boolean presente = false;
+        do {
+            System.out.println("What kind of card you want: 1-Resources 2-Gold");
+            int cardChoice = scanner.nextInt();
+            if (cardChoice == 1) {
+                System.out.println("From resource deck or from well: resource deck = 0; well: select card id\n");
+                cardChoice = scanner.nextInt();
+                if (cardChoice == 0) {
+                    resourceDeck.drawCard(player);
+                    System.out.printf("\nCard successfully drawn from the resource Deck");
+                    presente = true;
+                } else {
+                    for (Card card : cardsWell) {
+                        if (cardChoice == card.id && card.id <= 40) {
+                            player.getPlayerCards().add(card);
+                            cardsWell.remove(card.id);
+                            resourceDeck.drawCard(cardsWell);
+                            System.out.printf("card drawn correctly from the resource well");
+                            presente = true;
+                        }
+                    }
+                    if (!presente) {
+                        System.out.println("\nchosen id not present in the well");
+                    }
+                }
+            } else if (cardChoice == 2) {
+                System.out.println("From gold deck or from well: gold deck = 0; well: select card id\n");
+                int chosenCard = scanner.nextInt();
+                if (chosenCard == 0) {
+                    goldDeck.drawCard(player);
+                    System.out.printf("\nCard successfully drawn from the gold Deck");
+                    presente = true;
+                } else {
+                    for (Card card : cardsWell) {
+                        if (chosenCard == card.id && card.id > 40) {
+                            player.getPlayerCards().add(card);
+                            cardsWell.remove(card.id);
+                            goldDeck.drawCard(cardsWell);
+                            System.out.printf("card drawn correctly from the gold well");
+                            presente = true;
+                        }
+                    }
+                    if (!presente) {
+                        System.out.println("\nchosen id not present in the well");
                     }
                 }
             }
-        }
+        }while(!presente);
 
         player.chooseCardFromWell(cardsWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
         player.visualizePlayerCards(player.getPlayerCards());

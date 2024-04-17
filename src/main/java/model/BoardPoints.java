@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BoardPoints {
@@ -13,6 +14,24 @@ public class BoardPoints {
         for (SpecificSeed seed : SpecificSeed.values()) {
             seedCountMap.put(seed, 0);
         }
+        //Controlliamo se dobbiamo aggiungere gli attributi
+        ArrayList<Card> tempBoardCards = board.getCardsOnTheBoardList();
+        //initialCard
+        if(!tempBoardCards.getFirst().isCardBack()){
+            for (SpecificSeed seed : tempBoardCards.getFirst().getAttributes()) {
+                seedCountMap.put(seed, seedCountMap.get(seed) + 1);
+            }
+        }
+        tempBoardCards.removeFirst();
+        //altre Card
+        for(Card card : tempBoardCards){
+            if(card.isCardBack()){
+                for (SpecificSeed seed : card.getAttributes()) {
+                    seedCountMap.put(seed, seedCountMap.get(seed) + 1);
+                }
+            }
+        }
+
         for (int i = 0; i < board.getNodes().length; i++) {
             for (int j = 0; j < board.getNodes()[i].length; j++) {
                 SpecificSeed seed = board.getNodes()[i][j].getSpecificNodeSeed();

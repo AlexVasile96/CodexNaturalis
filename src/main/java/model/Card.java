@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Card {
         protected int id; //id which identifies the specific card
         protected SpecificSeed type; //specificCardType
@@ -15,9 +18,8 @@ public class Card {
         private int indexOnTheBoard;
         private Node node;
         private boolean isCardBack;
-        private SpecificSeed attribute;
 
-    public Card (int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, SpecificSeed attribute){ //Card constructor
+    public Card (int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR){ //Card constructor
             this.id=id;
             this.type=type;
             this.valueWhenPlaced=value;
@@ -35,7 +37,6 @@ public class Card {
             this.TRBack.setSpecificCornerSeed(TR.getSpecificCornerSeed());
             this.BLBack.setSpecificCornerSeed(BL.getSpecificCornerSeed());
             this.BRBack.setSpecificCornerSeed(BR.getSpecificCornerSeed());
-            this.attribute=attribute;
         }
 
         @Override
@@ -112,9 +113,6 @@ public class Card {
         }
         public void setCardBack(boolean cardBack) {
             isCardBack = cardBack;
-            SpecificSeed tempType = type;
-            // Imposta il tipo originale come attributo della carta
-            this.attribute = tempType;
         }
         public Corner getTLBack() {
             return TLBack;
@@ -139,6 +137,12 @@ public class Card {
         }
         public void setBRBack(Corner BRBack) {
             this.BRBack = BRBack;
+        }
+
+        public List<SpecificSeed> getAttributes(){
+            List<SpecificSeed> temp = new ArrayList<>();
+            temp.add(type);
+            return temp;
         }
 
 }

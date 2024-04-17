@@ -4,9 +4,9 @@ import java.util.List;
 
 public class InitialCard extends Card{
     private int indexOnTheBoard;
-    private List<SpecificSeed> attribute;
+    private List<SpecificSeed> attributes;
     private Node node;
-    private boolean isCardBack = false;
+    private boolean isCardBack;
     private Corner TLBack;
     private Corner TRBack;
     private Corner BLBack;
@@ -16,8 +16,8 @@ public class InitialCard extends Card{
     private Corner BLIBack;
     private Corner BRIBack;
     public InitialCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, Corner TLIBack, Corner TRIBack, Corner BLIBack, Corner BRIBack, List<SpecificSeed> attirbutes) {
-        super(id, type, value, TL, TR, BL, BR, type);
-        this.attribute = attirbutes;
+        super(id, type, value, TL, TR, BL, BR);
+        this.attributes = attirbutes;
         this.isCardBack=false;
         this.TLBack = new Corner(SpecificSeed.EMPTY,0,0);
         this.TRBack = new Corner(SpecificSeed.EMPTY,0,0);
@@ -41,7 +41,7 @@ public class InitialCard extends Card{
     public String toString() {
         return "InitialCard{" +
                 " id=" + id +
-                ", attributes=" + attribute +
+                ", attributes=" + attributes +
                 "\n     Front:  TL=" + TL +
                 ", TR=" + TR +
                 ", BL=" + BL +
@@ -77,9 +77,6 @@ public class InitialCard extends Card{
     public void setBR(Corner BR) {
         this.BR = BR;
     }
-    public void setAttribute(List<SpecificSeed> attribute) {
-        this.attribute = attribute;
-    }
     public int getId() {
         return id;
     }
@@ -100,7 +97,7 @@ public class InitialCard extends Card{
         return TLIBack;
     }
 
-    public void setTLIBack(Corner TLIBack) {
+    public void setTIBack(Corner TLIBack) {
         this.TLIBack = TLIBack;
     }
 
@@ -142,8 +139,8 @@ public class InitialCard extends Card{
     public void setIndexOnTheBoard(int indexOnTheBoard) {
         this.indexOnTheBoard = indexOnTheBoard;
     }
-    public List<SpecificSeed> getAttribute() {
-        return attribute;
+    public List<SpecificSeed> getAttributes() {
+        return attributes;
     }
 }
 
