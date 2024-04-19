@@ -45,15 +45,20 @@ public class CliClientApp {
     // Start the Command Line Interface
     private static void startCLI(Socket clientSocket, BufferedReader stdIn, BufferedReader input) throws IOException { //Start the Command Line Interface
     PrintWriter out= new PrintWriter(clientSocket.getOutputStream(),true);
-    while(true) {
+ while (true){
         System.out.println("<");
         String command = stdIn.readLine();
         out.println(command);
         String serverResponse = input.readLine();
         System.out.println("Server says: " + serverResponse);
-    }
+        System.out.println("<");
+        String loginName = stdIn.readLine();
+        out.println(loginName);
+        String risposta = input.readLine();
+        System.out.println("Server says: " + risposta);
         //System.out.println("Shut down.");
 }
+ }
 
 
 

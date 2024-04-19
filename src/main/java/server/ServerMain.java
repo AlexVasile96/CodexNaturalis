@@ -1,6 +1,7 @@
 package server;
 
 
+import model.Player;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -15,7 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ServerMain {
-    private static List<HandlingPlayerInputsThreadClient> clients= new ArrayList<>();
+    private static List<HandlingPlayerInputsThread> clients= new ArrayList<>();
     private static ExecutorService pool = Executors.newFixedThreadPool(4);
         public static void main(String[] args) {
             //Try-catch block to read the IP address and the port number from a JSON file
@@ -57,10 +58,11 @@ public class ServerMain {
             //Accepts connections from clients on new threads
             while (true) {
                 try {
+                    List< Player> playersInCurrentGame= new ArrayList<>();
                     Socket socket = serverSocket.accept();                                          //aspettando il client
                     String clientAddress = socket.getInetAddress().getHostAddress();
                     System.out.println("Client connected from IP: " + clientAddress);//ok            // ip del client
-                    HandlingPlayerInputsThreadClient clientThread= new HandlingPlayerInputsThreadClient(socket);
+                    HandlingPlayerInputsThread clientThread= new HandlingPlayerInputsThread(socket);
                     clients.add(clientThread);
                     pool.execute(clientThread); //HAndling single player client
 

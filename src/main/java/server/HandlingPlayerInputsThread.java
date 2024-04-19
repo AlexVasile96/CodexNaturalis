@@ -1,16 +1,12 @@
 package server;
 
-import Exceptions.OperationCancelledException;
 import com.google.gson.Gson;
-import network.message.MessageSender;
-import network.message.MessagesEnum;
 import view.ClientView;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.*;
 
-public class HandlingPlayerInputsThreadClient implements Runnable {
+public class HandlingPlayerInputsThread implements Runnable {
     public BufferedReader stdIn;
     public PrintWriter out;
     private ClientView clientView;
@@ -18,7 +14,7 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
     private Gson gson;
     private Socket clientSocket;
 
-    public HandlingPlayerInputsThreadClient( Socket socket) throws IOException { //Costructor
+    public HandlingPlayerInputsThread(Socket socket) throws IOException { //Costructor
         this.clientSocket= socket;
         stdIn= new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out= new PrintWriter(clientSocket.getOutputStream(), true);
@@ -32,20 +28,16 @@ public class HandlingPlayerInputsThreadClient implements Runnable {
     public void run() {
 
         try {
-            while(true) //ciò che succede in ogni singolo client ch3e cerca di connettersi
-            {
+            while(true) {
+                String ciao = stdIn.readLine();
+                System.out.println("Il client ha detto " + ciao);
                 out.println("ciao! Devi fare il login");
-                String request= stdIn.readLine();
-                if(request.contains("login"))
-                {
-                    out.println("Paolo");
-                }
-                else{
-                    out.println("Type tell me a name to get a random name");
-                }
+                String request = stdIn.readLine();
+                System.out.println("il nome del login è" + request);
+                out.println("Login effettuato con successo");
+
+
             }
-
-
         } catch (IOException e) {
             System.err.println("Io exception client handler");
         }
