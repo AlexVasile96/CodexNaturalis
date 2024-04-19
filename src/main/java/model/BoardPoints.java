@@ -15,21 +15,8 @@ public class BoardPoints {
             seedCountMap.put(seed, 0);
         }
         //Controlliamo se dobbiamo aggiungere gli attributi
-        ArrayList<Card> tempBoardCards = board.getCardsOnTheBoardList();
-
-        //initialCard
-        if(tempBoardCards.getFirst().isCardBack()){                              //se isCardBack è true, allora la carta non ha gli angoli dietro visibili
-            for (SpecificSeed seed : tempBoardCards.getFirst().getAttributes()) {
-                seedCountMap.put(seed, seedCountMap.get(seed) + 1);
-            }
-
-            //tempBoardCards.removeFirst();
-        }
-
-
-
-        for(Card card : tempBoardCards){ //checking all the othercards
-            if(card.isCardBack() && card.getIndexOnTheBoard()!=1){                                //se il cardback è true, allora aggiungi gli attributi
+        for(Card card : board.getCardsOnTheBoardList()){ //checking all the cards
+            if(card.isCardBack()){                                //se il cardback è true, allora aggiungi gli attributi
                 for (SpecificSeed seed : card.getAttributes()) {
                     seedCountMap.put(seed, seedCountMap.get(seed) + 1);
                 }
