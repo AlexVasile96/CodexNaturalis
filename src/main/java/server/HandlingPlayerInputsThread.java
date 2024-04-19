@@ -1,6 +1,9 @@
 package server;
 
 import com.google.gson.Gson;
+import model.Board;
+import model.Dot;
+import model.Player;
 import view.ClientView;
 
 import java.io.*;
@@ -28,20 +31,25 @@ public class HandlingPlayerInputsThread implements Runnable {
     public void run() {
 
         try {
-            while(true) {
+            while (true) {
+                Board board = new Board(50, 50);
                 String ciao = stdIn.readLine();
                 System.out.println("Il client ha detto " + ciao);
-                out.println("ciao! Devi fare il login");
+                out.println("ciao! Devi fare il login. Metti il tuo nome, fagiano!");
                 String request = stdIn.readLine();
-                System.out.println("il nome del login è" + request);
+                System.out.println("il nome del login è: " + request);
                 out.println("Login effettuato con successo");
+                Player pLayer = new Player(request, 0, Dot.BLACK, board);
+                out.println("Sarai messo in sala d'aassdfsdgrstesa");
+                inattesa();
 
 
             }
         } catch (IOException e) {
             System.err.println("Io exception client handler");
-        }
-        finally {
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
             out.close();
             try {
                 stdIn.close();
@@ -50,6 +58,17 @@ public class HandlingPlayerInputsThread implements Runnable {
             }
         }
     }
+
+        public synchronized void inattesa() throws InterruptedException {
+            while (true) {
+                {
+                    wait(10000);
+                    System.out.println("In attesa di altri giocatori");
+                }
+            }
+        }
+    }
+
 
 
 
@@ -200,5 +219,3 @@ public class HandlingPlayerInputsThread implements Runnable {
         doClose = true;
         System.out.println("Server connection lost, press any key to terminate.");
     }*/
-
-}

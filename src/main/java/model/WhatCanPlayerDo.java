@@ -7,7 +7,8 @@ package model;
 * */
 
 
-import network.message.MessagesEnum;
+import model.card.Card;
+import model.card.ObjectiveCard;
 
 import java.util.List;
 

@@ -1,6 +1,10 @@
 package model;
 
-import org.junit.jupiter.api.AfterEach;
+import model.card.Card;
+import model.card.GoldCardConstructor;
+import model.card.ResourceCardConstructor;
+import model.deck.GoldDeck;
+import model.deck.ResourceDeck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

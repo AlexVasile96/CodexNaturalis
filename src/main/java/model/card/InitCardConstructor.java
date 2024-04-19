@@ -1,4 +1,8 @@
-package model;
+package model.card;
+import model.Corner;
+import model.deck.Deck;
+import model.deck.InitialCardDeck;
+import model.SpecificSeed;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;

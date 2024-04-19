@@ -1,4 +1,8 @@
 package model;
+
+import model.deck.GoldDeck;
+import model.deck.ResourceDeck;
+
 public class FirstThreeCards {
     private Player player;
     private ResourceDeck resourceDeck;

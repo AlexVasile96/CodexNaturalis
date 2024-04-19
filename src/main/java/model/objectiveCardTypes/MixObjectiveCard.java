@@ -1,6 +1,6 @@
-package model;
+package model.objectiveCardTypes;
 
-import java.util.Map;
+import model.*;
 
 public class MixObjectiveCard implements ExtendExtendExtend {
     @Override

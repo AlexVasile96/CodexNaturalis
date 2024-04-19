@@ -1,5 +1,9 @@
-package model;
+package model.card;
 import Exceptions.CantCreateCardsException;
+import model.Corner;
+import model.deck.Deck;
+import model.deck.ResourceDeck;
+import model.SpecificSeed;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;

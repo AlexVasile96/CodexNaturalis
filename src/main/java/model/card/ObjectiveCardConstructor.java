@@ -1,4 +1,7 @@
-package model;
+package model.card;
+import model.*;
+import model.deck.Deck;
+import model.deck.ObjectiveDeck;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;

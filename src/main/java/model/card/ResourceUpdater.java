@@ -1,6 +1,9 @@
-package model;
+package model.card;
 
-public class ResourceUpdater implements Updater{
+import model.Board;
+import model.Player;
+
+public class ResourceUpdater implements Updater {
 
     @Override
     public void updatePlayerPoints(Card card, Player player, Board board) {

@@ -1,8 +1,11 @@
-package model;
+package model.deck;
 import Exceptions.AlredyInException;
 import Exceptions.FullDeckExeption;
 import Exceptions.IllegalAddException;
 import Exceptions.UknownWhyException;
+import model.Player;
+import model.card.Card;
+import model.card.ObjectiveCard;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,7 +51,7 @@ public class GoldDeck implements Deck {
 
         // Verifica se la carta è già presente nel mazzo
         for (Card card2 : goldCards) {
-            if (card.id == card2.id) throw new AlredyInException("La carta è già presente nel mazzo.");
+            if (card.getId() == card2.getId()) throw new AlredyInException("La carta è già presente nel mazzo.");
         }
 
         // provo ad aggiungere la carta

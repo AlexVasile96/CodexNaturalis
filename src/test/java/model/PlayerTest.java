@@ -1,5 +1,9 @@
 package model;
 
+import model.card.*;
+import model.deck.Deck;
+import model.deck.GoldDeck;
+import model.deck.ResourceDeck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

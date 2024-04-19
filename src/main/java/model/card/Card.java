@@ -1,4 +1,8 @@
-package model;
+package model.card;
+
+import model.Corner;
+import model.Node;
+import model.SpecificSeed;
 
 import java.util.ArrayList;
 import java.util.List;

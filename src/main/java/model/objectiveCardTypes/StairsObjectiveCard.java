@@ -1,6 +1,8 @@
-package model;
+package model.objectiveCardTypes;
 
-public class StairsObjectiveCard implements ExtendExtendExtend{
+import model.*;
+
+public class StairsObjectiveCard implements ExtendExtendExtend {
     @Override
     public boolean checkPattern(Board board, SpecificSeed seed, Player player) {
         Node[][] nodes = board.getNodes();

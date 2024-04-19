@@ -1,5 +1,8 @@
-package model;
+package model.deck;
 import Exceptions.*;
+import model.Player;
+import model.card.Card;
+import model.card.ObjectiveCard;
 
 import java.util.Collections;
 import java.util.List;
@@ -59,7 +62,7 @@ public class ResourceDeck implements Deck{
 
         // Verifica se la carta è già presente nel mazzo
         for (Card card2 : resourceCards) {
-            if (card.id == card2.id) throw new AlredyInException("La carta è già presente nel mazzo.");
+            if (card.getId() == card2.getId()) throw new AlredyInException("La carta è già presente nel mazzo.");
         }
 
         // provo ad aggiungere la carta

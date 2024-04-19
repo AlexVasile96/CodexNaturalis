@@ -1,5 +1,5 @@
 package model;
-import java.util.List;
+import model.card.ObjectiveCard;
 
 public class EndGame {
     public void finishGame(Player player, Board board){

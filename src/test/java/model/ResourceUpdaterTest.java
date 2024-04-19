@@ -1,5 +1,7 @@
 package model;
 
+import model.card.ResourceCard;
+import model.card.ResourceUpdater;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

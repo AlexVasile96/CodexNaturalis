@@ -3,6 +3,9 @@ package model;
 import Exceptions.InvalidCornerException;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import model.card.*;
+import model.deck.GoldDeck;
+import model.deck.ResourceDeck;
 
 import java.util.*;
 
@@ -95,7 +98,7 @@ public class Player implements Observable {
         }
     catch (IndexOutOfBoundsException e)
             {System.out.println(e.getMessage()); //INDEX GOES FROM 1 TO 3
-            return null;
+
         }
 
         return playerCards.get(index);
@@ -106,26 +109,36 @@ public class Player implements Observable {
             Card card = secretCards.get(i);
             System.out.println((i + 1) + ". " + card);
         }
+
         Scanner scanner = new Scanner(System.in);
+        boolean validIndex = false;
+        while(validIndex == false){
         System.out.println("Inserisci il numero della carta obiettivo SEGRETA che vuoi pescare: ");
         int selectedCardIndex = scanner.nextInt();
-        try {
-            if (selectedCardIndex < 1 || selectedCardIndex > secretCards.size()) {
-                throw new IndexOutOfBoundsException("Not a valid index");
-            }
-        }catch (IndexOutOfBoundsException e){
+
+            try {
+                if (selectedCardIndex < 1 || selectedCardIndex > secretCards.size()) {
+                    throw new IndexOutOfBoundsException("Not a valid index");
+                }
+                else {
+                    this.secretChosenCard=secretCards.get(selectedCardIndex - 1);
+                    System.out.println(secretChosenCard);
+                    validIndex = true;
+                }
+
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println(e.getMessage());
+            }
         }
 
-        this.secretChosenCard=secretCards.get(selectedCardIndex - 1);
-        System.out.println(secretChosenCard);
+
+
     } //METHOD TO CHOOSE THE SECRET CARD (THE PLAYER HAS A CHOICE BETWEEN 2 CARDS)
 
-    public void playCard(Board board, int cardIndex) {                  //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
-        Card selectedCardFromTheDeck = chooseCard(cardIndex);          //SELECTEDCARDFROMTHEDECK IS THE CARD CHOSEN FROM THE PLAYER DECK
-        if (selectedCardFromTheDeck == null) {                         //CHECKING IF THE CARD EXISTS, IN CASE RETURN
-            return;
-        }
+    public void playCard(Board board, int cardIndex) {
+        Card selectedCardFromTheDeck = chooseCard(cardIndex); //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
+        checkexistingcard(cardIndex);
+
         if (selectedCardFromTheDeck instanceof GoldCard) {
             boolean checker = board.placeGoldCard(((GoldCard) selectedCardFromTheDeck).getRequirementsForPlacing()); //CHECKING IF THE REQUIRMENTS ARE RESPECTED
             if (!checker) return; //checker==false
@@ -149,6 +162,9 @@ public class Player implements Observable {
         catch (IndexOutOfBoundsException e){
             System.out.println(e.getMessage());
             return;
+        }
+        catch (InputMismatchException e){
+            System.out.println(e.getMessage());
         }
 
         Card cardPlayerChoose = cardsPlayerCanChooseFrom.get(selectedCardIndex - 1); //ADJUSTING THE INDEX
@@ -482,4 +498,12 @@ public class Player implements Observable {
 
     }
 
+    public int checkexistingcard(int cardIndex)
+    {
+        Card selectedCardFromTheDeck = chooseCard(cardIndex);          //SELECTEDCARDFROMTHEDECK IS THE CARD CHOSEN FROM THE PLAYER DECK
+        if (selectedCardFromTheDeck == null) {                         //CHECKING IF THE CARD EXISTS, IN CASE RETURN
+            return 0;
+        }
+        return cardIndex;
+    }
 }

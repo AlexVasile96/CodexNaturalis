@@ -1,5 +1,8 @@
 package model;
 
+import model.card.Card;
+import model.card.ObjectiveCard;
+
 import java.util.List;
 
 public class Game implements WhatCanPlayerDo{

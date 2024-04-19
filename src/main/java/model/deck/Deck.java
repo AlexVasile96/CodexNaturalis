@@ -1,5 +1,9 @@
-package model;
+package model.deck;
 
+
+import model.Player;
+import model.card.Card;
+import model.card.ObjectiveCard;
 
 import java.util.List;
 

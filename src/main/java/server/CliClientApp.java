@@ -15,7 +15,7 @@ import java.net.Socket;
  */
 
 public class CliClientApp {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         // Reading JSON file to get host name and port number
         FileReader reader = new FileReader("src/main/resources/HostAndPort.json");
         JSONObject jsonObject = new JSONObject(new JSONTokener(reader));
@@ -43,22 +43,25 @@ public class CliClientApp {
         startCLI(socket, stdIn, input);
     }
     // Start the Command Line Interface
-    private static void startCLI(Socket clientSocket, BufferedReader stdIn, BufferedReader input) throws IOException { //Start the Command Line Interface
+    private static void startCLI(Socket clientSocket, BufferedReader stdIn, BufferedReader input) throws IOException, InterruptedException { //Start the Command Line Interface
     PrintWriter out= new PrintWriter(clientSocket.getOutputStream(),true);
- while (true){
-        System.out.println("<");
-        String command = stdIn.readLine();
-        out.println(command);
-        String serverResponse = input.readLine();
-        System.out.println("Server says: " + serverResponse);
-        System.out.println("<");
-        String loginName = stdIn.readLine();
-        out.println(loginName);
-        String risposta = input.readLine();
-        System.out.println("Server says: " + risposta);
-        //System.out.println("Shut down.");
-}
+ while (true) {
+     System.out.println("<");
+     String command = stdIn.readLine();
+     out.println(command);
+     String serverResponse = input.readLine();
+     System.out.println("Server says: " + serverResponse);
+     System.out.println("<");
+     String loginName = stdIn.readLine();
+     out.println(loginName);
+     String risposta = input.readLine();
+     System.out.println("Server says: " + risposta);
+     String okay = input.readLine();
+     System.out.println("Server says: " + okay);
+     System.out.println("sei in attesa");
  }
+}
+
 
 
 

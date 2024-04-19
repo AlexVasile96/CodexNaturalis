@@ -2,6 +2,10 @@ package model;
 
 import Exceptions.CantPlaceYourCardHere;
 import Exceptions.IllegalPlacementException;
+import model.card.Card;
+import model.card.InitialCard;
+import model.card.ObjectiveCard;
+import model.objectiveCardTypes.*;
 
 import java.util.*;
 
@@ -67,7 +71,7 @@ public class Board {
         int centerY = centralCoordinates[0][1];
         //IS THE INITIAL CARD ALREADY BEEN PLACED?
         if (getNode(centerX, centerY).getValueCounter() < 2) { //USING VALUE-COUNTER TO CHECK IF A INITIAL CARD HAD ALREADY BEEN PLACED
-            System.out.printf("Initial card id:" + initialCard.id + " Already Placed!");
+            System.out.printf("Initial card id:" + initialCard.getId() + " Already Placed!");
             return false;
         }
         if (initialCard.isCardBack()) { //initial card shows back corners cause the attribute is true
@@ -173,7 +177,7 @@ public class Board {
     } //METHOD TO PRINT THE COORDINATES OF THE CENTRAL COORDINATES
 
 
-    public ExtendExtendExtend createSpecificSecretCard( ObjectiveCard card, Player player) //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
+    public ExtendExtendExtend createSpecificSecretCard(ObjectiveCard card, Player player) //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
     {//Momo nota:"avvisatemi se il metodo diventa operativo cosi faccio il test. oppure fatelo voi :p "
         if(Objects.equals(card.getObjectiveSpecificTypeOfCard(), "STAIRS")) {
 

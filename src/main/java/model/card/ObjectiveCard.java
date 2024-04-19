@@ -1,4 +1,8 @@
-package model;
+package model.card;
+
+import model.Corner;
+import model.ObjectiveSpecificTypeOfCard;
+import model.SpecificSeed;
 
 public class ObjectiveCard extends Card{
     private int value;

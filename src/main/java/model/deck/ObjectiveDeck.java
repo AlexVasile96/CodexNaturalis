@@ -1,7 +1,10 @@
-package model;
+package model.deck;
 import Exceptions.AlreadyThreeCardsException;
 import Exceptions.EmptyDeckException;
 import Exceptions.UknownWhyException;
+import model.Player;
+import model.card.Card;
+import model.card.ObjectiveCard;
 
 import java.util.Collections;
 import java.util.List;

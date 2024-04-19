@@ -1,7 +1,9 @@
-package model;
+package model.objectiveCardTypes;
+import model.*;
+
 import java.util.Map;
 
-public class BisObjectiveCard implements ExtendExtendExtend{
+public class BisObjectiveCard implements ExtendExtendExtend {
     @Override
     public boolean checkPattern(Board board, SpecificSeed seed, Player player) {
         BoardPoints boardPoints = new BoardPoints();                                    //Initializing BoardPoints to count the number of Specific_seed on the board

@@ -1,6 +1,8 @@
-package model;
+package model.card;
 
-public class GoldUpdater implements Updater{
+import model.*;
+
+public class GoldUpdater implements Updater {
 
     @Override
     public void updatePlayerPoints(Card card, Player player, Board board) {

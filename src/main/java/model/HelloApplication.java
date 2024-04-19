@@ -4,6 +4,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.card.*;
+import model.deck.Deck;
+import model.deck.GoldDeck;
+import model.deck.InitialCardDeck;
+import model.deck.ResourceDeck;
+import model.objectiveCardTypes.TrisObjectiveCard;
 
 import java.io.IOException;
 import java.util.ArrayList;

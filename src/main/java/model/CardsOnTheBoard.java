@@ -1,5 +1,7 @@
 package model;
 
+import model.card.Card;
+
 import java.util.List;
 
 public class CardsOnTheBoard { //CLASS THAT READS THE CARD THAT HAD BEEN PLACED ON THE BOARD
