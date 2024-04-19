@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 import model.card.Card;
 import model.card.ObjectiveCard;

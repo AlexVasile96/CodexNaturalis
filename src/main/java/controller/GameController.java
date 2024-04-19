@@ -1,7 +1,7 @@
 package controller;
 
 import Exceptions.*;
-import model.Game;
+import model.game.Game;
 import network.JsonUtils;
 import network.message.Command;
 import network.message.MessageSender;

@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 public class Corner extends Node{
     private boolean isThisCornerFree;

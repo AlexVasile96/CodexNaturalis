@@ -1,9 +1,9 @@
 package model.card;
 
 
-import model.Corner;
-import model.Node;
-import model.SpecificSeed;
+import model.game.Corner;
+import model.game.Node;
+import model.game.SpecificSeed;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package view;
 
-import model.Game;
+import model.game.Game;
 
 //CLASSE CHE MANTIENE TUTTE LE INFORMAZIONI DEL SINGOLO CLIENT/PLAYER
 public class ClientView {

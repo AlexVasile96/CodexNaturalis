@@ -1,4 +1,4 @@
-package model;
+package model.prova;
 
 
 import model.card.*;
@@ -6,6 +6,7 @@ import model.deck.Deck;
 import model.deck.GoldDeck;
 import model.deck.InitialCardDeck;
 import model.deck.ResourceDeck;
+import model.game.*;
 import model.objectiveCardTypes.TrisObjectiveCard;
 
 import java.util.ArrayList;

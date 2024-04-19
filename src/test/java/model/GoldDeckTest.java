@@ -5,6 +5,9 @@ import model.card.GoldCardConstructor;
 import model.card.ResourceCardConstructor;
 import model.deck.GoldDeck;
 import model.deck.ResourceDeck;
+import model.game.Board;
+import model.game.Dot;
+import model.game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +28,7 @@ class GoldDeckTest {
     @BeforeEach
     void setUp() {
         board = new Board(50,50);
-        player = new Player("Momo",0,Dot.GREEN,board);
+        player = new Player("Momo",0, Dot.GREEN,board);
         player2 = new Player("Goku",0,Dot.GREEN,board);
 
     }

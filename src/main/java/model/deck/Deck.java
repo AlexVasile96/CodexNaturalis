@@ -1,7 +1,7 @@
 package model.deck;
 
 
-import model.Player;
+import model.game.Player;
 import model.card.Card;
 import model.card.ObjectiveCard;
 

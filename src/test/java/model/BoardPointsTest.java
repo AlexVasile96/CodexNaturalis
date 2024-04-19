@@ -1,5 +1,9 @@
 package model;
 
+import model.game.Board;
+import model.game.BoardPoints;
+import model.game.Node;
+import model.game.SpecificSeed;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

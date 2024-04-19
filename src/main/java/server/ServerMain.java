@@ -1,7 +1,7 @@
 package server;
 
 
-import model.Player;
+import model.game.Player;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;

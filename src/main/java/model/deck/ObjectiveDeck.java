@@ -2,7 +2,7 @@ package model.deck;
 import Exceptions.AlreadyThreeCardsException;
 import Exceptions.EmptyDeckException;
 import Exceptions.UknownWhyException;
-import model.Player;
+import model.game.Player;
 import model.card.Card;
 import model.card.ObjectiveCard;
 
@@ -28,7 +28,7 @@ public class ObjectiveDeck implements Deck {
 
     public ObjectiveCard firstCardForEachPlayer () {
         if (objectiveCards.isEmpty()) {
-            throw new EmptyDeckException("Deck obbiettivo vuoto");
+            throw new EmptyDeckException("Deck obiettivo vuoto");
         }
         try {
             //ObjectiveCard drownCard = (ObjectiveCard) objectiveCards.remove(0);

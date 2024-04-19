@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 import model.deck.GoldDeck;
 import model.deck.ResourceDeck;

@@ -1,9 +1,7 @@
 package model.card;
 
-import model.Board;
-import model.Player;
-import model.card.Card;
-import model.card.GoldCard;
+import model.game.Board;
+import model.game.Player;
 
 public interface Updater {
     public void updatePlayerPoints(Card card, Player player, Board board);

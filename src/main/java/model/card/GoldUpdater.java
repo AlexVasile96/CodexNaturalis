@@ -1,12 +1,14 @@
 package model.card;
 
-import model.*;
+import model.game.Board;
+import model.game.BoardPoints;
+import model.game.Player;
+import model.game.SpecificSeed;
 
 public class GoldUpdater implements Updater {
 
     @Override
     public void updatePlayerPoints(Card card, Player player, Board board) {
-
     }
     @Override
     public void updatePlayerPoints(GoldCard card, Player player, Board board) {

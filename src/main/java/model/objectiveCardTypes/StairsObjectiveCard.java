@@ -1,6 +1,9 @@
 package model.objectiveCardTypes;
 
-import model.*;
+import model.game.Board;
+import model.game.Node;
+import model.game.Player;
+import model.game.SpecificSeed;
 
 public class StairsObjectiveCard implements ExtendExtendExtend {
     @Override

@@ -1,7 +1,7 @@
 package model.card;
 
-import model.Board;
-import model.Player;
+import model.game.Board;
+import model.game.Player;
 
 public class ResourceUpdater implements Updater {
 

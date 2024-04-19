@@ -1,5 +1,8 @@
 package model.objectiveCardTypes;
-import model.*;
+import model.game.Board;
+import model.game.BoardPoints;
+import model.game.Player;
+import model.game.SpecificSeed;
 
 import java.util.Map;
 

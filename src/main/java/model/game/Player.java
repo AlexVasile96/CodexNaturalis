@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 import Exceptions.InvalidCornerException;
 import javafx.beans.InvalidationListener;

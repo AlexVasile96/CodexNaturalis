@@ -1,8 +1,8 @@
 package model.card;
 
-import model.Corner;
-import model.ObjectiveSpecificTypeOfCard;
-import model.SpecificSeed;
+import model.game.Corner;
+import model.game.ObjectiveSpecificTypeOfCard;
+import model.game.SpecificSeed;
 
 public class ObjectiveCard extends Card{
     private int value;

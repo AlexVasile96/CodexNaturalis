@@ -1,6 +1,9 @@
 package model.objectiveCardTypes;
 
-import model.*;
+import model.game.Board;
+import model.game.BoardPoints;
+import model.game.Player;
+import model.game.SpecificSeed;
 
 public class MixObjectiveCard implements ExtendExtendExtend {
     @Override

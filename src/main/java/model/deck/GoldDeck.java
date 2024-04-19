@@ -3,7 +3,7 @@ import Exceptions.AlredyInException;
 import Exceptions.FullDeckExeption;
 import Exceptions.IllegalAddException;
 import Exceptions.UknownWhyException;
-import model.Player;
+import model.game.Player;
 import model.card.Card;
 import model.card.ObjectiveCard;
 

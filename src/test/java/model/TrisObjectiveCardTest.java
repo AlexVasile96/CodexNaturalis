@@ -1,5 +1,6 @@
 package model;
 
+import model.game.*;
 import model.objectiveCardTypes.TrisObjectiveCard;
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TrisObjectiveCardTest {
     private Board board = new Board(50,50);
-    private Player player = new Player("Calla",0,Dot.GREEN,board);
+    private Player player = new Player("Calla",0, Dot.GREEN,board);
 
     private SpecificSeed specificSeed = SpecificSeed.MUSHROOM;
     private Node node = new Node(specificSeed,0,0);

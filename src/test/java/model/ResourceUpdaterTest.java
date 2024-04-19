@@ -2,6 +2,7 @@ package model;
 
 import model.card.ResourceCard;
 import model.card.ResourceUpdater;
+import model.game.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ import java.util.List;
 class ResourceUpdaterTest {
     //INIZIALIZZAZIONI
     private Board board = new Board(50,50);
-    private Player player = new Player("Calla",0,Dot.GREEN,board);
+    private Player player = new Player("Calla",0, Dot.GREEN,board);
     private ResourceUpdater resourceUpdater = new ResourceUpdater();
 
     @Test

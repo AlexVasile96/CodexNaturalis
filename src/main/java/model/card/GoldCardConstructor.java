@@ -1,10 +1,10 @@
 package model.card;
 
 
-import model.Corner;
+import model.game.Corner;
 import model.deck.Deck;
 import model.deck.GoldDeck;
-import model.SpecificSeed;
+import model.game.SpecificSeed;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -46,8 +46,8 @@ public class GoldCardConstructor implements CardConstructor{
                 goldCards.add(cards); //adding card to th arraylist previously created
             }
 
-            // Chiudi il reader
-            reader.close();
+
+            reader.close(); // closing the reader
         } catch (Exception e) {
             e.printStackTrace();
         }

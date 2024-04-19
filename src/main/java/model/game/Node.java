@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 public class Node {
     private SpecificSeed specificNodeSeed;

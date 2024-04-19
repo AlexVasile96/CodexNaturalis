@@ -45,7 +45,7 @@ public class CliClientApp {
     // Start the Command Line Interface
     private static void startCLI(Socket clientSocket, BufferedReader stdIn, BufferedReader input) throws IOException, InterruptedException { //Start the Command Line Interface
     PrintWriter out= new PrintWriter(clientSocket.getOutputStream(),true);
- while (true) {
+    while (true) {
      System.out.println("<");
      String command = stdIn.readLine();
      out.println(command);

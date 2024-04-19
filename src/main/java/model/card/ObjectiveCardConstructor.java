@@ -1,7 +1,9 @@
 package model.card;
-import model.*;
 import model.deck.Deck;
 import model.deck.ObjectiveDeck;
+import model.game.Corner;
+import model.game.ObjectiveSpecificTypeOfCard;
+import model.game.SpecificSeed;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;

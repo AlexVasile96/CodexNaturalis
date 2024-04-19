@@ -1,9 +1,9 @@
 package server;
 
 import com.google.gson.Gson;
-import model.Board;
-import model.Dot;
-import model.Player;
+import model.game.Board;
+import model.game.Dot;
+import model.game.Player;
 import view.ClientView;
 
 import java.io.*;
