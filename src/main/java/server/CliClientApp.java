@@ -22,7 +22,7 @@ public class CliClientApp {
         FileReader reader = new FileReader("src/main/resources/HostAndPort.json");
         JSONObject jsonObject = new JSONObject(new JSONTokener(reader));
         JSONArray hostAndPortArray = jsonObject.getJSONArray("hostandport");
-        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in)); //scanner
         String hostName=null;         //INITIALIZING
         int portNumber=0;       //INITIALIZING
 
@@ -41,15 +41,18 @@ public class CliClientApp {
         // Creating the socket and connecting to the server
         Socket socket = new Socket(hostName,portNumber); //CREATING THE SOCKET
         BufferedReader input= new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        PrintWriter out= new PrintWriter(socket.getOutputStream(),true);
         System.out.println("Client connected!");
-        startCLI(socket, stdIn, input);
+        ServerConnection serverConnection= new ServerConnection(socket);
+        serverConnection.run();
+        //startCLI(socket, stdIn, input);
     }
     // Start the Command Line Interface
     private static void startCLI(Socket clientSocket, BufferedReader stdIn, BufferedReader input) throws IOException, InterruptedException { //Start the Command Line Interface
-    PrintWriter out= new PrintWriter(clientSocket.getOutputStream(),true);
-    ServerConnection serverConnection= new ServerConnection(clientSocket);
-    new Thread(serverConnection).start();
-        while (true) {
+
+
+    //new Thread(serverConnection).start();
+        /*while (true) {
             System.out.println("<");
             String command = stdIn.readLine();
             if (command.equals("quit")) break;
@@ -69,8 +72,8 @@ public class CliClientApp {
             ordinePlayer(clientSocket, stdIn, input);
         }
 
-            /*out.println(command);
-             */
+            /*out.println(command);*/
+
 
      //
 

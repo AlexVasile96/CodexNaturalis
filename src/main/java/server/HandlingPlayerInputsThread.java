@@ -22,7 +22,6 @@ public class HandlingPlayerInputsThread implements Runnable {
     private Gson gson;
     private List<Player> playersList = new ArrayList<>();
     private Socket clientSocket;
-    private List<HandlingPlayerInputsThread> allThreads= new ArrayList<>();
     private Integer x;
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients) throws IOException { //Costructor
@@ -34,26 +33,45 @@ public class HandlingPlayerInputsThread implements Runnable {
         this.gson = new Gson();
         this.playersList= playersinTheGame;
         this.x=0;
-        this.allThreads = allThreads;
         this.isGameStarted = false;
         this.clients=clients;
 
     }
 
+
+    //NELLA RUN
+    /*
+    * CONTROLLO-> IF CLIENTVIEW.GETUSERNAME==NULL->LOGIN          LOGIN
+    * CLIENT IN ATTESA
+    *
+    *
+    *
+    *
+    *
+    * */
+
+
+
+
+
+
+
+
     @Override
     public void run() {
         try {
             while (true) {
+                //IF NOT LOGIN->LOGIN
+                //IF ACTIONINPUTS
+                System.out.println("Siamo nella run");
                 Board board = new Board(50, 50);
-                String ciao = stdIn.readLine();
-                System.out.println("Il client ha detto " + ciao);
-                out.println("ciao! Devi fare il login. Metti il tuo nome, fagiano!");
+                String firstMessag = stdIn.readLine();
+                System.out.println("Il client ha detto " + firstMessag);
+                out.println("Ciao! Devi fare il login. Inserisci il tuo nome per favore!");
                 String request = stdIn.readLine();
                 System.out.println("il nome del login è: " + request);
                 out.println("Login effettuato con successo");
                 Player player = new Player(request, 0, Dot.BLACK, board);
-                x=ServerMain.getIntClients();
-                System.out.println(x);
                 playersList.add(player);
                 System.out.println(player);
                 out.println("Sarai messo in sala d'attesa:");
@@ -65,6 +83,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     }
                 }
                 notifyGameStart();
+                //startGame();
 
 
             }
@@ -80,6 +99,9 @@ public class HandlingPlayerInputsThread implements Runnable {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    private void startGame() {
     }
 
 
