@@ -62,7 +62,7 @@ public class ServerMain {
                     Socket socket = serverSocket.accept();                                          //aspettando il client
                     String clientAddress = socket.getInetAddress().getHostAddress();
                     System.out.println("Client connected from IP: " + clientAddress);//ok            // ip del client
-                    HandlingPlayerInputsThread clientThread= new HandlingPlayerInputsThread(socket);
+                    HandlingPlayerInputsThread clientThread= new HandlingPlayerInputsThread(socket, playersInCurrentGame);
                     clients.add(clientThread);
                     pool.execute(clientThread); //HAndling single player client
 
@@ -73,5 +73,13 @@ public class ServerMain {
             }
 
         }
+
+    public static int getIntClients() {
+        return clients.size();
     }
+
+    public static List<HandlingPlayerInputsThread> getClients() {
+        return clients;
+    }
+}
 

@@ -47,7 +47,7 @@ public class CliClientApp {
     PrintWriter out= new PrintWriter(clientSocket.getOutputStream(),true);
     while (true) {
      System.out.println("<");
-     String command = stdIn.readLine();
+     String command = stdIn.readLine(); // client scrive "ciao"
      out.println(command);
      String serverResponse = input.readLine();
      System.out.println("Server says: " + serverResponse);
@@ -59,6 +59,9 @@ public class CliClientApp {
      String okay = input.readLine();
      System.out.println("Server says: " + okay);
      System.out.println("sei in attesa");
+     String ascolto = input.readLine();
+     System.out.println("Server says: " + ascolto);
+     //
         }
     }
 

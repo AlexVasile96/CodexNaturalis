@@ -8,22 +8,32 @@ import view.ClientView;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HandlingPlayerInputsThread implements Runnable {
     public BufferedReader stdIn;
     public PrintWriter out;
     private ClientView clientView;
+    private boolean isGameStarted;
     private boolean doClose;
     private Gson gson;
+    private List<Player> playersList;
     private Socket clientSocket;
+    private List<HandlingPlayerInputsThread> allThreads= new ArrayList<>();
+    private Integer x;
 
-    public HandlingPlayerInputsThread(Socket socket) throws IOException { //Costructor
+    public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame) throws IOException { //Costructor
         this.clientSocket= socket;
         stdIn= new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out= new PrintWriter(clientSocket.getOutputStream(), true);
         this.clientView = clientView;
         this.doClose = false;
         this.gson = new Gson();
+        this.playersList= playersinTheGame;
+        this.x=0;
+        this.allThreads = allThreads;
+        this.isGameStarted = false;
 
     }
 
@@ -40,8 +50,11 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println("il nome del login è: " + request);
                 out.println("Login effettuato con successo");
                 Player pLayer = new Player(request, 0, Dot.BLACK, board);
-                out.println("Sarai messo in sala d'aassdfsdgrstesa");
+                x=ServerMain.getIntClients();
+                System.out.println(x);
+                out.println("Sarai messo in sala d'attesa:");
                 inattesa();
+                notifyGameStart();
 
 
             }
@@ -60,13 +73,32 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
 
         public synchronized void inattesa() throws InterruptedException {
-            while (true) {
+            while (x!=2) {
                 {
                     wait(10000);
                     System.out.println("In attesa di altri giocatori");
                 }
             }
+            notifyAll();
+            return;
         }
+
+
+    public synchronized void notifyGameStart() {
+        if (!isGameStarted) {
+            isGameStarted = true;
+            for (HandlingPlayerInputsThread thread : ServerMain.getClients()) {
+                thread.sendMessageToClient("Il gioco è iniziato!");
+            }
+        }
+    }
+
+    // Aggiungi un metodo per inviare un messaggio a un singolo client
+    public synchronized void sendMessageToClient(String message) {
+        out.println(message);
+    }
+
+
     }
 
 
