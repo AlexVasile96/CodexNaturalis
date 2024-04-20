@@ -1,6 +1,7 @@
 package server;
 
 
+import model.game.Player;
 import network.client.ClientReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -9,6 +10,7 @@ import view.ClientView;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 /**
  * This class represents the command-line client application.
@@ -47,7 +49,7 @@ public class CliClientApp {
     PrintWriter out= new PrintWriter(clientSocket.getOutputStream(),true);
     while (true) {
      System.out.println("<");
-     String command = stdIn.readLine();
+     String command = stdIn.readLine(); // client scrive "ciao"
      out.println(command);
      String serverResponse = input.readLine();
      System.out.println("Server says: " + serverResponse);
@@ -59,7 +61,25 @@ public class CliClientApp {
      String okay = input.readLine();
      System.out.println("Server says: " + okay);
      System.out.println("sei in attesa");
+     String ascolto = input.readLine();
+     System.out.println("Server says: " + ascolto);
+        //System.out.println("numero giocatori da clientcli: "+ ServerMain.getPlayersInCurrentGame().size());
+     ordinePlayer(clientSocket, stdIn, input);
+
+     //
         }
+    }
+
+    //stampa ordine giocatori da sistemare
+    public static void ordinePlayer(Socket clientSocket, BufferedReader stdIn, BufferedReader input) throws IOException, InterruptedException {
+        Boolean uscitaCheck = Boolean.valueOf(input.readLine());
+        while (uscitaCheck != false) {
+            String ordinePlayer = input.readLine();
+            System.out.println("Server says: " + ordinePlayer);
+            uscitaCheck = Boolean.valueOf(input.readLine());
+
+        }
+
     }
 
     }

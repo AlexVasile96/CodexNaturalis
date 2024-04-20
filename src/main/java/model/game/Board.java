@@ -16,6 +16,7 @@ public class Board {
     private ArrayList<Card> cardsOnTheBoardList;
     private int numOfEmpty; //int that counts all the empty SpecificSeed on the Board
     private SpecificSeed initEmptyValue; //this helps us to initialize all the nodes as empty at the start
+    private Player player;
 
     public Board(int rows, int cols) { //initializing all the nodes using the constructor
         cardsOnTheBoardList = new ArrayList<>();

@@ -8,22 +8,32 @@ import view.ClientView;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HandlingPlayerInputsThread implements Runnable {
     public BufferedReader stdIn;
     public PrintWriter out;
     private ClientView clientView;
+    private boolean isGameStarted;
     private boolean doClose;
     private Gson gson;
+    private List<Player> playersList = new ArrayList<>();
     private Socket clientSocket;
+    private List<HandlingPlayerInputsThread> allThreads= new ArrayList<>();
+    private Integer x;
 
-    public HandlingPlayerInputsThread(Socket socket) throws IOException { //Costructor
+    public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame) throws IOException { //Costructor
         this.clientSocket= socket;
         stdIn= new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out= new PrintWriter(clientSocket.getOutputStream(), true);
         this.clientView = clientView;
         this.doClose = false;
         this.gson = new Gson();
+        this.playersList= playersinTheGame;
+        this.x=0;
+        this.allThreads = allThreads;
+        this.isGameStarted = false;
 
     }
 
@@ -39,9 +49,20 @@ public class HandlingPlayerInputsThread implements Runnable {
                 String request = stdIn.readLine();
                 System.out.println("il nome del login è: " + request);
                 out.println("Login effettuato con successo");
-                Player pLayer = new Player(request, 0, Dot.BLACK, board);
-                out.println("Sarai messo in sala d'aassdfsdgrstesa");
-                inattesa();
+                Player player = new Player(request, 0, Dot.BLACK, board);
+                x=ServerMain.getIntClients();
+                System.out.println(x);
+                playersList.add(player);
+                System.out.println(player);
+                out.println("Sarai messo in sala d'attesa:");
+                if(playersList.size()<2) {
+                    inattesa();
+                    //stampa punteggio giocatori *da spostare
+                    for(Player p: playersList) {
+                    p.visualizePlayerScore();
+                    }
+                }
+                notifyGameStart();
 
 
             }
@@ -60,40 +81,58 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
 
         public synchronized void inattesa() throws InterruptedException {
-            while (true) {
+            System.out.println("In attesa di altri giocatori");
+            while (playersList.size()!=2) {
                 {
                     wait(10000);
-                    System.out.println("In attesa di altri giocatori");
                 }
+            }
+            notifyAll();
+            return;
+        }
+
+
+    public synchronized void notifyGameStart() {
+        if (!isGameStarted) {
+            isGameStarted = true;
+            for (HandlingPlayerInputsThread thread : ServerMain.getClients()) {
+                thread.sendMessageToClient("Il gioco è iniziato!");
+                int i=1;
+                for (Player p : playersList) {
+                    thread.sendBooleanToClient(true);
+                    thread.sendMessageToClient("il "+i+"giocatore è: " + p.getNickName());
+                    i++;
+                }
+                thread.sendBooleanToClient(false);
             }
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-        /*public void sendMessageToServer (MessagesEnum type, String content) throws IOException {
-            out.writeObject(gson.toJson(new MessageSender(type, content)));
-        }
-
-
-
-    private void initializePlayer(String userInput)
-    {
-        //scelta del colore del dot
-        //assegnazione carta iniziale
-        //2 carte risorsa e 1 carta gold
-        //scelta della carta obiettivo
-        //inizializzazione dei punti(=0)
-        //creazione della sua tabella dei punti -> piazzamento del dot
+    // Aggiungi un metodo per inviare un messaggio a un singolo client
+    public synchronized void sendMessageToClient(String message) {
+        out.println(message);
     }
+
+    public synchronized boolean sendBooleanToClient(boolean value) {
+        out.println(value);
+        return value;
+    }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+    /*
+
+
 
 
     private void actionsInput(String userInput) throws IOException { //GAME STARTED

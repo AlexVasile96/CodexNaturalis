@@ -47,6 +47,10 @@ public class Player implements Observable {
             System.out.println(card);
         }
     }
+    public void visualizePlayerScore(){
+        System.out.println(nickName+"score: "+ playerScore);
+    }
+
     public void drawResourceCard(ResourceDeck deck) {
         deck.drawCard(this);
     } //DRAWING RESOURCE CARD
@@ -505,5 +509,18 @@ public class Player implements Observable {
             return 0;
         }
         return cardIndex;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "nickName='" + nickName + '\'' +
+                ", playerScore=" + playerScore +
+                ", dot=" + dot +
+                ", board=" + board +
+                ", isCardBack=" + isCardBack +
+                ", playerCards=" + playerCards +
+                ", secretChosenCard=" + secretChosenCard +
+                '}';
     }
 }

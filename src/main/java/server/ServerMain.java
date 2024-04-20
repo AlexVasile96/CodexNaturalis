@@ -18,6 +18,8 @@ import java.util.concurrent.Executors;
 public class ServerMain {
     private static List<HandlingPlayerInputsThread> clients= new ArrayList<>();
     private static ExecutorService pool = Executors.newFixedThreadPool(4);
+
+    private static List< Player> playersInCurrentGame= new ArrayList<>();
         public static void main(String[] args) {
             //Try-catch block to read the IP address and the port number from a JSON file
             try {
@@ -58,11 +60,10 @@ public class ServerMain {
             //Accepts connections from clients on new threads
             while (true) {
                 try {
-                    List< Player> playersInCurrentGame= new ArrayList<>();
                     Socket socket = serverSocket.accept();                                          //aspettando il client
                     String clientAddress = socket.getInetAddress().getHostAddress();
                     System.out.println("Client connected from IP: " + clientAddress);//ok            // ip del client
-                    HandlingPlayerInputsThread clientThread= new HandlingPlayerInputsThread(socket);
+                    HandlingPlayerInputsThread clientThread= new HandlingPlayerInputsThread(socket, playersInCurrentGame);
                     clients.add(clientThread);
                     pool.execute(clientThread); //HAndling single player client
 
@@ -73,5 +74,17 @@ public class ServerMain {
             }
 
         }
+
+    public static int getIntClients() {
+        return clients.size();
     }
+
+    public static List<HandlingPlayerInputsThread> getClients() {
+        return clients;
+    }
+
+    public static List<Player> getPlayersInCurrentGame() {
+        return playersInCurrentGame;
+    }
+}
 
