@@ -1,6 +1,13 @@
 package model;
 
-import org.junit.jupiter.api.AfterEach;
+import model.card.Card;
+import model.card.GoldCardConstructor;
+import model.card.ResourceCardConstructor;
+import model.deck.GoldDeck;
+import model.deck.ResourceDeck;
+import model.game.Board;
+import model.game.Dot;
+import model.game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +32,7 @@ class ResourceDeckTest {
     void setUp() {
         //CardConstructor resourceCardConstructor = new ResourceCardConstructor();
         board = new Board(50,50);
-        player = new Player("Momo",0,Dot.GREEN,board);
+        player = new Player("Momo",0, Dot.GREEN,board);
     }
 
     @Test //Test del metodo che fa pescare una carta al player dal deck risorse

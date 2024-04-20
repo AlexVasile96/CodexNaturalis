@@ -1,5 +1,7 @@
 package model;
 
+import model.game.*;
+import model.objectiveCardTypes.StairsObjectiveCard;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,7 +13,7 @@ The method checks if 3 cards of the correct specific seed are placed in the righ
 class StairsObjectiveCardTest {
     //INITIALIZATIONS
     private Board board = new Board(50,50);
-    private Player player = new Player("Calla",0,Dot.GREEN,board);
+    private Player player = new Player("Calla",0, Dot.GREEN,board);
 
     private SpecificSeed specificSeed = SpecificSeed.MUSHROOM;
     private SpecificSeed specificSeed2 = SpecificSeed.PLANT;

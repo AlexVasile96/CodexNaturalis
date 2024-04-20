@@ -1,5 +1,8 @@
 package model;
 
+import model.card.GoldCard;
+import model.card.GoldUpdater;
+import model.game.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

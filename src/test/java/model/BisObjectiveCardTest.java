@@ -1,5 +1,7 @@
 package model;
 
+import model.game.*;
+import model.objectiveCardTypes.BisObjectiveCard;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,7 +11,7 @@ class BisObjectiveCardTest {
     INITIALIZATION
      */
     private Board board = new Board(50,50);
-    private Player player = new Player("Calla",0,Dot.GREEN,board);
+    private Player player = new Player("Calla",0, Dot.GREEN,board);
 
     private SpecificSeed specificSeed = SpecificSeed.MUSHROOM;
     private SpecificSeed specificSeed2 = SpecificSeed.ANIMAL;

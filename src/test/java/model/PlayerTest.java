@@ -1,5 +1,12 @@
 package model;
 
+import model.card.*;
+import model.deck.Deck;
+import model.deck.GoldDeck;
+import model.deck.ResourceDeck;
+import model.game.Board;
+import model.game.Dot;
+import model.game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayerTest {
     ArrayList <Card> playerCards = new ArrayList<>(3);
     Board board = new Board(50,50);
-    Player player = new Player("Calla",0,Dot.GREEN,board);
+    Player player = new Player("Calla",0, Dot.GREEN,board);
     ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor();
     GoldCardConstructor goldCardConstructor = new GoldCardConstructor();
     ObjectiveCardConstructor objectiveCardConstructor = new ObjectiveCardConstructor();
