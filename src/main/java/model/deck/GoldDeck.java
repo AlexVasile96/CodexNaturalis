@@ -1,8 +1,8 @@
 package model.deck;
-import Exceptions.AlredyInException;
-import Exceptions.FullDeckExeption;
-import Exceptions.IllegalAddException;
-import Exceptions.UknownWhyException;
+import exceptions.AlredyInException;
+import exceptions.FullDeckExeption;
+import exceptions.IllegalAddException;
+import exceptions.UknownWhyException;
 import model.game.Player;
 import model.card.Card;
 import model.card.ObjectiveCard;

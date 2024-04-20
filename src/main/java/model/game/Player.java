@@ -1,6 +1,6 @@
 package model.game;
 
-import Exceptions.InvalidCornerException;
+import exceptions.InvalidCornerException;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import model.card.*;

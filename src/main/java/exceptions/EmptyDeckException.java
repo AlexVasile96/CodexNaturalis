@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 public class EmptyDeckException extends RuntimeException {
     public EmptyDeckException(String message) {

@@ -6,13 +6,6 @@ import model.game.Game;
 public class ClientView {
     String userName=null;
     Game game;
-    boolean waitPlayers=false;
-    public String getUsername() {
-        return userName;
-    }
-    public boolean getWaitPlayers() {
-        return false;
-    }
 
     public String getUserName() {
         return userName;
@@ -28,16 +21,5 @@ public class ClientView {
 
     public void setGame(Game game) {
         this.game = game;
-    }
-
-    public boolean isWaitPlayers() {
-        return waitPlayers;
-    }
-
-    public void setUsername(String username) {
-        this.userName = username;
-    }
-    public void setWaitPlayers(boolean waitPlayers) {
-        this.waitPlayers = waitPlayers;
     }
 }

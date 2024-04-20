@@ -1,5 +1,5 @@
 package model.card;
-import Exceptions.CantCreateCardsException;
+import exceptions.CantCreateCardsException;
 import model.game.Corner;
 import model.deck.Deck;
 import model.deck.ResourceDeck;

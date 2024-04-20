@@ -1,6 +1,6 @@
 package controller;
 
-import Exceptions.*;
+import exceptions.*;
 import model.game.Game;
 import network.JsonUtils;
 import network.message.Command;

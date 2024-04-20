@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 public class IllegalPlacementException extends RuntimeException {
     public IllegalPlacementException(String s) {

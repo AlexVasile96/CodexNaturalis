@@ -62,20 +62,11 @@ public class ClientReader implements Runnable {
                 }
 
                 case CONFIRM_USERNAME -> {
-                    clientView.setUsername(response.getMessageToSend());
-                    System.out.println("Username was correctly set to: " + clientView.getUsername() + ".");
+                    clientView.setUserName(response.getMessageToSend());
+                    System.out.println("Username was correctly set to: " + clientView.getUserName() + ".");
                 }
 
-                case WAIT_PLAYERS -> {
-                    clientView.setWaitPlayers(true);
-                    System.out.println(response.getMessageToSend());
-                }
 
-                case GAME_START -> {
-                    clientView.setWaitPlayers(false);
-                    notifyViewUpdate(response.getMessages());
-                    System.out.println(response.getMessageToSend());
-                }
 
                 case GAME_END -> {
                     notifyViewUpdate(response.getMessages());

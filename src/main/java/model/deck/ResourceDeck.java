@@ -1,5 +1,5 @@
 package model.deck;
-import Exceptions.*;
+import exceptions.*;
 import model.game.Player;
 import model.card.Card;
 import model.card.ObjectiveCard;
