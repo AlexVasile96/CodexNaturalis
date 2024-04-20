@@ -1,6 +1,6 @@
 package network.message;
 
-import Exceptions.ParametersNotValidException;
+import exceptions.ParametersNotValidException;
 import model.game.WhatCanPlayerDo;
 
 import java.lang.reflect.InvocationTargetException;

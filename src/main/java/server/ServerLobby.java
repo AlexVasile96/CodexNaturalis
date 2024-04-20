@@ -1,8 +1,8 @@
 package server;
 
-import Exceptions.GameFullException;
-import Exceptions.UnknownPlayerNumberException;
-import Exceptions.UsernameAlreadyExistsException;
+import exceptions.GameFullException;
+import exceptions.UnknownPlayerNumberException;
+import exceptions.UsernameAlreadyExistsException;
 import controller.GameController;
 
 import java.io.PrintWriter;

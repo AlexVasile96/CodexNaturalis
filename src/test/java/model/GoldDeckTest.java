@@ -57,12 +57,12 @@ class GoldDeckTest {
 
         //provo ad inserire una carta di un'altro deck
         Card cartaBomba2 = resourceDeck.drawCard(player);
-        assertThrows(Exceptions.IllegalAddException.class, () -> goldDeck.addCard(cartaBomba2), "La carta non appartiene al mazzo gold");
+        assertThrows(exceptions.IllegalAddException.class, () -> goldDeck.addCard(cartaBomba2), "La carta non appartiene al mazzo gold");
 
         //provo ad inserire un duplicato
         Card cartaBomba3 = goldDeck.drawCard(player2);
         goldDeck.addCard(cartaBomba);
-        assertThrows(Exceptions.AlredyInException.class, () -> goldDeck.addCard(cartaBomba));
+        assertThrows(exceptions.AlredyInException.class, () -> goldDeck.addCard(cartaBomba));
 
     }
 }

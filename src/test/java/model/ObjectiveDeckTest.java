@@ -44,7 +44,7 @@ class ObjectiveDeckTest {
         for(int i =0; i<15; i++){
             firstCommonObjective= objectiveDeck.firstCardForEachPlayer();
         }
-        assertThrows(Exceptions.EmptyDeckException.class, ()->objectiveDeck.firstCardForEachPlayer(), "già estratto tutte le carte");
+        assertThrows(exceptions.EmptyDeckException.class, ()->objectiveDeck.firstCardForEachPlayer(), "già estratto tutte le carte");
     }
 
     @Test

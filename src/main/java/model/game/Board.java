@@ -1,7 +1,7 @@
 package model.game;
 
-import Exceptions.CantPlaceYourCardHere;
-import Exceptions.IllegalPlacementException;
+import exceptions.CantPlaceYourCardHere;
+import exceptions.IllegalPlacementException;
 import model.card.Card;
 import model.card.InitialCard;
 import model.card.ObjectiveCard;

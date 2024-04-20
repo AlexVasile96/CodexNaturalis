@@ -1,6 +1,7 @@
 package server;
 
 import com.google.gson.Gson;
+import exceptions.OperationCancelledException;
 import model.game.Board;
 import model.game.Dot;
 import model.game.Player;
@@ -15,6 +16,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     public BufferedReader stdIn;
     public PrintWriter out;
     private ClientView clientView;
+    private List<HandlingPlayerInputsThread> clients;
     private boolean isGameStarted;
     private boolean doClose;
     private Gson gson;
@@ -23,7 +25,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private List<HandlingPlayerInputsThread> allThreads= new ArrayList<>();
     private Integer x;
 
-    public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame) throws IOException { //Costructor
+    public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients) throws IOException { //Costructor
         this.clientSocket= socket;
         stdIn= new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out= new PrintWriter(clientSocket.getOutputStream(), true);
@@ -34,12 +36,12 @@ public class HandlingPlayerInputsThread implements Runnable {
         this.x=0;
         this.allThreads = allThreads;
         this.isGameStarted = false;
+        this.clients=clients;
 
     }
 
     @Override
     public void run() {
-
         try {
             while (true) {
                 Board board = new Board(50, 50);
@@ -80,7 +82,62 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
 
-        public synchronized void inattesa() throws InterruptedException {
+
+    private void actionsInput(String userInput) throws IOException { //GAME STARTED
+        try {
+            switch (userInput) {
+                //Display the player's commands options
+                case "help" -> printHelp();
+
+                //Display the game's status
+                //case "status" -> printStatus();
+
+                //Display the list of available actions for the player in the current turn phase
+                //case "actions" -> printActions();
+
+                //The following methods are used to run game actions
+                //case "showCards", "0" -> showCards();//run
+
+                //case "chooseCardFromHand", "1" -> chosenHandCard();//run
+
+                //case "selectCardFromBoard", "2" -> selectedBoardCard();//run
+
+                //case "selectCornerFromChosenCard", "3" -> selectedCorner();//run
+
+                //case "placeCard", "4" -> placeSelectedCard();//run
+
+                //case "visualizeCommonObjectiveCards", "5" -> visualizeCommonObjective();//run
+
+                //case "visualizeSecretObjectiveCard", "6" -> visualizeSecretObjective();//run
+
+                //case "showBoard", "7" -> showBoard();//run
+
+                //case "showPoints", "8" -> showPoints();//run
+
+                //case "endTurn", "9" -> runEndTurn();//run
+
+                default -> {
+                        System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
+                }
+
+            }
+        } catch (OperationCancelledException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+    private void printHelp()
+    {
+        System.out.println("Commands:\n");
+        System.out.println(
+                "Supported commands are: " +
+                        "\n" +
+                        "\n- 'status': show the player who is currently taking their turn and the turn phase" +
+                        "\n- 'show': display a specific game element" +
+                        "\n- 'actions': display all currently allowed game actions" +
+                        "\n");
+    }
+
+    public synchronized void inattesa() throws InterruptedException {
             System.out.println("In attesa di altri giocatori");
             while (playersList.size()!=2) {
                 {
@@ -89,8 +146,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             }
             notifyAll();
             return;
-        }
-
+        } //metodo che mette in attesa i client fino a che non si è raggiunto il numero voluto di giocatori
 
     public synchronized void notifyGameStart() {
         if (!isGameStarted) {
@@ -108,18 +164,26 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
 
-    // Aggiungi un metodo per inviare un messaggio a un singolo client
+   //metodo per mandare un singolo messaggio al client
     public synchronized void sendMessageToClient(String message) {
         out.println(message);
     }
 
+    //metodo per mandare un singolo boolean al client
     public synchronized boolean sendBooleanToClient(boolean value) {
         out.println(value);
         return value;
     }
 
-
+    public synchronized void sendMessageToAllClients(String message)
+    {
+        for(HandlingPlayerInputsThread client: clients)
+        {
+            client.out.println(message);
+        }
     }
+
+}
 
 
 
@@ -135,51 +199,6 @@ public class HandlingPlayerInputsThread implements Runnable {
 
 
 
-    private void actionsInput(String userInput) throws IOException { //GAME STARTED
-        try {
-            switch (userInput) {
-                //Display the player's commands options
-                case "help" -> printHelp();
-
-                //Display the game's status
-                case "status" -> printStatus();
-
-                //Display the list of available actions for the player in the current turn phase
-                case "actions" -> printActions();
-
-                //The following methods are used to run game actions
-                case "showCards", "0" -> showCards();//run
-
-                case "chooseCardFromHand", "1" -> chosenHandCard();//run
-
-                case "selectCardFromBoard", "2" -> selectedBoardCard();//run
-
-                case "selectCornerFromChosenCard", "3" -> selectedCorner();//run
-
-                case "placeCard", "4" -> placeSelectedCard();//run
-
-                case "visualizeCommonObjectiveCards", "5" -> visualizeCommonObjective();//run
-
-                case "visualizeSecretObjectiveCard", "6" -> visualizeSecretObjective();//run
-
-                case "showBoard", "7" -> showBoard();//run
-
-                case "showPoints", "8" -> showPoints();//run
-
-                case "endTurn", "9" -> runEndTurn();//run
-
-                default -> {
-                    if (clientView.getGame() == null)
-                        out.writeObject(userInput);
-                    else
-                        System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
-                }
-
-            }
-        } catch (OperationCancelledException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
 
 
     private void printHelp()
@@ -199,7 +218,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 "Supported commands:" +
                         "\n- 'Cards': display player's cards" +
                         "\n- 'HandCard': select the card you want to place from your hand" +
-                        "\n- 'BoardCard': select the card from the board, that you want to add your card to" +
+                        "\n- 'BoardCard': select the card from the board you want to play your card to" +
                         "\n- 'Corner': select the corner you want to cover with your card" +
                         "\n- 'Place': place the card" +
                         "\n- 'Objective': visualize the common objective cards" +

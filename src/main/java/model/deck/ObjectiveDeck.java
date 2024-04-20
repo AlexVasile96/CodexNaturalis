@@ -1,7 +1,7 @@
 package model.deck;
-import Exceptions.AlreadyThreeCardsException;
-import Exceptions.EmptyDeckException;
-import Exceptions.UknownWhyException;
+import exceptions.AlreadyThreeCardsException;
+import exceptions.EmptyDeckException;
+import exceptions.UknownWhyException;
 import model.game.Player;
 import model.card.Card;
 import model.card.ObjectiveCard;
