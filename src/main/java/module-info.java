@@ -16,6 +16,4 @@ module com.example.proj {
     opens model.objectiveCardTypes to javafx.fxml;
     exports model.game;
     opens model.game to javafx.fxml;
-    exports model.prova;
-    opens model.prova to javafx.fxml;
 }

@@ -59,11 +59,8 @@ public class CliClientApp {
      String okay = input.readLine();
      System.out.println("Server says: " + okay);
      System.out.println("sei in attesa");
- }
-}
+        }
+    }
 
-
-
-
-}
+    }
 

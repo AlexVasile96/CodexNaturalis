@@ -1,4 +1,4 @@
-package model.prova;
+package model;
 
 
 import model.card.*;
