@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import view.ClientView;
+import view.cli.Cli;
 
 import java.io.*;
 import java.net.Socket;
@@ -43,7 +44,8 @@ public class CliClientApp {
         BufferedReader input= new BufferedReader(new InputStreamReader(socket.getInputStream()));
         PrintWriter out= new PrintWriter(socket.getOutputStream(),true);
         System.out.println("Client connected!");
-        ServerConnection serverConnection= new ServerConnection(socket);
+        ClientView clientView= new ClientView();
+        ServerConnection serverConnection= new ServerConnection(socket,clientView);
         serverConnection.run();
         //startCLI(socket, stdIn, input);
     }

@@ -40,7 +40,7 @@ public class Command { //Command Client sends to Server
 
 
     /*
-    * private void chooseBonusResourceType(UserCommandsInterface game) throws NotEnoughResourceException, WrongTurnPhaseException {
+    * private void chooseBonusResourceType(WhatCanPlayerDo game) throws NotEnoughResourceException, WrongTurnPhaseException {
         Resource resource = extractResource(parameters.get("resource"));
         int quantity = extractInt(parameters.get("quantity"));
         game.chooseBonusResourceType(resource, quantity);
