@@ -137,7 +137,7 @@ public class Player implements Observable {
 
         Card cardPlayerChoose= selectTheCardFromTheBoard(cardsPlayerCanChooseFrom,scanner);  //Choosing the card
         System.out.println("Card correctly chosen");
-        List<Corner> availableCorners = creatingCorners(cardPlayerChoose);
+        List<Corner> availableCorners = creatingCorners(cardPlayerChoose); //Creating 4 corners to handle SelectedCard corners
 
         if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
             cardChosenIsTheInitialcard(initialCard,availableCorners);
@@ -167,27 +167,16 @@ public class Player implements Observable {
                 playYourCardOnTheBottomRightCorner(x,y,selectedCardFromTheDeck);
                 break;
         }
+            decreasingAllTheValuesOfTheCornerPlaced(selectedCardFromTheDeck); //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
 
-        selectedCardFromTheDeck.getBR().setValueCounter(selectedCardFromTheDeck.getBR().getValueCounter()-1); //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
-        selectedCardFromTheDeck.getBL().setValueCounter(selectedCardFromTheDeck.getBL().getValueCounter()-1);
-        selectedCardFromTheDeck.getTL().setValueCounter(selectedCardFromTheDeck.getTL().getValueCounter()-1);
-        selectedCardFromTheDeck.getTR().setValueCounter(selectedCardFromTheDeck.getTR().getValueCounter()-1);
 
             // Add the selected card to the board
             selectedCardFromTheDeck.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new index
             board.getCardsOnTheBoardList().add(selectedCardFromTheDeck); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
             this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
             board.setNumOfEmpty(board.getNumOfEmpty() - 3);
-            if (selectedCardFromTheDeck.getId() < 41 && selectedCardFromTheDeck.getId() > 0) { //carta risorsa
-                ResourceUpdater resourceUpdater = new ResourceUpdater();
-                resourceUpdater.updatePlayerPoints(selectedCardFromTheDeck, this, board);
-
-            } else if (selectedCardFromTheDeck.getId() < 81 && selectedCardFromTheDeck.getId() > 40) {
-                GoldUpdater updater = new GoldUpdater();
-                updater.updatePlayerPoints(selectedCardFromTheDeck, this, board);
-            }
-            System.out.println("Your new score is " + playerScore + " points");
-            if (playerScore >= 20) {
+            updatingPoints(selectedCardFromTheDeck); //Updating player Points
+            if (playerScore >= 20) {                //EndGame if the playerpoints=>20 points
                 System.out.println("Player " + getNickName() + "wins!\n");
                 EndGame endGame = new EndGame();
             }
@@ -462,7 +451,25 @@ public class Player implements Observable {
         }
         board.getNode(x + 2, y + 2).setValueCounter(board.getNode(x + 2, y + 2).getValueCounter() - 1); // Decrease the value
     }
+    public void decreasingAllTheValuesOfTheCornerPlaced(Card selectedCardFromTheDeck)
+    {
+        selectedCardFromTheDeck.getBR().setValueCounter(selectedCardFromTheDeck.getBR().getValueCounter()-1);
+        selectedCardFromTheDeck.getBL().setValueCounter(selectedCardFromTheDeck.getBL().getValueCounter()-1);
+        selectedCardFromTheDeck.getTL().setValueCounter(selectedCardFromTheDeck.getTL().getValueCounter()-1);
+        selectedCardFromTheDeck.getTR().setValueCounter(selectedCardFromTheDeck.getTR().getValueCounter()-1);
+    }
+    public void updatingPoints(Card selectedCardFromTheDeck)
+    {
+        if (selectedCardFromTheDeck.getId() < 41 && selectedCardFromTheDeck.getId() > 0) { //carta risorsa
+            ResourceUpdater resourceUpdater = new ResourceUpdater();
+            resourceUpdater.updatePlayerPoints(selectedCardFromTheDeck, this, board);
 
+        } else if (selectedCardFromTheDeck.getId() < 81 && selectedCardFromTheDeck.getId() > 40) {
+            GoldUpdater updater = new GoldUpdater();
+            updater.updatePlayerPoints(selectedCardFromTheDeck, this, board);
+        }
+        System.out.println("Your new score is " + playerScore + " points");
+    }
 
     //SETTER AND GETTER OF PLAYER CLASS
 
@@ -508,7 +515,6 @@ public class Player implements Observable {
     public void setSecretChosenCard(ObjectiveCard secretChosenCard) {
         this.secretChosenCard = secretChosenCard;
     }
-
     @Override
     public void addListener(InvalidationListener invalidationListener) {
     }
