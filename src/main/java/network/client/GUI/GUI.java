@@ -7,13 +7,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.event.ActionEvent;
 
 public class GUI extends Application {
@@ -24,7 +22,6 @@ public class GUI extends Application {
     Stage window;
     Scene startScene;
     Scene gameScene;
-    BorderPane borderPane = new BorderPane();
 
 
     public static void main(String[] args) {
@@ -34,32 +31,75 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        window=primaryStage;
+
+        window = primaryStage;
+        StackPane rootGame = new StackPane();
+
+
+        // Carica l'immagine
+        Image codexLogo = new Image(getClass().getResourceAsStream("/ImmaginiCodex/codexLogo.png"));
+
+        // Crea un'immagine di sfondo adattabile alla dimensione della finestra
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundImage = new BackgroundImage(codexLogo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
+
+        // Crea uno StackPane per sovrapporre l'immagine di sfondo con altri nodi
+        StackPane root = new StackPane();
+
+        // Imposta lo sfondo del layout
+        root.setBackground(background);
+
+        // Aggiungi il pulsante "Start new game"
+        start = new Button("Start new game");
+        start.setOnAction(e -> {
+            gameScene.setRoot(rootGame);
+            window.setScene(gameScene);
+            primaryStage.setWidth(gameScene.getWidth());
+            gameScene.getWindow().setHeight(primaryStage.getHeight());
+
+        });
+
+        // Layout dei bottoni
+        VBox buttonLayout = new VBox(20); // Spaziatura tra i bottoni
+        buttonLayout.setAlignment(Pos.CENTER);
+        buttonLayout.getChildren().add(start);
+
+        // Aggiungi il layout dei bottoni sopra all'immagine di sfondo
+        root.getChildren().add(buttonLayout);
+
+        // Crea le scene
+        startScene = new Scene(root, 919, 743);
+
+
+
+
+        // Aggiungi il pulsante "Start new game"
+        Label gameLabel = new Label("Game Scene");
+        returnToMainMenu = new Button("Back to main menu");
+        returnToMainMenu.setOnAction(e -> window.setScene(startScene));
+
+        VBox gameLayout = new VBox(20); // Spaziatura tra i nodi
+        gameLayout.setAlignment(Pos.CENTER);
+        gameLayout.getChildren().addAll(gameLabel, returnToMainMenu);
+        gameLayout.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        rootGame.getChildren().addAll(gameLayout);
+        gameScene= new Scene(rootGame, 800, 600);
+
+
+        primaryStage.setScene(startScene);
+        primaryStage.setTitle("Codex");
+        primaryStage.show();
+
+
+
+
+
+        /*window=primaryStage;
         start=new Button("Start new game");
         start.setOnAction(e -> window.setScene(gameScene));
         returnToMainMenu = new Button("Return to main menu");
         returnToMainMenu.setOnAction(e -> window.setScene(startScene));
-
-        ImageView codexLogo = new ImageView(new Image(getClass().getResourceAsStream("/ImmaginiCodex/CodexLogo.png")));
-
-        codexLogo.fitHeightProperty().bind(primaryStage.heightProperty());
-        codexLogo.fitWidthProperty().bind(primaryStage.widthProperty());
-        codexLogo.setPreserveRatio(true);
-        codexLogo.setOpacity(20);
-
-        Region spacer = new Region();
-        spacer.setPrefHeight(100);
-
-        //Layout StartScene
-        VBox startLayout = new VBox();
-        startLayout.getChildren().addAll(codexLogo, spacer, start);
-        startLayout.setAlignment(Pos.CENTER);
-        //StackPane.setAlignment(startLayout, Pos.CENTER);
-
-        startLayout.setPrefHeight(100);
-
-        StackPane root = new StackPane(startLayout);
-        startScene= new Scene(root, 800, 600);
 
         //Layout GameScene
         VBox gameLayout=new VBox();
@@ -71,7 +111,7 @@ public class GUI extends Application {
 
         primaryStage.setScene(startScene);
         primaryStage.setTitle("Codex");
-        primaryStage.show();
+        primaryStage.show();*/
     }
 
 }
