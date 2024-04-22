@@ -13,12 +13,12 @@ public class CliClientApp {
         FileReader reader = new FileReader("src/main/resources/HostAndPort.json"); // Reading JSON file to get host name and port number
         JSONObject jsonObject = new JSONObject(new JSONTokener(reader));
         JSONArray hostAndPortArray = jsonObject.getJSONArray("hostandport");
-        String hostName=null;            //INITIALIZING
-        int portNumber=0;               //INITIALIZING
-        for (int i = 0; i < hostAndPortArray.length(); i++) {                    // Iterating through the JSONArray to extract host names and port numbers.
-            JSONObject hostAndPort = hostAndPortArray.getJSONObject(i);          // Get the JSONObject representing a host and port combination.
-            hostName = hostAndPort.getString("hostName");                    // Extract the host name from the JSONObject.
-            portNumber = hostAndPort.getInt("portNumber");                   // Extract the port number from the JSONObject.
+        String hostName=null;                                                                   //INITIALIZING
+        int portNumber=0;                                                                       //INITIALIZING
+        for (int i = 0; i < hostAndPortArray.length(); i++) {                                   // Iterating through the JSONArray to extract host names and port numbers.
+            JSONObject hostAndPort = hostAndPortArray.getJSONObject(i);                         // Get the JSONObject representing a host and port combination.
+            hostName = hostAndPort.getString("hostName");                                   // Extract the host name from the JSONObject.
+            portNumber = hostAndPort.getInt("portNumber");                                  // Extract the port number from the JSONObject.
             System.out.println("HostName: " + hostName);
             System.out.println("PortNumber: " + portNumber);
         }
