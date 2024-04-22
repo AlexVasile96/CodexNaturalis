@@ -122,6 +122,112 @@ public class Player implements Observable {
         }
     } //METHOD TO CHOOSE THE SECRET CARD (THE PLAYER HAS A CHOICE BETWEEN 2 CARDS)
 
+
+    public void playCard(Board board, int cardIndex) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
+        Scanner scanner = new Scanner(System.in);
+        Card selectedCardFromTheDeck = chooseCard(cardIndex);
+        checkIfTheCardExist(cardIndex);                                  //CHECKING IF THE CARD TRULY EXISTS
+        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirments are respected
+        if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return;
+
+        Card initialCard = board.getCardsOnTheBoardList().get(0);               //putting inside initialCard the firstPlacedCard on the board
+        List<Card> cardsPlayerCanChooseFrom = board.getCardsOnTheBoardList();   //VISUALIZING ALL THE CARDS ON THE BOARD SO THE PLAYER CAN CHOOSE ONE OF THEM
+
+        showingToTheCurrentPlayerCardsOnTheBoard(cardsPlayerCanChooseFrom);  //showing to the current player the cards he/she has on the board
+
+        Card cardPlayerChoose= selectTheCardFromTheBoard(cardsPlayerCanChooseFrom,scanner);  //Choosing the card
+        System.out.println("Card correctly chosen");
+        List<Corner> availableCorners = creatingCorners(cardPlayerChoose);
+
+        if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
+            cardChosenIsTheInitialcard(initialCard,availableCorners);
+        } else {                                                        //CARD CHOSEN ISN'T THE INITIAL CARD
+            List<Corner> corner = creatingCorners(cardPlayerChoose);
+            cardChosenIsNotTheInitialcard(availableCorners,corner);
+        }
+
+        String selectedCorner= freeCornersOfTheSelectedCard(availableCorners, cardPlayerChoose,scanner); //Showing the available corners of the card and letting the player choose one
+        int x = cardPlayerChoose.getNode().getCoordX(); //SAVING THE TOPLEFT COORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
+        int y = cardPlayerChoose.getNode().getCoordY();
+        switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECLTY
+            case "TL":
+                cardPlayerChoose.getTL().setValueCounter(cardPlayerChoose.getTL().getValueCounter()-1);
+                playYourCardOnTheTopLeftCorner(x,y,selectedCardFromTheDeck);
+                break;
+            case "TR":
+                cardPlayerChoose.getTR().setValueCounter(cardPlayerChoose.getTR().getValueCounter()-1);
+                playYourCardOnTheTopRightCorner(x,y,selectedCardFromTheDeck);
+                break;
+            case "BL":
+                cardPlayerChoose.getBL().setValueCounter(cardPlayerChoose.getBL().getValueCounter()-1);
+                playYourCardOnTheBottomLeftCorner(x,y,selectedCardFromTheDeck);
+                break;
+            case "BR":
+                cardPlayerChoose.getBR().setValueCounter(cardPlayerChoose.getBR().getValueCounter()-1);
+                playYourCardOnTheBottomRightCorner(x,y,selectedCardFromTheDeck);
+                break;
+        }
+
+        selectedCardFromTheDeck.getBR().setValueCounter(selectedCardFromTheDeck.getBR().getValueCounter()-1); //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
+        selectedCardFromTheDeck.getBL().setValueCounter(selectedCardFromTheDeck.getBL().getValueCounter()-1);
+        selectedCardFromTheDeck.getTL().setValueCounter(selectedCardFromTheDeck.getTL().getValueCounter()-1);
+        selectedCardFromTheDeck.getTR().setValueCounter(selectedCardFromTheDeck.getTR().getValueCounter()-1);
+
+            // Add the selected card to the board
+            selectedCardFromTheDeck.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new index
+            board.getCardsOnTheBoardList().add(selectedCardFromTheDeck); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
+            this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
+            board.setNumOfEmpty(board.getNumOfEmpty() - 3);
+            if (selectedCardFromTheDeck.getId() < 41 && selectedCardFromTheDeck.getId() > 0) { //carta risorsa
+                ResourceUpdater resourceUpdater = new ResourceUpdater();
+                resourceUpdater.updatePlayerPoints(selectedCardFromTheDeck, this, board);
+
+            } else if (selectedCardFromTheDeck.getId() < 81 && selectedCardFromTheDeck.getId() > 40) {
+                GoldUpdater updater = new GoldUpdater();
+                updater.updatePlayerPoints(selectedCardFromTheDeck, this, board);
+            }
+            System.out.println("Your new score is " + playerScore + " points");
+            if (playerScore >= 20) {
+                System.out.println("Player " + getNickName() + "wins!\n");
+                EndGame endGame = new EndGame();
+            }
+        }
+
+
+    public void turnYourCard(Card card) //METHOD TO TURN YOUR CARD IN CASE THE PLAYER WANTS TO PLACE THE CARD ON HER BACK
+    {
+        if (!card.isCardBack()) {
+            card.setCardBack(true); //CARD IS NOW ON HER BACK
+            card.getTL().setSpecificCornerSeed(SpecificSeed.EMPTY); //SETTING ALL THE CORNERS AS EMPTY
+            card.getTR().setSpecificCornerSeed(SpecificSeed.EMPTY);
+            card.getBL().setSpecificCornerSeed(SpecificSeed.EMPTY);
+            card.getBR().setSpecificCornerSeed(SpecificSeed.EMPTY);
+        } else {
+            card.setCardBack(false); //CARD IS ON HER ORIGINAL CONFIGURATION
+            card.getTL().setSpecificCornerSeed(card.getTLBack().getSpecificCornerSeed()); //BACKUPPING ALL CORNERS
+            card.getTR().setSpecificCornerSeed(card.getTRBack().getSpecificCornerSeed());
+            card.getBL().setSpecificCornerSeed(card.getBLBack().getSpecificCornerSeed());
+            card.getBR().setSpecificCornerSeed(card.getBRBack().getSpecificCornerSeed());
+        }
+    }
+
+    public int checkIfTheCardExist(int cardIndex)
+    {
+        Card selectedCardFromTheDeck = chooseCard(cardIndex);          //SELECTEDCARDFROMTHEDECK IS THE CARD CHOSEN FROM THE PLAYER DECK
+        if (selectedCardFromTheDeck == null) {                         //CHECKING IF THE CARD EXISTS, IN CASE RETURN
+            return 0;
+        }
+        return cardIndex;
+    }
+    public boolean isTheCardGold(Card selectedCard)
+    {
+        if (selectedCard instanceof GoldCard) {
+            return board.placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing());
+        }
+        else {
+            return false;
+        }
+    }
     public void showingToTheCurrentPlayerCardsOnTheBoard(List<Card> cardsPlayerCanChooseFrom){
         System.out.println("Cards on the board are:");                          //PRINTING THE CARDS ON THE BOARD
         for (int i = 0; i < cardsPlayerCanChooseFrom.size(); i++) {
@@ -358,95 +464,6 @@ public class Player implements Observable {
     }
 
 
-    public void playCard(Board board, int cardIndex) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
-        Scanner scanner = new Scanner(System.in);
-        Card selectedCardFromTheDeck = chooseCard(cardIndex);
-        checkIfTheCardExist(cardIndex);                                  //CHECKING IF THE CARD TRULY EXISTS
-        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirments are respected
-        if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return;
-
-        Card initialCard = board.getCardsOnTheBoardList().get(0);               //putting inside initialCard the firstPlacedCard on the board
-        List<Card> cardsPlayerCanChooseFrom = board.getCardsOnTheBoardList();   //VISUALIZING ALL THE CARDS ON THE BOARD SO THE PLAYER CAN CHOOSE ONE OF THEM
-
-        showingToTheCurrentPlayerCardsOnTheBoard(cardsPlayerCanChooseFrom);  //showing to the current player the cards he/she has on the board
-
-        Card cardPlayerChoose= selectTheCardFromTheBoard(cardsPlayerCanChooseFrom,scanner);  //Choosing the card
-        System.out.println("Card correctly chosen");
-        List<Corner> availableCorners = creatingCorners(cardPlayerChoose);
-
-        if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
-            cardChosenIsTheInitialcard(initialCard,availableCorners);
-        } else {                                                        //CARD CHOSEN ISN'T THE INITIAL CARD
-            List<Corner> corner = creatingCorners(cardPlayerChoose);
-            cardChosenIsNotTheInitialcard(availableCorners,corner);
-        }
-
-        String selectedCorner= freeCornersOfTheSelectedCard(availableCorners, cardPlayerChoose,scanner); //Showing the available corners of the card and letting the player choose one
-        int x = cardPlayerChoose.getNode().getCoordX(); //SAVING THE TOPLEFT COORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
-        int y = cardPlayerChoose.getNode().getCoordY();
-        switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECLTY
-            case "TL":
-                cardPlayerChoose.getTL().setValueCounter(cardPlayerChoose.getTL().getValueCounter()-1);
-                playYourCardOnTheTopLeftCorner(x,y,selectedCardFromTheDeck);
-                break;
-            case "TR":
-                cardPlayerChoose.getTR().setValueCounter(cardPlayerChoose.getTR().getValueCounter()-1);
-                playYourCardOnTheTopRightCorner(x,y,selectedCardFromTheDeck);
-                break;
-            case "BL":
-                cardPlayerChoose.getBL().setValueCounter(cardPlayerChoose.getBL().getValueCounter()-1);
-                playYourCardOnTheBottomLeftCorner(x,y,selectedCardFromTheDeck);
-                break;
-            case "BR":
-                cardPlayerChoose.getBR().setValueCounter(cardPlayerChoose.getBR().getValueCounter()-1);
-                playYourCardOnTheBottomRightCorner(x,y,selectedCardFromTheDeck);
-                break;
-        }
-
-        selectedCardFromTheDeck.getBR().setValueCounter(selectedCardFromTheDeck.getBR().getValueCounter()-1); //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
-        selectedCardFromTheDeck.getBL().setValueCounter(selectedCardFromTheDeck.getBL().getValueCounter()-1);
-        selectedCardFromTheDeck.getTL().setValueCounter(selectedCardFromTheDeck.getTL().getValueCounter()-1);
-        selectedCardFromTheDeck.getTR().setValueCounter(selectedCardFromTheDeck.getTR().getValueCounter()-1);
-
-            // Add the selected card to the board
-            selectedCardFromTheDeck.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new index
-            board.getCardsOnTheBoardList().add(selectedCardFromTheDeck); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
-            this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
-            board.setNumOfEmpty(board.getNumOfEmpty() - 3);
-            if (selectedCardFromTheDeck.getId() < 41 && selectedCardFromTheDeck.getId() > 0) { //carta risorsa
-                ResourceUpdater resourceUpdater = new ResourceUpdater();
-                resourceUpdater.updatePlayerPoints(selectedCardFromTheDeck, this, board);
-
-            } else if (selectedCardFromTheDeck.getId() < 81 && selectedCardFromTheDeck.getId() > 40) {
-                GoldUpdater updater = new GoldUpdater();
-                updater.updatePlayerPoints(selectedCardFromTheDeck, this, board);
-
-            }
-            System.out.println("Your new score is " + playerScore + " points");
-            if (playerScore >= 20) {
-                System.out.println("Player " + getNickName() + "wins!\n");
-                EndGame endGame = new EndGame();
-            }
-        }
-
-
-    public void turnYourCard(Card card) //METHOD TO TURN YOUR CARD IN CASE THE PLAYER WANTS TO PLACE THE CARD ON HER BACK
-    {
-        if (!card.isCardBack()) {
-            card.setCardBack(true); //CARD IS NOW ON HER BACK
-            card.getTL().setSpecificCornerSeed(SpecificSeed.EMPTY); //SETTING ALL THE CORNERS AS EMPTY
-            card.getTR().setSpecificCornerSeed(SpecificSeed.EMPTY);
-            card.getBL().setSpecificCornerSeed(SpecificSeed.EMPTY);
-            card.getBR().setSpecificCornerSeed(SpecificSeed.EMPTY);
-        } else {
-            card.setCardBack(false); //CARD IS ON HER ORIGINAL CONFIGURATION
-            card.getTL().setSpecificCornerSeed(card.getTLBack().getSpecificCornerSeed()); //BACKUPPING ALL CORNERS
-            card.getTR().setSpecificCornerSeed(card.getTRBack().getSpecificCornerSeed());
-            card.getBL().setSpecificCornerSeed(card.getBLBack().getSpecificCornerSeed());
-            card.getBR().setSpecificCornerSeed(card.getBRBack().getSpecificCornerSeed());
-        }
-    }
-
     //SETTER AND GETTER OF PLAYER CLASS
 
     public List<Card> getPlayerCards() {
@@ -482,48 +499,23 @@ public class Player implements Observable {
     public boolean isCardBack() {
         return isCardBack;
     }
-
     public void setCardBack(boolean cardBack) {
         isCardBack = cardBack;
     }
-
     public ObjectiveCard getSecretChosenCard() {
         return secretChosenCard;
     }
-
     public void setSecretChosenCard(ObjectiveCard secretChosenCard) {
         this.secretChosenCard = secretChosenCard;
     }
 
     @Override
     public void addListener(InvalidationListener invalidationListener) {
-
     }
-
     @Override
     public void removeListener(InvalidationListener invalidationListener) {
 
     }
-
-    public int checkIfTheCardExist(int cardIndex)
-    {
-        Card selectedCardFromTheDeck = chooseCard(cardIndex);          //SELECTEDCARDFROMTHEDECK IS THE CARD CHOSEN FROM THE PLAYER DECK
-        if (selectedCardFromTheDeck == null) {                         //CHECKING IF THE CARD EXISTS, IN CASE RETURN
-            return 0;
-        }
-        return cardIndex;
-    }
-    public boolean isTheCardGold(Card selectedCard)
-    {
-        if (selectedCard instanceof GoldCard) {
-            return board.placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing());
-        }
-        else {
-            return false;
-        }
-    }
-
-
     @Override
     public String toString() {
         return "Player{" +
