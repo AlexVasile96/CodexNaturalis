@@ -13,8 +13,7 @@ public class Command { //Command Client sends to Server
     private Map<String, Object> parameters;
     private CommandsTaipEnum commandType;
     public Command(CommandsTaipEnum commandType, Map<String, Object> parameters) throws ParametersNotValidException {
-        if (commandType == null)
-            throw new ParametersNotValidException();
+        if (commandType == null) throw new ParametersNotValidException();
         this.commandType = commandType;
         this.parameters = Objects.requireNonNullElseGet(parameters, HashMap::new);
     }

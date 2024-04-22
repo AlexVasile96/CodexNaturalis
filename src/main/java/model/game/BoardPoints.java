@@ -1,7 +1,6 @@
 package model.game;
 
 import model.card.Card;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,8 +14,8 @@ public class BoardPoints {
             seedCountMap.put(seed, 0);
         }
         //Controlliamo se dobbiamo aggiungere gli attributi
-        for(Card card : board.getCardsOnTheBoardList()){ //checking all the cards
-            if(card.isCardBack()){                                //se il cardback è true, allora aggiungi gli attributi
+        for(Card card : board.getCardsOnTheBoardList()){            //checking all the cards
+            if(card.isCardBack()){                                  //se il cardback è true, allora aggiungi gli attributi
                 for (SpecificSeed seed : card.getAttributes()) {
                     seedCountMap.put(seed, seedCountMap.get(seed) + 1);
                 }

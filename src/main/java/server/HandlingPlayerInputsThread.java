@@ -1,7 +1,10 @@
 package server;
 
 import com.google.gson.Gson;
+import controller.GameController;
 import exceptions.OperationCancelledException;
+import exceptions.UnknownPlayerNumberException;
+import exceptions.UsernameAlreadyExistsException;
 import model.game.Board;
 import model.game.Dot;
 import model.game.Player;
@@ -11,11 +14,12 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 /*
-* login
-* client chiede di potere svolgere un'azione
+* login ✔️
+* client chiede di potere svolgere un'azione ✔️
 * questo messaggio viene ricevuto dal server.
 * server-> metodo runCommand->GameController
 * gameController-> Command(WhatCanPlayerDo)
@@ -35,12 +39,15 @@ public class HandlingPlayerInputsThread implements Runnable {
     private List<HandlingPlayerInputsThread> clients;
     private boolean isGameStarted;
     private boolean doClose;
+    private final ServerLobby lobby;
     private Gson gson;
     private List<Player> playersList = new ArrayList<>();
     private Socket clientSocket;
     private Integer x;
+    private GameController gameController;
+    private String userName;
 
-    public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients) throws IOException { //Costructor
+    public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby) throws IOException { //Costructor
         this.clientSocket = socket;
         stdIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -51,39 +58,19 @@ public class HandlingPlayerInputsThread implements Runnable {
         this.x = 0;
         this.isGameStarted = false;
         this.clients = clients;
-
+        this.gameController= null;
+        this.lobby=lobby;
+        this.userName=null;
     }
-
-
-    //NELLA RUN
-    /*
-     * CONTROLLO-> IF CLIENTVIEW.GETUSERNAME==NULL->LOGIN          LOGIN
-     * CLIENT IN ATTESA
-     *
-     *
-     *
-     *
-     *
-     * */
 
 
     @Override
     public void run() {
         try {
-
-                //IF NOT LOGIN->LOGIN
-                //IF ACTIONINPUTS
-                System.out.println("Siamo nella run");
-
                 String firstMessag = stdIn.readLine();
                 System.out.println("Il client ha detto " + firstMessag);
-
                 loginEachClient();
-
                 startGame();
-
-
-
         } catch (IOException e) {
             System.err.println("Io exception client handler");
         } catch (InterruptedException e) {
@@ -102,31 +89,47 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
 
     private void loginEachClient() throws IOException, InterruptedException {
-                out.println("Ciao! Devi fare il login. Inserisci il tuo nome per favore!");
-                String request = stdIn.readLine();
-                System.out.println("il nome del login è: " + request);
-                out.println("Login effettuato con successo");
-                Board board = new Board(50, 50);
-                Player player = new Player(request, 0, Dot.BLACK, board);
-                playersList.add(player);
-                System.out.println(player);
-                out.println("Sarai messo in sala d'attesa:");
-                if (playersList.size() < 2) {
-                    inattesa();
-                    //stampa punteggio giocatori *da spostare
-                    for (Player p : playersList) {
-                        p.visualizePlayerScore();
+            if(gameController==null) { //if game controller==null it means the player has to log in!!
+                try {
+                    out.println("Ciao! Devi fare il login. Inserisci il tuo nome per favore!");
+                    String request = stdIn.readLine();
+                    System.out.println("il nome del login è: " + request);
+                    out.println("Login effettuato con successo");
+                    Board board = new Board(50, 50);
+                    Player player = new Player(request, 0, Dot.BLACK, board);
+                    this.userName=request;
+                    playersList.add(player);
+                    System.out.println(player);
+                    out.println("Sarai messo in sala d'attesa:");
+                    gameController = lobby.login(request, out);
+                    System.out.println(gameController);
+                    if (playersList.size() < 2) {
+                        inattesa();
+                        //stampa punteggio giocatori *da spostare
+                        for (Player p : playersList) {
+                            p.visualizePlayerScore();
+                        }
                     }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (UnknownPlayerNumberException e) {
+                    throw new RuntimeException(e);
+                } catch (UsernameAlreadyExistsException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
+            }
+
+                System.out.println(gameController);
                 notifyGameStart();
-                //startGame();
     }
 
     private void startGame() throws IOException {
         while (true) {
             //quale azione vuoi fare? fino a che non finsice il turno
             String messageFromClient = stdIn.readLine();
-            System.out.println("Il client ha chiesto di " + messageFromClient);
+            System.out.println("Il client ha seleionato: " + messageFromClient);
             switch (messageFromClient) {
                 case "COMMAND" -> //runCommand(messageFromClient);
                         System.out.println("ciao");
@@ -137,6 +140,16 @@ public class HandlingPlayerInputsThread implements Runnable {
 
             }
 
+        }
+    }
+    private void runCommand(String messageFromClient) throws NoSuchElementException {
+
+        //If player has logged in and their game's number of players has been decided
+        if (gameController != null && gameController.isSizeSet()) {
+
+            //Forward player command to controller
+            System.out.println("Received command: " + messageFromClient);
+            gameController.readCommand(userName, messageFromClient);
         }
     }
 

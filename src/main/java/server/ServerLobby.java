@@ -5,17 +5,23 @@ import exceptions.UnknownPlayerNumberException;
 import exceptions.UsernameAlreadyExistsException;
 import controller.GameController;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServerLobby {
     private final List<GameController> currentGames;
-    public ServerLobby() {
+    private final List<HandlingPlayerInputsThread> clients;
+    private Socket socket;
+    public ServerLobby(List<HandlingPlayerInputsThread> clients, Socket socket) {
         currentGames = new ArrayList<>();
+        this.clients=clients;
+        this.socket=socket;
     }
 
-    public synchronized GameController login(String username, PrintWriter userOut) throws UnknownPlayerNumberException, UsernameAlreadyExistsException {
+    public synchronized GameController login(String username, PrintWriter userOut) throws UnknownPlayerNumberException, UsernameAlreadyExistsException, IOException {
 
         //Checks if the given username is already taken, and attempts to add the player to the first game that isn't full or to the one they belonged before disconnection
         for (int i = 0; i < currentGames.size(); i++) {
@@ -36,17 +42,10 @@ public class ServerLobby {
         }
 
         //If there were no games waiting for players, create a new one
-        GameController newGame = new GameController(username, userOut);
+        GameController newGame = new GameController(username, userOut, clients, socket );
         currentGames.add(newGame);
-
         return newGame;
     }
-    /**
-     * Aborts the game associated with the given GameController.
-     *
-     * @param controller The GameController object representing the game to be aborted.
-     */
-
     public void abortGame(GameController controller) {
         // This method will implement game abortion logic when needed.
     }

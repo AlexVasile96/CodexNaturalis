@@ -46,6 +46,7 @@ public class ServerMain {
         private static void startServer(int port) {
             System.out.println("Server started!");
 
+
             // Creates a ServerSocket for handling connections
             ServerSocket serverSocket;
             try {
@@ -56,14 +57,16 @@ public class ServerMain {
             }
             System.out.println("Server ready for connections!");
             //Creates the lobby for this server
-            ServerLobby lobby = new ServerLobby();
+
             //Accepts connections from clients on new threads
             while (true) {
                 try {
+
                     Socket socket = serverSocket.accept();                                          //aspettando il client
                     String clientAddress = socket.getInetAddress().getHostAddress();
                     System.out.println("Client connected from IP: " + clientAddress);//ok            // ip del client
-                    HandlingPlayerInputsThread clientThread= new HandlingPlayerInputsThread(socket, playersInCurrentGame, clients);
+                    ServerLobby lobby = new ServerLobby(clients, socket);
+                    HandlingPlayerInputsThread clientThread= new HandlingPlayerInputsThread(socket, playersInCurrentGame, clients, lobby);
                     clients.add(clientThread);
                     pool.execute(clientThread); //HAndling single player client
 

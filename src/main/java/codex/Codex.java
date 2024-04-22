@@ -6,10 +6,6 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-/**
- * This class represents the main executable for the game, it allows to select between booting the server, the CLI client or the GUI client
- */
-
 public class Codex {
 
     public static void main(String[] args) throws IOException, InterruptedException {
