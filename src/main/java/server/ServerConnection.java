@@ -16,42 +16,41 @@ public class ServerConnection implements Runnable {
 
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
-        this.clientView=clientView;
-        this.socket = server;
-       this.in= new BufferedReader(new InputStreamReader(socket.getInputStream()));
-       this.out= new PrintWriter(socket.getOutputStream(), true);
-       this.stdin= new BufferedReader(new InputStreamReader(System.in)); //scanner
-    }
+            this.clientView=clientView;
+            this.socket = server;
+            this.in= new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.out= new PrintWriter(socket.getOutputStream(), true);
+            this.stdin= new BufferedReader(new InputStreamReader(System.in)); //scanner
+        }
 
-    @Override //Handling inputs from the server, just waiting for the server to say something
+    @Override
     public void run() {
-        String command=null; //inizializzazimone della stringa
+        String command; //inizializzazimone della stringa
         try {
-            System.out.println("Benvenuto!Sono il server\n");
+            System.out.println("Benvenuto!Sono il server! Scrivere una qualsiasi stringa per iniziare la conversazione\n");
             while (true) {
                 try {
-                    System.out.println(">");
-                    command=stdin.readLine(); ///ciao
-                    if (clientView.getUserName() == null) {
+                    System.out.print(">");
+                    command=stdin.readLine();
+                    if (clientView.getUserName() == null) { //If client hasn't made the login yet, he has to log first.
                         out.println(command);
                         loginPlayer();
-                        //break;
                     }
-                    else{
+                    else    {                                     //If client has made the login, he can start asking for inputs if it's his turn
                         out.println(command);
                         actionsInput(command);
-                    }
+                        }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
-                }
-    }
+                            }
+            }
 
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
+                                                }
     }
 
-    private void loginPlayer() throws IOException, InterruptedException {
+    private void loginPlayer() throws IOException, InterruptedException { //LOGIN METHOD
         String serverResponse = in.readLine();
         System.out.println("Server says: " + serverResponse);
         System.out.println(">");
@@ -64,11 +63,11 @@ public class ServerConnection implements Runnable {
         System.out.println("sei in attesa");
         String ascolto = in.readLine();
         System.out.println("Server says: " + ascolto);
-        ordinePlayer(socket, stdin, in);
-        clientView.setUserName(loginName);
+        ordinePlayer(in);
+        clientView.setUserName(loginName);                      //UPDATING CLIENT VIEW
     }
 
-    public static void ordinePlayer(Socket clientSocket, BufferedReader stdIn, BufferedReader input) throws IOException, InterruptedException {
+    public static void ordinePlayer(BufferedReader input) throws IOException, InterruptedException {
         Boolean uscitaCheck = Boolean.valueOf(input.readLine());
         while (uscitaCheck != false) {
             String ordinePlayer = input.readLine();
