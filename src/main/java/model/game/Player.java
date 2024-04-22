@@ -374,9 +374,6 @@ public class Player implements Observable {
         System.out.println("Card correctly chosen");
         List<Corner> availableCorners = creatingCorners(cardPlayerChoose);
 
-        //switchcase
-        //4 differenti funzioni in base al corner scelto
-
         if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
             cardChosenIsTheInitialcard(initialCard,availableCorners);
         } else {                                                        //CARD CHOSEN ISN'T THE INITIAL CARD
@@ -410,8 +407,6 @@ public class Player implements Observable {
         selectedCardFromTheDeck.getBL().setValueCounter(selectedCardFromTheDeck.getBL().getValueCounter()-1);
         selectedCardFromTheDeck.getTL().setValueCounter(selectedCardFromTheDeck.getTL().getValueCounter()-1);
         selectedCardFromTheDeck.getTR().setValueCounter(selectedCardFromTheDeck.getTR().getValueCounter()-1);
-
-
 
             // Add the selected card to the board
             selectedCardFromTheDeck.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new index
