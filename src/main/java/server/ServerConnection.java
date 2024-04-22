@@ -8,6 +8,7 @@ import java.nio.Buffer;
 import java.util.List;
 
 public class ServerConnection implements Runnable {
+    private static boolean setsize= false;
     private Socket socket;
     private ClientView clientView;
     private BufferedReader in;
@@ -18,9 +19,9 @@ public class ServerConnection implements Runnable {
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
             this.clientView=clientView;
             this.socket = server;
-            this.in= new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.in= new BufferedReader(new InputStreamReader(socket.getInputStream())); //ricevere dati dal server
             this.out= new PrintWriter(socket.getOutputStream(), true);
-            this.stdin= new BufferedReader(new InputStreamReader(System.in)); //scanner
+            this.stdin= new BufferedReader(new InputStreamReader(System.in)); //scanner, mi serve per scrivere
         }
 
     @Override
@@ -35,6 +36,7 @@ public class ServerConnection implements Runnable {
                     if (clientView.getUserName() == null) { //If client hasn't made the login yet, he has to log first.
                         out.println(command);
                         loginPlayer();
+                        respondToNumberOfPLayers();
                     }
                     else    {                                     //If client has made the login, he can start asking for inputs if it's his turn
                         out.println(command);
@@ -52,20 +54,34 @@ public class ServerConnection implements Runnable {
 
     private void loginPlayer() throws IOException, InterruptedException { //LOGIN METHOD
         String serverResponse = in.readLine();
-        System.out.println("Server says: " + serverResponse);
+        System.out.println("Server says: " + serverResponse); //Inserisci il tuo nome per favore
         System.out.println(">");
         String loginName = stdin.readLine();
         out.println(loginName);
         String risposta = in.readLine();
-        System.out.println("Server says: " + risposta);
+        System.out.println("Server says: " + risposta); //Login effettuato con successo
         String okay = in.readLine();
-        System.out.println("Server says: " + okay);
+        System.out.println("Server says: " + okay);   //Sarai messo in sala d'attesa
         System.out.println("sei in attesa");
         String ascolto = in.readLine();
         System.out.println("Server says: " + ascolto);
         ordinePlayer(in);
         clientView.setUserName(loginName);                      //UPDATING CLIENT VIEW
     }
+
+    private void respondToNumberOfPLayers() throws IOException {
+        String serverResponse = in.readLine();
+        System.out.println("Server says: " + serverResponse);
+        if(serverResponse.equals("NO")){
+          return;
+        }
+        System.out.println(">");
+        String messaggio= stdin.readLine();
+        int size = Integer.parseInt(messaggio);
+        out.println(size);
+        System.out.println(size);
+    }
+
 
     public static void ordinePlayer(BufferedReader input) throws IOException, InterruptedException {
         Boolean uscitaCheck = Boolean.valueOf(input.readLine());

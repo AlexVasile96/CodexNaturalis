@@ -37,9 +37,7 @@ public class GameController {
         this.out= new PrintWriter(socket.getOutputStream(), true);
     }
 
-    public int getNumOfPlayers() {
-        return players.size();
-    }
+
     public synchronized void readCommand(String username, String commandString) {
         if (!username.equals(getCurrentPlayerUsername())) {
             sendMessageToClient("It's not your turn to act");
@@ -89,6 +87,9 @@ public class GameController {
         }
         size = number;
         //preparationForStartingGame();
+    }
+    public int getNumOfPlayers() {
+        return players.size();
     }
     /*
     private void preparationForStartingGame() {

@@ -3,6 +3,7 @@ package server;
 import com.google.gson.Gson;
 import controller.GameController;
 import exceptions.OperationCancelledException;
+import exceptions.ParametersNotValidException;
 import exceptions.UnknownPlayerNumberException;
 import exceptions.UsernameAlreadyExistsException;
 import model.game.Board;
@@ -70,6 +71,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 String firstMessag = stdIn.readLine();
                 System.out.println("Il client ha detto " + firstMessag);
                 loginEachClient();
+                setGameSize();
                 startGame();
         } catch (IOException e) {
             System.err.println("Io exception client handler");
@@ -85,9 +87,6 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
 
-    private void initializePLayersResources() {
-    }
-
     private void loginEachClient() throws IOException, InterruptedException {
             if(gameController==null) { //if game controller==null it means the player has to log in!!
                 try {
@@ -100,9 +99,9 @@ public class HandlingPlayerInputsThread implements Runnable {
                     this.userName=request;
                     playersList.add(player);
                     System.out.println(player);
-                    out.println("Sarai messo in sala d'attesa:");
                     gameController = lobby.login(request, out);
                     System.out.println(gameController);
+                    out.println("Sarai messo in sala d'attesa:");
                     if (playersList.size() < 2) {
                         inattesa();
                         //stampa punteggio giocatori *da spostare
@@ -141,8 +140,36 @@ public class HandlingPlayerInputsThread implements Runnable {
 
         }
     }
-    private void runCommand(String messageFromClient) throws NoSuchElementException {
 
+
+
+    private void setGameSize() throws NoSuchElementException {
+        String messaggio=null;
+        if (!gameController.isSizeSet()) {          //If controller number of players has not been decided
+            //Tries to set controller's number of players
+            try {
+                out.println("Scegli il numero di partecipanti al gioco-> Deve essere un numero compreso fra 2 e 4!");
+                messaggio= stdIn.readLine();
+                int size = Integer.parseInt(messaggio);
+                System.out.println("Il numero di giocatori sarà " +size);
+                gameController.choosePlayerNumber(size);
+            } catch (NumberFormatException ex) {
+               sendMessageToClient("Game's number of players must be an integer.");
+            } catch (Exception ex) {
+                sendMessageToClient("Errore");
+            } catch (ParametersNotValidException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.out.println("Player attempted to choose game's number of players without needing to.");
+            sendMessageToClient("NO");
+        }
+    }
+
+
+
+
+    private void runCommand(String messageFromClient) throws NoSuchElementException {
         //If player has logged in and their game's number of players has been decided
         if (gameController != null ) {
             //if(gameController.isSizeSet())
@@ -180,6 +207,26 @@ public class HandlingPlayerInputsThread implements Runnable {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //metodo per mandare un singolo messaggio al client
     public synchronized void sendMessageToClient(String message) {
