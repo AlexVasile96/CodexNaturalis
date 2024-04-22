@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -76,9 +77,9 @@ public void setUp(){
 
         //Verifico che il metodo ritorni null se si sceglie una carta non presente nella mano del player
         assertNull(player.chooseCard(5));
-        //assertThrows(IndexOutOfBoundsException.class,() ->{
-        //player.chooseCard(4);
-        //});
+        assertThrows(IndexOutOfBoundsException.class,() ->{
+        player.chooseCard(4);
+        });
 
     }
 
@@ -98,7 +99,7 @@ public void setUp(){
 
         ByteArrayOutputStream stampa = new ByteArrayOutputStream();
         System.setOut(new PrintStream(stampa));
-        assertThrows(IndexOutOfBoundsException.class, ()->{
+        assertThrows(NoSuchElementException.class, ()->{
             player.chooseSecretCard(secretCards);
             });
 
@@ -126,7 +127,7 @@ public void setUp(){
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         player.chooseCardFromWell(cardsFromWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
-        int index = player.getPlayerCards().getFirst().id;
+        int index = player.getPlayerCards().getFirst().getId();
         assertEquals(1,index);
 
     }
