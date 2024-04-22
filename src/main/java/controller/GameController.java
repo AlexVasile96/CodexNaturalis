@@ -51,6 +51,7 @@ public class GameController {
 
         } else {
             try {
+                System.out.println("PAPPA");
                 Command command = gson.fromJson(commandString, Command.class); //cambiare questo
                 String result = command.runCommand(game);
             } catch (Exception ignored) {

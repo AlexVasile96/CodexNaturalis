@@ -129,10 +129,9 @@ public class HandlingPlayerInputsThread implements Runnable {
         while (true) {
             //quale azione vuoi fare? fino a che non finsice il turno
             String messageFromClient = stdIn.readLine();
-            System.out.println("Il client ha seleionato: " + messageFromClient);
+            System.out.println("Il client ha selezionato: " + messageFromClient);
             switch (messageFromClient) {
-                case "COMMAND" -> //runCommand(messageFromClient);
-                        System.out.println("ciao");
+                case "COMMAND" -> {runCommand(messageFromClient);}
                 case "PING" -> {
                 }
                 case "help" -> System.out.println("Il player ha chiesto una mano");
@@ -145,7 +144,8 @@ public class HandlingPlayerInputsThread implements Runnable {
     private void runCommand(String messageFromClient) throws NoSuchElementException {
 
         //If player has logged in and their game's number of players has been decided
-        if (gameController != null && gameController.isSizeSet()) {
+        if (gameController != null ) {
+            //if(gameController.isSizeSet())
 
             //Forward player command to controller
             System.out.println("Received command: " + messageFromClient);

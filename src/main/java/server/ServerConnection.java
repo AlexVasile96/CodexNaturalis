@@ -85,32 +85,21 @@ public class ServerConnection implements Runnable {
                 case "help" -> printHelp();
 
                 //Display the game's status
-                //case "status" -> printStatus();
+                case "status" -> printStatus();
 
                 //Display the list of available actions for the player in the current turn phase
-                //case "actions" -> printActions();
+                case "actions" -> printActions();
 
                 //The following methods are used to run game actions
-                //case "showCards", "0" -> showCards();//run
-
-                //case "chooseCardFromHand", "1" -> chosenHandCard();//run
-
-                //case "selectCardFromBoard", "2" -> selectedBoardCard();//run
-
-                //case "selectCornerFromChosenCard", "3" -> selectedCorner();//run
-
-                //case "placeCard", "4" -> placeSelectedCard();//run
-
-                //case "visualizeCommonObjectiveCards", "5" -> visualizeCommonObjective();//run
-
-                //case "visualizeSecretObjectiveCard", "6" -> visualizeSecretObjective();//run
-
-                //case "showBoard", "7" -> showBoard();//run
-
-                //case "showPoints", "8" -> showPoints();//run
-
-                //case "endTurn", "9" -> runEndTurn();//run
-
+                case "showYourCardDeck", "0" -> showCards();
+                case "playCardFromYourHand", "1" -> chosenHandCard();
+                case "visualizeCommonObjectiveCards", "2" -> visualizeCommonObjective();
+                case "visualizeSecretObjectiveCard", "3" -> visualizeSecretObjective();
+                case "showBoard", "4" -> showBoard();
+                case "showPoints", "5" -> showPoints();
+                case "drawCardFromDeck", "6" -> drawCardFromDeck();
+                case "drawCardFromWell", "7" -> drawCardFromWell();
+                case "endTurn", "8" -> runEndTurn();//run
                 default -> {
                     System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
                 }
@@ -132,30 +121,33 @@ public class ServerConnection implements Runnable {
                         "\n- 'actions': display all currently allowed game actions" +
                         "\n");
     }
-  /*
+
     private void printActions() throws IOException {
         System.out.println(
                 "Supported commands:" +
-                        "\n- 'Cards': display player's cards" +
-                        "\n- 'HandCard': select the card you want to place from your hand" +
-                        "\n- 'BoardCard': select the card from the board you want to play your card to" +
-                        "\n- 'Corner': select the corner you want to cover with your card" +
-                        "\n- 'Place': place the card" +
-                        "\n- 'Objective': visualize the common objective cards" +
-                        "\n- 'Secret': visualize your secret objective card" +
-                        "\n- 'Board': visualize your entire board" +
-                        "\n- 'Points': visualize your points"
+                        "\n- If you type-> 'showYourCardDeck / 0 ': display player's cards" +
+                        "\n- If you type-> 'playCardFromYourHand /1': select the card you want to place from your hand" +
+                        "\n- If you type->  'visualizeCommonObjectiveCards /2': visualize the common objective cards" +
+                        "\n- If you type->  'visualizeSecretObjectiveCard /3': visualize your secret objective card" +
+                        "\n- If you type->  'showBoard /4':print your board" +
+                        "\n- If you type->  'showPoints /5': show your points" +
+                        "\n- If you type->  'drawCardFromDeck /6': draw a card from the resource/gold deck" +
+                        "\n- If you type->  'drawCardFromWell /7': draw a card from the well" +
+                        "\n- If you type->  'endTurn /8': end your turn"
         );
     }
     private void printStatus(){
         System.out.println("\n"+clientView.getGame());
     }
+    private void showCards(){}
+    private void chosenHandCard(){}
+    private void visualizeCommonObjective(){}
+    private void visualizeSecretObjective(){}
+    private void showBoard(){}
+    private void showPoints(){}
+    private void drawCardFromDeck(){}
+    private void drawCardFromWell(){}
     private void runEndTurn(){}
-
-    private void doClose() {
-        doClose = true;
-        System.out.println("Server connection lost, press any key to terminate.");
-    }*/
 
 }
 
