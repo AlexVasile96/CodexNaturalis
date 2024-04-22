@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServerLobby {
-    private final List<GameController> currentGames;
+    private final static List<GameController> currentGames= new ArrayList<>();
     private final List<HandlingPlayerInputsThread> clients;
     private Socket socket;
     public ServerLobby(List<HandlingPlayerInputsThread> clients, Socket socket) {
-        currentGames = new ArrayList<>();
         this.clients=clients;
         this.socket=socket;
+
     }
 
     public synchronized GameController login(String username, PrintWriter userOut) throws UnknownPlayerNumberException, UsernameAlreadyExistsException, IOException {

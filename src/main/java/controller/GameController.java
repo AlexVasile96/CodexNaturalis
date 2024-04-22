@@ -70,9 +70,9 @@ public class GameController {
         } else {
             throw new UsernameAlreadyExistsException();
         }
-        sendMessageToAllClients("Un nuovo client si è connesso: " + getCurrentPlayerUsername());
+        //sendMessageToAllClients("Un nuovo client si è connesso: " + username);
         players.put(username, userOut);
-        System.out.println("Added player: " + username + " to current game.");
+        //System.out.println("Added player: " + username + " to current game.");
 
         //preparationForStartingGame();
     }

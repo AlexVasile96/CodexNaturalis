@@ -36,7 +36,7 @@ public class ServerConnection implements Runnable {
                     if (clientView.getUserName() == null) { //If client hasn't made the login yet, he has to log first.
                         out.println(command);
                         loginPlayer();
-                        respondToNumberOfPLayers();
+                        //respondToNumberOfPLayers();
                     }
                     else    {                                     //If client has made the login, he can start asking for inputs if it's his turn
                         out.println(command);
@@ -51,7 +51,6 @@ public class ServerConnection implements Runnable {
             throw new RuntimeException(e);
                                                 }
     }
-
     private void loginPlayer() throws IOException, InterruptedException { //LOGIN METHOD
         String serverResponse = in.readLine();
         System.out.println("Server says: " + serverResponse); //Inserisci il tuo nome per favore
@@ -61,12 +60,25 @@ public class ServerConnection implements Runnable {
         String risposta = in.readLine();
         System.out.println("Server says: " + risposta); //Login effettuato con successo
         String okay = in.readLine();
-        System.out.println("Server says: " + okay);   //Sarai messo in sala d'attesa
-        System.out.println("sei in attesa");
-        String ascolto = in.readLine();
-        System.out.println("Server says: " + ascolto);
-        ordinePlayer(in);
+        //System.out.println("Server says: " + okay);   //Sarai messo in sala d'attesa
+        //System.out.println("sei in attesa");
         clientView.setUserName(loginName);                      //UPDATING CLIENT VIEW
+        System.out.println("server says: "+ okay); //Scegli il numero di partecipanti
+        if(okay.equals("NO")){
+            return;
+        }
+        System.out.println(">");
+        String messaggio= stdin.readLine();
+        int size = Integer.parseInt(messaggio);
+        out.println(size);
+        System.out.println(size);
+        String ascolto = in.readLine();
+        System.out.println("Server says: " + ascolto); //Numero di giocatori scelto correttamente
+        String listening= in.readLine();
+        System.out.println("Server says: " + listening);
+        System.out.println("sei in attesa");
+        ordinePlayer(in);
+
     }
 
     private void respondToNumberOfPLayers() throws IOException {
