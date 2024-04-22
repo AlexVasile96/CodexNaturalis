@@ -27,15 +27,7 @@ public class Player implements Observable {
     }
 
 
-
-    public void visualizePlayerCards(List<Card> cards){
-        for(Card card: cards){
-            System.out.println(card);
-        }
-    }
-    public void visualizePlayerScore(){
-        System.out.println(nickName+"score: "+ playerScore);
-    }
+    //IN GAME METHODS
 
     public void drawResourceCard(ResourceDeck deck) {
         deck.drawCard(this);
@@ -44,6 +36,7 @@ public class Player implements Observable {
         deck.drawCard(this);
     } //DRAWING GOLD CARD
     public List<Card> chooseCardFromWell(List<Card>cardwell,ResourceDeck rc, GoldDeck gd) {
+        Scanner scanner = new Scanner(System.in);
             if (this.playerCards.size() < 3) {
                 if (cardwell.isEmpty()) {
                     return null; //empty well
@@ -52,24 +45,9 @@ public class Player implements Observable {
                     for (Card card : cardwell) {
                         System.out.println(card);
                     }
-                    System.out.println("\n");
-                    System.out.print("Select a card from the well ");
-                    Scanner scanner = new Scanner(System.in);
-                    int selectedCardIndex = scanner.nextInt();
-                    if (selectedCardIndex < 1 || selectedCardIndex > cardwell.size()) {
-                        System.out.println("Not valid index");
-                        return null;
-                    }
-                    int realIndex = selectedCardIndex - 1;
-                    Card drownCard = cardwell.remove(realIndex);
-                    playerCards.add(drownCard);
-                    if (drownCard.getId() >= 1 && drownCard.getId() <= 40) {
-                        rc.drawCard(cardwell);
-                    }
-                    if (drownCard.getId() >= 41 && drownCard.getId() <= 80) {
-                        gd.drawCard(cardwell);
-                    }
-                    return cardwell;
+                    Card drownCard= choosingTheSpecificCardFromTheWell(scanner, cardwell); //Choosing the card and saving it in drowncard
+                    fillingTheWellWithTheCorrectCard(drownCard,rc,gd, cardwell);           //Filling The Well
+                    playerCards.add(drownCard);                                             //Adding the card to the player hand
                 } catch (Exception e) {
                     throw new IllegalStateException("Well is empty"); // Eccezione specifica
                 }
@@ -78,22 +56,8 @@ public class Player implements Observable {
                 System.out.println("Player's deck already has 3 cards\n");
                 return cardwell;
             }
+            return cardwell;
         }
-
-    public Card chooseCard(int index) {
-        try{
-        if (index < 0 || index >= playerCards.size()) {
-            throw new IndexOutOfBoundsException("Not a valid index");
-        }
-        }
-    catch (IndexOutOfBoundsException e)
-            {System.out.println(e.getMessage()); //INDEX GOES FROM 1 TO 3
-
-        }
-
-        return playerCards.get(index);
-    }  //METHOD TO CHOOSE WHICH CARD THE PLAYER WANTS TO PLACE ON THE BOARD
-
     public void chooseSecretCard(List <ObjectiveCard> secretCards){
         for (int i = 0; i < secretCards.size(); i++) {
             Card card = secretCards.get(i);
@@ -103,8 +67,8 @@ public class Player implements Observable {
         Scanner scanner = new Scanner(System.in);
         boolean validIndex = false;
         while(validIndex == false){
-        System.out.println("Inserisci il numero della carta obiettivo SEGRETA che vuoi pescare: ");
-        int selectedCardIndex = scanner.nextInt();
+            System.out.println("Inserisci il numero della carta obiettivo SEGRETA che vuoi pescare: ");
+            int selectedCardIndex = scanner.nextInt();
 
             try {
                 if (selectedCardIndex < 1 || selectedCardIndex > secretCards.size()) {
@@ -122,7 +86,22 @@ public class Player implements Observable {
         }
     } //METHOD TO CHOOSE THE SECRET CARD (THE PLAYER HAS A CHOICE BETWEEN 2 CARDS)
 
-
+    public void turnYourCard(Card card) //METHOD TO TURN YOUR CARD IN CASE THE PLAYER WANTS TO PLACE THE CARD ON HER BACK
+    {
+        if (!card.isCardBack()) {
+            card.setCardBack(true); //CARD IS NOW ON HER BACK
+            card.getTL().setSpecificCornerSeed(SpecificSeed.EMPTY); //SETTING ALL THE CORNERS AS EMPTY
+            card.getTR().setSpecificCornerSeed(SpecificSeed.EMPTY);
+            card.getBL().setSpecificCornerSeed(SpecificSeed.EMPTY);
+            card.getBR().setSpecificCornerSeed(SpecificSeed.EMPTY);
+        } else {
+            card.setCardBack(false); //CARD IS ON HER ORIGINAL CONFIGURATION
+            card.getTL().setSpecificCornerSeed(card.getTLBack().getSpecificCornerSeed()); //BACKUPPING ALL CORNERS
+            card.getTR().setSpecificCornerSeed(card.getTRBack().getSpecificCornerSeed());
+            card.getBL().setSpecificCornerSeed(card.getBLBack().getSpecificCornerSeed());
+            card.getBR().setSpecificCornerSeed(card.getBRBack().getSpecificCornerSeed());
+        }
+    }
     public void playCard(Board board, int cardIndex) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
         Scanner scanner = new Scanner(System.in);
         Card selectedCardFromTheDeck = chooseCard(cardIndex);
@@ -147,9 +126,9 @@ public class Player implements Observable {
         }
 
         String selectedCorner= freeCornersOfTheSelectedCard(availableCorners, cardPlayerChoose,scanner); //Showing the available corners of the card and letting the player choose one
-        int x = cardPlayerChoose.getNode().getCoordX(); //SAVING THE TOPLEFT COORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
+        int x = cardPlayerChoose.getNode().getCoordX(); //SAVING THE TOP LEFT CORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
         int y = cardPlayerChoose.getNode().getCoordY();
-        switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECLTY
+        switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECTLY
             case "TL":
                 cardPlayerChoose.getTL().setValueCounter(cardPlayerChoose.getTL().getValueCounter()-1);
                 playYourCardOnTheTopLeftCorner(x,y,selectedCardFromTheDeck);
@@ -167,38 +146,24 @@ public class Player implements Observable {
                 playYourCardOnTheBottomRightCorner(x,y,selectedCardFromTheDeck);
                 break;
         }
-            decreasingAllTheValuesOfTheCornerPlaced(selectedCardFromTheDeck); //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
+        decreasingAllTheValuesOfTheCornerPlaced(selectedCardFromTheDeck); //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
 
 
-            // Add the selected card to the board
-            selectedCardFromTheDeck.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new index
-            board.getCardsOnTheBoardList().add(selectedCardFromTheDeck); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
-            this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
-            board.setNumOfEmpty(board.getNumOfEmpty() - 3);
-            updatingPoints(selectedCardFromTheDeck); //Updating player Points
-            if (playerScore >= 20) {                //EndGame if the playerpoints=>20 points
-                System.out.println("Player " + getNickName() + "wins!\n");
-                EndGame endGame = new EndGame();
-            }
-        }
-
-
-    public void turnYourCard(Card card) //METHOD TO TURN YOUR CARD IN CASE THE PLAYER WANTS TO PLACE THE CARD ON HER BACK
-    {
-        if (!card.isCardBack()) {
-            card.setCardBack(true); //CARD IS NOW ON HER BACK
-            card.getTL().setSpecificCornerSeed(SpecificSeed.EMPTY); //SETTING ALL THE CORNERS AS EMPTY
-            card.getTR().setSpecificCornerSeed(SpecificSeed.EMPTY);
-            card.getBL().setSpecificCornerSeed(SpecificSeed.EMPTY);
-            card.getBR().setSpecificCornerSeed(SpecificSeed.EMPTY);
-        } else {
-            card.setCardBack(false); //CARD IS ON HER ORIGINAL CONFIGURATION
-            card.getTL().setSpecificCornerSeed(card.getTLBack().getSpecificCornerSeed()); //BACKUPPING ALL CORNERS
-            card.getTR().setSpecificCornerSeed(card.getTRBack().getSpecificCornerSeed());
-            card.getBL().setSpecificCornerSeed(card.getBLBack().getSpecificCornerSeed());
-            card.getBR().setSpecificCornerSeed(card.getBRBack().getSpecificCornerSeed());
+        // Add the selected card to the board
+        selectedCardFromTheDeck.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new index
+        board.getCardsOnTheBoardList().add(selectedCardFromTheDeck); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
+        this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
+        board.setNumOfEmpty(board.getNumOfEmpty() - 3);
+        updatingPoints(selectedCardFromTheDeck); //Updating player Points
+        if (playerScore >= 20) {                //EndGame if the playerpoints=>20 points
+            System.out.println("Player " + getNickName() + "wins!\n");
+            EndGame endGame = new EndGame();
         }
     }
+
+    //METHODS INVOKED FROM THE PREVIOUS METHODS
+
+
 
     public int checkIfTheCardExist(int cardIndex)
     {
@@ -470,8 +435,61 @@ public class Player implements Observable {
         }
         System.out.println("Your new score is " + playerScore + " points");
     }
+    public void visualizePlayerCards(List<Card> cards){
+        for(Card card: cards){
+            System.out.println(card);
+        }
+    }
+    public void visualizePlayerScore(){
+        System.out.println(nickName+"score: "+ playerScore);
+    }
+    public Card choosingTheSpecificCardFromTheWell(Scanner scanner, List<Card>cardwell){
+        System.out.println("\n");
+        System.out.print("Select a card from the well ");
+        int selectedCardIndex = scanner.nextInt();
+        if (selectedCardIndex < 1 || selectedCardIndex > cardwell.size()) {
+            System.out.println("Not valid index");
+            return null;
+        }
+        int realIndex = selectedCardIndex - 1;
+        return cardwell.remove(realIndex);
+
+    }
+    public void  fillingTheWellWithTheCorrectCard(Card drownCard, ResourceDeck rc,GoldDeck gd, List<Card>cardwell)
+    {
+        if (drownCard.getId() >= 1 && drownCard.getId() <= 40) {
+            rc.drawCard(cardwell);
+        }
+        if (drownCard.getId() >= 41 && drownCard.getId() <= 80) {
+            gd.drawCard(cardwell);
+        }
+    }
+    public Card chooseCard(int index) {
+        try{
+            if (index < 0 || index >= playerCards.size()) {
+                throw new IndexOutOfBoundsException("Not a valid index");
+            }
+        }catch (IndexOutOfBoundsException e)
+        {
+            System.out.println(e.getMessage()); //INDEX GOES FROM 1 TO 3
+        }
+
+        return playerCards.get(index);
+    }  //METHOD TO CHOOSE WHICH CARD THE PLAYER WANTS TO PLACE ON THE BOARD
+
+
+
+
+
 
     //SETTER AND GETTER OF PLAYER CLASS
+
+
+
+
+
+
+
 
     public List<Card> getPlayerCards() {
         return playerCards;
