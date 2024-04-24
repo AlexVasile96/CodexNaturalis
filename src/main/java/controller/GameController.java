@@ -23,6 +23,7 @@ public class GameController {
     private Game game;
     private List<HandlingPlayerInputsThread> clients;
     PrintWriter out;
+    private boolean isSizeSet;
 
     //CONSTRUCTORS
 
@@ -35,6 +36,7 @@ public class GameController {
         this.game=new Game();
         this.clients=clients;
         this.out= new PrintWriter(socket.getOutputStream(), true);
+        this.isSizeSet=false;
     }
 
 
@@ -135,7 +137,10 @@ public class GameController {
     }
 
     public boolean isSizeSet() {
-        return false;
+        return isSizeSet;
+    }
+    public void setSizeSet(boolean sizeSet) {
+        isSizeSet = sizeSet;
     }
 
     public void setDisconnectedStatus(String username) {
@@ -146,6 +151,9 @@ public class GameController {
         }
         return game.getCurrentPlayer().getNickName();
     }
+
+
+
 
     @Override
     public String toString() {

@@ -160,7 +160,8 @@ public class ServerConnection implements Runnable {
                         "\n- If you type->  'showPoints /5': show your points" +
                         "\n- If you type->  'drawCardFromDeck /6': draw a card from the resource/gold deck" +
                         "\n- If you type->  'drawCardFromWell /7': draw a card from the well" +
-                        "\n- If you type->  'endTurn /8': end your turn"
+                        "\n- If you type->  'endTurn /8': end your turn" +
+                        "\n. if you type -> quit /9: esci dal gioco"
         );
     }
     private void printStatus(){

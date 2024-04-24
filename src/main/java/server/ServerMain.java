@@ -68,7 +68,7 @@ public class ServerMain {
                     ServerLobby lobby = new ServerLobby(clients, socket);
                     HandlingPlayerInputsThread clientThread= new HandlingPlayerInputsThread(socket, playersInCurrentGame, clients, lobby);
                     clients.add(clientThread);
-                    pool.execute(clientThread); //HAndling single player client
+                    pool.execute(clientThread); //Handling single player client
 
                 } catch (IOException ex) {
                     System.err.println(ex.getMessage());
