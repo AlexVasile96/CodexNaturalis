@@ -9,6 +9,7 @@ import exceptions.UnknownPlayerNumberException;
 import exceptions.UsernameAlreadyExistsException;
 import model.game.Board;
 import model.game.Dot;
+import model.game.Game;
 import model.game.Player;
 import view.ClientView;
 
@@ -38,6 +39,7 @@ import java.util.Objects;
 public class HandlingPlayerInputsThread implements Runnable {
     private static GameController gameController;
     private static TurnController turnController;
+    private Game game;
     private static Player currentPlayer;
     public BufferedReader stdIn;
     public PrintWriter out;
@@ -50,7 +52,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private Socket clientSocket;
     private String userName;
 
-    public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby) throws IOException { //Costructor
+    public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException { //Costructor
         this.clientSocket = socket;
         stdIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -63,6 +65,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         this.turnController=null;
         this.lobby=lobby;
         this.userName=null;
+        this.game=game;
     }
 
 
@@ -75,8 +78,23 @@ public class HandlingPlayerInputsThread implements Runnable {
                 //setGameSize();
 
                 handlingTurns(playersList);
+                for(Player playerInGame: playersList)
+                {
+                    game.addPlayer(playerInGame);
+                }
 
+                System.out.println("SATANA " + game.getPlayers());
+                game.initializationResources(); //Sto creando le carte e sto assegnando le 3 carte iniziali ai players + pozzo
+                for(Player playerInGame: playersList)
+                {       //DEBUGGING
+                    System.out.println("giocatore " + playerInGame.getNickName());
+                    System.out.println("giocatore " + playerInGame.getPlayerCards());
+                    System.out.println("Numero di carte risorsa rimanenti nel deck: " + game.CardsIndeck());
+                    System.out.println("Numero di carte gold rimanenti nel deck: " + game.GoldsIndeck());
+                }
+                //firstObjectiveCard(); //carta segreta obiettivo
                 startGame();
+
         } catch (IOException e) {
             System.err.println("Io exception client handler");
         } catch (InterruptedException e) {
@@ -100,12 +118,12 @@ public class HandlingPlayerInputsThread implements Runnable {
                     out.println("Login effettuato con successo");
                     Board board = new Board(50, 50);
                     Player player = new Player(request, 0, Dot.BLACK, board);
-
                     this.userName=request;
                     playersList.add(player);
                     System.out.println("Giocatori nel gioco: "+ playersList);
                     System.out.println(player);
                     gameController = lobby.login(request, out);
+
                     System.out.println(gameController);
                     setGameSize();
                     out.println("Sarai messo in sala d'attesa:");

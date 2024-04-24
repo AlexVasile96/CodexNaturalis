@@ -19,7 +19,6 @@ public class PROVA {
         BoardPoints boardPoints = new BoardPoints(); //creating the board which is NOT shared by all the players
         Board board = new Board(50, 50);
         Player player = new Player("Calla", 0, Dot.GREEN, board); //creating a player
-        //int numOfMush=0;
         ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor(); //create resource cards
         Deck resourceDeck = resourceCardConstructor.createCards();                      //create Deck for resourcesCards
         resourceDeck.shuffle();                                                          //SHUFFLING THE RESOURCEDECK
@@ -84,6 +83,10 @@ public class PROVA {
         board.printCardsOnTheBoard();
         board.printBoard();                                          //printing the board
         boardPoints.countPoints(board);                             //telling the player how many specificseeds he got
+
+
+
+
         //NOW PLAYER HAS TO CHOOSE WHICH CARDS HE WANTS TO PLAY
         while (player.getPlayerScore() < 20) {
             System.out.println("Which card do you want to place on the board?");
@@ -118,46 +121,30 @@ public class PROVA {
                     if (cardChoice == 0) {
                         resourceDeck.drawCard(player);
                         System.out.println("\nCard successfully drawn from the resource Deck");
-                        presente = true;
+                        presente = true; //ok
                     } else if(cardChoice == 1){
-                        System.out.println("Scegli la carta dal pozzo, bastardo: ");
-                        System.out.println(cardsWell+"\n");
-                        int idScelto = scanner.nextInt()-1;
-                        for (Card card : cardsWell) {
-                            if (idScelto == card.getId() && card.getId() <= 40) {
-                                player.getPlayerCards().add(card);
-                                cardsWell.remove(card.getId());
-                                resourceDeck.drawCard(cardsWell);
-                                System.out.println("card drawn correctly from the resource well");
-                                presente = true;
-                            }
-                        }
+                        player.chooseCardFromWell(cardsWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
+                        presente=true;
                         if (!presente) {
                             System.out.println("\nchosen id not present in the well");
                         }
                     }
                 } else if (cardChoice == 2) {
-                    System.out.println("From gold deck or from well: gold deck = 0; well: select card id\n");
+                    System.out.println("From gold deck or from well: gold deck = 0; well:1\n");
                     int chosenCard = scanner.nextInt();
                     if (chosenCard == 0) {
                         goldDeck.drawCard(player);
                         System.out.printf("\nCard successfully drawn from the gold Deck");
                         presente = true;
-                    } else {
-                        for (Card card : cardsWell) {
-                            if (chosenCard == card.getId() && card.getId() > 40) {
-                                player.getPlayerCards().add(card);
-                                cardsWell.remove(card.getId());
-                                goldDeck.drawCard(cardsWell);
-                                System.out.printf("card drawn correctly from the gold well");
-                                presente = true;
-                            }
-                        }
+                    } else if(chosenCard==1){
+                        player.chooseCardFromWell(cardsWell, (ResourceDeck) resourceDeck, (GoldDeck) goldDeck);
+                        presente=true;
                         if (!presente) {
                             System.out.println("\nchosen id not present in the well");
+                         }
                         }
                     }
-                }
+
             } while (!presente);
 
             player.visualizePlayerCards(player.getPlayerCards());
@@ -168,7 +155,6 @@ public class PROVA {
             boardPoints.countPoints(board);
             TrisObjectiveCard trisObjectiveCard = new TrisObjectiveCard();
             trisObjectiveCard.checkPattern(board, SpecificSeed.MUSHROOM, player); //Funziona!
-
         }
     }
 }
