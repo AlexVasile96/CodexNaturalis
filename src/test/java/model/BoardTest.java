@@ -62,7 +62,7 @@ class BoardTest {
 
         // Attempt to place a second initial card
         InitialCard initialCard2 = initialCardDeck.firstCardForPlayer(player);
-        assertThrows(exceptions.InitialCardAlreadyPlacedException.class, ()->board.placeInitialCard(initialCard2));
+        assertFalse(board.placeInitialCard(initialCard2));
     }
 
     @Test
