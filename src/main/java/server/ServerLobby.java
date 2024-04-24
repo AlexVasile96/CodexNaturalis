@@ -4,6 +4,7 @@ import exceptions.GameFullException;
 import exceptions.UnknownPlayerNumberException;
 import exceptions.UsernameAlreadyExistsException;
 import controller.GameController;
+import model.game.Game;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,15 +16,17 @@ public class ServerLobby {
     private final static List<GameController> currentGames= new ArrayList<>();
     private final List<HandlingPlayerInputsThread> clients;
     private Socket socket;
-    public ServerLobby(List<HandlingPlayerInputsThread> clients, Socket socket) {
+    private Game game;
+    public ServerLobby(List<HandlingPlayerInputsThread> clients, Socket socket, Game game) {
         this.clients=clients;
         this.socket=socket;
+        this.game=game;
 
     }
 
     public synchronized GameController login(String username, PrintWriter userOut) throws UnknownPlayerNumberException, UsernameAlreadyExistsException, IOException {
         if (currentGames.isEmpty() || currentGames.get(0).getNumOfPlayers() >= 4) {
-            GameController newGame = new GameController(username, userOut, clients, socket);
+            GameController newGame = new GameController(username, userOut, clients, socket, game);
             currentGames.add(newGame);
             return newGame;
         } else {

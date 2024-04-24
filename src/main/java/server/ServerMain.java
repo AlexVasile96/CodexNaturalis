@@ -1,6 +1,7 @@
 package server;
 
 
+import model.game.Game;
 import model.game.Player;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,6 +19,7 @@ import java.util.concurrent.Executors;
 public class ServerMain {
     private static List<HandlingPlayerInputsThread> clients= new ArrayList<>();
     private static ExecutorService pool = Executors.newFixedThreadPool(4);
+    private static Game game= new Game();
 
     private static List< Player> playersInCurrentGame= new ArrayList<>();
         public static void main(String[] args) {
@@ -61,12 +63,11 @@ public class ServerMain {
             //Accepts connections from clients on new threads
             while (true) {
                 try {
-
                     Socket socket = serverSocket.accept();                                          //aspettando il client
                     String clientAddress = socket.getInetAddress().getHostAddress();
                     System.out.println("Client connected from IP: " + clientAddress);//ok            // ip del client
-                    ServerLobby lobby = new ServerLobby(clients, socket);
-                    HandlingPlayerInputsThread clientThread= new HandlingPlayerInputsThread(socket, playersInCurrentGame, clients, lobby);
+                    ServerLobby lobby = new ServerLobby(clients, socket, game);
+                    HandlingPlayerInputsThread clientThread= new HandlingPlayerInputsThread(socket, playersInCurrentGame, clients, lobby, game);
                     clients.add(clientThread);
                     pool.execute(clientThread); //Handling single player client
 

@@ -25,7 +25,7 @@ public class CliClientApp {
         Socket socket = new Socket(hostName,portNumber);                                 // Creating the socket and connecting to the server
         System.out.println("Client connected!");                                        //Client successfully connected
         ClientView clientView= new ClientView();                                        //Giving the client a personal view
-        ServerConnection serverConnection= new ServerConnection(socket,clientView); //Creating a new thread that will handle clients interactions
+        ServerConnection serverConnection= new ServerConnection(socket,clientView);     //Creating a new thread that will handle clients interactions
         serverConnection.run();                                                         //Starting each client thread
     }
 }
