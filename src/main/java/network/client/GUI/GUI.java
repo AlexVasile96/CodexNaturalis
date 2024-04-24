@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -13,9 +14,12 @@ import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
+import server.HandlingPlayerInputsThread;
+import server.ServerLobby;
+import view.ClientView;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 public class GUI extends Application {
@@ -25,8 +29,11 @@ public class GUI extends Application {
     private Button returnToMainMenu;
     private Stage window;
     private Scene startScene;
+    private Scene loginScene;
     private Scene gameScene;
     private Socket socket;
+    private ClientView clientView;
+
 
 
     public static void main(String[] args) {
@@ -36,9 +43,14 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
+        clientView = new ClientView();
+        startMenuScene(primaryStage);
+        loginScene();
 
-        // Inizializza la scena di gioco
-        initializeGameScene();
+
+    }
+
+    private void startMenuScene(Stage primaryStage) {
 
         // Carica l'immagine di sfondo
         Image codexLogo = new Image(getClass().getResourceAsStream("/ImmaginiCodex/codexLogo.png"));
@@ -55,7 +67,7 @@ public class GUI extends Application {
         start = new Button("Start new game");
         start.setOnAction(e -> {
             connectToServer();
-            window.setScene(gameScene);
+            window.setScene(loginScene);
         });
 
         // Layout dei bottoni
@@ -73,34 +85,52 @@ public class GUI extends Application {
         primaryStage.show();
     }
 
-    private void initializeGameScene() {
-        StackPane rootGame = new StackPane();
 
-        // Aggiungi il pulsante "Back to main menu"
-        Label gameLabel = new Label("Game Scene");
+
+
+    private void loginScene() {
+
+        Button loginButton = new Button("Login");
+        Label test = new Label();
+
+        StackPane rootGame = new StackPane();
+        Label loginLabel = new Label("Write your username");
+        TextField usernameField = new TextField();
+
+        loginButton.setOnAction(e->{
+            clientView.setUserName(usernameField.getText());
+        });
+        if(clientView.getUserName() != null) {
+           test = new Label("Il tuo username è: "+ clientView.getUserName());
+        }
+
+
+
         returnToMainMenu = new Button("Back to main menu");
         returnToMainMenu.setOnAction(e -> {
             window.setScene(startScene);
             try {
-                closeConnection();
+                closeConnection(socket);
             } catch (IOException ex) {
-                throw new RuntimeException(ex);
+                ex.printStackTrace();
             }
 
         });
 
-        VBox gameLayout = new VBox(20); // Spaziatura tra i nodi
-        gameLayout.setAlignment(Pos.CENTER);
-        gameLayout.getChildren().addAll(gameLabel, returnToMainMenu);
-        gameLayout.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        rootGame.getChildren().addAll(gameLayout);
+        VBox loginLayout = new VBox(20); // Spaziatura tra i nodi
+        loginLayout.setAlignment(Pos.CENTER);
+        loginLayout.getChildren().addAll(loginLabel, usernameField, loginButton, test, returnToMainMenu);
+        loginLayout.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        rootGame.getChildren().addAll(loginLayout);
 
         // Inizializza la scena di gioco
-        gameScene = new Scene(rootGame, 800, 600);
+        loginScene = new Scene(rootGame, 800, 600);
     }
 
+
+
+
     private Socket connectToServer() {
-        Socket socket = null;
         try {
 
             FileReader reader = new FileReader("src/main/resources/HostAndPort.json");
@@ -115,16 +145,14 @@ public class GUI extends Application {
                 portNumber = hostAndPort.getInt("portNumber");
             }
 
-            socket = new Socket(hostName, portNumber);
+            this.socket = new Socket(hostName, portNumber);
         } catch (IOException e) {
             System.err.println("Connection failed\n");
         }
         return socket;
     }
-    private void closeConnection() throws IOException {
-        Socket socket = connectToServer();
-        if (socket != null) {
-            socket.close();
-        }
+
+    private void closeConnection(Socket socket) throws IOException {
+        socket.close();
     }
 }
