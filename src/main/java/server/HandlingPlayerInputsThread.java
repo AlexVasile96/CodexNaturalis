@@ -125,21 +125,19 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
             }
                 System.out.println(gameController);
-                notifyGameStart();
+                //notifyGameStart();
     }
 
     private void startGame() throws IOException {
         while (true) {  //quale azione vuoi fare? fino a che non finsice il turno
+            String messageFromClient = stdIn.readLine();        //messaggio dal thread client
             if(Objects.equals(currentPlayer.getNickName(), this.userName)){
-                String messageFromClient = stdIn.readLine();
+                out.println("è il tuo turno!!");
                 System.out.println("Il client ha selezionato: " + messageFromClient);
-                switch (messageFromClient) {
-                    case "COMMAND" -> {runCommand(messageFromClient);}
-                    case "PING" -> {
-                    }
-                    case "help" -> System.out.println("Il player ha chiesto una mano");
-                    default -> System.out.println("Client sent an unexpected message: ");
-                    }
+                runCommand(messageFromClient);
+            }
+            else{
+                out.println("Aspetta non è il tuo turno!");
             }
         }
     }
@@ -196,7 +194,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         return;
     } //metodo che mette in attesa i client fino a che non si è raggiunto il numero voluto di giocatori
 
-    public synchronized void notifyGameStart() {
+    /*public synchronized void notifyGameStart() {
         if (!isGameStarted) {
             isGameStarted = true;
             for (HandlingPlayerInputsThread thread : clients) {
@@ -210,7 +208,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 thread.sendBooleanToClient(false);
             }
         }
-    }
+    }*/
 
     //GetCurrentPLayer
     //if GetCurrentPlayer==String name -> azione

@@ -41,23 +41,8 @@ public class GameController {
 
 
     public synchronized void readCommand(String username, String commandString) {
-        if (!username.equals(getCurrentPlayerUsername())) {
-            sendMessageToClient("It's not your turn to act");
-            System.out.println("Wrong player tried to send a command.");
-
-        } else if (isGameOver) {
-            sendMessageToClient( "The game has already ended");
-            System.out.println("Player tried to send a command after the end of the game.");
-
-        } else {
-            try {
-                System.out.println("PAPPA");
-                Command command = gson.fromJson(commandString, Command.class); //cambiare questo
-                String result = command.runCommand(game);
-            } catch (Exception ignored) {
-
-            }
-        }
+        Command command = gson.fromJson(commandString, Command.class); //cambiare questo
+        String result = command.runCommand(game);
     }
 
 
