@@ -32,19 +32,24 @@ public class ServerConnection implements Runnable {
             while (true) {
                 try {
                     System.out.print(">");
-                    command=stdin.readLine();
+                    command=stdin.readLine();       //il client scrive un messaggio
                     if (clientView.getUserName() == null) { //If client hasn't made the login yet, he has to log first.
                         out.println(command);
                         loginPlayer();
                         //respondToNumberOfPLayers();
                     }
-                    else    {                                     //If client has made the login, he can start asking for inputs if it's his turn
-                        out.println(command);
-                        actionsInput(command);
+                    else {                                     //If client has made the login, he can start asking for inputs if it's his turn
+                        out.println(command);                   //messaggio inoltrato al server
+                        String accesso = in.readLine();         //è il tuo turno
+                        System.out.println(accesso);
+                        if(accesso.equals("è il tuo turno!!")) {
+                            out.println(command);
+                            actionsInput(command);
                         }
+                    }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
-                            }
+                }
             }
 
         } catch (InterruptedException e) {
@@ -65,6 +70,8 @@ public class ServerConnection implements Runnable {
         clientView.setUserName(loginName);                      //UPDATING CLIENT VIEW
         System.out.println("server says: "+ okay); //Scegli il numero di partecipanti
         if(okay.equals("NO")){
+            String risposta2 = in.readLine();
+            System.out.println("Server says: " + risposta2);
             return;
         }
         System.out.println(">");
@@ -77,7 +84,7 @@ public class ServerConnection implements Runnable {
         String listening= in.readLine();
         System.out.println("Server says: " + listening);
         System.out.println("sei in attesa");
-        ordinePlayer(in);
+        //ordinePlayer(in);
 
     }
 
@@ -95,14 +102,14 @@ public class ServerConnection implements Runnable {
     }
 
 
-    public static void ordinePlayer(BufferedReader input) throws IOException, InterruptedException {
+    /*public static void ordinePlayer(BufferedReader input) throws IOException, InterruptedException {
         Boolean uscitaCheck = Boolean.valueOf(input.readLine());
         while (uscitaCheck != false) {
             String ordinePlayer = input.readLine();
             System.out.println("Server says: " + ordinePlayer);
             uscitaCheck = Boolean.valueOf(input.readLine());
         }
-    }
+    }*/
 
 
     private void actionsInput(String userInput) throws IOException { //GAME STARTED
@@ -160,11 +167,15 @@ public class ServerConnection implements Runnable {
                         "\n- If you type->  'showPoints /5': show your points" +
                         "\n- If you type->  'drawCardFromDeck /6': draw a card from the resource/gold deck" +
                         "\n- If you type->  'drawCardFromWell /7': draw a card from the well" +
-                        "\n- If you type->  'endTurn /8': end your turn"
+                        "\n- If you type->  'endTurn /8': end your turn" +
+                        "\n. if you type -> quit /9: esci dal gioco"
         );
     }
     private void printStatus(){
         System.out.println("\n"+clientView.getGame());
+    }
+    private void runEndTurn(){
+
     }
     private void showCards(){}
     private void chosenHandCard(){}
@@ -174,7 +185,7 @@ public class ServerConnection implements Runnable {
     private void showPoints(){}
     private void drawCardFromDeck(){}
     private void drawCardFromWell(){}
-    private void runEndTurn(){}
+
 
 }
 

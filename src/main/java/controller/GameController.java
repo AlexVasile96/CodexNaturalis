@@ -23,6 +23,7 @@ public class GameController {
     private Game game;
     private List<HandlingPlayerInputsThread> clients;
     PrintWriter out;
+    private boolean isSizeSet;
 
     //CONSTRUCTORS
 
@@ -35,27 +36,13 @@ public class GameController {
         this.game=new Game();
         this.clients=clients;
         this.out= new PrintWriter(socket.getOutputStream(), true);
+        this.isSizeSet=false;
     }
 
 
     public synchronized void readCommand(String username, String commandString) {
-        if (!username.equals(getCurrentPlayerUsername())) {
-            sendMessageToClient("It's not your turn to act");
-            System.out.println("Wrong player tried to send a command.");
-
-        } else if (isGameOver) {
-            sendMessageToClient( "The game has already ended");
-            System.out.println("Player tried to send a command after the end of the game.");
-
-        } else {
-            try {
-                System.out.println("PAPPA");
-                Command command = gson.fromJson(commandString, Command.class); //cambiare questo
-                String result = command.runCommand(game);
-            } catch (Exception ignored) {
-
-            }
-        }
+        Command command = gson.fromJson(commandString, Command.class); //cambiare questo
+        String result = command.runCommand(game);
     }
 
 
@@ -135,7 +122,10 @@ public class GameController {
     }
 
     public boolean isSizeSet() {
-        return false;
+        return isSizeSet;
+    }
+    public void setSizeSet(boolean sizeSet) {
+        isSizeSet = sizeSet;
     }
 
     public void setDisconnectedStatus(String username) {
@@ -146,6 +136,9 @@ public class GameController {
         }
         return game.getCurrentPlayer().getNickName();
     }
+
+
+
 
     @Override
     public String toString() {
