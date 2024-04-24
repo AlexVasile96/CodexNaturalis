@@ -14,12 +14,11 @@ import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import server.HandlingPlayerInputsThread;
-import server.ServerLobby;
 import view.ClientView;
+
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.ServerSocket;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class GUI extends Application {
@@ -66,7 +65,15 @@ public class GUI extends Application {
         // Aggiungi il pulsante "Start new game"
         start = new Button("Start new game");
         start.setOnAction(e -> {
+            String firstMessage = "login";
             connectToServer();
+            PrintWriter printWriter;
+            try {
+                printWriter = new PrintWriter(socket.getOutputStream(),true);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            printWriter.println(firstMessage);
             window.setScene(loginScene);
         });
 
@@ -92,17 +99,20 @@ public class GUI extends Application {
 
         Button loginButton = new Button("Login");
         Label test = new Label();
-
         StackPane rootGame = new StackPane();
         Label loginLabel = new Label("Write your username");
         TextField usernameField = new TextField();
-
         loginButton.setOnAction(e->{
-            clientView.setUserName(usernameField.getText());
+            String username = usernameField.getText();
+          if(!username.isEmpty()){
+              clientView.setUserName(username);
+              setUsername(username);
+              test.setText("Il tuo username è: " + username);
+          }else{
+              System.out.println("Username necessario");
+          }
         });
-        if(clientView.getUserName() != null) {
-           test = new Label("Il tuo username è: "+ clientView.getUserName());
-        }
+
 
 
 
@@ -129,7 +139,14 @@ public class GUI extends Application {
 
 
 
-
+    private  void setUsername(String username){
+        try {
+            PrintWriter printWriter = new PrintWriter(socket.getOutputStream(),true);
+            printWriter.println(username);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     private Socket connectToServer() {
         try {
 
