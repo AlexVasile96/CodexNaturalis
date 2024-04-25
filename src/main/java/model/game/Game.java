@@ -113,7 +113,6 @@ public class Game implements WhatCanPlayerDo {
     @Override
     public void drawResourceCard(Player player) {
         player.drawResourceCard(resourceDeck);
-
     }
 
     @Override
