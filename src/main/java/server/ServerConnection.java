@@ -36,6 +36,7 @@ public class ServerConnection implements Runnable {
                     if (clientView.getUserName() == null) { //If client hasn't made the login yet, he has to log first.
                         out.println(command);
                         loginPlayer();
+                        assigningSecretCard();
                         //respondToNumberOfPLayers();
                     }
                     else {                                     //If client has made the login, he can start asking for inputs if it's his turn
@@ -56,6 +57,17 @@ public class ServerConnection implements Runnable {
             throw new RuntimeException(e);
                                                 }
     }
+
+    private synchronized void assigningSecretCard() throws IOException {
+        String stringSecretCard= in.readLine();
+        System.out.println("server says: " + stringSecretCard);
+        System.out.println("selaziona la carta: 1-prima carta, 2-seconda carta");
+        String intero= stdin.readLine();
+        int size = Integer.parseInt(intero);
+        out.println(size);
+
+    }
+
     private void loginPlayer() throws IOException, InterruptedException { //LOGIN METHOD
         String serverResponse = in.readLine();
         System.out.println("Server says: " + serverResponse); //Inserisci il tuo nome per favore

@@ -26,17 +26,6 @@ public class Game implements WhatCanPlayerDo {
     public Game() {
         this.players = new ArrayList<>();
         this.well= new ArrayList<>();
-    }
-
-    public void addPlayer(Player player) {
-        players.add(player);
-    }
-
-
-
-
-    public void initializationResources() {
-
         ResourceCardConstructor constructor = new ResourceCardConstructor();
         resourceDeck = (ResourceDeck) constructor.createCards();
         resourceDeck.shuffle();
@@ -52,13 +41,16 @@ public class Game implements WhatCanPlayerDo {
         ObjectiveCardConstructor constructorObjective = new ObjectiveCardConstructor();
         objectiveDeck = (ObjectiveDeck) constructorObjective.createCards();
         objectiveDeck.shuffle();
-        assignResourcesAndGoldCardsToPlayers();
+
         initializewell();
         commonObjectiveCards();
-        //assignSecretCardToPlayer();
-        //assignCartaIniziale
-
     }
+
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
+
+
 
     public void initializewell(){
         resourceDeck.drawCard(well);
@@ -244,5 +236,6 @@ public class Game implements WhatCanPlayerDo {
     public int GoldsIndeck(){
         return goldDeck.carteRimaste();
     }
+
 }
 

@@ -44,18 +44,19 @@ public class ObjectiveDeck implements Deck {
     }
 
     public ObjectiveCard drawCard(Player player){
+            return null;
+    }
+
+    public ObjectiveCard drawObjectiveCard(){
         if (objectiveCards.isEmpty()) { //CHECKING IF THE CARD IS MADE IN THE CORRECT WAY
             return null;
         }
 
         try {
-            if(player.getPlayerCards().size()<3){
-                return (ObjectiveCard)objectiveCards.remove(0);                          //RETURING THE CHOSEN CARD
-            }
+            return (ObjectiveCard)objectiveCards.remove(0);
         } catch(Exception e) {
             throw new AlreadyThreeCardsException("Il giocatore ha già tre carte nella mano.",e); // Eccezione specifica
         }
-        return null;
     }
 
     @Override
