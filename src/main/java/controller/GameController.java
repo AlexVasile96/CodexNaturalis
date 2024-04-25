@@ -12,7 +12,6 @@ import model.game.Game;
 import model.game.Player;
 import network.message.Command;
 import network.message.MessagesEnum;
-import com.google.gson.Gson;
 import server.HandlingPlayerInputsThread;
 import view.ClientView;
 
@@ -28,7 +27,6 @@ public class GameController {
     private final Map<String, PrintWriter> players;
     int size;
     boolean isGameOver;
-    Gson gson;
     private Game game;
     private List<HandlingPlayerInputsThread> clients;
     PrintWriter out;
@@ -49,7 +47,6 @@ public class GameController {
         this.size = 0;
         this.isGameOver = false;
         players.put(username, userOut);
-        this.gson = new Gson();
         this.game=game;
         this.clients=clients;
         this.out= new PrintWriter(socket.getOutputStream(), true);
@@ -110,13 +107,6 @@ public class GameController {
         return size;
     }
 
-    public Gson getGson() {
-        return gson;
-    }
-
-    public void setGson(Gson gson) {
-        this.gson = gson;
-    }
 
     public Game getGame() {
         return game;

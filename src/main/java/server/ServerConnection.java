@@ -4,11 +4,10 @@ import view.ClientView;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.Buffer;
-import java.util.List;
+
 
 public class ServerConnection implements Runnable {
-    private static boolean setsize= false;
+
     private Socket socket;
     private ClientView clientView;
     private BufferedReader in;
@@ -26,25 +25,25 @@ public class ServerConnection implements Runnable {
 
     @Override
     public void run() {
-        String command; //inizializzazimone della stringa
+        String command;
         try {
             System.out.println("Benvenuto!Sono il server! Scrivere una qualsiasi stringa per iniziare la conversazione\n");
             while (true) {
                 try {
                     System.out.print(">");
-                    command=stdin.readLine();       //il client scrive un messaggio
-                    if (clientView.getUserName() == null) { //If client hasn't made the login yet, he has to log first.
-                        out.println(command);
-                        loginPlayer();
-                        assigningSecretCard();
-                        //respondToNumberOfPLayers();
+                    command=stdin.readLine();                           //il client scrive un messaggio
+                    if (clientView.getUserName() == null) {             //If client hasn't made the login yet, he has to log first.
+                        sendMessageToServer(command);
+                        loginPlayer();                                  //Actual Login
+                        assigningSecretCard();                          //Choosing the secret Card
+                        //choosingTheInitialCard();
                     }
-                    else {                                     //If client has made the login, he can start asking for inputs if it's his turn
-                        out.println(command);                   //messaggio inoltrato al server
-                        String accesso = in.readLine();         //è il tuo turno
-                        System.out.println(accesso);
-                        if(accesso.equals("è il tuo turno!!")) {
-                            out.println(command);
+                    else {                                              //If client has made the login, he can start asking for inputs if it's his turn
+                        sendMessageToServer(command);                   //messaggio inoltrato al server
+                        String isMyTurn = in.readLine();                //è il tuo turno
+                        System.out.println(isMyTurn);
+                        if(isMyTurn.equals("è il tuo turno!!")) {
+                            sendMessageToServer(command);
                             actionsInput(command);
                         }
                     }
@@ -65,7 +64,6 @@ public class ServerConnection implements Runnable {
         String intero= stdin.readLine();
         int size = Integer.parseInt(intero);
         out.println(size);
-
     }
 
     private void loginPlayer() throws IOException, InterruptedException { //LOGIN METHOD
@@ -73,57 +71,38 @@ public class ServerConnection implements Runnable {
         System.out.println("Server says: " + serverResponse); //Inserisci il tuo nome per favore
         System.out.println(">");
         String loginName = stdin.readLine();
-        out.println(loginName);
-        String risposta = in.readLine();
-        System.out.println("Server says: " + risposta); //Login effettuato con successo
-        String okay = in.readLine();
-        //System.out.println("Server says: " + okay);   //Sarai messo in sala d'attesa
-        //System.out.println("sei in attesa");
+        sendMessageToServer(loginName);
+        String correctLogin = in.readLine();
+        System.out.println("Server says: " + correctLogin); //Login effettuato con successo
         clientView.setUserName(loginName);                      //UPDATING CLIENT VIEW
-        System.out.println("server says: "+ okay); //Scegli il numero di partecipanti
-        if(okay.equals("NO")){
-            String risposta2 = in.readLine();
-            System.out.println("Server says: " + risposta2);
+        chooseNumberOfPlayers();
+    }
+
+    public synchronized void sendMessageToServer(String message) {
+        out.println(message);
+    }     //metodo per mandare un singolo messaggio al server
+
+
+
+    private void chooseNumberOfPlayers() throws IOException {
+        String choosingNumberOfPlayers = in.readLine();
+        System.out.println("server says: "+ choosingNumberOfPlayers);              //Scegli il numero di partecipanti
+        if(choosingNumberOfPlayers.equals("NO")){
+            String answer = in.readLine();
+            System.out.println("Server says: " + answer);
             return;
         }
         System.out.println(">");
-        String messaggio= stdin.readLine();
-        int size = Integer.parseInt(messaggio);
+        String numbersOfPlayers= stdin.readLine();
+        int size = Integer.parseInt(numbersOfPlayers);
         out.println(size);
         System.out.println(size);
-        String ascolto = in.readLine();
-        System.out.println("Server says: " + ascolto); //Numero di giocatori scelto correttamente
-        String listening= in.readLine();
-        System.out.println("Server says: " + listening);
-        System.out.println("sei in attesa");
-        //ordinePlayer(in);
+        String serverAnswer = in.readLine();
+        System.out.println("Server says: " + serverAnswer); //Numero di giocatori scelto correttamente
+        String waitingClients= in.readLine();
+        System.out.println("Server says: " + waitingClients);
 
     }
-
-    private void respondToNumberOfPLayers() throws IOException {
-        String serverResponse = in.readLine();
-        System.out.println("Server says: " + serverResponse);
-        if(serverResponse.equals("NO")){
-          return;
-        }
-        System.out.println(">");
-        String messaggio= stdin.readLine();
-        int size = Integer.parseInt(messaggio);
-        out.println(size);
-        System.out.println(size);
-    }
-
-
-    /*public static void ordinePlayer(BufferedReader input) throws IOException, InterruptedException {
-        Boolean uscitaCheck = Boolean.valueOf(input.readLine());
-        while (uscitaCheck != false) {
-            String ordinePlayer = input.readLine();
-            System.out.println("Server says: " + ordinePlayer);
-            uscitaCheck = Boolean.valueOf(input.readLine());
-        }
-    }*/
-
-
     private void actionsInput(String userInput) throws IOException { //GAME STARTED
         try {
             switch (userInput) {
@@ -146,9 +125,7 @@ public class ServerConnection implements Runnable {
                 case "drawCardFromDeck", "6" -> drawCardFromDeck();
                 case "drawCardFromWell", "7" -> drawCardFromWell();
                 case "endTurn", "8" -> runEndTurn();//run
-                default -> {
-                    System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
-                }
+                default -> System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
 
             }
         } catch (OperationCancelledException exception) {
@@ -160,27 +137,29 @@ public class ServerConnection implements Runnable {
     {
         System.out.println("Commands:\n");
         System.out.println(
-                "Supported commands are: " +
-                        "\n" +
-                        "\n- 'status': show the player who is currently taking their turn and the turn phase" +
-                        "\n- 'show': display a specific game element" +
-                        "\n- 'actions': display all currently allowed game actions" +
-                        "\n");
+                """
+                        Supported commands are:\s
+
+                        - 'status': show the player who is currently taking their turn and the turn phase
+                        - 'show': display a specific game element
+                        - 'actions': display all currently allowed game actions
+                        """);
     }
 
-    private void printActions() throws IOException {
+    private void printActions() {
         System.out.println(
-                "Supported commands:" +
-                        "\n- If you type-> 'showYourCardDeck / 0 ': display player's cards" +
-                        "\n- If you type-> 'playCardFromYourHand /1': select the card you want to place from your hand" +
-                        "\n- If you type->  'visualizeCommonObjectiveCards /2': visualize the common objective cards" +
-                        "\n- If you type->  'visualizeSecretObjectiveCard /3': visualize your secret objective card" +
-                        "\n- If you type->  'showBoard /4':print your board" +
-                        "\n- If you type->  'showPoints /5': show your points" +
-                        "\n- If you type->  'drawCardFromDeck /6': draw a card from the resource/gold deck" +
-                        "\n- If you type->  'drawCardFromWell /7': draw a card from the well" +
-                        "\n- If you type->  'endTurn /8': end your turn" +
-                        "\n. if you type -> quit /9: esci dal gioco"
+                """
+                        Supported commands:
+                        - If you type-> 'showYourCardDeck / 0 ': display player's cards
+                        - If you type-> 'playCardFromYourHand /1': select the card you want to place from your hand
+                        - If you type->  'visualizeCommonObjectiveCards /2': visualize the common objective cards
+                        - If you type->  'visualizeSecretObjectiveCard /3': visualize your secret objective card
+                        - If you type->  'showBoard /4':print your board
+                        - If you type->  'showPoints /5': show your points
+                        - If you type->  'drawCardFromDeck /6': draw a card from the resource/gold deck
+                        - If you type->  'drawCardFromWell /7': draw a card from the well
+                        - If you type->  'endTurn /8': end your turn
+                        . if you type -> quit /9: esci dal gioco"""
         );
     }
     private void printStatus(){
