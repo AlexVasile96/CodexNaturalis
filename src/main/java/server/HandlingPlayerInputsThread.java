@@ -194,16 +194,17 @@ public class HandlingPlayerInputsThread implements Runnable {
             sendMessageToClient("Scegli il colore del tuo dot, puoi scegliere fra Blu, Rosso, Verde e Giallo!");
             message = stdIn.readLine();
             dot = Dot.valueOf(message);
+
             if (playerlist.size() != 0) {
                 for (Player player : playerlist) {
                     if (player.getDot() == dot) {
                         sendMessageToClient("Quel colore è gia stato scelto da un altro utente, perfavore inserire un altro colore");
-                    } else {
+                    }/* else {
                         System.out.println("Colore scelto dal client: " + message);
                         sendMessageToClient("Colore del dot scelto correttamente");
                         isTheColorOkay = true;
 
-                    }
+                    }*/
                 }
             } else{
                 System.out.println("Colore scelto dal client: " + message);
