@@ -86,16 +86,25 @@ public class ServerConnection implements Runnable {
     }     //metodo per mandare un singolo messaggio al server
 
     private void chooseYourDotColor() throws IOException {
-        String chooseYourColor = in.readLine();
-        System.out.println("server says: "+ chooseYourColor);              //Scegli il colore del tuo dot
-        System.out.println("Inserire\n -RED per scegliere il dot di colore rosso\n -BLUE per scegliere il colore blu\n -GREEN per scegliere il colore verde\n -YELLOW per scegliere il colore giallo");
-        System.out.println(">");
-        String dotColor= stdin.readLine();
-        sendMessageToServer(dotColor);
-        System.out.println(dotColor);
-        String serverAnswer = in.readLine();
-        System.out.println("Server says: " + serverAnswer); //Colore del dot scelto correttamente
+        boolean isTheColorOkay= false;
+        while(!isTheColorOkay) {
+            String chooseYourColor = in.readLine();
+            System.out.println("server says: " + chooseYourColor);              //Scegli il colore del tuo dot
+            System.out.println("Inserire\n -RED per scegliere il dot di colore rosso\n -BLUE per scegliere il colore blu\n -GREEN per scegliere il colore verde\n -YELLOW per scegliere il colore giallo");
+            System.out.println(">");
+            String dotColor = stdin.readLine();
+            sendMessageToServer(dotColor);
+            System.out.println(dotColor);
+            String serverAnswer = in.readLine();
+            if (serverAnswer.equals("Quel colore è gia stato scelto da un altro utente, perfavore inserire un altro colore")) {
+                System.out.println("server says: " + serverAnswer);
 
+            }
+            else {
+                System.out.println("Server says: " + serverAnswer); //Colore del dot scelto correttamente
+                isTheColorOkay=true;
+            }
+        }
     }
 
     private void chooseNumberOfPlayers() throws IOException {

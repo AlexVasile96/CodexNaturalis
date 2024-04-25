@@ -115,7 +115,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println("il nome del client è: " + request);
                 sendMessageToClient("Login effettuato con successo!");
                 Board board = new Board(50, 50);
-                Dot dot= chooseClientDotColor();
+                Dot dot= chooseClientDotColor(playersList);
                 player = new Player(request, 0, dot, board);
                 this.userName=request;
                 playersList.add(player);
@@ -186,14 +186,31 @@ public class HandlingPlayerInputsThread implements Runnable {
             sendMessageToClient("NO");
         }
     }
-
-    private Dot chooseClientDotColor() throws IOException {
+    private Dot chooseClientDotColor(List<Player> playerlist) throws IOException {
         String message;
-        sendMessageToClient("Scegli il colore del tuo dot, puoi scegliere fra Blu, Rosso, Verde e Giallo!");
-        message= stdIn.readLine();
-        Dot dot= Dot.valueOf(message);
-        System.out.println("Colore scelto dal client: " + message);
-        sendMessageToClient("Colore del dot scelto correttamente");
+        Dot dot = null;
+        boolean isTheColorOkay = false;
+        while (!isTheColorOkay) {
+            sendMessageToClient("Scegli il colore del tuo dot, puoi scegliere fra Blu, Rosso, Verde e Giallo!");
+            message = stdIn.readLine();
+            dot = Dot.valueOf(message);
+            if (playerlist.size() != 0) {
+                for (Player player : playerlist) {
+                    if (player.getDot() == dot) {
+                        sendMessageToClient("Quel colore è gia stato scelto da un altro utente, perfavore inserire un altro colore");
+                    } else {
+                        System.out.println("Colore scelto dal client: " + message);
+                        sendMessageToClient("Colore del dot scelto correttamente");
+                        isTheColorOkay = true;
+
+                    }
+                }
+            } else{
+                System.out.println("Colore scelto dal client: " + message);
+                sendMessageToClient("Colore del dot scelto correttamente");
+                isTheColorOkay = true;
+             }
+        }
         return dot;
     }
     private void runCommand(String messageFromClient) throws NoSuchElementException {
