@@ -50,7 +50,6 @@ public class Corner extends Node{
         this.y = y;
     }
 
-    //per i test
 
 
 }

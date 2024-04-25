@@ -115,7 +115,8 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println("il nome del client è: " + request);
                 sendMessageToClient("Login effettuato con successo!");
                 Board board = new Board(50, 50);
-                player = new Player(request, 0, Dot.BLACK, board);
+                Dot dot= chooseClientDotColor();
+                player = new Player(request, 0, dot, board);
                 this.userName=request;
                 playersList.add(player);
                 System.out.println("Giocatori nel gioco: "+ playersList);
@@ -184,6 +185,16 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("Player doesn't need to choose game number of players");
             sendMessageToClient("NO");
         }
+    }
+
+    private Dot chooseClientDotColor() throws IOException {
+        String message;
+        sendMessageToClient("Scegli il colore del tuo dot, puoi scegliere fra Blu, Rosso, Verde e Giallo!");
+        message= stdIn.readLine();
+        Dot dot= Dot.valueOf(message);
+        System.out.println("Colore scelto dal client: " + message);
+        sendMessageToClient("Colore del dot scelto correttamente");
+        return dot;
     }
     private void runCommand(String messageFromClient) throws NoSuchElementException {
         //If player has logged in and their game's number of players has been decided

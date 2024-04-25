@@ -1,5 +1,6 @@
 package server;
 import exceptions.OperationCancelledException;
+import model.game.Dot;
 import view.ClientView;
 
 import java.io.*;
@@ -75,14 +76,27 @@ public class ServerConnection implements Runnable {
         String correctLogin = in.readLine();
         System.out.println("Server says: " + correctLogin); //Login effettuato con successo
         clientView.setUserName(loginName);                      //UPDATING CLIENT VIEW
+        chooseYourDotColor();
         chooseNumberOfPlayers();
+
     }
 
     public synchronized void sendMessageToServer(String message) {
         out.println(message);
     }     //metodo per mandare un singolo messaggio al server
 
+    private void chooseYourDotColor() throws IOException {
+        String chooseYourColor = in.readLine();
+        System.out.println("server says: "+ chooseYourColor);              //Scegli il colore del tuo dot
+        System.out.println("Inserire\n -RED per scegliere il dot di colore rosso\n -BLUE per scegliere il colore blu\n -GREEN per scegliere il colore verde\n -YELLOW per scegliere il colore giallo");
+        System.out.println(">");
+        String dotColor= stdin.readLine();
+        sendMessageToServer(dotColor);
+        System.out.println(dotColor);
+        String serverAnswer = in.readLine();
+        System.out.println("Server says: " + serverAnswer); //Colore del dot scelto correttamente
 
+    }
 
     private void chooseNumberOfPlayers() throws IOException {
         String choosingNumberOfPlayers = in.readLine();
