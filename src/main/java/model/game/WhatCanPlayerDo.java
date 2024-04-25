@@ -30,9 +30,9 @@ public interface WhatCanPlayerDo {
     void placeCardOnBoard(Player player, int cardIndex, String selectedCorner);
     void chooseSecretCard(Player player, List<ObjectiveCard> secretCards);
     void turnYourCard(Card card);
-    void getPlayerScore(Player player);
-    void getNickName(Player player);
-    void getPlayerCards(Player player);
+    int getPlayerScore(Player player);
+    String getNickName(Player player);
+    List<Card> getPlayerCards(Player player);
     void endTurn(Player player);
     void requestGameInfo(Player player); //Richiede le informazioni attuali sullo stato del gioco al server.
 }

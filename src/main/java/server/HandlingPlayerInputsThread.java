@@ -64,11 +64,14 @@ public class HandlingPlayerInputsThread implements Runnable {
                         initializeCards();
                     }
                 }
-
                 assigningSecretCard();                                            //Each thread will assign the secret card to the player
-                assignInitialCard();
+                assignInitialCard();                                                //Each client places his first card
                 System.out.println(game.getObjectiveDeck().carteRimaste());       //Debugging to check if all cards are given correctly
+
+                //GAME IS READY TO START
+
                 startGame();                                                      //Game can eventually start
+
         } catch (IOException e) {
             System.err.println("Io exception client handler");
             } catch (InterruptedException e) {
@@ -87,16 +90,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     //if GetCurrentPlayer==String name -> azione
 
 
-    private void assignInitialCard() throws IOException {
-        InitialCard initialCard= game.getInitialCardDeck().firstCardInitialGame();
-        sendMessageToClient("la tua carta iniziale è questa " +initialCard );
-        String integerString = stdIn.readLine();
-        int size = Integer.parseInt(integerString);
-        System.out.println(size);
-        game.placeInitialCard(threadPlayer.getBoard(),initialCard);
-        System.out.println("Carta iniziale piazzata correttamente");
-        threadPlayer.getBoard().printBoard();
-    }
+
     public synchronized void sendMessageToAllClients(String message) {
         for (HandlingPlayerInputsThread client : clients) {
             client.out.println(message);
@@ -146,11 +140,11 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println(gameController);
         return player;
     }
-    public synchronized void assigningSecretCard() throws IOException {
+    private synchronized void assigningSecretCard() throws IOException {
         List<ObjectiveCard> secretCards = new ArrayList<>();
         secretCards.add( game.getObjectiveDeck().drawObjectiveCard());
         secretCards.add( game.getObjectiveDeck().drawObjectiveCard());
-        sendMessageToClient("scegli la carta obbiettivo:" + secretCards);
+        sendMessageToClient("scegli la carta obiettivo:" + secretCards);
         String integerString = stdIn.readLine();
         int size = Integer.parseInt(integerString);
         System.out.println(userName +"ha scelto la carta numero: "+ size);
@@ -270,7 +264,17 @@ public class HandlingPlayerInputsThread implements Runnable {
         //d
 
     }
-
+    private void assignInitialCard() throws IOException {
+        InitialCard initialCard= game.getInitialCardDeck().firstCardInitialGame();
+        sendMessageToClient("la tua carta iniziale è questa " +initialCard.toString() );
+        initialCard.toString();
+        String integerString = stdIn.readLine();
+        int size = Integer.parseInt(integerString);
+        System.out.println(size);
+        game.placeInitialCard(threadPlayer.getBoard(),initialCard);
+        System.out.println("Carta iniziale piazzata correttamente");
+        threadPlayer.getBoard().printBoard();
+    }
 }
 
 

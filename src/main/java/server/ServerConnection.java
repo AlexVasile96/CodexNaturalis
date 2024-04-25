@@ -61,10 +61,10 @@ public class ServerConnection implements Runnable {
     private void takingTheInitialCard() throws IOException {
         String firstCard= in.readLine();
         System.out.println("server says: " + firstCard);
-        System.out.println("Vuoi girare la tua carta? Scrivere 1 per tenerla con gli angoli davanti, 1 per girarla");
+        System.out.println("Vuoi girare la tua carta? Scrivere 1 per tenerla con gli angoli davanti, 2 per girarla");
         String intero= stdin.readLine();
         int size = Integer.parseInt(intero);
-        out.println(size);
+        out.println(size-1);
 
     }
 

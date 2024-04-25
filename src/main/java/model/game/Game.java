@@ -8,7 +8,6 @@ import model.deck.ResourceDeck;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Game implements WhatCanPlayerDo {
     private List<Player> players;
@@ -23,7 +22,7 @@ public class Game implements WhatCanPlayerDo {
     private ObjectiveCard secondObjectiveCommonCard;
 
 
-    public Game() {
+    public Game() {                                           //GAME CONSTRUCTOR WHICH INITIALIZED ALL THE CARDS
         this.players = new ArrayList<>();
         this.well= new ArrayList<>();
         ResourceCardConstructor constructor = new ResourceCardConstructor();
@@ -113,22 +112,22 @@ public class Game implements WhatCanPlayerDo {
 
     @Override
     public void drawResourceCard(Player player) {
+        player.drawResourceCard(resourceDeck);
 
     }
 
     @Override
     public void drawGoldCard(Player player) {
-
+        player.drawGoldCard(goldDeck);
     }
 
     @Override
-    public void placeCardOnBoard(Player player, int cardIndex, String selectedCorner) {
-
+    public void placeCardOnBoard(Player player, int cardIndex, String selectedCorner) { //Da rivedere come gestire questo caso con il client, quando sceglie il corner?
+        player.playCard(player.getBoard(),cardIndex);
     }
 
     @Override
     public void chooseSecretCard(Player player, List<ObjectiveCard> secretCards) {
-
     }
 
     @Override
@@ -137,18 +136,18 @@ public class Game implements WhatCanPlayerDo {
     }
 
     @Override
-    public void getPlayerScore(Player player) {
-
+    public int getPlayerScore(Player player) {
+        return player.getPlayerScore();
     }
 
     @Override
-    public void getNickName(Player player) {
-
+    public String getNickName(Player player) {
+        return player.getNickName();
     }
 
     @Override
-    public void getPlayerCards(Player player) {
-
+    public List<Card> getPlayerCards(Player player) {
+        return player.getPlayerCards();
     }
 
     @Override
