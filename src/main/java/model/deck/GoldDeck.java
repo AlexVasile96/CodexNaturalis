@@ -40,18 +40,18 @@ public class GoldDeck implements Deck {
     }
     public void addCard(Card card) {
         // Verifica se il mazzo ha già raggiunto la capacità massima
-        if (goldCards.size() >= 40) {
+        if(isDeckFull()){
             throw new FullDeckExeption("Il mazzo ha raggiunto la capacità massima di 40 carte.");
         }
 
         // Verifico che la carta appartiene al mazzo Resource
-        if (card.getId() <= 40 || card.getId() > 81) {
+        if(!isAGoldCard(card.getId())){
             throw new IllegalAddException("La carta non appartiene al mazzo Resource.");
         }
 
         // Verifica se la carta è già presente nel mazzo
         for (Card card2 : goldCards) {
-            if (card.getId() == card2.getId()) throw new AlredyInException("La carta è già presente nel mazzo.");
+            if (alreadyInDeck(card.getId(),card2.getId())) throw new AlredyInException("La carta è già presente nel mazzo.");
         }
 
         // provo ad aggiungere la carta
@@ -61,6 +61,9 @@ public class GoldDeck implements Deck {
             throw new UknownWhyException("Operazione 'addCard' non riuscita.", e);
         }
     }
+
+
+
     @Override
     public ObjectiveCard firstCardForEachPlayer() {
         return null;
@@ -78,9 +81,20 @@ public class GoldDeck implements Deck {
             throw new IllegalStateException("Il giocatore ha già tre carte nella mano."); // Eccezione specifica
         }
     }
-
-    //serve per il test
     public int carteRimaste(){
         return goldCards.size();
     }
+
+    private boolean isDeckFull() {
+        return goldCards.size() >= 40;
+    }
+
+    private boolean alreadyInDeck(int id1, int id2) {
+        return id1==id2;
+    }
+
+    private boolean isAGoldCard(int idCard) {
+        return (idCard > 40 && idCard <= 80);
+    }
+
 }

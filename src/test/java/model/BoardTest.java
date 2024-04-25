@@ -66,58 +66,7 @@ class BoardTest {
     }
 
     @Test
-    void printCornerCoordinates() {
-    }
+    void createSpecificSecretCardTest(){
 
-    @Test
-    void createSpecificSecretCard() {
-    }
-
-    @Test
-    void setNodes() {
-    }
-
-    @Test
-    void setInitialCard() {
-    }
-
-    @Test
-    void setCardsOnTheBoardList() {
-    }
-
-    @Test
-    void setNumOfEmpty() {
-    }
-
-    @Test
-    void setInitEmptyValue() {
-    }
-
-    @Test
-    void getNodes() {
-    }
-
-    @Test
-    void getInitialCard() {
-    }
-
-    @Test
-    void getCardsOnTheBoardList() {
-    }
-
-    @Test
-    void getNumOfEmpty() {
-    }
-
-    @Test
-    void getInitEmptyValue() {
-    }
-
-    @Test
-    void getNode() {
-    }
-
-    @Test
-    void setNode() {
     }
 }

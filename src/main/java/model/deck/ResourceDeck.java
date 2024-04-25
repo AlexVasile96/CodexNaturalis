@@ -51,18 +51,18 @@ public class ResourceDeck implements Deck{
 
     public void addCard(Card card) {
         // Verifica se il mazzo ha già raggiunto la capacità massima
-        if (resourceCards.size() >= 40) {
+        if (isDeckFull()) {
             throw new FullDeckExeption("Il mazzo ha raggiunto la capacità massima di 40 carte.");
         }
 
         // Verifico che la carta appartiene al mazzo Resource
-        if (card.getId() > 40) {
+        if (!isAResourceCard(card.getId())) {
             throw new IllegalAddException("La carta non appartiene al mazzo Resource.");
         }
 
         // Verifica se la carta è già presente nel mazzo
         for (Card card2 : resourceCards) {
-            if (card.getId() == card2.getId()) throw new AlredyInException("La carta è già presente nel mazzo.");
+            if (alreadyInDeck(card.getId(), card2.getId())) throw new AlredyInException("La carta è già presente nel mazzo.");
         }
 
         // provo ad aggiungere la carta
@@ -80,5 +80,17 @@ public class ResourceDeck implements Deck{
     //serve per il test
     public int carteRimaste(){
         return resourceCards.size();
+    }
+
+    private boolean isDeckFull() {
+        return resourceCards.size() >= 40;
+    }
+
+    private boolean alreadyInDeck(int id1, int id2) {
+        return id1==id2;
+    }
+
+    private boolean isAResourceCard(int idCard) {
+        return (idCard <= 40 && idCard >0);
     }
 }
