@@ -66,7 +66,7 @@ public class Player implements Observable {
 
         Scanner scanner = new Scanner(System.in);
         boolean validIndex = false;
-        while(validIndex == false){
+        while(!validIndex){
             System.out.println("Inserisci il numero della carta obiettivo SEGRETA che vuoi pescare: ");
             int selectedCardIndex = scanner.nextInt();
 
@@ -145,6 +145,10 @@ public class Player implements Observable {
                 cardPlayerChoose.getBR().setValueCounter(cardPlayerChoose.getBR().getValueCounter()-1);
                 playYourCardOnTheBottomRightCorner(x,y,selectedCardFromTheDeck);
                 break;
+            case null:
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + selectedCorner);
         }
         decreasingAllTheValuesOfTheCornerPlaced(selectedCardFromTheDeck); //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
 
@@ -160,6 +164,8 @@ public class Player implements Observable {
             EndGame endGame = new EndGame();
         }
     }
+
+
 
     //METHODS INVOKED FROM THE PREVIOUS METHODS
 
@@ -205,7 +211,7 @@ public class Player implements Observable {
         }
         return cardsPlayerCanChooseFrom.get(selectedCardIndex - 1);
     }
-    public List<Corner> creatingCorners(Card cardPlayerChoose){
+    private List<Corner> creatingCorners(Card cardPlayerChoose){
         List<Corner> availableCorners = new ArrayList<>();                //CREATING CORNERS THAT WILL BE DISPLAYED TO THE PLAYER
         availableCorners.add(cardPlayerChoose.getTL());
         availableCorners.add(cardPlayerChoose.getTR());
@@ -213,7 +219,7 @@ public class Player implements Observable {
         availableCorners.add(cardPlayerChoose.getBR());
         return availableCorners;
     }
-    public void cardChosenIsTheInitialcard(Card initialCard,List<Corner> availableCorners )
+    private void cardChosenIsTheInitialcard(Card initialCard,List<Corner> availableCorners )
     {
         List<Corner> initialCardCorners = new ArrayList<>();       //THEN ELIMINATING NOTTOBEPLACEDON CORNERS FROM PLAYER DISPLAYER &&CORNER WHOSE VALUE IS 0
         initialCardCorners.add(initialCard.getTL());
@@ -226,7 +232,7 @@ public class Player implements Observable {
             }
         }
     }
-    public void cardChosenIsNotTheInitialcard(List<Corner> availableCorners, List<Corner> corner)
+    private void cardChosenIsNotTheInitialcard(List<Corner> availableCorners, List<Corner> corner)
     {
         for (int i = corner.size() - 1; i >= 0; i--) {
             if (corner.get(i).getSpecificCornerSeed() == SpecificSeed.NOTTOBEPLACEDON || corner.get(i).getValueCounter() == 0) { //SAMECHECK
@@ -235,7 +241,7 @@ public class Player implements Observable {
             }
         }
     }
-    public String freeCornersOfTheSelectedCard(List<Corner> availableCorners, Card cardPlayerChoose, Scanner scanner){
+    private String freeCornersOfTheSelectedCard(List<Corner> availableCorners, Card cardPlayerChoose, Scanner scanner){
         Map<Corner, String> cornerLabels = new HashMap<>();      //PUTTING THE CORRECT CORNERLABEL TO THE CORRECT CORNER
         cornerLabels.put(cardPlayerChoose.getTL(), "TL");
         cornerLabels.put(cardPlayerChoose.getTR(), "TR");
@@ -261,7 +267,7 @@ public class Player implements Observable {
         return selectedCorner;
 
     }
-    public void playYourCardOnTheTopLeftCorner(int x,int y, Card selectedCardFromTheDeck)
+    private void playYourCardOnTheTopLeftCorner(int x,int y, Card selectedCardFromTheDeck)
     {
         selectedCardFromTheDeck.getBR().setValueCounter(selectedCardFromTheDeck.getBR().getValueCounter()-1); //PLACED CORNER, I CANNOT PUT ANY OTHER THING ON THIS CORNER
 
@@ -301,7 +307,7 @@ public class Player implements Observable {
         }
         board.getNode(x, y).setValueCounter(board.getNode(x, y).getValueCounter() - 1); // Decrease the value
     }
-    public void playYourCardOnTheTopRightCorner(int x,int y, Card selectedCardFromTheDeck)
+    private void playYourCardOnTheTopRightCorner(int x,int y, Card selectedCardFromTheDeck)
     {
         selectedCardFromTheDeck.getBL().setValueCounter(selectedCardFromTheDeck.getBL().getValueCounter()-1);
 
@@ -339,7 +345,7 @@ public class Player implements Observable {
         }
         board.getNode(x, y + 2).setValueCounter(board.getNode(x, y + 2).getValueCounter() - 1); // Decrease the value
     }
-    public void playYourCardOnTheBottomLeftCorner(int x,int y, Card selectedCardFromTheDeck){
+    private void playYourCardOnTheBottomLeftCorner(int x,int y, Card selectedCardFromTheDeck){
         selectedCardFromTheDeck.getTR().setValueCounter(selectedCardFromTheDeck.getTR().getValueCounter()-1);
 
 
@@ -379,7 +385,7 @@ public class Player implements Observable {
         }
         board.getNode(x + 2, y).setValueCounter(board.getNode(x + 2, y).getValueCounter() - 1); // Decrease the value
     }
-    public void playYourCardOnTheBottomRightCorner(int x,int y, Card selectedCardFromTheDeck){
+    private void playYourCardOnTheBottomRightCorner(int x,int y, Card selectedCardFromTheDeck){
         selectedCardFromTheDeck.getTL().setValueCounter(selectedCardFromTheDeck.getTL().getValueCounter()-1);
 
         board.getNode(x + 1, y + 1).setSpecificNodeSeed(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());//SETTING THE NODE
@@ -416,14 +422,14 @@ public class Player implements Observable {
         }
         board.getNode(x + 2, y + 2).setValueCounter(board.getNode(x + 2, y + 2).getValueCounter() - 1); // Decrease the value
     }
-    public void decreasingAllTheValuesOfTheCornerPlaced(Card selectedCardFromTheDeck)
+    private void decreasingAllTheValuesOfTheCornerPlaced(Card selectedCardFromTheDeck)
     {
         selectedCardFromTheDeck.getBR().setValueCounter(selectedCardFromTheDeck.getBR().getValueCounter()-1);
         selectedCardFromTheDeck.getBL().setValueCounter(selectedCardFromTheDeck.getBL().getValueCounter()-1);
         selectedCardFromTheDeck.getTL().setValueCounter(selectedCardFromTheDeck.getTL().getValueCounter()-1);
         selectedCardFromTheDeck.getTR().setValueCounter(selectedCardFromTheDeck.getTR().getValueCounter()-1);
     }
-    public void updatingPoints(Card selectedCardFromTheDeck)
+    private void updatingPoints(Card selectedCardFromTheDeck)
     {
         if (selectedCardFromTheDeck.getId() < 41 && selectedCardFromTheDeck.getId() > 0) { //carta risorsa
             ResourceUpdater resourceUpdater = new ResourceUpdater();
@@ -455,7 +461,7 @@ public class Player implements Observable {
         return cardwell.remove(realIndex);
 
     }
-    public void  fillingTheWellWithTheCorrectCard(Card drownCard, ResourceDeck rc,GoldDeck gd, List<Card>cardwell)
+    private void  fillingTheWellWithTheCorrectCard(Card drownCard, ResourceDeck rc,GoldDeck gd, List<Card>cardwell)
     {
         if (drownCard.getId() >= 1 && drownCard.getId() <= 40) {
             rc.drawCard(cardwell);
