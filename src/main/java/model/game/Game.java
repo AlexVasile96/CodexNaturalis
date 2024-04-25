@@ -62,7 +62,9 @@ public class Game implements WhatCanPlayerDo {
 
 
 
-
+    public void placeInitialCard(Board board, InitialCard card){
+        board.placeInitialCard(card);
+    }
 
     @Override
     public void drawCard() {

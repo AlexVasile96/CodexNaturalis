@@ -8,6 +8,7 @@ package model.game;
 
 
 import model.card.Card;
+import model.card.InitialCard;
 import model.card.ObjectiveCard;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public interface WhatCanPlayerDo {
 
     void drawCard(); //switch con resource, gold oppure pescare dal pozzo
     void playCard(Board board, Card card);
+    public void placeInitialCard(Board board, InitialCard card);
     void showCards();
     void chosenHandCard(); //implementare metodo in player
     void visualizeCommonObjective();

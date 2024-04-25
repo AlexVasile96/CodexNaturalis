@@ -87,10 +87,15 @@ public class HandlingPlayerInputsThread implements Runnable {
     //if GetCurrentPlayer==String name -> azione
 
 
-    private void assignInitialCard()
-    {
+    private void assignInitialCard() throws IOException {
         InitialCard initialCard= game.getInitialCardDeck().firstCardInitialGame();
         sendMessageToClient("la tua carta iniziale è questa " +initialCard );
+        String integerString = stdIn.readLine();
+        int size = Integer.parseInt(integerString);
+        System.out.println(size);
+        game.placeInitialCard(threadPlayer.getBoard(),initialCard);
+        System.out.println("Carta iniziale piazzata correttamente");
+        threadPlayer.getBoard().printBoard();
     }
     public synchronized void sendMessageToAllClients(String message) {
         for (HandlingPlayerInputsThread client : clients) {
@@ -205,12 +210,12 @@ public class HandlingPlayerInputsThread implements Runnable {
                 for (Player player : playerlist) {
                     if (player.getDot() == dot) {
                         sendMessageToClient("Quel colore è gia stato scelto da un altro utente, perfavore inserire un altro colore");
-                    }/* else {
+                    } else {
                         System.out.println("Colore scelto dal client: " + message);
                         sendMessageToClient("Colore del dot scelto correttamente");
                         isTheColorOkay = true;
 
-                    }*/
+                    }
                 }
             } else{
                 System.out.println("Colore scelto dal client: " + message);

@@ -37,7 +37,7 @@ public class ServerConnection implements Runnable {
                         sendMessageToServer(command);
                         loginPlayer();                                  //Actual Login
                         assigningSecretCard();                          //Choosing the secret Card
-                        //choosingTheInitialCard();
+                        takingTheInitialCard();
                     }
                     else {                                              //If client has made the login, he can start asking for inputs if it's his turn
                         sendMessageToServer(command);                   //messaggio inoltrato al server
@@ -56,6 +56,16 @@ public class ServerConnection implements Runnable {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
                                                 }
+    }
+
+    private void takingTheInitialCard() throws IOException {
+        String firstCard= in.readLine();
+        System.out.println("server says: " + firstCard);
+        System.out.println("Vuoi girare la tua carta? Scrivere 1 per tenerla con gli angoli davanti, 1 per girarla");
+        String intero= stdin.readLine();
+        int size = Integer.parseInt(intero);
+        out.println(size);
+
     }
 
     private synchronized void assigningSecretCard() throws IOException {
