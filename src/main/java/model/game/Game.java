@@ -50,20 +50,6 @@ public class Game implements WhatCanPlayerDo {
         players.add(player);
     }
 
-
-
-    public void initializewell(){
-        resourceDeck.drawCard(well);
-        resourceDeck.drawCard(well);
-        goldDeck.drawCard(well);
-        goldDeck.drawCard(well);
-        System.out.println("Cards in the well: ");
-        for (Card card : well) {
-            System.out.println(card);
-        }
-        System.out.println("\n");
-    }
-
     public void assignResourcesAndGoldCardsToPlayers() {
         for (Player player : players) {
             player.drawResourceCard(resourceDeck);
@@ -72,13 +58,10 @@ public class Game implements WhatCanPlayerDo {
         }
     }
 
-    public void commonObjectiveCards()
-    {
-        this.firstObjectiveCommonCard= objectiveDeck.firstCardForEachPlayer(); //common objective cards
-        this.secondObjectiveCommonCard= objectiveDeck.firstCardForEachPlayer();
-        System.out.println("First common objective card is " + firstObjectiveCommonCard);
-        System.out.println("Second common objective card is " + secondObjectiveCommonCard);
-    }
+
+
+
+
 
 
     @Override
@@ -236,6 +219,31 @@ public class Game implements WhatCanPlayerDo {
     public int GoldsIndeck(){
         return goldDeck.carteRimaste();
     }
+
+    //PRIVATE METHODS INSIDE GAME
+
+    private void initializewell(){
+        resourceDeck.drawCard(well);
+        resourceDeck.drawCard(well);
+        goldDeck.drawCard(well);
+        goldDeck.drawCard(well);
+        System.out.println("Cards in the well: ");
+        for (Card card : well) {
+            System.out.println(card);
+        }
+        System.out.println("\n");
+    }
+
+
+
+    private void commonObjectiveCards()
+    {
+        this.firstObjectiveCommonCard= objectiveDeck.firstCardForEachPlayer(); //common objective cards
+        this.secondObjectiveCommonCard= objectiveDeck.firstCardForEachPlayer();
+        System.out.println("First common objective card is " + firstObjectiveCommonCard);
+        System.out.println("Second common objective card is " + secondObjectiveCommonCard);
+    }
+
 
 }
 

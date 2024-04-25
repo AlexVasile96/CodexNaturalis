@@ -102,6 +102,85 @@ public class GameController {
         return players.size();
     }
 
+    public Map<String, PrintWriter> getPlayers() {
+        return players;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public Gson getGson() {
+        return gson;
+    }
+
+    public void setGson(Gson gson) {
+        this.gson = gson;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public List<HandlingPlayerInputsThread> getClients() {
+        return clients;
+    }
+
+    public void setClients(List<HandlingPlayerInputsThread> clients) {
+        this.clients = clients;
+    }
+
+    public PrintWriter getOut() {
+        return out;
+    }
+
+    public void setOut(PrintWriter out) {
+        this.out = out;
+    }
+
+    public static Deck getResourceDeck() {
+        return resourceDeck;
+    }
+
+    public static void setResourceDeck(Deck resourceDeck) {
+        GameController.resourceDeck = resourceDeck;
+    }
+
+    public static Deck getGoldDeck() {
+        return goldDeck;
+    }
+
+    public static void setGoldDeck(Deck goldDeck) {
+        GameController.goldDeck = goldDeck;
+    }
+
+    public static Deck getInitialDeck() {
+        return initialDeck;
+    }
+
+    public static void setInitialDeck(Deck initialDeck) {
+        GameController.initialDeck = initialDeck;
+    }
+
+    public static Deck getObjectiveDeck() {
+        return objectiveDeck;
+    }
+
+    public static void setObjectiveDeck(Deck objectiveDeck) {
+        GameController.objectiveDeck = objectiveDeck;
+    }
+
+    public Map<String, ClientView> getClientViews() {
+        return clientViews;
+    }
+
+    public void setClientViews(Map<String, ClientView> clientViews) {
+        this.clientViews = clientViews;
+    }
 
     private void updateClientView(String username, Player player) {
         // Ottieni l'istanza corretta di ClientView associata al client

@@ -1,9 +1,6 @@
 package server;
-
-import com.google.gson.Gson;
 import controller.GameController;
 import controller.TurnController;
-import exceptions.OperationCancelledException;
 import exceptions.ParametersNotValidException;
 import exceptions.UnknownPlayerNumberException;
 import exceptions.UsernameAlreadyExistsException;
@@ -12,7 +9,6 @@ import model.game.Board;
 import model.game.Dot;
 import model.game.Game;
 import model.game.Player;
-import view.ClientView;
 
 import java.io.*;
 import java.net.Socket;
@@ -22,35 +18,18 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 
-/*
-* login ✔️
-* client chiede di potere svolgere un'azione ✔️
-* questo messaggio viene ricevuto dal server.
-* server-> metodo runCommand->GameController
-* gameController-> Command(WhatCanPlayerDo)
-* whatcanplayerdo-> Game
-*
-*
-*
-* endTurn-> nextTurn da turn controller per passare il gioco al prossimo giocatore
-* */
-
-
 
 public class HandlingPlayerInputsThread implements Runnable {
     private static GameController gameController;
     private static TurnController turnController;
     private Player threadPlayer=null;
-    private Game game;
+    private final Game game;
     private static Player currentPlayer;
     public BufferedReader stdIn;
     public PrintWriter out;
-    private ClientView clientView;
-    private List<HandlingPlayerInputsThread> clients;
-    private boolean isGameStarted;
+    private final List<HandlingPlayerInputsThread> clients;
     private static boolean checkGameInizialization;
     private final ServerLobby lobby;
-    private Gson gson;
     private List<Player> playersList;
     private Socket clientSocket;
     private String userName;
@@ -59,51 +38,40 @@ public class HandlingPlayerInputsThread implements Runnable {
         this.clientSocket = socket;
         stdIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new PrintWriter(clientSocket.getOutputStream(), true);
-        this.clientView = clientView;
-        this.gson = new Gson();
         this.playersList = playersinTheGame;
-        this.isGameStarted = false;
+        boolean isGameStarted = false;
         this.clients = clients;
-        this.gameController= null;
-        this.turnController=null;
+        gameController= null;
+        turnController=null;
         this.lobby=lobby;
         this.userName=null;
         this.game=game;
-        this.checkGameInizialization=false;
+        checkGameInizialization=false;
     }
 
 
     @Override
     public void run() {
         try {
-                String firstMessag = stdIn.readLine();
-                System.out.println("Il client ha detto " + firstMessag);
-                threadPlayer = loginEachClient();
-                //setGameSize();
-
-                handlingTurns(playersList);
-                for(Player playerInGame: playersList)
-                {
-                    game.addPlayer(playerInGame);
-                }
-                synchronized (this){
+                String clientSaysHello = stdIn.readLine();
+                System.out.println("Il client ha detto " + clientSaysHello);    //Client says hello
+                threadPlayer = loginEachClient();                               //EveryClient has to log in, we save his name information inside threadPLayer
+                handlingTurns(playersList);                                     //Handling turns, first client will be the first player inside the game
+                addingPlayersToTheGame();                                        //Adding players to the current game
+                synchronized (this){                                             //First thread that accesses this function will assign all the cards to the players
                     if (!checkGameInizialization) {
-                        game.assignResourcesAndGoldCardsToPlayers();
-                        checkGameInizialization = true;
-                        System.out.println(game.CardsIndeck());
-                        System.out.println(game.GoldsIndeck());
+                        initializeCards();
                     }
                 }
-                assigningSecretCard();
-                System.out.println(game.getObjectiveDeck().carteRimaste());
-                //firstObjectiveCard(); //carta segreta obiettivo
-                startGame();
-
+                assigningSecretCard();                                            //Each thread will assign the secret card to the player
+                //assignInitialCard();
+                System.out.println(game.getObjectiveDeck().carteRimaste());       //Debugging to check if all cards are given correctly
+                startGame();                                                      //Game can eventually start
         } catch (IOException e) {
             System.err.println("Io exception client handler");
-        } catch (InterruptedException e) {
+            } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        } finally {
+                } finally {
             out.close();
             try {
                 stdIn.close();
@@ -113,64 +81,76 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
 
+    //GetCurrentPLayer
+    //if GetCurrentPlayer==String name -> azione
+
+
+
+    public synchronized void sendMessageToAllClients(String message) {
+        for (HandlingPlayerInputsThread client : clients) {
+            client.out.println(message);
+        }
+    }
+    public synchronized void sendMessageToClient(String message) {
+        out.println(message);
+    }     //metodo per mandare un singolo messaggio al client
+
+
+
+
+
+
+
+
+
+
+    //PRIVATE METHODS INSIDE HANDLINGPLAYERINPUTS
+
     private Player loginEachClient() throws IOException, InterruptedException {
         Player player = null;
-            if(gameController==null) { //if game controller==null it means the player has to log in!!
-
-                try {
-                    out.println("Ciao! Devi fare il login. Inserisci il tuo nome per favore!");
-                    String request = stdIn.readLine();
-                    System.out.println("il nome del login è: " + request);
-                    out.println("Login effettuato con successo");
-                    Board board = new Board(50, 50);
-                    player = new Player(request, 0, Dot.BLACK, board);
-                    this.userName=request;
-                    playersList.add(player);
-                    System.out.println("Giocatori nel gioco: "+ playersList);
-                    System.out.println(player);
-                    gameController = lobby.login(request, out);
-
-                    System.out.println(gameController);
-                    setGameSize();
-                    out.println("Sarai messo in sala d'attesa:");
-                    if (playersList.size() < 2) {
-                        inattesa();
-                        //stampa punteggio giocatori *da spostare
-                        for (Player p : playersList) {
-                            p.visualizePlayerScore();
-                        }
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (UnknownPlayerNumberException e) {
-                    throw new RuntimeException(e);
-                } catch (UsernameAlreadyExistsException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+        if(gameController==null) { //if game controller==null it means the player has to log in!!
+            try {
+                sendMessageToClient("Ciao! Devi fare il login. Inserisci il tuo nome per favore!");
+                String request = stdIn.readLine();
+                System.out.println("il nome del client è: " + request);
+                sendMessageToClient("Login effettuato con successo!");
+                Board board = new Board(50, 50);
+                player = new Player(request, 0, Dot.BLACK, board);
+                this.userName=request;
+                playersList.add(player);
+                System.out.println("Giocatori nel gioco: "+ playersList);
+                System.out.println(player);
+                gameController = lobby.login(request, out);
                 System.out.println(gameController);
-                //notifyGameStart();
+                setGameSize();
+                sendMessageToClient("Sarai messo in sala d'attesa:");
+                if (playersList.size() < gameController.getSize()) {
+                    waitingForClients();
+                }
+            } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        System.out.println(gameController);
         return player;
     }
-
     public synchronized void assigningSecretCard() throws IOException {
         List<ObjectiveCard> secretCards = new ArrayList<>();
         secretCards.add( game.getObjectiveDeck().drawObjectiveCard());
         secretCards.add( game.getObjectiveDeck().drawObjectiveCard());
-        out.println("scegli la carta obbiettivo:" + secretCards);
-        String strgIntero = stdIn.readLine();
-        int size = Integer.parseInt(strgIntero);
+        sendMessageToClient("scegli la carta obbiettivo:" + secretCards);
+        String integerString = stdIn.readLine();
+        int size = Integer.parseInt(integerString);
         System.out.println(userName +"ha scelto la carta numero: "+ size);
         threadPlayer.setSecretChosenCard(secretCards.get(size-1));
-        threadPlayer.toString();
+        System.out.println(threadPlayer.toString());
 
     }
-
     private void startGame() throws IOException {
         while (true) {  //quale azione vuoi fare? fino a che non finsice il turno
             String messageFromClient = stdIn.readLine();        //messaggio dal thread client
             if(Objects.equals(currentPlayer.getNickName(), this.userName)){
-                out.println("è il tuo turno!!");
+                sendMessageToClient("è il tuo turno!!");
                 System.out.println(game.CardsIndeck());
                 System.out.println(game.GoldsIndeck());
                 System.out.println("Il client ha selezionato: " + messageFromClient);
@@ -181,26 +161,20 @@ public class HandlingPlayerInputsThread implements Runnable {
             }
         }
     }
-
-
-
-
-
     private void setGameSize() throws NoSuchElementException {
-        String messaggio=null;
+        String message;
         if (!gameController.isSizeSet()) {          //If controller number of players has not been decided
             //Tries to set controller's number of players
             try {
-                out.println("Scegli il numero di partecipanti al gioco-> Deve essere un numero compreso fra 2 e 4!");
-                messaggio= stdIn.readLine();
-                int size = Integer.parseInt(messaggio);
+                sendMessageToClient("Scegli il numero di partecipanti al gioco-> Deve essere un numero compreso fra 2 e 4!");
+                message= stdIn.readLine();
+                int size = Integer.parseInt(message);
                 System.out.println("Il numero di giocatori sarà " +size);
-                out.println("Numero di giocatori scelto correttamente");
+                sendMessageToClient("Numero di giocatori scelto correttamente");
                 gameController.choosePlayerNumber(size);
                 gameController.setSizeSet(true);
-
             } catch (NumberFormatException ex) {
-               sendMessageToClient("Game's number of players must be an integer.");
+                sendMessageToClient("Game's number of players must be an integer.");
             } catch (Exception ex) {
                 sendMessageToClient("Errore");
             } catch (ParametersNotValidException e) {
@@ -214,53 +188,34 @@ public class HandlingPlayerInputsThread implements Runnable {
     private void runCommand(String messageFromClient) throws NoSuchElementException {
         //If player has logged in and their game's number of players has been decided
         if (gameController != null ) {
-            //if(gameController.isSizeSet())
+
 
             //Forward player command to controller
             System.out.println("Received command: " + messageFromClient);
             gameController.readCommand(userName, messageFromClient);
         }
     }
-
-
-    public synchronized void inattesa() throws InterruptedException {
+    private synchronized void waitingForClients() throws InterruptedException {
         System.out.println("In attesa di altri giocatori");
         while (playersList.size() != 2) {
             {
                 wait(10000);
             }
         }
-        notifyAll();
-        return;
-    } //metodo che mette in attesa i client fino a che non si è raggiunto il numero voluto di giocatori
-
-    /*public synchronized void notifyGameStart() {
-        if (!isGameStarted) {
-            isGameStarted = true;
-            for (HandlingPlayerInputsThread thread : clients) {
-                thread.sendMessageToClient("Il gioco è iniziato!");
-                int i = 1;
-                for (Player p : playersList) {
-                    thread.sendBooleanToClient(true);
-                    thread.sendMessageToClient("il " + i + "giocatore è: " + p.getNickName());
-                    i++;
-                }
-                thread.sendBooleanToClient(false);
-            }
+    }
+    private void initializeCards(){
+        game.assignResourcesAndGoldCardsToPlayers();
+        checkGameInizialization = true;
+        System.out.println(game.CardsIndeck());
+        System.out.println(game.GoldsIndeck());
+    }
+    private void  addingPlayersToTheGame()
+    {
+        for(Player playerInGame: playersList)                           //Adding all the players to the Game
+        {
+            game.addPlayer(playerInGame);
         }
-    }*/
-
-    //GetCurrentPLayer
-    //if GetCurrentPlayer==String name -> azione
-
-
-
-
-
-
-
-
-
+    }
     private void handlingTurns(List<Player> playerList)
     {
         turnController= new TurnController(playerList);
@@ -274,25 +229,6 @@ public class HandlingPlayerInputsThread implements Runnable {
         //c
         //d
 
-    }
-
-
-
-
-
-
-
-    public synchronized void sendMessageToAllClients(String message) {
-        for (HandlingPlayerInputsThread client : clients) {
-            client.out.println(message);
-        }
-    }
-    public synchronized void sendMessageToClient(String message) {
-        out.println(message);
-    }     //metodo per mandare un singolo messaggio al client
-    public synchronized boolean sendBooleanToClient(boolean value) {   //metodo per mandare un singolo boolean al client
-        out.println(value);
-        return value;
     }
 
 }
