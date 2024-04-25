@@ -15,17 +15,10 @@ public class MixObjectiveCard implements ExtendExtendExtend {
         return addMixObjectiveCardPointsToPlayer(counterOfMinimumPoints, player); // Add points to the player based on the minimum count of each seed type;
     }
 
-
-    @Override
-    public boolean checkPattern(Board board, SpecificSeed seed, Player player, SpecificSeed specificSeed) {
-        return false;
-    }
     //CONTI I 3 SIMBOLI PARTICOLARI, TIENI IL NUMERO MINOR DEI 3 SIMBOLI (ES SE HO 2 3 3) TENGO 2, FACCIO 2* 3.
 
-
-
     // Method to add points to the player based on the counts of seed types
-    public boolean addMixObjectiveCardPointsToPlayer(int[] counterOfMinimumPoints, Player player) {
+    private boolean addMixObjectiveCardPointsToPlayer(int[] counterOfMinimumPoints, Player player) {
         // Find the minimum count among the three seed types
         int minimo = counterOfMinimumPoints[0];
         if (counterOfMinimumPoints[1] < minimo) {
@@ -38,5 +31,9 @@ public class MixObjectiveCard implements ExtendExtendExtend {
         int points = minimo * pointsForEachMicObjectiveCard; // Calculate points based on the minimum count and add to player's score
         player.setPlayerScore(player.getPlayerScore() + points);
         return true;
+    }
+    @Override
+    public boolean checkPattern(Board board, SpecificSeed seed, Player player, SpecificSeed specificSeed) {
+        return false;
     }
 }

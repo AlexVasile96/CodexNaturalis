@@ -6,9 +6,7 @@ import java.util.Map;
 
 public class BoardPoints {
     public Map<SpecificSeed, Integer> countPoints(Board board) {
-        int INKWELLCount=0;
-        int PARCHMENTCount=0;
-        int FEATHERCount=0;
+
         Map<SpecificSeed, Integer> seedCountMap = new HashMap<>();
         for (SpecificSeed seed : SpecificSeed.values()) {
             seedCountMap.put(seed, 0);
@@ -21,25 +19,13 @@ public class BoardPoints {
                 }
             }
         }
-
         for (int i = 0; i < board.getNodes().length; i++) {
             for (int j = 0; j < board.getNodes()[i].length; j++) {
                 SpecificSeed seed = board.getNodes()[i][j].getSpecificNodeSeed();
-
                 seedCountMap.put(seed, seedCountMap.get(seed) + 1);
-                if(board.getNodes()[i][j].getSpecificNodeSeed() == SpecificSeed.INKWELL) {
-                    INKWELLCount++;
-                }
-                if(board.getNodes()[i][j].getSpecificNodeSeed() == SpecificSeed.PARCHMENT) {
-                    PARCHMENTCount++;
-                }
-                if(board.getNodes()[i][j].getSpecificNodeSeed() == SpecificSeed.FEATHER) {
-                    FEATHERCount++;
-                }
             }
         }
-        System.out.println("INKWELL: " + INKWELLCount+" PARCHMENT: " + PARCHMENTCount+" FEATHER: "+FEATHERCount);
-        System.out.println("Trattini trattini trattini " + seedCountMap);
+        System.out.println("Points on the map: " + seedCountMap);
         return seedCountMap;
     }
 
@@ -47,7 +33,7 @@ public class BoardPoints {
         int INKWELLCount=0;
         int PARCHMENTCount=0;
         int FEATHERCount=0;
-        int[] sucascuaCounter = new int[3];
+        int[] attributesCounter = new int[3];
         Map<SpecificSeed, Integer> seedCountMap = new HashMap<>();
         for (SpecificSeed seed : SpecificSeed.values()) {
             seedCountMap.put(seed, 0);
@@ -69,10 +55,10 @@ public class BoardPoints {
         }
         System.out.println("INKWELL: " + INKWELLCount+" PARCHMENT: " + PARCHMENTCount+" FEATHER: "+FEATHERCount);
         System.out.println("Trattini trattini trattini " + seedCountMap);
-        sucascuaCounter[0]= INKWELLCount;
-        sucascuaCounter[1]= PARCHMENTCount;
-        sucascuaCounter[2]= FEATHERCount;
-        return  sucascuaCounter;
+        attributesCounter[0]= INKWELLCount;
+        attributesCounter[1]= PARCHMENTCount;
+        attributesCounter[2]= FEATHERCount;
+        return  attributesCounter;
     }
 
     public int addictionalPointsForGoldCards(Board board, SpecificSeed specificSeed) {

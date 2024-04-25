@@ -30,7 +30,7 @@ public class BisObjectiveCard implements ExtendExtendExtend {
     /*
     Get the number of given SpecificSeed on the board
      */
-    public int countNumbersOfSpecificSeed(Board board, SpecificSeed seed){
+    private int countNumbersOfSpecificSeed(Board board, SpecificSeed seed){
         BoardPoints boardPoints = new BoardPoints();
         Map<SpecificSeed, Integer> seedCountMap = boardPoints.countPoints(board);
         return seedCountMap.get(seed);
@@ -39,7 +39,7 @@ public class BisObjectiveCard implements ExtendExtendExtend {
     /*
     Add 2 points for every couple of the given SpecificSeed to the player's score
      */
-    public void updatePlayersScore(int numberOfSpecificSeed, Player player){
+    private void updatePlayersScore(int numberOfSpecificSeed, Player player){
         player.setPlayerScore(player.getPlayerScore()+((numberOfSpecificSeed/2)*2));
     }
 
