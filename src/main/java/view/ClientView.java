@@ -32,6 +32,7 @@ public class ClientView {
         return game;
     }
 
+
     public void setGame(Game game) {
         this.game = game;
     }
@@ -45,5 +46,53 @@ public class ClientView {
             this.playerCards = (ArrayList<Card>) player.getPlayerCards(); // Aggiorna le carte del giocatore
             this.secretChosenCard = player.getSecretChosenCard();
         }
+    }
+
+    public int getPlayerScore() {
+        return playerScore;
+    }
+
+    public void setPlayerScore(int playerScore) {
+        this.playerScore = playerScore;
+    }
+
+    public Dot getDot() {
+        return dot;
+    }
+
+    public void setDot(Dot dot) {
+        this.dot = dot;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public boolean isCardBack() {
+        return isCardBack;
+    }
+
+    public void setCardBack(boolean cardBack) {
+        isCardBack = cardBack;
+    }
+
+    public ArrayList<Card> getPlayerCards() {
+        return playerCards;
+    }
+
+    public void setPlayerCards(ArrayList<Card> playerCards) {
+        this.playerCards = playerCards;
+    }
+
+    public ObjectiveCard getSecretChosenCard() {
+        return secretChosenCard;
+    }
+
+    public void setSecretChosenCard(ObjectiveCard secretChosenCard) {
+        this.secretChosenCard = secretChosenCard;
     }
 }

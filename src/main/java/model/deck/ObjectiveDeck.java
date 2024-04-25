@@ -44,7 +44,7 @@ public class ObjectiveDeck implements Deck {
     }
 
     public ObjectiveCard drawCard(Player player){
-            return null;
+        return (ObjectiveCard) objectiveCards.remove(0); //return drownCard;
     }
 
     public ObjectiveCard drawObjectiveCard(){

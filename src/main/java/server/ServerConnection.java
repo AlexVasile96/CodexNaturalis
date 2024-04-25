@@ -103,8 +103,11 @@ public class ServerConnection implements Runnable {
             else {
                 System.out.println("Server says: " + serverAnswer); //Colore del dot scelto correttamente
                 isTheColorOkay=true;
+                Dot dot= Dot.valueOf(dotColor);
+                clientView.setDot(dot);
             }
         }
+
     }
 
     private void chooseNumberOfPlayers() throws IOException {

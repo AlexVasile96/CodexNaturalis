@@ -4,6 +4,7 @@ import controller.TurnController;
 import exceptions.ParametersNotValidException;
 import exceptions.UnknownPlayerNumberException;
 import exceptions.UsernameAlreadyExistsException;
+import model.card.InitialCard;
 import model.card.ObjectiveCard;
 import model.game.Board;
 import model.game.Dot;
@@ -63,8 +64,9 @@ public class HandlingPlayerInputsThread implements Runnable {
                         initializeCards();
                     }
                 }
+
                 assigningSecretCard();                                            //Each thread will assign the secret card to the player
-                //assignInitialCard();
+                assignInitialCard();
                 System.out.println(game.getObjectiveDeck().carteRimaste());       //Debugging to check if all cards are given correctly
                 startGame();                                                      //Game can eventually start
         } catch (IOException e) {
@@ -85,7 +87,11 @@ public class HandlingPlayerInputsThread implements Runnable {
     //if GetCurrentPlayer==String name -> azione
 
 
-
+    private void assignInitialCard()
+    {
+        InitialCard initialCard= game.getInitialCardDeck().firstCardInitialGame();
+        sendMessageToClient("la tua carta iniziale è questa " +initialCard );
+    }
     public synchronized void sendMessageToAllClients(String message) {
         for (HandlingPlayerInputsThread client : clients) {
             client.out.println(message);

@@ -43,6 +43,11 @@ public class InitialCardDeck implements Deck {
         InitialCard drownCard = (InitialCard) initialCards.remove(0);
         return drownCard;
     }
+    public InitialCard firstCardInitialGame(){
+        Collections.shuffle(initialCards);
+        InitialCard drownCard = (InitialCard) initialCards.remove(0);
+        return drownCard;
+    }
     public List<Card> getInitialCards() {
         return initialCards;
     }
