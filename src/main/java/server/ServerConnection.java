@@ -214,15 +214,17 @@ public class ServerConnection implements Runnable {
     private void showCards() throws IOException {
         System.out.println("Il tuo mazzo:" );
         String firstCard=in.readLine(); //Hai selezionato di vedere le tue carte
-        System.out.println(firstCard);
-        System.out.println(firstCard);
-        System.out.println(firstCard);
-        /*String secondCard = in.readLine();
-        System.out.println(secondCard );
+        String secondCard = in.readLine();
         String thirdCard = in.readLine();
-        System.out.println(thirdCard);*/
+        System.out.println(firstCard);
+        System.out.println(secondCard);
+        System.out.println(thirdCard);
 
-
+       /* String paolo=in.readLine();
+        String Federico = in.readLine();
+        String Giacomo = in.readLine();
+        String x= in.readLine();
+        String y=in.readLine();*/
     }
 
     private void chosenHandCard(){

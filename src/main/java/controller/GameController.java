@@ -60,6 +60,7 @@ public class GameController {
             String result = command.runCommand(game, commandString, player);
             if (result != null) {
                 sendMessageToClient(result);
+                out.flush();
             }
         }
     }
