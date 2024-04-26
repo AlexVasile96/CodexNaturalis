@@ -48,7 +48,7 @@ public class Command { //Command Client sends to Server
                 return "f";
 
             case "actions":
-                return "Hai selezionato di compiere un'azione";
+                return "Hai selezionato actions";
             case "help":
                 return "Hai chiesto aiuto";
             default:

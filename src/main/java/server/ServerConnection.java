@@ -42,9 +42,9 @@ public class ServerConnection implements Runnable {
                     else {                                              //If client has made the login, he can start asking for inputs if it's his turn
                         sendMessageToServer(command);                   //messaggio inoltrato al server
                         String isMyTurn = in.readLine();                //è il tuo turno
-                        System.out.println(isMyTurn);
+                        System.out.println(isMyTurn);                   //viene stampato è il tuo turno
                         if(isMyTurn.equals("è il tuo turno!!")) {
-                            sendMessageToServer(command);
+                            sendMessageToServer(command);               //mando showYourCardDeck
                             actionsInput(command);
                         }
                     }
@@ -175,7 +175,7 @@ public class ServerConnection implements Runnable {
 
     private void printHelp() throws IOException {
         String serviceString=in.readLine();
-        System.out.println(in.readLine());
+        System.out.println(serviceString);
         System.out.println("Commands:\n");
         System.out.println(
                 """
@@ -189,7 +189,7 @@ public class ServerConnection implements Runnable {
 
     private void printActions() throws IOException {
         String serviceString=in.readLine();
-        System.out.println(in.readLine());
+        System.out.println(serviceString);
         System.out.println(
                 """
                         Supported commands:
@@ -212,9 +212,15 @@ public class ServerConnection implements Runnable {
 
     }
     private void showCards() throws IOException {
+        String serviceString=in.readLine();
+        System.out.println(serviceString);
         System.out.println("Hai scelto di visualizzare quali sono le tue carte!\n");
         String deckInfo = in.readLine();
-        System.out.println("Il tuo mazzo:" +deckInfo);
+        String deckInfo2 = in.readLine();
+        String deckInfo3 = in.readLine();
+        System.out.println("Il tuo mazzo:" );
+        System.out.println(deckInfo + deckInfo2 + deckInfo3);
+
 
     }
 

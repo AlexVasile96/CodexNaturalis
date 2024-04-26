@@ -163,7 +163,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 runCommand(messageFromClient, threadPlayer);
             }
             else{
-                out.println("Aspetta non è il tuo turno!");
+                out.println("Aspetta perfavore, non è il tuo turno!");
             }
         }
     }
