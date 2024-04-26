@@ -87,7 +87,7 @@ public class Game implements WhatCanPlayerDo {
         for (Card card : cardToSendToServer) {
             cardsAsString.append(card.toString()).append("\n");
         }
-        return String.valueOf(cardsAsString);
+        return String.valueOf(cardsAsString); //ritorna stringa
     }
 
     @Override
@@ -112,6 +112,7 @@ public class Game implements WhatCanPlayerDo {
 
     @Override
     public void showPoints() {
+
 
     }
 

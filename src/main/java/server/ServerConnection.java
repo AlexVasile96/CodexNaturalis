@@ -159,7 +159,7 @@ public class ServerConnection implements Runnable {
                 case "actions" -> printActions();
 
                 //The following methods are used to run game actions
-                case "showYourCardDeck", "0" -> {  showCards();}
+                case "showYourCardDeck", "0" -> showCards();
                 case "playCardFromYourHand", "1" -> chosenHandCard();
                 case "visualizeCommonObjectiveCards", "2" -> visualizeCommonObjective();
                 case "visualizeSecretObjectiveCard", "3" -> visualizeSecretObjective();
@@ -182,7 +182,6 @@ public class ServerConnection implements Runnable {
         System.out.println(
                 """
                         Supported commands are:\s
-
                         - 'status': show the player who is currently taking their turn and the turn phase
                         - 'show': display a specific game element
                         - 'actions': display all currently allowed game actions
