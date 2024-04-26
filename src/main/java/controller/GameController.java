@@ -54,10 +54,11 @@ public class GameController {
     }
 
 
-    public synchronized void readCommand(String username, String commandString) {
+    public synchronized void readCommand(String username, String commandString, Player player) {
         if (game != null) {
             Command command = new Command();
-            String result = command.runCommand(game, commandString);
+            String result = command.runCommand(game, commandString, player);
+            sendMessageToClient(result);
             // Gestisci il risultato come desideri, ad esempio inviandolo al client
             /*if (result != null) {
                 sendMessageToClient(result);

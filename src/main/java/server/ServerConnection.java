@@ -173,8 +173,9 @@ public class ServerConnection implements Runnable {
         }
     }
 
-    private void printHelp()
-    {
+    private void printHelp() throws IOException {
+        String serviceString=in.readLine();
+        System.out.println(in.readLine());
         System.out.println("Commands:\n");
         System.out.println(
                 """
@@ -186,7 +187,9 @@ public class ServerConnection implements Runnable {
                         """);
     }
 
-    private void printActions() {
+    private void printActions() throws IOException {
+        String serviceString=in.readLine();
+        System.out.println(in.readLine());
         System.out.println(
                 """
                         Supported commands:
@@ -199,17 +202,26 @@ public class ServerConnection implements Runnable {
                         - If you type->  'drawCardFromDeck /6': draw a card from the resource/gold deck
                         - If you type->  'drawCardFromWell /7': draw a card from the well
                         - If you type->  'endTurn /8': end your turn
-                        . if you type -> quit /9: esci dal gioco"""
+                        . if you type ->  'quit /9: esci dal gioco\n"""
         );
     }
     private void printStatus(){
-        System.out.println("\n"+clientView.getGame());
+        System.out.println("\n"+clientView.toString());
     }
     private void runEndTurn(){
 
     }
-    private void showCards(){}
-    private void chosenHandCard(){}
+    private void showCards() throws IOException {
+        System.out.println("Hai scelto di visualizzare quali sono le tue carte!\n");
+        String deckInfo = in.readLine();
+        System.out.println("Il tuo mazzo:" +deckInfo);
+
+    }
+
+    private void chosenHandCard(){
+        System.out.println("Hai scelto di giocare una carta dal tuo deck!\n");
+
+    }
     private void visualizeCommonObjective(){}
     private void visualizeSecretObjective(){}
     private void showBoard(){}

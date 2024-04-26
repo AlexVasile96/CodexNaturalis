@@ -57,6 +57,7 @@ public class Game implements WhatCanPlayerDo {
             player.drawResourceCard(resourceDeck);
             player.drawResourceCard(resourceDeck);
             player.drawGoldCard(goldDeck);
+
         }
     }
 
@@ -79,8 +80,14 @@ public class Game implements WhatCanPlayerDo {
     }
 
     @Override
-    public void showCards() {
-
+    public String showCards(Player player) {
+        List<Card> cardToSendToServer = player.getPlayerCards();
+        System.out.println(player.getPlayerCards());
+        StringBuilder cardsAsString = new StringBuilder();
+        for (Card card : cardToSendToServer) {
+            cardsAsString.append(card.toString()).append("\n");
+        }
+        return cardsAsString.toString();
     }
 
     @Override

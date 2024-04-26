@@ -95,4 +95,18 @@ public class ClientView {
     public void setSecretChosenCard(ObjectiveCard secretChosenCard) {
         this.secretChosenCard = secretChosenCard;
     }
+
+    @Override
+    public String toString() {
+        return "ClientView{" +
+                "userName='" + userName + '\'' +
+                ", game=" + game +
+                ", playerScore=" + playerScore +
+                ", dot=" + dot +
+                ", board=" + board +
+                ", isCardBack=" + isCardBack +
+                ", playerCards=" + playerCards +
+                ", secretChosenCard=" + secretChosenCard +
+                '}';
+    }
 }

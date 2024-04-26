@@ -18,7 +18,7 @@ public interface WhatCanPlayerDo {
     void drawCard(); //switch con resource, gold oppure pescare dal pozzo
     void playCard(Board board, Card card);
     public void placeInitialCard(Board board, InitialCard card);
-    void showCards();
+    String showCards(Player player);
     void chosenHandCard(); //implementare metodo in player
     void visualizeCommonObjective();
     void visualizeSecretObjective();
