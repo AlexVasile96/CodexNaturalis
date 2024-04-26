@@ -220,11 +220,12 @@ public class ServerConnection implements Runnable {
         System.out.println(secondCard);
         System.out.println(thirdCard);
 
-       /* String paolo=in.readLine();
+        String paolo=in.readLine();
         String Federico = in.readLine();
         String Giacomo = in.readLine();
         String x= in.readLine();
-        String y=in.readLine();*/
+        String y=in.readLine();
+        String f= in.readLine();
     }
 
     private void chosenHandCard(){

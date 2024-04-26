@@ -87,7 +87,7 @@ public class Game implements WhatCanPlayerDo {
         for (Card card : cardToSendToServer) {
             cardsAsString.append(card.toString()).append("\n");
         }
-        return cardsAsString.toString();
+        return String.valueOf(cardsAsString);
     }
 
     @Override
