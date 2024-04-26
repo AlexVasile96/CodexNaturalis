@@ -39,9 +39,9 @@ public class Command { //Command Client sends to Server
             case "actions":
                 return "Hai selezionato actions";
             case "help":{
-                System.out.println("Sono entrato in help anche se non dovevo");
+                System.out.println("Sono entrato in help");
                 String help;
-                help="hia chiesto aiuto";
+                help="hai chiesto aiuto";
                 return help;
             }
             default:

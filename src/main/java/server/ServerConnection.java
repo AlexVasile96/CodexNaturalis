@@ -40,11 +40,11 @@ public class ServerConnection implements Runnable {
                         takingTheInitialCard();
                     }
                     else {                                              //If client has made the login, he can start asking for inputs if it's his turn
-                        sendMessageToServer(command);                   //messaggio inoltrato al server
+                        sendMessageToServer(command);
                         String isMyTurn = in.readLine();                //è il tuo turno
                         System.out.println(isMyTurn);                   //viene stampato è il tuo turno
                         if(isMyTurn.equals("è il tuo turno!!")) {
-                            sendMessageToServer(command);               //mando showYourCardDeck
+                                         //mando showYourCardDeck
                             actionsInput(command);
                         }
                     }
@@ -216,7 +216,13 @@ public class ServerConnection implements Runnable {
     private void showCards() throws IOException {
         System.out.println("Il tuo mazzo:" );
         String firstCard=in.readLine(); //Hai selezionato di vedere le tue carte
+        String secondCard=in.readLine(); //Hai selezionato di vedere le tue carte
+        String thirdCard=in.readLine(); //Hai selezionato di vedere le tue carte
+        String spazio=in.readLine(); //Hai selezionato di vedere le tue carte
         System.out.println(firstCard);
+        System.out.println(secondCard);
+        System.out.println(thirdCard);
+        System.out.println(spazio);
         System.out.println("Carte lette correttamente");
     }
 
