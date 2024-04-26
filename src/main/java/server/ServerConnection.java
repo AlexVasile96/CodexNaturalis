@@ -19,9 +19,9 @@ public class ServerConnection implements Runnable {
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
             this.clientView=clientView;
             this.socket = server;
-            this.in= new BufferedReader(new InputStreamReader(socket.getInputStream())); //ricevere dati dal server
+            this.in= new BufferedReader(new InputStreamReader(socket.getInputStream()));    //ricevere dati dal server
             this.out= new PrintWriter(socket.getOutputStream(), true);
-            this.stdin= new BufferedReader(new InputStreamReader(System.in)); //scanner, mi serve per scrivere
+            this.stdin= new BufferedReader(new InputStreamReader(System.in));               //scanner, mi serve per scrivere
         }
 
     @Override
@@ -60,8 +60,12 @@ public class ServerConnection implements Runnable {
 
     private void takingTheInitialCard() throws IOException {
         String firstCard= in.readLine();
+        String FrontalCorners= in.readLine();
+        String BackCorners=in.readLine();
         System.out.println("server says: " + firstCard);
         System.out.println("Vuoi girare la tua carta? Scrivere 1 per tenerla con gli angoli davanti, 2 per girarla");
+        System.out.println(FrontalCorners);
+        System.out.println(BackCorners);
         String intero= stdin.readLine();
         int size = Integer.parseInt(intero);
         out.println(size-1);
