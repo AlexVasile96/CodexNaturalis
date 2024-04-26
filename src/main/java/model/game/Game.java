@@ -230,15 +230,15 @@ public class Game implements WhatCanPlayerDo {
         return goldDeck.carteRimaste();
     }
 
-    public List<String> getDots() {
+    public synchronized List<String> getDots() {
         return dots;
     }
 
-    public void removeDot(String stringa) {
+    public synchronized void removeDot(String stringa) {
         dots.remove(stringa);
     }
 
-    public boolean isInDots(String stringa) {
+    public synchronized boolean isInDots(String stringa) {
         return dots.contains(stringa);
     }
 
