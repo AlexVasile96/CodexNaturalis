@@ -4,11 +4,14 @@ import model.game.Player;
 
 public class Command { //Command Client sends to Server
 
-    public String runCommand(Game game, String commandString, Player player) {
+    //passo il cufrent player_> Player player
+
+
+    public String runCommand(Game game, String commandString, Player player) { //chiama sempre il game
         switch (commandString) {
             case "showYourCardDeck":{
                 String deckprinted;
-                deckprinted= game.showCards(player);
+                deckprinted= game.showCards(player); //salva nella stringa il deck del giocatore
                 return deckprinted;
             }
             case "playCardFromYourHand":

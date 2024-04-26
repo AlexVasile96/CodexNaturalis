@@ -161,10 +161,8 @@ public class HandlingPlayerInputsThread implements Runnable {
                 sendMessageToClient("è il tuo turno!!");
                 System.out.println(game.CardsIndeck());
                 System.out.println(game.GoldsIndeck());
-                System.out.println("Il client ha selezionato: " + messageFromClient);
-                runCommand(messageFromClient, threadPlayer);
-
-
+                System.out.println("Il client ha selezionato: " + messageFromClient);  //Server riceve il comando del client
+                runCommand(messageFromClient, threadPlayer); //->run
             }
             else{
                 //out.println("Aspetta perfavore, non è il tuo turno!");
@@ -246,7 +244,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         if (gameController != null ) {
             //Forward player command to controller
             System.out.println("Received command: " + messageFromClient);
-            gameController.readCommand(userName, messageFromClient, player);
+            gameController.readCommand(userName, messageFromClient, player); //sto passando una stringa e un player
         }
     }
     private synchronized void waitingForClients() throws InterruptedException {
