@@ -196,17 +196,33 @@ public class HandlingPlayerInputsThread implements Runnable {
         Dot dot = null;
         boolean isTheColorOkay = false;
         while (!isTheColorOkay) {
-            sendMessageToClient("Scegli il colore del tuo dot, puoi scegliere fra Blu, Rosso, Verde e Giallo!");
+            sendMessageToClient("Scegli il colore del tuo dot, puoi scegliere fra: " + game.getDots());
             message = stdIn.readLine();
+            message = message.toUpperCase();
             dot = Dot.valueOf(message);
 
-            if (playerlist.size() != 0) {
+            //DA SISTEMARE LA COMUNICAZIONE CON IL CLIENT PRIMA DI SOSTITUIRE QUESTO CODICE
+            /*
+            do{
+                sendMessageToClient("Scegli il colore del tuo dot, puoi scegliere fra: " + game.getDots());
+                message = stdIn.readLine();
+                message = message.toUpperCase();
+                if (!game.isInDots(message)) {
+                    legalDot = false;
+                    sendMessageToClient("Colore scelto non disponibile!");
+                }
+            }while(!legalDot);
+             */
+
+            if (!playerlist.isEmpty()) {
                 for (Player player : playerlist) {
                     if (player.getDot() == dot) {
                         sendMessageToClient("Quel colore è gia stato scelto da un altro utente, perfavore inserire un altro colore");
                     } else {
                         System.out.println("Colore scelto dal client: " + message);
                         sendMessageToClient("Colore del dot scelto correttamente");
+                        game.removeDot(message);
+                        //System.out.println(game.getDots());
                         isTheColorOkay = true;
 
                     }
@@ -214,6 +230,8 @@ public class HandlingPlayerInputsThread implements Runnable {
             } else{
                 System.out.println("Colore scelto dal client: " + message);
                 sendMessageToClient("Colore del dot scelto correttamente");
+                game.removeDot(message);
+                //System.out.println(game.getDots());
                 isTheColorOkay = true;
              }
         }

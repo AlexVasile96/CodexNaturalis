@@ -20,11 +20,13 @@ public class Game implements WhatCanPlayerDo {
     private List<Card> well;
     private ObjectiveCard firstObjectiveCommonCard;
     private ObjectiveCard secondObjectiveCommonCard;
+    private List<String> dots;
 
 
     public Game() {                                           //GAME CONSTRUCTOR WHICH INITIALIZED ALL THE CARDS
         this.players = new ArrayList<>();
         this.well= new ArrayList<>();
+        this.dots= new ArrayList<>();
         ResourceCardConstructor constructor = new ResourceCardConstructor();
         resourceDeck = (ResourceDeck) constructor.createCards();
         resourceDeck.shuffle();
@@ -41,6 +43,7 @@ public class Game implements WhatCanPlayerDo {
         objectiveDeck = (ObjectiveDeck) constructorObjective.createCards();
         objectiveDeck.shuffle();
 
+        initializeDots();
         initializewell();
         commonObjectiveCards();
     }
@@ -220,6 +223,18 @@ public class Game implements WhatCanPlayerDo {
         return goldDeck.carteRimaste();
     }
 
+    public List<String> getDots() {
+        return dots;
+    }
+
+    public void removeDot(String stringa) {
+        dots.remove(stringa);
+    }
+
+    public boolean isInDots(String stringa) {
+        return dots.contains(stringa);
+    }
+
     //PRIVATE METHODS INSIDE GAME
 
     private void initializewell(){
@@ -242,6 +257,13 @@ public class Game implements WhatCanPlayerDo {
         this.secondObjectiveCommonCard= objectiveDeck.firstCardForEachPlayer();
         System.out.println("First common objective card is " + firstObjectiveCommonCard);
         System.out.println("Second common objective card is " + secondObjectiveCommonCard);
+    }
+
+    private void initializeDots() {
+        dots.add("RED");
+        dots.add("BLUE");
+        dots.add("GREEN");
+        dots.add("YELLOW");
     }
 
 
