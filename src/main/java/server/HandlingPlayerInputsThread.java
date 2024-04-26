@@ -153,14 +153,17 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     }
     private void startGame() throws IOException {
+        String messageFromClient;
         while (true) {  //quale azione vuoi fare? fino a che non finsice il turno
-            String messageFromClient = stdIn.readLine();        //messaggio dal thread client
+            System.out.println("Sto aspettando che il client mi faccia richiesta");
+            messageFromClient = stdIn.readLine();        //messaggio dal thread client
             if(Objects.equals(currentPlayer.getNickName(), this.userName)){
                 sendMessageToClient("è il tuo turno!!");
                 System.out.println(game.CardsIndeck());
                 System.out.println(game.GoldsIndeck());
                 System.out.println("Il client ha selezionato: " + messageFromClient);
                 runCommand(messageFromClient, threadPlayer);
+
             }
             else{
                 out.println("Aspetta perfavore, non è il tuo turno!");

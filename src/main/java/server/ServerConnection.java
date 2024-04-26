@@ -147,16 +147,19 @@ public class ServerConnection implements Runnable {
         try {
             switch (userInput) {
                 //Display the player's commands options
-                case "help" -> printHelp();
+                case "help" -> {
+                    printHelp();
 
-                //Display the game's status
+
+                    //Display the game's status
+                }
                 case "status" -> printStatus();
 
                 //Display the list of available actions for the player in the current turn phase
                 case "actions" -> printActions();
 
                 //The following methods are used to run game actions
-                case "showYourCardDeck", "0" -> showCards();
+                case "showYourCardDeck", "0" -> {  showCards();}
                 case "playCardFromYourHand", "1" -> chosenHandCard();
                 case "visualizeCommonObjectiveCards", "2" -> visualizeCommonObjective();
                 case "visualizeSecretObjectiveCard", "3" -> visualizeSecretObjective();
@@ -176,7 +179,6 @@ public class ServerConnection implements Runnable {
     private void printHelp() throws IOException {
         String serviceString=in.readLine();
         System.out.println(serviceString);
-        System.out.println("Commands:\n");
         System.out.println(
                 """
                         Supported commands are:\s
@@ -214,18 +216,8 @@ public class ServerConnection implements Runnable {
     private void showCards() throws IOException {
         System.out.println("Il tuo mazzo:" );
         String firstCard=in.readLine(); //Hai selezionato di vedere le tue carte
-        String secondCard = in.readLine();
-        String thirdCard = in.readLine();
         System.out.println(firstCard);
-        System.out.println(secondCard);
-        System.out.println(thirdCard);
-
-        String paolo=in.readLine();
-        String Federico = in.readLine();
-        String Giacomo = in.readLine();
-        String x= in.readLine();
-        String y=in.readLine();
-        String f= in.readLine();
+        System.out.println("Carte lette correttamente");
     }
 
     private void chosenHandCard(){

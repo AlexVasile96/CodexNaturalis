@@ -1,17 +1,10 @@
 package controller;
 
 import exceptions.*;
-import model.card.GoldCardConstructor;
-import model.card.InitCardConstructor;
-import model.card.ObjectiveCardConstructor;
-import model.card.ResourceCardConstructor;
 import model.deck.Deck;
-import model.deck.GoldDeck;
-import model.deck.ResourceDeck;
 import model.game.Game;
 import model.game.Player;
 import network.message.Command;
-import network.message.MessagesEnum;
 import server.HandlingPlayerInputsThread;
 import view.ClientView;
 
@@ -60,7 +53,6 @@ public class GameController {
             String result = command.runCommand(game, commandString, player);
             if (result != null) {
                 sendMessageToClient(result);
-                out.flush();
             }
         }
     }
@@ -77,11 +69,7 @@ public class GameController {
         } else {
             throw new UsernameAlreadyExistsException();
         }
-        //sendMessageToAllClients("Un nuovo client si è connesso: " + username);
         players.put(username, userOut);
-        //System.out.println("Added player: " + username + " to current game.");
-
-        //preparationForStartingGame();
     }
 
     public void choosePlayerNumber(int number) throws PlayerNumberAlreadySetException, ParametersNotValidException {
@@ -93,7 +81,6 @@ public class GameController {
             throw new ParametersNotValidException();
         }
         size = number;
-        //preparationForStartingGame();
     }
     public int getNumOfPlayers() {
         return players.size();

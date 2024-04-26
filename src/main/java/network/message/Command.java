@@ -1,24 +1,16 @@
 package network.message;
-
-import exceptions.ParametersNotValidException;
 import model.game.Game;
 import model.game.Player;
-import model.game.WhatCanPlayerDo;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class Command { //Command Client sends to Server
 
     public String runCommand(Game game, String commandString, Player player) {
         switch (commandString) {
-            case "showYourCardDeck":
+            case "showYourCardDeck":{
                 String deckprinted;
                 deckprinted= game.showCards(player);
                 return deckprinted;
+            }
             case "playCardFromYourHand":
                 //game.playCard();
                 return "Command executed: Play Card From YOur Hand.";
@@ -46,8 +38,12 @@ public class Command { //Command Client sends to Server
 
             case "actions":
                 return "Hai selezionato actions";
-            case "help":
-                return "Hai chiesto aiuto";
+            case "help":{
+                System.out.println("Sono entrato in help anche se non dovevo");
+                String help;
+                help="hia chiesto aiuto";
+                return help;
+            }
             default:
                 return "Unknown command.";
         }
