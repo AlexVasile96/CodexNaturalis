@@ -7,6 +7,7 @@ package model.game;
 * */
 
 
+import controller.TurnController;
 import model.card.Card;
 import model.card.InitialCard;
 import model.card.ObjectiveCard;
@@ -33,6 +34,6 @@ public interface WhatCanPlayerDo {
     int getPlayerScore(Player player);
     String getNickName(Player player);
     List<Card> getPlayerCards(Player player);
-    void endTurn(Player player);
+    public void endTurn(Player currentPlayer);
     void requestGameInfo(Player player); //Richiede le informazioni attuali sullo stato del gioco al server.
 }

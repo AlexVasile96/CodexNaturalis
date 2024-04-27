@@ -212,9 +212,6 @@ public class ServerConnection implements Runnable {
     private void printStatus(){
         System.out.println("\n"+clientView.toString());
     }
-    private void runEndTurn(){
-
-    }
     private void showCards() throws IOException {
         System.out.println("Il tuo mazzo:" );
         String firstCard=in.readLine(); //Hai selezionato di vedere le tue carte
@@ -260,7 +257,11 @@ public class ServerConnection implements Runnable {
     private void quit(){
         System.out.println("Hai scelto di quittare!\n");
     }
+    private void runEndTurn(){
+        System.out.println("Hai scelto di concludere il tuo turno. La mano passa al gicatore successivo");
 
+
+    }
 
 }
 

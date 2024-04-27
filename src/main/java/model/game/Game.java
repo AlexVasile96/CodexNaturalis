@@ -1,5 +1,6 @@
 package model.game;
 
+import controller.TurnController;
 import model.card.*;
 import model.deck.GoldDeck;
 import model.deck.InitialCardDeck;
@@ -161,7 +162,7 @@ public class Game implements WhatCanPlayerDo {
     }
 
     @Override
-    public void endTurn(Player player) {
+    public void endTurn(Player currentPlayer) {
 
     }
 

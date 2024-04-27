@@ -38,7 +38,9 @@ public class Command { //Command Client sends to Server
                 return "e";
 
             case "endTurn":                //PIETRO
-                return "f";
+                game.endTurn(player);
+                return "Hai selezionato endTurn";
+
 
             case "actions": //finito
                 return "Hai selezionato actions";
