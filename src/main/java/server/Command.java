@@ -24,7 +24,9 @@ public class Command { //Command Client sends to Server
                 return secretObjectiveCard;
 
             case "showBoard":                //MOMO
-                return "b";
+                String yourBoard;
+                yourBoard= game.showBoard(player);
+                return yourBoard;
 
             case "showPoints":                 //PIETRO
                 String playerPoints;

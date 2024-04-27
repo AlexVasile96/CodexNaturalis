@@ -47,7 +47,7 @@ public class GameController {
     }
 
 
-    public synchronized void readCommand(String username, String commandString, Player player) {
+    public synchronized void readCommand(String commandString, Player player) {
         if (game != null) {
             Command command = new Command();
             String result = command.runCommand(game, commandString, player);

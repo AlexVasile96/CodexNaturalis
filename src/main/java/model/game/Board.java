@@ -39,6 +39,19 @@ public class Board {
         }
     } //PRINTING THE BOARD
 
+    public String printBoardForServer() { //printBoard method
+        StringBuilder stringBoard = new StringBuilder();
+        for (int i = 0; i < nodes.length; i++) {
+            for (int j = 0; j < nodes[i].length; j++) {
+                if(nodeIsUsed(nodes[i][j].getValueCounter())){
+                    stringBoard.append(nodes[i][j].getSpecificNodeSeed() + "\t" + j + "\t" + i + ", value:" + nodes[i][j].getValueCounter() + " |");
+                }
+            }
+            //System.out.println();
+        }
+        return String.valueOf(stringBoard);
+    }
+
     private boolean nodeIsUsed(int node) {
         return node<2;
     }

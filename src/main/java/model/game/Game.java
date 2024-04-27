@@ -83,7 +83,7 @@ public class Game implements WhatCanPlayerDo {
     @Override
     public String showCards(Player player) {
         List<Card> cardToSendToServer = player.getPlayerCards();
-        System.out.println(player.getPlayerCards());
+        //System.out.println(player.getPlayerCards());
         StringBuilder cardsAsString = new StringBuilder();
         for (Card card : cardToSendToServer) {
             cardsAsString.append(card.toString()).append("\n");
@@ -108,8 +108,8 @@ public class Game implements WhatCanPlayerDo {
     }
 
     @Override
-    public void showBoard() {
-
+    public String showBoard(Player player) {
+        return player.getBoard().printBoardForServer();
     }
 
     @Override

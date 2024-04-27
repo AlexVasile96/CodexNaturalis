@@ -23,7 +23,7 @@ public interface WhatCanPlayerDo {
     void chosenHandCard(); //implementare metodo in player
     String visualizeCommonObjective(Player player);
     String visualizeSecretObjective(Player player);
-    void showBoard();
+    String showBoard(Player player);
     String showPoints(Player player);
     void runEndTurn();
     void drawResourceCard(Player player);

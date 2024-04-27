@@ -126,9 +126,16 @@ public class ServerConnection implements Runnable {
     }
 
     private void chooseNumberOfPlayers() throws IOException {
-        String choosingNumberOfPlayers = in.readLine();
-        System.out.println("server says: "+ choosingNumberOfPlayers);              //Scegli il numero di partecipanti
-        if(choosingNumberOfPlayers.equals("NO")){
+        StringBuilder stampa= new StringBuilder();
+        String stringNumberOfPlayers; //numero di giocatori
+
+        stampa.append(in.readLine());
+        stringNumberOfPlayers = in.readLine();
+        stampa.append(stringNumberOfPlayers);
+        stampa.append(in.readLine());
+        System.out.println("server says: "+ String.valueOf(stampa));              //Scegli il numero di partecipanti
+        if(Integer.parseInt(stringNumberOfPlayers)>1) {
+        //if(stringNumberOfPlayers.equals("NO")){
             String answer = in.readLine();
             System.out.println("Server says: " + answer);
             return;

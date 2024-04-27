@@ -4,6 +4,7 @@ import controller.TurnController;
 import exceptions.ParametersNotValidException;
 import exceptions.UnknownPlayerNumberException;
 import exceptions.UsernameAlreadyExistsException;
+import exceptions.turnPlayerErrorException;
 import model.card.InitialCard;
 import model.card.ObjectiveCard;
 import model.game.Board;
@@ -174,7 +175,9 @@ public class HandlingPlayerInputsThread implements Runnable {
         if (!gameController.isSizeSet()) {          //If controller number of players has not been decided
             //Tries to set controller's number of players
             try {
-                sendMessageToClient("Scegli il numero di partecipanti al gioco-> Deve essere un numero compreso fra 2 e 4!");
+                sendMessageToClient("At the moment ther's: ");
+                sendMessageToClient("1");
+                sendMessageToClient(" player. Choose how many players there will be-> shoud be from 2 to 4");
                 message= stdIn.readLine();
                 int size = Integer.parseInt(message);
                 System.out.println("Il numero di giocatori sarà " +size);
@@ -190,7 +193,9 @@ public class HandlingPlayerInputsThread implements Runnable {
             }
         } else {
             System.out.println("Player doesn't need to choose game number of players");
-            sendMessageToClient("NO");
+            sendMessageToClient("There's already someone online! you will be ");
+            sendMessageToClient(String.valueOf(gameController.getSize()));
+            sendMessageToClient(" players");
         }
     }
     private Dot chooseClientDotColor(List<Player> playerlist) throws IOException {
@@ -245,7 +250,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 endTurn(player,turnController);
             }
             else {
-                gameController.readCommand(userName, messageFromClient, player); //sto passando una stringa e un player
+                gameController.readCommand(messageFromClient, player); //sto passando una stringa e un player
             }
         }
     }
@@ -296,6 +301,9 @@ public class HandlingPlayerInputsThread implements Runnable {
         threadPlayer.getBoard().printBoard();
     }
     public void endTurn(Player currentPlayer, TurnController turnController) {
+        if(currentPlayer != turnController.getCurrentPlayer()){
+            throw new turnPlayerErrorException("il giocatore attuale è sfasato");
+        }
         turnController.nextTurn();
         Player nextPlayer = turnController.getCurrentPlayer();
         setCurrentPlayer(nextPlayer);
