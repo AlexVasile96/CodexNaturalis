@@ -36,7 +36,35 @@ public class LObjectiveCard implements ExtendExtendExtend {
     }
 
     private void onePlantAndTwoMushrooms(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){
+        Node[][] nodes = board.getNodes();
+        int rows = nodes.length;
+        int cols = nodes.length;
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < cols; column++)
+            {
+                if((nodes[row][column].getFirstPlacement()==SpecificSeed.PLANT && nodes[row][column].getSecondPlacement()==SpecificSeed.MUSHROOM) ||
+                        (nodes[row][column].getFirstPlacement()==SpecificSeed.MUSHROOM && nodes[row][column].getSecondPlacement()==SpecificSeed.PLANT)){
+                            if(nodes[row][column-2].getFirstPlacement()==SpecificSeed.MUSHROOM  && !nodes[row][column - 2].isAlreadyChecked())
+                                if(nodes[row][column-3].getFirstPlacement()==SpecificSeed.MUSHROOM && !nodes[row][column - 3].isAlreadyChecked() )
+                                    if(nodes[row-1][column-3].getFirstPlacement()==SpecificSeed.MUSHROOM && !nodes[row-1][column - 3].isAlreadyChecked())
+                                        if(nodes[row-1][column-2].getFirstPlacement()==SpecificSeed.MUSHROOM && !nodes[row-1][column - 2].isAlreadyChecked()){
+                                            player.setPlayerScore(player.getPlayerScore()+3);
+                                            nodes[row][column].setAlreadyChecked(true);
+                                            nodes[row][column-2].setAlreadyChecked(true);
+                                            nodes[row][column-3].setAlreadyChecked(true);
+                                            nodes[row-1][column-3].setAlreadyChecked(true);
+                                            nodes[row-1][column-2].setAlreadyChecked(true);
 
+
+                                        }
+
+
+
+
+                }
+
+            }
+        }
 
 
     }

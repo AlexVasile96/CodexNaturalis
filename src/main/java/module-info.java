@@ -9,4 +9,5 @@ module com.example.proj {
     opens model to javafx.fxml;
     exports model;
     exports network.client.GUI;
+    opens server to com.google.gson;
 }

@@ -2,8 +2,6 @@ package network.client;
 
 import com.google.gson.Gson;
 import server.HandlingPlayerInputsThread;
-import network.message.MessageSender;
-import network.message.MessagesEnum;
 import view.ClientView;
 
 import java.io.IOException;
