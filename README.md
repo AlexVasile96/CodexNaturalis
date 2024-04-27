@@ -32,7 +32,7 @@
 |PERSISTENCE|⏱|
 
 Legenda <br>
-✅: Implemented  ⛔: Not implemented ⚙️ Testing    ⏱ Developig
+✅: Implemented  ⛔: Not implemented ⚙️ Testing    ⏱ Developing
 
 <b>Team</b> <br>
 Pietro Callandrone   - pietro.callandrone@mail.polimi.it <br>
