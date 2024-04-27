@@ -51,9 +51,8 @@ public class GameController {
         if (game != null) {
             Command command = new Command();
             String result = command.runCommand(game, commandString, player);
-            if (result != null) {
-                sendMessageToClient(result);
-            }
+            sendMessageToClient(result);
+
         }
     }
 

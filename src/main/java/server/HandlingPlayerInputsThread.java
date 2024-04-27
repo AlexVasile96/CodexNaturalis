@@ -170,6 +170,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             }
         }
     }
+
     private void setGameSize() throws NoSuchElementException {
         String message;
         if (!gameController.isSizeSet()) {          //If controller number of players has not been decided

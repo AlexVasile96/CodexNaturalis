@@ -245,8 +245,10 @@ public class ServerConnection implements Runnable {
         System.out.println(result);
         System.out.println("Questa è la tua carta obiettivo!");
     }
-    private void showBoard(){
+    private void showBoard() throws IOException {
         System.out.println("Hai scelto di visualizzare la tua board!\n");
+        String result= in.readLine();
+        System.out.println(result);
     }
     private void showPoints() throws IOException {
         System.out.println("Hai scelto di visualizzare i tuoi attuali punti!\n");
