@@ -240,11 +240,14 @@ public class HandlingPlayerInputsThread implements Runnable {
         return dot;
     }
     private void runCommand(String messageFromClient, Player player) throws NoSuchElementException {
-        //If player has logged in and their game's number of players has been decided
         if (gameController != null ) {
-            //Forward player command to controller
-            System.out.println("Received command: " + messageFromClient);
-            gameController.readCommand(userName, messageFromClient, player); //sto passando una stringa e un player
+            System.out.println("Received command: " + messageFromClient); //Forward player command to controller
+            if(messageFromClient.equals("endTurn")){
+                endTurn(player,turnController);
+            }
+            else {
+                gameController.readCommand(userName, messageFromClient, player); //sto passando una stringa e un player
+            }
         }
     }
     private synchronized void waitingForClients() throws InterruptedException {
@@ -292,6 +295,15 @@ public class HandlingPlayerInputsThread implements Runnable {
         game.placeInitialCard(threadPlayer.getBoard(),initialCard);
         System.out.println("Carta iniziale piazzata correttamente");
         threadPlayer.getBoard().printBoard();
+    }
+    public void endTurn(Player currentPlayer, TurnController turnController) {
+        turnController.nextTurn();
+        Player nextPlayer = turnController.getCurrentPlayer();
+        setCurrentPlayer(nextPlayer);
+    }
+    public void setCurrentPlayer(Player currentPlayerName) {
+        this.currentPlayer = currentPlayerName;
+        System.out.println("Current player: " + currentPlayerName);
     }
 }
 

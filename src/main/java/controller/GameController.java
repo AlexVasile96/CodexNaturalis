@@ -4,7 +4,7 @@ import exceptions.*;
 import model.deck.Deck;
 import model.game.Game;
 import model.game.Player;
-import network.message.Command;
+import server.Command;
 import server.HandlingPlayerInputsThread;
 import view.ClientView;
 

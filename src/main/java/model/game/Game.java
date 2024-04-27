@@ -1,5 +1,6 @@
 package model.game;
 
+import controller.TurnController;
 import model.card.*;
 import model.deck.GoldDeck;
 import model.deck.InitialCardDeck;
@@ -96,13 +97,14 @@ public class Game implements WhatCanPlayerDo {
     }
 
     @Override
-    public void visualizeCommonObjective() {
-
+    public String  visualizeCommonObjective(Player player) {
+        return null;
     }
 
     @Override
-    public void visualizeSecretObjective() {
-
+    public String visualizeSecretObjective(Player player) {
+        String result= String.valueOf(player.getSecretChosenCard());
+        return result;
     }
 
     @Override
@@ -111,9 +113,8 @@ public class Game implements WhatCanPlayerDo {
     }
 
     @Override
-    public void showPoints() {
-
-
+    public String showPoints(Player player) {
+        return String.valueOf(player.getPlayerScore());
     }
 
     @Override
@@ -161,7 +162,7 @@ public class Game implements WhatCanPlayerDo {
     }
 
     @Override
-    public void endTurn(Player player) {
+    public void endTurn(Player currentPlayer) {
 
     }
 
