@@ -41,14 +41,20 @@ public class Board {
 
     public String printBoardForServer() { //printBoard method
         StringBuilder stringBoard = new StringBuilder();
+        Boolean aCapo=false;
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes[i].length; j++) {
                 if(nodeIsUsed(nodes[i][j].getValueCounter())){
+                    if(!aCapo){
+                        stringBoard.append("\n");
+                        aCapo=true;
+                    }
                     stringBoard.append(nodes[i][j].getSpecificNodeSeed() + "\t" + j + "\t" + i + ", value:" + nodes[i][j].getValueCounter() + " |");
                 }
             }
-            //System.out.println();
+            aCapo=false;
         }
+        stringBoard.append("\n");
         return String.valueOf(stringBoard);
     }
 
