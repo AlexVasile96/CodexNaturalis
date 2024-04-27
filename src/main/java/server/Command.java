@@ -6,7 +6,7 @@ public class Command { //Command Client sends to Server
 
     public String runCommand(Game game, String commandString, Player player) { //chiama sempre il game
         switch (commandString) {
-            case "showYourCardDeck":{
+            case "showYourCardDeck":{ //finito
                 String deckprinted;
                 deckprinted= game.showCards(player); //salva nella stringa il deck del giocatore
                 return deckprinted;
@@ -15,12 +15,12 @@ public class Command { //Command Client sends to Server
                 //game.playCard();
                 return "Command executed: Play Card From Your Hand.";
 
-            case "visualizeCommonObjectiveCards": //MOMO
+            case "visualizeCommonObjectiveCards":   //MOMO
                 return "";
 
-            case "secret":  //PIETRO
+            case "secret":                          //PIETRO ->finito
                 String secretObjectiveCard;
-                secretObjectiveCard= game.visualizeSecretObjective(player);
+                secretObjectiveCard= game.visualizeSecretObjective(player); //salva nella stringa la carta obiettivo segreta del giocatore
                 return secretObjectiveCard;
 
             case "showBoard":                //MOMO
@@ -38,9 +38,9 @@ public class Command { //Command Client sends to Server
             case "endTurn":                //PIETRO
                 return "f";
 
-            case "actions":
+            case "actions": //finito
                 return "Hai selezionato actions";
-            case "help":{
+            case "help":{ //finito
                 System.out.println("Sono entrato in help");
                 String help;
                 help="hai chiesto aiuto";
