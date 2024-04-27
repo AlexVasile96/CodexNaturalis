@@ -96,13 +96,14 @@ public class Game implements WhatCanPlayerDo {
     }
 
     @Override
-    public void visualizeCommonObjective() {
-
+    public String  visualizeCommonObjective(Player player) {
+        return null;
     }
 
     @Override
-    public void visualizeSecretObjective() {
-
+    public String visualizeSecretObjective(Player player) {
+        String result= String.valueOf(player.getSecretChosenCard());
+        return result;
     }
 
     @Override

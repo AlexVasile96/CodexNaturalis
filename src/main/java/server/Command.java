@@ -4,9 +4,6 @@ import model.game.Player;
 
 public class Command { //Command Client sends to Server
 
-    //passo il cufrent player_> Player player
-
-
     public String runCommand(Game game, String commandString, Player player) { //chiama sempre il game
         switch (commandString) {
             case "showYourCardDeck":{
@@ -14,29 +11,31 @@ public class Command { //Command Client sends to Server
                 deckprinted= game.showCards(player); //salva nella stringa il deck del giocatore
                 return deckprinted;
             }
-            case "playCardFromYourHand":
+            case "playCardFromYourHand": //PIETRO
                 //game.playCard();
                 return "Command executed: Play Card From Your Hand.";
 
-            case "visualizeCommonObjectiveCards":
+            case "visualizeCommonObjectiveCards": //MOMO
                 return "";
 
-            case "visualizeSecretObjectiveCard":
-                return "a";
+            case "secret":  //PIETRO
+                String secretObjectiveCard;
+                secretObjectiveCard= game.visualizeSecretObjective(player);
+                return secretObjectiveCard;
 
-            case "showBoard":
+            case "showBoard":                //MOMO
                 return "b";
 
-            case "showPoints":
+            case "showPoints":                 //PIETRO
                 return "c";
 
-            case "drawCardFromDeck":
+            case "drawResourceCardFromDeck":        //MOMO
                 return "d";
 
-            case "drawCardFromWell":
+            case "drawGoldCardFromWell":      //MOMO
                 return "e";
 
-            case "endTurn":
+            case "endTurn":                //PIETRO
                 return "f";
 
             case "actions":
@@ -47,6 +46,7 @@ public class Command { //Command Client sends to Server
                 help="hai chiesto aiuto";
                 return help;
             }
+            case "quit": return "suca";
             default:
                 return "Unknown command.";
         }

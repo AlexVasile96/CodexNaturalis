@@ -20,8 +20,8 @@ public interface WhatCanPlayerDo {
     public void placeInitialCard(Board board, InitialCard card);
     String showCards(Player player);
     void chosenHandCard(); //implementare metodo in player
-    void visualizeCommonObjective();
-    void visualizeSecretObjective();
+    String visualizeCommonObjective(Player player);
+    String visualizeSecretObjective(Player player);
     void showBoard();
     void showPoints();
     void runEndTurn();

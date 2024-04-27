@@ -241,6 +241,11 @@ public class Player implements Observable {
             }
         }
     }
+
+
+
+
+
     private String freeCornersOfTheSelectedCard(List<Corner> availableCorners, Card cardPlayerChoose, Scanner scanner){
         Map<Corner, String> cornerLabels = new HashMap<>();      //PUTTING THE CORRECT CORNERLABEL TO THE CORRECT CORNER
         cornerLabels.put(cardPlayerChoose.getTL(), "TL");
@@ -544,8 +549,10 @@ public class Player implements Observable {
     }
     @Override
     public void removeListener(InvalidationListener invalidationListener) {
-
     }
+
+
+
     @Override
     public String toString() {
         return "Player{" +

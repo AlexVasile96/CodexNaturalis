@@ -240,13 +240,12 @@ public class HandlingPlayerInputsThread implements Runnable {
         return dot;
     }
     private void runCommand(String messageFromClient, Player player) throws NoSuchElementException {
-        //If player has logged in and their game's number of players has been decided
-        if (gameController != null ) {
-            //Forward player command to controller
-            System.out.println("Received command: " + messageFromClient);
+        if (gameController != null ) { //If controller Game isn't null
+            System.out.println("Received command: " + messageFromClient); //Forward player command to controller
             gameController.readCommand(userName, messageFromClient, player); //sto passando una stringa e un player
         }
     }
+
     private synchronized void waitingForClients() throws InterruptedException {
         System.out.println("In attesa di altri giocatori");
         while (playersList.size() != 2) {

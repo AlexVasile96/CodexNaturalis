@@ -162,12 +162,14 @@ public class ServerConnection implements Runnable {
                 case "showYourCardDeck", "0" -> showCards();
                 case "playCardFromYourHand", "1" -> chosenHandCard();
                 case "visualizeCommonObjectiveCards", "2" -> visualizeCommonObjective();
-                case "visualizeSecretObjectiveCard", "3" -> visualizeSecretObjective();
+                case "secret", "3" -> visualizeSecretObjective();
                 case "showBoard", "4" -> showBoard();
                 case "showPoints", "5" -> showPoints();
-                case "drawCardFromDeck", "6" -> drawCardFromDeck();
-                case "drawCardFromWell", "7" -> drawCardFromWell();
-                case "endTurn", "8" -> runEndTurn();//run
+                case "drawResourceCardFromDeck", "6" -> drawResourceCardFromDeck();
+                case  "drawGoldCardFromDeck", "7"->drawGoldCardFromDeck();
+                case "drawCardFromWell", "8" -> drawCardFromWell();
+                case "endTurn", "9" -> runEndTurn();//run
+                case "quit", "10" -> quit();
                 default -> System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
 
             }
@@ -197,13 +199,14 @@ public class ServerConnection implements Runnable {
                         - If you type-> 'showYourCardDeck / 0 ': display player's cards
                         - If you type-> 'playCardFromYourHand /1': select the card you want to place from your hand
                         - If you type->  'visualizeCommonObjectiveCards /2': visualize the common objective cards
-                        - If you type->  'visualizeSecretObjectiveCard /3': visualize your secret objective card
+                        - If you type->  'secret /3': visualize your secret objective card
                         - If you type->  'showBoard /4':print your board
                         - If you type->  'showPoints /5': show your points
-                        - If you type->  'drawCardFromDeck /6': draw a card from the resource/gold deck
-                        - If you type->  'drawCardFromWell /7': draw a card from the well
-                        - If you type->  'endTurn /8': end your turn
-                        . if you type ->  'quit /9: esci dal gioco\n"""
+                        - If you type->  'drawResourceCardFromDeck /6': draw a card from the resource deck
+                        - If you type->  'drawGoldCardFromDeck /7': draw a card from the gold deck
+                        - If you type->  'drawCardFromWell /8': draw a card from the well
+                        - If you type->  'endTurn /9': end your turn
+                        . if you type ->  'quit /10': esci dal gioco\n"""
         );
     }
     private void printStatus(){
@@ -225,16 +228,22 @@ public class ServerConnection implements Runnable {
         System.out.println("Carte lette correttamente");
     }
 
-    private void chosenHandCard(){
+    private void chosenHandCard() throws IOException {
         System.out.println("Hai scelto di giocare una carta dal tuo deck!\n");
-
     }
     private void visualizeCommonObjective(){}
-    private void visualizeSecretObjective(){}
+    private void visualizeSecretObjective() throws IOException {
+        System.out.println("Hai scelto di visualizzare la tua carta obiettivo segreta\n");
+        String result= in.readLine();
+        System.out.println(result);
+        System.out.println("Questa è la tua carta obiettivo!");
+    }
     private void showBoard(){}
     private void showPoints(){}
-    private void drawCardFromDeck(){}
+    private void drawResourceCardFromDeck(){}
+    private void drawGoldCardFromDeck(){}
     private void drawCardFromWell(){}
+    private void quit(){}
 
 
 }
