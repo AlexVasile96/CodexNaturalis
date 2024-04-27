@@ -1,4 +1,4 @@
-package network.client.GUI;
+package network.client.gui;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -6,8 +6,6 @@ import org.json.JSONTokener;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class Configs {
     private String hostName;

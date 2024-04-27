@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.Background?>
 <StackPane alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
-           fx:controller="network.client.GUI.SceneController">
+           fx:controller="controller.SceneController">
 
     <background>
         <Background>

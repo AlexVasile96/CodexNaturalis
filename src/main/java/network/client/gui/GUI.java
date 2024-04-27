@@ -1,11 +1,17 @@
-package network.client.GUI;
+package network.client.gui;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -31,7 +37,14 @@ public class GUI extends Application {
     private Scene loginScene;
     private Scene gameScene;
     private Socket socket;
-    private ClientView clientView;
+    private ClientView clientView = new ClientView();
+
+    @FXML
+    public TextField usernameField;
+    @FXML
+    public Button loginButton;
+    @FXML
+    public Label test;
 
 
 
@@ -42,16 +55,17 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
-        clientView = new ClientView();
+
+
         startMenuScene(primaryStage);
-        loginScene();
 
 
     }
 
-    private void startMenuScene(Stage primaryStage) {
+    private void startMenuScene(Stage primaryStage) throws IOException {
 
         // Carica l'immagine di sfondo
+        Parent fxml = FXMLLoader.load(getClass().getResource("/model/mainMenu.fxml"));
         Image codexLogo = new Image(getClass().getResourceAsStream("/ImmaginiCodex/codexLogo.png"));
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage backgroundImage = new BackgroundImage(codexLogo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
@@ -62,28 +76,8 @@ public class GUI extends Application {
         StackPane root = new StackPane();
         root.setBackground(background);
 
-        // Aggiungi il pulsante "Start new game"
-        start = new Button("Start new game");
-        start.setOnAction(e -> {
-            String firstMessage = "login";
-            connectToServer();
-            PrintWriter printWriter;
-            try {
-                printWriter = new PrintWriter(socket.getOutputStream(),true);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            printWriter.println(firstMessage);
-            window.setScene(loginScene);
-        });
-
-        // Layout dei bottoni
-        VBox buttonLayout = new VBox(20); // Spaziatura tra i bottoni
-        buttonLayout.setAlignment(Pos.CENTER);
-        buttonLayout.getChildren().add(start);
-
         // Aggiungi il layout dei bottoni sopra all'immagine di sfondo
-        root.getChildren().add(buttonLayout);
+        root.getChildren().addAll(fxml);
 
         // Crea la scena di avvio
         startScene = new Scene(root, 919, 743);
@@ -92,12 +86,27 @@ public class GUI extends Application {
         primaryStage.show();
     }
 
+    public void startGameClicked(ActionEvent event) throws IOException {
+        String firstMessage = "login";
+        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        connectToServer();
+        PrintWriter printWriter;
+        try {
+            printWriter = new PrintWriter(socket.getOutputStream(),true);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        printWriter.println(firstMessage);
+        loginScene();
+        primaryStage.setScene(loginScene);
+    }
 
 
 
-    private void loginScene() {
 
-        Button loginButton = new Button("Login");
+    private void loginScene() throws IOException {
+
+        /*Button loginButton = new Button("Login");
         Label test = new Label();
         StackPane rootGame = new StackPane();
         Label loginLabel = new Label("Write your username");
@@ -112,10 +121,6 @@ public class GUI extends Application {
               System.out.println("Username necessario");
           }
         });
-
-
-
-
         returnToMainMenu = new Button("Back to main menu");
         returnToMainMenu.setOnAction(e -> {
             window.setScene(startScene);
@@ -124,7 +129,6 @@ public class GUI extends Application {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-
         });
 
         VBox loginLayout = new VBox(20); // Spaziatura tra i nodi
@@ -134,7 +138,24 @@ public class GUI extends Application {
         rootGame.getChildren().addAll(loginLayout);
 
         // Inizializza la scena di gioco
-        loginScene = new Scene(rootGame, 800, 600);
+        loginScene = new Scene(rootGame, 800, 600);*/
+
+        Parent fxml = FXMLLoader.load(getClass().getResource("/model/loginScene.fxml"));
+        StackPane root = new StackPane();
+        root.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        root.getChildren().addAll(fxml);
+        loginScene = new Scene(root, 800, 600);
+    }
+
+    public void loginButtonClicked(ActionEvent event) throws IOException {
+        String username = usernameField.getText();
+        if(!username.isEmpty()){
+            clientView.setUserName(username);
+            setUsername(username);
+            test.setText("Il tuo username è: " + username);
+        }else{
+            System.out.println("Username necessario");
+        }
     }
 
 

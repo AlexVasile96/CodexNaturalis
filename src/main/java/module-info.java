@@ -8,5 +8,6 @@ module com.example.proj {
     opens network.message to com.google.gson;
     opens model to javafx.fxml;
     exports model;
-    exports network.client.GUI;
+    exports network.client.gui;
+    exports controller;
 }
