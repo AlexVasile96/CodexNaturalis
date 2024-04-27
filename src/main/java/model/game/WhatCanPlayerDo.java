@@ -23,7 +23,7 @@ public interface WhatCanPlayerDo {
     String visualizeCommonObjective(Player player);
     String visualizeSecretObjective(Player player);
     void showBoard();
-    void showPoints();
+    String showPoints(Player player);
     void runEndTurn();
     void drawResourceCard(Player player);
     void drawGoldCard(Player player);

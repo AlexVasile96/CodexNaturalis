@@ -198,7 +198,7 @@ public class ServerConnection implements Runnable {
                         Supported commands:
                         - If you type-> 'showYourCardDeck / 0 ': display player's cards
                         - If you type-> 'playCardFromYourHand /1': select the card you want to place from your hand
-                        - If you type->  'visualizeCommonObjectiveCards /2': visualize the common objective cards
+                        - If you type->  'common /2': visualize the common objective cards
                         - If you type->  'secret /3': visualize your secret objective card
                         - If you type->  'showBoard /4':print your board
                         - If you type->  'showPoints /5': show your points
@@ -231,19 +231,35 @@ public class ServerConnection implements Runnable {
     private void chosenHandCard() throws IOException {
         System.out.println("Hai scelto di giocare una carta dal tuo deck!\n");
     }
-    private void visualizeCommonObjective(){}
+    private void visualizeCommonObjective(){
+        System.out.println("Hai scelto di visualizzare gli obiettivi comuni a tutti!\n");
+    }
     private void visualizeSecretObjective() throws IOException {
         System.out.println("Hai scelto di visualizzare la tua carta obiettivo segreta\n");
         String result= in.readLine();
         System.out.println(result);
         System.out.println("Questa è la tua carta obiettivo!");
     }
-    private void showBoard(){}
-    private void showPoints(){}
-    private void drawResourceCardFromDeck(){}
-    private void drawGoldCardFromDeck(){}
-    private void drawCardFromWell(){}
-    private void quit(){}
+    private void showBoard(){
+        System.out.println("Hai scelto di visualizzare la tua board!\n");
+    }
+    private void showPoints() throws IOException {
+        System.out.println("Hai scelto di visualizzare i tuoi attuali punti!\n");
+        String result= in.readLine();
+        System.out.println("I tuoi punti attualmente sono: " + result);
+    }
+    private void drawResourceCardFromDeck(){
+        System.out.println("Hai scelto di pescare una carta dal deck Risorsa!\n");
+    }
+    private void drawGoldCardFromDeck(){
+        System.out.println("Hai scelto di pescare una carta dal deck Gold\n");
+    }
+    private void drawCardFromWell(){
+        System.out.println("Hai scelto di pescare una carta dal pozzo!\n");
+    }
+    private void quit(){
+        System.out.println("Hai scelto di quittare!\n");
+    }
 
 
 }

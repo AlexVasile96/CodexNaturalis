@@ -112,9 +112,8 @@ public class Game implements WhatCanPlayerDo {
     }
 
     @Override
-    public void showPoints() {
-
-
+    public String showPoints(Player player) {
+        return String.valueOf(player.getPlayerScore());
     }
 
     @Override
