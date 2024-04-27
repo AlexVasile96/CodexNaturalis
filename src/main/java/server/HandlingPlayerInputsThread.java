@@ -157,10 +157,10 @@ public class HandlingPlayerInputsThread implements Runnable {
         while (true) {  //quale azione vuoi fare? fino a che non finsice il turno
             if(Objects.equals(currentPlayer.getNickName(), this.userName)){
                 System.out.println("Sto aspettando che il client" + threadPlayer.getNickName() + " mi faccia richiesta");
-                messageFromClient = stdIn.readLine();        //messaggio dal thread client
                 sendMessageToClient("è il tuo turno!!");
-                System.out.println(game.CardsIndeck());
-                System.out.println(game.GoldsIndeck());
+                messageFromClient = stdIn.readLine();        //messaggio dal thread client
+                //System.out.println(game.CardsIndeck());
+                //System.out.println(game.GoldsIndeck());
                 System.out.println("Il client ha selezionato: " + messageFromClient);  //Server riceve il comando del client
                 runCommand(messageFromClient, threadPlayer); //->run
             }
@@ -200,7 +200,6 @@ public class HandlingPlayerInputsThread implements Runnable {
         while (!isTheColorOkay) {
             sendMessageToClient("Scegli il colore del tuo dot, puoi scegliere fra: " + game.getDots());
             message = stdIn.readLine();
-            message = message.toUpperCase();
             dot = Dot.valueOf(message);
 
             //DA SISTEMARE LA COMUNICAZIONE CON IL CLIENT PRIMA DI SOSTITUIRE QUESTO CODICE

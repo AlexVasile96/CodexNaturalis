@@ -39,14 +39,14 @@ public class ServerConnection implements Runnable {
                         assigningSecretCard();                          //Choosing the secret Card
                         takingTheInitialCard();
                     }
-                    else {                                              //If client has made the login, he can start asking for inputs if it's his turn
-                        sendMessageToServer(command);
-                        String isMyTurn = in.readLine();                //è il tuo turno
-                        System.out.println(isMyTurn);                   //viene stampato è il tuo turno
-                        if(isMyTurn.equals("è il tuo turno!!")) {
-                                         //mando showYourCardDeck
-                            actionsInput(command);
-                        }
+                    else {//If client has made the login, he can start asking for inputs if it's his turn
+                            String isMyTurn = in.readLine();                //è il tuo turno
+                            sendMessageToServer(command);
+                            System.out.println(isMyTurn);                   //viene stampato è il tuo turno
+                            if (isMyTurn.equals("è il tuo turno!!")) {
+                                //mando showYourCardDeck
+                                actionsInput(command);
+                            }
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -107,6 +107,7 @@ public class ServerConnection implements Runnable {
             System.out.println("Inserire\n -RED per scegliere il dot di colore rosso\n -BLUE per scegliere il colore blu\n -GREEN per scegliere il colore verde\n -YELLOW per scegliere il colore giallo");
             System.out.println(">");
             String dotColor = stdin.readLine();
+            dotColor = dotColor.toUpperCase();
             sendMessageToServer(dotColor);
             System.out.println(dotColor);
             String serverAnswer = in.readLine();
