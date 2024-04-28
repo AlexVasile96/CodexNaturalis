@@ -38,6 +38,8 @@ public class ClientView {
     }
     public void update(Player player) {
             // Aggiorna le informazioni del giocatore corrente
+            this.userName= player.getNickName();
+            //this.game= game;
             this.playerScore = player.getPlayerScore();
             this.dot = player.getDot();
             this.board = player.getBoard();
