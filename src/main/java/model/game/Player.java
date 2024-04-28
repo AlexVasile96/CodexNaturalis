@@ -6,6 +6,7 @@ import javafx.beans.Observable;
 import model.card.*;
 import model.deck.GoldDeck;
 import model.deck.ResourceDeck;
+import view.ClientView;
 
 import java.util.*;
 
@@ -13,6 +14,7 @@ public class Player implements Observable {
     private String nickName;
     private int playerScore;
     private Dot dot;
+    private ClientView clientView;
     private Board board;
     private boolean isCardBack;
     private ArrayList <Card> playerCards;
@@ -24,17 +26,20 @@ public class Player implements Observable {
         this.board = board;
         this.playerCards = new ArrayList<>(3);
         this.isCardBack=false;
+        this.clientView= new ClientView();
     }
 
 
     //IN GAME METHODS
 
     public void drawResourceCard(ResourceDeck deck) {
-        deck.drawCard(this);
-    } //DRAWING RESOURCE CARD
+       deck.drawCard(this);
+       //this.clientView.getPlayerCards().add(drownCard);
+    }
     public void drawGoldCard(GoldDeck deck) {
         deck.drawCard(this);
-    } //DRAWING GOLD CARD
+    }
+
     public List<Card> chooseCardFromWell(List<Card>cardwell,ResourceDeck rc, GoldDeck gd) {
         Scanner scanner = new Scanner(System.in);
             if (this.playerCards.size() < 3) {
@@ -104,10 +109,10 @@ public class Player implements Observable {
     }
     public void playCard(Board board, int cardIndex) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
         Scanner scanner = new Scanner(System.in);
-        Card selectedCardFromTheDeck = chooseCard(cardIndex);
-        checkIfTheCardExist(cardIndex);                                  //CHECKING IF THE CARD TRULY EXISTS
-        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirments are respected
-        if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return;
+        Card selectedCardFromTheDeck = chooseCard(cardIndex);                   //OKAY
+        checkIfTheCardExist(cardIndex);                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
+        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
+        if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return; //DA MODIFICARE
 
         Card initialCard = board.getCardsOnTheBoardList().get(0);               //putting inside initialCard the firstPlacedCard on the board
         List<Card> cardsPlayerCanChooseFrom = board.getCardsOnTheBoardList();   //VISUALIZING ALL THE CARDS ON THE BOARD SO THE PLAYER CAN CHOOSE ONE OF THEM
@@ -167,11 +172,24 @@ public class Player implements Observable {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     //METHODS INVOKED FROM THE PREVIOUS METHODS
 
 
 
-    public int checkIfTheCardExist(int cardIndex)
+    private int checkIfTheCardExist(int cardIndex)
     {
         Card selectedCardFromTheDeck = chooseCard(cardIndex);          //SELECTEDCARDFROMTHEDECK IS THE CARD CHOSEN FROM THE PLAYER DECK
         if (selectedCardFromTheDeck == null) {                         //CHECKING IF THE CARD EXISTS, IN CASE RETURN
@@ -179,7 +197,7 @@ public class Player implements Observable {
         }
         return cardIndex;
     }
-    public boolean isTheCardGold(Card selectedCard)
+    private boolean isTheCardGold(Card selectedCard)
     {
         if (selectedCard instanceof GoldCard) {
             return board.placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing());
@@ -188,14 +206,15 @@ public class Player implements Observable {
             return false;
         }
     }
-    public void showingToTheCurrentPlayerCardsOnTheBoard(List<Card> cardsPlayerCanChooseFrom){
+    private void showingToTheCurrentPlayerCardsOnTheBoard(List<Card> cardsPlayerCanChooseFrom){
         System.out.println("Cards on the board are:");                          //PRINTING THE CARDS ON THE BOARD
         for (int i = 0; i < cardsPlayerCanChooseFrom.size(); i++) {
             Card card = cardsPlayerCanChooseFrom.get(i);
             System.out.println((i + 1) + ". " + card);
+
         }
     }
-    public Card selectTheCardFromTheBoard(List<Card> cardsPlayerCanChooseFrom, Scanner scanner){
+    private Card selectTheCardFromTheBoard(List<Card> cardsPlayerCanChooseFrom, Scanner scanner){
         System.out.print("Select a card on your board you want to place the card from your deck on: ");
         int selectedCardIndex = scanner.nextInt();
         try{
@@ -552,6 +571,13 @@ public class Player implements Observable {
     }
 
 
+    public ClientView getClientView() {
+        return clientView;
+    }
+
+    public void setClientView(ClientView clientView) {
+        this.clientView = clientView;
+    }
 
     @Override
     public String toString() {

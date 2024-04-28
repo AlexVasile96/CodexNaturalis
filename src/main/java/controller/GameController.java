@@ -47,12 +47,23 @@ public class GameController {
     }
 
 
-    public synchronized void readCommand(String commandString, Player player) {
+    public synchronized void readCommand(String commandString, Player player, int size) {
         if (game != null) {
             Command command = new Command();
-            String result = command.runCommand(game, commandString, player);
-            sendMessageToClient(result);
+            if(commandString.equals("playCard"))
+            {
+                String boardResult= command.runCommand(game,commandString,player,size);
+                sendMessageToClient(boardResult);
+                String cornersAvaible= command.runCommand(game, commandString, player, size);
+                sendMessageToClient(cornersAvaible);
+                String finale= command.runCommand(game, commandString, player, size);
+                sendMessageToClient(finale);
 
+            }
+            else {
+                String result = command.runCommand(game, commandString, player, size);
+                sendMessageToClient(result);
+            }
         }
     }
 
@@ -158,14 +169,7 @@ public class GameController {
         this.clientViews = clientViews;
     }
 
-    private void updateClientView(String username, Player player) {
-        // Ottieni l'istanza corretta di ClientView associata al client
-        ClientView clientView = getClientViewByUsername(username);
-        if (clientView != null) {
-            // Aggiorna la vista del client con le nuove informazioni del giocatore
-            clientView.update(username, player);
-        }
-    }
+
     private ClientView getClientViewByUsername(String username) {
         return clientViews.get(username);
     }

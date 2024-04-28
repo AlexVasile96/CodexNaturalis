@@ -3,17 +3,39 @@ import model.game.Game;
 import model.game.Player;
 
 public class Command { //Command Client sends to Server
+    private static int checkIfTheBoardHadAlreadyBeenPrinted= 0;
 
-    public String runCommand(Game game, String commandString, Player player) { //chiama sempre il game
+    public String runCommand(Game game, String commandString, Player player, int size) { //chiama sempre il game
         switch (commandString) {
             case "showYourCardDeck":{ //finito-> funzionante
                 String deckprinted;
                 deckprinted= game.showCards(player); //salva nella stringa il deck del giocatore
                 return deckprinted;
             }
-            case "playCardFromYourHand": //PIETRO
-                //game.playCard();
-                return "Command executed: Play Card From Your Hand.";
+            case "playCard": //PIETRO
+            {
+                if(checkIfTheBoardHadAlreadyBeenPrinted==0){
+                String boardForPlacingcards;
+                boardForPlacingcards= game.showBoardForPlacingCards(player);
+                checkIfTheBoardHadAlreadyBeenPrinted++;
+                return boardForPlacingcards;
+                }
+                else if(checkIfTheBoardHadAlreadyBeenPrinted==1)
+                {
+                    String CornersAvaiable= game.showAvaiableCorners(player);
+
+                    checkIfTheBoardHadAlreadyBeenPrinted++;
+                    return CornersAvaiable;
+                }
+                else if(checkIfTheBoardHadAlreadyBeenPrinted==2){
+                    game.playCard(player.getBoard(), 0);
+                    String finalResult="Carta placed";
+                    return finalResult;
+
+                }
+            }
+
+
 
             case "common":   //MOMO
                 return "";
@@ -28,7 +50,7 @@ public class Command { //Command Client sends to Server
                 yourBoard= game.showBoard(player);
                 return yourBoard;
 
-            case "showPoints":                 //PIETRO
+            case "showPoints":                 //PIETRO -> finito-> funzionante
                 String playerPoints;
                 playerPoints= game.showPoints(player);
                 return playerPoints;
@@ -39,7 +61,7 @@ public class Command { //Command Client sends to Server
             case "drawGoldCardFromWell":      //MOMO
                 return "e";
 
-            case "endTurn":                //PIETRO
+            case "endTurn":                //PIETRO -> non funziona
                 game.endTurn(player);
                 return "Hai selezionato endTurn";
 

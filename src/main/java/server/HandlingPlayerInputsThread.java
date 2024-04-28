@@ -65,8 +65,15 @@ public class HandlingPlayerInputsThread implements Runnable {
                         initializeCards();
                     }
                 }
+
                 assigningSecretCard();                                            //Each thread will assign the secret card to the player
                 assignInitialCard();                                                //Each client places his first card
+                for(Player player:playersList)
+                    {
+                        game.updateSingleClientView(player);                      //Updating each player ClientView
+                        System.out.println(player.getClientView());
+                    }
+                //assignEachClientStartingCards();
                 System.out.println(game.getObjectiveDeck().carteRimaste());       //Debugging to check if all cards are given correctly
 
                 //GAME IS READY TO START
@@ -151,22 +158,20 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println(userName +"ha scelto la carta numero: "+ size);
         threadPlayer.setSecretChosenCard(secretCards.get(size-1));
         System.out.println(threadPlayer.toString());
-
     }
-    private synchronized void startGame() throws IOException {
+
+    private void startGame() throws IOException {
         String messageFromClient;
-        while (true) {  //quale azione vuoi fare? fino a che non finsice il turno
+        while (true) {
             if(Objects.equals(currentPlayer.getNickName(), this.userName)){
-                System.out.println("Sto aspettando che il client" + threadPlayer.getNickName() + " mi faccia richiesta");
+                System.out.println("Sto aspettando che il client" + currentPlayer.getNickName() + " mi faccia richiesta");
                 sendMessageToClient("è il tuo turno!!");
-                messageFromClient = stdIn.readLine();        //messaggio dal thread client
-                //System.out.println(game.CardsIndeck());
-                //System.out.println(game.GoldsIndeck());
+                messageFromClient = stdIn.readLine();                                   //messaggio dal thread client
                 System.out.println("Il client ha selezionato: " + messageFromClient);  //Server riceve il comando del client
                 runCommand(messageFromClient, threadPlayer); //->run
             }
             else{
-                //out.println("Aspetta perfavore, non è il tuo turno!");
+                sendMessageToClient("Aspetta perfavore, non è il tuo turno!");
             }
         }
     }
@@ -176,13 +181,13 @@ public class HandlingPlayerInputsThread implements Runnable {
         if (!gameController.isSizeSet()) {          //If controller number of players has not been decided
             //Tries to set controller's number of players
             try {
-                sendMessageToClient("At the moment ther's: ");
+                sendMessageToClient("At the moment there are: ");
                 sendMessageToClient("1");
-                sendMessageToClient(" player. Choose how many players there will be-> shoud be from 2 to 4");
+                sendMessageToClient(" player. Choose how many players you want to play with-> players have to be from 2 to 4.");
                 message= stdIn.readLine();
                 int size = Integer.parseInt(message);
-                System.out.println("Il numero di giocatori sarà " +size);
-                sendMessageToClient("Numero di giocatori scelto correttamente");
+                System.out.println("Numbers of Player will be " +size);
+                sendMessageToClient("Players number correctly chosen ");
                 gameController.choosePlayerNumber(size);
                 gameController.setSizeSet(true);
             } catch (NumberFormatException ex) {
@@ -244,14 +249,28 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
         return dot;
     }
-    private void runCommand(String messageFromClient, Player player) throws NoSuchElementException {
+    private void runCommand(String messageFromClient, Player player) throws NoSuchElementException, IOException {
         if (gameController != null ) {
             System.out.println("Received command: " + messageFromClient); //Forward player command to controller
             if(messageFromClient.equals("endTurn")){
                 endTurn(player,turnController);
             }
-            else {
-                gameController.readCommand(messageFromClient, player); //sto passando una stringa e un player
+            else if(messageFromClient.equals("playCard"))
+            {
+                String indexCardChosen= stdIn.readLine();
+                int size = Integer.parseInt(indexCardChosen);
+                System.out.println("Il player ha scelto la carta numero " +size);
+                String cartaSullaBoard= stdIn.readLine();
+                int cartadellaboard= Integer.parseInt(indexCardChosen);
+                System.out.println("Il player ha deciso di piazzare la propria carta sulla carta numero " + cartadellaboard);
+                String cornerChosen= stdIn.readLine();
+                System.out.println("Il player ha deciso di piazzare la propria carta sull'angolo " + cornerChosen);
+
+                gameController.readCommand(messageFromClient, player,size);
+            }
+
+            else  {
+                gameController.readCommand(messageFromClient, player,0); //sto passando una stringa e un player
             }
         }
     }
@@ -301,6 +320,16 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println("Carta iniziale piazzata correttamente");
         threadPlayer.getBoard().printBoard();
     }
+
+    private void assignEachClientStartingCards(){
+
+        for(int i=0; i<threadPlayer.getPlayerCards().size(); i++)
+        {
+            out.print(threadPlayer.getPlayerCards().get(i));
+        }
+
+    }
+
     public void endTurn(Player currentPlayer, TurnController turnController) {
         if(currentPlayer != turnController.getCurrentPlayer()){
             throw new turnPlayerErrorException("il giocatore attuale è sfasato");

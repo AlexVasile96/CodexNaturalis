@@ -58,7 +58,6 @@ public class Game implements WhatCanPlayerDo {
             player.drawResourceCard(resourceDeck);
             player.drawResourceCard(resourceDeck);
             player.drawGoldCard(goldDeck);
-
         }
     }
 
@@ -76,7 +75,8 @@ public class Game implements WhatCanPlayerDo {
     }
 
     @Override
-    public void playCard(Board board, Card card) {
+    public void playCard(Board board, int index) {
+
 
     }
 
@@ -110,6 +110,15 @@ public class Game implements WhatCanPlayerDo {
     @Override
     public String showBoard(Player player) {
         return player.getBoard().printBoardForServer();
+    }
+
+    public String showBoardForPlacingCards(Player player)
+    {
+        return player.getBoard().printBoardForServer();
+    }
+    public String showAvaiableCorners(Player player)
+    {
+        return null;
     }
 
     @Override
@@ -165,7 +174,10 @@ public class Game implements WhatCanPlayerDo {
     public void endTurn(Player currentPlayer) {
 
     }
+    public void updateSingleClientView(Player player){
+        player.getClientView().update(player);
 
+    }
     @Override
     public void requestGameInfo(Player player) {
 
