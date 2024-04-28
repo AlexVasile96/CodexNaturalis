@@ -41,6 +41,7 @@ public class Board {
 
     public String printBoardForServer() { //printBoard method
         StringBuilder stringBoard = new StringBuilder();
+        //ciao pietro minchione
         Boolean aCapo=false;
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes[i].length; j++) {
