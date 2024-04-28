@@ -259,7 +259,13 @@ public class HandlingPlayerInputsThread implements Runnable {
             {
                 String indexCardChosen= stdIn.readLine();
                 int size = Integer.parseInt(indexCardChosen);
-                System.out.println(size);
+                System.out.println("Il player ha scelto la carta numero " +size);
+                String cartaSullaBoard= stdIn.readLine();
+                int cartadellaboard= Integer.parseInt(indexCardChosen);
+                System.out.println("Il player ha deciso di piazzare la propria carta sulla carta numero " + cartadellaboard);
+                String cornerChosen= stdIn.readLine();
+                System.out.println("Il player ha deciso di piazzare la propria carta sull'angolo " + cornerChosen);
+
                 gameController.readCommand(messageFromClient, player,size);
             }
 

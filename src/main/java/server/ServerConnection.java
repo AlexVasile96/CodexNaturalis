@@ -278,16 +278,23 @@ public class ServerConnection implements Runnable {
     }
 
     private void chosenHandCard() throws IOException {
+        //Al game controller devo passare in ordine ->
+        //carta del player deck che voglio giocare
+        //carta della board su cui piazzare la mia carta
+        //Angolo su cui voglio piazzare la mia carta
         System.out.println("Hai scelto di giocare una carta dal tuo deck!\n");
         System.out.println(player.getClientView().getPlayerStringCards().get(0));
         System.out.println(player.getClientView().getPlayerStringCards().get(1));
         System.out.println(player.getClientView().getPlayerStringCards().get(2));
-        System.out.println("Scegli quale carta vuoi giocare sulla tua bord");
+        System.out.println("Scegli quale carta vuoi giocare sulla tua board:");
         String result= stdin.readLine();
         int size= Integer.parseInt(result);
-        Card selectedCardFromTheDeck = chooseCard(size);                             //OKAY
+        out.print(size-1); //Carta scelta dal deck del player
+        //Card selectedCardFromTheDeck = chooseCard(size);
+     /*
         checkIfTheCardExist(size);                                              //CHECKING IF THE CARD TRULY EXISTS->OKAY
-        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
+        //boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
+        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);
         if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return; //DA MODIFICARE
         Scanner scanner= new Scanner(System.in);
         System.out.println("Ti verranno ora mostrate tutte le carte presenti sulla tua board");
@@ -307,7 +314,7 @@ public class ServerConnection implements Runnable {
         }
 
         String selectedCorner= freeCornersOfTheSelectedCard(availableCorners, cardPlayerChoose,scanner); //Showing the available corners of the card and letting the player choose one
-
+        */
 
     }
     private void visualizeCommonObjective(){
@@ -348,14 +355,14 @@ public class ServerConnection implements Runnable {
 
 
     }
-    private int checkIfTheCardExist(int cardIndex)
+    /*private int checkIfTheCardExist(int cardIndex)
     {
         Card selectedCardFromTheDeck = chooseCard(cardIndex);          //SELECTEDCARDFROMTHEDECK IS THE CARD CHOSEN FROM THE PLAYER DECK
         if (selectedCardFromTheDeck == null) {                         //CHECKING IF THE CARD EXISTS, IN CASE RETURN
             return 0;
         }
         return cardIndex;
-    }
+    }*/
     private boolean isTheCardGold(Card selectedCard)
     {
         if (selectedCard instanceof GoldCard) {
@@ -418,7 +425,7 @@ public class ServerConnection implements Runnable {
             }
         }
     }
-    public Card chooseCard(int index) {
+    public String chooseCard(int index) {
         try{
             if (index < 0 || index >= clientView.getPlayerCards().size()) {
                 throw new IndexOutOfBoundsException("Not a valid index");
@@ -428,7 +435,7 @@ public class ServerConnection implements Runnable {
             System.out.println(e.getMessage()); //INDEX GOES FROM 1 TO 3
         }
 
-        return clientView.getPlayerCards().get(index);
+        return clientView.getPlayerStringCards().get(index);
     }  //METHOD TO CHOOSE WHICH CARD THE PLAYER WANTS TO PLACE ON THE BOARD
 
 
