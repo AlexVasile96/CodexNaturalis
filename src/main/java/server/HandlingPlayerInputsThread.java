@@ -160,7 +160,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println(threadPlayer.toString());
     }
 
-    private void startGame() throws IOException {
+    private void startGame() throws IOException, InterruptedException {
         String messageFromClient;
         while (true) {
             if(Objects.equals(currentPlayer.getNickName(), this.userName)){

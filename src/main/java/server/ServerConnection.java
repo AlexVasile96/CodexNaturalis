@@ -3,10 +3,7 @@ import exceptions.InvalidCornerException;
 import exceptions.OperationCancelledException;
 import model.card.Card;
 import model.card.GoldCard;
-import model.game.Corner;
-import model.game.Dot;
-import model.game.Player;
-import model.game.SpecificSeed;
+import model.game.*;
 import view.ClientView;
 
 import java.io.*;
@@ -22,6 +19,7 @@ public class ServerConnection implements Runnable {
     private BufferedReader stdin;
     private PrintWriter out;
     private Player player;
+    private Boolean myTurn;
 
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
@@ -31,6 +29,7 @@ public class ServerConnection implements Runnable {
             this.out= new PrintWriter(socket.getOutputStream(), true);
             this.stdin= new BufferedReader(new InputStreamReader(System.in));               //scanner, mi serve per scrivere
             this.player=new Player(null,0,null,null );
+            this.myTurn=false;
     }
 
     @Override
@@ -51,8 +50,12 @@ public class ServerConnection implements Runnable {
                     else {//If client has made the login, he can start asking for inputs if it's his turn
                         String isMyTurn = in.readLine();                //è il tuo turno
                         System.out.println(isMyTurn);                   //viene stampato è il tuo turno
-                        if (isMyTurn.equals("è il tuo turno!!")) {
-                            System.out.println("Menu:\n" +
+                        if (isMyTurn != null && isMyTurn.equals("è il tuo turno!!")) {
+                            myTurn = true;
+                        }
+                        if (myTurn) {
+                            System.out.println("command:");
+                            /*System.out.println("Menu:\n" +
                                     "1.  help - printHelp()\n" +
                                     "2.  status - printStatus()\n" +
                                     "3.  actions - printActions()\n" +
@@ -66,11 +69,21 @@ public class ServerConnection implements Runnable {
                                     "11. drawGoldCardFromDeck, 7 - drawGoldCardFromDeck()\n" +
                                     "12. drawCardFromWell, 8 - drawCardFromWell()\n" +
                                     "13. endTurn, 9 - runEndTurn()\n" +
-                                    "14. quit, 10 - quit()");
+                                    "14. quit, 10 - quit()");*/
                             command=stdin.readLine();
                             sendMessageToServer(command);
                             //mando showYourCardDeck
                             actionsInput(command);
+                        }
+                        else{
+                            while (!myTurn) {
+                                command=stdin.readLine();
+                                System.out.println("attendi...");
+                                isMyTurn=in.readLine();
+                                if (isMyTurn != null && isMyTurn.equals("è il tuo turno!!")) {
+                                    myTurn = true;
+                                }
+                            }
                         }
                     }
                 } catch (IOException e) {
@@ -327,9 +340,15 @@ public class ServerConnection implements Runnable {
         System.out.println("Questa è la tua carta obiettivo!");
     }
     private void showBoard() throws IOException {
-        System.out.println("Hai scelto di visualizzare la tua board!\n");
+        System.out.println("Hai selezionato la tua board:\n");
+        System.out.print("////////////////////////////////// INIZIO BOARD //////////////////////////////////////////");
         String result= in.readLine();
-        System.out.println(result);
+        do{
+            System.out.println(result);
+            result= in.readLine();
+        }while (!result.equals("fine board"));
+        System.out.println();
+        System.out.println("////////////////////////////////// FINE BOARD ////////////////////////////////////////////");
     }
     private void showPoints() throws IOException {
         System.out.println("Hai scelto di visualizzare i tuoi attuali punti!\n");

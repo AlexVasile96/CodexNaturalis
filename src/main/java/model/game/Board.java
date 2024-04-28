@@ -54,7 +54,7 @@ public class Board {
             }
             aCapo=false;
         }
-        stringBoard.append("\n");
+        stringBoard.append("\nfine board");
         return String.valueOf(stringBoard);
     }
 
