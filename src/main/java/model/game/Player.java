@@ -33,10 +33,11 @@ public class Player implements Observable {
     //IN GAME METHODS
 
     public void drawResourceCard(ResourceDeck deck) {
-        this.clientView.getPlayerCards().add(deck.drawCard(this));
+       deck.drawCard(this);
+       //this.clientView.getPlayerCards().add(drownCard);
     }
     public void drawGoldCard(GoldDeck deck) {
-        this.clientView.getPlayerCards().add(deck.drawCard(this));
+        deck.drawCard(this);
     }
 
     public List<Card> chooseCardFromWell(List<Card>cardwell,ResourceDeck rc, GoldDeck gd) {

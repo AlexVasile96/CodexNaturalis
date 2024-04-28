@@ -36,8 +36,7 @@ public class ClientView {
     public void setGame(Game game) {
         this.game = game;
     }
-    public void update(String username, Player player) {
-        if (username.equals(userName)) {
+    public void update(Player player) {
             // Aggiorna le informazioni del giocatore corrente
             this.playerScore = player.getPlayerScore();
             this.dot = player.getDot();
@@ -45,7 +44,7 @@ public class ClientView {
             this.isCardBack = player.isCardBack();
             this.playerCards = (ArrayList<Card>) player.getPlayerCards(); // Aggiorna le carte del giocatore
             this.secretChosenCard = player.getSecretChosenCard();
-        }
+
     }
 
     public int getPlayerScore() {

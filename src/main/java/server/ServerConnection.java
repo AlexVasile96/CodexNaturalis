@@ -191,7 +191,7 @@ public class ServerConnection implements Runnable {
 
                 //The following methods are used to run game actions
                 case "showYourCardDeck", "0" -> showCards();
-                case "playCardFromYourHand", "1" -> chosenHandCard();
+                case "playCard", "1" -> chosenHandCard();
                 case "visualizeCommonObjectiveCards", "2" -> visualizeCommonObjective();
                 case "secret", "3" -> visualizeSecretObjective();
                 case "showBoard", "4" -> showBoard();
@@ -265,9 +265,9 @@ public class ServerConnection implements Runnable {
         System.out.println("Scegli quale carta vuoi piazzare sulla tua board!");
         String intero= stdin.readLine();
         int size = Integer.parseInt(intero);
-        out.println(size);
-        Card selectedCardFromTheDeck = chooseCard(size);                   //OKAY
-        checkIfTheCardExist(size);                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
+        //out.println(size);
+        Card selectedCardFromTheDeck = chooseCard(size);                             //OKAY
+        checkIfTheCardExist(size);                                              //CHECKING IF THE CARD TRULY EXISTS->OKAY
         boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
         if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return; //DA MODIFICARE
         Scanner scanner= new Scanner(System.in);

@@ -158,14 +158,7 @@ public class GameController {
         this.clientViews = clientViews;
     }
 
-    private void updateClientView(String username, Player player) {
-        // Ottieni l'istanza corretta di ClientView associata al client
-        ClientView clientView = getClientViewByUsername(username);
-        if (clientView != null) {
-            // Aggiorna la vista del client con le nuove informazioni del giocatore
-            clientView.update(username, player);
-        }
-    }
+
     private ClientView getClientViewByUsername(String username) {
         return clientViews.get(username);
     }
