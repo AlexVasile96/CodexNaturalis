@@ -157,16 +157,14 @@ public class HandlingPlayerInputsThread implements Runnable {
         String messageFromClient;
         while (true) {  //quale azione vuoi fare? fino a che non finsice il turno
             if(Objects.equals(currentPlayer.getNickName(), this.userName)){
-                System.out.println("Sto aspettando che il client" + threadPlayer.getNickName() + " mi faccia richiesta");
+                System.out.println("Sto aspettando che il client" + currentPlayer.getNickName() + " mi faccia richiesta");
                 sendMessageToClient("è il tuo turno!!");
                 messageFromClient = stdIn.readLine();        //messaggio dal thread client
-                //System.out.println(game.CardsIndeck());
-                //System.out.println(game.GoldsIndeck());
                 System.out.println("Il client ha selezionato: " + messageFromClient);  //Server riceve il comando del client
                 runCommand(messageFromClient, threadPlayer); //->run
             }
             else{
-                //out.println("Aspetta perfavore, non è il tuo turno!");
+                sendMessageToClient("Aspetta perfavore, non è il tuo turno!");
             }
         }
     }
@@ -176,13 +174,13 @@ public class HandlingPlayerInputsThread implements Runnable {
         if (!gameController.isSizeSet()) {          //If controller number of players has not been decided
             //Tries to set controller's number of players
             try {
-                sendMessageToClient("At the moment ther's: ");
+                sendMessageToClient("At the moment there are: ");
                 sendMessageToClient("1");
-                sendMessageToClient(" player. Choose how many players there will be-> shoud be from 2 to 4");
+                sendMessageToClient(" player. Choose how many players you want to play with-> players have to be from 2 to 4.");
                 message= stdIn.readLine();
                 int size = Integer.parseInt(message);
-                System.out.println("Il numero di giocatori sarà " +size);
-                sendMessageToClient("Numero di giocatori scelto correttamente");
+                System.out.println("Numbers of Player will be " +size);
+                sendMessageToClient("Players number correctly chosen ");
                 gameController.choosePlayerNumber(size);
                 gameController.setSizeSet(true);
             } catch (NumberFormatException ex) {
