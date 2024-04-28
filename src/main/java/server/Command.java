@@ -3,6 +3,7 @@ import model.game.Game;
 import model.game.Player;
 
 public class Command { //Command Client sends to Server
+    private static int checkIfTheBoardHadAlreadyBeenPrinted= 0;
 
     public String runCommand(Game game, String commandString, Player player, int size) { //chiama sempre il game
         switch (commandString) {
@@ -12,8 +13,29 @@ public class Command { //Command Client sends to Server
                 return deckprinted;
             }
             case "playCard": //PIETRO
-                game.playCard(player.getBoard(),0);
-                return "Command executed: Play Card From Your Hand.";
+            {
+                if(checkIfTheBoardHadAlreadyBeenPrinted==0){
+                String boardForPlacingcards;
+                boardForPlacingcards= game.showBoardForPlacingCards(player);
+                checkIfTheBoardHadAlreadyBeenPrinted++;
+                return boardForPlacingcards;
+                }
+                else if(checkIfTheBoardHadAlreadyBeenPrinted==1)
+                {
+                    String CornersAvaiable= game.showAvaiableCorners(player);
+
+                    checkIfTheBoardHadAlreadyBeenPrinted++;
+                    return CornersAvaiable;
+                }
+                else if(checkIfTheBoardHadAlreadyBeenPrinted==2){
+                    game.playCard(player.getBoard(), 0);
+                    String finalResult="Carta placed";
+                    return finalResult;
+
+                }
+            }
+
+
 
             case "common":   //MOMO
                 return "";

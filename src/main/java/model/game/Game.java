@@ -112,6 +112,15 @@ public class Game implements WhatCanPlayerDo {
         return player.getBoard().printBoardForServer();
     }
 
+    public String showBoardForPlacingCards(Player player)
+    {
+        return player.getBoard().printBoardForServer();
+    }
+    public String showAvaiableCorners(Player player)
+    {
+        return null;
+    }
+
     @Override
     public String showPoints(Player player) {
         return String.valueOf(player.getPlayerScore());

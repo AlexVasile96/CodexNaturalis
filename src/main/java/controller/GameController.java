@@ -50,9 +50,20 @@ public class GameController {
     public synchronized void readCommand(String commandString, Player player, int size) {
         if (game != null) {
             Command command = new Command();
-            String result = command.runCommand(game, commandString, player,size);
-            sendMessageToClient(result);
+            if(commandString.equals("playCard"))
+            {
+                String boardResult= command.runCommand(game,commandString,player,size);
+                sendMessageToClient(boardResult);
+                String cornersAvaible= command.runCommand(game, commandString, player, size);
+                sendMessageToClient(cornersAvaible);
+                String finale= command.runCommand(game, commandString, player, size);
+                sendMessageToClient(finale);
 
+            }
+            else {
+                String result = command.runCommand(game, commandString, player, size);
+                sendMessageToClient(result);
+            }
         }
     }
 

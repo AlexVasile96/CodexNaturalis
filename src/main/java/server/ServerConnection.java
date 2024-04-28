@@ -290,6 +290,7 @@ public class ServerConnection implements Runnable {
         String result= stdin.readLine();
         int size= Integer.parseInt(result);
         out.print(size-1); //Carta scelta dal deck del player
+        System.out.println("Su quale carta della board vuoi piazzare la carta?");
         //Card selectedCardFromTheDeck = chooseCard(size);
      /*
         checkIfTheCardExist(size);                                              //CHECKING IF THE CARD TRULY EXISTS->OKAY
