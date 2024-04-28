@@ -2,6 +2,7 @@ package server;
 import exceptions.InvalidCornerException;
 import exceptions.OperationCancelledException;
 import model.card.Card;
+import model.card.GoldCard;
 import model.game.Corner;
 import model.game.Dot;
 import model.game.Player;
@@ -265,6 +266,10 @@ public class ServerConnection implements Runnable {
         String intero= stdin.readLine();
         int size = Integer.parseInt(intero);
         out.println(size);
+        Card selectedCardFromTheDeck = chooseCard(size);                   //OKAY
+        checkIfTheCardExist(size);                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
+        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
+        if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return; //DA MODIFICARE
         Scanner scanner= new Scanner(System.in);
         System.out.println("Ti verranno ora mostrate tutte le carte presenti sulla tua board");
         Card initialCard = clientView.getBoard().getCardsOnTheBoardList().get(0);            //putting inside initialCard the firstPlacedCard on the board
@@ -324,6 +329,23 @@ public class ServerConnection implements Runnable {
 
 
     }
+    private int checkIfTheCardExist(int cardIndex)
+    {
+        Card selectedCardFromTheDeck = chooseCard(cardIndex);          //SELECTEDCARDFROMTHEDECK IS THE CARD CHOSEN FROM THE PLAYER DECK
+        if (selectedCardFromTheDeck == null) {                         //CHECKING IF THE CARD EXISTS, IN CASE RETURN
+            return 0;
+        }
+        return cardIndex;
+    }
+    private boolean isTheCardGold(Card selectedCard)
+    {
+        if (selectedCard instanceof GoldCard) {
+            return clientView.getBoard().placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing());
+        }
+        else {
+            return false;
+        }
+    }
     private void showingToTheCurrentPlayerCardsOnTheBoard(List<Card> cardsPlayerCanChooseFrom){
         System.out.println("Cards on the board are:");                          //PRINTING THE CARDS ON THE BOARD
         for (int i = 0; i < cardsPlayerCanChooseFrom.size(); i++) {
@@ -377,6 +399,18 @@ public class ServerConnection implements Runnable {
             }
         }
     }
+    public Card chooseCard(int index) {
+        try{
+            if (index < 0 || index >= clientView.getPlayerCards().size()) {
+                throw new IndexOutOfBoundsException("Not a valid index");
+            }
+        }catch (IndexOutOfBoundsException e)
+        {
+            System.out.println(e.getMessage()); //INDEX GOES FROM 1 TO 3
+        }
+
+        return clientView.getPlayerCards().get(index);
+    }  //METHOD TO CHOOSE WHICH CARD THE PLAYER WANTS TO PLACE ON THE BOARD
 
 
 
