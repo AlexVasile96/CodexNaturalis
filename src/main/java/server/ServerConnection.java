@@ -21,6 +21,7 @@ public class ServerConnection implements Runnable {
     private BufferedReader in;
     private BufferedReader stdin;
     private PrintWriter out;
+    private Player player;
 
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
@@ -29,7 +30,8 @@ public class ServerConnection implements Runnable {
             this.in= new BufferedReader(new InputStreamReader(socket.getInputStream()));    //ricevere dati dal server
             this.out= new PrintWriter(socket.getOutputStream(), true);
             this.stdin= new BufferedReader(new InputStreamReader(System.in));               //scanner, mi serve per scrivere
-        }
+            this.player=new Player(null,0,null,null );
+    }
 
     @Override
     public void run() {
@@ -42,9 +44,11 @@ public class ServerConnection implements Runnable {
                     command=stdin.readLine();                           //il client scrive un messaggio
                     if (clientView.getUserName() == null) {             //If client hasn't made the login yet, he has to log first.
                         sendMessageToServer(command);
-                        loginPlayer();                                  //Actual Login
+                        loginPlayer(player);                                  //Actual Login
                         assigningSecretCard();                          //Choosing the secret Card
                         takingTheInitialCard();
+                        //receiveYourStartingcards();
+
                     }
                     else {//If client has made the login, he can start asking for inputs if it's his turn
                         String isMyTurn = in.readLine();                //è il tuo turno
@@ -92,7 +96,16 @@ public class ServerConnection implements Runnable {
         String intero= stdin.readLine();
         int size = Integer.parseInt(intero);
         out.println(size-1);
+    }
 
+    private void receiveYourStartingcards() throws IOException {
+        for(int i=0; i<player.getPlayerCards().size();i++)
+        {
+            String card;
+            card = in.readLine();
+            //player.getClientView().getPlayerCards().add(card);
+
+        }
     }
 
     private synchronized void assigningSecretCard() throws IOException {
@@ -103,9 +116,10 @@ public class ServerConnection implements Runnable {
         int size = Integer.parseInt(intero);
         out.println(size);
 
+
     }
 
-    private void loginPlayer() throws IOException, InterruptedException { //LOGIN METHOD
+    private void loginPlayer(Player player) throws IOException, InterruptedException { //LOGIN METHOD
         String serverResponse = in.readLine();
         System.out.println("Server says: " + serverResponse); //Inserisci il tuo nome per favore
         System.out.println(">");
@@ -113,8 +127,9 @@ public class ServerConnection implements Runnable {
         sendMessageToServer(loginName);
         String correctLogin = in.readLine();
         System.out.println("Server says: " + correctLogin); //Login effettuato con successo
+        player.getClientView().setUserName(loginName);
         clientView.setUserName(loginName);                      //UPDATING CLIENT VIEW
-        chooseYourDotColor();
+        chooseYourDotColor(player);
         chooseNumberOfPlayers();
 
     }
@@ -123,7 +138,7 @@ public class ServerConnection implements Runnable {
         out.println(message);
     }     //metodo per mandare un singolo messaggio al server
 
-    private void chooseYourDotColor() throws IOException {
+    private void chooseYourDotColor(Player player) throws IOException {
         boolean isTheColorOkay= false;
         while(!isTheColorOkay) {
             String chooseYourColor = in.readLine();
@@ -144,6 +159,7 @@ public class ServerConnection implements Runnable {
                 isTheColorOkay=true;
                 Dot dot= Dot.valueOf(dotColor);
                 clientView.setDot(dot);
+                player.getClientView().setDot(dot);
             }
         }
 
@@ -229,7 +245,7 @@ public class ServerConnection implements Runnable {
                 """
                         Supported commands:
                         - If you type-> 'showYourCardDeck / 0 ': display player's cards
-                        - If you type-> 'playCardFromYourHand /1': select the card you want to place from your hand
+                        - If you type-> 'playCard /1': select the card you want to place from your hand
                         - If you type->  'common /2': visualize the common objective cards
                         - If you type->  'secret /3': visualize your secret objective card
                         - If you type->  'showBoard /4':print your board
@@ -249,24 +265,26 @@ public class ServerConnection implements Runnable {
         String firstCard=in.readLine(); //Hai selezionato di vedere le tue carte
         String secondCard=in.readLine(); //Hai selezionato di vedere le tue carte
         String thirdCard=in.readLine(); //Hai selezionato di vedere le tue carte
-        String spazio=in.readLine(); //Hai selezionato di vedere le tue carte
+        String spatio=in.readLine(); //Hai selezionato di vedere le tue carte
         System.out.println(firstCard);
         System.out.println(secondCard);
         System.out.println(thirdCard);
-        System.out.println(spazio);
+        player.getClientView().getPlayerStringCards().add(firstCard);
+        player.getClientView().getPlayerStringCards().add(secondCard);
+        player.getClientView().getPlayerStringCards().add(thirdCard);
+        System.out.println(spatio);
         System.out.println("Carte lette correttamente");
+        System.out.println(player.getClientView().getPlayerStringCards());
     }
 
     private void chosenHandCard() throws IOException {
         System.out.println("Hai scelto di giocare una carta dal tuo deck!\n");
-        for(Card cards: clientView.getPlayerCards())
-        {
-            System.out.println(cards);
-        }
-        System.out.println("Scegli quale carta vuoi piazzare sulla tua board!");
-        String intero= stdin.readLine();
-        int size = Integer.parseInt(intero);
-        //out.println(size);
+        System.out.println(player.getClientView().getPlayerStringCards().get(0));
+        System.out.println(player.getClientView().getPlayerStringCards().get(1));
+        System.out.println(player.getClientView().getPlayerStringCards().get(2));
+        System.out.println("Scegli quale carta vuoi giocare sulla tua bord");
+        String result= stdin.readLine();
+        int size= Integer.parseInt(result);
         Card selectedCardFromTheDeck = chooseCard(size);                             //OKAY
         checkIfTheCardExist(size);                                              //CHECKING IF THE CARD TRULY EXISTS->OKAY
         boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY

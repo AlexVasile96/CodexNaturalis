@@ -70,9 +70,10 @@ public class HandlingPlayerInputsThread implements Runnable {
                 assignInitialCard();                                                //Each client places his first card
                 for(Player player:playersList)
                     {
-                        game.updateSingleClientView(player);
+                        game.updateSingleClientView(player);                      //Updating each player ClientView
                         System.out.println(player.getClientView());
                     }
+                //assignEachClientStartingCards();
                 System.out.println(game.getObjectiveDeck().carteRimaste());       //Debugging to check if all cards are given correctly
 
                 //GAME IS READY TO START
@@ -259,6 +260,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 String indexCardChosen= stdIn.readLine();
                 int size = Integer.parseInt(indexCardChosen);
                 System.out.println(size);
+                gameController.readCommand(messageFromClient, player,size);
             }
 
             else  {
@@ -312,6 +314,16 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println("Carta iniziale piazzata correttamente");
         threadPlayer.getBoard().printBoard();
     }
+
+    private void assignEachClientStartingCards(){
+
+        for(int i=0; i<threadPlayer.getPlayerCards().size(); i++)
+        {
+            out.print(threadPlayer.getPlayerCards().get(i));
+        }
+
+    }
+
     public void endTurn(Player currentPlayer, TurnController turnController) {
         if(currentPlayer != turnController.getCurrentPlayer()){
             throw new turnPlayerErrorException("il giocatore attuale è sfasato");
