@@ -18,7 +18,7 @@ import java.util.Set;
 
 public class GameController {
     private final Map<String, PrintWriter> players;
-    int size;
+    int size    ;
     boolean isGameOver;
     private Game game;
     private List<HandlingPlayerInputsThread> clients;

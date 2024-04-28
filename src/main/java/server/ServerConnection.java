@@ -40,27 +40,24 @@ public class ServerConnection implements Runnable {
             System.out.println("Benvenuto!Sono il server! Scrivere una qualsiasi stringa per iniziare la conversazione\n");
             while (true) {
                 try {
-                    System.out.print(">");
-                    command=stdin.readLine();                           //il client scrive un messaggio
+                    System.out.print(">");                          //il client scrive un messaggio
                     if (clientView.getUserName() == null) {             //If client hasn't made the login yet, he has to log first.
+                        command=stdin.readLine();
                         sendMessageToServer(command);
                         loginPlayer(player);                                  //Actual Login
                         assigningSecretCard();                          //Choosing the secret Card
                         takingTheInitialCard();
-                        //receiveYourStartingcards();
-
                     }
                     else {//If client has made the login, he can start asking for inputs if it's his turn
                         String isMyTurn = in.readLine();                //è il tuo turno
-                        sendMessageToServer(command);
                         System.out.println(isMyTurn);                   //viene stampato è il tuo turno
                         if (isMyTurn.equals("è il tuo turno!!")) {
-                            /*System.out.println("Menu:\n" +
+                            System.out.println("Menu:\n" +
                                     "1.  help - printHelp()\n" +
                                     "2.  status - printStatus()\n" +
                                     "3.  actions - printActions()\n" +
                                     "4.  showYourCardDeck, 0 - showCards()\n" +
-                                    "5.  playCard, 1 - chosenHandCard()\n" +
+                                    "5.  playCardFromYourHand, 1 - chosenHandCard()\n" +
                                     "6.  visualizeCommonObjectiveCards, 2 - visualizeCommonObjective()\n" +
                                     "7.  secret, 3 - visualizeSecretObjective()\n" +
                                     "8.  showBoard, 4 - showBoard()\n" +
@@ -69,11 +66,12 @@ public class ServerConnection implements Runnable {
                                     "11. drawGoldCardFromDeck, 7 - drawGoldCardFromDeck()\n" +
                                     "12. drawCardFromWell, 8 - drawCardFromWell()\n" +
                                     "13. endTurn, 9 - runEndTurn()\n" +
-                                    "14. quit, 10 - quit()");*/
-                                //mando showYourCardDeck
+                                    "14. quit, 10 - quit()");
+                            command=stdin.readLine();
+                            sendMessageToServer(command);
+                            //mando showYourCardDeck
                             actionsInput(command);
                         }
-
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
