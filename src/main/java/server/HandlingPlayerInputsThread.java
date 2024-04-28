@@ -65,8 +65,14 @@ public class HandlingPlayerInputsThread implements Runnable {
                         initializeCards();
                     }
                 }
+
                 assigningSecretCard();                                            //Each thread will assign the secret card to the player
                 assignInitialCard();                                                //Each client places his first card
+                for(Player player:playersList)
+                    {
+                        game.updateSingleClientView(player);
+                        System.out.println(player.getClientView());
+                    }
                 System.out.println(game.getObjectiveDeck().carteRimaste());       //Debugging to check if all cards are given correctly
 
                 //GAME IS READY TO START

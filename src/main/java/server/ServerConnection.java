@@ -102,6 +102,7 @@ public class ServerConnection implements Runnable {
         String intero= stdin.readLine();
         int size = Integer.parseInt(intero);
         out.println(size);
+
     }
 
     private void loginPlayer() throws IOException, InterruptedException { //LOGIN METHOD

@@ -88,9 +88,6 @@ public class Game implements WhatCanPlayerDo {
         for (Card card : cardToSendToServer) {
             cardsAsString.append(card.toString()).append("\n");
         }
-        System.out.println(player.getClientView());
-        player.getClientView().update(player);
-        System.out.println(player.getClientView());
         return String.valueOf(cardsAsString); //ritorna stringa
     }
 
@@ -168,7 +165,10 @@ public class Game implements WhatCanPlayerDo {
     public void endTurn(Player currentPlayer) {
 
     }
+    public void updateSingleClientView(Player player){
+        player.getClientView().update(player);
 
+    }
     @Override
     public void requestGameInfo(Player player) {
 
