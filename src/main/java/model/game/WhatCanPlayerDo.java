@@ -17,7 +17,7 @@ import java.util.List;
 public interface WhatCanPlayerDo {
 
     void drawCard(); //switch con resource, gold oppure pescare dal pozzo
-    void playCard(Board board, Card card);
+    void playCard(Board board, int card);
     public void placeInitialCard(Board board, InitialCard card);
     String showCards(Player player);
     void chosenHandCard(); //implementare metodo in player

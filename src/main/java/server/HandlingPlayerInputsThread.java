@@ -151,8 +151,8 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println(userName +"ha scelto la carta numero: "+ size);
         threadPlayer.setSecretChosenCard(secretCards.get(size-1));
         System.out.println(threadPlayer.toString());
-
     }
+
     private void startGame() throws IOException {
         String messageFromClient;
         while (true) {
@@ -242,14 +242,21 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
         return dot;
     }
-    private void runCommand(String messageFromClient, Player player) throws NoSuchElementException {
+    private void runCommand(String messageFromClient, Player player) throws NoSuchElementException, IOException {
         if (gameController != null ) {
             System.out.println("Received command: " + messageFromClient); //Forward player command to controller
             if(messageFromClient.equals("endTurn")){
                 endTurn(player,turnController);
             }
-            else {
-                gameController.readCommand(messageFromClient, player); //sto passando una stringa e un player
+            else if(messageFromClient.equals("playCard"))
+            {
+                String indexCardChosen= stdIn.readLine();
+                int size = Integer.parseInt(indexCardChosen);
+                System.out.println(size);
+            }
+
+            else  {
+                gameController.readCommand(messageFromClient, player,0); //sto passando una stringa e un player
             }
         }
     }

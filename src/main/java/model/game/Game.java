@@ -58,7 +58,6 @@ public class Game implements WhatCanPlayerDo {
             player.drawResourceCard(resourceDeck);
             player.drawResourceCard(resourceDeck);
             player.drawGoldCard(goldDeck);
-
         }
     }
 
@@ -76,7 +75,8 @@ public class Game implements WhatCanPlayerDo {
     }
 
     @Override
-    public void playCard(Board board, Card card) {
+    public void playCard(Board board, int index) {
+
 
     }
 

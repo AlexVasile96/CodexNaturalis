@@ -47,10 +47,10 @@ public class GameController {
     }
 
 
-    public synchronized void readCommand(String commandString, Player player) {
+    public synchronized void readCommand(String commandString, Player player, int size) {
         if (game != null) {
             Command command = new Command();
-            String result = command.runCommand(game, commandString, player);
+            String result = command.runCommand(game, commandString, player,size);
             sendMessageToClient(result);
 
         }
