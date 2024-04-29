@@ -129,6 +129,14 @@ public class Game implements WhatCanPlayerDo {
         return String.valueOf(player.getPlayerScore());
     }
 
+    public String showWell(){
+        StringBuilder cardsAsString = new StringBuilder();
+        for (Card card : well) {
+            cardsAsString.append(card.toString()).append("\n");
+        }
+        return String.valueOf(cardsAsString); //ritorna stringa
+    }
+
     @Override
     public void runEndTurn() {
 
@@ -257,6 +265,10 @@ public class Game implements WhatCanPlayerDo {
 
     public synchronized boolean isInDots(String stringa) {
         return dots.contains(stringa);
+    }
+
+    public List<Card> getWell(){
+        return well;
     }
 
     //PRIVATE METHODS INSIDE GAME

@@ -30,7 +30,7 @@ public class Command { //Command Client sends to Server
 
 
 
-            case "common":   //MOMO
+            case "visualizeCommonObjectiveCards":   //MOMO ->finito-> funzionante
                 String commonCards;
                 commonCards= game.visualizeCommonObjective(player);
                 return commonCards;
@@ -50,10 +50,18 @@ public class Command { //Command Client sends to Server
                 playerPoints= game.showPoints(player);
                 return playerPoints;
 
+            case "showWell":        //MOMO
+                String wellPrinted;
+                wellPrinted= game.showWell(); //salva nella stringa il deck del giocatore
+                return wellPrinted;
+
             case "drawResourceCardFromDeck":        //MOMO
                 return "d";
 
-            case "drawGoldCardFromWell":      //MOMO
+            case "drawGoldCardFromDeck":        //MOMO
+                return "d";
+
+            case "drawCardFromWell":      //MOMO
                 return "e";
 
             case "endTurn":                //PIETRO -> non funziona

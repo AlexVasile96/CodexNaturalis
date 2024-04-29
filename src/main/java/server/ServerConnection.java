@@ -222,13 +222,14 @@ public class ServerConnection implements Runnable {
                 case "secret", "3" -> visualizeSecretObjective();
                 case "showBoard", "4" -> showBoard();
                 case "showPoints", "5" -> showPoints();
-                case "drawResourceCardFromDeck", "6" -> drawResourceCardFromDeck();
-                case  "drawGoldCardFromDeck", "7"->drawGoldCardFromDeck();
+                case "drawCard", "6" -> drawCard();
+                case "drawGoldCardFromDeck", "7"->drawGoldCardFromDeck();
                 case "drawCardFromWell", "8" -> drawCardFromWell();
                 case "endTurn", "9" -> runEndTurn();//run
                 case "quit", "10" -> quit();
+                case "showWell", "11" -> showWell();
                 default -> {System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
-                    System.out.println(in.readLine());}
+                    in.readLine();}
 
             }
         } catch (OperationCancelledException exception) {
@@ -292,9 +293,9 @@ public class ServerConnection implements Runnable {
         //carta del player deck che voglio giocare
         //carta della board su cui piazzare la mia carta
         //Angolo su cui voglio piazzare la mia carta
-        System.out.println("Hai scelto di giocare una carta dal tuo deck!\n");
-        System.out.println("Questa è la tua attuale board:");
-        System.out.print("////////////////////////////////// INIZIO BOARD //////////////////////////////////////////");
+        System.out.println("Hai scelto di giocare una carta dal tuo deck!");
+        System.out.println("Questa è la tua attuale board:\n");
+        System.out.print("////////////////////////////////// INIZIO BOARD //////////////////////////////////////////\n");
         String actualBoard= in.readLine();
         do{
             System.out.println(actualBoard);
@@ -354,10 +355,8 @@ public class ServerConnection implements Runnable {
     }
     private void visualizeCommonObjective() throws IOException {
         System.out.println("Common Objective Cards:\n");
-        String firstCard=in.readLine();
-        String secondCard=in.readLine();
-        System.out.println(firstCard);
-        System.out.println(secondCard);
+        System.out.println(in.readLine());//first common card
+        System.out.println(in.readLine());//second common card
 
         System.out.println("Carte lette correttamente");
     }
@@ -384,7 +383,17 @@ public class ServerConnection implements Runnable {
         String result= in.readLine();
         System.out.println("I tuoi punti attualmente sono: " + result);
     }
-    private void drawResourceCardFromDeck(){
+    private void showWell() throws IOException {
+        System.out.println("Common Well:\n------------------------------------------------------------------------------------------");
+        System.out.println(in.readLine());//prima carta nel pozzo
+        System.out.println(in.readLine());//seconda carta nel pozzo
+        System.out.println(in.readLine());//terza carta nel pozzo
+        System.out.println(in.readLine());//quarta carta nel pozzo
+        in.readLine();//spazio
+        System.out.println("------------------------------------------------------------------------------------------");
+
+    }
+    private void drawCard(){
         System.out.println("Hai scelto di pescare una carta dal deck Risorsa!\n");
     }
     private void drawGoldCardFromDeck(){
