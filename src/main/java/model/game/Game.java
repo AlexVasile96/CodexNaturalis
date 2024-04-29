@@ -22,6 +22,9 @@ public class Game implements WhatCanPlayerDo {
     private ObjectiveCard firstObjectiveCommonCard;
     private ObjectiveCard secondObjectiveCommonCard;
     private List<String> dots;
+    private static boolean isCornerAlreadyChosen= false;
+    private Card selectedCardFromTheDeck=null;
+    private Card cardPlayerChoose=null;
 
 
     public Game() {                                           //GAME CONSTRUCTOR WHICH INITIALIZED ALL THE CARDS
@@ -121,9 +124,20 @@ public class Game implements WhatCanPlayerDo {
     }
     public String showAvaiableCorners(Player player, int cardindex, int cardChosenOnTheBoard)
     {
-        Card cardChosen= player.getPlayerCards().get(cardindex);
-        player.playCard(player.getBoard(),cardindex, cardChosenOnTheBoard);
-        return "on god";
+        if(!isCornerAlreadyChosen){
+            Card initialCard = player.getBoard().getCardsOnTheBoardList().get(0);
+            selectedCardFromTheDeck= player.primostep(player.getBoard(),cardindex, cardChosenOnTheBoard);
+            cardPlayerChoose= player.secondostep(player.getBoard(),cardindex, cardChosenOnTheBoard);
+            String result= player.terzostep(player.getBoard(),cardindex, cardChosenOnTheBoard, selectedCardFromTheDeck,cardPlayerChoose, initialCard);
+            System.out.println(result);
+            isCornerAlreadyChosen=true;
+            return result;}
+        else {
+            //Mi servono
+            //cardPlayerChoose e selcted card from the deck
+        }
+        return null;
+
     }
 
     @Override

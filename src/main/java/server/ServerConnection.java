@@ -320,11 +320,16 @@ public class ServerConnection implements Runnable {
         String chosenCardOnTheBoard= stdin.readLine();
         int paolo= Integer.parseInt(chosenCardOnTheBoard);
         out.println(paolo-1);
-
-
-
-
         String avaiableCorners= in.readLine();
+        do{
+            System.out.println(avaiableCorners);
+            avaiableCorners= in.readLine();
+        } while(!avaiableCorners.equals("end"));
+        System.out.println();
+        System.out.print("Choose the corner you want to place the card on: ");
+        String cornerChosen= stdin.readLine();
+        System.out.println("Corner scelto correttamente!");
+        out.println(cornerChosen);
 
 
         //Card selectedCardFromTheDeck = chooseCard(size);

@@ -29,6 +29,7 @@ public class GameController {
     public static Deck initialDeck;
     private static Deck objectiveDeck;
     private Map<String, ClientView> clientViews = new HashMap<>();
+    private static boolean isCornerAlreadyChosen= false;
 
 
 
@@ -47,19 +48,25 @@ public class GameController {
     }
 
 
-    public synchronized void readCommand(String commandString, Player player, int size, int paolo) {
+    public synchronized void readCommand(String commandString, Player player, int size, int paolo, String cornerChosen) {
         if (game != null) {
             Command command = new Command();
             if(commandString.equals("playCard"))
             {
-                String cornersAvaible= command.runCommand(game, commandString, player, size,paolo);
-                sendMessageToClient(cornersAvaible);
-                String finale= command.runCommand(game, commandString, player, size,paolo);
-                sendMessageToClient(finale);
+                if(!isCornerAlreadyChosen) {
+                    String cornersAvaible = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
+                    sendMessageToClient(cornersAvaible); //Mando al client i corners disponibili
+                    isCornerAlreadyChosen=true;
+                }
+                else {
+                    String ciaone= command.runCommand(game,commandString,player,size,paolo,cornerChosen);
+                    sendMessageToClient(ciaone);
+                    isCornerAlreadyChosen=false;
+                }
 
             }
             else {
-                String result = command.runCommand(game, commandString, player,0,0);
+                String result = command.runCommand(game, commandString, player,0,0, cornerChosen);
                 sendMessageToClient(result);
             }
         }

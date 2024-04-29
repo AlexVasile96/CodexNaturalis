@@ -5,7 +5,7 @@ import model.game.Player;
 public class Command { //Command Client sends to Server
     private static int checkIfTheBoardHadAlreadyBeenPrinted= 0;
 
-    public String runCommand(Game game, String commandString, Player player, int size, int paolo) { //chiama sempre il game
+    public String runCommand(Game game, String commandString, Player player, int size, int paolo, String cornerChosen) { //chiama sempre il game
         switch (commandString) {
             case "showYourCardDeck":{ //finito-> funzionante
                 String deckprinted;

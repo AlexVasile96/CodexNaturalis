@@ -170,13 +170,47 @@ public class Player implements Observable {
         }
     }
 
-
-    public void playCard(Board board, int cardIndex, int cardChosenONTheBoard) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
-        Scanner scanner = new Scanner(System.in);
+    public Card primostep(Board board, int cardIndex, int cardChosen)
+    {
         Card selectedCardFromTheDeck = chooseCard(cardIndex);                   //OKAY
         checkIfTheCardExist(cardIndex);                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
         boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
-        if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return; //DA MODIFICARE
+        if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return null;
+        return selectedCardFromTheDeck;
+    }
+    public Card secondostep(Board board, int cardIndex, int cardChosenONTheBoard)
+    {
+        Card initialCard = board.getCardsOnTheBoardList().get(0);               //putting inside initialCard the firstPlacedCard on the board
+        List<Card> cardsPlayerCanChooseFrom = board.getCardsOnTheBoardList();   //VISUALIZING ALL THE CARDS ON THE BOARD SO THE PLAYER CAN CHOOSE ONE OF THEM
+
+        //showingToTheCurrentPlayerCardsOnTheBoard(cardsPlayerCanChooseFrom);  //showing to the current player the cards he/she has on the board
+        //FINO A QUA FUNZIONA TUTTO BENE
+        //Card cardPlayerChoose= selectTheCardFromTheBoard(cardsPlayerCanChooseFrom,scanner);  //Choosing the card
+        //System.out.println("Card correctly chosen");
+        Card cardPlayerChoose= cardsPlayerCanChooseFrom.get(cardChosenONTheBoard);
+
+
+        return cardPlayerChoose;
+    }
+    public String terzostep(Board board, int cardIndex, int cardChosenONTheBoard, Card selectedCardFromTheDeck, Card cardPlayerChoose, Card initialCard){
+        Scanner scanner = new Scanner(System.in);
+        List<Corner> availableCorners = creatingCorners(cardPlayerChoose); //Creating 4 corners to handle SelectedCard corners
+
+        if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
+            cardChosenIsTheInitialcard(initialCard,availableCorners);
+        } else {                                                        //CARD CHOSEN ISN'T THE INITIAL CARD
+            List<Corner> corner = creatingCorners(cardPlayerChoose);
+            cardChosenIsNotTheInitialcard(availableCorners,corner);
+        }
+        return freeScornerosi(availableCorners, cardPlayerChoose,scanner);
+    }
+
+    public String playCard(Board board, int cardIndex, int cardChosenONTheBoard) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
+        Scanner scanner = new Scanner(System.in);
+        /*Card selectedCardFromTheDeck = chooseCard(cardIndex);                   //OKAY
+        checkIfTheCardExist(cardIndex);                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
+        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
+        if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return null;
 
         Card initialCard = board.getCardsOnTheBoardList().get(0);               //putting inside initialCard the firstPlacedCard on the board
         List<Card> cardsPlayerCanChooseFrom = board.getCardsOnTheBoardList();   //VISUALIZING ALL THE CARDS ON THE BOARD SO THE PLAYER CAN CHOOSE ONE OF THEM
@@ -186,6 +220,7 @@ public class Player implements Observable {
         //Card cardPlayerChoose= selectTheCardFromTheBoard(cardsPlayerCanChooseFrom,scanner);  //Choosing the card
         //System.out.println("Card correctly chosen");
         Card cardPlayerChoose= cardsPlayerCanChooseFrom.get(cardChosenONTheBoard);
+        //Devo suddividere in tanti piccoli metodi per risucire a salvare i valori
         List<Corner> availableCorners = creatingCorners(cardPlayerChoose); //Creating 4 corners to handle SelectedCard corners
 
         if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
@@ -195,7 +230,9 @@ public class Player implements Observable {
             cardChosenIsNotTheInitialcard(availableCorners,corner);
         }
 
-        String selectedCorner= freeCornersOfTheSelectedCard(availableCorners, cardPlayerChoose,scanner); //Showing the available corners of the card and letting the player choose one
+        return freeScornerosi(availableCorners, cardPlayerChoose,scanner);*/
+
+        /*                                                                                  //Showing the available corners of the card and letting the player choose one
         int x = cardPlayerChoose.getNode().getCoordX(); //SAVING THE TOP LEFT CORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
         int y = cardPlayerChoose.getNode().getCoordY();
         switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECTLY
@@ -232,7 +269,8 @@ public class Player implements Observable {
         if (playerScore >= 20) {                //EndGame if the playerpoints=>20 points
             System.out.println("Player " + getNickName() + "wins!\n");
             EndGame endGame = new EndGame();
-        }
+        }*/
+        return null;
     }
 
 
@@ -377,8 +415,7 @@ public void cornersAvaible(){
             String cornerLabel = cornerLabels.get(corner);
             options.append((i + 1)).append(". EMPTY -> ").append(cornerLabel).append("|Please press ").append(cornerLabel).append(" to select the corner\n");
         }
-
-        // Restituisci le opzioni disponibili al client
+        options.append("\nend");
         System.out.println(options);
         return options.toString();
         /*System.out.print("Choose the corner you want to place the card on: ");

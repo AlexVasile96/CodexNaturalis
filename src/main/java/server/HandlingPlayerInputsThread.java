@@ -251,15 +251,17 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     private void runCommand(String messageFromClient, Player player) throws NoSuchElementException, IOException {
         if (gameController != null ) {
+            String cornerChosen=null;
             System.out.println("Received command: " + messageFromClient); //Forward player command to controller
             if(messageFromClient.equals("endTurn")){
                 endTurn(player,turnController);
             }
             else if(messageFromClient.equals("playCard"))
             {
+
                 String sentBoard= "showBoard";
                 System.out.println("Sono in runCommand");
-                gameController.readCommand(sentBoard, player,0,0); //In questo modo, al player viene fatta visualizzare la propria Board
+                gameController.readCommand(sentBoard, player,0,0, cornerChosen); //In questo modo, al player viene fatta visualizzare la propria Board
                 String indexCardChosen= stdIn.readLine(); //Memorizzo quale carta del proprio deck il player ha deciso di giocare
                 int cardChosenFromHisDeck = Integer.parseInt(indexCardChosen);
                 System.out.println("Il player ha scelto la carta numero " +cardChosenFromHisDeck);
@@ -267,11 +269,14 @@ public class HandlingPlayerInputsThread implements Runnable {
                 int boardCardChosen= Integer.parseInt(CardOnTheBoardChosen);
                 System.out.println("Il player ha deciso di giocare la proria carta sulla carta numero " + boardCardChosen);
                 System.out.println("Mando tutto al GameController");
-                gameController.readCommand(messageFromClient, player,cardChosenFromHisDeck, boardCardChosen);
+                gameController.readCommand(messageFromClient, player,cardChosenFromHisDeck, boardCardChosen, cornerChosen);
+                cornerChosen= stdIn.readLine();
+                System.out.println(cornerChosen);
+                gameController.readCommand(messageFromClient, player,cardChosenFromHisDeck, boardCardChosen, cornerChosen);
             }
 
             else  {
-                gameController.readCommand(messageFromClient, player,0,0); //sto passando una stringa e un player
+                gameController.readCommand(messageFromClient, player,0,0,cornerChosen ); //sto passando una stringa e un player
             }
         }
     }
