@@ -230,7 +230,7 @@ public class Player implements Observable {
         return freeScornerosi(availableCorners, cardPlayerChoose,scanner);
     }
 
-    public String playCard(Board board, int cardIndex, int cardChosenONTheBoard) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
+    public void playCard(Board board, int cardIndex, int cardChosenONTheBoard,Card selectedCardFromTheDeck, Card cardPlayerChoose, String selectedCorner) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
         Scanner scanner = new Scanner(System.in);
         /*Card selectedCardFromTheDeck = chooseCard(cardIndex);                   //OKAY
         checkIfTheCardExist(cardIndex);                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
@@ -257,7 +257,7 @@ public class Player implements Observable {
 
         return freeScornerosi(availableCorners, cardPlayerChoose,scanner);*/
 
-        /*                                                                                  //Showing the available corners of the card and letting the player choose one
+
         int x = cardPlayerChoose.getNode().getCoordX(); //SAVING THE TOP LEFT CORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
         int y = cardPlayerChoose.getNode().getCoordY();
         switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECTLY
@@ -294,8 +294,7 @@ public class Player implements Observable {
         if (playerScore >= 20) {                //EndGame if the playerpoints=>20 points
             System.out.println("Player " + getNickName() + "wins!\n");
             EndGame endGame = new EndGame();
-        }*/
-        return null;
+        }
     }
 
 

@@ -21,8 +21,9 @@ public class Command { //Command Client sends to Server
                 }
                 else if(checkIfTheBoardHadAlreadyBeenPrinted==1)
                 {
-                    game.playCard(player.getBoard(), 0);
+                    game.playCard(player,size, paolo, cornerChosen);
                     String finalResult="Carta placed";
+                    checkIfTheBoardHadAlreadyBeenPrinted--;
                     return finalResult;
 
                 }

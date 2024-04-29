@@ -1,6 +1,5 @@
 package model.game;
 
-import controller.TurnController;
 import model.card.*;
 import model.deck.GoldDeck;
 import model.deck.InitialCardDeck;
@@ -77,10 +76,16 @@ public class Game implements WhatCanPlayerDo {
 
     }
 
-    @Override
-    public void playCard(Board board, int index) {
 
 
+
+    public String playCard(Player player, int cardindex, int cardChosenOnTheBoard, String selectedCorner) {
+            player.playCard(player.getBoard(),cardindex,cardChosenOnTheBoard,selectedCardFromTheDeck,cardPlayerChoose, selectedCorner);
+            String finalAnswer="Carta piazzata correttamente";
+            player.getClientView().update(player);
+
+
+        return finalAnswer;
     }
 
     @Override
@@ -124,20 +129,13 @@ public class Game implements WhatCanPlayerDo {
     }
     public String showAvaiableCorners(Player player, int cardindex, int cardChosenOnTheBoard)
     {
-        if(!isCornerAlreadyChosen){
             Card initialCard = player.getBoard().getCardsOnTheBoardList().get(0);
             selectedCardFromTheDeck= player.primostep(player.getBoard(),cardindex, cardChosenOnTheBoard);
             cardPlayerChoose= player.secondostep(player.getBoard(),cardindex, cardChosenOnTheBoard);
             String result= player.terzostep(player.getBoard(),cardindex, cardChosenOnTheBoard, selectedCardFromTheDeck,cardPlayerChoose, initialCard);
             System.out.println(result);
             isCornerAlreadyChosen=true;
-            return result;}
-        else {
-            //Mi servono
-            //cardPlayerChoose e selcted card from the deck
-        }
-        return null;
-
+            return result;
     }
 
     @Override

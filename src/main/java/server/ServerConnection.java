@@ -263,11 +263,11 @@ public class ServerConnection implements Runnable {
                 """
                         Supported commands:
                         - If you type-> 'showdeck / 0 ': display player's cards
-                        - If you type-> 'playCard /1': select the card you want to place from your hand
+                        - If you type-> 'playcard /1': select the card you want to place from your hand
                         - If you type->  'common /2': visualize the common objective cards
                         - If you type->  'secret /3': visualize your secret objective card
-                        - If you type->  'showBoard /4':print your board
-                        - If you type->  'showPoints /5': show your points
+                        - If you type->  'board /4':print your board
+                        - If you type->  'points /5': show your points
                         - If you type->  'drawResourceCardFromDeck /6': draw a card from the resource deck
                         - If you type->  'drawGoldCardFromDeck /7': draw a card from the gold deck
                         - If you type->  'drawCardFromWell /8': draw a card from the well
@@ -340,33 +340,8 @@ public class ServerConnection implements Runnable {
         String cornerChosen= stdin.readLine();
         System.out.println("Corner scelto correttamente!");
         out.println(cornerChosen);
-
-
-        //Card selectedCardFromTheDeck = chooseCard(size);
-     /*
-        checkIfTheCardExist(size);                                              //CHECKING IF THE CARD TRULY EXISTS->OKAY
-        //boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
-        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);
-        if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return; //DA MODIFICARE
-        Scanner scanner= new Scanner(System.in);
-        System.out.println("Ti verranno ora mostrate tutte le carte presenti sulla tua board");
-        Card initialCard = clientView.getBoard().getCardsOnTheBoardList().get(0);            //putting inside initialCard the firstPlacedCard on the board
-        List<Card> cardsPlayerCanChooseFrom =clientView.getBoard().getCardsOnTheBoardList();   //VISUALIZING ALL THE CARDS ON THE BOARD SO THE PLAYER CAN CHOOSE ONE OF THEM
-
-        showingToTheCurrentPlayerCardsOnTheBoard(cardsPlayerCanChooseFrom);                     //showing to the current player the cards he/she has on the board
-        Card cardPlayerChoose= selectTheCardFromTheBoard(cardsPlayerCanChooseFrom,scanner);     //Choosing the card
-        System.out.println("Card correctly chosen");
-        List<Corner> availableCorners = creatingCorners(cardPlayerChoose); //Creating 4 corners to handle SelectedCard corners
-
-        if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
-            cardChosenIsTheInitialcard(initialCard,availableCorners);
-        } else {                                                        //CARD CHOSEN ISN'T THE INITIAL CARD
-            List<Corner> corner = creatingCorners(cardPlayerChoose);
-            cardChosenIsNotTheInitialcard(availableCorners,corner);
-        }
-
-        String selectedCorner= freeCornersOfTheSelectedCard(availableCorners, cardPlayerChoose,scanner); //Showing the available corners of the card and letting the player choose one
-        */
+        String ultimo= in.readLine();
+        System.out.println(ultimo);
         numberOfCardsplaced++;
     }
     private void visualizeCommonObjective() throws IOException {
@@ -509,121 +484,6 @@ public class ServerConnection implements Runnable {
     private void runEndTurn(){
         sendMessageToServer("endTurn");
         System.out.println("Hai scelto di concludere il tuo turno. La mano passa al gicatore successivo");
-
-
-
-    }
-    /*private int checkIfTheCardExist(int cardIndex)
-    {
-        Card selectedCardFromTheDeck = chooseCard(cardIndex);          //SELECTEDCARDFROMTHEDECK IS THE CARD CHOSEN FROM THE PLAYER DECK
-        if (selectedCardFromTheDeck == null) {                         //CHECKING IF THE CARD EXISTS, IN CASE RETURN
-            return 0;
-        }
-        return cardIndex;
-    }*/
-    private boolean isTheCardGold(Card selectedCard)
-    {
-        if (selectedCard instanceof GoldCard) {
-            return clientView.getBoard().placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing());
-        }
-        else {
-            return false;
-        }
-    }
-    private void showingToTheCurrentPlayerCardsOnTheBoard(List<Card> cardsPlayerCanChooseFrom){
-        System.out.println("Cards on the board are:");                          //PRINTING THE CARDS ON THE BOARD
-        for (int i = 0; i < cardsPlayerCanChooseFrom.size(); i++) {
-            Card card = cardsPlayerCanChooseFrom.get(i);
-            System.out.println((i + 1) + ". " + card);
-        }
-    }
-    private Card selectTheCardFromTheBoard(List<Card> cardsPlayerCanChooseFrom, Scanner scanner){
-        System.out.print("Select a card on your board you want to place the card from your deck on: ");
-        int selectedCardIndex = scanner.nextInt();
-        try{
-            if (selectedCardIndex < 1 || selectedCardIndex > cardsPlayerCanChooseFrom.size()) {
-                throw new IndexOutOfBoundsException("Not a valid index");}
-        }
-        catch (IndexOutOfBoundsException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        catch (InputMismatchException e){
-            System.out.println(e.getMessage());
-        }
-        return cardsPlayerCanChooseFrom.get(selectedCardIndex - 1);
-    }
-    private List<Corner> creatingCorners(Card cardPlayerChoose){
-        List<Corner> availableCorners = new ArrayList<>();                //CREATING CORNERS THAT WILL BE DISPLAYED TO THE PLAYER
-        availableCorners.add(cardPlayerChoose.getTL());
-        availableCorners.add(cardPlayerChoose.getTR());
-        availableCorners.add(cardPlayerChoose.getBL());
-        availableCorners.add(cardPlayerChoose.getBR());
-        return availableCorners;
-    }
-    private void cardChosenIsTheInitialcard(Card initialCard,List<Corner> availableCorners )
-    {
-        List<Corner> initialCardCorners = new ArrayList<>();       //THEN ELIMINATING NOTTOBEPLACEDON CORNERS FROM PLAYER DISPLAYER &&CORNER WHOSE VALUE IS 0
-        initialCardCorners.add(initialCard.getTL());
-        initialCardCorners.add(initialCard.getTR());
-        initialCardCorners.add(initialCard.getBL());
-        initialCardCorners.add(initialCard.getBR());
-        for (int i = initialCardCorners.size() - 1; i >= 0; i--) {
-            if (initialCardCorners.get(i).getSpecificCornerSeed() == SpecificSeed.NOTTOBEPLACEDON || initialCardCorners.get(i).getValueCounter() == 0) {
-                availableCorners.remove(i);
-            }
-        }
-    }
-    private void cardChosenIsNotTheInitialcard(List<Corner> availableCorners, List<Corner> corner)
-    {
-        for (int i = corner.size() - 1; i >= 0; i--) {
-            if (corner.get(i).getSpecificCornerSeed() == SpecificSeed.NOTTOBEPLACEDON || corner.get(i).getValueCounter() == 0) { //SAMECHECK
-                availableCorners.remove(i);
-                corner.remove(i);
-            }
-        }
-    }
-    public String chooseCard(int index) {
-        try{
-            if (index < 0 || index >= clientView.getPlayerCards().size()) {
-                throw new IndexOutOfBoundsException("Not a valid index");
-            }
-        }catch (IndexOutOfBoundsException e)
-        {
-            System.out.println(e.getMessage()); //INDEX GOES FROM 1 TO 3
-        }
-
-        return clientView.getPlayerStringCards().get(index);
-    }  //METHOD TO CHOOSE WHICH CARD THE PLAYER WANTS TO PLACE ON THE BOARD
-
-
-
-
-
-    private String freeCornersOfTheSelectedCard(List<Corner> availableCorners, Card cardPlayerChoose, Scanner scanner){
-        Map<Corner, String> cornerLabels = new HashMap<>();      //PUTTING THE CORRECT CORNERLABEL TO THE CORRECT CORNER
-        cornerLabels.put(cardPlayerChoose.getTL(), "TL");
-        cornerLabels.put(cardPlayerChoose.getTR(), "TR");
-        cornerLabels.put(cardPlayerChoose.getBL(), "BL");
-        cornerLabels.put(cardPlayerChoose.getBR(), "BR");
-
-        System.out.println("Free Corners of the selected card "); //DISPLAYING THE POSSIBLE CORNERS
-        for (int i = 0; i < availableCorners.size(); i++) {
-            Corner corner = availableCorners.get(i);
-            String cornerLabel = cornerLabels.get(corner);
-            System.out.println((i + 1) + ". " + corner + " -> " + cornerLabel + "|Please press " +cornerLabel + " to select the corner ");
-        }
-        System.out.print("Choose the corner you want to place the card on: ");
-        String selectedCorner = scanner.next().toUpperCase();
-        try{
-            if (!selectedCorner.equals("TL") && !selectedCorner.equals("TR") && !selectedCorner.equals("BL") && !selectedCorner.equals("BR")) {
-                throw new InvalidCornerException("Invalid corner selection.");
-            }
-        }  catch (InvalidCornerException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        return selectedCorner;
 
     }
 

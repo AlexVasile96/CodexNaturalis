@@ -7,7 +7,6 @@ package model.game;
 * */
 
 
-import controller.TurnController;
 import model.card.Card;
 import model.card.InitialCard;
 import model.card.ObjectiveCard;
@@ -17,7 +16,6 @@ import java.util.List;
 public interface WhatCanPlayerDo {
 
     void drawCard(); //switch con resource, gold oppure pescare dal pozzo
-    void playCard(Board board, int card);
     public void placeInitialCard(Board board, InitialCard card);
     String showCards(Player player);
     void chosenHandCard(); //implementare metodo in player
