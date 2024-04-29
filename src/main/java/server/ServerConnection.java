@@ -219,12 +219,12 @@ public class ServerConnection implements Runnable {
                 case "actions" -> printActions();
 
                 //The following methods are used to run game actions
-                case "showyourcarddeck", "0" -> showCards();
+                case "showdeck", "0" -> showCards();
                 case "playcard", "1" -> chosenHandCard();
-                case "visualizecommonobjectivecards", "2" -> visualizeCommonObjective();
+                case "common", "2" -> visualizeCommonObjective();
                 case "secret", "3" -> visualizeSecretObjective();
-                case "showboard", "4" -> showBoard();
-                case "showpoints", "5" -> showPoints();
+                case "board", "4" -> showBoard();
+                case "points", "5" -> showPoints();
                 case "drawcard", "6" -> drawCard();
                 case "drawcardfromdeck", "7"-> drawCardFromDeck();
                 case "drawcardfromwell", "8" -> drawCardFromWell();
@@ -262,7 +262,7 @@ public class ServerConnection implements Runnable {
         System.out.println(
                 """
                         Supported commands:
-                        - If you type-> 'showYourCardDeck / 0 ': display player's cards
+                        - If you type-> 'showdeck / 0 ': display player's cards
                         - If you type-> 'playCard /1': select the card you want to place from your hand
                         - If you type->  'common /2': visualize the common objective cards
                         - If you type->  'secret /3': visualize your secret objective card
