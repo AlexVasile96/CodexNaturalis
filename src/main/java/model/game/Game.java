@@ -98,7 +98,10 @@ public class Game implements WhatCanPlayerDo {
 
     @Override
     public String  visualizeCommonObjective(Player player) {
-        return null;
+        StringBuilder cardsAsString = new StringBuilder();
+        cardsAsString.append(firstObjectiveCommonCard.toString()).append("\n");
+        cardsAsString.append(secondObjectiveCommonCard.toString());
+        return String.valueOf(cardsAsString); //ritorna stringa
     }
 
     @Override

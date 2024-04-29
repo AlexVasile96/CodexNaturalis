@@ -31,14 +31,16 @@ public class Command { //Command Client sends to Server
 
 
             case "common":   //MOMO
-                return "";
+                String commonCards;
+                commonCards= game.visualizeCommonObjective(player);
+                return commonCards;
 
             case "secret":                          //PIETRO ->finito-> funzionante
                 String secretObjectiveCard;
                 secretObjectiveCard= game.visualizeSecretObjective(player); //salva nella stringa la carta obiettivo segreta del giocatore
                 return secretObjectiveCard;
 
-            case "showBoard":                //MOMO
+            case "showBoard":                //MOMO-> finito-> funzionante
                 String yourBoard;
                 yourBoard= game.showBoard(player);
                 return yourBoard;

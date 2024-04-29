@@ -227,7 +227,8 @@ public class ServerConnection implements Runnable {
                 case "drawCardFromWell", "8" -> drawCardFromWell();
                 case "endTurn", "9" -> runEndTurn();//run
                 case "quit", "10" -> quit();
-                default -> System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
+                default -> {System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
+                    System.out.println(in.readLine());}
 
             }
         } catch (OperationCancelledException exception) {
@@ -351,8 +352,14 @@ public class ServerConnection implements Runnable {
         */
         numberOfCardsplaced++;
     }
-    private void visualizeCommonObjective(){
-        System.out.println("Hai scelto di visualizzare gli obiettivi comuni a tutti!\n");
+    private void visualizeCommonObjective() throws IOException {
+        System.out.println("Common Objective Cards:\n");
+        String firstCard=in.readLine();
+        String secondCard=in.readLine();
+        System.out.println(firstCard);
+        System.out.println(secondCard);
+
+        System.out.println("Carte lette correttamente");
     }
     private void visualizeSecretObjective() throws IOException {
         System.out.println("Hai scelto di visualizzare la tua carta obiettivo segreta\n");
