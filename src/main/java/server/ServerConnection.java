@@ -20,7 +20,7 @@ public class ServerConnection implements Runnable {
     private PrintWriter out;
     private Player player;
     private Boolean myTurn;
-
+    private int numberOfCardsplaced=1;
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
             this.clientView=clientView;
@@ -47,7 +47,7 @@ public class ServerConnection implements Runnable {
                         assigningSecretCard();                          //Choosing the secret Card
                         takingTheInitialCard();
                     }
-                    else {//If client has made the login, he can start asking for inputs if it's his turn
+                    else {                                              //If client has made the login, he can start asking for inputs if it's his turn
                         String isMyTurn = in.readLine();                //è il tuo turno
                         System.out.println(isMyTurn);                   //viene stampato è il tuo turno
                         if (isMyTurn != null && isMyTurn.equals("è il tuo turno!!")) {
@@ -72,7 +72,6 @@ public class ServerConnection implements Runnable {
                                     "14. quit, 10 - quit()");*/
                             command=stdin.readLine();
                             sendMessageToServer(command);
-                            //mando showYourCardDeck
                             actionsInput(command);
                         }
                         else{
@@ -142,7 +141,6 @@ public class ServerConnection implements Runnable {
         clientView.setUserName(loginName);                      //UPDATING CLIENT VIEW
         chooseYourDotColor(player);
         chooseNumberOfPlayers();
-
     }
 
     public synchronized void sendMessageToServer(String message) {
@@ -294,14 +292,38 @@ public class ServerConnection implements Runnable {
         //carta della board su cui piazzare la mia carta
         //Angolo su cui voglio piazzare la mia carta
         System.out.println("Hai scelto di giocare una carta dal tuo deck!\n");
+        System.out.println("Questa è la tua attuale board:");
+        System.out.print("////////////////////////////////// INIZIO BOARD //////////////////////////////////////////");
+        String actualBoard= in.readLine();
+        do{
+            System.out.println(actualBoard);
+            actualBoard= in.readLine();
+        }while (!actualBoard.equals("fine board"));
+        System.out.println();
+        System.out.println("////////////////////////////////// FINE BOARD ////////////////////////////////////////////");
+        System.out.println("\n");
+        System.out.println("Queste sono le carte del tuo deck: ");
+        System.out.println("\n");
         System.out.println(player.getClientView().getPlayerStringCards().get(0));
         System.out.println(player.getClientView().getPlayerStringCards().get(1));
         System.out.println(player.getClientView().getPlayerStringCards().get(2));
         System.out.println("Scegli quale carta vuoi giocare sulla tua board:");
+        System.out.println("1-> prima carta\n2-> seconda carta\n3-> terza carta");
         String result= stdin.readLine();
         int size= Integer.parseInt(result);
         out.print(size-1); //Carta scelta dal deck del player
-        System.out.println("Su quale carta della board vuoi piazzare la carta?");
+        System.out.println("Su quale carta della board vuoi andare a piazzare la tua carta?");
+        System.out.println("1-> corrisponde alla carta iniziale");
+        String chosenCardonTheBoard= stdin.readLine();
+        int paolo= Integer.parseInt(chosenCardonTheBoard);
+        out.print(paolo-1);
+
+
+
+
+        String avaiableCorners= in.readLine();
+
+
         //Card selectedCardFromTheDeck = chooseCard(size);
      /*
         checkIfTheCardExist(size);                                              //CHECKING IF THE CARD TRULY EXISTS->OKAY
@@ -327,7 +349,7 @@ public class ServerConnection implements Runnable {
 
         String selectedCorner= freeCornersOfTheSelectedCard(availableCorners, cardPlayerChoose,scanner); //Showing the available corners of the card and letting the player choose one
         */
-
+        numberOfCardsplaced++;
     }
     private void visualizeCommonObjective(){
         System.out.println("Hai scelto di visualizzare gli obiettivi comuni a tutti!\n");

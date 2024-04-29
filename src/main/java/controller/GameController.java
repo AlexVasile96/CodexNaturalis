@@ -47,25 +47,24 @@ public class GameController {
     }
 
 
-    public synchronized void readCommand(String commandString, Player player, int size) {
+    public synchronized void readCommand(String commandString, Player player, int size, int paolo) {
         if (game != null) {
             Command command = new Command();
             if(commandString.equals("playCard"))
             {
-                String boardResult= command.runCommand(game,commandString,player,size);
-                sendMessageToClient(boardResult);
-                String cornersAvaible= command.runCommand(game, commandString, player, size);
+                String cornersAvaible= command.runCommand(game, commandString, player, size,paolo);
                 sendMessageToClient(cornersAvaible);
-                String finale= command.runCommand(game, commandString, player, size);
+                String finale= command.runCommand(game, commandString, player, size,paolo);
                 sendMessageToClient(finale);
 
             }
             else {
-                String result = command.runCommand(game, commandString, player, size);
+                String result = command.runCommand(game, commandString, player,0,0);
                 sendMessageToClient(result);
             }
         }
     }
+
 
 
     public void addPlayer(String username, PrintWriter userOut) throws GameFullException, UnknownPlayerNumberException, UsernameAlreadyExistsException {

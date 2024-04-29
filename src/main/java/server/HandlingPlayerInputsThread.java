@@ -257,20 +257,20 @@ public class HandlingPlayerInputsThread implements Runnable {
             }
             else if(messageFromClient.equals("playCard"))
             {
-                String indexCardChosen= stdIn.readLine();
-                int size = Integer.parseInt(indexCardChosen);
-                System.out.println("Il player ha scelto la carta numero " +size);
-                String cartaSullaBoard= stdIn.readLine();
-                int cartadellaboard= Integer.parseInt(indexCardChosen);
-                System.out.println("Il player ha deciso di piazzare la propria carta sulla carta numero " + cartadellaboard);
-                String cornerChosen= stdIn.readLine();
-                System.out.println("Il player ha deciso di piazzare la propria carta sull'angolo " + cornerChosen);
+                String sentBoard= "showBoard";
+                gameController.readCommand(sentBoard, player,0,0); //In questo modo, al player viene fatta visualizzare la propria Board
+                String indexCardChosen= stdIn.readLine(); //Memorizzo quale carta del proprio deck il player ha deciso di giocare
+                int cardChosenFromHisDeck = Integer.parseInt(indexCardChosen);
+                System.out.println("Il player ha scelto la carta numero " +cardChosenFromHisDeck);
+                String CardOnTheBoardChosen= stdIn.readLine();
+                int boardCardChosen= Integer.parseInt(CardOnTheBoardChosen);
+                System.out.println("Il player ha deciso di giocare la proria carta sulla carta numero " + boardCardChosen);
 
-                gameController.readCommand(messageFromClient, player,size);
+                gameController.readCommand(messageFromClient, player,cardChosenFromHisDeck, boardCardChosen);
             }
 
             else  {
-                gameController.readCommand(messageFromClient, player,0); //sto passando una stringa e un player
+                gameController.readCommand(messageFromClient, player,0,0); //sto passando una stringa e un player
             }
         }
     }

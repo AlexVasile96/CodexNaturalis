@@ -31,8 +31,12 @@ public class Board {
     public void printBoard() { //printBoard method
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes[i].length; j++) {
-                if(nodeIsUsed(nodes[i][j].getValueCounter())){
+                if(nodeIsUsed(nodes[i][j].getValueCounter()))
+                {
                     System.out.print(nodes[i][j].getSpecificNodeSeed() + "\t" + j + "\t" + i + ", value:" + nodes[i][j].getValueCounter() + " |");
+                }
+                else {
+                    System.out.print("[VUOTO]\t" + j + "\t" + i + ", value:0 |");
                 }
             }
             System.out.println();
