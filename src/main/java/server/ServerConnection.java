@@ -71,7 +71,9 @@ public class ServerConnection implements Runnable {
                                     "13. endTurn, 9 - runEndTurn()\n" +
                                     "14. quit, 10 - quit()");*/
                             command=stdin.readLine();
-                            sendMessageToServer(command);
+                            if(!command.equals("drawCard")) { //aggiunto il controllo cosi da mandare il comando appropriato al server
+                                sendMessageToServer(command);
+                            }
                             actionsInput(command);
                         }
                         else{
@@ -223,7 +225,7 @@ public class ServerConnection implements Runnable {
                 case "showBoard", "4" -> showBoard();
                 case "showPoints", "5" -> showPoints();
                 case "drawCard", "6" -> drawCard();
-                case "drawGoldCardFromDeck", "7"->drawGoldCardFromDeck();
+                case "drawCardFromDeck", "7"-> drawCardFromDeck();
                 case "drawCardFromWell", "8" -> drawCardFromWell();
                 case "endTurn", "9" -> runEndTurn();//run
                 case "quit", "10" -> quit();
@@ -399,15 +401,87 @@ public class ServerConnection implements Runnable {
         System.out.println("------------------------------------------------------------------------------------------");
 
     }
-    private void drawCard(){
-        System.out.println("Hai scelto di pescare una carta dal deck Risorsa!\n");
+    private void drawCard() throws IOException {
+        System.out.println("You chose to draw a card!\n");
+        sendMessageToServer("showWell");
+        showWell();
+        String pesca;
+        do {
+            System.out.println("where to draw the card from?\n" +
+                    "->deck\n" +
+                    "->well");
+            pesca = in.readLine().toLowerCase();
+            if (pesca.equals("deck")) {
+                drawCardFromDeck();
+            }
+            else if (pesca.equals("well")) {
+                drawCardFromWell();
+            }
+            else System.out.println("write 'deck' or 'well'");
+        }while (!pesca.equals("well") && !pesca.equals("deck"));
     }
-    private void drawGoldCardFromDeck(){
-        System.out.println("Hai scelto di pescare una carta dal deck Gold\n");
+    private void drawCardFromDeck() throws IOException {
+        System.out.println("where to draw the card from?\n" +
+                "->Resource\n" +
+                "->Gold");
+        String pesca;
+        do{
+            pesca = in.readLine().toLowerCase();
+            if (pesca.equals("resource")) {
+                sendMessageToServer("drawCardFromResourceDeck");
+                drawCardFromResourceDeck();
+            }
+            else if (pesca.equals("gold")) {
+                sendMessageToServer("drawCardFromGoldDeck");
+                drawCardFromGoldDeck();
+            }
+            else System.out.println("write 'resource' or 'gold'");
+
+        }while (!pesca.equals("resource") && !pesca.equals("gold"));
     }
-    private void drawCardFromWell(){
-        System.out.println("Hai scelto di pescare una carta dal pozzo!\n");
+
+    private void drawCardFromResourceDeck() {
     }
+
+    private void drawCardFromGoldDeck() {
+    }
+
+    private void drawCardFromWell() throws IOException {
+        System.out.println("Which card from the well do you want to draw?\n");
+        sendMessageToServer("showWell");
+        System.out.println("Well:\n------------------------------------------------------------------------------------------");
+        System.out.println("select 'well-0' for"+in.readLine());//prima carta nel pozzo
+        System.out.println("select 'well-1' for"+in.readLine());//seconda carta nel pozzo
+        System.out.println("select 'well-2' for"+in.readLine());//terza carta nel pozzo
+        System.out.println("select 'well-3' for"+in.readLine());//quarta carta nel pozzo
+        in.readLine();//spazio
+        System.out.println("------------------------------------------------------------------------------------------");
+        String selectedCard;
+        do{
+            selectedCard= in.readLine().toLowerCase();
+            if(!rightResponseWell(selectedCard)) {
+                System.out.println("wrong choice, try again");
+            }
+        }while(!rightResponseWell(selectedCard));
+        sendMessageToServer(selectedCard);
+
+        String esito = in.readLine();
+        if(Objects.equals(esito, String.valueOf(true))) {
+            System.out.println("operation performed correctly");
+
+        }
+        else{
+            System.out.println("operation performed incorrectly");
+        }
+    }
+
+    private boolean rightResponseWell(String selectedCard) {
+        if(selectedCard.equals("well-0") || selectedCard.equals("well-1") || selectedCard.equals("well-2") || selectedCard.equals("well-3")) {
+            return true;
+        }
+        return false;
+    }
+
     private void quit(){
         System.out.println("Hai scelto di quittare!\n");
     }

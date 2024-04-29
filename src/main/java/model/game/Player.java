@@ -42,27 +42,52 @@ public class Player implements Observable {
 
     public List<Card> chooseCardFromWell(List<Card>cardwell,ResourceDeck rc, GoldDeck gd) {
         Scanner scanner = new Scanner(System.in);
-            if (this.playerCards.size() < 3) {
-                if (cardwell.isEmpty()) {
-                    return null; //empty well
-                }
-                try {
-                    for (Card card : cardwell) {
-                        System.out.println(card);
-                    }
-                    Card drownCard= choosingTheSpecificCardFromTheWell(scanner, cardwell); //Choosing the card and saving it in drowncard
-                    fillingTheWellWithTheCorrectCard(drownCard,rc,gd, cardwell);           //Filling The Well
-                    playerCards.add(drownCard);                                             //Adding the card to the player hand
-                } catch (Exception e) {
-                    throw new IllegalStateException("Well is empty"); // Eccezione specifica
-                }
+        if (this.playerCards.size() < 3) {
+            if (cardwell.isEmpty()) {
+                return null; //empty well
             }
-            else {
-                System.out.println("Player's deck already has 3 cards\n");
-                return cardwell;
+            try {
+                for (Card card : cardwell) {
+                    System.out.println(card);
+                }
+                Card drownCard= choosingTheSpecificCardFromTheWell(scanner, cardwell); //Choosing the card and saving it in drowncard
+                fillingTheWellWithTheCorrectCard(drownCard,rc,gd, cardwell);           //Filling The Well
+                playerCards.add(drownCard);                                             //Adding the card to the player hand
+            } catch (Exception e) {
+                throw new IllegalStateException("Well is empty"); // Eccezione specifica
             }
+        }
+        else {
+            System.out.println("Player's deck already has 3 cards\n");
             return cardwell;
         }
+        return cardwell;
+    }
+
+    public Boolean chooseCardFromWellForServer(List<Card>cardwell, int index, ResourceDeck rc, GoldDeck gd) {
+        if (this.playerCards.size() < 3) {
+            if (cardwell.isEmpty()) {
+                System.out.println("Well is empty");
+                return false; //empty well
+            }
+            try {
+                for (Card card : cardwell) {
+                    System.out.println(card);
+                }
+                Card drownCard= choosingTheSpecificCardFromTheWellForServer(index, cardwell); //Choosing the card and saving it in drowncard
+                fillingTheWellWithTheCorrectCard(drownCard,rc,gd, cardwell);           //Filling The Well
+                playerCards.add(drownCard);                                             //Adding the card to the player hand
+            } catch (Exception e) {
+                throw new IllegalStateException("problema nel blocco try di chooseCardFromWellForServer"); // Eccezione specifica
+            }
+        }
+        else {
+            System.out.println("Player's deck already has 3 cards\n");
+            return false;
+        }
+        return true;
+    }
+
     public void chooseSecretCard(List <ObjectiveCard> secretCards){
         for (int i = 0; i < secretCards.size(); i++) {
             Card card = secretCards.get(i);
@@ -618,7 +643,6 @@ public void cornersAvaible(){
         System.out.println(nickName+"score: "+ playerScore);
     }
     public Card choosingTheSpecificCardFromTheWell(Scanner scanner, List<Card>cardwell){
-        System.out.println("\n");
         System.out.print("Select a card from the well ");
         int selectedCardIndex = scanner.nextInt();
         if (selectedCardIndex < 1 || selectedCardIndex > cardwell.size()) {
@@ -627,6 +651,14 @@ public void cornersAvaible(){
         }
         int realIndex = selectedCardIndex - 1;
         return cardwell.remove(realIndex);
+
+    }
+    public Card choosingTheSpecificCardFromTheWellForServer(int index, List<Card>cardwell){
+        if (index < 1 || index > cardwell.size()) {
+            System.out.println("Not valid index");
+            return null;
+        }
+        return cardwell.remove(index);
 
     }
     private void  fillingTheWellWithTheCorrectCard(Card drownCard, ResourceDeck rc,GoldDeck gd, List<Card>cardwell)

@@ -55,14 +55,18 @@ public class Command { //Command Client sends to Server
                 wellPrinted= game.showWell(); //salva nella stringa il deck del giocatore
                 return wellPrinted;
 
-            case "drawResourceCardFromDeck":        //MOMO
+            case "drawCardFromResourceDeck":        //MOMO
                 return "d";
 
-            case "drawGoldCardFromDeck":        //MOMO
-                return "d";
+            case "drawCardFromGoldDeck":        //MOMO
+                Boolean esito;
+                esito = game.drawCardFromWell(player, size);
+                return String.valueOf(esito);
 
             case "drawCardFromWell":      //MOMO
-                return "e";
+                String operationResult;
+                operationResult= game.showWell(); //salva nella stringa il deck del giocatore
+                return operationResult;
 
             case "endTurn":                //PIETRO -> non funziona
                 game.endTurn(player);

@@ -274,11 +274,21 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println(cornerChosen);
                 gameController.readCommand(messageFromClient, player,cardChosenFromHisDeck, boardCardChosen, cornerChosen);
             }
-
+            else if(rightWell(messageFromClient)){
+                char ultimoCarattere = messageFromClient.charAt(messageFromClient.length() - 1);    //in questo modo prndo l'intero che mi serve
+                int posizione= Integer.parseInt(String.valueOf(ultimoCarattere));
+                gameController.readCommand("drawCardFromWell", player,posizione,0);
+            }
             else  {
                 gameController.readCommand(messageFromClient, player,0,0,cornerChosen ); //sto passando una stringa e un player
             }
         }
+    }
+    private boolean rightWell(String selectedCard) {
+        if(selectedCard.equals("well-0") || selectedCard.equals("well-1") || selectedCard.equals("well-2") || selectedCard.equals("well-3")) {
+            return true;
+        }
+        return false;
     }
     private synchronized void waitingForClients() throws InterruptedException {
         System.out.println("In attesa di altri giocatori");
