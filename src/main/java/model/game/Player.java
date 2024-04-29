@@ -117,10 +117,10 @@ public class Player implements Observable {
         Card initialCard = board.getCardsOnTheBoardList().get(0);               //putting inside initialCard the firstPlacedCard on the board
         List<Card> cardsPlayerCanChooseFrom = board.getCardsOnTheBoardList();   //VISUALIZING ALL THE CARDS ON THE BOARD SO THE PLAYER CAN CHOOSE ONE OF THEM
 
-        showingToTheCurrentPlayerCardsOnTheBoard(cardsPlayerCanChooseFrom);  //showing to the current player the cards he/she has on the board
-
+        //showingToTheCurrentPlayerCardsOnTheBoard(cardsPlayerCanChooseFrom);  //showing to the current player the cards he/she has on the board
+        //FINO A QUA FUNZIONA TUTTO BENE
         Card cardPlayerChoose= selectTheCardFromTheBoard(cardsPlayerCanChooseFrom,scanner);  //Choosing the card
-        System.out.println("Card correctly chosen");
+        //System.out.println("Card correctly chosen");
         List<Corner> availableCorners = creatingCorners(cardPlayerChoose); //Creating 4 corners to handle SelectedCard corners
 
         if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
@@ -171,6 +171,74 @@ public class Player implements Observable {
     }
 
 
+    public void playCard(Board board, int cardIndex, int cardChosenONTheBoard) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
+        Scanner scanner = new Scanner(System.in);
+        Card selectedCardFromTheDeck = chooseCard(cardIndex);                   //OKAY
+        checkIfTheCardExist(cardIndex);                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
+        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
+        if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return; //DA MODIFICARE
+
+        Card initialCard = board.getCardsOnTheBoardList().get(0);               //putting inside initialCard the firstPlacedCard on the board
+        List<Card> cardsPlayerCanChooseFrom = board.getCardsOnTheBoardList();   //VISUALIZING ALL THE CARDS ON THE BOARD SO THE PLAYER CAN CHOOSE ONE OF THEM
+
+        //showingToTheCurrentPlayerCardsOnTheBoard(cardsPlayerCanChooseFrom);  //showing to the current player the cards he/she has on the board
+        //FINO A QUA FUNZIONA TUTTO BENE
+        //Card cardPlayerChoose= selectTheCardFromTheBoard(cardsPlayerCanChooseFrom,scanner);  //Choosing the card
+        //System.out.println("Card correctly chosen");
+        Card cardPlayerChoose= cardsPlayerCanChooseFrom.get(cardChosenONTheBoard);
+        List<Corner> availableCorners = creatingCorners(cardPlayerChoose); //Creating 4 corners to handle SelectedCard corners
+
+        if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
+            cardChosenIsTheInitialcard(initialCard,availableCorners);
+        } else {                                                        //CARD CHOSEN ISN'T THE INITIAL CARD
+            List<Corner> corner = creatingCorners(cardPlayerChoose);
+            cardChosenIsNotTheInitialcard(availableCorners,corner);
+        }
+
+        String selectedCorner= freeCornersOfTheSelectedCard(availableCorners, cardPlayerChoose,scanner); //Showing the available corners of the card and letting the player choose one
+        int x = cardPlayerChoose.getNode().getCoordX(); //SAVING THE TOP LEFT CORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
+        int y = cardPlayerChoose.getNode().getCoordY();
+        switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECTLY
+            case "TL":
+                cardPlayerChoose.getTL().setValueCounter(cardPlayerChoose.getTL().getValueCounter()-1);
+                playYourCardOnTheTopLeftCorner(x,y,selectedCardFromTheDeck);
+                break;
+            case "TR":
+                cardPlayerChoose.getTR().setValueCounter(cardPlayerChoose.getTR().getValueCounter()-1);
+                playYourCardOnTheTopRightCorner(x,y,selectedCardFromTheDeck);
+                break;
+            case "BL":
+                cardPlayerChoose.getBL().setValueCounter(cardPlayerChoose.getBL().getValueCounter()-1);
+                playYourCardOnTheBottomLeftCorner(x,y,selectedCardFromTheDeck);
+                break;
+            case "BR":
+                cardPlayerChoose.getBR().setValueCounter(cardPlayerChoose.getBR().getValueCounter()-1);
+                playYourCardOnTheBottomRightCorner(x,y,selectedCardFromTheDeck);
+                break;
+            case null:
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + selectedCorner);
+        }
+        decreasingAllTheValuesOfTheCornerPlaced(selectedCardFromTheDeck); //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
+
+
+        // Add the selected card to the board
+        selectedCardFromTheDeck.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new index
+        board.getCardsOnTheBoardList().add(selectedCardFromTheDeck); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
+        this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
+        board.setNumOfEmpty(board.getNumOfEmpty() - 3);
+        updatingPoints(selectedCardFromTheDeck); //Updating player Points
+        if (playerScore >= 20) {                //EndGame if the playerpoints=>20 points
+            System.out.println("Player " + getNickName() + "wins!\n");
+            EndGame endGame = new EndGame();
+        }
+    }
+
+
+public void cornersAvaible(){
+
+}
 
 
 
@@ -230,6 +298,10 @@ public class Player implements Observable {
         }
         return cardsPlayerCanChooseFrom.get(selectedCardIndex - 1);
     }
+
+
+
+
     private List<Corner> creatingCorners(Card cardPlayerChoose){
         List<Corner> availableCorners = new ArrayList<>();                //CREATING CORNERS THAT WILL BE DISPLAYED TO THE PLAYER
         availableCorners.add(cardPlayerChoose.getTL());
@@ -289,8 +361,43 @@ public class Player implements Observable {
             return null;
         }
         return selectedCorner;
+    }
+    private String freeScornerosi(List<Corner> availableCorners, Card cardPlayerChoose, Scanner scanner){
+        Map<Corner, String> cornerLabels = new HashMap<>();      //PUTTING THE CORRECT CORNERLABEL TO THE CORRECT CORNER
+        cornerLabels.put(cardPlayerChoose.getTL(), "TL");
+        cornerLabels.put(cardPlayerChoose.getTR(), "TR");
+        cornerLabels.put(cardPlayerChoose.getBL(), "BL");
+        cornerLabels.put(cardPlayerChoose.getBR(), "BR");
+
+        StringBuilder options = new StringBuilder(); // Stringa contenente le opzioni disponibili
+        options.append("Free Corners of the selected card\n");
+
+        for (int i = 0; i < availableCorners.size(); i++) {
+            Corner corner = availableCorners.get(i);
+            String cornerLabel = cornerLabels.get(corner);
+            options.append((i + 1)).append(". EMPTY -> ").append(cornerLabel).append("|Please press ").append(cornerLabel).append(" to select the corner\n");
+        }
+
+        // Restituisci le opzioni disponibili al client
+        System.out.println(options);
+        return options.toString();
+        /*System.out.print("Choose the corner you want to place the card on: ");
+        String selectedCorner = scanner.next().toUpperCase();
+        try{
+            if (!selectedCorner.equals("TL") && !selectedCorner.equals("TR") && !selectedCorner.equals("BL") && !selectedCorner.equals("BR")) {
+                throw new InvalidCornerException("Invalid corner selection.");
+            }
+        }  catch (InvalidCornerException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        return selectedCorner;*/
 
     }
+
+
+
+
     private void playYourCardOnTheTopLeftCorner(int x,int y, Card selectedCardFromTheDeck)
     {
         selectedCardFromTheDeck.getBR().setValueCounter(selectedCardFromTheDeck.getBR().getValueCounter()-1); //PLACED CORNER, I CANNOT PUT ANY OTHER THING ON THIS CORNER

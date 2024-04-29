@@ -119,9 +119,11 @@ public class Game implements WhatCanPlayerDo {
     {
         return player.getBoard().printBoardForServer();
     }
-    public String showAvaiableCorners(Player player)
+    public String showAvaiableCorners(Player player, int cardindex, int cardChosenOnTheBoard)
     {
-        return null;
+        Card cardChosen= player.getPlayerCards().get(cardindex);
+        player.playCard(player.getBoard(),cardindex, cardChosenOnTheBoard);
+        return "on god";
     }
 
     @Override

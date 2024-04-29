@@ -258,6 +258,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             else if(messageFromClient.equals("playCard"))
             {
                 String sentBoard= "showBoard";
+                System.out.println("Sono in runCommand");
                 gameController.readCommand(sentBoard, player,0,0); //In questo modo, al player viene fatta visualizzare la propria Board
                 String indexCardChosen= stdIn.readLine(); //Memorizzo quale carta del proprio deck il player ha deciso di giocare
                 int cardChosenFromHisDeck = Integer.parseInt(indexCardChosen);
@@ -265,7 +266,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 String CardOnTheBoardChosen= stdIn.readLine();
                 int boardCardChosen= Integer.parseInt(CardOnTheBoardChosen);
                 System.out.println("Il player ha deciso di giocare la proria carta sulla carta numero " + boardCardChosen);
-
+                System.out.println("Mando tutto al GameController");
                 gameController.readCommand(messageFromClient, player,cardChosenFromHisDeck, boardCardChosen);
             }
 

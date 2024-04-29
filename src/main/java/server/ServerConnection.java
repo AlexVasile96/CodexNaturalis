@@ -265,6 +265,7 @@ public class ServerConnection implements Runnable {
                         - If you type->  'drawGoldCardFromDeck /7': draw a card from the gold deck
                         - If you type->  'drawCardFromWell /8': draw a card from the well
                         - If you type->  'endTurn /9': end your turn
+                        - If you type->  'showWell /9': you'll be displayed the well
                         . if you type ->  'quit /10': esci dal gioco\n"""
         );
     }
@@ -313,12 +314,12 @@ public class ServerConnection implements Runnable {
         System.out.println("1-> prima carta\n2-> seconda carta\n3-> terza carta");
         String result= stdin.readLine();
         int size= Integer.parseInt(result);
-        out.print(size-1); //Carta scelta dal deck del player
+        out.println(size-1); //Carta scelta dal deck del player, sto mandando al server
         System.out.println("Su quale carta della board vuoi andare a piazzare la tua carta?");
         System.out.println("1-> corrisponde alla carta iniziale");
-        String chosenCardonTheBoard= stdin.readLine();
-        int paolo= Integer.parseInt(chosenCardonTheBoard);
-        out.print(paolo-1);
+        String chosenCardOnTheBoard= stdin.readLine();
+        int paolo= Integer.parseInt(chosenCardOnTheBoard);
+        out.println(paolo-1);
 
 
 
