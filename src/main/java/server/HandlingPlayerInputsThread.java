@@ -277,7 +277,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             else if(rightWell(messageFromClient)){
                 char ultimoCarattere = messageFromClient.charAt(messageFromClient.length() - 1);    //in questo modo prndo l'intero che mi serve
                 int posizione= Integer.parseInt(String.valueOf(ultimoCarattere));
-                gameController.readCommand("drawCardFromWell", player,posizione,0);
+                gameController.readCommand("drawCardFromWell", player, posizione,0, null);
             }
             else  {
                 gameController.readCommand(messageFromClient, player,0,0,cornerChosen ); //sto passando una stringa e un player
