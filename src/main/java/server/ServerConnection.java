@@ -70,10 +70,10 @@ public class ServerConnection implements Runnable {
                                     "12. drawCardFromWell, 8 - drawCardFromWell()\n" +
                                     "13. endTurn, 9 - runEndTurn()\n" +
                                     "14. quit, 10 - quit()");*/
-                            command=stdin.readLine();
-                            if(!command.equals("drawCard")) { //aggiunto il controllo cosi da mandare il comando appropriato al server
+                            command=stdin.readLine().toLowerCase();
+                            /*if(!command.equals("drawcard")) { //aggiunto il controllo cosi da mandare il comando appropriato al server
                                 sendMessageToServer(command);
-                            }
+                            }*/
                             actionsInput(command);
                         }
                         else{
@@ -218,21 +218,23 @@ public class ServerConnection implements Runnable {
                 case "actions" -> printActions();
 
                 //The following methods are used to run game actions
-                case "showYourCardDeck", "0" -> showCards();
-                case "playCard", "1" -> chosenHandCard();
-                case "visualizeCommonObjectiveCards", "2" -> visualizeCommonObjective();
+                case "showyourcarddeck", "0" -> showCards();
+                case "playcard", "1" -> chosenHandCard();
+                case "visualizecommonobjectivecards", "2" -> visualizeCommonObjective();
                 case "secret", "3" -> visualizeSecretObjective();
-                case "showBoard", "4" -> showBoard();
-                case "showPoints", "5" -> showPoints();
-                case "drawCard", "6" -> drawCard();
-                case "drawCardFromDeck", "7"-> drawCardFromDeck();
-                case "drawCardFromWell", "8" -> drawCardFromWell();
-                case "endTurn", "9" -> runEndTurn();//run
+                case "showboard", "4" -> showBoard();
+                case "showpoints", "5" -> showPoints();
+                case "drawcard", "6" -> drawCard();
+                case "drawcardfromdeck", "7"-> drawCardFromDeck();
+                case "drawcardfromwell", "8" -> drawCardFromWell();
+                case "endturn", "9" -> runEndTurn();//run
                 case "quit", "10" -> quit();
-                case "showWell", "11" -> showWell();
-                default -> {System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
-                    in.readLine();}
-
+                case "showwell", "11" -> showWell();
+                default -> {
+                    System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
+                    sendMessageToServer("default");
+                    in.readLine();
+                }
             }
         } catch (OperationCancelledException exception) {
             System.out.println(exception.getMessage());
@@ -240,6 +242,7 @@ public class ServerConnection implements Runnable {
     }
 
     private void printHelp() throws IOException {
+        sendMessageToServer("help");
         String serviceString=in.readLine();
         System.out.println(serviceString);
         System.out.println(
@@ -252,6 +255,7 @@ public class ServerConnection implements Runnable {
     }
 
     private void printActions() throws IOException {
+        sendMessageToServer("actions");
         String serviceString=in.readLine();
         System.out.println(serviceString);
         System.out.println(
@@ -272,9 +276,11 @@ public class ServerConnection implements Runnable {
         );
     }
     private void printStatus(){
+        sendMessageToServer("status");
         System.out.println("\n"+clientView.toString());
     }
     private void showCards() throws IOException {
+        sendMessageToServer("showYourCardDeck");
         System.out.println("Il tuo mazzo:" );
         String firstCard=in.readLine(); //Hai selezionato di vedere le tue carte
         String secondCard=in.readLine(); //Hai selezionato di vedere le tue carte
@@ -292,6 +298,7 @@ public class ServerConnection implements Runnable {
     }
 
     private void chosenHandCard() throws IOException {
+        sendMessageToServer("playCard");
         //Al game controller devo passare in ordine ->
         //carta del player deck che voglio giocare
         //carta della board su cui piazzare la mia carta
@@ -362,6 +369,7 @@ public class ServerConnection implements Runnable {
         numberOfCardsplaced++;
     }
     private void visualizeCommonObjective() throws IOException {
+        sendMessageToServer("visualizeCommonObjectiveCards");
         System.out.println("Common Objective Cards:\n");
         System.out.println(in.readLine());//first common card
         System.out.println(in.readLine());//second common card
@@ -369,6 +377,7 @@ public class ServerConnection implements Runnable {
         System.out.println("Carte lette correttamente");
     }
     private void visualizeSecretObjective() throws IOException {
+        sendMessageToServer("secret");
         System.out.println("Hai scelto di visualizzare la tua carta obiettivo segreta\n");
         String result= in.readLine();
         System.out.println(result);
@@ -376,6 +385,7 @@ public class ServerConnection implements Runnable {
         System.out.println("Questa è la tua carta obiettivo!");
     }
     private void showBoard() throws IOException {
+        sendMessageToServer("showBoard");
         System.out.println("Hai selezionato la tua board:\n");
         System.out.print("////////////////////////////////// INIZIO BOARD //////////////////////////////////////////");
         String result= in.readLine();
@@ -387,11 +397,13 @@ public class ServerConnection implements Runnable {
         System.out.println("////////////////////////////////// FINE BOARD ////////////////////////////////////////////");
     }
     private void showPoints() throws IOException {
+        sendMessageToServer("showPoints");
         System.out.println("Hai scelto di visualizzare i tuoi attuali punti!\n");
         String result= in.readLine();
         System.out.println("I tuoi punti attualmente sono: " + result);
     }
     private void showWell() throws IOException {
+        sendMessageToServer("showWell");
         System.out.println("Common Well:\n------------------------------------------------------------------------------------------");
         System.out.println(in.readLine());//prima carta nel pozzo
         System.out.println(in.readLine());//seconda carta nel pozzo
@@ -403,7 +415,6 @@ public class ServerConnection implements Runnable {
     }
     private void drawCard() throws IOException {
         System.out.println("You chose to draw a card!\n");
-        sendMessageToServer("showWell");
         showWell();
         String pesca;
         do {
@@ -483,9 +494,11 @@ public class ServerConnection implements Runnable {
     }
 
     private void quit(){
+        sendMessageToServer("quit");
         System.out.println("Hai scelto di quittare!\n");
     }
     private void runEndTurn(){
+        sendMessageToServer("endTurn");
         System.out.println("Hai scelto di concludere il tuo turno. La mano passa al gicatore successivo");
 
 
