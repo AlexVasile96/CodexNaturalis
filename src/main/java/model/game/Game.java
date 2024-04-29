@@ -83,8 +83,6 @@ public class Game implements WhatCanPlayerDo {
             player.playCard(player.getBoard(),cardindex,cardChosenOnTheBoard,selectedCardFromTheDeck,cardPlayerChoose, selectedCorner);
             String finalAnswer="Carta piazzata correttamente";
             player.getClientView().update(player);
-
-
         return finalAnswer;
     }
 

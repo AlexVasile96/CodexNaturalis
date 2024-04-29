@@ -280,22 +280,35 @@ public class ServerConnection implements Runnable {
         sendMessageToServer("status");
         System.out.println("\n"+clientView.toString());
     }
+
+    private void initializeEachClientCards(){
+        //DA IMPLEMENTARE E DA LEVARE IL METODO DA SHOWCARDS, ATM PER FARE IN MODO CHE TUTTO FUNZIONI DEVE ESSERE
+        //PRIMA INVOCATO IL METODO SHOWCARDS O LE CARTE NON VENGONO SALVATE
+    }
+
+
     private void showCards() throws IOException {
         sendMessageToServer("showYourCardDeck");
         System.out.println("Il tuo mazzo:" );
-        String firstCard=in.readLine(); //Hai selezionato di vedere le tue carte
-        String secondCard=in.readLine(); //Hai selezionato di vedere le tue carte
-        String thirdCard=in.readLine(); //Hai selezionato di vedere le tue carte
-        String spatio=in.readLine(); //Hai selezionato di vedere le tue carte
+        receivingAndPrintingCards();
+        System.out.println("Carte lette correttamente");
+        System.out.println(player.getClientView().getPlayerStringCards());
+    }
+    private void receivingAndPrintingCards() throws IOException {
+        String firstCard=in.readLine();
+        String secondCard=in.readLine();
+        String thirdCard=in.readLine();
+        String spatio=in.readLine();
         System.out.println(firstCard);
         System.out.println(secondCard);
         System.out.println(thirdCard);
+        System.out.println(spatio);
+        updatingView(firstCard,secondCard,thirdCard);
+    }
+    private void updatingView(String firstCard, String secondCard, String thirdCard){
         player.getClientView().getPlayerStringCards().add(firstCard);
         player.getClientView().getPlayerStringCards().add(secondCard);
         player.getClientView().getPlayerStringCards().add(thirdCard);
-        System.out.println(spatio);
-        System.out.println("Carte lette correttamente");
-        System.out.println(player.getClientView().getPlayerStringCards());
     }
 
     private void chosenHandCard() throws IOException {
