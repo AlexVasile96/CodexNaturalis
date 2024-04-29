@@ -35,6 +35,7 @@ public class ServerConnection implements Runnable {
     @Override
     public void run() {
         String command;
+        String isMyTurn;
         try {
             System.out.println("Benvenuto!Sono il server! Scrivere una qualsiasi stringa per iniziare la conversazione\n");
             while (true) {
@@ -47,8 +48,8 @@ public class ServerConnection implements Runnable {
                         assigningSecretCard();                          //Choosing the secret Card
                         takingTheInitialCard();
                     }
-                    else {                                              //If client has made the login, he can start asking for inputs if it's his turn
-                        String isMyTurn = in.readLine();                //è il tuo turno
+                    else {
+                        isMyTurn = in.readLine();                //è il tuo turno
                         System.out.println(isMyTurn);                   //viene stampato è il tuo turno
                         if (isMyTurn != null && isMyTurn.equals("è il tuo turno!!")) {
                             myTurn = true;
@@ -421,7 +422,7 @@ public class ServerConnection implements Runnable {
             System.out.println("where to draw the card from?\n" +
                     "->deck\n" +
                     "->well");
-            pesca = in.readLine().toLowerCase();
+            pesca = stdin.readLine().toLowerCase();
             if (pesca.equals("deck")) {
                 drawCardFromDeck();
             }
@@ -437,7 +438,7 @@ public class ServerConnection implements Runnable {
                 "->Gold");
         String pesca;
         do{
-            pesca = in.readLine().toLowerCase();
+            pesca = stdin.readLine().toLowerCase();
             if (pesca.equals("resource")) {
                 sendMessageToServer("drawCardFromResourceDeck");
                 drawCardFromResourceDeck();
@@ -458,6 +459,10 @@ public class ServerConnection implements Runnable {
     }
 
     private void drawCardFromWell() throws IOException {
+        /*
+        DEVO CAOIRE PERCHE CONTINUA A STAMPARE è IL TUO TURNO
+        PROBABILMENTE è IL WHILE DEL SERVER IL PROBLEMA
+         */
         System.out.println("Which card from the well do you want to draw?\n");
         sendMessageToServer("showWell");
         System.out.println("Well:\n------------------------------------------------------------------------------------------");
@@ -469,20 +474,24 @@ public class ServerConnection implements Runnable {
         System.out.println("------------------------------------------------------------------------------------------");
         String selectedCard;
         do{
-            selectedCard= in.readLine().toLowerCase();
+            selectedCard= stdin.readLine().toLowerCase();
             if(!rightResponseWell(selectedCard)) {
                 System.out.println("wrong choice, try again");
             }
         }while(!rightResponseWell(selectedCard));
         sendMessageToServer(selectedCard);
 
+        //ora gestisco le risposte del server
         String esito = in.readLine();
         if(Objects.equals(esito, String.valueOf(true))) {
             System.out.println("operation performed correctly");
-
+            showCards();
+            showWell();
         }
         else{
             System.out.println("operation performed incorrectly");
+            showCards();
+            showWell();
         }
     }
 
