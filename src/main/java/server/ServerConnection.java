@@ -29,16 +29,16 @@ public class ServerConnection implements Runnable {
             this.myTurn=false;
     }
 
-    @Override
+@Override
     public void run() {
         String command;
         String isMyTurn;
         try {
             System.out.println("Benvenuto!Sono il server! Scrivere una qualsiasi stringa per iniziare la conversazione\n");
             while (true) {
-                try {
-                    System.out.print(">");                          //il client scrive un messaggio
+                try {                                                       //il client scrive un messaggio
                     if (clientView.getUserName() == null) {             //If client hasn't made the login yet, he has to log first.
+                        System.out.print(">");
                         command=stdin.readLine();
                         sendMessageToServer(command);
                         loginPlayer(player);                                  //Actual Login
@@ -46,15 +46,15 @@ public class ServerConnection implements Runnable {
                         takingTheInitialCard();
                     }
                     else {
-                        sendMessageToServer(clientView.getUserName());
-                        isMyTurn = in.readLine();                       //è il tuo turno
-                        System.out.println(isMyTurn);                   //viene stampato è il tuo turno
-                        //if(!myTurn) showCards();
-                        if (isMyTurn != null && isMyTurn.equals("è il tuo turno!!")) {
-                            myTurn = true;
-                        }
-                        else myTurn=false;
-                        if (myTurn) {
+                        System.out.println("Is my turn?");
+                        String serverCurrentPlayerNickname= in.readLine();
+                        System.out.println("Il current player è " + serverCurrentPlayerNickname);
+                        if(serverCurrentPlayerNickname.equals(clientView.getUserName()))
+                        {
+                            System.out.println("SONO DENTRO");
+                            isMyTurn = in.readLine();                       //è il tuo turno
+                            System.out.println(isMyTurn);
+                            System.out.print(">");
                             System.out.println("command:");
                             /*System.out.println("Menu:\n" +
                                     "1.  help - printHelp()\n" +
@@ -72,16 +72,95 @@ public class ServerConnection implements Runnable {
                                     "13. endTurn, 9 - runEndTurn()\n" +
                                     "14. quit, 10 - quit()");*/
                             command=stdin.readLine().toLowerCase();
+                            //sendMessageToServer(command);
+                            actionsInput(command);
+                        }
+
+                        else{
+
+                                System.out.println("Non è il tuo turno, attendi...");
+                                in.readLine(); //prende il send message to client
+                            boolean x= true;
+
+                            while (x)
+                            {
+                                //stdin.readLine();
+                                //System.out.println("Attendi");
+                                String playerChanged= in.readLine();
+                                if(playerChanged.equals("player changed!")){
+                                     x=false;
+
+                                 }
+
+                            }
+
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    /*public void run() {
+        String command;
+        String isMyTurn;
+        try {
+            System.out.println("Benvenuto!Sono il server! Scrivere una qualsiasi stringa per iniziare la conversazione\n");
+            while (true) {
+                try {                                                       //il client scrive un messaggio
+                    if (clientView.getUserName() == null) {             //If client hasn't made the login yet, he has to log first.
+                        System.out.print(">");
+                        command=stdin.readLine();
+                        sendMessageToServer(command);
+                        loginPlayer(player);                                  //Actual Login
+                        assigningSecretCard();                          //Choosing the secret Card
+                        takingTheInitialCard();
+                    }
+                    else {
+                        sendMessageToServer(clientView.getUserName());   //Mando al server il mio nome
+                        isMyTurn = in.readLine();                       //è il tuo turno
+                        System.out.println(isMyTurn);                   //viene stampato è il tuo turno
+                        if (isMyTurn != null && isMyTurn.equals("è il tuo turno!!")) {
+                            myTurn = true;
+                        }
+                        else myTurn=false;
+                        if (myTurn) {
+                            System.out.print(">");
+                            System.out.println("command:");
+                            /*System.out.println("Menu:\n" +
+                                    "1.  help - printHelp()\n" +
+                                    "2.  status - printStatus()\n" +
+                                    "3.  actions - printActions()\n" +
+                                    "4.  showYourCardDeck, 0 - showCards()\n" +
+                                    "5.  playCardFromYourHand, 1 - chosenHandCard()\n" +
+                                    "6.  visualizeCommonObjectiveCards, 2 - visualizeCommonObjective()\n" +
+                                    "7.  secret, 3 - visualizeSecretObjective()\n" +
+                                    "8.  showBoard, 4 - showBoard()\n" +
+                                    "9.  showPoints, 5 - showPoints()\n" +
+                                    "10. drawResourceCardFromDeck, 6 - drawResourceCardFromDeck()\n" +
+                                    "11. drawGoldCardFromDeck, 7 - drawGoldCardFromDeck()\n" +
+                                    "12. drawCardFromWell, 8 - drawCardFromWell()\n" +
+                                    "13. endTurn, 9 - runEndTurn()\n" +
+                                    "14. quit, 10 - quit()");*/
+                            //command=stdin.readLine().toLowerCase();
                             /*if(!command.equals("drawcard")) { //aggiunto il controllo cosi da mandare il comando appropriato al server
                                 sendMessageToServer(command);
-                            }*/
+                            }
                             actionsInput(command);
                         }
                         else{
                             while (!myTurn) {
-                                wait();
-                                stdin.readLine();
                                 System.out.println("attendi...");
+                                System.out.println(">");
+                                //stdin.readLine();
+                                //String asfidanken= in.readLine();
+                                //System.out.println(asfidanken); //il nuovo giocatore è cambiato
                                 isMyTurn=in.readLine();
                                 if (isMyTurn != null && isMyTurn.equals(player.getNickName())) {
                                     myTurn = true;
@@ -97,7 +176,7 @@ public class ServerConnection implements Runnable {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
                                                 }
-    }
+    }*/
 
     private void takingTheInitialCard() throws IOException {
         String firstCard= in.readLine();
@@ -254,8 +333,8 @@ public class ServerConnection implements Runnable {
         }
     }
 
-    private void printHelp() throws IOException {
-        sendMessageToServer("help");
+    private synchronized void printHelp() throws IOException {
+        out.println("help");
         String serviceString=in.readLine();
         System.out.println(serviceString);
         System.out.println(
@@ -524,10 +603,12 @@ public class ServerConnection implements Runnable {
         sendMessageToServer("quit");
         System.out.println("Hai scelto di quittare!\n");
     }
-    private void runEndTurn(){
+    private void runEndTurn() throws IOException {
         sendMessageToServer("endTurn");
         System.out.println("Hai scelto di concludere il tuo turno. La mano passa al gicatore successivo");
-            notifyAll();
+        String napoli= in.readLine();
+        System.out.println(napoli); //Hai selezionato endTurn
+        System.out.println("PRIMO MESSAGGIO");
 
     }
 

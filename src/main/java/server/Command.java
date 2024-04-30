@@ -70,7 +70,7 @@ public class Command { //Command Client sends to Server
                 return operationResult;
 
             case "endturn":                //PIETRO -> non funziona
-                game.endTurn(player);
+                //game.endTurn(player);
                 return "Hai selezionato endTurn";
 
 
