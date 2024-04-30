@@ -69,7 +69,7 @@ public class Command { //Command Client sends to Server
                 operationResult= game.drawCardFromWell(player, size); //salva nella stringa il deck del giocatore
                 return operationResult;
 
-            case "endTurn":                //PIETRO -> non funziona
+            case "endturn":                //PIETRO -> non funziona
                 game.endTurn(player);
                 return "Hai selezionato endTurn";
 

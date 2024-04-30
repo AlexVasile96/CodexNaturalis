@@ -13,6 +13,7 @@ import java.util.*;
 public class Player implements Observable {
     private String nickName;
     private int playerScore;
+    private int index;
     private Dot dot;
     private ClientView clientView;
     private Board board;
@@ -29,6 +30,13 @@ public class Player implements Observable {
         this.clientView= new ClientView();
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     //IN GAME METHODS
 

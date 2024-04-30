@@ -35,6 +35,10 @@ public class HandlingPlayerInputsThread implements Runnable {
     private List<Player> playersList;
     private Socket clientSocket;
     private String userName;
+    private static int numbOfPlayers=0;
+    private static int currentPlayerIndex=0;
+    private static int index=0;
+    private static String lastCommand="startingMethod";
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException { //Costructor
         this.clientSocket = socket;
@@ -77,7 +81,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println(game.getObjectiveDeck().carteRimaste());       //Debugging to check if all cards are given correctly
 
                 //GAME IS READY TO START
-
+                numbOfPlayers= gameController.getSize();
                 startGame();                                                      //Game can eventually start
 
         } catch (IOException e) {
@@ -131,6 +135,10 @@ public class HandlingPlayerInputsThread implements Runnable {
                 Dot dot= chooseClientDotColor(playersList);
                 player = new Player(request, 0, dot, board);
                 this.userName=request;
+                synchronized (this){
+                player.setIndex(index);
+                index++;
+                }
                 playersList.add(player);
                 System.out.println("Giocatori nel gioco: "+ playersList);
                 System.out.println(player);
@@ -163,12 +171,18 @@ public class HandlingPlayerInputsThread implements Runnable {
     private void startGame() throws IOException, InterruptedException {
         String messageFromClient;
         while (true) {
-            if(Objects.equals(currentPlayer.getNickName(), this.userName)){
+            /*if(lastCommand.equals("endturn")){
+               stdIn.readLine(); //prendo l'ultima call del client che ha appena finito
+                sendMessageToAllClients(currentPlayer.getNickName());
+            }*/
+            messageFromClient= stdIn.readLine();
+            if(Objects.equals(currentPlayer.getNickName(),messageFromClient)){
                 System.out.println("Sto aspettando che il client" + currentPlayer.getNickName() + " mi faccia richiesta");
                 sendMessageToClient("è il tuo turno!!");
                 messageFromClient = stdIn.readLine();                                   //messaggio dal thread client
                 System.out.println("Il client ha selezionato: " + messageFromClient);  //Server riceve il comando del client
                 runCommand(messageFromClient, threadPlayer); //->run
+                lastCommand=messageFromClient.toLowerCase();
             }
             else{
                 sendMessageToClient("Aspetta perfavore, non è il tuo turno!");
@@ -347,6 +361,8 @@ public class HandlingPlayerInputsThread implements Runnable {
         turnController.nextTurn();
         Player nextPlayer = turnController.getCurrentPlayer();
         setCurrentPlayer(nextPlayer);
+
+
     }
     public void setCurrentPlayer(Player currentPlayerName) {
         this.currentPlayer = currentPlayerName;

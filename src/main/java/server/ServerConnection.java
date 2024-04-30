@@ -9,7 +9,7 @@ import java.util.*;
 
 
 public class ServerConnection implements Runnable {
-
+    private static int index=0;
     private Socket socket;
     private ClientView clientView;
     private BufferedReader in;
@@ -46,12 +46,14 @@ public class ServerConnection implements Runnable {
                         takingTheInitialCard();
                     }
                     else {
-                        isMyTurn = in.readLine();                //è il tuo turno
+                        sendMessageToServer(clientView.getUserName());
+                        isMyTurn = in.readLine();                       //è il tuo turno
                         System.out.println(isMyTurn);                   //viene stampato è il tuo turno
                         //if(!myTurn) showCards();
                         if (isMyTurn != null && isMyTurn.equals("è il tuo turno!!")) {
                             myTurn = true;
                         }
+                        else myTurn=false;
                         if (myTurn) {
                             System.out.println("command:");
                             /*System.out.println("Menu:\n" +
@@ -77,10 +79,11 @@ public class ServerConnection implements Runnable {
                         }
                         else{
                             while (!myTurn) {
-                                command=stdin.readLine();
+                                wait();
+                                stdin.readLine();
                                 System.out.println("attendi...");
                                 isMyTurn=in.readLine();
-                                if (isMyTurn != null && isMyTurn.equals("è il tuo turno!!")) {
+                                if (isMyTurn != null && isMyTurn.equals(player.getNickName())) {
                                     myTurn = true;
                                 }
                             }
@@ -140,8 +143,15 @@ public class ServerConnection implements Runnable {
         System.out.println("Server says: " + correctLogin); //Login effettuato con successo
         player.getClientView().setUserName(loginName);
         clientView.setUserName(loginName);                      //UPDATING CLIENT VIEW
+       synchronized (this)
+       {
+           clientView.setIndex(index);
+           index++;
+        }
+
         chooseYourDotColor(player);
         chooseNumberOfPlayers();
+
     }
 
     public synchronized void sendMessageToServer(String message) {
@@ -273,7 +283,7 @@ public class ServerConnection implements Runnable {
                         - If you type->  'drawResourceCardFromDeck /6': draw a card from the resource deck
                         - If you type->  'drawGoldCardFromDeck /7': draw a card from the gold deck
                         - If you type->  'drawCardFromWell /8': draw a card from the well
-                        - If you type->  'endTurn /9': end your turn
+                        - If you type->  'endturn /9': end your turn
                         - If you type->  'showWell /9': you'll be displayed the well
                         . if you type ->  'quit /10': esci dal gioco\n"""
         );
@@ -517,6 +527,7 @@ public class ServerConnection implements Runnable {
     private void runEndTurn(){
         sendMessageToServer("endTurn");
         System.out.println("Hai scelto di concludere il tuo turno. La mano passa al gicatore successivo");
+            notifyAll();
 
     }
 
