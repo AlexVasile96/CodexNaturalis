@@ -5,13 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -52,6 +50,7 @@ public class GUI extends Application {
         launch(args);
     }
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
@@ -89,7 +88,7 @@ public class GUI extends Application {
     public void startGameClicked(ActionEvent event) throws IOException {
         String firstMessage = "login";
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        connectToServer();
+        this.socket = connectToServer();
         PrintWriter printWriter;
         try {
             printWriter = new PrintWriter(socket.getOutputStream(),true);
@@ -148,18 +147,19 @@ public class GUI extends Application {
     }
 
     public void loginButtonClicked(ActionEvent event) throws IOException {
+        socket = connectToServer();
         String username = usernameField.getText();
         if(!username.isEmpty()){
             clientView.setUserName(username);
-            setUsername(username);
-            test.setText("Il tuo username è: " + username);
+            //setUsername(username);
+            test.setText("Il tuo username è: " + clientView.getUserName());
         }else{
             System.out.println("Username necessario");
         }
     }
 
 
-
+    @FXML
     private  void setUsername(String username){
         try {
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream(),true);
@@ -168,7 +168,9 @@ public class GUI extends Application {
             e.printStackTrace();
         }
     }
-    private Socket connectToServer() {
+
+    @FXML
+    public Socket connectToServer() {
         try {
 
             FileReader reader = new FileReader("src/main/resources/HostAndPort.json");
@@ -189,8 +191,8 @@ public class GUI extends Application {
         }
         return socket;
     }
-
-    private void closeConnection(Socket socket) throws IOException {
+    @FXML
+    public void closeConnection(Socket socket) throws IOException {
         socket.close();
     }
 }
