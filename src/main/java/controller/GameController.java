@@ -66,7 +66,7 @@ public class GameController {
 
             }
             else {
-                String result = command.runCommand(game, commandString, player,0,0, cornerChosen);
+                String result = command.runCommand(game, commandString, player,size,paolo, cornerChosen);
                 sendMessageToClient(result);
             }
         }
