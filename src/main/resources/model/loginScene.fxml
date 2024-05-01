@@ -7,17 +7,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GuiHandlerThread">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GUI">
    <children>
-      <TextField layoutX="34.0" layoutY="39.0" fx:id="usernameField"/>
+      <TextField fx:id="usernameField" layoutX="34.0" layoutY="39.0" />
       <Text layoutX="34.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Write your username:" wrappingWidth="128.841796875" />
-      <Button layoutX="198.0" layoutY="39.0" mnemonicParsing="false" text="Login" fx:id="loginButton" onAction="#loginButtonClicked"/>
-      <Label layoutX="34.0" layoutY="85.0" text="Label" fx:id="test"/>
-      <Button layoutX="34.0" layoutY="122.0" mnemonicParsing="false" text="Button" />
-      <RadioButton layoutX="34.0" layoutY="161.0" mnemonicParsing="false" text="RedDot" fx:id="reddot" toggleGroup="$toggleGroup"/>
-      <RadioButton layoutX="34.0" layoutY="184.0" mnemonicParsing="false" text="GreenDot" fx:id="greendot" toggleGroup="$toggleGroup"/>
-      <RadioButton layoutX="34.0" layoutY="208.0" mnemonicParsing="false" text="BlueDot" fx:id="bluedot" toggleGroup="$toggleGroup"/>
-      <RadioButton layoutX="34.0" layoutY="231.0" mnemonicParsing="false" text="YellowDot" fx:id="yellodot" toggleGroup="$toggleGroup"/>
+      <Button fx:id="loginButton" layoutX="277.0" layoutY="309.0" mnemonicParsing="false" onAction="#loginButtonClicked" text="Login" />
+      <Label fx:id="test" layoutX="34.0" layoutY="85.0" text="Label" />
+      <RadioButton fx:id="reddot" layoutX="34.0" layoutY="161.0" mnemonicParsing="false" text="RED">
+
+         <toggleGroup>
+            <ToggleGroup fx:id="toggleGroup" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="greendot" layoutX="34.0" layoutY="184.0" mnemonicParsing="false" text="GREEN" toggleGroup="$toggleGroup" />
+      <RadioButton fx:id="bluedot" layoutX="34.0" layoutY="208.0" mnemonicParsing="false" text="BLUE" toggleGroup="$toggleGroup" />
+      <RadioButton fx:id="yellowdot" layoutX="34.0" layoutY="231.0" mnemonicParsing="false" text="YELLOW" toggleGroup="$toggleGroup" />
+      <Label fx:id="testDot" layoutX="34.0" layoutY="260.0" text="colore scelto: " />
    </children>
 </Pane>

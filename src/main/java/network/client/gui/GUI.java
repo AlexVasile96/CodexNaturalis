@@ -1,5 +1,6 @@
 package network.client.gui;
 
+import controller.GameController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.game.Dot;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -32,6 +34,9 @@ public class GUI extends Application {
     private Scene startScene;
     private Scene loginScene;
     private Scene gameScene;
+    private Scene chooseNumOfPlayersScene;
+    private int selectedNumOfPlayers;
+    private boolean isFirstPlayer=false;
 
     private ClientView clientView = new ClientView();
     private static Socket socket;
@@ -44,6 +49,10 @@ public class GUI extends Application {
     public Label test;
     @FXML
     public ToggleGroup toggleGroup;
+    @FXML
+    public Label testDot;
+    @FXML
+    public ToggleGroup numOfPlayersGroup;
 
     public GUI() throws IOException {
     }
@@ -91,6 +100,7 @@ public class GUI extends Application {
         out.println(firstMessage); //-> il client ha detto login
         loginScene();
         primaryStage.setScene(loginScene);
+
     }
 
 
@@ -113,53 +123,79 @@ public class GUI extends Application {
         }else{
             System.out.println("Username necessario");
         }
-        String dot= toggleGroup.getSelectedToggle().toString();
-        out.println(dot);
+        Toggle dot = toggleGroup.getSelectedToggle();
+
+        String realChosenDot=null;
+        if(dot.toString().equals("RadioButton[id=reddot, styleClass=radio-button]'RED'")){
+            realChosenDot="RED";
+        }
+        if(dot.toString().equals("RadioButton[id=yellowdot, styleClass=radio-button]'YELLOW'")){
+            realChosenDot="YELLOW";
+        }
+        if(dot.toString().equals("RadioButton[id=bluedot, styleClass=radio-button]'BLUE'")){
+            realChosenDot="BLUE";
+        }
+        if(dot.toString().equals("RadioButton[id=greendot, styleClass=radio-button]'GREEN'")){
+            realChosenDot="GREEN";
+        }
+
+        testDot.setText("Il colore scelto è: " + realChosenDot);
+        out.println(realChosenDot);
+        clientView.setDot(Dot.valueOf(realChosenDot));
+        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        chooseNumOfPlayers();
+        primaryStage.setScene(chooseNumOfPlayersScene);
+
+
+
+
+        /*if(seiIlPrimoPlayer){
+            chooseNumOfPlayers();
+        }*/
+        /*chooseNumOfPlayers();
+        primaryStage.setScene(chooseNumOfPlayers());*/
+
         //COLORE PECIOTTO
         //SE FIRST CLIENT-> SCEGLI NUMERO DI GIOCATORI DA 2 A 4
         //-> clients until #clients==gamecontroller.getsize-> changescene(lobby)
         //-> si cambia la scena e si arriva al game scene
     }
 
-
+    private void chooseNumOfPlayers() throws IOException {
+        Parent fxml = FXMLLoader.load(getClass().getResource("/model/ChooseNumberOfPlayers.fxml"));
+        StackPane root = new StackPane();
+        root.getChildren().addAll(fxml);
+        chooseNumOfPlayersScene = new Scene(root, 800, 600);
+    }
 
     @FXML
+    private void goToLobbyClicked(ActionEvent event) throws IOException {
+        if(isFirstPlayer) {
+            Toggle numOfPlayers = numOfPlayersGroup.getSelectedToggle();
+
+            if (numOfPlayers.toString().equals("RadioButton[id=2, styleClass=radio-button]'2 Giocatori'")) {
+                selectedNumOfPlayers = 2;
+            }
+            if (numOfPlayers.toString().equals("RadioButton[id=3, styleClass=radio-button]'3 Giocatori'")) {
+                selectedNumOfPlayers = 3;
+            }
+            if (numOfPlayers.toString().equals("RadioButton[id=4, styleClass=radio-button]'4 Giocatori'")) {
+                selectedNumOfPlayers = 4;
+            }
+            Label testNumbers = new Label();
+            testNumbers.setText("Il numero di giocatori è: " + selectedNumOfPlayers);
+            out.println(selectedNumOfPlayers);
+        }
+        else{
+
+        }
+    }
+
+
+
+
     public void closeConnection(Socket socket) throws IOException {
         socket.close();
     }
 }
-
-
-//ERA IN LOGIN SCENE
-
-    /*Button loginButton = new Button("Login");
-        Label test = new Label();
-        StackPane rootGame = new StackPane();
-        Label loginLabel = new Label("Write your username");
-        TextField usernameField = new TextField();
-        loginButton.setOnAction(e->{
-            String username = usernameField.getText();
-          if(!username.isEmpty()){
-              clientView.setUserName(username);
-              setUsername(username);
-              test.setText("Il tuo username è: " + username);
-          }else{
-              System.out.println("Username necessario");
-          }
-        });
-        returnToMainMenu = new Button("Back to main menu");
-        returnToMainMenu.setOnAction(e -> {
-            window.setScene(startScene);
-            try {
-                closeConnection(socket);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
-        VBox loginLayout = new VBox(20); // Spaziatura tra i nodi
-        loginLayout.setAlignment(Pos.CENTER);
-        loginLayout.getChildren().addAll(loginLabel, usernameField, loginButton, test, returnToMainMenu);
-        loginLayout.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        rootGame.getChildren().addAll(loginLayout);
-        // Inizializza la scena di gioco
-        loginScene = new Scene(rootGame, 800, 600);*/

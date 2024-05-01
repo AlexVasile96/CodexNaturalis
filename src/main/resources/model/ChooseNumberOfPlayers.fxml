@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GUI">
+   <children>
+      <Label layoutX="140.0" layoutY="107.0" text="Scegli il numero di giocatoris">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="2" layoutX="261.0" layoutY="169.0" mnemonicParsing="false" text="2 Giocatori">
+              <toggleGroup>
+                  <ToggleGroup fx:id="numOfPlayersGroup" />
+              </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="3" layoutX="61.0" layoutY="327.0" mnemonicParsing="false" text="3 Giocatori" toggleGroup="$numOfPlayersGroup" />
+      <RadioButton fx:id="4" layoutX="468.0" layoutY="327.0" mnemonicParsing="false" text="4 Giocatori" toggleGroup="$numOfPlayersGroup" />
+      <Button layoutX="261.0" layoutY="245.0" mnemonicParsing="false" onAction="#goToLobbyClicked" text="Go to lobby" />
+   </children>
+</Pane>
