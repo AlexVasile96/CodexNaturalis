@@ -17,6 +17,7 @@ public class Game implements WhatCanPlayerDo {
     private ObjectiveDeck objectiveDeck;
     private int currentPlayerIndex;
     private String currentPlayer;
+    private Player currentPlayingPLayer;
     private List<Card> well;
     private ObjectiveCard firstObjectiveCommonCard;
     private ObjectiveCard secondObjectiveCommonCard;

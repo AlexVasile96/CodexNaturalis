@@ -67,7 +67,7 @@ public class GameController {
             }
             else {
                 String result = command.runCommand(game, commandString, player,size,paolo, cornerChosen);
-                sendMessageToClient(result);
+                sendMessageToAllClients(result);
             }
         }
     }
@@ -92,7 +92,6 @@ public class GameController {
         if (size > 0) {
             throw new PlayerNumberAlreadySetException();
         }
-
         if (number < 1 || number > 4) {
             throw new ParametersNotValidException();
         }
@@ -231,4 +230,5 @@ public class GameController {
     public synchronized void sendMessageToClient(String message) {
         out.println(message);
     }
+
 }

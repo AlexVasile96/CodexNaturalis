@@ -28,10 +28,7 @@ public class Command { //Command Client sends to Server
 
                 }
             }
-
-
-
-            case "visualizeCommonObjectiveCards":   //MOMO ->finito-> funzionante
+          case "visualizeCommonObjectiveCards":   //MOMO ->finito-> funzionante
                 String commonCards;
                 commonCards= game.visualizeCommonObjective(player);
                 return commonCards;
@@ -69,18 +66,13 @@ public class Command { //Command Client sends to Server
                 operationResult= game.drawCardFromWell(player, size); //salva nella stringa il deck del giocatore
                 return operationResult;
 
-            case "endturn":                //PIETRO -> non funziona
-                //game.endTurn(player);
-                return "Hai selezionato endTurn";
-
-
+            case "endTurn":                //PIETRO -> non funziona
+                return "fine turno";
             case "actions": //finito
                 return "Hai selezionato actions";
             case "help":{ //finito
                 System.out.println("Sono entrato in help");
-                String help;
-                help="hai chiesto aiuto";
-                return help;
+                return "hai chiesto aiuto";
             }
             case "quit": return "suca";
             default:
