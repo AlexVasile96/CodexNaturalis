@@ -40,12 +40,14 @@ public class Player implements Observable {
 
     //IN GAME METHODS
 
-    public void drawResourceCard(ResourceDeck deck) {
+    public String drawResourceCard(ResourceDeck deck) {
        deck.drawCard(this);
        //this.clientView.getPlayerCards().add(drownCard);
+        return "card drawn correctly from Resource deck";
     }
-    public void drawGoldCard(GoldDeck deck) {
+    public String drawGoldCard(GoldDeck deck) {
         deck.drawCard(this);
+        return "card drawn correctly from Gold deck";
     }
 
     public List<Card> chooseCardFromWell(List<Card>cardwell,ResourceDeck rc, GoldDeck gd) {

@@ -34,7 +34,7 @@ public class GoldDeck implements Deck {
                 return drownCard;
             }
         } catch(Exception e) {
-            throw new IllegalStateException("Il giocatore ha già tre carte nella mano."); // Eccezione specifica
+            throw new IllegalStateException("problema nel blocco try di drawCard nella classe GoldDeck"); // Eccezione specifica
         }
         return null;
     }

@@ -156,13 +156,13 @@ public class Game implements WhatCanPlayerDo {
     }
 
     @Override
-    public void drawResourceCard(Player player) {
-        player.drawResourceCard(resourceDeck);
+    public String drawResourceCard(Player player) {
+        return player.drawResourceCard(resourceDeck);
     }
 
     @Override
-    public void drawGoldCard(Player player) {
-        player.drawGoldCard(goldDeck);
+    public String drawGoldCard(Player player) {
+        return player.drawGoldCard(goldDeck);
     }
 
     public String drawCardFromWell(Player player, int index) {

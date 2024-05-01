@@ -54,12 +54,14 @@ public class Command { //Command Client sends to Server
                 return wellPrinted;
 
             case "drawCardFromResourceDeck":        //MOMO
-                return "d";
+                String esito;
+                esito = game.drawResourceCard(player);
+                return esito;
 
             case "drawCardFromGoldDeck":        //MOMO
-                String esito;
-                esito = game.drawCardFromWell(player, size);
-                return esito;
+                String ciao;
+                ciao = game.drawGoldCard(player);
+                return ciao;
 
             case "drawCardFromWell":      //MOMO
                 String operationResult;
