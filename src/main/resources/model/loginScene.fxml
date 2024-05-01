@@ -15,9 +15,9 @@
       <Button layoutX="198.0" layoutY="39.0" mnemonicParsing="false" text="Login" fx:id="loginButton" onAction="#loginButtonClicked"/>
       <Label layoutX="34.0" layoutY="85.0" text="Label" fx:id="test"/>
       <Button layoutX="34.0" layoutY="122.0" mnemonicParsing="false" text="Button" />
-      <RadioButton layoutX="34.0" layoutY="161.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton layoutX="34.0" layoutY="208.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton layoutX="34.0" layoutY="184.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton layoutX="34.0" layoutY="231.0" mnemonicParsing="false" text="RadioButton" />
+      <RadioButton layoutX="34.0" layoutY="161.0" mnemonicParsing="false" text="RedDot" fx:id="reddot" toggleGroup="$toggleGroup"/>
+      <RadioButton layoutX="34.0" layoutY="184.0" mnemonicParsing="false" text="GreenDot" fx:id="greendot" toggleGroup="$toggleGroup"/>
+      <RadioButton layoutX="34.0" layoutY="208.0" mnemonicParsing="false" text="BlueDot" fx:id="bluedot" toggleGroup="$toggleGroup"/>
+      <RadioButton layoutX="34.0" layoutY="231.0" mnemonicParsing="false" text="YellowDot" fx:id="yellodot" toggleGroup="$toggleGroup"/>
    </children>
 </Pane>
