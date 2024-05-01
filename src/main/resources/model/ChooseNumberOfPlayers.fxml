@@ -20,5 +20,6 @@
       <RadioButton fx:id="3" layoutX="61.0" layoutY="327.0" mnemonicParsing="false" text="3 Giocatori" toggleGroup="$numOfPlayersGroup" />
       <RadioButton fx:id="4" layoutX="468.0" layoutY="327.0" mnemonicParsing="false" text="4 Giocatori" toggleGroup="$numOfPlayersGroup" />
       <Button layoutX="261.0" layoutY="245.0" mnemonicParsing="false" onAction="#goToLobbyClicked" text="Go to lobby" />
+      <Label layoutX="286.0" layoutY="304.0" text="Label" fx:id="testNumbers"/>
    </children>
 </Pane>

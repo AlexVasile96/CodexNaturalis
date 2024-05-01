@@ -24,6 +24,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GUI extends Application {
 
@@ -36,7 +37,8 @@ public class GUI extends Application {
     private Scene gameScene;
     private Scene chooseNumOfPlayersScene;
     private int selectedNumOfPlayers;
-    private boolean isFirstPlayer=false;
+    //private static boolean isFirstPlayer;
+    private static AtomicBoolean isFirstPlayer = new AtomicBoolean(true);
 
     private ClientView clientView = new ClientView();
     private static Socket socket;
@@ -53,7 +55,15 @@ public class GUI extends Application {
     public Label testDot;
     @FXML
     public ToggleGroup numOfPlayersGroup;
+    @FXML
+    public Label testNumbers;
 
+    public static void setFirstPlayer(boolean value) {
+        isFirstPlayer.set(value);
+    }
+    public static boolean isFirstPlayer() {
+        return isFirstPlayer.get();
+    }
     public GUI() throws IOException {
     }
 
@@ -146,20 +156,7 @@ public class GUI extends Application {
 
         chooseNumOfPlayers();
         primaryStage.setScene(chooseNumOfPlayersScene);
-
-
-
-
-        /*if(seiIlPrimoPlayer){
-            chooseNumOfPlayers();
-        }*/
-        /*chooseNumOfPlayers();
-        primaryStage.setScene(chooseNumOfPlayers());*/
-
-        //COLORE PECIOTTO
-        //SE FIRST CLIENT-> SCEGLI NUMERO DI GIOCATORI DA 2 A 4
-        //-> clients until #clients==gamecontroller.getsize-> changescene(lobby)
-        //-> si cambia la scena e si arriva al game scene
+        //isFirstPlayer=false;
     }
 
     private void chooseNumOfPlayers() throws IOException {
@@ -171,7 +168,8 @@ public class GUI extends Application {
 
     @FXML
     private void goToLobbyClicked(ActionEvent event) throws IOException {
-        if(isFirstPlayer) {
+        if(isFirstPlayer()) {
+            setFirstPlayer(false);
             Toggle numOfPlayers = numOfPlayersGroup.getSelectedToggle();
 
             if (numOfPlayers.toString().equals("RadioButton[id=2, styleClass=radio-button]'2 Giocatori'")) {
@@ -183,12 +181,13 @@ public class GUI extends Application {
             if (numOfPlayers.toString().equals("RadioButton[id=4, styleClass=radio-button]'4 Giocatori'")) {
                 selectedNumOfPlayers = 4;
             }
-            Label testNumbers = new Label();
             testNumbers.setText("Il numero di giocatori è: " + selectedNumOfPlayers);
             out.println(selectedNumOfPlayers);
+
+            //isFirstPlayer=false;
         }
         else{
-
+            testNumbers.setText("Quello che selezioni non conta niente, SCEMO, il numero di giocatori è: " + selectedNumOfPlayers);
         }
     }
 

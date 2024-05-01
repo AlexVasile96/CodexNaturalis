@@ -10,6 +10,7 @@ import java.net.Socket;
 
 public class ConnectionWithServer {
     private Socket socket;
+    private static boolean isFirst=true;
     public Socket connectToServer() {
         try {
 
