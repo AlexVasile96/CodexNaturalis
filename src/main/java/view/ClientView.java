@@ -18,6 +18,7 @@ public class ClientView {
     private Dot dot;
     private Board board;
     private boolean isCardBack;
+    private int index;
     private ArrayList<Card> playerCards;
     private ObjectiveCard secretChosenCard;
 
@@ -49,6 +50,14 @@ public class ClientView {
             this.playerCards = (ArrayList<Card>) player.getPlayerCards(); // Aggiorna le carte del giocatore
             this.secretChosenCard = player.getSecretChosenCard();
 
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public int getPlayerScore() {

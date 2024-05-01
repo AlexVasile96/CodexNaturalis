@@ -164,7 +164,7 @@ public class Game implements WhatCanPlayerDo {
         player.drawGoldCard(goldDeck);
     }
 
-    public Boolean drawCardFromWell(Player player, int index) {
+    public String drawCardFromWell(Player player, int index) {
         return player.chooseCardFromWellForServer(well, index, resourceDeck, goldDeck);
     }
 

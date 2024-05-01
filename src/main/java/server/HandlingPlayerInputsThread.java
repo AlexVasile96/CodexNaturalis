@@ -35,6 +35,10 @@ public class HandlingPlayerInputsThread implements Runnable {
     private List<Player> playersList;
     private Socket clientSocket;
     private String userName;
+    private static int numbOfPlayers=0;
+    private static int currentPlayerIndex=0;
+    private static int index=0;
+    private static String lastCommand="startingMethod";
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException { //Costructor
         this.clientSocket = socket;
@@ -77,7 +81,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println(game.getObjectiveDeck().carteRimaste());       //Debugging to check if all cards are given correctly
 
                 //GAME IS READY TO START
-
+                numbOfPlayers++;
                 startGame();                                                      //Game can eventually start
 
         } catch (IOException e) {
@@ -131,6 +135,10 @@ public class HandlingPlayerInputsThread implements Runnable {
                 Dot dot= chooseClientDotColor(playersList);
                 player = new Player(request, 0, dot, board);
                 this.userName=request;
+                synchronized (this){
+                player.setIndex(index);
+                index++;
+                }
                 playersList.add(player);
                 System.out.println("Giocatori nel gioco: "+ playersList);
                 System.out.println(player);
@@ -160,19 +168,61 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println(threadPlayer.toString());
     }
 
-    private void startGame() throws IOException, InterruptedException {
+    /*private void startGame() throws IOException, InterruptedException {
         String messageFromClient;
         while (true) {
-            if(Objects.equals(currentPlayer.getNickName(), this.userName)){
+            /*if(lastCommand.equals("endturn")){
+               stdIn.readLine(); //prendo l'ultima call del client che ha appena finito
+                sendMessageToAllClients(currentPlayer.getNickName());
+            }
+            sendMessageToClient(currentPlayer.getNickName());
+            messageFromClient= stdIn.readLine();
+            if(Objects.equals(currentPlayer.getNickName(),messageFromClient)){
                 System.out.println("Sto aspettando che il client" + currentPlayer.getNickName() + " mi faccia richiesta");
                 sendMessageToClient("è il tuo turno!!");
                 messageFromClient = stdIn.readLine();                                   //messaggio dal thread client
                 System.out.println("Il client ha selezionato: " + messageFromClient);  //Server riceve il comando del client
                 runCommand(messageFromClient, threadPlayer); //->run
+                lastCommand=messageFromClient.toLowerCase();
             }
             else{
                 sendMessageToClient("Aspetta perfavore, non è il tuo turno!");
             }
+        }
+    }*/
+
+
+    private void startGame() throws IOException, InterruptedException {
+        while(numbOfPlayers!= gameController.getSize()){
+            System.out.println("acca");
+        }
+        String messageFromClient;
+        while (true) {
+
+
+                if(lastCommand.equals("endturn"))
+                {
+                    sendMessageToAllClients(currentPlayer.getNickName());
+                    sendMessageToAllClients("è il tuo turno");
+                    System.out.println("Sto aspettando che il client " + currentPlayer.getNickName() + " mi faccia richiesta");
+                    messageFromClient = stdIn.readLine();                                   //messaggio dal thread client
+                    System.out.println("Il client ha selezionato: " + messageFromClient);  //Server riceve il comando del client
+                    runCommand(messageFromClient, threadPlayer); //->run
+                    lastCommand=messageFromClient.toLowerCase();
+                }
+                else{
+
+                    sendMessageToClient(currentPlayer.getNickName());
+                    System.out.println("Sto aspettando che il client" + currentPlayer.getNickName() + " mi faccia richiesta");
+                    sendMessageToClient("è il tuo turno!!");
+                    messageFromClient = stdIn.readLine();                                   //messaggio dal thread client
+                    System.out.println("Il client ha selezionato: " + messageFromClient);  //Server riceve il comando del client
+                    runCommand(messageFromClient, threadPlayer); //->run
+                    lastCommand=messageFromClient.toLowerCase();}
+
+
+                //sendMessageToClient("Aspetta perfavore, non è il tuo turno!");
+
         }
     }
 
@@ -273,22 +323,36 @@ public class HandlingPlayerInputsThread implements Runnable {
                 cornerChosen= stdIn.readLine();
                 System.out.println(cornerChosen);
                 gameController.readCommand(messageFromClient, player,cardChosenFromHisDeck, boardCardChosen, cornerChosen);
+                messageFromClient = stdIn.readLine();
+                runCommand(messageFromClient,player);
             }
-            else if(rightWell(messageFromClient)){
-                char ultimoCarattere = messageFromClient.charAt(messageFromClient.length() - 1);    //in questo modo prndo l'intero che mi serve
-                int posizione= Integer.parseInt(String.valueOf(ultimoCarattere));
-                gameController.readCommand("drawCardFromWell", player, posizione,0, null);
+            //else if(messageFromClient.equals("drawCardFromWell")){
+            else if(messageFromClient.equals("drawCard")){
+                //intro
+                messageFromClient= stdIn.readLine();
+                gameController.readCommand(messageFromClient, player, 0, 0, null);// showwell
+                //well o deck?
+                messageFromClient=stdIn.readLine();
+                if (messageFromClient.equals("deck")) {
+
+                }
+                else if (messageFromClient.equals("well")) {
+                    messageFromClient= stdIn.readLine();
+                    gameController.readCommand(messageFromClient, player, 0, 0, null);//showwell
+                    int index = Integer.parseInt(stdIn.readLine());
+                    gameController.readCommand("drawCardFromWell", player, index,0, null);//drawCardFromWll
+                    messageFromClient = stdIn.readLine();
+                    gameController.readCommand(messageFromClient, player, 0,0, null);
+                    messageFromClient = stdIn.readLine();
+                    gameController.readCommand(messageFromClient, player, 0,0, null);
+                }
+                else {System.out.println("messagio dal client errato ,messageFromClient: " + messageFromClient);};
+
             }
             else  {
                 gameController.readCommand(messageFromClient, player,0,0,cornerChosen ); //sto passando una stringa e un player
             }
         }
-    }
-    private boolean rightWell(String selectedCard) {
-        if(selectedCard.equals("well-0") || selectedCard.equals("well-1") || selectedCard.equals("well-2") || selectedCard.equals("well-3")) {
-            return true;
-        }
-        return false;
     }
     private synchronized void waitingForClients() throws InterruptedException {
         System.out.println("In attesa di altri giocatori");
@@ -357,6 +421,12 @@ public class HandlingPlayerInputsThread implements Runnable {
     public void setCurrentPlayer(Player currentPlayerName) {
         this.currentPlayer = currentPlayerName;
         System.out.println("Current player: " + currentPlayerName);
+        String response= "player changed!";
+        sendMessageToAllClients(response);
+    }
+    public void sendMessageToSpecificClient(String message)
+    {
+
     }
 }
 

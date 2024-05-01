@@ -13,6 +13,7 @@ import java.util.*;
 public class Player implements Observable {
     private String nickName;
     private int playerScore;
+    private int index;
     private Dot dot;
     private ClientView clientView;
     private Board board;
@@ -29,6 +30,13 @@ public class Player implements Observable {
         this.clientView= new ClientView();
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     //IN GAME METHODS
 
@@ -64,11 +72,11 @@ public class Player implements Observable {
         return cardwell;
     }
 
-    public Boolean chooseCardFromWellForServer(List<Card>cardwell, int index, ResourceDeck rc, GoldDeck gd) {
+    public String chooseCardFromWellForServer(List<Card>cardwell, int index, ResourceDeck rc, GoldDeck gd) {
         if (this.playerCards.size() < 3) {
             if (cardwell.isEmpty()) {
                 System.out.println("Well is empty");
-                return false; //empty well
+                return "Well is empty"; //empty well
             }
             try {
                 for (Card card : cardwell) {
@@ -83,9 +91,10 @@ public class Player implements Observable {
         }
         else {
             System.out.println("Player's deck already has 3 cards\n");
-            return false;
+            return "Player's deck already has 3 cards";
         }
-        return true;
+        System.out.println("operation performed correctly");
+        return "operation performed correctly";
     }
 
     public void chooseSecretCard(List <ObjectiveCard> secretCards){
@@ -653,7 +662,7 @@ public void cornersAvaible(){
 
     }
     public Card choosingTheSpecificCardFromTheWellForServer(int index, List<Card>cardwell){
-        if (index < 1 || index > cardwell.size()) {
+        if (index < 0 || index > cardwell.size()-1) {
             System.out.println("Not valid index");
             return null;
         }
