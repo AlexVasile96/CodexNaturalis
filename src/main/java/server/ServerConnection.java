@@ -102,17 +102,15 @@ private void staifermo() throws IOException {
                 case "secret", "3" -> visualizeSecretObjective();
                 case "board", "4" -> showBoard();
                 case "points", "5" -> showPoints();
-                case "drawcard", "6" -> drawCard();
-                case "drawcardfromdeck", "7"-> drawCardFromDeck();
-                case "drawcardfromwell", "8" -> drawCardFromWell();
+                case "showwell", "6" -> showWell();
+                //case "drawcard", "11" -> drawCard();              //il player pesca solo se gioca una carta
+                //case "drawcardfromdeck", "7"-> drawCardFromDeck();
+                //case "drawcardfromwell", "8" -> drawCardFromWell();
                 case "endturn", "9" -> runEndTurn();//run
                 case "quit", "10" -> quit();
-                case "showwell", "11" -> showWell();
                 default -> {
                     System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
-                    sendMessageToServer("default");
-                    in.readLine();
-                }
+                    }
             }
         } catch (OperationCancelledException exception) {
             System.out.println(exception.getMessage());
@@ -166,8 +164,9 @@ private void staifermo() throws IOException {
     private void showCards() throws IOException {
         sendMessageToServer("showYourCardDeck");
         System.out.println("Il tuo mazzo:" );
+        System.out.println("--------------------------------------------------------------------------------------");
         receivingAndPrintingCards();
-        System.out.println("Carte lette correttamente");
+        System.out.println("--------------------------------------------------------------------------------------");
     }
     private void receivingAndPrintingCards() throws IOException {
         String firstCard = in.readLine();
@@ -320,11 +319,9 @@ private void staifermo() throws IOException {
         do{
             pesca = stdin.readLine().toLowerCase();
             if (pesca.equals("resource")) {
-                sendMessageToServer("drawCardFromResourceDeck");
                 drawCardFromResourceDeck();
             }
             else if (pesca.equals("gold")) {
-                sendMessageToServer("drawCardFromGoldDeck");
                 drawCardFromGoldDeck();
             }
             else System.out.println("write 'resource' or 'gold'");
@@ -332,10 +329,24 @@ private void staifermo() throws IOException {
         }while (!pesca.equals("resource") && !pesca.equals("gold"));
     }
 
-    private void drawCardFromResourceDeck() {
+    private void drawCardFromResourceDeck() throws IOException {
+        sendMessageToServer("drawCardFromGoldDeck");
+        System.out.println(in.readLine());
+        sendMessageToServer("showYourCardDeck");
+        System.out.println("Your Deck:" );
+        System.out.println("--------------------------------------------------------------------------------------");
+        receivingAndPrintingCards();
+        System.out.println("--------------------------------------------------------------------------------------");
     }
 
-    private void drawCardFromGoldDeck() {
+    private void drawCardFromGoldDeck() throws IOException {
+        sendMessageToServer("drawCardFromResourceDeck");
+        System.out.println(in.readLine());
+        sendMessageToServer("showYourCardDeck");
+        System.out.println("Your Deck:" );
+        System.out.println("--------------------------------------------------------------------------------------");
+        receivingAndPrintingCards();
+        System.out.println("--------------------------------------------------------------------------------------");
     }
 
     private void drawCardFromWell() throws IOException {
@@ -362,7 +373,7 @@ private void staifermo() throws IOException {
         if(result.equals("operation performed correctly")) {
             System.out.println("Operation 'Draw card from Well' performed correctly");
             sendMessageToServer("showYourCardDeck");
-            System.out.println("Il tuo mazzo:" );
+            System.out.println("Your Deck:" );
             System.out.println("--------------------------------------------------------------------------------------");
             receivingAndPrintingCards();
             System.out.println("--------------------------------------------------------------------------------------");
@@ -371,7 +382,7 @@ private void staifermo() throws IOException {
         else{
             System.out.println("operation performed incorrectly");
             System.out.println("Server says: "+ result);
-            System.out.println("Il tuo mazzo:" );
+            System.out.println("Your Deck:" );
             System.out.println("--------------------------------------------------------------------------------------");
             sendMessageToServer("showYourCardDeck");
             receivingAndPrintingCards();

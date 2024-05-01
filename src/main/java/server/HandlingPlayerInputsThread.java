@@ -275,7 +275,10 @@ public class HandlingPlayerInputsThread implements Runnable {
                 //well o deck?
                 messageFromClient=stdIn.readLine();
                 if (messageFromClient.equals("deck")) {
-
+                    messageFromClient= stdIn.readLine();
+                    gameController.readCommand(messageFromClient, player, 0, 0, null);
+                    messageFromClient= stdIn.readLine();
+                    gameController.readCommand(messageFromClient, player, 0, 0, null);
                 }
                 else if (messageFromClient.equals("well")) {
                     messageFromClient= stdIn.readLine();

@@ -24,8 +24,8 @@ public interface WhatCanPlayerDo {
     String showBoard(Player player);
     String showPoints(Player player);
     void runEndTurn();
-    void drawResourceCard(Player player);
-    void drawGoldCard(Player player);
+    String drawResourceCard(Player player);
+    String drawGoldCard(Player player);
     void placeCardOnBoard(Player player, int cardIndex, String selectedCorner);
     void chooseSecretCard(Player player, List<ObjectiveCard> secretCards);
     void turnYourCard(Card card);
