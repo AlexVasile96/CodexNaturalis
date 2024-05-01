@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import server.ServerConnection;
 import view.ClientView;
 
 import java.io.FileReader;
@@ -54,14 +55,14 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
+        connectToServer();
 
 
-        startMenuScene(primaryStage);
 
 
     }
 
-    private void startMenuScene(Stage primaryStage) throws IOException {
+    /*private void startMenuScene(Stage primaryStage) throws IOException {
 
         // Carica l'immagine di sfondo
         Parent fxml = FXMLLoader.load(getClass().getResource("/model/mainMenu.fxml"));
@@ -88,14 +89,7 @@ public class GUI extends Application {
     public void startGameClicked(ActionEvent event) throws IOException {
         String firstMessage = "login";
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        this.socket = connectToServer();
-        PrintWriter printWriter;
-        try {
-            printWriter = new PrintWriter(socket.getOutputStream(),true);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-        printWriter.println(firstMessage);
+        //pronto.println(firstMessage);
         loginScene();
         primaryStage.setScene(loginScene);
     }
@@ -137,7 +131,7 @@ public class GUI extends Application {
         rootGame.getChildren().addAll(loginLayout);
 
         // Inizializza la scena di gioco
-        loginScene = new Scene(rootGame, 800, 600);*/
+        loginScene = new Scene(rootGame, 800, 600);
 
         Parent fxml = FXMLLoader.load(getClass().getResource("/model/loginScene.fxml"));
         StackPane root = new StackPane();
@@ -147,49 +141,41 @@ public class GUI extends Application {
     }
 
     public void loginButtonClicked(ActionEvent event) throws IOException {
-        socket = connectToServer();
         String username = usernameField.getText();
         if(!username.isEmpty()){
             clientView.setUserName(username);
-            //setUsername(username);
             test.setText("Il tuo username è: " + clientView.getUserName());
+            PrintWriter newPrintWriter = new PrintWriter(socket.getOutputStream(),true);
+            newPrintWriter.println(username);
         }else{
             System.out.println("Username necessario");
         }
-    }
-
+    }*/
 
     @FXML
-    private  void setUsername(String username){
+    public void connectToServer() throws IOException {
         try {
-            PrintWriter printWriter = new PrintWriter(socket.getOutputStream(),true);
-            printWriter.println(username);
+            FileReader reader = new FileReader("src/main/resources/HostAndPort.json"); // Reading JSON file to get host name and port number
+            JSONObject jsonObject = new JSONObject(new JSONTokener(reader));
+            JSONArray hostAndPortArray = jsonObject.getJSONArray("hostandport");
+            String hostName = null;                                                                   //INITIALIZING
+            int portNumber = 0;                                                                       //INITIALIZING
+            for (int i = 0; i < hostAndPortArray.length(); i++) {                                   // Iterating through the JSONArray to extract host names and port numbers.
+                JSONObject hostAndPort = hostAndPortArray.getJSONObject(i);                         // Get the JSONObject representing a host and port combination.
+                hostName = hostAndPort.getString("hostName");                                   // Extract the host name from the JSONObject.
+                portNumber = hostAndPort.getInt("portNumber");                                  // Extract the port number from the JSONObject.
+                System.out.println("HostName: " + hostName);
+                System.out.println("PortNumber: " + portNumber);
+            }
+            Socket socket = new Socket(hostName, portNumber);                                 // Creating the socket and connecting to the server
+            System.out.println("Client connected!");                                        //Client successfully connected
+            ClientView clientView = new ClientView();                                        //Giving the client a personal view
+            GuiHandlerThread guiHandlerThread = new GuiHandlerThread(socket, clientView);     //Creating a new thread that will handle clients interactions
+            guiHandlerThread.run();
+
         }catch (IOException e){
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    public Socket connectToServer() {
-        try {
-
-            FileReader reader = new FileReader("src/main/resources/HostAndPort.json");
-            JSONObject jsonObject = new JSONObject(new JSONTokener(reader));
-            JSONArray hostAndPortArray = jsonObject.getJSONArray("hostandport");
-
-            String hostName = null;
-            int portNumber = 0;
-            for (int i = 0; i < hostAndPortArray.length(); i++) {
-                JSONObject hostAndPort = hostAndPortArray.getJSONObject(i);
-                hostName = hostAndPort.getString("hostName");
-                portNumber = hostAndPort.getInt("portNumber");
-            }
-
-            this.socket = new Socket(hostName, portNumber);
-        } catch (IOException e) {
-            System.err.println("Connection failed\n");
-        }
-        return socket;
     }
     @FXML
     public void closeConnection(Socket socket) throws IOException {

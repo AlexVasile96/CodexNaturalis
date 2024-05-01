@@ -12,7 +12,7 @@
          <children>
             <ImageView fitHeight="400.0" fitWidth="600.0">
                <image>
-                  <Image url="@../ImmaginiCodex/sfondo%20game.png" />
+                  <Image url="@../ImmaginiCodex/sfondo game.png" />
                </image>
             </ImageView>
             <HBox layoutY="1.0" prefHeight="400.0" prefWidth="600.0">
