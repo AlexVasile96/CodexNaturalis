@@ -323,11 +323,31 @@ public class HandlingPlayerInputsThread implements Runnable {
                 cornerChosen= stdIn.readLine();
                 System.out.println(cornerChosen);
                 gameController.readCommand(messageFromClient, player,cardChosenFromHisDeck, boardCardChosen, cornerChosen);
+                messageFromClient = stdIn.readLine();
+                runCommand(messageFromClient,player);
             }
-            else if(messageFromClient.equals("drawCardFromWell")){
-                gameController.readCommand("showWell", player, 0, 0, null);
-                int index = Integer.parseInt(stdIn.readLine());
-                gameController.readCommand(messageFromClient, player, index,0, null);
+            //else if(messageFromClient.equals("drawCardFromWell")){
+            else if(messageFromClient.equals("drawCard")){
+                //intro
+                messageFromClient= stdIn.readLine();
+                gameController.readCommand(messageFromClient, player, 0, 0, null);// showwell
+                //well o deck?
+                messageFromClient=stdIn.readLine();
+                if (messageFromClient.equals("deck")) {
+
+                }
+                else if (messageFromClient.equals("well")) {
+                    messageFromClient= stdIn.readLine();
+                    gameController.readCommand(messageFromClient, player, 0, 0, null);//showwell
+                    int index = Integer.parseInt(stdIn.readLine());
+                    gameController.readCommand("drawCardFromWell", player, index,0, null);//drawCardFromWll
+                    messageFromClient = stdIn.readLine();
+                    gameController.readCommand(messageFromClient, player, 0,0, null);
+                    messageFromClient = stdIn.readLine();
+                    gameController.readCommand(messageFromClient, player, 0,0, null);
+                }
+                else {System.out.println("messagio dal client errato ,messageFromClient: " + messageFromClient);};
+
             }
             else  {
                 gameController.readCommand(messageFromClient, player,0,0,cornerChosen ); //sto passando una stringa e un player
