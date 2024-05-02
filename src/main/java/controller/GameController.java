@@ -47,7 +47,6 @@ public class GameController {
         this.isSizeSet=false;
     }
 
-
     public synchronized void readCommand(String commandString, Player player, int size, int paolo, String cornerChosen) {
         if (game != null) {
             Command command = new Command();

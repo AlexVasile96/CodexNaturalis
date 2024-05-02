@@ -1,6 +1,7 @@
 package network.client.gui;
 
 import controller.GameController;
+import controller.GuiController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,9 +37,9 @@ public class GUI extends Application {
     private Scene loginScene;
     private Scene gameScene;
     private Scene chooseNumOfPlayersScene;
+    private Scene lobbyScene;
     private int selectedNumOfPlayers;
-    //private static boolean isFirstPlayer;
-    private static AtomicBoolean isFirstPlayer = new AtomicBoolean(true);
+    private static GuiController guiController = null;
 
     private ClientView clientView = new ClientView();
     private static Socket socket;
@@ -58,22 +59,13 @@ public class GUI extends Application {
     @FXML
     public Label testNumbers;
 
-    public static void setFirstPlayer(boolean value) {
-        isFirstPlayer.set(value);
-    }
-    public static boolean isFirstPlayer() {
-        return isFirstPlayer.get();
-    }
-    public GUI() throws IOException {
-    }
-
 
     public static void main(String[] args) throws IOException {
 
         ConnectionWithServer connectionWithServer= new ConnectionWithServer(); //creazione classe
         socket= connectionWithServer.connectToServer();
         out=new PrintWriter(socket.getOutputStream(), true); //to write
-
+        guiController = new GuiController(0);
         launch(args); //default
     }
 
@@ -152,11 +144,13 @@ public class GUI extends Application {
         testDot.setText("Il colore scelto è: " + realChosenDot);
         out.println(realChosenDot);
         clientView.setDot(Dot.valueOf(realChosenDot));
-        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        chooseNumOfPlayers();
-        primaryStage.setScene(chooseNumOfPlayersScene);
-        //isFirstPlayer=false;
+        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        lobby();
+        primaryStage.setScene(lobbyScene);
+        /*chooseNumOfPlayers();
+        primaryStage.setScene(chooseNumOfPlayersScene);*/
+
     }
 
     private void chooseNumOfPlayers() throws IOException {
@@ -168,8 +162,7 @@ public class GUI extends Application {
 
     @FXML
     private void goToLobbyClicked(ActionEvent event) throws IOException {
-        if(isFirstPlayer()) {
-            setFirstPlayer(false);
+        if(!guiController.isSizeSet()) {
             Toggle numOfPlayers = numOfPlayersGroup.getSelectedToggle();
 
             if (numOfPlayers.toString().equals("RadioButton[id=2, styleClass=radio-button]'2 Giocatori'")) {
@@ -183,12 +176,22 @@ public class GUI extends Application {
             }
             testNumbers.setText("Il numero di giocatori è: " + selectedNumOfPlayers);
             out.println(selectedNumOfPlayers);
-
-            //isFirstPlayer=false;
+            guiController.setSizeSet(true);
         }
         else{
             testNumbers.setText("Quello che selezioni non conta niente, SCEMO, il numero di giocatori è: " + selectedNumOfPlayers);
         }
+    }
+
+    @FXML
+    private void lobby() throws IOException{
+        Parent fxmlLobby = FXMLLoader.load(getClass().getResource("/model/lobby.fxml"));
+
+        Pane root = new Pane();
+        root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+        root.getChildren().addAll(fxmlLobby);
+
+        lobbyScene = new Scene(root, 800, 600);
     }
 
 
