@@ -107,7 +107,10 @@ private void staifermo() throws IOException {
                 //case "drawcardfromdeck", "7"-> drawCardFromDeck();
                 //case "drawcardfromwell", "8" -> drawCardFromWell();
                 case "endturn", "9" -> runEndTurn();//run
-                case "quit", "10" -> quit();
+                case "allboards", "10" -> showEachPlayerBoard();
+                case "specseeds", "11" -> showYourSpecificSeed();
+                case "allseed", "12" -> showAllSpecificSeed();
+                case "quit", "13" -> quit();
                 default -> {
                     System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
                     }
@@ -116,6 +119,10 @@ private void staifermo() throws IOException {
             System.out.println(exception.getMessage());
         }
     }
+
+    private void showEachPlayerBoard(){}
+    private void showYourSpecificSeed(){}
+    private void showAllSpecificSeed(){}
 
     private synchronized void printHelp() throws IOException {
         sendMessageToServer("help");
