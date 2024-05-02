@@ -73,7 +73,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     {
                         game.updateSingleClientView(player);                      //Updating each player ClientView
                         System.out.println(player.getClientView());
-                    }
+                    }// Momo: perche non solo quella del thread player?
                 System.out.println(game.getObjectiveDeck().carteRimaste());         //Debugging to check if all cards are given correctly
                 sendMessageToClient(currentPlayer.getNickName());
 
@@ -95,22 +95,13 @@ public class HandlingPlayerInputsThread implements Runnable {
         String messageFromClient;
         boolean endturnphase=false;
         while (!endturnphase) {
-                System.out.println("Sto aspettando che il client " + currentPlayer.getNickName() + " mi faccia richiesta");
-                messageFromClient = stdIn.readLine();
-                System.out.println("Il client ha selezionato: " + messageFromClient);
-                runCommand(messageFromClient, threadPlayer); //->run
-                if(messageFromClient.equals("endTurn")) endturnphase=true;
-            }
+            System.out.println("Sto aspettando che il client " + currentPlayer.getNickName() + " mi faccia richiesta");
+            messageFromClient = stdIn.readLine();
+            System.out.println("Il client ha selezionato: " + messageFromClient);
+            if(messageFromClient.equals("endTurn")) endturnphase=true;
+            runCommand(messageFromClient, threadPlayer); //->run
         }
-
-
-
-
-
-
-
-
-
+    }
 
 
 
@@ -130,7 +121,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println("il nome del client è: " + request);
                 sendMessageToClient("Login effettuato con successo!");
                 Board board = new Board(50, 50);
-                Dot dot= chooseClientDotColor(playersList);
+                Dot dot= chooseClientDotColor();
                 player = new Player(request, 0, dot, board);
                 this.userName=request;
                 synchronized (this){
@@ -193,7 +184,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             sendMessageToClient(" players");
         }
     }
-    private Dot chooseClientDotColor(List<Player> playerlist) throws IOException {
+    private Dot chooseClientDotColor() throws IOException {
         String message;
         Dot dot = null;
 
@@ -248,9 +239,9 @@ public class HandlingPlayerInputsThread implements Runnable {
                 //well o deck?
                 messageFromClient=stdIn.readLine();
                 if (messageFromClient.equals("deck")) {
-                    messageFromClient= stdIn.readLine();
+                    messageFromClient= stdIn.readLine();//gold o resource
                     gameController.readCommand(messageFromClient, player, 0, 0, null);
-                    messageFromClient= stdIn.readLine();
+                    messageFromClient= stdIn.readLine();//showdeck
                     gameController.readCommand(messageFromClient, player, 0, 0, null);
                 }
                 else if (messageFromClient.equals("well")) {
@@ -258,9 +249,9 @@ public class HandlingPlayerInputsThread implements Runnable {
                     gameController.readCommand(messageFromClient, player, 0, 0, null);//showwell
                     int index = Integer.parseInt(stdIn.readLine());
                     gameController.readCommand("drawCardFromWell", player, index,0, null);//drawCardFromWll
-                    messageFromClient = stdIn.readLine();
+                    messageFromClient = stdIn.readLine();//showdeck
                     gameController.readCommand(messageFromClient, player, 0,0, null);
-                    messageFromClient = stdIn.readLine();
+                    messageFromClient = stdIn.readLine();//showwell
                     gameController.readCommand(messageFromClient, player, 0,0, null);
                 }
                 else {System.out.println("messagio dal client errato ,messageFromClient: " + messageFromClient);};

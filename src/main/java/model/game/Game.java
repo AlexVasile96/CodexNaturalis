@@ -53,7 +53,14 @@ public class Game implements WhatCanPlayerDo {
     }
 
     public void addPlayer(Player player) {
-        players.add(player);
+        boolean esiste = false;
+        for (Player p : players) {
+            if (p.getNickName().equals(player.getNickName())) {
+                esiste = true;
+                break;
+            }
+        }
+        if (!esiste) players.add(player);
     }
 
     public void assignResourcesAndGoldCardsToPlayers() {
