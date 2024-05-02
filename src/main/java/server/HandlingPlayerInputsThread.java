@@ -196,46 +196,19 @@ public class HandlingPlayerInputsThread implements Runnable {
     private Dot chooseClientDotColor(List<Player> playerlist) throws IOException {
         String message;
         Dot dot = null;
-        boolean isTheColorOkay = false;
-        while (!isTheColorOkay) {
-            sendMessageToClient("Scegli il colore del tuo dot, puoi scegliere fra: " + game.getDots());
+
+        do{
+            sendMessageToClient("Choose the color of your dot, you can choose between: " + game.getDots());
             message = stdIn.readLine();
-            dot = Dot.valueOf(message);
+            if (!game.isInDots(message)) {
+                sendMessageToClient("Color chosen not available!");
+            }
+            else sendMessageToClient("color chosen correctly:");
+        }while(!game.isInDots(message));
+        dot = Dot.valueOf(message);
 
-            //DA SISTEMARE LA COMUNICAZIONE CON IL CLIENT PRIMA DI SOSTITUIRE QUESTO CODICE
-            /*
-            do{
-                sendMessageToClient("Scegli il colore del tuo dot, puoi scegliere fra: " + game.getDots());
-                message = stdIn.readLine();
-                message = message.toUpperCase();
-                if (!game.isInDots(message)) {
-                    legalDot = false;
-                    sendMessageToClient("Colore scelto non disponibile!");
-                }
-            }while(!legalDot);
-             */
-
-            if (!playerlist.isEmpty()) {
-                for (Player player : playerlist) {
-                    if (player.getDot() == dot) {
-                        sendMessageToClient("Quel colore è gia stato scelto da un altro utente, perfavore inserire un altro colore");
-                    } else {
-                        System.out.println("Colore scelto dal client: " + message);
-                        sendMessageToClient("Colore del dot scelto correttamente");
-                        game.removeDot(message);
-                        //System.out.println(game.getDots());
-                        isTheColorOkay = true;
-
-                    }
-                }
-            } else{
-                System.out.println("Colore scelto dal client: " + message);
-                sendMessageToClient("Colore del dot scelto correttamente");
-                game.removeDot(message);
-                //System.out.println(game.getDots());
-                isTheColorOkay = true;
-             }
-        }
+        System.out.println("Colore scelto dal client: " + message);
+        game.removeDot(message);
         return dot;
     }
     private void runCommand(String messageFromClient, Player player) throws NoSuchElementException, IOException {

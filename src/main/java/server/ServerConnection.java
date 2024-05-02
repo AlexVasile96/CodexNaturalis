@@ -65,7 +65,7 @@ public class ServerConnection implements Runnable {
 }
 
 private void staifermo() throws IOException {
-   currentPlayer= getCurrentPlayer();
+   //currentPlayer= getCurrentPlayer();
         while(!clientView.getUserName().equals(getCurrentPlayer()))
         {
             //stdin.readLine();  //Scrivi cosa vuoi
@@ -473,29 +473,18 @@ private void staifermo() throws IOException {
     }
 
     private void chooseYourDotColor(Player player) throws IOException {
-        boolean isTheColorOkay= false;
-        while(!isTheColorOkay) {
-            String chooseYourColor = in.readLine();
-            System.out.println("server says: " + chooseYourColor);              //Scegli il colore del tuo dot
-            System.out.println("Inserire\n -RED per scegliere il dot di colore rosso\n -BLUE per scegliere il colore blu\n -GREEN per scegliere il colore verde\n -YELLOW per scegliere il colore giallo");
-            System.out.println(">");
-            String dotColor = stdin.readLine();
-            dotColor = dotColor.toUpperCase();
-            sendMessageToServer(dotColor);
-            System.out.println(dotColor);
-            String serverAnswer = in.readLine();
-            if (serverAnswer.equals("Quel colore è gia stato scelto da un altro utente, perfavore inserire un altro colore")) {
-                System.out.println("server says: " + serverAnswer);
-
-            }
-            else {
-                System.out.println("Server says: " + serverAnswer); //Colore del dot scelto correttamente
-                isTheColorOkay=true;
-                Dot dot= Dot.valueOf(dotColor);
-                clientView.setDot(dot);
-                player.getClientView().setDot(dot);
-            }
-        }
+            String messageFromServer;
+            do {
+                messageFromServer = in.readLine();
+                System.out.println("server says: " + messageFromServer);              //Scegli il colore del tuo dot
+                System.out.println("Inserire\n -RED per scegliere il dot di colore rosso\n -BLUE per scegliere il colore blu\n -GREEN per scegliere il colore verde\n -YELLOW per scegliere il colore giallo");
+                System.out.println(">");
+                String dotColor = stdin.readLine();
+                dotColor = dotColor.toUpperCase();
+                sendMessageToServer(dotColor);
+                messageFromServer = in.readLine();
+                System.out.println(messageFromServer);
+            }while (messageFromServer.equals("Color chosen not available!"));
 
     }
 
