@@ -94,7 +94,9 @@ public class GameController {
         if (number < 1 || number > 4) {
             throw new ParametersNotValidException();
         }
-        size = number;
+        synchronized (this) {
+            size = number;
+        }
     }
     public int getNumOfPlayers() {
         return players.size();
@@ -104,7 +106,7 @@ public class GameController {
         return players;
     }
 
-    public int getSize() {
+    public synchronized int getSize() {
         return size;
     }
 

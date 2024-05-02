@@ -136,6 +136,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 setGameSize();
                 sendMessageToClient("Sarai messo in sala d'attesa:");
                 if (playersList.size() < gameController.getSize()) {
+                    System.out.println("in attesa di: "+ (gameController.getSize()-playersList.size()) + "giocatori");
                     waitingForClients();
                 }
             } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
@@ -264,7 +265,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     private synchronized void waitingForClients() throws InterruptedException {
         System.out.println("In attesa di altri giocatori");
-        while (playersList.size() != 2) {
+        while (playersList.size() < gameController.getSize()) {
             {
                 wait(10000);
             }
