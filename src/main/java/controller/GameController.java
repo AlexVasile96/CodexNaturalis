@@ -55,12 +55,12 @@ public class GameController {
             {
                 if(!isCornerAlreadyChosen) {
                     String cornersAvaible = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
-                    sendMessageToClient(cornersAvaible); //Mando al client i corners disponibili
+                    sendMessageToAllClients(cornersAvaible); //Mando al client i corners disponibili
                     isCornerAlreadyChosen=true;
                 }
                 else {
                     String ciaone= command.runCommand(game,commandString,player,size,paolo,cornerChosen);
-                    sendMessageToClient(ciaone);
+                    sendMessageToAllClients(ciaone);
                     isCornerAlreadyChosen=false;
                 }
 

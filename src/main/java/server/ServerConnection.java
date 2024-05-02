@@ -70,7 +70,7 @@ private void staifermo() throws IOException {
         {
             //stdin.readLine();  //Scrivi cosa vuoi
             //System.out.println("Non è il tuo turno, verrai notificato quando toccherà a te");
-            System.out.println(getCurrentPlayer());
+            //System.out.println(getCurrentPlayer());
 
             String waitForCall= in.readLine();
             if(waitForCall.equals(clientView.getUserName())){
