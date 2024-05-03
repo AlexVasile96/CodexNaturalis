@@ -77,14 +77,22 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }// Momo: perche non solo quella del thread player?
                 System.out.println(game.getObjectiveDeck().carteRimaste());         //Debugging to check if all cards are given correctly
                 sendMessageToClient(currentPlayer.getNickName());
-
-                do {
+                boolean hasClientQuit= false;
+                while (!hasClientQuit){
                     startGame();
                     System.out.println("Il client è cambiato, ora tocca a " + currentPlayer);
-                } while (true);
+                    hasClientQuit=true;
+                }
+                clients.remove(this);
+                try {
+                    clientSocket.close();
+                } catch (IOException ex) {
+                    System.err.println("Errore durante la chiusura del socket del client: " + ex.getMessage());
+                }
+                System.out.println("Connessione chiusa dal client.");
 
             } catch (IOException e) {
-                System.err.println("Io exception client handler");
+
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -98,8 +106,12 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("Sto aspettando che il client " + currentPlayer.getNickName() + " mi faccia richiesta");
             messageFromClient = stdIn.readLine();
             System.out.println("Il client ha selezionato: " + messageFromClient);
-            if(messageFromClient.equals("endTurn")) endturnphase=true;
+            //if(messageFromClient.equals("endTurn")) endturnphase=true;
             runCommand(messageFromClient, threadPlayer); //->run
+            if(messageFromClient.equals("quit")){
+                endturnphase=true;
+            }
+
         }
     }
     private void sendingClientHisFirstThreeCards() throws IOException {

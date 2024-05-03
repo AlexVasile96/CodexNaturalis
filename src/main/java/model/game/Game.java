@@ -95,9 +95,7 @@ public class Game implements WhatCanPlayerDo {
     }
 
 
-    public String showAllPlayersBoard(){
-        return null;
-    }
+
     public String showYourspecificSeeds(Player player){
         BoardPoints boardPoints= new BoardPoints();
         String yourSpecificSeeds= boardPoints.countPoints(player.getBoard()).toString();
@@ -135,9 +133,21 @@ public class Game implements WhatCanPlayerDo {
         return result;
     }
 
+    public String showAllSpecificSeed(){
+        return null;
+    }
+
+
     @Override
     public String showBoard(Player player) {
         return player.getBoard().printBoardForServer();
+    }
+    public String showAllPlayersBoard(Player player){
+        for(Player playerz: players)
+        {
+            playerz.getBoard().printBoardForServer();
+        }
+        return null;
     }
 
     public String showBoardForPlacingCards(Player player)

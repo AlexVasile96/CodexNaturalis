@@ -17,6 +17,8 @@ public class ServerConnection implements Runnable {
     private final PrintWriter out;
     private final Player player;
     private String currentPlayer= null;
+    private boolean isConnectionClosed= false;
+    private boolean isTheWhileActive=false;
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
             this.clientView=clientView;
@@ -33,10 +35,11 @@ public class ServerConnection implements Runnable {
     synchronized (this) {
         try {
             System.out.println("Benvenuto!Sono il server! Scrivere una qualsiasi stringa per iniziare la conversazione\n");
-            while (true) {
+            while (!isTheWhileActive) {
                 try {                                                       //il client scrive un messaggio
                     if (clientView.getUserName() == null) {             //If client hasn't made the login yet, he has to log first.
                         System.out.print(">");
+
                         command = stdin.readLine();
                         sendMessageToServer(command);
                         loginPlayer(player);                                  //Actual Login
@@ -46,15 +49,34 @@ public class ServerConnection implements Runnable {
                         currentPlayer = in.readLine();                         //who is the current player?
                         System.out.println("Server says that first player will be " + currentPlayer);
                     } else {
-                        while (true) {
+                        while (!isTheWhileActive) {
+                            if(isConnectionClosed==true)
+                            {
+                                isTheWhileActive=true;
+
+                            }
+                            else{
                             staifermo();
                             faiLeTueAzioni();
+                            }
                         }
-
                     }
+
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            }
+            try {
+                exitFromGame();
+                in.close();
+                out.close();
+                socket.close();
+                System.out.println("Connessione con il server chiusa, grazie di avere giocato a Codex!");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -72,7 +94,7 @@ private void staifermo() throws IOException {
                 System.out.println(getCurrentPlayer());
                 in.readLine(); //Si mangia il "fine turno"
             }
-            else {System.out.println("Il current layer ha selezionato " +waitForCall);}
+            else {System.out.println("Il current player ha selezionato " +waitForCall);}
         }
 }
     private void faiLeTueAzioni() throws IOException {
@@ -167,12 +189,17 @@ private void staifermo() throws IOException {
     }
 
 
-    private void showEachPlayerBoard(){
+    private void showEachPlayerBoard() throws IOException {
         sendMessageToServer("showEachPlayerBoard");
-
+        System.out.println("Hai deciso di stampare tutte le board di tutti i players");
+        String allBoards= in.readLine();
+        System.out.println(allBoards);
     }
-    private void showYourSpecificSeed(){
+    private void showYourSpecificSeed() throws IOException {
         sendMessageToServer("showYourSpecificSeed");
+        System.out.println("I tuoi seeds: ");
+        String yourseeds= in.readLine();
+        System.out.println(yourseeds);
     }
 
     private void showAllSpecificSeed(){
@@ -414,13 +441,24 @@ private void staifermo() throws IOException {
 
     private void quit(){
         sendMessageToServer("quit");
-        System.out.println("Hai scelto di quittare!\n");
+        System.out.println("Hai scelto di uscire dal gioco!\n");
+        isConnectionClosed=true;
+
     }
     private void runEndTurn() throws IOException {
         sendMessageToServer("endTurn");
         System.out.println("Hai scelto di concludere il tuo turno. La mano passa al gicatore successivo");
         String answer= in.readLine();
         System.out.println(answer);
+        setCurrentPlayer(answer);
+        String updatingCurrentPlayer= in.readLine(); //-> aggiornamento del currentPLayer
+        System.out.println(updatingCurrentPlayer);
+        cleanTheSocket();
+    }
+
+    private void exitFromGame() throws IOException {
+        sendMessageToServer("endTurn");
+        String answer= in.readLine();
         setCurrentPlayer(answer);
         String updatingCurrentPlayer= in.readLine(); //-> aggiornamento del currentPLayer
         System.out.println(updatingCurrentPlayer);

@@ -17,14 +17,14 @@ public class Board {
     private int numOfEmpty; //int that counts all the empty SpecificSeed on the Board
     private SpecificSeed initEmptyValue; //this helps us to initialize all the nodes as empty at the start
 
-    public Board(int rows, int cols) { //initializing all the nodes using the constructor
+    public Board(int rows, int cols) {                                                      //initializing all the nodes using the constructor
         cardsOnTheBoardList = new ArrayList<>();
         nodes = new Node[rows][cols];
         this.initEmptyValue =SpecificSeed.EMPTY;
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < cols; column++) {
                 nodes[row][column] = new Node(SpecificSeed.EMPTY, row, column);
-                this.numOfEmpty++; //NumOfEmpty is an int that checks if we're doing things correctly
+                this.numOfEmpty++;                                                           //NumOfEmpty is an int that checks if we're doing things correctly
             }
         }
     } // BOARD CONSTRUCTOR
@@ -125,7 +125,6 @@ public class Board {
 
     //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
     public ExtendExtendExtend createSpecificSecretCard(ObjectiveCard card, Player player) {
-
         if(seedCardEquals("STAIRS", card)){
 
             StairsObjectiveCard stairsObjectiveCard=new StairsObjectiveCard();
@@ -173,7 +172,7 @@ public class Board {
         int centerX = centralCoordinates[0][0];
         int centerY = centralCoordinates[0][1];
         try {
-            if(iCanPlaceTheCard(centerX, centerY)){//CHECKING IF I CAN PLACE THE CARD ON THE BOARD
+            if(CanIPlaceTheCard(centerX, centerY)){//CHECKING IF I CAN PLACE THE CARD ON THE BOARD
                 Corner TOPLEFT = initialCard.getTLIBack();                            //TOP LEFT BACK
                 SpecificSeed TOPLEFTING = TOPLEFT.getSpecificCornerSeed();
                 getNode(centerX, centerY).setSpecificNodeSeed(TOPLEFTING);       //Setting the node of the initial Card
@@ -225,7 +224,7 @@ public class Board {
         int centerX = centralCoordinates[0][0];
         int centerY = centralCoordinates[0][1];
         try {
-            if(iCanPlaceTheCard(centerX, centerY)){ //CHECKING IF I CAN PLACE THE CARD ON THE BOARD
+            if(CanIPlaceTheCard(centerX, centerY)){ //CHECKING IF I CAN PLACE THE CARD ON THE BOARD
                 Corner TOPLEFT = initialCard.getTL();                            //TOP LEFT
                 SpecificSeed TOPLEFTING = TOPLEFT.getSpecificCornerSeed();
                 getNode(centerX, centerY).setSpecificNodeSeed(TOPLEFTING);       //Setting the node of the initial Card
@@ -266,7 +265,7 @@ public class Board {
         return true;
     }
 
-    private boolean iCanPlaceTheCard(int centerX, int centerY) {
+    private boolean CanIPlaceTheCard(int centerX, int centerY) {
         return (centerX >= 0 && centerX < nodes.length && centerY >= 0 && centerY < nodes[0].length);
     }
 
