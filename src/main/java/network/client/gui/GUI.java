@@ -13,8 +13,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.game.Dot;
 import org.json.JSONArray;
@@ -41,6 +43,7 @@ public class GUI extends Application {
     private Scene gameScene;
     private Scene chooseNumOfPlayersScene;
     private Scene lobbyScene;
+    private Scene chooseSecretObjectiveScene;
     private int selectedNumOfPlayers;
     private static GuiController guiController = null;
 
@@ -61,8 +64,16 @@ public class GUI extends Application {
     public ToggleGroup numOfPlayersGroup;
     @FXML
     public Label testNumbers;
+    @FXML
+    public ImageView obiettivo1;
+    @FXML
+    public ImageView obiettivo2;
+    @FXML
+    public Text labelObj1;
+    @FXML
+    public Label labelObj2;
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         launch(args);
     }
 
@@ -168,14 +179,14 @@ public class GUI extends Application {
         }
     }*/
 
-    @Override
+    /*@Override
     public void stop() throws Exception {
         super.stop();
         if (socket != null) {
             socket.close();
         }
     }
-}
+}*/
 
 
 /*import controller.GameController;
@@ -236,7 +247,7 @@ public class GUI extends Application {
     @FXML
     public ToggleGroup numOfPlayersGroup;
     @FXML
-    public Label testNumbers;
+    public Label testNumbers;*/
 
 
     public static void main(String[] args) throws IOException {
@@ -244,6 +255,7 @@ public class GUI extends Application {
         ConnectionWithServer connectionWithServer= new ConnectionWithServer(); //creazione classe
         socket= connectionWithServer.connectToServer();
         out=new PrintWriter(socket.getOutputStream(), true); //to write
+        in=new BufferedReader(new InputStreamReader(socket.getInputStream()));
         launch(args); //default
 
     }
@@ -346,7 +358,7 @@ public class GUI extends Application {
             Toggle numOfPlayers = numOfPlayersGroup.getSelectedToggle();
 
             if (numOfPlayers.toString().equals("RadioButton[id=2, styleClass=radio-button]'2 Giocatori'")) {
-                selectedNumOfPlayers = 2;
+                selectedNumOfPlayers = 1;
             }
             if (numOfPlayers.toString().equals("RadioButton[id=3, styleClass=radio-button]'3 Giocatori'")) {
                 selectedNumOfPlayers = 3;
@@ -360,8 +372,10 @@ public class GUI extends Application {
 
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            lobby();
-            primaryStage.setScene(lobbyScene);
+            //lobby();
+            //primaryStage.setScene(lobbyScene);
+            chooseSecretObjective();
+            primaryStage.setScene(chooseSecretObjectiveScene);
         }
         else{
             testNumbers.setText("Quello che selezioni non conta niente, SCEMO, il numero di giocatori è: " + selectedNumOfPlayers);
@@ -379,10 +393,30 @@ public class GUI extends Application {
         lobbyScene = new Scene(root, 800, 600);
     }
 
+    @FXML
+    private void chooseSecretObjective() throws IOException{
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        Parent fxmlGame = FXMLLoader.load(getClass().getResource("/model/SceltaObiettivoSegreto.fxml"));
+        Pane root = new Pane();
+        String cartaSegreta = in.readLine();
+        labelObj1.setText(cartaSegreta);
+        System.out.println(cartaSegreta);
+        root.getChildren().addAll(fxmlGame, labelObj1);
+        chooseSecretObjectiveScene = new Scene(root, 800, 600);
+    }
+
 
 
 
     public void closeConnection(Socket socket) throws IOException {
         socket.close();
     }
-}*/
+}
