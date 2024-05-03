@@ -98,8 +98,11 @@ public class Game implements WhatCanPlayerDo {
     public String showAllPlayersBoard(){
         return null;
     }
-    public String showYourspecificSeeds(){
-        return null;
+    public String showYourspecificSeeds(Player player){
+        BoardPoints boardPoints= new BoardPoints();
+        String yourSpecificSeeds= boardPoints.countPoints(player.getBoard()).toString();
+        System.out.println(yourSpecificSeeds);
+        return yourSpecificSeeds;
     }
 
     @Override

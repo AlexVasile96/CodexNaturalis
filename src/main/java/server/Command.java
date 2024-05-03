@@ -72,7 +72,8 @@ public class Command { //Command Client sends to Server
                 allboards= game.showAllPlayersBoard();
             case "showYourSpecificSeed":
                 String allStrings;
-                allStrings= game.showYourspecificSeeds();
+                allStrings= game.showYourspecificSeeds(player);
+                return allStrings;
 
             case "endTurn":                //PIETRO
                 return "fine turno";

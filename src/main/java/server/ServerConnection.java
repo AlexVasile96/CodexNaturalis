@@ -102,7 +102,7 @@ private void staifermo() throws IOException {
                 //case "drawcardfromwell", "8" -> drawCardFromWell();
                 case "endturn", "9" -> runEndTurn();//run
                 case "allboards", "10" -> showEachPlayerBoard();
-                case "specseeds", "11" -> showYourSpecificSeed();
+                case "yourseeds", "11" -> showYourSpecificSeed();
                 case "allseed", "12" -> showAllSpecificSeed();
                 case "quit", "13" -> quit();
                 default -> 
@@ -169,9 +169,15 @@ private void staifermo() throws IOException {
 
     private void showEachPlayerBoard(){
         sendMessageToServer("showEachPlayerBoard");
+
     }
-    private void showYourSpecificSeed(){}
-    private void showAllSpecificSeed(){}
+    private void showYourSpecificSeed(){
+        sendMessageToServer("showYourSpecificSeed");
+    }
+
+    private void showAllSpecificSeed(){
+        sendMessageToServer("showAllSpecificSeed");
+    }
 
 
 
