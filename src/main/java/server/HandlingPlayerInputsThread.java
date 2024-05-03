@@ -56,39 +56,41 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     @Override
     public void run() {
-        try {
+        synchronized (this) {
+            try {
                 String clientSaysHello = stdIn.readLine();
                 System.out.println("Il client ha detto " + clientSaysHello);    //Client says hello
                 threadPlayer = loginEachClient();                               //EveryClient has to log in, we save his name information inside threadPLayer
                 handlingTurns(playersList);                                     //Handling turns, first client will be the first player inside the game
                 addingPlayersToTheGame();                                        //Adding players to the current game
-                synchronized (this){                                             //First thread that accesses this function will assign all the cards to the players
+                synchronized (this) {                                             //First thread that accesses this function will assign all the cards to the players
                     if (!checkGameInizialization) {
                         initializeCards();
                     }
                 }
                 assigningSecretCard();                                            //Each thread will assign the secret card to the player
                 assignInitialCard();                                                //Each client places his first card
-                for(Player player:playersList)
-                    {
-                        game.updateSingleClientView(player);                      //Updating each player ClientView
-                        System.out.println(player.getClientView());
-                    }// Momo: perche non solo quella del thread player?
+                //sendingClientHisFirstThreeCards();
+                for (Player player : playersList) {
+                    game.updateSingleClientView(player);                      //Updating each player ClientView
+                    System.out.println(player.getClientView());
+                }// Momo: perche non solo quella del thread player?
                 System.out.println(game.getObjectiveDeck().carteRimaste());         //Debugging to check if all cards are given correctly
                 sendMessageToClient(currentPlayer.getNickName());
 
-            do {
-                startGame();
-                System.out.println("Il client è cambiato, ora tocca a " + currentPlayer);
-                //out.close();
+                do {
+                    startGame();
+                    System.out.println("Il client è cambiato, ora tocca a " + currentPlayer);
+                    //out.close();
 
-            } while (true);
+                } while (true);
 
-        } catch (IOException e) {
-            System.err.println("Io exception client handler");
+            } catch (IOException e) {
+                System.err.println("Io exception client handler");
             } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-                }
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private void startGame() throws IOException, InterruptedException {
@@ -102,7 +104,10 @@ public class HandlingPlayerInputsThread implements Runnable {
             runCommand(messageFromClient, threadPlayer); //->run
         }
     }
+    private void sendingClientHisFirstThreeCards() throws IOException {
+        runCommand("showYourCardDeck", threadPlayer);
 
+    }
 
 
 
@@ -186,13 +191,13 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     private Dot chooseClientDotColor() throws IOException {
         String message;
-        Dot dot = null;
+        Dot dot;
 
         do{
             sendMessageToClient("Choose the color of your dot, you can choose between: " + game.getDots());
             message = stdIn.readLine();
             if (!game.isInDots(message)) {
-                sendMessageToClient("Color chosen not available!");
+                sendMessageToClient("Chosen color not available!");
             }
             else sendMessageToClient("color chosen correctly:");
         }while(!game.isInDots(message));
