@@ -171,8 +171,11 @@ private void staifermo() throws IOException {
         sendMessageToServer("showEachPlayerBoard");
 
     }
-    private void showYourSpecificSeed(){
+    private void showYourSpecificSeed() throws IOException {
         sendMessageToServer("showYourSpecificSeed");
+        System.out.println("I tuoi seeds: ");
+        String yourseeds= in.readLine();
+        System.out.println(yourseeds);
     }
 
     private void showAllSpecificSeed(){
