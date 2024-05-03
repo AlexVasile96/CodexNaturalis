@@ -316,21 +316,21 @@ private void staifermo() throws IOException {
     }
     private void drawCardFromDeck() throws IOException {
         System.out.println("""
-                where to draw the card from?
+                Where do you want to draw your card from?
                 ->Resource
                 ->Gold""");
-        String pesca;
+        String drawnCard;
         do{
-            pesca = stdin.readLine().toLowerCase();
-            if (pesca.equals("resource")) {
+            drawnCard = stdin.readLine().toLowerCase();
+            if (drawnCard.equals("resource")) {
                 drawCardFromResourceDeck();
             }
-            else if (pesca.equals("gold")) {
+            else if (drawnCard.equals("gold")) {
                 drawCardFromGoldDeck();
             }
-            else System.out.println("write 'resource' or 'gold'");
+            else System.out.println("Write 'resource' or 'gold'");
 
-        }while (!pesca.equals("resource") && !pesca.equals("gold"));
+        }while (!drawnCard.equals("resource") && !drawnCard.equals("gold"));
     }
 
     private void drawCardFromResourceDeck() throws IOException {
