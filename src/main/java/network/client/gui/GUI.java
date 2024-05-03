@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.card.Card;
 import model.game.Dot;
 import org.json.JSONArray;
 import org.json.JSONObject;
