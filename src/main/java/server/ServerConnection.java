@@ -114,9 +114,6 @@ private void staifermo() throws IOException {
         }
     }
 
-    private void showEachPlayerBoard(){}
-    private void showYourSpecificSeed(){}
-    private void showAllSpecificSeed(){}
 
     private synchronized void printHelp() throws IOException {
         sendMessageToServer("help");
@@ -168,6 +165,15 @@ private void staifermo() throws IOException {
         receivingAndPrintingCards();
         System.out.println("--------------------------------------------------------------------------------------");
     }
+
+
+    private void showEachPlayerBoard(){
+        sendMessageToServer("showEachPlayerBoard");
+    }
+    private void showYourSpecificSeed(){}
+    private void showAllSpecificSeed(){}
+
+
 
     private void receivingAndPrintingCards() throws IOException {
         String firstCard = in.readLine();
@@ -334,7 +340,7 @@ private void staifermo() throws IOException {
     }
 
     private void drawCardFromResourceDeck() throws IOException {
-        sendMessageToServer("drawCardFromGoldDeck");
+        sendMessageToServer("drawCardFromResourceDeck");
         System.out.println(in.readLine());
         sendMessageToServer("showYourCardDeck");
         System.out.println("Your Deck:" );
@@ -344,7 +350,7 @@ private void staifermo() throws IOException {
     }
 
     private void drawCardFromGoldDeck() throws IOException {
-        sendMessageToServer("drawCardFromResourceDeck");
+        sendMessageToServer("drawCardFromGoldDeck");
         System.out.println(in.readLine());
         sendMessageToServer("showYourCardDeck");
         System.out.println("Your Deck:" );

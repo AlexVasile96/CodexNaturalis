@@ -67,8 +67,14 @@ public class Command { //Command Client sends to Server
                 String operationResult;
                 operationResult= game.drawCardFromWell(player, size); //salva nella stringa il deck del giocatore
                 return operationResult;
+            case "showEachPlayerBoard":
+                String allboards;
+                allboards= game.showAllPlayersBoard();
+            case "showYourSpecificSeed":
+                String allStrings;
+                allStrings= game.showYourspecificSeeds();
 
-            case "endTurn":                //PIETRO -> non funziona
+            case "endTurn":                //PIETRO
                 return "fine turno";
             case "actions": //finito
                 return "Hai selezionato actions";

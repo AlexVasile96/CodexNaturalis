@@ -68,7 +68,6 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         ConnectionWithServer connectionWithServer= new ConnectionWithServer();
         this.socket= connectionWithServer.connectToServer();
         out=new PrintWriter(socket.getOutputStream(), true); //to write
@@ -113,7 +112,7 @@ public class GUI extends Application {
     private void login() {
         try {
             String firstMessage = "login";
-            //Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            //Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); //VADO A REINIZIALIZZARE PRIMARY STAGE
             out.println(firstMessage);
             String response = in.readLine();
             if (response != null ) {
@@ -136,6 +135,13 @@ public class GUI extends Application {
     private void loginScene() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/model/loginScene.fxml"));
         loginScene = new Scene(root, 800, 600);
+
+
+        //   Parent fxml = FXMLLoader.load(getClass().getResource("/model/loginScene.fxml"));
+        //        StackPane root = new StackPane();
+        //        root.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        //        root.getChildren().addAll(fxml);
+        //        loginScene = new Scene(root, 800, 600);
     }
 
     @FXML
@@ -147,6 +153,7 @@ public class GUI extends Application {
         } else {
             System.out.println("Username necessario");
         }
+        //peciotti + parte un altro thread
     }
 
     //@FXML

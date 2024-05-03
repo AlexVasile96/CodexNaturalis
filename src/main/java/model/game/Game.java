@@ -94,6 +94,14 @@ public class Game implements WhatCanPlayerDo {
         return finalAnswer;
     }
 
+
+    public String showAllPlayersBoard(){
+        return null;
+    }
+    public String showYourspecificSeeds(){
+        return null;
+    }
+
     @Override
     public String showCards(Player player) {
         List<Card> cardToSendToServer = player.getPlayerCards();
