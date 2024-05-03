@@ -28,54 +28,51 @@ public class Command { //Command Client sends to Server
 
                 }
             }
-          case "visualizeCommonObjectiveCards":   //MOMO ->finito-> funzionante
+          case "visualizeCommonObjectiveCards":
                 String commonCards;
                 commonCards= game.visualizeCommonObjective(player);
                 return commonCards;
-
-            case "secret":                          //PIETRO ->finito-> funzionante
+            case "secret":
                 String secretObjectiveCard;
                 secretObjectiveCard= game.visualizeSecretObjective(player); //salva nella stringa la carta obiettivo segreta del giocatore
                 return secretObjectiveCard;
-
-            case "showBoard":                //MOMO-> finito-> funzionante
+            case "showBoard":
                 String yourBoard;
                 yourBoard= game.showBoard(player);
                 return yourBoard;
-
-            case "showPoints":                 //PIETRO -> finito-> funzionante
+            case "showPoints":
                 String playerPoints;
                 playerPoints= game.showPoints(player);
                 return playerPoints;
-
-            case "showWell":        //MOMO
+            case "showWell":
                 String wellPrinted;
-                wellPrinted= game.showWell(); //salva nella stringa il deck del giocatore
+                wellPrinted= game.showWell();
                 return wellPrinted;
-
-            case "drawCardFromResourceDeck":        //MOMO
-                String esito;
-                esito = game.drawResourceCard(player);
-                return esito;
-
-            case "drawCardFromGoldDeck":        //MOMO
-                String ciao;
-                ciao = game.drawGoldCard(player);
-                return ciao;
-
-            case "drawCardFromWell":      //MOMO
+            case "drawCardFromResourceDeck":
+                String cardFromResourceDeck;
+                cardFromResourceDeck = game.drawResourceCard(player);
+                return cardFromResourceDeck;
+            case "drawCardFromGoldDeck":
+                String cardFromGoldDeck;
+                cardFromGoldDeck = game.drawGoldCard(player);
+                return cardFromGoldDeck;
+            case "drawCardFromWell":
                 String operationResult;
-                operationResult= game.drawCardFromWell(player, size); //salva nella stringa il deck del giocatore
+                operationResult= game.drawCardFromWell(player, size);
                 return operationResult;
             case "showEachPlayerBoard":
                 String allboards;
-                allboards= game.showAllPlayersBoard();
+                allboards= game.showAllPlayersBoard(player);
+                return  allboards;
             case "showYourSpecificSeed":
                 String allStrings;
                 allStrings= game.showYourspecificSeeds(player);
                 return allStrings;
-
-            case "endTurn":                //PIETRO
+            case "showAllSpecificSeed":
+                String allseeds;
+                allseeds= game.showAllSpecificSeed();
+                return allseeds;
+            case "endTurn":
                 return "fine turno";
             case "actions": //finito
                 return "Hai selezionato actions";

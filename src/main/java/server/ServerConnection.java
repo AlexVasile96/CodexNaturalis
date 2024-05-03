@@ -17,6 +17,7 @@ public class ServerConnection implements Runnable {
     private final PrintWriter out;
     private final Player player;
     private String currentPlayer= null;
+    private boolean isConnectionClosed= false;
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
             this.clientView=clientView;
@@ -37,6 +38,11 @@ public class ServerConnection implements Runnable {
                 try {                                                       //il client scrive un messaggio
                     if (clientView.getUserName() == null) {             //If client hasn't made the login yet, he has to log first.
                         System.out.print(">");
+                        if(isConnectionClosed=true)
+                        {
+                            return;
+
+                        }
                         command = stdin.readLine();
                         sendMessageToServer(command);
                         loginPlayer(player);                                  //Actual Login
@@ -172,7 +178,6 @@ private void staifermo() throws IOException {
         System.out.println("Hai deciso di stampare tutte le board di tutti i players");
         String allBoards= in.readLine();
         System.out.println(allBoards);
-//1 METODO CHE SERVER PER AGGIORNARE LA LABEL-> RUN LATER -> SETLABEL
     }
     private void showYourSpecificSeed() throws IOException {
         sendMessageToServer("showYourSpecificSeed");
@@ -420,7 +425,17 @@ private void staifermo() throws IOException {
 
     private void quit(){
         sendMessageToServer("quit");
-        System.out.println("Hai scelto di quittare!\n");
+        System.out.println("Hai scelto di uscire dal gioco!\n");
+            try {
+                in.close();
+                out.close();
+                socket.close();
+                System.out.println("Connessione con il server chiusa, grazie di avere giocato a Codex!");
+                isConnectionClosed=true;
+            } catch (IOException e) {
+                e.printStackTrace();
+
+        }
     }
     private void runEndTurn() throws IOException {
         sendMessageToServer("endTurn");

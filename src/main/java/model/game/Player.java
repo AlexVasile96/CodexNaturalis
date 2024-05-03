@@ -50,11 +50,11 @@ public class Player implements Observable {
         return "card drawn correctly from Gold deck";
     }
 
-    public List<Card> chooseCardFromWell(List<Card>cardwell,ResourceDeck rc, GoldDeck gd) {
+    public void chooseCardFromWell(List<Card>cardwell, ResourceDeck rc, GoldDeck gd) {
         Scanner scanner = new Scanner(System.in);
         if (this.playerCards.size() < 3) {
             if (cardwell.isEmpty()) {
-                return null; //empty well
+                return; //empty well
             }
             try {
                 for (Card card : cardwell) {
@@ -69,9 +69,7 @@ public class Player implements Observable {
         }
         else {
             System.out.println("Player's deck already has 3 cards\n");
-            return cardwell;
         }
-        return cardwell;
     }
 
     public String chooseCardFromWellForServer(List<Card>cardwell, int index, ResourceDeck rc, GoldDeck gd) {
@@ -191,16 +189,13 @@ public class Player implements Observable {
             default:
                 throw new IllegalStateException("Unexpected value: " + selectedCorner);
         }
-        decreasingAllTheValuesOfTheCornerPlaced(selectedCardFromTheDeck); //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
-
-
-        // Add the selected card to the board
+        decreasingAllTheValuesOfTheCornerPlaced(selectedCardFromTheDeck);                       //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
         selectedCardFromTheDeck.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new index
-        board.getCardsOnTheBoardList().add(selectedCardFromTheDeck); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
-        this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
+        board.getCardsOnTheBoardList().add(selectedCardFromTheDeck);                            //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
+        this.playerCards.remove(cardIndex);                                                     //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
         board.setNumOfEmpty(board.getNumOfEmpty() - 3);
-        updatingPoints(selectedCardFromTheDeck); //Updating player Points
-        if (playerScore >= 20) {                //EndGame if the playerpoints=>20 points
+        updatingPoints(selectedCardFromTheDeck);                                                 //Updating player Points
+        if (playerScore >= 20) {                                                                //EndGame if the playerpoints=>20 points
             System.out.println("Player " + getNickName() + "wins!\n");
             EndGame endGame = new EndGame();
         }

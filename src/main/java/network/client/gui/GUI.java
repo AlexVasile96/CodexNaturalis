@@ -386,3 +386,12 @@ public class GUI extends Application {
         socket.close();
     }
 }*/
+
+
+
+
+
+
+////1 METODO CHE SERVER PER AGGIORNARE LA LABEL-> RUN LATER -> SETLABEL
+// startgame->login->choosenumberof->attesa->carteobiettivo->cartainiziale-> schermata di gioco
+//schermata di gioco è da aggiornare ad ogni endturn --> 1 METODO CHE SERVER PER AGGIORNARE LA LABEL-> RUN LATER -> SETLABEL
