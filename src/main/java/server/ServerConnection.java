@@ -167,9 +167,12 @@ private void staifermo() throws IOException {
     }
 
 
-    private void showEachPlayerBoard(){
+    private void showEachPlayerBoard() throws IOException {
         sendMessageToServer("showEachPlayerBoard");
-
+        System.out.println("Hai deciso di stampare tutte le board di tutti i players");
+        String allBoards= in.readLine();
+        System.out.println(allBoards);
+//1 METODO CHE SERVER PER AGGIORNARE LA LABEL-> RUN LATER -> SETLABEL
     }
     private void showYourSpecificSeed() throws IOException {
         sendMessageToServer("showYourSpecificSeed");
