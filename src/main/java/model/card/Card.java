@@ -3,6 +3,9 @@ package model.card;
 import model.game.Corner;
 import model.game.Node;
 import model.game.SpecificSeed;
+import org.json.JSONObject;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,6 +151,19 @@ public class Card {
             temp.add(type);
             return temp;
         }
+    public JsonObject toJsonObject(){
+        JsonObject jsonObject= new JsonObject();
+        jsonObject.addProperty("id", id);
+        jsonObject.addProperty("specificSeedType", type.ordinal());
+        jsonObject.addProperty("value", valueWhenPlaced);
+        jsonObject.addProperty("TopLeftCorner", String.valueOf(TL));
+        jsonObject.addProperty("TopRightCorner", String.valueOf(TR));
+        jsonObject.addProperty("BottomLeftCorner", String.valueOf(BL));
+        jsonObject.addProperty("BottomRightCorner", String.valueOf(BR));
+        return jsonObject;
+
+
+    }
 
 }
 

@@ -73,6 +73,7 @@ public class Command { //Command Client sends to Server
                 allseeds= game.showAllSpecificSeed();
                 return allseeds;
             case "endTurn":
+                game.runEndTurn(player);
                 return "fine turno";
             case "actions": //finito
                 return "Hai selezionato actions";

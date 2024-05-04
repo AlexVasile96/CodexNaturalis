@@ -415,21 +415,21 @@ public class GUI extends Application {
         in.readLine();
         in.readLine();
         in.readLine();
-        String cartaSegreta1 = in.readLine();
-        String cartaSegreta2 = in.readLine();
+        String firstSecretCard = in.readLine();
+        String secondSecretCard = in.readLine();
 
-        String idCartaSegreta1 = in.readLine();
-        String idCartaSegreta2 = in.readLine();
+        String firstCardId = in.readLine();
+        String secondCardId = in.readLine();
 
-        String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/" + idCartaSegreta1 + ".png";
-        String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/" + idCartaSegreta2 + ".png";
+        String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/" + firstCardId + ".png";
+        String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/" + secondCardId + ".png";
 
         Image objImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj1)));
         Image objImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
         obiettivo1.setImage(objImage1);
         obiettivo2.setImage(objImage2);
-        System.out.println(cartaSegreta1);
-        System.out.println(cartaSegreta2);
+        System.out.println(firstSecretCard);
+        System.out.println(secondSecretCard);
     }
 
     @FXML
@@ -493,9 +493,25 @@ public class GUI extends Application {
 
     @FXML
     public void flipToFrontCard() {
-        String pathFlipped = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
-        Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-        initCard.setImage(initImage);
+        int idToInt= Integer.parseInt(id);
+        if(idToInt>=1 && idToInt <=40) //Resource Card
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
+            Image resourceImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            resourceCard.setImage(resourceImage);
+        }
+        else if(idToInt>40 && idToInt<=80) //GoldCard
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteFront/Gold/" + id + ".png";
+            Image goldImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            goldCard.setImage(goldImage);
+        }
+        else if(idToInt>=81 && idToInt<=86) //InitCard
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
+            Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            initCard.setImage(initImage);
+        }
     }
 
 

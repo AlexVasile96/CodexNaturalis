@@ -1,11 +1,21 @@
 package model.game;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonSerializer;
 import model.card.*;
 import model.deck.GoldDeck;
 import model.deck.InitialCardDeck;
 import model.deck.ObjectiveDeck;
 import model.deck.ResourceDeck;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONObject;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -170,17 +180,17 @@ public class Game implements WhatCanPlayerDo {
         return String.valueOf(player.getPlayerScore());
     }
 
+    @Override
+    public void runEndTurn(Player player) {
+        saveCards();
+    }
+
     public String showWell(){
         StringBuilder cardsAsString = new StringBuilder();
         for (Card card : well) {
             cardsAsString.append(card.toString()).append("\n");
         }
         return String.valueOf(cardsAsString); //ritorna stringa
-    }
-
-    @Override
-    public void runEndTurn() {
-
     }
 
     @Override
@@ -226,10 +236,6 @@ public class Game implements WhatCanPlayerDo {
         return player.getPlayerCards();
     }
 
-    @Override
-    public void endTurn(Player currentPlayer) {
-
-    }
     public void updateSingleClientView(Player player){
         player.getClientView().update(player);
 
@@ -347,6 +353,28 @@ public class Game implements WhatCanPlayerDo {
         dots.add("YELLOW");
     }
 
+    private Path getDefaulPath(){
+        String home= ("src/main/resources/savecard.json");
+        return Paths.get(home);
+    }
 
+    void saveCards(){
+        savePath(getDefaulPath());
+    }
+
+    void savePath(Path path){
+        JsonArray jo= new JsonArray();
+
+        for(Card card: currentPlayingPLayer.getPlayerCards()){
+            jo.add(card.toJsonObject());
+        }
+        String jsonText = jo.toString();
+
+        try (FileWriter fileWriter = new FileWriter(path.toString())) {
+            fileWriter.write(jsonText);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

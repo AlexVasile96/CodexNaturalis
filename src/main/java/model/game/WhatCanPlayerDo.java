@@ -23,7 +23,7 @@ public interface WhatCanPlayerDo {
     String visualizeSecretObjective(Player player);
     String showBoard(Player player);
     String showPoints(Player player);
-    void runEndTurn();
+    void runEndTurn(Player player);
     String drawResourceCard(Player player);
     String drawGoldCard(Player player);
     String drawCardFromWell(Player player, int index);
@@ -33,6 +33,5 @@ public interface WhatCanPlayerDo {
     int getPlayerScore(Player player);
     String getNickName(Player player);
     List<Card> getPlayerCards(Player player);
-    public void endTurn(Player currentPlayer);
     void requestGameInfo(Player player); //Richiede le informazioni attuali sullo stato del gioco al server.
 }
