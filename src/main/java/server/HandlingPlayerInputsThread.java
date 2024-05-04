@@ -92,7 +92,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println("Connessione chiusa dal client.");
 
             } catch (IOException e) {
-
+                e.printStackTrace();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -115,10 +115,6 @@ public class HandlingPlayerInputsThread implements Runnable {
 
         }
     }
-    private void sendingClientHisFirstThreeCards() throws IOException {
-        runCommand("showYourCardDeck", threadPlayer);
-    }
-
 
 
 
@@ -131,10 +127,10 @@ public class HandlingPlayerInputsThread implements Runnable {
         Player player = null;
         if(gameController==null) { //if game controller==null it means the player has to log in!!
             try {
-                sendMessageToClient("Ciao! Devi fare il login. Inserisci il tuo nome per favore!");
+                sendMessageToClient("Hello!! You have to log in, please type your username");
                 String request = stdIn.readLine();
-                System.out.println("il nome del client è: " + request);
-                sendMessageToClient("Login effettuato con successo!");
+                System.out.println("Client name is " + request);
+                sendMessageToClient("Login successfully done!");
                 Board board = new Board(50, 50);
                 Dot dot= chooseClientDotColor();
                 player = new Player(request, 0, dot, board);
@@ -144,12 +140,12 @@ public class HandlingPlayerInputsThread implements Runnable {
                 index++;
                 }
                 playersList.add(player);
-                System.out.println("Giocatori nel gioco: "+ playersList);
+                System.out.println("Players in game "+ playersList);
                 System.out.println(player);
                 gameController = lobby.login(request, out);
                 System.out.println(gameController);
                 setGameSize();
-                sendMessageToClient("Sarai messo in sala d'attesa:");
+                sendMessageToClient("You have to wait until all clients are connected!");
                 if (playersList.size() < gameController.getSize()) {
                     waitingForClients();
                 }
@@ -178,12 +174,12 @@ public class HandlingPlayerInputsThread implements Runnable {
         String integerString = stdIn.readLine();
         int size = Integer.parseInt(integerString);
         if(size==1){
-            System.out.println(userName +"ha scelto la carta numero: "+ size);
+            System.out.println(userName +"chose card number: "+ size);
             threadPlayer.setSecretChosenCard(secretCards.get(size-1));
             System.out.println(threadPlayer.toString());
         }
-        else{
-            System.out.println(userName +"ha scelto la carta numero: "+ size);
+        else {
+            System.out.println(userName +"chose card number: "+ size);
             threadPlayer.setSecretChosenCard(secretCards.get(size-1));
             System.out.println(threadPlayer.toString());
         }
@@ -206,7 +202,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             } catch (NumberFormatException ex) {
                 sendMessageToClient("Game's number of players must be an integer.");
             } catch (Exception ex) {
-                sendMessageToClient("Errore");
+                sendMessageToClient("Error");
             } catch (ParametersNotValidException e) {
                 throw new RuntimeException(e);
             }
@@ -226,10 +222,10 @@ public class HandlingPlayerInputsThread implements Runnable {
             if (!game.isInDots(message)) {
                 sendMessageToClient("Chosen color not available!");
             }
-            else sendMessageToClient("color chosen correctly:");
+            else sendMessageToClient("Color chosen correctly:");
         }while(!game.isInDots(message));
         dot = Dot.valueOf(message);
-        System.out.println("Colore scelto dal client: " + message);
+        System.out.println("Client color chosen is " + message);
         game.removeDot(message);
         return dot;
     }
@@ -254,11 +250,10 @@ public class HandlingPlayerInputsThread implements Runnable {
                     gameController.readCommand(sentBoard, player, 0, 0, cornerChosen); //In questo modo, al player viene fatta visualizzare la propria Board
                     String indexCardChosen = stdIn.readLine(); //Memorizzo quale carta del proprio deck il player ha deciso di giocare
                     int cardChosenFromHisDeck = Integer.parseInt(indexCardChosen);
-                    System.out.println("Il player ha scelto la carta numero " + cardChosenFromHisDeck);
+                    System.out.println("Player chose card number " + cardChosenFromHisDeck);
                     String CardOnTheBoardChosen = stdIn.readLine();
                     int boardCardChosen = Integer.parseInt(CardOnTheBoardChosen);
                     System.out.println("Il player ha deciso di giocare la proria carta sulla carta numero " + boardCardChosen);
-                    System.out.println("Mando tutto al GameController");
                     gameController.readCommand(messageFromClient, player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
                     cornerChosen = stdIn.readLine();
                     System.out.println(cornerChosen);
@@ -288,7 +283,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                         messageFromClient = stdIn.readLine();//showwell
                         gameController.readCommand(messageFromClient, player, 0, 0, null);
                     } else {
-                        System.out.println("messaggio dal client errato ,messageFromClient: " + messageFromClient);
+                        System.out.println("Client message wrong ,messageFromClient: " + messageFromClient);
                     }
 
                 }
@@ -298,8 +293,8 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
     private synchronized void waitingForClients() throws InterruptedException {
-        System.out.println("In attesa di altri giocatori");
-        while (playersList.size() != 2) {
+        System.out.println("Waiting other players");
+        while (playersList.size() != gameController.getSize()) {
             {
                 wait(10000);
             }
@@ -337,12 +332,13 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println(size);
         if(size==0)
         {
-            game.placeInitialCard(threadPlayer.getBoard(),initialCard);
+            game.placeInitialCardBack(threadPlayer.getBoard(), initialCard);
             System.out.println("Initial Card correctly placed");
         }
         else if(size==1)
         {
-            game.placeInitialCardBack(threadPlayer.getBoard(), initialCard);
+
+            game.placeInitialCard(threadPlayer.getBoard(),initialCard);
             System.out.println("Initial Card correctly placed");
         }
         threadPlayer.getBoard().printBoard();
