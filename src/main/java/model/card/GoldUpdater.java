@@ -20,7 +20,7 @@ public class GoldUpdater implements Updater {
             return;
         }
         BoardPoints boardPoints= new BoardPoints();
-        int y= boardPoints.addictionalPointsForGoldCards(board,adder) + player.getPlayerScore();
+        int y= boardPoints.additionalPointsForGoldCards(board,adder) + player.getPlayerScore();
         player.setPlayerScore(y);
     }
 }

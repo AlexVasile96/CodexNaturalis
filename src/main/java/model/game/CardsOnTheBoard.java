@@ -13,5 +13,5 @@ public class CardsOnTheBoard { //CLASS THAT READS THE CARD THAT HAD BEEN PLACED 
     {
         cardsOnTheBoard= cards;
         return cardsOnTheBoard;
-    } //construcotr
+    }
 }

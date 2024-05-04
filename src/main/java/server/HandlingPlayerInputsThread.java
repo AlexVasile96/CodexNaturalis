@@ -318,7 +318,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         turnController= new TurnController(playerList);
         System.out.println(turnController.getPlayers());
         currentPlayer = turnController.getCurrentPlayer(); //viene preso il primo
-        System.out.println("Il primo giocatore è " + currentPlayer);
+        System.out.println("First player is " + currentPlayer);
         game.setCurrentPlayingPLayer(currentPlayer);
 
     }
@@ -348,7 +348,7 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     private void endTurn(Player currentPlayer, TurnController turnController) {
         if(currentPlayer != turnController.getCurrentPlayer()){
-            throw new turnPlayerErrorException("il giocatore attuale è sfasato");
+            throw new turnPlayerErrorException("Current player not correct");
         }
         turnController.nextTurn();
         Player nextPlayer = turnController.getCurrentPlayer();

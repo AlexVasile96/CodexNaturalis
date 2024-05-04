@@ -15,9 +15,9 @@ public class Command { //Command Client sends to Server
             case "playCard": //PIETRO
             {
                 if(checkIfTheBoardHadAlreadyBeenPrinted==0){
-                    String CornersAvaiable= game.showAvaiableCorners(player, size, paolo);
+                    String CornersAvailable= game.showAvaiableCorners(player, size, paolo);
                     checkIfTheBoardHadAlreadyBeenPrinted++;
-                    return CornersAvaiable;
+                    return CornersAvailable;
                 }
                 else if(checkIfTheBoardHadAlreadyBeenPrinted==1)
                 {
