@@ -161,8 +161,17 @@ public class Card {
         jsonObject.addProperty("BottomLeftCorner", String.valueOf(BL));
         jsonObject.addProperty("BottomRightCorner", String.valueOf(BR));
         return jsonObject;
-
-
+    }
+    public static Card fromJsonObject(JsonObject jo){
+        int id = jo.get("id").getAsInt();
+        int specificSeedIndex = jo.get("specificSeedType").getAsInt();
+        SpecificSeed specificSeed = SpecificSeed.values()[specificSeedIndex];
+        int value = jo.get("value").getAsInt();
+        Corner TL = Corner.fromJsonObject(jo.getAsJsonObject("TopLeftCorner"));
+        Corner TR = Corner.fromJsonObject(jo.getAsJsonObject("TopRightCorner"));
+        Corner BL = Corner.fromJsonObject(jo.getAsJsonObject("BottomLeftCorner"));
+        Corner BR = Corner.fromJsonObject(jo.getAsJsonObject("BottomRightCorner"));
+        return new Card(id, specificSeed, value, TL, TR, BL, BR);
     }
 
 }

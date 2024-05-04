@@ -1,19 +1,19 @@
 package model.game;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonSerializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import model.card.*;
 import model.deck.GoldDeck;
 import model.deck.InitialCardDeck;
 import model.deck.ObjectiveDeck;
 import model.deck.ResourceDeck;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONObject;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -60,6 +60,7 @@ public class Game implements WhatCanPlayerDo {
         initializeDots();
         initializewell();
         commonObjectiveCards();
+
     }
 
     public void addPlayer(Player player) {
@@ -362,25 +363,42 @@ public class Game implements WhatCanPlayerDo {
         dots.add("YELLOW");
     }
 
-    private Path getDefaulPath(){
+    private Path getDefaultCardPath(){
         String home= ("src/main/resources/savecard.json");
         return Paths.get(home);
     }
 
     void saveCards(){
-        savePath(getDefaulPath());
+        savePath(getDefaultCardPath());
     }
 
     void savePath(Path path){
         JsonArray jo= new JsonArray();
-
         for(Card card: currentPlayingPLayer.getPlayerCards()){
             jo.add(card.toJsonObject());
         }
         String jsonText = jo.toString();
-
         try (FileWriter fileWriter = new FileWriter(path.toString())) {
             fileWriter.write(jsonText);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void load(){
+        loadPath(getDefaultCardPath());
+    }
+
+    public void loadPath(Path path) {
+        try {
+            String jsonText = Files.readString(path);
+            JsonArray jsonArray = new Gson().fromJson(jsonText, JsonArray.class);
+
+            for (JsonElement jsonElement : jsonArray) {
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                Card card = Card.fromJsonObject(jsonObject);
+                currentPlayingPLayer.getPlayerCards().add(card);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

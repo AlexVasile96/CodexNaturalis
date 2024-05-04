@@ -1,5 +1,7 @@
 package model.game;
 
+import com.google.gson.JsonObject;
+
 public class Corner extends Node{
     private boolean isThisCornerFree;
     private SpecificSeed specificCornerSeed;
@@ -50,6 +52,16 @@ public class Corner extends Node{
         this.y = y;
     }
 
+    public static Corner fromJsonObject(JsonObject jo) {
+        int specificSeedIndex = jo.get("specificCornerSeed").getAsInt();
+        SpecificSeed specificSeed = SpecificSeed.values()[specificSeedIndex];
+        int x = jo.get("x").getAsInt();
+        int y = jo.get("y").getAsInt();
 
+        Corner corner = new Corner(specificSeed, x, y);
+        //corner.setThisCornerFree(jo.get("isThisCornerFree").getAsBoolean());
+
+        return corner;
+    }
 
 }
