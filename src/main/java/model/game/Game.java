@@ -73,6 +73,14 @@ public class Game implements WhatCanPlayerDo {
         if (!esiste) players.add(player);
     }
 
+    public Player getCurrentPlayingPLayer() {
+        return currentPlayingPLayer;
+    }
+
+    public void setCurrentPlayingPLayer(Player currentPlayingPLayer) {
+        this.currentPlayingPLayer = currentPlayingPLayer;
+    }
+
     public void assignResourcesAndGoldCardsToPlayers() {
         for (Player player : players) {
             player.drawResourceCard(resourceDeck);
@@ -183,6 +191,7 @@ public class Game implements WhatCanPlayerDo {
     @Override
     public void runEndTurn(Player player) {
         saveCards();
+        System.out.println("Carte salvate correttamente");
     }
 
     public String showWell(){

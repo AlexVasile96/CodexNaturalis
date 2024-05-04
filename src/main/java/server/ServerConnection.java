@@ -371,7 +371,6 @@ private void staifermo() throws IOException {
 
         }while (!drawnCard.equals("resource") && !drawnCard.equals("gold"));
     }
-
     private void drawCardFromResourceDeck() throws IOException {
         sendMessageToServer("drawCardFromResourceDeck");
         System.out.println(in.readLine());
@@ -381,7 +380,6 @@ private void staifermo() throws IOException {
         receivingAndPrintingCards();
         System.out.println("--------------------------------------------------------------------------------------");
     }
-
     private void drawCardFromGoldDeck() throws IOException {
         sendMessageToServer("drawCardFromGoldDeck");
         System.out.println(in.readLine());
@@ -391,7 +389,6 @@ private void staifermo() throws IOException {
         receivingAndPrintingCards();
         System.out.println("--------------------------------------------------------------------------------------");
     }
-
     private void drawCardFromWell() throws IOException {
         sendMessageToServer("showWell");
         System.out.println("Which card from the well do you want to draw?");
@@ -439,9 +436,10 @@ private void staifermo() throws IOException {
         return num < 0 || num > 3;
     }
 
-    private void quit(){
+    private void quit() throws IOException {
         sendMessageToServer("quit");
         System.out.println("Hai scelto di uscire dal gioco!\n");
+        System.out.println(in.readLine()); //quit
         isConnectionClosed=true;
 
     }
@@ -460,6 +458,7 @@ private void staifermo() throws IOException {
         sendMessageToServer("endTurn");
         String answer= in.readLine();
         setCurrentPlayer(answer);
+        System.out.println("Current player: " + currentPlayer);
         String updatingCurrentPlayer= in.readLine(); //-> aggiornamento del currentPLayer
         System.out.println(updatingCurrentPlayer);
         cleanTheSocket();

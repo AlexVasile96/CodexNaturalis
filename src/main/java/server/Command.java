@@ -81,7 +81,9 @@ public class Command { //Command Client sends to Server
                 System.out.println("Sono entrato in help");
                 return "hai chiesto aiuto";
             }
-            case "quit": return "suca";
+            case "quit":
+                game.runEndTurn(player);
+                return "quit";
             default:
                 return "Unknown command.";
         }
