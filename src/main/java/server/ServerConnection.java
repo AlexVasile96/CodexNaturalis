@@ -232,12 +232,8 @@ private void waitUntilItsYourTurn() throws IOException {
 
     private void chosenHandCard() throws IOException {
         sendMessageToServer("playCard");
-        //Al game controller devo passare in ordine ->
-        //carta del player deck che voglio giocare
-        //carta della board su cui piazzare la mia carta
-        //Angolo su cui voglio piazzare la mia carta
-        System.out.println("Hai scelto di giocare una carta dal tuo deck!");
-        System.out.println("Questa è la tua attuale board:\n");
+        System.out.println("You chose to play a card from your deck!");
+        System.out.println("This is your board:\n");
         System.out.print("////////////////////////////////// INIZIO BOARD //////////////////////////////////////////\n");
         String actualBoard= in.readLine();
         do{
@@ -247,13 +243,13 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println();
         System.out.println("////////////////////////////////// FINE BOARD ////////////////////////////////////////////");
         System.out.println("\n");
-        System.out.println("Queste sono le carte del tuo deck: ");
+        System.out.println("These are your deck cards: ");
         System.out.println("\n");
         System.out.println(player.getClientView().getPlayerStringCards().get(0));
         System.out.println(player.getClientView().getPlayerStringCards().get(1));
         System.out.println(player.getClientView().getPlayerStringCards().get(2));
-        System.out.println("Scegli quale carta vuoi giocare sulla tua board:");
-        System.out.println("1-> prima carta\n2-> seconda carta\n3-> terza carta");
+        System.out.println("Which card do you want to play on the board?");
+        System.out.println("1-> first card\n2-> second card\n3-> third card");
         String result= stdin.readLine();
         int size= Integer.parseInt(result);
         out.println(size-1); //Carta scelta dal deck del player, sto mandando al server
@@ -270,7 +266,7 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println();
         System.out.print("Choose the corner you want to place the card on: ");
         String cornerChosen= stdin.readLine().toUpperCase();
-        System.out.println("Corner scelto correttamente!");
+        System.out.println("Corner correctly chosen!");
         out.println(cornerChosen);
         String ultimo= in.readLine();
         System.out.println(ultimo);
@@ -281,23 +277,21 @@ private void waitUntilItsYourTurn() throws IOException {
 
     private void visualizeCommonObjective() throws IOException {
         sendMessageToServer("visualizeCommonObjectiveCards");
-        System.out.println("Common Objective Cards:\n");
+        System.out.println("Common Objective Cards are:\n");
         System.out.println(in.readLine());//first common card
         System.out.println(in.readLine());//second common card
-
-        System.out.println("Carte lette correttamente");
     }
     private void visualizeSecretObjective() throws IOException {
         sendMessageToServer("secret");
-        System.out.println("Hai scelto di visualizzare la tua carta obiettivo segreta\n");
+        System.out.println("You chose to visualize your secret card!\n");
         String result= in.readLine();
         System.out.println(result);
         System.out.println("\n");
-        System.out.println("Questa è la tua carta obiettivo!");
+        System.out.println("This is your objective card!");
     }
     private void showBoard() throws IOException {
         sendMessageToServer("showBoard");
-        System.out.println("Hai selezionato la tua board:");
+        System.out.println("You chose to visualize your board!");
         System.out.print("////////////////////////////////// INIZIO BOARD ////////////////////////////////////////// \n");
         String result= in.readLine();
         do{
@@ -309,9 +303,9 @@ private void waitUntilItsYourTurn() throws IOException {
     }
     private void showPoints() throws IOException {
         sendMessageToServer("showPoints");
-        System.out.println("Hai scelto di visualizzare i tuoi attuali punti!\n");
+        System.out.println("You chose to visualize your points!\n");
         String result= in.readLine();
-        System.out.println("I tuoi punti attualmente sono: " + result);
+        System.out.println("At the moment your points are: " + result);
     }
 
     private void showWell() throws IOException {
