@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -44,6 +45,7 @@ public class GUI extends Application {
     private Scene chooseNumOfPlayersScene;
     private Scene lobbyScene;
     private Scene chooseSecretObjectiveScene;
+    private Scene chooseInitCardScene;
     private int selectedNumOfPlayers;
     private static GuiController guiController = null;
 
@@ -68,10 +70,6 @@ public class GUI extends Application {
     public ImageView obiettivo1;
     @FXML
     public ImageView obiettivo2;
-    @FXML
-    public Label labelObj1;
-    @FXML
-    public Label labelObj2;
     @FXML
     public Button chooseObj;
 
@@ -418,12 +416,53 @@ public class GUI extends Application {
         in.readLine();
         String cartaSegreta1 = in.readLine();
         String cartaSegreta2 = in.readLine();
-        Image objImage1 = new Image(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Objective/87.png"));
+
+        String idCartaSegreta1 = in.readLine();
+        String idCartaSegreta2 = in.readLine();
+
+        String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/" + idCartaSegreta1 + ".png";
+        String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/" + idCartaSegreta2 + ".png";
+
+        Image objImage1 = new Image(getClass().getResourceAsStream(pathObj1));
+        Image objImage2 = new Image(getClass().getResourceAsStream(pathObj2));
         obiettivo1.setImage(objImage1);
-        labelObj1.setText(cartaSegreta1);
-        labelObj2.setText(cartaSegreta2);
+        obiettivo2.setImage(objImage2);
         System.out.println(cartaSegreta1);
         System.out.println(cartaSegreta2);
+    }
+
+    @FXML
+    public void chosenObj1(MouseEvent event) throws IOException {
+        out.println(1);
+        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        chooseInitCard();
+        primaryStage.setScene(chooseInitCardScene);
+    }
+
+    @FXML
+    public void chosenObj2(MouseEvent event) throws IOException {
+        out.println(2);
+        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        chooseInitCard();
+        primaryStage.setScene(chooseInitCardScene);
+    }
+
+    @FXML
+    private void chooseInitCard() throws IOException {
+        Parent fxmlInit = FXMLLoader.load(getClass().getResource("/model/FlipInitCard.fxml"));
+        Pane root = new Pane();
+        root.getChildren().addAll(fxmlInit);
+        chooseInitCardScene = new Scene(root, 800, 600);
+    }
+
+    @FXML
+    public void showInit(ActionEvent event) throws IOException {
+
+    }
+
+    @FXML
+    public void flipCard(ActionEvent event) throws IOException {
+
     }
 
 
