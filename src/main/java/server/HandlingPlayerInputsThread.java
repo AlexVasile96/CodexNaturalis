@@ -238,13 +238,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                     endTurn(player, turnController);
                     gameController.readCommand(messageFromClient, player, 0, 0, cornerChosen);
                 }
-                /*case "quit"-> {
-                    endTurn(player, turnController);
-                    gameController.readCommand("endturn", player, 0, 0, cornerChosen);
-                    gameController.readCommand(messageFromClient, player, 0, 0, cornerChosen);
-
-
-                }*/
                 case "playCard" -> {
                     String sentBoard = "showBoard";
                     gameController.readCommand(sentBoard, player, 0, 0, cornerChosen); //In questo modo, al player viene fatta visualizzare la propria Board
@@ -356,9 +349,15 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     private void setCurrentPlayer(Player currentPlayerName) {
         currentPlayer = currentPlayerName;
+        if(playersList.size()==0)
+        {
+            System.out.println("All clients quit");
+            sendMessageToAllClients("All clients have quit");
+        }
+        else{
         System.out.println("Current player: " + currentPlayerName);
         sendMessageToAllClients(currentPlayer.getNickName());
-        game.setCurrentPlayingPLayer(currentPlayer);
+        game.setCurrentPlayingPLayer(currentPlayer);}
     }
 
 
