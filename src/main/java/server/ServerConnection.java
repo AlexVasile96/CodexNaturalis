@@ -486,8 +486,12 @@ private void staifermo() throws IOException {
     }
     private synchronized void assigningSecretCard() throws IOException {
         boolean isNumberCorrect=false;
-        String stringSecretCard= in.readLine();
-        String stringSecondCard= in.readLine();
+        String stringSecretCard= in.readLine(); //carta
+        String stringSecondCard= in.readLine(); //carta
+        String firstCardID= in.readLine(); //id
+        String secondCardID= in.readLine(); //id
+        int firstID= Integer.parseInt(firstCardID);
+        int secondID= Integer.parseInt(secondCardID);
         System.out.println("Server says: your first objective card is" + stringSecretCard);
         System.out.println("Server says: your second objective card is" + stringSecondCard);
         while(!isNumberCorrect){

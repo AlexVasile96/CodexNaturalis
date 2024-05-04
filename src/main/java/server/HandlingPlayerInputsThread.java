@@ -161,15 +161,19 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     private synchronized void assigningSecretCard() throws IOException {
         List<ObjectiveCard> secretCards = new ArrayList<>();
-       //secretCards.add( game.getObjectiveDeck().drawObjectiveCard());
-        //secretCards.add( game.getObjectiveDeck().drawObjectiveCard());
         ObjectiveCard firstCard= game.getObjectiveDeck().drawObjectiveCard();
         ObjectiveCard secondCard= game.getObjectiveDeck().drawObjectiveCard();
         secretCards.add(firstCard);
         secretCards.add(secondCard);
-        //sendMessageToClient("scegli la carta obiettivo:" + secretCards);
+        int firstid= firstCard.getId();
+        int secondID= secondCard.getId();
+        System.out.println(firstid); //debugging
+        System.out.println(secondID);
+
         sendMessageToClient(String.valueOf(firstCard));
         sendMessageToClient(String.valueOf(secondCard));
+        sendMessageToClient(String.valueOf(firstid)); //sending the correct card id to the client
+        sendMessageToClient(String.valueOf(secondID));
         String integerString = stdIn.readLine();
         int size = Integer.parseInt(integerString);
         if(size==1){
