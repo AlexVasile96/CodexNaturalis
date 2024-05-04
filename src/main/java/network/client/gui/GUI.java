@@ -48,7 +48,7 @@ public class GUI extends Application {
     private Scene chooseInitCardScene;
     private int selectedNumOfPlayers;
     private static GuiController guiController = null;
-
+    private String id;
     private ClientView clientView = new ClientView();
     private static Socket socket;
     private static PrintWriter out;
@@ -72,6 +72,8 @@ public class GUI extends Application {
     public ImageView obiettivo2;
     @FXML
     public Button chooseObj;
+    @FXML
+    public ImageView initCard;
 
     /*public static void main(String[] args) {
         launch(args);
@@ -457,13 +459,29 @@ public class GUI extends Application {
 
     @FXML
     public void showInit(ActionEvent event) throws IOException {
-
+        System.out.println(in.readLine());
+        System.out.println(in.readLine());
+        System.out.println(in.readLine());
+        id = in.readLine();
+        String pathInit = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
+        Image initImage = new Image(getClass().getResourceAsStream(pathInit));
+        initCard.setImage(initImage);
     }
 
     @FXML
-    public void flipCard(ActionEvent event) throws IOException {
-
+    public void flipToBackCard(ActionEvent event) throws IOException {
+        String pathFlipped = "/ImmaginiCodex/CarteBack/Init/" + id + ".png";
+        Image initImage = new Image(getClass().getResourceAsStream(pathFlipped));
+        initCard.setImage(initImage);
     }
+
+    @FXML
+    public void flipToFrontCard(ActionEvent event) throws IOException {
+        String pathFlipped = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
+        Image initImage = new Image(getClass().getResourceAsStream(pathFlipped));
+        initCard.setImage(initImage);
+    }
+
 
 
 
