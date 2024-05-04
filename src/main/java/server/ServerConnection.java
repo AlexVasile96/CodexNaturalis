@@ -34,12 +34,11 @@ public class ServerConnection implements Runnable {
     String command;
     synchronized (this) {
         try {
-            System.out.println("Benvenuto!Sono il server! Scrivere una qualsiasi stringa per iniziare la conversazione\n");
+            System.out.println("Welcome! I'm the server, please type anything to start the conversation!\n");
             while (!isTheWhileActive) {
                 try {                                                       //il client scrive un messaggio
                     if (clientView.getUserName() == null) {             //If client hasn't made the login yet, he has to log first.
                         System.out.print(">");
-
                         command = stdin.readLine();
                         sendMessageToServer(command);
                         loginPlayer(player);                                  //Actual Login
@@ -50,19 +49,16 @@ public class ServerConnection implements Runnable {
                         System.out.println("Server says that first player will be " + currentPlayer);
                     } else {
                         while (!isTheWhileActive) {
-                            if(isConnectionClosed==true)
+                            if(isConnectionClosed)
                             {
                                 isTheWhileActive=true;
-
                             }
                             else{
-                            staifermo();
-                            faiLeTueAzioni();
+                                waitUntilItsYourTurn();
+                                makeYourMoves();
                             }
                         }
                     }
-
-
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -72,11 +68,9 @@ public class ServerConnection implements Runnable {
                 in.close();
                 out.close();
                 socket.close();
-                System.out.println("Connessione con il server chiusa, grazie di avere giocato a Codex!");
-
+                System.out.println("Connection with server has been closed, thank you for playing Codex!");
             } catch (IOException e) {
                 e.printStackTrace();
-
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -84,7 +78,7 @@ public class ServerConnection implements Runnable {
     }
 }
 
-private void staifermo() throws IOException {
+private void waitUntilItsYourTurn() throws IOException {
    //currentPlayer= getCurrentPlayer();
         while(!clientView.getUserName().equals(getCurrentPlayer()))
         {
@@ -94,12 +88,12 @@ private void staifermo() throws IOException {
                 System.out.println(getCurrentPlayer());
                 in.readLine(); //Si mangia il "fine turno"
             }
-            else {System.out.println("Il current player ha selezionato " +waitForCall);}
+            else {System.out.println("Current Player "+ currentPlayer + "typed " +waitForCall);}
         }
 }
-    private void faiLeTueAzioni() throws IOException {
-        System.out.println("E' il tuo turno");
-        System.out.println("Quale azione vuoi compiere?");
+    private void makeYourMoves() throws IOException {
+        System.out.println("It's your turn!");
+        System.out.println("What do you want to do?");
         String command= stdin.readLine();
         actionsInput(command);
     }
@@ -438,14 +432,14 @@ private void staifermo() throws IOException {
 
     private void quit() throws IOException {
         sendMessageToServer("quit");
-        System.out.println("Hai scelto di uscire dal gioco!\n");
+        System.out.println("You chose to quit Codex :c \n");
         System.out.println(in.readLine()); //quit
         isConnectionClosed=true;
 
     }
     private void runEndTurn() throws IOException {
         sendMessageToServer("endTurn");
-        System.out.println("Hai scelto di concludere il tuo turno. La mano passa al gicatore successivo");
+        System.out.println("You chose to end your turn.");
         String answer= in.readLine();
         System.out.println(answer);
         setCurrentPlayer(answer);
@@ -472,17 +466,31 @@ private void staifermo() throws IOException {
         this.currentPlayer = currentPlayer;
     }
     private void takingTheInitialCard() throws IOException {                                                                            //DA FINIRE
+        boolean hasTheCardAlreadyBeenTurn= false;
         String firstCard= in.readLine();
         String FrontalCorners= in.readLine();
         String BackCorners=in.readLine();
-        String initialCardId= in.readLine();
+        in.readLine(); //For gui purpose
         System.out.println("server says: " + firstCard);
-        System.out.println("Vuoi girare la tua carta? Scrivere 1 per tenerla con gli angoli davanti, 2 per girarla");
         System.out.println(FrontalCorners);
         System.out.println(BackCorners);
-        String integer= stdin.readLine();
-        int size = Integer.parseInt(integer);
+        String integer=null;
+        int size;
+        System.out.println("Do you want to turn your card?");
+        while(!hasTheCardAlreadyBeenTurn){
+        System.out.println("Please type 1 if you want to turn your card\nPlease type 2 if you don't want to turn your card");
+        integer= stdin.readLine();
+        if(integer.equals("1")|| integer.equals("2")){
+            System.out.println("Okay!");
+            hasTheCardAlreadyBeenTurn=true;
+         }
+        else{
+            System.out.println("You didn't type correctly!");
+            }
+        }
+        size = Integer.parseInt(integer);
         out.println(size-1);
+        System.out.println("Initial Card correctly placed!");
     }
     private synchronized void assigningSecretCard() throws IOException {
         boolean isNumberCorrect=false;

@@ -329,16 +329,24 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     private void assignInitialCard() throws IOException {
         InitialCard initialCard= game.getInitialCardDeck().firstCardInitialGame();
-        int initCardId= initialCard.getId();
-        sendMessageToClient("la tua carta iniziale è questa " +initialCard.toString() ); //Sending the card
-        sendMessageToClient(String.valueOf(initCardId)); //Sending the id
-        //initialCard.toString();
+        int initCardId= initialCard.getId();                                //For gui purpose
+        sendMessageToClient("This is your first card " +initialCard ); //Sending the card
+        sendMessageToClient(String.valueOf(initCardId)); //Sending the id (for gui purpose)
         String integerString = stdIn.readLine();
         int size = Integer.parseInt(integerString);
         System.out.println(size);
-        game.placeInitialCard(threadPlayer.getBoard(),initialCard);
-        System.out.println("Carta iniziale piazzata correttamente");
+        if(size==0)
+        {
+            game.placeInitialCard(threadPlayer.getBoard(),initialCard);
+            System.out.println("Initial Card correctly placed");
+        }
+        else if(size==1)
+        {
+            game.placeInitialCardBack(threadPlayer.getBoard(), initialCard);
+            System.out.println("Initial Card correctly placed");
+        }
         threadPlayer.getBoard().printBoard();
+
     }
 
 

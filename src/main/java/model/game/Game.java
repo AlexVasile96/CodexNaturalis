@@ -95,9 +95,12 @@ public class Game implements WhatCanPlayerDo {
 
 
     public void placeInitialCard(Board board, InitialCard card){
-        board.placeInitialCard(card);
+        board.placeFrontInitialCard(card);
     }
-
+    public void placeInitialCardBack(Board board, InitialCard card)
+    {
+        board.placeBackInitialCard(card);
+    }
     @Override
     public void drawCard() {
 
