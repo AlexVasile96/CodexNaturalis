@@ -12,5 +12,7 @@
       <Label fx:id="labelObj1" layoutX="147.0" layoutY="216.0" text="Label" />
       <Label fx:id="labelObj2" layoutX="409.0" layoutY="216.0" text="Label" />
       <Button fx:id="scegliObj" layoutX="189.0" layoutY="141.0" mnemonicParsing="false" onAction="#chooseSecretObjectiveClicked" text="Premimi per vedere le carte obiettivo!!!" />
+      <ImageView fx:id="obiettivo1" fitHeight="150.0" fitWidth="200.0" layoutX="61.0" layoutY="233.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="obiettivo2" fitHeight="150.0" fitWidth="200.0" layoutX="323.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </Pane>

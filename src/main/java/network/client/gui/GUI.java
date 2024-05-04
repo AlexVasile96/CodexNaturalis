@@ -416,10 +416,14 @@ public class GUI extends Application {
         in.readLine();
         in.readLine();
         in.readLine();
-        String cartaSegreta = in.readLine();
-        labelObj1.setText("suca");
-        labelObj2.setText(cartaSegreta);
-        System.out.println(cartaSegreta);
+        String cartaSegreta1 = in.readLine();
+        String cartaSegreta2 = in.readLine();
+        Image objImage1 = new Image(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Objective/87.png"));
+        obiettivo1.setImage(objImage1);
+        labelObj1.setText(cartaSegreta1);
+        labelObj2.setText(cartaSegreta2);
+        System.out.println(cartaSegreta1);
+        System.out.println(cartaSegreta2);
     }
 
 
