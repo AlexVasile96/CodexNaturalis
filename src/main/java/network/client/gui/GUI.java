@@ -69,9 +69,11 @@ public class GUI extends Application {
     @FXML
     public ImageView obiettivo2;
     @FXML
-    public Text labelObj1;
+    public Label labelObj1;
     @FXML
     public Label labelObj2;
+    @FXML
+    public Button chooseObj;
 
     /*public static void main(String[] args) {
         launch(args);
@@ -266,6 +268,7 @@ public class GUI extends Application {
         window = primaryStage;
         startMenuScene(primaryStage);
         guiController = new GuiController(0);
+
     }
 
     private void startMenuScene(Stage primaryStage) throws IOException {
@@ -280,7 +283,6 @@ public class GUI extends Application {
         StackPane root = new StackPane();
         root.setBackground(background);
         root.getChildren().addAll(fxml); // Aggiungi il layout dei bottoni sopra all'immagine di sfondo
-
         // Crea la scena di avvio
         startScene = new Scene(root, 919, 743);
         primaryStage.setScene(startScene);
@@ -374,7 +376,9 @@ public class GUI extends Application {
 
             //lobby();
             //primaryStage.setScene(lobbyScene);
+
             chooseSecretObjective();
+
             primaryStage.setScene(chooseSecretObjectiveScene);
         }
         else{
@@ -395,22 +399,27 @@ public class GUI extends Application {
 
     @FXML
     private void chooseSecretObjective() throws IOException{
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
         Parent fxmlGame = FXMLLoader.load(getClass().getResource("/model/SceltaObiettivoSegreto.fxml"));
         Pane root = new Pane();
-        String cartaSegreta = in.readLine();
-        labelObj1.setText(cartaSegreta);
-        System.out.println(cartaSegreta);
-        root.getChildren().addAll(fxmlGame, labelObj1);
+        root.getChildren().addAll(fxmlGame);
         chooseSecretObjectiveScene = new Scene(root, 800, 600);
+    }
+
+    @FXML
+    private void chooseSecretObjectiveClicked(ActionEvent event) throws IOException {
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        String cartaSegreta = in.readLine();
+        labelObj1.setText("suca");
+        labelObj2.setText(cartaSegreta);
+        System.out.println(cartaSegreta);
     }
 
 
