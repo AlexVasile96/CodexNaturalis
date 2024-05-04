@@ -476,12 +476,13 @@ private void staifermo() throws IOException {
         String firstCard= in.readLine();
         String FrontalCorners= in.readLine();
         String BackCorners=in.readLine();
+        String initialCardId= in.readLine();
         System.out.println("server says: " + firstCard);
         System.out.println("Vuoi girare la tua carta? Scrivere 1 per tenerla con gli angoli davanti, 2 per girarla");
         System.out.println(FrontalCorners);
         System.out.println(BackCorners);
-        String intero= stdin.readLine();
-        int size = Integer.parseInt(intero);
+        String integer= stdin.readLine();
+        int size = Integer.parseInt(integer);
         out.println(size-1);
     }
     private synchronized void assigningSecretCard() throws IOException {
