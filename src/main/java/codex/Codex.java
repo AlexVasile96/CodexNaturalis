@@ -1,4 +1,5 @@
 package codex;
+import network.client.gui.GUI;
 import server.CliClientApp;
 import server.ServerMain;
 
@@ -32,7 +33,7 @@ public class Codex {
                 CliClientApp.main(null); }
             case 2 -> {
                 System.out.println("You selected the GUI interface, have fun!\nStarting...");
-                //GUI.main(null);
+                GUI.main(null);
             }
             default -> System.err.println("Invalid argument, please run the executable again with one of these options:\n1.server\n2.client");
         }

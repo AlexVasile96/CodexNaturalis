@@ -17,7 +17,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
+
 
 
 
@@ -43,7 +43,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         stdIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         this.playersList = playersinTheGame;
-        boolean isGameStarted = false;
+        //boolean isGameStarted = false;
         this.clients = clients;
         gameController= null;
         turnController=null;
@@ -56,39 +56,47 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     @Override
     public void run() {
-        try {
+        synchronized (this) {
+            try {
                 String clientSaysHello = stdIn.readLine();
                 System.out.println("Il client ha detto " + clientSaysHello);    //Client says hello
                 threadPlayer = loginEachClient();                               //EveryClient has to log in, we save his name information inside threadPLayer
                 handlingTurns(playersList);                                     //Handling turns, first client will be the first player inside the game
                 addingPlayersToTheGame();                                        //Adding players to the current game
-                synchronized (this){                                             //First thread that accesses this function will assign all the cards to the players
+                synchronized (this) {                                             //First thread that accesses this function will assign all the cards to the players
                     if (!checkGameInizialization) {
                         initializeCards();
                     }
                 }
                 assigningSecretCard();                                            //Each thread will assign the secret card to the player
                 assignInitialCard();                                                //Each client places his first card
-                for(Player player:playersList)
-                    {
-                        game.updateSingleClientView(player);                      //Updating each player ClientView
-                        System.out.println(player.getClientView());
-                    }// Momo: perche non solo quella del thread player?
+                //sendingClientHisFirstThreeCards();
+                for (Player player : playersList) {
+                    game.updateSingleClientView(player);                      //Updating each player ClientView
+                    System.out.println(player.getClientView());
+                }// Momo: perche non solo quella del thread player?
                 System.out.println(game.getObjectiveDeck().carteRimaste());         //Debugging to check if all cards are given correctly
                 sendMessageToClient(currentPlayer.getNickName());
-
-            do {
-                startGame();
-                System.out.println("Il client è cambiato, ora tocca a " + currentPlayer);
-                //out.close();
-
-            } while (true);
-
-        } catch (IOException e) {
-            System.err.println("Io exception client handler");
-            } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+                boolean hasClientQuit= false;
+                while (!hasClientQuit){
+                    startGame();
+                    System.out.println("Il client è cambiato, ora tocca a " + currentPlayer);
+                    hasClientQuit=true;
                 }
+                clients.remove(this);
+                try {
+                    clientSocket.close();
+                } catch (IOException ex) {
+                    System.err.println("Errore durante la chiusura del socket del client: " + ex.getMessage());
+                }
+                System.out.println("Connessione chiusa dal client.");
+
+            } catch (IOException e) {
+
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private void startGame() throws IOException, InterruptedException {
@@ -98,11 +106,17 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("Sto aspettando che il client " + currentPlayer.getNickName() + " mi faccia richiesta");
             messageFromClient = stdIn.readLine();
             System.out.println("Il client ha selezionato: " + messageFromClient);
-            if(messageFromClient.equals("endTurn")) endturnphase=true;
+            //if(messageFromClient.equals("endTurn")) endturnphase=true;
             runCommand(messageFromClient, threadPlayer); //->run
+            if(messageFromClient.equals("quit")){
+                endturnphase=true;
+            }
+
         }
     }
-
+    private void sendingClientHisFirstThreeCards() throws IOException {
+        runCommand("showYourCardDeck", threadPlayer);
+    }
 
 
 
@@ -162,7 +176,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         if (!gameController.isSizeSet()) {          //If controller number of players has not been decided
             //Tries to set controller's number of players
             try {
-                sendMessageToClient("At the moment there are: ");
+                sendMessageToClient("At the moment there is: ");
                 sendMessageToClient("1");
                 sendMessageToClient(" player. Choose how many players you want to play with-> players have to be from 2 to 4.");
                 message= stdIn.readLine();
@@ -180,25 +194,23 @@ public class HandlingPlayerInputsThread implements Runnable {
             }
         } else {
             System.out.println("Player doesn't need to choose game number of players");
-            sendMessageToClient("There's already someone online! you will be ");
+            sendMessageToClient("There's already someone online! You will be ");
             sendMessageToClient(String.valueOf(gameController.getSize()));
             sendMessageToClient(" players");
         }
     }
     private Dot chooseClientDotColor() throws IOException {
         String message;
-        Dot dot = null;
-
+        Dot dot;
         do{
             sendMessageToClient("Choose the color of your dot, you can choose between: " + game.getDots());
             message = stdIn.readLine();
             if (!game.isInDots(message)) {
-                sendMessageToClient("Color chosen not available!");
+                sendMessageToClient("Chosen color not available!");
             }
             else sendMessageToClient("color chosen correctly:");
         }while(!game.isInDots(message));
         dot = Dot.valueOf(message);
-
         System.out.println("Colore scelto dal client: " + message);
         game.removeDot(message);
         return dot;
@@ -207,59 +219,59 @@ public class HandlingPlayerInputsThread implements Runnable {
         if (gameController != null ) {
             String cornerChosen=null;
             System.out.println("Received command: " + messageFromClient); //Forward player command to controller
-            if(messageFromClient.equals("endTurn")){
-                endTurn(player,turnController);
-                gameController.readCommand(messageFromClient, player,0,0,cornerChosen);
-
-            }
-            else if(messageFromClient.equals("playCard"))
-            {
-
-                String sentBoard= "showBoard";
-                System.out.println("Sono in runCommand");
-                gameController.readCommand(sentBoard, player,0,0, cornerChosen); //In questo modo, al player viene fatta visualizzare la propria Board
-                String indexCardChosen= stdIn.readLine(); //Memorizzo quale carta del proprio deck il player ha deciso di giocare
-                int cardChosenFromHisDeck = Integer.parseInt(indexCardChosen);
-                System.out.println("Il player ha scelto la carta numero " +cardChosenFromHisDeck);
-                String CardOnTheBoardChosen= stdIn.readLine();
-                int boardCardChosen= Integer.parseInt(CardOnTheBoardChosen);
-                System.out.println("Il player ha deciso di giocare la proria carta sulla carta numero " + boardCardChosen);
-                System.out.println("Mando tutto al GameController");
-                gameController.readCommand(messageFromClient, player,cardChosenFromHisDeck, boardCardChosen, cornerChosen);
-                cornerChosen= stdIn.readLine();
-                System.out.println(cornerChosen);
-                gameController.readCommand(messageFromClient, player,cardChosenFromHisDeck, boardCardChosen, cornerChosen);
-                messageFromClient = stdIn.readLine();
-                runCommand(messageFromClient,player);
-            }
-            //else if(messageFromClient.equals("drawCardFromWell")){
-            else if(messageFromClient.equals("drawCard")){
-                //intro
-                messageFromClient= stdIn.readLine();
-                gameController.readCommand(messageFromClient, player, 0, 0, null);// showwell
-                //well o deck?
-                messageFromClient=stdIn.readLine();
-                if (messageFromClient.equals("deck")) {
-                    messageFromClient= stdIn.readLine();//gold o resource
-                    gameController.readCommand(messageFromClient, player, 0, 0, null);
-                    messageFromClient= stdIn.readLine();//showdeck
-                    gameController.readCommand(messageFromClient, player, 0, 0, null);
+            switch (messageFromClient) {
+                case "endTurn" -> {
+                    endTurn(player, turnController);
+                    gameController.readCommand(messageFromClient, player, 0, 0, cornerChosen);
                 }
-                else if (messageFromClient.equals("well")) {
-                    messageFromClient= stdIn.readLine();
-                    gameController.readCommand(messageFromClient, player, 0, 0, null);//showwell
-                    int index = Integer.parseInt(stdIn.readLine());
-                    gameController.readCommand("drawCardFromWell", player, index,0, null);//drawCardFromWll
-                    messageFromClient = stdIn.readLine();//showdeck
-                    gameController.readCommand(messageFromClient, player, 0,0, null);
-                    messageFromClient = stdIn.readLine();//showwell
-                    gameController.readCommand(messageFromClient, player, 0,0, null);
+                case "playCard" -> {
+                    String sentBoard = "showBoard";
+                    System.out.println("Sono in runCommand");
+                    gameController.readCommand(sentBoard, player, 0, 0, cornerChosen); //In questo modo, al player viene fatta visualizzare la propria Board
+                    String indexCardChosen = stdIn.readLine(); //Memorizzo quale carta del proprio deck il player ha deciso di giocare
+                    int cardChosenFromHisDeck = Integer.parseInt(indexCardChosen);
+                    System.out.println("Il player ha scelto la carta numero " + cardChosenFromHisDeck);
+                    String CardOnTheBoardChosen = stdIn.readLine();
+                    int boardCardChosen = Integer.parseInt(CardOnTheBoardChosen);
+                    System.out.println("Il player ha deciso di giocare la proria carta sulla carta numero " + boardCardChosen);
+                    System.out.println("Mando tutto al GameController");
+                    gameController.readCommand(messageFromClient, player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
+                    cornerChosen = stdIn.readLine();
+                    System.out.println(cornerChosen);
+                    gameController.readCommand(messageFromClient, player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
+                    messageFromClient = stdIn.readLine();
+                    runCommand(messageFromClient, player);
                 }
-                else {System.out.println("messagio dal client errato ,messageFromClient: " + messageFromClient);};
+                //else if(messageFromClient.equals("drawCardFromWell")){
+                case "drawCard" -> {
+                    //intro
+                    messageFromClient = stdIn.readLine();
+                    gameController.readCommand(messageFromClient, player, 0, 0, null);// showwell
 
-            }
-            else  {
-                gameController.readCommand(messageFromClient, player,0,0,cornerChosen ); //sto passando una stringa e un player
+
+                    //well o deck?
+                    messageFromClient = stdIn.readLine();
+                    if (messageFromClient.equals("deck")) {
+                        messageFromClient = stdIn.readLine();//gold o resource
+                        gameController.readCommand(messageFromClient, player, 0, 0, null);
+                        messageFromClient = stdIn.readLine();//showdeck
+                        gameController.readCommand(messageFromClient, player, 0, 0, null);
+                    } else if (messageFromClient.equals("well")) {
+                        messageFromClient = stdIn.readLine();
+                        gameController.readCommand(messageFromClient, player, 0, 0, null);//showwell
+                        int index = Integer.parseInt(stdIn.readLine());
+                        gameController.readCommand("drawCardFromWell", player, index, 0, null);//drawCardFromWll
+                        messageFromClient = stdIn.readLine();//showdeck
+                        gameController.readCommand(messageFromClient, player, 0, 0, null);
+                        messageFromClient = stdIn.readLine();//showwell
+                        gameController.readCommand(messageFromClient, player, 0, 0, null);
+                    } else {
+                        System.out.println("messagio dal client errato ,messageFromClient: " + messageFromClient);
+                    }
+
+                }
+                default ->
+                        gameController.readCommand(messageFromClient, player, 0, 0, cornerChosen); //sto passando una stringa e un player
             }
         }
     }

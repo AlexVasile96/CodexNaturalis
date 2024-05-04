@@ -47,8 +47,7 @@ public class ServerMain {
         //PRIVATE METHODS
         private static void startServer(int port) {
             System.out.println("Server started!");
-            // Creates a ServerSocket for handling connections
-            ServerSocket serverSocket;
+            ServerSocket serverSocket; // Creates a ServerSocket for handling connections
             try {
                 serverSocket = new ServerSocket(port);
             } catch (IOException ex) {

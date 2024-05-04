@@ -7,7 +7,6 @@ import view.ClientView;
 import java.io.*;
 import java.net.Socket;
 
-
 public class CliClientApp {
     public static void main(String[] args) throws IOException, InterruptedException {
         FileReader reader = new FileReader("src/main/resources/HostAndPort.json"); // Reading JSON file to get host name and port number

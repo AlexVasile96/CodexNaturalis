@@ -47,22 +47,24 @@ public class GameController {
         this.isSizeSet=false;
     }
 
+
+
+
     public synchronized void readCommand(String commandString, Player player, int size, int paolo, String cornerChosen) {
         if (game != null) {
             Command command = new Command();
             if(commandString.equals("playCard"))
             {
                 if(!isCornerAlreadyChosen) {
-                    String cornersAvaible = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
-                    sendMessageToAllClients(cornersAvaible); //Mando al client i corners disponibili
+                    String cornersAvailable = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
+                    sendMessageToAllClients(cornersAvailable); //Mando al client i corners disponibili
                     isCornerAlreadyChosen=true;
                 }
                 else {
-                    String ciaone= command.runCommand(game,commandString,player,size,paolo,cornerChosen);
-                    sendMessageToAllClients(ciaone);
+                    String cornersChosen= command.runCommand(game,commandString,player,size,paolo,cornerChosen);
+                    sendMessageToAllClients(cornersChosen);
                     isCornerAlreadyChosen=false;
                 }
-
             }
             else {
                 String result = command.runCommand(game, commandString, player,size,paolo, cornerChosen);
@@ -73,10 +75,10 @@ public class GameController {
 
 
 
+
     public void addPlayer(String username, PrintWriter userOut) throws GameFullException, UnknownPlayerNumberException, UsernameAlreadyExistsException {
         if (size == 0)
             throw new UnknownPlayerNumberException();
-
         if (!players.containsKey(username)) {
             if (players.size() >= size || isGameOver) {
                 throw new GameFullException();

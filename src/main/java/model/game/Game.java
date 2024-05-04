@@ -94,6 +94,15 @@ public class Game implements WhatCanPlayerDo {
         return finalAnswer;
     }
 
+
+
+    public String showYourspecificSeeds(Player player){
+        BoardPoints boardPoints= new BoardPoints();
+        String yourSpecificSeeds= boardPoints.countPoints(player.getBoard()).toString();
+        System.out.println(yourSpecificSeeds);
+        return yourSpecificSeeds;
+    }
+
     @Override
     public String showCards(Player player) {
         List<Card> cardToSendToServer = player.getPlayerCards();
@@ -124,9 +133,21 @@ public class Game implements WhatCanPlayerDo {
         return result;
     }
 
+    public String showAllSpecificSeed(){
+        return null;
+    }
+
+
     @Override
     public String showBoard(Player player) {
         return player.getBoard().printBoardForServer();
+    }
+    public String showAllPlayersBoard(Player player){
+        for(Player playerz: players)
+        {
+            playerz.getBoard().printBoardForServer();
+        }
+        return null;
     }
 
     public String showBoardForPlacingCards(Player player)

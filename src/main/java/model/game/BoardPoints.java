@@ -6,7 +6,6 @@ import java.util.Map;
 
 public class BoardPoints {
     public Map<SpecificSeed, Integer> countPoints(Board board) {
-
         Map<SpecificSeed, Integer> seedCountMap = new HashMap<>();
         for (SpecificSeed seed : SpecificSeed.values()) {
             seedCountMap.put(seed, 0);

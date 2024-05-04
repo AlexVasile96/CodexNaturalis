@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GUI">
+   <children>
+      <TextField layoutX="129.0" layoutY="96.0" prefHeight="44.0" prefWidth="343.0" text="Scegli la tua carta obiettivo segreta">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <ImageView fx:id="obiettivo1" fitHeight="150.0" fitWidth="200.0" layoutX="101.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="obiettivo2" fitHeight="150.0" fitWidth="200.0" layoutX="301.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="labelObj2" layoutX="437.0" layoutY="179.0" text="Label" />
+      <Text fx:id="labelObj1" layoutX="116.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+   </children>
+</AnchorPane>
