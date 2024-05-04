@@ -161,14 +161,28 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     private synchronized void assigningSecretCard() throws IOException {
         List<ObjectiveCard> secretCards = new ArrayList<>();
-        secretCards.add( game.getObjectiveDeck().drawObjectiveCard());
-        secretCards.add( game.getObjectiveDeck().drawObjectiveCard());
-        sendMessageToClient("scegli la carta obiettivo:" + secretCards);
+       //secretCards.add( game.getObjectiveDeck().drawObjectiveCard());
+        //secretCards.add( game.getObjectiveDeck().drawObjectiveCard());
+        ObjectiveCard firstCard= game.getObjectiveDeck().drawObjectiveCard();
+        ObjectiveCard secondCard= game.getObjectiveDeck().drawObjectiveCard();
+        secretCards.add(firstCard);
+        secretCards.add(secondCard);
+        //sendMessageToClient("scegli la carta obiettivo:" + secretCards);
+        sendMessageToClient(String.valueOf(firstCard));
+        sendMessageToClient(String.valueOf(secondCard));
         String integerString = stdIn.readLine();
         int size = Integer.parseInt(integerString);
-        System.out.println(userName +"ha scelto la carta numero: "+ size);
-        threadPlayer.setSecretChosenCard(secretCards.get(size-1));
-        System.out.println(threadPlayer.toString());
+        if(size==1){
+            System.out.println(userName +"ha scelto la carta numero: "+ size);
+            threadPlayer.setSecretChosenCard(secretCards.get(size-1));
+            System.out.println(threadPlayer.toString());
+        }
+        else{
+            System.out.println(userName +"ha scelto la carta numero: "+ size);
+            threadPlayer.setSecretChosenCard(secretCards.get(size-1));
+            System.out.println(threadPlayer.toString());
+        }
+
     }
     private void setGameSize() throws NoSuchElementException {
         String message;

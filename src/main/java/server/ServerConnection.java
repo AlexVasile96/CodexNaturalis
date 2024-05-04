@@ -487,7 +487,9 @@ private void staifermo() throws IOException {
     private synchronized void assigningSecretCard() throws IOException {
         boolean isNumberCorrect=false;
         String stringSecretCard= in.readLine();
-        System.out.println("Server says: " + stringSecretCard);
+        String stringSecondCard= in.readLine();
+        System.out.println("Server says: your first objective card is" + stringSecretCard);
+        System.out.println("Server says: your second objective card is" + stringSecondCard);
         while(!isNumberCorrect){
         System.out.println("Choose the card you want to draw:\nType 1 if you want to select the first card\nType 2 if you want to select the second card");
         String numberChosen= stdin.readLine();
