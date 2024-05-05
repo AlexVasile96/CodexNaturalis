@@ -21,7 +21,6 @@ public class ServerLobby {
         this.clients=clients;
         this.socket=socket;
         this.game=game;
-
     }
 
     public synchronized GameController login(String username, PrintWriter userOut) throws UnknownPlayerNumberException, UsernameAlreadyExistsException, IOException {

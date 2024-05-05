@@ -43,7 +43,7 @@ public class Board {
         }
     } //PRINTING THE BOARD
 
-    public String printBoardForServer() { //printBoard method
+   public String printBoardForServer() { //printBoard method
         StringBuilder stringBoard = new StringBuilder();
         Boolean aCapo=false;
         for (int i = 0; i < nodes.length; i++) {
@@ -61,6 +61,10 @@ public class Board {
         stringBoard.append("\nfine board");
         return String.valueOf(stringBoard);
     }
+
+
+
+
 
     private boolean nodeIsUsed(int node) {
         return node<2;
