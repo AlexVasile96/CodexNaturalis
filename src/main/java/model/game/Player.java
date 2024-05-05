@@ -20,6 +20,7 @@ public class Player implements Observable {
     private boolean isCardBack;
     private ArrayList <Card> playerCards;
     private ObjectiveCard secretChosenCard;
+    private boolean hasThePlayerAlreadyPLacedACard= false;
     public Player(String nickName, int playerScore, Dot dot, Board board){ //PLAYER CONSTRUCTOR
         this.nickName = nickName;
         this.playerScore = playerScore;
@@ -741,6 +742,15 @@ public class Player implements Observable {
 
     public void setClientView(ClientView clientView) {
         this.clientView = clientView;
+    }
+
+
+    public boolean isHasThePlayerAlreadyPLacedACard() {
+        return hasThePlayerAlreadyPLacedACard;
+    }
+
+    public void setHasThePlayerAlreadyPLacedACard(boolean hasThePlayerAlreadyPLacedACard) {
+        this.hasThePlayerAlreadyPLacedACard = hasThePlayerAlreadyPLacedACard;
     }
 
     @Override

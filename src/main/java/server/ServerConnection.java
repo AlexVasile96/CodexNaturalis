@@ -98,6 +98,11 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println("It's your turn!");
         System.out.println("What do you want to do?");
         String command= stdin.readLine();
+        if(command.equals("playcard") && player.isHasThePlayerAlreadyPLacedACard())
+        {
+            System.out.println("You already placed and drew a card!");
+            return;
+        }
         actionsInput(command);
     }
 
@@ -237,6 +242,8 @@ private void waitUntilItsYourTurn() throws IOException {
 
     private void chosenHandCard() throws IOException {
         sendMessageToServer("playCard");
+
+        player.setHasThePlayerAlreadyPLacedACard(true);
         System.out.println("You chose to play a card from your deck!");
         System.out.println("This is your board:\n");
         System.out.print("////////////////////////////////// INIZIO BOARD //////////////////////////////////////////\n");
@@ -438,6 +445,7 @@ private void waitUntilItsYourTurn() throws IOException {
     }
     private void runEndTurn() throws IOException {
         sendMessageToServer("endTurn");
+        player.setHasThePlayerAlreadyPLacedACard(false);
         System.out.println("You chose to end your turn.");
         String answer= in.readLine();
         System.out.println(answer);
