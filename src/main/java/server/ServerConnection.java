@@ -121,14 +121,11 @@ private void waitUntilItsYourTurn() throws IOException {
                 case "board", "4" -> showBoard();
                 case "points", "5" -> showPoints();
                 case "showwell", "6" -> showWell();
-                //case "drawcard", "11" -> drawCard();              //il player pesca solo se gioca una carta
-                //case "drawcardfromdeck", "7"-> drawCardFromDeck();
-                //case "drawcardfromwell", "8" -> drawCardFromWell();
-                case "endturn", "9" -> runEndTurn();//run
-                case "allboards", "10" -> showEachPlayerBoard();
-                case "yourseeds", "11" -> showYourSpecificSeed();
-                case "allseed", "12" -> showAllSpecificSeed();
-                case "quit", "13" -> quit();
+                case "endturn", "7" -> runEndTurn();//run
+                case "allboards", "8" -> showEachPlayerBoard();
+                case "yourseeds", "9" -> showYourSpecificSeed();
+                case "allseed", "10" -> showAllSpecificSeed();
+                case "quit", "11" -> quit();
                 default -> 
                     System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
                     
