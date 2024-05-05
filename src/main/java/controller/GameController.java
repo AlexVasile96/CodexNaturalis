@@ -76,9 +76,12 @@ public class GameController {
 
 
 
-    public void addPlayer(String username, PrintWriter userOut) throws GameFullException, UnknownPlayerNumberException, UsernameAlreadyExistsException {
-        if (size == 0)
-            throw new UnknownPlayerNumberException();
+    public void addPlayer(String username, PrintWriter userOut) throws GameFullException, UnknownPlayerNumberException, UsernameAlreadyExistsException, InterruptedException {
+        if (size == 0){
+            return;
+
+        }
+
         if (!players.containsKey(username)) {
             if (players.size() >= size || isGameOver) {
                 throw new GameFullException();

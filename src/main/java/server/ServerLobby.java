@@ -37,6 +37,8 @@ public class ServerLobby {
             } catch (GameFullException ignored) {
                 // Il gioco è pieno, quindi non aggiungere il giocatore
                 return null;
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }

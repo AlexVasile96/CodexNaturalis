@@ -5,7 +5,7 @@ import view.ClientView;
 
 import java.io.*;
 import java.net.Socket;
-
+import java.util.concurrent.locks.ReentrantLock;
 
 
 public class ServerConnection implements Runnable {
@@ -19,6 +19,8 @@ public class ServerConnection implements Runnable {
     private String currentPlayer= null;
     private boolean isConnectionClosed= false;
     private boolean isTheWhileActive=false;
+    private final ReentrantLock lock = new ReentrantLock();
+    private static boolean areYouthefirstOne=false;
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
             this.clientView=clientView;
@@ -31,6 +33,7 @@ public class ServerConnection implements Runnable {
 
 @Override
     public void run() {
+
     String command;
     synchronized (this) {
         try {
@@ -44,7 +47,7 @@ public class ServerConnection implements Runnable {
                         loginPlayer(player);                                  //Actual Login
                         assigningSecretCard();                                //Choosing the secret Card
                         takingTheInitialCard();                               //Taking the initial Card
-                        //receivingAndPrintingCards();
+                        receivingAndPrintingCards();
                         currentPlayer = in.readLine();                         //who is the current player?
                         System.out.println("Server says that first player will be " + currentPlayer);
                     } else {
@@ -182,6 +185,17 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println("--------------------------------------------------------------------------------------");
     }
 
+    private void receivingAndPrintingCards() throws IOException {
+        String firstCard = in.readLine();
+        String secondCard = in.readLine();
+        String thirdCard = in.readLine();
+        in.readLine();//è solo lo spazio
+        updatingView(firstCard, secondCard, thirdCard);
+        for (String s : player.getClientView().getPlayerStringCards()) {
+            System.out.println(s);
+        }
+    }
+
 
     private void showEachPlayerBoard() throws IOException {
         sendMessageToServer("showEachPlayerBoard");
@@ -202,16 +216,7 @@ private void waitUntilItsYourTurn() throws IOException {
 
 
 
-    private void receivingAndPrintingCards() throws IOException {
-        String firstCard = in.readLine();
-        String secondCard = in.readLine();
-        String thirdCard = in.readLine();
-        in.readLine();//è solo lo spazio
-        updatingView(firstCard, secondCard, thirdCard);
-        for (String s: player.getClientView().getPlayerStringCards()){
-            System.out.println(s);
-        }
-    }
+
     private void updatingView(String firstCard, String secondCard, String thirdCard){
         String[] carte = {firstCard, secondCard, thirdCard};
         if(player.getClientView().getPlayerStringCards().isEmpty()) {
@@ -548,14 +553,16 @@ private void waitUntilItsYourTurn() throws IOException {
                 System.out.println(messageFromServer);
             }while (messageFromServer.equals("Chosen color not available!"));
     }
+
     private void chooseNumberOfPlayers() throws IOException {
+
         StringBuilder numberOfPlayers= new StringBuilder();
         String stringNumberOfPlayers;
         numberOfPlayers.append(in.readLine());
         stringNumberOfPlayers = in.readLine();
         numberOfPlayers.append(stringNumberOfPlayers);
         numberOfPlayers.append(in.readLine());
-        System.out.println("server says: "+ numberOfPlayers);              //SChoose numbers of players
+        System.out.println("server says: "+ numberOfPlayers);              //Choose numbers of players
         if(Integer.parseInt(stringNumberOfPlayers)>1) {
             String answer = in.readLine();
             System.out.println("Server says: " + answer);
@@ -570,6 +577,7 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println("Server says: " + serverAnswer); //PLayers nuumber correctly chosen
         String waitingClients= in.readLine();
         System.out.println("Server says: " + waitingClients);
-    }
+        }
+
 }
 

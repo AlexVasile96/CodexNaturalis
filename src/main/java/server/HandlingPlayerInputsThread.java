@@ -36,6 +36,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private Socket clientSocket;
     private String userName;
     private static int index=0;
+    private static int whichplayerAreYou=0;
 
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException { //Costructor
@@ -43,7 +44,6 @@ public class HandlingPlayerInputsThread implements Runnable {
         stdIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         this.playersList = playersinTheGame;
-        //boolean isGameStarted = false;
         this.clients = clients;
         gameController= null;
         turnController=null;
@@ -58,6 +58,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     public void run() {
         synchronized (this) {
             try {
+                whichplayerAreYou++;
                 String clientSaysHello = stdIn.readLine();
                 System.out.println("Il client ha detto " + clientSaysHello);    //Client says hello
                 threadPlayer = loginEachClient();                               //EveryClient has to log in, we save his name information inside threadPLayer
@@ -70,11 +71,11 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
                 assigningSecretCard();                                            //Each thread will assign the secret card to the player
                 assignInitialCard();                                                //Each client places his first card
-                //sendingClientHisFirstThreeCards();
+                sendingClientHisFirstThreeCards();
                 for (Player player : playersList) {
                     game.updateSingleClientView(player);                      //Updating each player ClientView
                     System.out.println(player.getClientView());
-                }// Momo: perche non solo quella del thread player?
+                }
                 System.out.println(game.getObjectiveDeck().carteRimaste());         //Debugging to check if all cards are given correctly
                 sendMessageToClient(currentPlayer.getNickName());
                 boolean hasClientQuit= false;
@@ -97,6 +98,10 @@ public class HandlingPlayerInputsThread implements Runnable {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    private void sendingClientHisFirstThreeCards() throws IOException {
+        runCommand("showYourCardDeck", threadPlayer);
     }
 
     private void startGame() throws IOException, InterruptedException {
@@ -166,7 +171,6 @@ public class HandlingPlayerInputsThread implements Runnable {
         int secondID= secondCard.getId();
         System.out.println(firstid); //debugging
         System.out.println(secondID);
-
         sendMessageToClient(String.valueOf(firstCard));
         sendMessageToClient(String.valueOf(secondCard));
         sendMessageToClient(String.valueOf(firstid)); //sending the correct card id to the client
@@ -188,7 +192,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private void setGameSize() throws NoSuchElementException {
         String message;
         if (!gameController.isSizeSet()) {          //If controller number of players has not been decided
-            //Tries to set controller's number of players
+                                                    //Tries to set controller's number of players
             try {
                 sendMessageToClient("At the moment there is: ");
                 sendMessageToClient("1");
