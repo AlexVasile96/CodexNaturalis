@@ -63,22 +63,23 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println("Il client ha detto " + clientSaysHello);    //Client says hello
                 threadPlayer = loginEachClient();                               //EveryClient has to log in, we save his name information inside threadPLayer
                 handlingTurns(playersList);                                     //Handling turns, first client will be the first player inside the game
-                addingPlayersToTheGame();                                        //Adding players to the current game
-                synchronized (this) {                                             //First thread that accesses this function will assign all the cards to the players
+                addingPlayersToTheGame();                                       //Adding players to the current game
+                synchronized (this) {                                           //First thread that accesses this function will assign all the cards to the players
                     if (!checkGameInizialization) {
                         initializeCards();
                     }
                 }
                 assigningSecretCard();                                            //Each thread will assign the secret card to the player
-                assignInitialCard();                                                //Each client places his first card
-                //sendingClientHisFirstThreeCards();
+                assignInitialCard();                                              //Each client places his first card
+
                 for (Player player : playersList) {
-                    game.updateSingleClientView(player);                      //Updating each player ClientView
+                    game.updateSingleClientView(player);                          //Updating each player ClientView
                     System.out.println(player.getClientView());
                 }
-                System.out.println(game.getObjectiveDeck().carteRimaste());         //Debugging to check if all cards are given correctly
+                System.out.println(game.getObjectiveDeck().carteRimaste());       //Debugging to check if all cards are given correctly
                 sendMessageToClient(currentPlayer.getNickName());
                 boolean hasClientQuit= false;
+                //sendingClientHisFirstThreeCards();
                 while (!hasClientQuit){
                     startGame();
                     System.out.println("Il client è cambiato, ora tocca a " + currentPlayer);
@@ -161,6 +162,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println(gameController);
         return player;
     }
+
     private synchronized void assigningSecretCard() throws IOException {
         List<ObjectiveCard> secretCards = new ArrayList<>();
         ObjectiveCard firstCard= game.getObjectiveDeck().drawObjectiveCard();

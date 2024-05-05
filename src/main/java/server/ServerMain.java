@@ -20,8 +20,8 @@ public class ServerMain {
     private static List<HandlingPlayerInputsThread> clients= new ArrayList<>();
     private static ExecutorService pool = Executors.newFixedThreadPool(4);
     private static Game game= new Game();
-
     private static List< Player> playersInCurrentGame= new ArrayList<>();
+
         public static void main(String[] args) {
             //Try-catch block to read the IP address and the port number from a JSON file
             try {

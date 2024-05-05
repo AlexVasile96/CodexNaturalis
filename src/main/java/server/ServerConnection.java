@@ -20,7 +20,7 @@ public class ServerConnection implements Runnable {
     private boolean isConnectionClosed= false;
     private boolean isTheWhileActive=false;
     private final ReentrantLock lock = new ReentrantLock();
-    private static boolean areYouthefirstOne=false;
+    private static boolean firstTime=false;
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
             this.clientView=clientView;
@@ -47,16 +47,25 @@ public class ServerConnection implements Runnable {
                         loginPlayer(player);                                  //Actual Login
                         assigningSecretCard();                                //Choosing the secret Card
                         takingTheInitialCard();                               //Taking the initial Card
-                        //receivingAndPrintingCards();
+
+
                         currentPlayer = in.readLine();                         //who is the current player?
                         System.out.println("Server says that first player will be " + currentPlayer);
                     } else {
+                        /*if(!firstTime)
+                        {
+                            //System.out.println("These are your deck cards:");
+                            //firstTime=true;
+                            //receivingAndPrintingCards();
+
+                        }*/
                         while (!isTheWhileActive) {
                             if(isConnectionClosed)
                             {
                                 isTheWhileActive=true;
                             }
                             else{
+
                                 waitUntilItsYourTurn();
                                 makeYourMoves();
                             }
@@ -89,14 +98,15 @@ private void waitUntilItsYourTurn() throws IOException {
             if(waitForCall.equals(clientView.getUserName())){
                 setCurrentPlayer(waitForCall);
                 System.out.println(getCurrentPlayer());
-                in.readLine(); //Si mangia il "fine turno"
+                in.readLine(); //"endturn"
             }
-            else {System.out.println("Current Player "+ currentPlayer + "typed " +waitForCall);}
+            else {System.out.println("Current Player "+ currentPlayer + " is still deciding what's his next move...");}
         }
 }
     private void makeYourMoves() throws IOException {
         System.out.println("It's your turn!");
         System.out.println("What do you want to do?");
+        System.out.println("Please type help if you want to see which moves you can make.");
         String command= stdin.readLine();
         if(command.equals("playcard") && player.isHasThePlayerAlreadyPLacedACard())
         {
@@ -172,12 +182,14 @@ private void waitUntilItsYourTurn() throws IOException {
                         - If you type->  'secret /3': visualize your secret objective card
                         - If you type->  'board /4':print your board
                         - If you type->  'points /5': show your points
-                        - If you type->  'drawResourceCardFromDeck /6': draw a card from the resource deck
-                        - If you type->  'drawGoldCardFromDeck /7': draw a card from the gold deck
-                        - If you type->  'drawCardFromWell /8': draw a card from the well
-                        - If you type->  'endturn /9': end your turn
-                        - If you type->  'showWell /9': you'll be displayed the well
-                        . if you type ->  'quit /10': esci dal gioco"""
+                        - If you type->  'showWell /6': you'll be displayed the well
+                        - If you type->  'endturn /7': end your turn
+                        - If you type->  'allboards /8': you'll be displayed your opponent boards
+                        - if you type ->  'yourseeds /9': you'll be displayed all the specific seed you have on your board
+                        - if you type ->  'allseed /10': you'll be displayed all your opponent specific seed
+                        - if you type ->  'allpoints /11': you'll be displayed your opponents' points
+                        - if you type ->  'quit /11': you'll quit the game
+                        """
         );
     }
 
@@ -221,7 +233,7 @@ private void waitUntilItsYourTurn() throws IOException {
     }
     private void showYourSpecificSeed() throws IOException {
         sendMessageToServer("showYourSpecificSeed");
-        System.out.println("I tuoi seeds: ");
+        System.out.println("Your specific seeds: ");
         String yourseeds= in.readLine();
         System.out.println(yourseeds);
     }
