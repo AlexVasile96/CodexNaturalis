@@ -78,7 +78,7 @@ public class GameController {
 
     public void addPlayer(String username, PrintWriter userOut) throws GameFullException, UnknownPlayerNumberException, UsernameAlreadyExistsException, InterruptedException {
         if (size == 0){
-            return;
+            throw new UnknownPlayerNumberException();
 
         }
 

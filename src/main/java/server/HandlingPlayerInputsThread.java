@@ -71,7 +71,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
                 assigningSecretCard();                                            //Each thread will assign the secret card to the player
                 assignInitialCard();                                                //Each client places his first card
-                sendingClientHisFirstThreeCards();
+                //sendingClientHisFirstThreeCards();
                 for (Player player : playersList) {
                     game.updateSingleClientView(player);                      //Updating each player ClientView
                     System.out.println(player.getClientView());
@@ -291,7 +291,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     private synchronized void waitingForClients() throws InterruptedException {
         System.out.println("Waiting other players");
-        while (playersList.size() != gameController.getSize()) {
+        while (playersList.size() != 2) {
             {
                 wait(10000);
             }

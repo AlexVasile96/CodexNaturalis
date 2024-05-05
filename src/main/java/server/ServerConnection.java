@@ -47,7 +47,7 @@ public class ServerConnection implements Runnable {
                         loginPlayer(player);                                  //Actual Login
                         assigningSecretCard();                                //Choosing the secret Card
                         takingTheInitialCard();                               //Taking the initial Card
-                        receivingAndPrintingCards();
+                        //receivingAndPrintingCards();
                         currentPlayer = in.readLine();                         //who is the current player?
                         System.out.println("Server says that first player will be " + currentPlayer);
                     } else {
@@ -502,8 +502,8 @@ private void waitUntilItsYourTurn() throws IOException {
         String stringSecondCard= in.readLine(); //carta
         String firstCardID= in.readLine(); //id
         String secondCardID= in.readLine(); //id
-        int firstID= Integer.parseInt(firstCardID);
-        int secondID= Integer.parseInt(secondCardID);
+        //int firstID= Integer.parseInt(firstCardID);
+        //int secondID= Integer.parseInt(secondCardID);
         System.out.println("Server says: your first objective card is" + stringSecretCard);
         System.out.println("Server says: your second objective card is" + stringSecondCard);
         while(!isNumberCorrect){
