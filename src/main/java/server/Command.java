@@ -62,7 +62,7 @@ public class Command { //Command Client sends to Server
                 return operationResult;
             case "showEachPlayerBoard":
                 String allboards;
-                allboards= game.showAllPlayersBoard(player);
+                allboards= game.showAllPlayersBoard();
                 return  allboards;
             case "showYourSpecificSeed":
                 String allStrings;
@@ -72,6 +72,9 @@ public class Command { //Command Client sends to Server
                 String allseeds;
                 allseeds= game.showAllSpecificSeed();
                 return allseeds;
+            case "showAllPoints" :
+                String allPoints = game.showAllPoints();
+                return allPoints;
             case "endTurn":
                 game.runEndTurn(player);
                 return "fine turno";

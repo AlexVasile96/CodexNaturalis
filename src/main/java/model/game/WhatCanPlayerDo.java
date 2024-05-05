@@ -34,4 +34,6 @@ public interface WhatCanPlayerDo {
     String getNickName(Player player);
     List<Card> getPlayerCards(Player player);
     void requestGameInfo(Player player); //Richiede le informazioni attuali sullo stato del gioco al server.
+
+    String showAllPoints();
 }

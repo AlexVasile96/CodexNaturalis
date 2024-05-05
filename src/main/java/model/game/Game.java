@@ -163,7 +163,7 @@ public class Game implements WhatCanPlayerDo {
     public String showBoard(Player player) {
         return player.getBoard().printBoardForServer();
     }
-    public String showAllPlayersBoard(Player player){
+    public String showAllPlayersBoard(){
         StringBuilder stamp = new StringBuilder();
         for(Player playerz: players)
         {
@@ -171,10 +171,28 @@ public class Game implements WhatCanPlayerDo {
             stamp.append(playerz.getNickName());
             stamp.append(" //////////////////////////////////////////");
             stamp.append("\n");
+            String point = showPoints(playerz);
+            stamp.append("Current Point: ");
+            stamp.append(point);
+            stamp.append("\n");
             String bord= playerz.getBoard().printBoardForServer();
             stamp.append(bord.replace("fine board", "\n"));
             stamp.append("////////////////////////////////// FINE BOARD ////////////////////////////////////////////");
             stamp.append("\n");
+        }
+        stamp.append("exit");
+        return String.valueOf(stamp);
+    }
+
+    @Override
+    public String showAllPoints() {
+        StringBuilder stamp = new StringBuilder();
+        for(Player playerz: players)
+        {
+            stamp.append(playerz.getNickName());
+            stamp.append(" current Point: ");
+            stamp.append(showPoints(playerz));
+            stamp.append("\n--------------------------------------------------\n");
         }
         stamp.append("exit");
         return String.valueOf(stamp);
@@ -265,6 +283,8 @@ public class Game implements WhatCanPlayerDo {
     public void requestGameInfo(Player player) {
 
     }
+
+
     public List<Player> getPlayers() {
         return players;
     }

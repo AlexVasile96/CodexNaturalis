@@ -125,7 +125,8 @@ private void waitUntilItsYourTurn() throws IOException {
                 case "allboards", "8" -> showEachPlayerBoard();
                 case "yourseeds", "9" -> showYourSpecificSeed();
                 case "allseed", "10" -> showAllSpecificSeed();
-                case "quit", "11" -> quit();
+                case "allpoints", "11" -> showAllPoints();
+                case "quit", "12" -> quit();
                 default -> 
                     System.out.println("This command is not supported. Press 'help' for a list of all available commands.");
                     
@@ -133,6 +134,15 @@ private void waitUntilItsYourTurn() throws IOException {
         } catch (OperationCancelledException exception) {
             System.out.println(exception.getMessage());
         }
+    }
+
+    private void showAllPoints() throws IOException {
+        sendMessageToServer("showAllPoints");
+        String messageFromServer = in.readLine();
+        do{
+            System.out.println(messageFromServer);
+            messageFromServer = in.readLine();
+        }while (!messageFromServer.equals("exit"));
     }
 
 
