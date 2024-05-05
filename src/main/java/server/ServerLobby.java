@@ -21,7 +21,6 @@ public class ServerLobby {
         this.clients=clients;
         this.socket=socket;
         this.game=game;
-
     }
 
     public synchronized GameController login(String username, PrintWriter userOut) throws UnknownPlayerNumberException, UsernameAlreadyExistsException, IOException {
@@ -37,6 +36,8 @@ public class ServerLobby {
             } catch (GameFullException ignored) {
                 // Il gioco è pieno, quindi non aggiungere il giocatore
                 return null;
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }

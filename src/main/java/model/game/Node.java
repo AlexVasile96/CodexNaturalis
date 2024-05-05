@@ -81,4 +81,7 @@ public class Node {
     public void setAlreadyChecked(boolean alreadyChecked) {
         this.alreadyChecked = alreadyChecked;
     }
+    public int getRow() {
+        return coordY;
+    }
 }

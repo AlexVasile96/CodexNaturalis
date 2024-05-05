@@ -15,9 +15,9 @@ public class Command { //Command Client sends to Server
             case "playCard": //PIETRO
             {
                 if(checkIfTheBoardHadAlreadyBeenPrinted==0){
-                    String CornersAvaiable= game.showAvaiableCorners(player, size, paolo);
+                    String CornersAvailable= game.showAvaiableCorners(player, size, paolo);
                     checkIfTheBoardHadAlreadyBeenPrinted++;
-                    return CornersAvaiable;
+                    return CornersAvailable;
                 }
                 else if(checkIfTheBoardHadAlreadyBeenPrinted==1)
                 {
@@ -73,6 +73,7 @@ public class Command { //Command Client sends to Server
                 allseeds= game.showAllSpecificSeed();
                 return allseeds;
             case "endTurn":
+                game.runEndTurn(player);
                 return "fine turno";
             case "actions": //finito
                 return "Hai selezionato actions";
@@ -80,7 +81,9 @@ public class Command { //Command Client sends to Server
                 System.out.println("Sono entrato in help");
                 return "hai chiesto aiuto";
             }
-            case "quit": return "suca";
+            case "quit":
+                game.runEndTurn(player);
+                return "quit";
             default:
                 return "Unknown command.";
         }

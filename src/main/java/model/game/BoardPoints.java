@@ -10,9 +10,9 @@ public class BoardPoints {
         for (SpecificSeed seed : SpecificSeed.values()) {
             seedCountMap.put(seed, 0);
         }
-        //Controlliamo se dobbiamo aggiungere gli attributi
+        //Check if we have to add attributes
         for(Card card : board.getCardsOnTheBoardList()){            //checking all the cards
-            if(card.isCardBack()){                                  //se il cardback è true, allora aggiungi gli attributi
+            if(card.isCardBack()){                                  //if card.isCardBack== true -> add attributes
                 for (SpecificSeed seed : card.getAttributes()) {
                     seedCountMap.put(seed, seedCountMap.get(seed) + 1);
                 }
@@ -53,14 +53,14 @@ public class BoardPoints {
             }
         }
         System.out.println("INKWELL: " + INKWELLCount+" PARCHMENT: " + PARCHMENTCount+" FEATHER: "+FEATHERCount);
-        System.out.println("Trattini trattini trattini " + seedCountMap);
+        System.out.println("Specific Seeds on the map " + seedCountMap);
         attributesCounter[0]= INKWELLCount;
         attributesCounter[1]= PARCHMENTCount;
         attributesCounter[2]= FEATHERCount;
         return  attributesCounter;
     }
 
-    public int addictionalPointsForGoldCards(Board board, SpecificSeed specificSeed) {
+    public int additionalPointsForGoldCards(Board board, SpecificSeed specificSeed) {
         int seedCount = 0;
         for (int i = 0; i < board.getNodes().length; i++) {
             for (int j = 0; j < board.getNodes()[i].length; j++) {

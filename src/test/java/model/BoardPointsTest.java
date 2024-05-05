@@ -44,7 +44,7 @@ class BoardPointsTest {
         /*
         The method should return 3
          */
-        assertEquals(3,boardPoints.addictionalPointsForGoldCards(board,SpecificSeed.INKWELL));
+        assertEquals(3,boardPoints.additionalPointsForGoldCards(board,SpecificSeed.INKWELL));
         //OK
     }
 }

@@ -3,6 +3,9 @@ package model.card;
 import model.game.Corner;
 import model.game.Node;
 import model.game.SpecificSeed;
+import org.json.JSONObject;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,6 +151,28 @@ public class Card {
             temp.add(type);
             return temp;
         }
+    public JsonObject toJsonObject(){
+        JsonObject jsonObject= new JsonObject();
+        jsonObject.addProperty("id", id);
+        jsonObject.addProperty("specificSeedType", type.ordinal());
+        jsonObject.addProperty("value", valueWhenPlaced);
+        jsonObject.addProperty("TopLeftCorner", String.valueOf(TL));
+        jsonObject.addProperty("TopRightCorner", String.valueOf(TR));
+        jsonObject.addProperty("BottomLeftCorner", String.valueOf(BL));
+        jsonObject.addProperty("BottomRightCorner", String.valueOf(BR));
+        return jsonObject;
+    }
+    public static Card fromJsonObject(JsonObject jo){
+        int id = jo.get("id").getAsInt();
+        int specificSeedIndex = jo.get("specificSeedType").getAsInt();
+        SpecificSeed specificSeed = SpecificSeed.values()[specificSeedIndex];
+        int value = jo.get("value").getAsInt();
+        Corner TL = Corner.fromJsonObject(jo.getAsJsonObject("TopLeftCorner"));
+        Corner TR = Corner.fromJsonObject(jo.getAsJsonObject("TopRightCorner"));
+        Corner BL = Corner.fromJsonObject(jo.getAsJsonObject("BottomLeftCorner"));
+        Corner BR = Corner.fromJsonObject(jo.getAsJsonObject("BottomRightCorner"));
+        return new Card(id, specificSeed, value, TL, TR, BL, BR);
+    }
 
 }
 

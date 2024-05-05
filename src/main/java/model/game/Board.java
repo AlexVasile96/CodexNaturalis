@@ -43,7 +43,7 @@ public class Board {
         }
     } //PRINTING THE BOARD
 
-    public String printBoardForServer() { //printBoard method
+   public String printBoardForServer() { //printBoard method
         StringBuilder stringBoard = new StringBuilder();
         Boolean aCapo=false;
         for (int i = 0; i < nodes.length; i++) {
@@ -61,6 +61,10 @@ public class Board {
         stringBoard.append("\nfine board");
         return String.valueOf(stringBoard);
     }
+
+
+
+
 
     private boolean nodeIsUsed(int node) {
         return node<2;
@@ -167,7 +171,7 @@ public class Board {
         System.out.println("Card finished"); //I PRINTED ALL THE CARDS I HAVE ON MY BOARD
     }
 
-    private boolean placeBackInitialCard(InitialCard initialCard) {
+    public boolean placeBackInitialCard(InitialCard initialCard) {
         int[][] centralCoordinates = getCentralCoordinates(); //GETTING THE CENTRAL COORDINATES OF THE BOARD
         int centerX = centralCoordinates[0][0];
         int centerY = centralCoordinates[0][1];
@@ -219,7 +223,7 @@ public class Board {
         return true;
     }
 
-    private boolean placeFrontInitialCard(InitialCard initialCard) {
+    public boolean placeFrontInitialCard(InitialCard initialCard) {
         int[][] centralCoordinates = getCentralCoordinates(); //GETTING THE CENTRAL COORDINATES OF THE BOARD
         int centerX = centralCoordinates[0][0];
         int centerY = centralCoordinates[0][1];

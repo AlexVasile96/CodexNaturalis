@@ -1,11 +1,20 @@
 package model.game;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import model.card.*;
 import model.deck.GoldDeck;
 import model.deck.InitialCardDeck;
 import model.deck.ObjectiveDeck;
 import model.deck.ResourceDeck;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +59,7 @@ public class Game implements WhatCanPlayerDo {
         initializeDots();
         initializewell();
         commonObjectiveCards();
+
     }
 
     public void addPlayer(Player player) {
@@ -61,6 +71,14 @@ public class Game implements WhatCanPlayerDo {
             }
         }
         if (!esiste) players.add(player);
+    }
+
+    public Player getCurrentPlayingPLayer() {
+        return currentPlayingPLayer;
+    }
+
+    public void setCurrentPlayingPLayer(Player currentPlayingPLayer) {
+        this.currentPlayingPLayer = currentPlayingPLayer;
     }
 
     public void assignResourcesAndGoldCardsToPlayers() {
@@ -76,9 +94,12 @@ public class Game implements WhatCanPlayerDo {
 
 
     public void placeInitialCard(Board board, InitialCard card){
-        board.placeInitialCard(card);
+        board.placeFrontInitialCard(card);
     }
-
+    public void placeInitialCardBack(Board board, InitialCard card)
+    {
+        board.placeBackInitialCard(card);
+    }
     @Override
     public void drawCard() {
 
@@ -157,9 +178,9 @@ public class Game implements WhatCanPlayerDo {
     public String showAvaiableCorners(Player player, int cardindex, int cardChosenOnTheBoard)
     {
             Card initialCard = player.getBoard().getCardsOnTheBoardList().get(0);
-            selectedCardFromTheDeck= player.primostep(player.getBoard(),cardindex, cardChosenOnTheBoard);
-            cardPlayerChoose= player.secondostep(player.getBoard(),cardindex, cardChosenOnTheBoard);
-            String result= player.terzostep(player.getBoard(),cardindex, cardChosenOnTheBoard, selectedCardFromTheDeck,cardPlayerChoose, initialCard);
+            selectedCardFromTheDeck= player.checkingTheChosencard(cardindex);
+            cardPlayerChoose= player.gettingCardsFromTheBoard(player.getBoard(), cardChosenOnTheBoard);
+            String result= player.isTheCardChosenTheInitialcard(cardPlayerChoose, initialCard);
             System.out.println(result);
             isCornerAlreadyChosen=true;
             return result;
@@ -170,17 +191,18 @@ public class Game implements WhatCanPlayerDo {
         return String.valueOf(player.getPlayerScore());
     }
 
+    @Override
+    public void runEndTurn(Player player) {
+        saveCards();
+        System.out.println("Carte salvate correttamente");
+    }
+
     public String showWell(){
         StringBuilder cardsAsString = new StringBuilder();
         for (Card card : well) {
             cardsAsString.append(card.toString()).append("\n");
         }
         return String.valueOf(cardsAsString); //ritorna stringa
-    }
-
-    @Override
-    public void runEndTurn() {
-
     }
 
     @Override
@@ -226,10 +248,6 @@ public class Game implements WhatCanPlayerDo {
         return player.getPlayerCards();
     }
 
-    @Override
-    public void endTurn(Player currentPlayer) {
-
-    }
     public void updateSingleClientView(Player player){
         player.getClientView().update(player);
 
@@ -347,6 +365,45 @@ public class Game implements WhatCanPlayerDo {
         dots.add("YELLOW");
     }
 
+    private Path getDefaultCardPath(){
+        String home= ("src/main/resources/savecard.json");
+        return Paths.get(home);
+    }
 
+    void saveCards(){
+        savePath(getDefaultCardPath());
+    }
+
+    void savePath(Path path){
+        JsonArray jo= new JsonArray();
+        for(Card card: currentPlayingPLayer.getPlayerCards()){
+            jo.add(card.toJsonObject());
+        }
+        String jsonText = jo.toString();
+        try (FileWriter fileWriter = new FileWriter(path.toString())) {
+            fileWriter.write(jsonText);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void load(){
+        loadPath(getDefaultCardPath());
+    }
+
+    public void loadPath(Path path) {
+        try {
+            String jsonText = Files.readString(path);
+            JsonArray jsonArray = new Gson().fromJson(jsonText, JsonArray.class);
+
+            for (JsonElement jsonElement : jsonArray) {
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                Card card = Card.fromJsonObject(jsonObject);
+                currentPlayingPLayer.getPlayerCards().add(card);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

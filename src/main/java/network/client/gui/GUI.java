@@ -1,9 +1,8 @@
 package network.client.gui;
 
-import controller.GameController;
+
 import controller.GuiController;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,20 +13,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.game.Dot;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-import server.ServerConnection;
 import view.ClientView;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Objects;
 
 public class GUI extends Application {
 
@@ -44,9 +39,10 @@ public class GUI extends Application {
     private Scene chooseNumOfPlayersScene;
     private Scene lobbyScene;
     private Scene chooseSecretObjectiveScene;
+    private Scene chooseInitCardScene;
     private int selectedNumOfPlayers;
     private static GuiController guiController = null;
-
+    private String id;
     private ClientView clientView = new ClientView();
     private static Socket socket;
     private static PrintWriter out;
@@ -69,9 +65,14 @@ public class GUI extends Application {
     @FXML
     public ImageView obiettivo2;
     @FXML
-    public Text labelObj1;
+    public Button chooseObj;
     @FXML
-    public Label labelObj2;
+    public ImageView initCard;
+    @FXML
+    public ImageView resourceCard;
+    @FXML
+    public ImageView goldCard;
+
 
     /*public static void main(String[] args) {
         launch(args);
@@ -266,13 +267,14 @@ public class GUI extends Application {
         window = primaryStage;
         startMenuScene(primaryStage);
         guiController = new GuiController(0);
+
     }
 
     private void startMenuScene(Stage primaryStage) throws IOException {
 
         // Carica l'immagine di sfondo
-        Parent fxml = FXMLLoader.load(getClass().getResource("/model/mainMenu.fxml"));
-        Image codexLogo = new Image(getClass().getResourceAsStream("/ImmaginiCodex/codexLogo.png"));
+        Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/mainMenu.fxml")));
+        Image codexLogo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/codexLogo.png")));
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage backgroundImage = new BackgroundImage(codexLogo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
@@ -280,7 +282,6 @@ public class GUI extends Application {
         StackPane root = new StackPane();
         root.setBackground(background);
         root.getChildren().addAll(fxml); // Aggiungi il layout dei bottoni sopra all'immagine di sfondo
-
         // Crea la scena di avvio
         startScene = new Scene(root, 919, 743);
         primaryStage.setScene(startScene);
@@ -301,7 +302,7 @@ public class GUI extends Application {
 
 
     private void loginScene() throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("/model/loginScene.fxml"));
+        Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/loginScene.fxml")));
         StackPane root = new StackPane();
         root.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         root.getChildren().addAll(fxml);
@@ -346,7 +347,7 @@ public class GUI extends Application {
     }
 
     private void chooseNumOfPlayers() throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("/model/ChooseNumberOfPlayers.fxml"));
+        Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/ChooseNumberOfPlayers.fxml")));
         StackPane root = new StackPane();
         root.getChildren().addAll(fxml);
         chooseNumOfPlayersScene = new Scene(root, 800, 600);
@@ -374,7 +375,9 @@ public class GUI extends Application {
 
             //lobby();
             //primaryStage.setScene(lobbyScene);
+
             chooseSecretObjective();
+
             primaryStage.setScene(chooseSecretObjectiveScene);
         }
         else{
@@ -384,7 +387,7 @@ public class GUI extends Application {
 
     @FXML
     private void lobby() throws IOException{
-        Parent fxmlLobby = FXMLLoader.load(getClass().getResource("/model/lobby.fxml"));
+        Parent fxmlLobby = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/lobby.fxml")));
 
         Pane root = new Pane();
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
@@ -395,28 +398,130 @@ public class GUI extends Application {
 
     @FXML
     private void chooseSecretObjective() throws IOException{
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        Parent fxmlGame = FXMLLoader.load(getClass().getResource("/model/SceltaObiettivoSegreto.fxml"));
+        Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/SceltaObiettivoSegreto.fxml")));
         Pane root = new Pane();
-        String cartaSegreta = in.readLine();
-        labelObj1.setText(cartaSegreta);
-        System.out.println(cartaSegreta);
-        root.getChildren().addAll(fxmlGame, labelObj1);
+        root.getChildren().addAll(fxmlGame);
         chooseSecretObjectiveScene = new Scene(root, 800, 600);
+    }
+
+    @FXML
+    private void chooseSecretObjectiveClicked() throws IOException {
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        in.readLine();
+        String firstSecretCard = in.readLine();
+        String secondSecretCard = in.readLine();
+
+        String firstCardId = in.readLine();
+        String secondCardId = in.readLine();
+
+        String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/" + firstCardId + ".png";
+        String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/" + secondCardId + ".png";
+
+        Image objImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj1)));
+        Image objImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
+        obiettivo1.setImage(objImage1);
+        obiettivo2.setImage(objImage2);
+        System.out.println(firstSecretCard);
+        System.out.println(secondSecretCard);
+    }
+
+    @FXML
+    public void chosenObj1(MouseEvent event) throws IOException {
+        out.println(1);
+        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        chooseInitCard();
+        primaryStage.setScene(chooseInitCardScene);
+    }
+
+    @FXML
+    public void chosenObj2(MouseEvent event) throws IOException {
+        out.println(2);
+        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        chooseInitCard();
+        primaryStage.setScene(chooseInitCardScene);
+    }
+
+    @FXML
+    private void chooseInitCard() throws IOException {
+        Parent fxmlInit = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/FlipInitCard.fxml")));
+        Pane root = new Pane();
+        root.getChildren().addAll(fxmlInit);
+        chooseInitCardScene = new Scene(root, 800, 600);
+    }
+
+    @FXML
+    public void showInit() throws IOException {
+        System.out.println(in.readLine());
+        System.out.println(in.readLine());
+        System.out.println(in.readLine());
+        id = in.readLine();
+        String pathInit = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
+        Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathInit)));
+        initCard.setImage(initImage);
+    }
+
+    @FXML
+    public void flipToBackCard() {
+        int idToInt= Integer.parseInt(id);
+        if(idToInt>=1 && idToInt <=40) //Resource Card
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
+            Image resourceImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            resourceCard.setImage(resourceImage);
+        }
+        else if(idToInt>40 && idToInt<=80) //GoldCard
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteBack/Gold/" + id + ".png";
+            Image goldImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            goldCard.setImage(goldImage);
+        }
+        else if(idToInt>=81 && idToInt<=86) //InitCard
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteBack/Init/" + id + ".png";
+            Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            initCard.setImage(initImage);
+        }
+
+    }
+
+    @FXML
+    public void flipToFrontCard() {
+        int idToInt= Integer.parseInt(id);
+        if(idToInt>=1 && idToInt <=40) //Resource Card
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
+            Image resourceImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            resourceCard.setImage(resourceImage);
+        }
+        else if(idToInt>40 && idToInt<=80) //GoldCard
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteFront/Gold/" + id + ".png";
+            Image goldImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            goldCard.setImage(goldImage);
+        }
+        else if(idToInt>=81 && idToInt<=86) //InitCard
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
+            Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            initCard.setImage(initImage);
+        }
     }
 
 
 
 
+
     public void closeConnection(Socket socket) throws IOException {
+        in.close();
+        out.close();
         socket.close();
+
     }
 }

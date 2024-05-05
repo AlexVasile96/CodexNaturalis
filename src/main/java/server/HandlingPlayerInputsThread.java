@@ -36,6 +36,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private Socket clientSocket;
     private String userName;
     private static int index=0;
+    private static int whichplayerAreYou=0;
 
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException { //Costructor
@@ -43,7 +44,6 @@ public class HandlingPlayerInputsThread implements Runnable {
         stdIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         this.playersList = playersinTheGame;
-        //boolean isGameStarted = false;
         this.clients = clients;
         gameController= null;
         turnController=null;
@@ -58,6 +58,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     public void run() {
         synchronized (this) {
             try {
+                whichplayerAreYou++;
                 String clientSaysHello = stdIn.readLine();
                 System.out.println("Il client ha detto " + clientSaysHello);    //Client says hello
                 threadPlayer = loginEachClient();                               //EveryClient has to log in, we save his name information inside threadPLayer
@@ -70,11 +71,11 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
                 assigningSecretCard();                                            //Each thread will assign the secret card to the player
                 assignInitialCard();                                                //Each client places his first card
-                //sendingClientHisFirstThreeCards();
+                sendingClientHisFirstThreeCards();
                 for (Player player : playersList) {
                     game.updateSingleClientView(player);                      //Updating each player ClientView
                     System.out.println(player.getClientView());
-                }// Momo: perche non solo quella del thread player?
+                }
                 System.out.println(game.getObjectiveDeck().carteRimaste());         //Debugging to check if all cards are given correctly
                 sendMessageToClient(currentPlayer.getNickName());
                 boolean hasClientQuit= false;
@@ -92,11 +93,15 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println("Connessione chiusa dal client.");
 
             } catch (IOException e) {
-
+                e.printStackTrace();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    private void sendingClientHisFirstThreeCards() throws IOException {
+        runCommand("showYourCardDeck", threadPlayer);
     }
 
     private void startGame() throws IOException, InterruptedException {
@@ -106,18 +111,15 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("Sto aspettando che il client " + currentPlayer.getNickName() + " mi faccia richiesta");
             messageFromClient = stdIn.readLine();
             System.out.println("Il client ha selezionato: " + messageFromClient);
-            //if(messageFromClient.equals("endTurn")) endturnphase=true;
             runCommand(messageFromClient, threadPlayer); //->run
             if(messageFromClient.equals("quit")){
+                messageFromClient = stdIn.readLine(); //endturn
+                runCommand(messageFromClient, threadPlayer); //->run
                 endturnphase=true;
             }
 
         }
     }
-    private void sendingClientHisFirstThreeCards() throws IOException {
-        runCommand("showYourCardDeck", threadPlayer);
-    }
-
 
 
 
@@ -130,10 +132,10 @@ public class HandlingPlayerInputsThread implements Runnable {
         Player player = null;
         if(gameController==null) { //if game controller==null it means the player has to log in!!
             try {
-                sendMessageToClient("Ciao! Devi fare il login. Inserisci il tuo nome per favore!");
+                sendMessageToClient("Hello!! You have to log in, please type your username");
                 String request = stdIn.readLine();
-                System.out.println("il nome del client è: " + request);
-                sendMessageToClient("Login effettuato con successo!");
+                System.out.println("Client name is " + request);
+                sendMessageToClient("Login successfully done!");
                 Board board = new Board(50, 50);
                 Dot dot= chooseClientDotColor();
                 player = new Player(request, 0, dot, board);
@@ -143,14 +145,13 @@ public class HandlingPlayerInputsThread implements Runnable {
                 index++;
                 }
                 playersList.add(player);
-                System.out.println("Giocatori nel gioco: "+ playersList);
+                System.out.println("Players in game "+ playersList);
                 System.out.println(player);
                 gameController = lobby.login(request, out);
                 System.out.println(gameController);
                 setGameSize();
-                sendMessageToClient("Sarai messo in sala d'attesa:");
+                sendMessageToClient("You have to wait until all clients are connected!");
                 if (playersList.size() < gameController.getSize()) {
-                    System.out.println("in attesa di: "+ (gameController.getSize()-playersList.size()) + "giocatori");
                     waitingForClients();
                 }
             } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
@@ -162,19 +163,36 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     private synchronized void assigningSecretCard() throws IOException {
         List<ObjectiveCard> secretCards = new ArrayList<>();
-        secretCards.add( game.getObjectiveDeck().drawObjectiveCard());
-        secretCards.add( game.getObjectiveDeck().drawObjectiveCard());
-        sendMessageToClient("scegli la carta obiettivo:" + secretCards);
+        ObjectiveCard firstCard= game.getObjectiveDeck().drawObjectiveCard();
+        ObjectiveCard secondCard= game.getObjectiveDeck().drawObjectiveCard();
+        secretCards.add(firstCard);
+        secretCards.add(secondCard);
+        int firstid= firstCard.getId();
+        int secondID= secondCard.getId();
+        System.out.println(firstid); //debugging
+        System.out.println(secondID);
+        sendMessageToClient(String.valueOf(firstCard));
+        sendMessageToClient(String.valueOf(secondCard));
+        sendMessageToClient(String.valueOf(firstid)); //sending the correct card id to the client
+        sendMessageToClient(String.valueOf(secondID));
         String integerString = stdIn.readLine();
         int size = Integer.parseInt(integerString);
-        System.out.println(userName +"ha scelto la carta numero: "+ size);
-        threadPlayer.setSecretChosenCard(secretCards.get(size-1));
-        System.out.println(threadPlayer.toString());
+        if(size==1){
+            System.out.println(userName +"chose card number: "+ size);
+            threadPlayer.setSecretChosenCard(secretCards.get(size-1));
+            System.out.println(threadPlayer.toString());
+        }
+        else {
+            System.out.println(userName +"chose card number: "+ size);
+            threadPlayer.setSecretChosenCard(secretCards.get(size-1));
+            System.out.println(threadPlayer.toString());
+        }
+
     }
     private void setGameSize() throws NoSuchElementException {
         String message;
         if (!gameController.isSizeSet()) {          //If controller number of players has not been decided
-            //Tries to set controller's number of players
+                                                    //Tries to set controller's number of players
             try {
                 sendMessageToClient("At the moment there is: ");
                 sendMessageToClient("1");
@@ -188,7 +206,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             } catch (NumberFormatException ex) {
                 sendMessageToClient("Game's number of players must be an integer.");
             } catch (Exception ex) {
-                sendMessageToClient("Errore");
+                sendMessageToClient("Error");
             } catch (ParametersNotValidException e) {
                 throw new RuntimeException(e);
             }
@@ -208,10 +226,10 @@ public class HandlingPlayerInputsThread implements Runnable {
             if (!game.isInDots(message)) {
                 sendMessageToClient("Chosen color not available!");
             }
-            else sendMessageToClient("color chosen correctly:");
+            else sendMessageToClient("Color chosen correctly:");
         }while(!game.isInDots(message));
         dot = Dot.valueOf(message);
-        System.out.println("Colore scelto dal client: " + message);
+        System.out.println("Client color chosen is " + message);
         game.removeDot(message);
         return dot;
     }
@@ -226,15 +244,13 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
                 case "playCard" -> {
                     String sentBoard = "showBoard";
-                    System.out.println("Sono in runCommand");
                     gameController.readCommand(sentBoard, player, 0, 0, cornerChosen); //In questo modo, al player viene fatta visualizzare la propria Board
                     String indexCardChosen = stdIn.readLine(); //Memorizzo quale carta del proprio deck il player ha deciso di giocare
                     int cardChosenFromHisDeck = Integer.parseInt(indexCardChosen);
-                    System.out.println("Il player ha scelto la carta numero " + cardChosenFromHisDeck);
+                    System.out.println("Player chose card number " + cardChosenFromHisDeck);
                     String CardOnTheBoardChosen = stdIn.readLine();
                     int boardCardChosen = Integer.parseInt(CardOnTheBoardChosen);
                     System.out.println("Il player ha deciso di giocare la proria carta sulla carta numero " + boardCardChosen);
-                    System.out.println("Mando tutto al GameController");
                     gameController.readCommand(messageFromClient, player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
                     cornerChosen = stdIn.readLine();
                     System.out.println(cornerChosen);
@@ -247,8 +263,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                     //intro
                     messageFromClient = stdIn.readLine();
                     gameController.readCommand(messageFromClient, player, 0, 0, null);// showwell
-
-
                     //well o deck?
                     messageFromClient = stdIn.readLine();
                     if (messageFromClient.equals("deck")) {
@@ -266,7 +280,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                         messageFromClient = stdIn.readLine();//showwell
                         gameController.readCommand(messageFromClient, player, 0, 0, null);
                     } else {
-                        System.out.println("messagio dal client errato ,messageFromClient: " + messageFromClient);
+                        System.out.println("Client message wrong ,messageFromClient: " + messageFromClient);
                     }
 
                 }
@@ -276,8 +290,8 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
     private synchronized void waitingForClients() throws InterruptedException {
-        System.out.println("In attesa di altri giocatori");
-        while (playersList.size() < gameController.getSize()) {
+        System.out.println("Waiting other players");
+        while (playersList.size() != gameController.getSize()) {
             {
                 wait(10000);
             }
@@ -301,31 +315,37 @@ public class HandlingPlayerInputsThread implements Runnable {
         turnController= new TurnController(playerList);
         System.out.println(turnController.getPlayers());
         currentPlayer = turnController.getCurrentPlayer(); //viene preso il primo
-        System.out.println("Il primo giocatore è " + currentPlayer);
-
-        //while(currentplayer.getUsername==this.username)
-        //a-> current player
-        //b
-        //c
-        //d
+        System.out.println("First player is " + currentPlayer);
+        game.setCurrentPlayingPLayer(currentPlayer);
 
     }
     private void assignInitialCard() throws IOException {
         InitialCard initialCard= game.getInitialCardDeck().firstCardInitialGame();
-        sendMessageToClient("la tua carta iniziale è questa " +initialCard.toString() );
-        initialCard.toString();
+        int initCardId= initialCard.getId();                                //For gui purpose
+        sendMessageToClient("This is your first card " +initialCard ); //Sending the card
+        sendMessageToClient(String.valueOf(initCardId)); //Sending the id (for gui purpose)
         String integerString = stdIn.readLine();
         int size = Integer.parseInt(integerString);
         System.out.println(size);
-        game.placeInitialCard(threadPlayer.getBoard(),initialCard);
-        System.out.println("Carta iniziale piazzata correttamente");
+        if(size==0)
+        {
+            game.placeInitialCardBack(threadPlayer.getBoard(), initialCard);
+            System.out.println("Initial Card correctly placed");
+        }
+        else if(size==1)
+        {
+
+            game.placeInitialCard(threadPlayer.getBoard(),initialCard);
+            System.out.println("Initial Card correctly placed");
+        }
         threadPlayer.getBoard().printBoard();
+
     }
 
 
     private void endTurn(Player currentPlayer, TurnController turnController) {
         if(currentPlayer != turnController.getCurrentPlayer()){
-            throw new turnPlayerErrorException("il giocatore attuale è sfasato");
+            throw new turnPlayerErrorException("Current player not correct");
         }
         turnController.nextTurn();
         Player nextPlayer = turnController.getCurrentPlayer();
@@ -333,8 +353,15 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     private void setCurrentPlayer(Player currentPlayerName) {
         currentPlayer = currentPlayerName;
+        if(playersList.size()==0)
+        {
+            System.out.println("All clients quit");
+            sendMessageToAllClients("All clients have quit");
+        }
+        else{
         System.out.println("Current player: " + currentPlayerName);
         sendMessageToAllClients(currentPlayer.getNickName());
+        game.setCurrentPlayingPLayer(currentPlayer);}
     }
 
 
