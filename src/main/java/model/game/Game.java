@@ -164,11 +164,20 @@ public class Game implements WhatCanPlayerDo {
         return player.getBoard().printBoardForServer();
     }
     public String showAllPlayersBoard(Player player){
+        StringBuilder stamp = new StringBuilder();
         for(Player playerz: players)
         {
-            playerz.getBoard().printBoardForServer();
+            stamp.append("////////////////////////////////// INIZIO BOARD: ");
+            stamp.append(playerz.getNickName());
+            stamp.append(" //////////////////////////////////////////");
+            stamp.append("\n");
+            String bord= playerz.getBoard().printBoardForServer();
+            stamp.append(bord.replace("fine board", "\n"));
+            stamp.append("////////////////////////////////// FINE BOARD ////////////////////////////////////////////");
+            stamp.append("\n");
         }
-        return null;
+        stamp.append("exit");
+        return String.valueOf(stamp);
     }
 
     public String showBoardForPlacingCards(Player player)

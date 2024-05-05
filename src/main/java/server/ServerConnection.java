@@ -202,8 +202,12 @@ private void waitUntilItsYourTurn() throws IOException {
     private void showEachPlayerBoard() throws IOException {
         sendMessageToServer("showEachPlayerBoard");
         System.out.println("Hai deciso di stampare tutte le board di tutti i players");
-        String allBoards= in.readLine();
-        System.out.println(allBoards);
+        String messageFromServer = in.readLine();
+        do{
+            System.out.println(messageFromServer);
+            messageFromServer = in.readLine();
+        }while (!messageFromServer.equals("exit"));
+        System.out.println("All Board Printed!");
     }
     private void showYourSpecificSeed() throws IOException {
         sendMessageToServer("showYourSpecificSeed");
