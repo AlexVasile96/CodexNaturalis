@@ -21,6 +21,7 @@ public class Player implements Observable {
     private ArrayList <Card> playerCards;
     private ObjectiveCard secretChosenCard;
     private boolean hasThePlayerAlreadyPLacedACard= false;
+    private boolean isThePlayerDeckStarted=false;
     public Player(String nickName, int playerScore, Dot dot, Board board){ //PLAYER CONSTRUCTOR
         this.nickName = nickName;
         this.playerScore = playerScore;
@@ -39,7 +40,15 @@ public class Player implements Observable {
         this.index = index;
     }
 
-    //IN GAME METHODS
+    public boolean isThePlayerDeckStarted() {
+        return isThePlayerDeckStarted;
+    }
+
+    public void setThePlayerDeckStarted(boolean thePlayerDeckStarted) {
+        isThePlayerDeckStarted = thePlayerDeckStarted;
+    }
+
+//IN GAME METHODS
 
     public String drawResourceCard(ResourceDeck deck) {
        deck.drawCard(this);

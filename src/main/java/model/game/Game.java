@@ -170,7 +170,7 @@ public class Game implements WhatCanPlayerDo {
             stamp.append(" //////////////////////////////////////////");
             stamp.append("\n");
             String point = showPoints(playerz);
-            stamp.append("Current Point: ");
+            stamp.append("Current points: ");
             stamp.append(point);
             stamp.append("\n");
             String bord= playerz.getBoard().printBoardForServer();

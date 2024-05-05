@@ -104,6 +104,11 @@ private void waitUntilItsYourTurn() throws IOException {
         }
 }
     private void makeYourMoves() throws IOException {
+        if(!player.isThePlayerDeckStarted())
+        {
+            player.setThePlayerDeckStarted(true);
+            showCards();
+        }
         System.out.println("It's your turn!");
         System.out.println("What do you want to do?");
         System.out.println("Please type help if you want to see which moves you can make.");
@@ -552,7 +557,7 @@ private void waitUntilItsYourTurn() throws IOException {
         String loginName = stdin.readLine();
         sendMessageToServer(loginName);
         String correctLogin = in.readLine();
-        System.out.println("Server says: " + correctLogin); //Login effettuato con successo
+        System.out.println("Server says: " + correctLogin);     //Login succesfully done
         player.getClientView().setUserName(loginName);
         clientView.setUserName(loginName);                      //UPDATING CLIENT VIEW
         synchronized (this)
