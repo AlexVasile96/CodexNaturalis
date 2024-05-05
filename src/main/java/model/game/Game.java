@@ -154,9 +154,7 @@ public class Game implements WhatCanPlayerDo {
         return result;
     }
 
-    public String showAllSpecificSeed(){
-        return null;
-    }
+
 
 
     @Override
@@ -193,6 +191,19 @@ public class Game implements WhatCanPlayerDo {
             stamp.append(" current Point: ");
             stamp.append(showPoints(playerz));
             stamp.append("\n--------------------------------------------------\n");
+        }
+        stamp.append("exit");
+        return String.valueOf(stamp);
+    }
+
+    public String showAllSpecificSeed(){
+        StringBuilder stamp = new StringBuilder();
+        for(Player playerz: players)
+        {
+            stamp.append(playerz.getNickName());
+            stamp.append(" current Seed:\n");
+            stamp.append(showYourspecificSeeds(playerz));
+            stamp.append("\n");
         }
         stamp.append("exit");
         return String.valueOf(stamp);

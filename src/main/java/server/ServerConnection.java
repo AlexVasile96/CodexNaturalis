@@ -226,8 +226,13 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println(yourseeds);
     }
 
-    private void showAllSpecificSeed(){
+    private void showAllSpecificSeed() throws IOException {
         sendMessageToServer("showAllSpecificSeed");
+        String messageFromServer = in.readLine();
+        do{
+            System.out.println(messageFromServer);
+            messageFromServer = in.readLine();
+        }while (!messageFromServer.equals("exit"));
     }
 
 

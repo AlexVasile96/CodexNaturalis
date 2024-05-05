@@ -36,4 +36,5 @@ public interface WhatCanPlayerDo {
     void requestGameInfo(Player player); //Richiede le informazioni attuali sullo stato del gioco al server.
 
     String showAllPoints();
+    String showAllSpecificSeed();
 }
