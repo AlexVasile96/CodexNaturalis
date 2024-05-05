@@ -5,7 +5,7 @@ import view.ClientView;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.concurrent.locks.ReentrantLock;
+
 
 
 public class ServerConnection implements Runnable {
@@ -19,15 +19,15 @@ public class ServerConnection implements Runnable {
     private String currentPlayer= null;
     private boolean isConnectionClosed= false;
     private boolean isTheWhileActive=false;
-    private final ReentrantLock lock = new ReentrantLock();
-    private static boolean firstTime=false;
+
+
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
             this.clientView=clientView;
             this.socket = server;
-            this.in= new BufferedReader(new InputStreamReader(socket.getInputStream()));    //ricevere dati dal server
+            this.in= new BufferedReader(new InputStreamReader(socket.getInputStream()));    //receiving server data
             this.out= new PrintWriter(socket.getOutputStream(), true);
-            this.stdin= new BufferedReader(new InputStreamReader(System.in));               //scanner, mi serve per scrivere
+            this.stdin= new BufferedReader(new InputStreamReader(System.in));
             this.player=new Player(null,0,null,null );
     }
 
@@ -40,32 +40,21 @@ public class ServerConnection implements Runnable {
             System.out.println("Welcome! I'm the server, please type anything to start the conversation!\n");
             while (!isTheWhileActive) {
                 try {                                                       //il client scrive un messaggio
-                    if (clientView.getUserName() == null) {             //If client hasn't made the login yet, he has to log first.
+                    if (clientView.getUserName() == null) {                 //If client hasn't made the login yet, he has to log first.
                         System.out.print(">");
                         command = stdin.readLine();
                         sendMessageToServer(command);
                         loginPlayer(player);                                  //Actual Login
                         assigningSecretCard();                                //Choosing the secret Card
                         takingTheInitialCard();                               //Taking the initial Card
-
-
                         currentPlayer = in.readLine();                         //who is the current player?
                         System.out.println("Server says that first player will be " + currentPlayer);
                     } else {
-                        /*if(!firstTime)
-                        {
-                            //System.out.println("These are your deck cards:");
-                            //firstTime=true;
-                            //receivingAndPrintingCards();
-
-                        }*/
-                        while (!isTheWhileActive) {
-                            if(isConnectionClosed)
-                            {
-                                isTheWhileActive=true;
-                            }
+                        while (!isTheWhileActive){
+                            if(isConnectionClosed){
+                                    isTheWhileActive=true;
+                                }
                             else{
-
                                 waitUntilItsYourTurn();
                                 makeYourMoves();
                             }
@@ -91,7 +80,6 @@ public class ServerConnection implements Runnable {
 }
 
 private void waitUntilItsYourTurn() throws IOException {
-   //currentPlayer= getCurrentPlayer();
         while(!clientView.getUserName().equals(getCurrentPlayer()))
         {
             String waitForCall= in.readLine();
@@ -159,47 +147,6 @@ private void waitUntilItsYourTurn() throws IOException {
         }while (!messageFromServer.equals("exit"));
     }
 
-
-    private synchronized void printHelp() throws IOException {
-        sendMessageToServer("help");
-        String serviceString=in.readLine();
-        System.out.println(serviceString);
-        System.out.println(
-                """
-                        Supported commands are:\s
-                        - 'show': display a specific game element
-                        - 'actions': display all currently allowed game actions
-                        """);
-    }
-
-    private void printActions() throws IOException {
-        sendMessageToServer("actions");
-        String serviceString=in.readLine();
-        System.out.println(serviceString);
-        System.out.println(
-                """
-                        Supported commands:
-                        - If you type-> 'showdeck / 0 ': display player's cards
-                        - If you type-> 'playcard /1': select the card you want to place from your hand
-                        - If you type->  'common /2': visualize the common objective cards
-                        - If you type->  'secret /3': visualize your secret objective card
-                        - If you type->  'board /4':print your board
-                        - If you type->  'points /5': show your points
-                        - If you type->  'showWell /6': you'll be displayed the well
-                        - If you type->  'endturn /7': end your turn
-                        - If you type->  'allboards /8': you'll be displayed your opponent boards
-                        - if you type ->  'yourseeds /9': you'll be displayed all the specific seed you have on your board
-                        - if you type ->  'allseed /10': you'll be displayed all your opponent specific seed
-                        - if you type ->  'allpoints /11': you'll be displayed your opponents' points
-                        - if you type ->  'quit /11': you'll quit the game
-                        """
-        );
-    }
-
-    private void cleanTheSocket() {
-        out.flush();
-    }
-
     private void showCards() throws IOException {
         sendMessageToServer("showYourCardDeck");
         System.out.println("Your deck:" );
@@ -209,10 +156,10 @@ private void waitUntilItsYourTurn() throws IOException {
     }
 
     private void receivingAndPrintingCards() throws IOException {
-        String firstCard = in.readLine();
+        String firstCard = in.readLine(); //Reading all three cards
         String secondCard = in.readLine();
         String thirdCard = in.readLine();
-        in.readLine();//è solo lo spazio
+        in.readLine();//the space
         updatingView(firstCard, secondCard, thirdCard);
         for (String s : player.getClientView().getPlayerStringCards()) {
             System.out.println(s);
@@ -291,6 +238,11 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println("1-> first card\n2-> second card\n3-> third card");
         String result= stdin.readLine();
         int size= Integer.parseInt(result);
+        System.out.println("Do you want to turn your card?\nBack of all cards has 4 empty corners and 1 attribute representing the specific seed of the card");
+        System.out.println("Please type 1 if you want to turn your card, 2 if you don't want to turn your card");
+
+        //DA FINIRE
+
         out.println(size-1); //Carta scelta dal deck del player, sto mandando al server
         System.out.println("Su quale carta della board vuoi andare a piazzare la tua carta?");
         System.out.println("1-> is the initial card");
@@ -365,7 +317,7 @@ private void waitUntilItsYourTurn() throws IOException {
         String drawnCard;
         do {
             System.out.println("""
-                    where do you want to draw the card from?
+                    Where do you want to draw the card from?
                     ->deck
                     ->well""");
             drawnCard = stdin.readLine().toLowerCase();
@@ -407,6 +359,7 @@ private void waitUntilItsYourTurn() throws IOException {
         receivingAndPrintingCards();
         System.out.println("--------------------------------------------------------------------------------------");
     }
+
     private void drawCardFromGoldDeck() throws IOException {
         sendMessageToServer("drawCardFromGoldDeck");
         System.out.println(in.readLine());
@@ -416,28 +369,29 @@ private void waitUntilItsYourTurn() throws IOException {
         receivingAndPrintingCards();
         System.out.println("--------------------------------------------------------------------------------------");
     }
+
     private void drawCardFromWell() throws IOException {
         sendMessageToServer("showWell");
         System.out.println("Which card from the well do you want to draw?");
         System.out.println("------------------------------------------------------------------------------------------");
-        System.out.println("select '0' for"+in.readLine());//prima carta nel pozzo
-        System.out.println("select '1' for"+in.readLine());//seconda carta nel pozzo
-        System.out.println("select '2' for"+in.readLine());//terza carta nel pozzo
-        System.out.println("select '3' for"+in.readLine());//quarta carta nel pozzo
+        System.out.println("Select '0' for"+in.readLine()); //cards in the well
+        System.out.println("Select '1' for"+in.readLine());
+        System.out.println("Select '2' for"+in.readLine());
+        System.out.println("Select '3' for"+in.readLine());
         in.readLine();//spazio
         System.out.println("------------------------------------------------------------------------------------------");
         String selectedCard;
         do{
             selectedCard= readMessageFromUser();
             if(wrongChoice(selectedCard)) {
-                System.out.println("wrong choice, try again");
+                System.out.println("Wrong choice, try again");
             }
         }while(wrongChoice(selectedCard));
         sendMessageToServer(selectedCard);
 
         //ora gestisco le risposte del server
         String result = in.readLine();
-        if(result.equals("operation performed correctly")) {
+        if(result.equals("Operation performed correctly")) {
             System.out.println("Operation 'Draw card from Well' performed correctly");
             sendMessageToServer("showYourCardDeck");
             System.out.println("Your Deck:" );
@@ -447,7 +401,7 @@ private void waitUntilItsYourTurn() throws IOException {
             showWell();
         }
         else{
-            System.out.println("operation performed incorrectly");
+            System.out.println("Operation performed incorrectly");
             System.out.println("Server says: "+ result);
             System.out.println("Your Deck:" );
             System.out.println("--------------------------------------------------------------------------------------");
@@ -468,8 +422,8 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println("You chose to quit Codex :c \n");
         System.out.println(in.readLine()); //quit
         isConnectionClosed=true;
-
     }
+
     private void runEndTurn() throws IOException {
         sendMessageToServer("endTurn");
         player.setHasThePlayerAlreadyPLacedACard(false);
@@ -499,6 +453,7 @@ private void waitUntilItsYourTurn() throws IOException {
     public synchronized void setCurrentPlayer(String currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
+
     private void takingTheInitialCard() throws IOException {                                                                            //DA FINIRE
         boolean hasTheCardAlreadyBeenTurn= false;
         String firstCard= in.readLine();
@@ -526,12 +481,13 @@ private void waitUntilItsYourTurn() throws IOException {
         out.println(size-1);
         System.out.println("Initial Card correctly placed!");
     }
+
     private synchronized void assigningSecretCard() throws IOException {
         boolean isNumberCorrect=false;
         String stringSecretCard= in.readLine(); //carta
         String stringSecondCard= in.readLine(); //carta
-        String firstCardID= in.readLine(); //id
-        String secondCardID= in.readLine(); //id
+        in.readLine(); //id
+         in.readLine(); //id
         //int firstID= Integer.parseInt(firstCardID);
         //int secondID= Integer.parseInt(secondCardID);
         System.out.println("Server says: your first objective card is" + stringSecretCard);
@@ -550,6 +506,7 @@ private void waitUntilItsYourTurn() throws IOException {
             }
         }
     }
+
     private void loginPlayer(Player player) throws IOException, InterruptedException { //LOGIN METHOD
         String serverResponse = in.readLine();
         System.out.println("Server says: " + serverResponse); //Inserisci il tuo nome per favore
@@ -568,12 +525,7 @@ private void waitUntilItsYourTurn() throws IOException {
         chooseYourDotColor();
         chooseNumberOfPlayers();
     }
-    public void sendMessageToServer(String message) {
-        out.println(message);
-    }
-    public String readMessageFromUser() throws IOException {
-        return stdin.readLine();
-    }
+
     private void chooseYourDotColor() throws IOException {
             String messageFromServer;
             do {
@@ -590,7 +542,6 @@ private void waitUntilItsYourTurn() throws IOException {
     }
 
     private void chooseNumberOfPlayers() throws IOException {
-
         StringBuilder numberOfPlayers= new StringBuilder();
         String stringNumberOfPlayers;
         numberOfPlayers.append(in.readLine());
@@ -614,5 +565,51 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println("Server says: " + waitingClients);
         }
 
+    private synchronized void printHelp() throws IOException {
+        sendMessageToServer("help");
+        String serviceString=in.readLine();
+        System.out.println(serviceString);
+        System.out.println(
+                """
+                        Supported commands are:\s
+                        - 'show': display a specific game element
+                        - 'actions': display all currently allowed game actions
+                        """);
+    }
+
+    private void printActions() throws IOException {
+        sendMessageToServer("actions");
+        String serviceString=in.readLine();
+        System.out.println(serviceString);
+        System.out.println(
+                """
+                        Supported commands:
+                        - If you type-> 'showdeck / 0 ': display player's cards
+                        - If you type-> 'playcard /1': select the card you want to place from your hand
+                        - If you type->  'common /2': visualize the common objective cards
+                        - If you type->  'secret /3': visualize your secret objective card
+                        - If you type->  'board /4':print your board
+                        - If you type->  'points /5': show your points
+                        - If you type->  'showWell /6': you'll be displayed the well
+                        - If you type->  'endturn /7': end your turn
+                        - If you type->  'allboards /8': you'll be displayed your opponent boards
+                        - if you type ->  'yourseeds /9': you'll be displayed all the specific seed you have on your board
+                        - if you type ->  'allseed /10': you'll be displayed all your opponent specific seed
+                        - if you type ->  'allpoints /11': you'll be displayed your opponents' points
+                        - if you type ->  'quit /11': you'll quit the game
+                        """
+        );
+    }
+
+
+    private void cleanTheSocket() {
+        out.flush();
+    }
+    public void sendMessageToServer(String message) {
+        out.println(message);
+    }
+    public String readMessageFromUser() throws IOException {
+        return stdin.readLine();
+    }
 }
 
