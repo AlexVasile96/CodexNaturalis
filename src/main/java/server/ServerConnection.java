@@ -122,7 +122,6 @@ private void waitUntilItsYourTurn() throws IOException {
         try {
             switch (userInput) {
                 case "help"-> printHelp();
-                case "status" -> printStatus();
                 case "actions" -> printActions();
                 case "showdeck", "0" -> showCards();
                 case "playcard", "1" -> chosenHandCard();
@@ -163,7 +162,6 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println(
                 """
                         Supported commands are:\s
-                        - 'status': show the player who is currently taking their turn and the turn phase
                         - 'show': display a specific game element
                         - 'actions': display all currently allowed game actions
                         """);
@@ -193,17 +191,13 @@ private void waitUntilItsYourTurn() throws IOException {
         );
     }
 
-    private void printStatus(){
-        sendMessageToServer("status");
-        System.out.println("\n"+clientView.toString());
-    }
     private void cleanTheSocket() {
         out.flush();
     }
 
     private void showCards() throws IOException {
         sendMessageToServer("showYourCardDeck");
-        System.out.println("Il tuo mazzo:" );
+        System.out.println("Your deck:" );
         System.out.println("--------------------------------------------------------------------------------------");
         receivingAndPrintingCards();
         System.out.println("--------------------------------------------------------------------------------------");
@@ -223,13 +217,13 @@ private void waitUntilItsYourTurn() throws IOException {
 
     private void showEachPlayerBoard() throws IOException {
         sendMessageToServer("showEachPlayerBoard");
-        System.out.println("Hai deciso di stampare tutte le board di tutti i players");
+        System.out.println("You decided to print all players boards!");
         String messageFromServer = in.readLine();
         do{
             System.out.println(messageFromServer);
             messageFromServer = in.readLine();
         }while (!messageFromServer.equals("exit"));
-        System.out.println("All Board Printed!");
+        System.out.println("All Boards Printed!");
     }
     private void showYourSpecificSeed() throws IOException {
         sendMessageToServer("showYourSpecificSeed");
@@ -294,7 +288,7 @@ private void waitUntilItsYourTurn() throws IOException {
         int size= Integer.parseInt(result);
         out.println(size-1); //Carta scelta dal deck del player, sto mandando al server
         System.out.println("Su quale carta della board vuoi andare a piazzare la tua carta?");
-        System.out.println("1-> corrisponde alla carta iniziale");
+        System.out.println("1-> is the initial card");
         String chosenCardOnTheBoard= stdin.readLine();
         int paolo= Integer.parseInt(chosenCardOnTheBoard);
         out.println(paolo-1);
@@ -430,10 +424,10 @@ private void waitUntilItsYourTurn() throws IOException {
         String selectedCard;
         do{
             selectedCard= readMessageFromUser();
-            if(sceltaNonIdonea(selectedCard)) {
+            if(wrongChoice(selectedCard)) {
                 System.out.println("wrong choice, try again");
             }
-        }while(sceltaNonIdonea(selectedCard));
+        }while(wrongChoice(selectedCard));
         sendMessageToServer(selectedCard);
 
         //ora gestisco le risposte del server
@@ -459,7 +453,7 @@ private void waitUntilItsYourTurn() throws IOException {
         }
     }
 
-    private boolean sceltaNonIdonea(String selectedCard) {
+    private boolean wrongChoice(String selectedCard) {
         int num = Integer.parseInt(selectedCard);
         return num < 0 || num > 3;
     }
