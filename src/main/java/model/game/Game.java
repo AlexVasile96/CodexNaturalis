@@ -99,6 +99,7 @@ public class Game implements WhatCanPlayerDo {
     public void placeInitialCardBack(Board board, InitialCard card)
     {
         board.placeBackInitialCard(card);
+        card.setCardBack(true);
     }
     @Override
     public void drawCard() {
