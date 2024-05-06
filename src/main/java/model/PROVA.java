@@ -62,7 +62,7 @@ public class PROVA {
         boolean towhileloop = false;                                  //boolean to check the while loop
         Scanner scanner = new Scanner(System.in);
         System.out.println("Now your card corners are the front ones");
-        while (towhileloop == false) {                                 //looping to be sure a client chooses 1 or 2
+        while (!towhileloop) {                                 //looping to be sure a client chooses 1 or 2
             System.out.println("\nFlip the card?\n");
             System.out.println("1 = YES    2 = NO\n");
             int turnCard = scanner.nextInt();

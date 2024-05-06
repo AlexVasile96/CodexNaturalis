@@ -164,7 +164,7 @@ public class Player implements Observable {
         List<Corner> availableCorners = creatingCorners(cardPlayerChoose); //Creating 4 corners to handle SelectedCard corners
 
         if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
-            cardChosenIsTheInitialcard(initialCard,availableCorners);
+            cardChosenIsTheInitialcard((InitialCard) initialCard,availableCorners);
         } else {                                                        //CARD CHOSEN ISN'T THE INITIAL CARD
             List<Corner> corner = creatingCorners(cardPlayerChoose);
             cardChosenIsNotTheInitialcard(availableCorners,corner);
@@ -228,7 +228,7 @@ public class Player implements Observable {
         Scanner scanner = new Scanner(System.in);
         List<Corner> availableCorners = creatingCorners(cardPlayerChoose); //Creating 4 corners to handle SelectedCard corners
         if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
-            cardChosenIsTheInitialcard(initialCard,availableCorners);
+            cardChosenIsTheInitialcard((InitialCard) initialCard,availableCorners);
         } else {                                                        //CARD CHOSEN ISN'T THE INITIAL CARD
             List<Corner> corner = creatingCorners(cardPlayerChoose);
             cardChosenIsNotTheInitialcard(availableCorners,corner);
@@ -342,16 +342,31 @@ public class Player implements Observable {
         availableCorners.add(cardPlayerChoose.getBR());
         return availableCorners;
     }
-    private void cardChosenIsTheInitialcard(Card initialCard,List<Corner> availableCorners )
+    private void cardChosenIsTheInitialcard(InitialCard initialCard,List<Corner> availableCorners )
     {
-        List<Corner> initialCardCorners = new ArrayList<>();       //THEN ELIMINATING NOTTOBEPLACEDON CORNERS FROM PLAYER DISPLAYER &&CORNER WHOSE VALUE IS 0
-        initialCardCorners.add(initialCard.getTL());
-        initialCardCorners.add(initialCard.getTR());
-        initialCardCorners.add(initialCard.getBL());
-        initialCardCorners.add(initialCard.getBR());
-        for (int i = initialCardCorners.size() - 1; i >= 0; i--) {
-            if (initialCardCorners.get(i).getSpecificCornerSeed() == SpecificSeed.NOTTOBEPLACEDON || initialCardCorners.get(i).getValueCounter() == 0) {
-                availableCorners.remove(i);
+
+        if(initialCard.isCardBack()){
+            List<Corner> initialCardCorners = new ArrayList<>();       //THEN ELIMINATING NOTTOBEPLACEDON CORNERS FROM PLAYER DISPLAYER &&CORNER WHOSE VALUE IS 0
+            initialCardCorners.add(initialCard.getTLIBack());
+            initialCardCorners.add(initialCard.getTRIBack());
+            initialCardCorners.add(initialCard.getBLIBack());
+            initialCardCorners.add(initialCard.getBRIBack());
+            for (int i = initialCardCorners.size() - 1; i >= 0; i--) {
+                if (initialCardCorners.get(i).getSpecificCornerSeed() == SpecificSeed.NOTTOBEPLACEDON || initialCardCorners.get(i).getValueCounter() == 0) {
+                    availableCorners.remove(i);
+                }
+            }
+        }
+        else {
+            List<Corner> initialCardCorners = new ArrayList<>();       //THEN ELIMINATING NOTTOBEPLACEDON CORNERS FROM PLAYER DISPLAYER &&CORNER WHOSE VALUE IS 0
+            initialCardCorners.add(initialCard.getTL());
+            initialCardCorners.add(initialCard.getTR());
+            initialCardCorners.add(initialCard.getBL());
+            initialCardCorners.add(initialCard.getBR());
+            for (int i = initialCardCorners.size() - 1; i >= 0; i--) {
+                if (initialCardCorners.get(i).getSpecificCornerSeed() == SpecificSeed.NOTTOBEPLACEDON || initialCardCorners.get(i).getValueCounter() == 0) {
+                    availableCorners.remove(i);
+                }
             }
         }
     }
@@ -371,10 +386,26 @@ public class Player implements Observable {
 
     private String freeCornersOfTheSelectedCard(List<Corner> availableCorners, Card cardPlayerChoose, Scanner scanner){
         Map<Corner, String> cornerLabels = new HashMap<>();      //PUTTING THE CORRECT CORNERLABEL TO THE CORRECT CORNER
-        cornerLabels.put(cardPlayerChoose.getTL(), "TL");
-        cornerLabels.put(cardPlayerChoose.getTR(), "TR");
-        cornerLabels.put(cardPlayerChoose.getBL(), "BL");
-        cornerLabels.put(cardPlayerChoose.getBR(), "BR");
+        if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()==1){
+            cornerLabels.put(((InitialCard) cardPlayerChoose).getTLIBack(), "TLBack");
+            cornerLabels.put(((InitialCard) cardPlayerChoose).getTRIBack(), "TRBack");
+            cornerLabels.put(((InitialCard) cardPlayerChoose).getBLIBack(), "BLBack");
+            cornerLabels.put(((InitialCard) cardPlayerChoose).getBRIBack(), "BRBack");}
+        else if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()!=1)
+        {
+            cornerLabels.put(cardPlayerChoose.getTLBack(), "TLBack");
+            cornerLabels.put(cardPlayerChoose.getTRBack(), "TRBack");
+            cornerLabels.put(cardPlayerChoose.getBLBack(), "BLBack");
+            cornerLabels.put(cardPlayerChoose.getBRBack(), "BRBack");
+
+        }
+        else if(!cardPlayerChoose.isCardBack())
+        {
+            cornerLabels.put(cardPlayerChoose.getTL(), "TL");
+            cornerLabels.put(cardPlayerChoose.getTR(), "TR");
+            cornerLabels.put(cardPlayerChoose.getBL(), "BL");
+            cornerLabels.put(cardPlayerChoose.getBR(), "BR");
+        }
 
         System.out.println("Free Corners of the selected card "); //DISPLAYING THE POSSIBLE CORNERS
         for (int i = 0; i < availableCorners.size(); i++) {

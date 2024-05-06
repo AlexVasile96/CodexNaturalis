@@ -146,5 +146,54 @@ public class InitialCard extends Card{
     public List<SpecificSeed> getAttributes() {
         return attributes;
     }
+
+
+    public void setAttributes(List<SpecificSeed> attributes) {
+        this.attributes = attributes;
+    }
+
+    @Override
+    public Corner getTLBack() {
+        return TLBack;
+    }
+
+    @Override
+    public void setTLBack(Corner TLBack) {
+        this.TLBack = TLBack;
+    }
+
+    @Override
+    public Corner getTRBack() {
+        return TRBack;
+    }
+
+    @Override
+    public void setTRBack(Corner TRBack) {
+        this.TRBack = TRBack;
+    }
+
+    @Override
+    public Corner getBLBack() {
+        return BLBack;
+    }
+
+    @Override
+    public void setBLBack(Corner BLBack) {
+        this.BLBack = BLBack;
+    }
+
+    @Override
+    public Corner getBRBack() {
+        return BRBack;
+    }
+
+    @Override
+    public void setBRBack(Corner BRBack) {
+        this.BRBack = BRBack;
+    }
+
+    public void setTLIBack(Corner TLIBack) {
+        this.TLIBack = TLIBack;
+    }
 }
 

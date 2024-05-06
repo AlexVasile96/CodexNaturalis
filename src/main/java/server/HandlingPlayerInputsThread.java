@@ -79,7 +79,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println(game.getObjectiveDeck().carteRimaste());       //Debugging to check if all cards are given correctly
                 sendMessageToClient(currentPlayer.getNickName());
                 boolean hasClientQuit= false;
-                //sendingClientHisFirstThreeCards();
                 while (!hasClientQuit){
                     startGame();
                     System.out.println("Il client è cambiato, ora tocca a " + currentPlayer);
@@ -101,9 +100,6 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
 
-    private void sendingClientHisFirstThreeCards() throws IOException {
-        runCommand("showYourCardDeck", threadPlayer);
-    }
 
     private void startGame() throws IOException, InterruptedException {
         String messageFromClient;
