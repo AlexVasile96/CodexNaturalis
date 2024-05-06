@@ -25,15 +25,10 @@ public class TurnController {
         return players.get(currentPlayerIndex);
     }
 
-
     public void nextTurn() {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
     }
-/*NON FUNZIONA CON PIU DI 2 GIOCATORI
-    public void nextTurn() {
-        if(currentPlayerIndex < players.size()-1) currentPlayerIndex++;
-        else currentPlayerIndex = 0;
-    }*/
+
 
     @Override
     public String toString() {

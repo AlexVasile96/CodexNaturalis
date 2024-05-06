@@ -20,8 +20,6 @@ public class LObjectiveCard implements ExtendExtendExtend {
        {
            oneInsectAndTwoPlants(board,player,seed1,seed2);
        }
-
-
     return true;
     }
 
@@ -42,35 +40,60 @@ public class LObjectiveCard implements ExtendExtendExtend {
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < cols; column++)
             {
+                //  SE IL PRIMO PLACEMENT è PIANTA E IL SECONDO FUNGO O VICEVERSA
                 if((nodes[row][column].getFirstPlacement()==SpecificSeed.PLANT && nodes[row][column].getSecondPlacement()==SpecificSeed.MUSHROOM) ||
                         (nodes[row][column].getFirstPlacement()==SpecificSeed.MUSHROOM && nodes[row][column].getSecondPlacement()==SpecificSeed.PLANT)){
-                            if(nodes[row][column-2].getFirstPlacement()==SpecificSeed.MUSHROOM  && !nodes[row][column - 2].isAlreadyChecked())
-                                if(nodes[row][column-3].getFirstPlacement()==SpecificSeed.MUSHROOM && !nodes[row][column - 3].isAlreadyChecked() )
-                                    if(nodes[row-1][column-3].getFirstPlacement()==SpecificSeed.MUSHROOM && !nodes[row-1][column - 3].isAlreadyChecked())
-                                        if(nodes[row-1][column-2].getFirstPlacement()==SpecificSeed.MUSHROOM && !nodes[row-1][column - 2].isAlreadyChecked()){
-                                            player.setPlayerScore(player.getPlayerScore()+3);
+
+                        //SE TUTTI E 4 I FIRST PLACEMENT SOPRA LA CARTA SONO FUNGO, ALLORA LA CARTA OBIETTIVO è VALIDA
+                            if(nodes[row][column-2].getFirstPlacement()==SpecificSeed.MUSHROOM  && !nodes[row][column - 2].isAlreadyChecked()){
+                                if(nodes[row][column-3].getFirstPlacement()==SpecificSeed.MUSHROOM && !nodes[row][column - 3].isAlreadyChecked() ) {
+                                    if (nodes[row - 1][column - 3].getFirstPlacement() == SpecificSeed.MUSHROOM && !nodes[row - 1][column - 3].isAlreadyChecked()) {
+                                        if (nodes[row - 1][column - 2].getFirstPlacement() == SpecificSeed.MUSHROOM && !nodes[row - 1][column - 2].isAlreadyChecked()) {
+                                            player.setPlayerScore(player.getPlayerScore() + 3);
                                             nodes[row][column].setAlreadyChecked(true);
-                                            nodes[row][column-2].setAlreadyChecked(true);
-                                            nodes[row][column-3].setAlreadyChecked(true);
-                                            nodes[row-1][column-3].setAlreadyChecked(true);
-                                            nodes[row-1][column-2].setAlreadyChecked(true);
-
-
+                                            nodes[row][column - 2].setAlreadyChecked(true);
+                                            nodes[row][column - 3].setAlreadyChecked(true);
+                                            nodes[row - 1][column - 3].setAlreadyChecked(true);
+                                            nodes[row - 1][column - 2].setAlreadyChecked(true);
                                         }
+                                    }
+                                }
+                            //SE CIO NON è VERO, ALLORA TUTTI E 4 I SECOND FIRST PLACEMENT DEVONO ESSERE FUNGO(?)
+                            }
+                            else  if(nodes[row][column-2].getSecondPlacement()==SpecificSeed.MUSHROOM  && !nodes[row][column - 2].isAlreadyChecked()){
+                                    if(nodes[row][column-3].getSecondPlacement()==SpecificSeed.MUSHROOM && !nodes[row][column - 3].isAlreadyChecked() ) {
+                                        if (nodes[row - 1][column - 3].getSecondPlacement() == SpecificSeed.MUSHROOM && !nodes[row - 1][column - 3].isAlreadyChecked()) {
+                                            if (nodes[row - 1][column - 2].getSecondPlacement() == SpecificSeed.MUSHROOM && !nodes[row - 1][column - 2].isAlreadyChecked()) {
+                                                player.setPlayerScore(player.getPlayerScore() + 3);
+                                                nodes[row][column].setAlreadyChecked(true);
+                                                nodes[row][column - 2].setAlreadyChecked(true);
+                                                nodes[row][column - 3].setAlreadyChecked(true);
+                                                nodes[row - 1][column - 3].setAlreadyChecked(true);
+                                                nodes[row - 1][column - 2].setAlreadyChecked(true);
+                                        }
+                                    }
+                                }
 
-
-
-
+                            }
+                        }
                 }
-
-            }
         }
-
-
     }
-    private void oneMushAndTwoPlants(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){}
-    private void oneAnimalAndTwoInsects(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){}
-    private void oneInsectAndTwoPlants(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){}
+    private void oneMushAndTwoPlants(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){
+        Node[][] nodes = board.getNodes();
+        int rows = nodes.length;
+        int cols = nodes.length;
+    }
+    private void oneAnimalAndTwoInsects(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){
+        Node[][] nodes = board.getNodes();
+        int rows = nodes.length;
+        int cols = nodes.length;
+    }
+    private void oneInsectAndTwoPlants(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){
+        Node[][] nodes = board.getNodes();
+        int rows = nodes.length;
+        int cols = nodes.length;
+    }
 
 
 }
