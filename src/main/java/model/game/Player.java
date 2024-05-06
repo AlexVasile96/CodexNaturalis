@@ -1,5 +1,6 @@
 package model.game;
 
+import com.google.gson.JsonObject;
 import exceptions.InvalidCornerException;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -22,6 +23,7 @@ public class Player implements Observable {
     private ObjectiveCard secretChosenCard;
     private boolean hasThePlayerAlreadyPLacedACard= false;
     private boolean isThePlayerDeckStarted=false;
+
     public Player(String nickName, int playerScore, Dot dot, Board board){ //PLAYER CONSTRUCTOR
         this.nickName = nickName;
         this.playerScore = playerScore;
@@ -802,6 +804,19 @@ public class Player implements Observable {
     }
 
     * */
+
+    public JsonObject toJsonObject(){
+        JsonObject jsonObject= new JsonObject();
+        jsonObject.addProperty("nickName", nickName);
+        jsonObject.addProperty("score", playerScore);
+        jsonObject.addProperty("dot", dot.ordinal());
+        jsonObject.addProperty("board", String.valueOf(board));
+        jsonObject.addProperty("playerCards", String.valueOf(playerCards));
+        jsonObject.addProperty("clientView", String.valueOf(clientView));
+        return jsonObject;
+
+    }
+
 
 
 }

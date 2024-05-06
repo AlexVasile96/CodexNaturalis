@@ -227,7 +227,8 @@ public class Game implements WhatCanPlayerDo {
 
     @Override
     public void runEndTurn(Player player) {
-        saveCards();
+        //saveCards();
+        savePlayers();
         System.out.println("Carte salvate correttamente");
     }
 
@@ -401,6 +402,11 @@ public class Game implements WhatCanPlayerDo {
         return Paths.get(home);
     }
 
+    private Path getDefaultPlayers(){
+        String home= ("src/main/resources/saveplayers.json");
+        return Paths.get(home);
+    }
+
     void saveCards(){
         savePath(getDefaultCardPath());
     }
@@ -417,6 +423,24 @@ public class Game implements WhatCanPlayerDo {
             e.printStackTrace();
         }
     }
+
+    void saveEachPlayerInGame(Path path){                                                   //METHOD TO SAVE CARDS
+        JsonArray jo= new JsonArray();
+        for(Player player: players){
+            jo.add(player.toJsonObject());
+        }
+        String jsonText = jo.toString();
+        try (FileWriter fileWriter = new FileWriter(path.toString())) {
+            fileWriter.write(jsonText);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void savePlayers(){
+        saveEachPlayerInGame(getDefaultPlayers());
+    }
+
 
     void load(){
         loadPath(getDefaultCardPath());
