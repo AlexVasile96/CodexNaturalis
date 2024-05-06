@@ -28,12 +28,10 @@ public class ServerMain {
                 FileReader reader = new FileReader("src/main/resources/HostAndPort.json");
                 JSONObject jsonObject = new JSONObject(new JSONTokener(reader));
                 JSONArray hostAndPortArray = jsonObject.getJSONArray("hostandport");
-
                 for (int i = 0; i < hostAndPortArray.length(); i++) {
                     JSONObject hostAndPort = hostAndPortArray.getJSONObject(i);
                     String hostName = hostAndPort.getString("hostName");
                     int portNumber = hostAndPort.getInt("portNumber");
-
                     System.out.println("HostName: " + hostName);
                     System.out.println("PortNumber: " + portNumber);
                     startServer(portNumber);

@@ -43,6 +43,5 @@ public class ResourceCard extends Card{
         jsonObject.addProperty("BottomRightCorner", String.valueOf(BR));
         return jsonObject;
 
-
-    }
+        }
     }
