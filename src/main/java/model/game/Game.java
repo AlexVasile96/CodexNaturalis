@@ -415,7 +415,7 @@ public class Game implements WhatCanPlayerDo {
         savePath(getDefaultCardPath());
     }
 
-    void savePath(Path path){
+    void savePath(Path path){                                                   //METHOD TO SAVE CARDS
         JsonArray jo= new JsonArray();
         for(Card card: currentPlayingPLayer.getPlayerCards()){
             jo.add(card.toJsonObject());
