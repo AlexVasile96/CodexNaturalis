@@ -236,23 +236,39 @@ public class Player implements Observable {
         return freeScornerosi(availableCorners, cardPlayerChoose,scanner);
     }
 
-    public void playCard(Board board, int cardIndex, int cardChosenONTheBoard,Card selectedCardFromTheDeck, Card cardPlayerChoose, String selectedCorner) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
+    public void playCard(Board board, int cardIndex, int cardChosenONTheBoard,Card selectedCardFromTheDeck, InitialCard cardPlayerChoose, String selectedCorner) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
         int x = cardPlayerChoose.getNode().getCoordX(); //SAVING THE TOP LEFT CORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
         int y = cardPlayerChoose.getNode().getCoordY();
         switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECTLY
             case "TL":
+                if(cardPlayerChoose.getIndexOnTheBoard()==1 && cardPlayerChoose.isCardBack())
+                {
+                    cardPlayerChoose.getTLIBack().setValueCounter(0);
+                }
                 cardPlayerChoose.getTL().setValueCounter(cardPlayerChoose.getTL().getValueCounter()-1);
                 playYourCardOnTheTopLeftCorner(x,y,selectedCardFromTheDeck);
                 break;
             case "TR":
+                if(cardPlayerChoose.getIndexOnTheBoard()==1 && cardPlayerChoose.isCardBack())
+                {
+                    cardPlayerChoose.getTRIBack().setValueCounter(0);
+                }
                 cardPlayerChoose.getTR().setValueCounter(cardPlayerChoose.getTR().getValueCounter()-1);
                 playYourCardOnTheTopRightCorner(x,y,selectedCardFromTheDeck);
                 break;
             case "BL":
+                if(cardPlayerChoose.getIndexOnTheBoard()==1 && cardPlayerChoose.isCardBack())
+                {
+                    cardPlayerChoose.getBLIBack().setValueCounter(0);
+                }
                 cardPlayerChoose.getBL().setValueCounter(cardPlayerChoose.getBL().getValueCounter()-1);
                 playYourCardOnTheBottomLeftCorner(x,y,selectedCardFromTheDeck);
                 break;
             case "BR":
+                if(cardPlayerChoose.getIndexOnTheBoard()==1 && cardPlayerChoose.isCardBack())
+                {
+                    cardPlayerChoose.getBRIBack().setValueCounter(0);
+                }
                 cardPlayerChoose.getBR().setValueCounter(cardPlayerChoose.getBR().getValueCounter()-1);
                 playYourCardOnTheBottomRightCorner(x,y,selectedCardFromTheDeck);
                 break;
@@ -349,6 +365,7 @@ public class Player implements Observable {
 
         return availableCorners;
     }
+
     private void cardChosenIsTheInitialcard(InitialCard initialCard,List<Corner> availableCorners )
     {
         if(initialCard.isCardBack()){
@@ -403,7 +420,6 @@ public class Player implements Observable {
             cornerLabels.put(cardPlayerChoose.getTRBack(), "TRBack");
             cornerLabels.put(cardPlayerChoose.getBLBack(), "BLBack");
             cornerLabels.put(cardPlayerChoose.getBRBack(), "BRBack");
-
         }
         else if(!cardPlayerChoose.isCardBack())
         {

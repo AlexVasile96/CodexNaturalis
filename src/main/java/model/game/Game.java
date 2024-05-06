@@ -110,7 +110,7 @@ public class Game implements WhatCanPlayerDo {
 
 
     public String playCard(Player player, int cardindex, int cardChosenOnTheBoard, String selectedCorner) {
-            player.playCard(player.getBoard(),cardindex,cardChosenOnTheBoard,selectedCardFromTheDeck,cardPlayerChoose, selectedCorner);
+            player.playCard(player.getBoard(),cardindex,cardChosenOnTheBoard,selectedCardFromTheDeck, (InitialCard) cardPlayerChoose, selectedCorner);
             String finalAnswer="Carta piazzata correttamente";
             player.getClientView().update(player);
         return finalAnswer;
