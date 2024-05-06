@@ -262,7 +262,7 @@ public class Player implements Observable {
                 throw new IllegalStateException("Unexpected value: " + selectedCorner);
         }
         decreasingAllTheValuesOfTheCornerPlaced(selectedCardFromTheDeck); //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
-        selectedCardFromTheDeck.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new index
+        selectedCardFromTheDeck.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new incremented index
         board.getCardsOnTheBoardList().add(selectedCardFromTheDeck); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
         this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
         board.setNumOfEmpty(board.getNumOfEmpty() - 3);
@@ -432,64 +432,43 @@ public class Player implements Observable {
         return selectedCorner;
     }
     private String freeScornerosi(List<Corner> availableCorners, Card cardPlayerChoose, Scanner scanner){
-        Map<Corner, String> cornerLabels = new HashMap<>();      //PUTTING THE CORRECT CORNERLABEL TO THE CORRECT CORNER
-        cornerLabels.put(cardPlayerChoose.getTL(), "TL");
-        cornerLabels.put(cardPlayerChoose.getTR(), "TR");
-        cornerLabels.put(cardPlayerChoose.getBL(), "BL");
-        cornerLabels.put(cardPlayerChoose.getBR(), "BR");
+        Map<Corner, String> cornerLabels = new HashMap<>();                                 //PUTTING THE CORRECT CORNERLABEL TO THE CORRECT CORNER
+        if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()==1){
+            cornerLabels.put(((InitialCard) cardPlayerChoose).getTLIBack(), "TL");
+            cornerLabels.put(((InitialCard) cardPlayerChoose).getTRIBack(), "TR");
+            cornerLabels.put(((InitialCard) cardPlayerChoose).getBLIBack(), "BL");
+            cornerLabels.put(((InitialCard) cardPlayerChoose).getBRIBack(), "BR");}
+        else if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()!=1)
+        {
+            cornerLabels.put(cardPlayerChoose.getTLBack(), "TL");
+            cornerLabels.put(cardPlayerChoose.getTRBack(), "TR");
+            cornerLabels.put(cardPlayerChoose.getBLBack(), "BL");
+            cornerLabels.put(cardPlayerChoose.getBRBack(), "BR");
 
+        }
+        else if(!cardPlayerChoose.isCardBack())
+        {
+            cornerLabels.put(cardPlayerChoose.getTL(), "TL");
+            cornerLabels.put(cardPlayerChoose.getTR(), "TR");
+            cornerLabels.put(cardPlayerChoose.getBL(), "BL");
+            cornerLabels.put(cardPlayerChoose.getBR(), "BR");
+        }
         StringBuilder options = new StringBuilder(); // Stringa contenente le opzioni disponibili
         options.append("Free Corners of the selected card\n");
 
         for (int i = 0; i < availableCorners.size(); i++) {
             Corner corner = availableCorners.get(i);
             String cornerLabel = cornerLabels.get(corner);
-            //options.append((i + 1)).append(". EMPTY -> ").append(cornerLabel).append("|Please press ").append(cornerLabel).append(" to select the corner\n");
             options.append((i + 1)).append(". ").append(corner).append(" -> ").append(cornerLabel).append("|Please press ").append(cornerLabel).append(" to select the corner\n");
         }
         options.append("\nend");
         System.out.println(options);
         return options.toString();
-        /*System.out.print("Choose the corner you want to place the card on: ");
-        String selectedCorner = scanner.next().toUpperCase();
-        try{
-            if (!selectedCorner.equals("TL") && !selectedCorner.equals("TR") && !selectedCorner.equals("BL") && !selectedCorner.equals("BR")) {
-                throw new InvalidCornerException("Invalid corner selection.");
-            }
-        }  catch (InvalidCornerException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        return selectedCorner;*/
+
+
+
 
     }
-
-
-    /*
-    *
-    *
-    for (int i = 0; i < availableCorners.size(); i++) {
-        Corner corner = availableCorners.get(i);
-        String cornerLabel = cornerLabels.get(corner);
-        resultBuilder.append((i + 1)).append(". ").append(corner).append(" -> ").append(cornerLabel).append("|Please press ").append(cornerLabel).append(" to select the corner\n");
-    }
-
-    resultBuilder.append("Choose the corner you want to place the card on: ");
-    System.out.print(resultBuilder.toString());
-
-    String selectedCorner = scanner.next().toUpperCase();
-    try {
-        if (!selectedCorner.equals("TL") && !selectedCorner.equals("TR") && !selectedCorner.equals("BL") && !selectedCorner.equals("BR")) {
-            throw new InvalidCornerException("Invalid corner selection.");
-        }
-    } catch (InvalidCornerException e) {
-        System.out.println(e.getMessage());
-        return null;
-    }
-
-    return selectedCorner;
-}
-    * */
 
 
 
