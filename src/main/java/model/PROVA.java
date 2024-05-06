@@ -93,7 +93,7 @@ public class PROVA {
             player.visualizePlayerCards(player.getPlayerCards());
             System.out.println("If you wanto to play the first card, please type 1\nIf you wanto to play the second card, please type 2\nIf you wanto to play the third card, please type 3\n");
             int cardChosenFromHisDeck = scanner.nextInt() - 1;
-            switch (cardChosenFromHisDeck) {
+            /*switch (cardChosenFromHisDeck) {
                 case 0:
                     player.playCard(board, 0);
                     break;
@@ -103,7 +103,7 @@ public class PROVA {
                 case 2:
                     player.playCard(board, 2);
                     break;
-            }
+            }*/
             board.printBoard();
 
             System.out.println("Common Cards in the well: ");
@@ -148,7 +148,7 @@ public class PROVA {
             } while (!presente);
 
             player.visualizePlayerCards(player.getPlayerCards());
-            player.playCard(board, 0);
+            //player.playCard(board, 0);
             //printing the board
             board.printBoard();
             System.out.println(board.getCardsOnTheBoardList());

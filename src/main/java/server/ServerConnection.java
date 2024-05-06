@@ -117,7 +117,7 @@ private void waitUntilItsYourTurn() throws IOException {
                 case "help"-> printHelp();
                 case "actions" -> printActions();
                 case "showdeck", "0" -> showCards();
-                case "playcard", "1" -> chosenHandCard();
+                case "playcard", "1" -> playCardFromYourDeck();
                 case "common", "2" -> visualizeCommonObjective();
                 case "secret", "3" -> visualizeSecretObjective();
                 case "board", "4" -> showBoard();
@@ -214,7 +214,7 @@ private void waitUntilItsYourTurn() throws IOException {
         }
     }
 
-    private void chosenHandCard() throws IOException {
+    private void playCardFromYourDeck() throws IOException {
         sendMessageToServer("playCard");
 
         player.setHasThePlayerAlreadyPLacedACard(true);
@@ -255,13 +255,21 @@ private void waitUntilItsYourTurn() throws IOException {
             avaiableCorners= in.readLine();
         } while(!avaiableCorners.equals("end"));
         System.out.println();
-        System.out.print("Choose the corner you want to place the card on: ");
-        String cornerChosen= stdin.readLine().toUpperCase();
-        System.out.println("Corner correctly chosen!");
-        out.println(cornerChosen);
+        boolean isTheCornerCorrect=false;
+        while(!isTheCornerCorrect) {
+            System.out.print("Choose the corner you want to place the card on: ");
+            String cornerChosen = stdin.readLine().toUpperCase();
+            if (cornerChosen.equals("TL") || cornerChosen.equals("TR") || cornerChosen.equals("BL") || cornerChosen.equals("BR")) {
+                System.out.println("Corner correctly chosen!");
+                out.println(cornerChosen);
+                isTheCornerCorrect = true;
+            }
+            else {
+                System.out.println("This is not an available corner!");
+            }
+        }
         String ultimo= in.readLine();
         System.out.println(ultimo);
-        //da gestire nel caso l'operazione fallisca
         player.getClientView().getPlayerStringCards().remove(size-1);
         drawCard();
     }
@@ -332,6 +340,7 @@ private void waitUntilItsYourTurn() throws IOException {
             else System.out.println("write 'deck' or 'well'");
         }while (!drawnCard.equals("well") && !drawnCard.equals("deck"));
     }
+
     private void drawCardFromDeck() throws IOException {
         System.out.println("""
                 Where do you want to draw your card from?
@@ -350,6 +359,7 @@ private void waitUntilItsYourTurn() throws IOException {
 
         }while (!drawnCard.equals("resource") && !drawnCard.equals("gold"));
     }
+
     private void drawCardFromResourceDeck() throws IOException {
         sendMessageToServer("drawCardFromResourceDeck");
         System.out.println(in.readLine());
@@ -600,7 +610,6 @@ private void waitUntilItsYourTurn() throws IOException {
                         """
         );
     }
-
 
     private void cleanTheSocket() {
         out.flush();

@@ -101,11 +101,6 @@ public class Game implements WhatCanPlayerDo {
         board.placeBackInitialCard(card);
         card.setCardBack(true);
     }
-    @Override
-    public void drawCard() {
-
-    }
-
 
 
 
@@ -256,11 +251,6 @@ public class Game implements WhatCanPlayerDo {
 
     public String drawCardFromWell(Player player, int index) {
         return player.chooseCardFromWellForServer(well, index, resourceDeck, goldDeck);
-    }
-
-    @Override
-    public void placeCardOnBoard(Player player, int cardIndex, String selectedCorner) { //Da rivedere come gestire questo caso con il client, quando sceglie il corner?
-        player.playCard(player.getBoard(),cardIndex);
     }
 
     @Override
