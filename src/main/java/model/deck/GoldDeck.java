@@ -25,7 +25,7 @@ public class GoldDeck implements Deck {
     }
     public Card drawCard(Player player) {
         if (goldCards.isEmpty()) {
-            return null; // Mazzo vuoto
+            return null;
         }
         try {
             if(player.getPlayerCards().size()<3) {
@@ -39,30 +39,27 @@ public class GoldDeck implements Deck {
         return null;
     }
     public void addCard(Card card) {
-        // Verifica se il mazzo ha già raggiunto la capacità massima
         if(isDeckFull()){
-            throw new FullDeckExeption("Il mazzo ha raggiunto la capacità massima di 40 carte.");
+            throw new FullDeckExeption("Deck is full");
         }
 
         // Verifico che la carta appartiene al mazzo Resource
         if(!isAGoldCard(card.getId())){
-            throw new IllegalAddException("La carta non appartiene al mazzo Resource.");
+            throw new IllegalAddException("The Card doesn't belong to ResourceDeck");
         }
 
         // Verifica se la carta è già presente nel mazzo
         for (Card card2 : goldCards) {
-            if (alreadyInDeck(card.getId(),card2.getId())) throw new AlredyInException("La carta è già presente nel mazzo.");
+            if (alreadyInDeck(card.getId(),card2.getId())) throw new AlredyInException("Card is already present in the deck");
         }
 
         // provo ad aggiungere la carta
         try {
             goldCards.add(card);
         } catch(Exception e) {
-            throw new UknownWhyException("Operazione 'addCard' non riuscita.", e);
+            throw new UknownWhyException("AddCard failed", e);
         }
     }
-
-
 
     @Override
     public ObjectiveCard firstCardForEachPlayer() {
@@ -78,7 +75,7 @@ public class GoldDeck implements Deck {
             pozzo.add(drownCard);
             return pozzo;
         } catch(Exception e) {
-            throw new IllegalStateException("Il giocatore ha già tre carte nella mano."); // Eccezione specifica
+            throw new IllegalStateException("Player already has 3 card in his deck"); // Specific Exception
         }
     }
     public int carteRimaste(){

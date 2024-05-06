@@ -32,7 +32,7 @@ public class ResourceDeck implements Deck{
                 return drownCard;
             }
         } catch(Exception e) {
-            throw new AlreadyThreeCardsException("Il giocatore ha già tre carte nella mano.", e); // Eccezione specifica
+            throw new AlreadyThreeCardsException("Player already has 3 cards in his deck", e); // Eccezione specifica
         }
         return null;
     }
@@ -45,31 +45,31 @@ public class ResourceDeck implements Deck{
                 pozzo.add(drownCard);
                 return pozzo;
         } catch(Exception e) {
-            throw new PozzoUnrechableExeption("Coudn't place card in the pozzo",e); // Eccezione specifica
+            throw new PozzoUnrechableExeption("Coudn't place card in the well",e); // Eccezione specifica
         }
     }
 
     public void addCard(Card card) {
         // Verifica se il mazzo ha già raggiunto la capacità massima
         if (isDeckFull()) {
-            throw new FullDeckExeption("Il mazzo ha raggiunto la capacità massima di 40 carte.");
+            throw new FullDeckExeption("Deck already has 40 cards");
         }
 
         // Verifico che la carta appartiene al mazzo Resource
         if (!isAResourceCard(card.getId())) {
-            throw new IllegalAddException("La carta non appartiene al mazzo Resource.");
+            throw new IllegalAddException("Card doesn't belong to this deck");
         }
 
         // Verifica se la carta è già presente nel mazzo
         for (Card card2 : resourceCards) {
-            if (alreadyInDeck(card.getId(), card2.getId())) throw new AlredyInException("La carta è già presente nel mazzo.");
+            if (alreadyInDeck(card.getId(), card2.getId())) throw new AlredyInException("Card is already in the deck");
         }
 
         // provo ad aggiungere la carta
         try {
             resourceCards.add(card);
         } catch(Exception e) {
-            throw new UknownWhyException("Non riesco ad aggiungere la carta.", e);
+            throw new UknownWhyException("Can't add the card", e);
         }
     }
     @Override

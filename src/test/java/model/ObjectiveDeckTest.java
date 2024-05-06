@@ -39,7 +39,7 @@ class ObjectiveDeckTest {
     @Test
     void firstCardForEachPlayer() {
         ObjectiveCard firstCommonObjective= objectiveDeck.firstCardForEachPlayer();
-        assertEquals(15, objectiveDeck.carteRimaste());
+        assertEquals(15, objectiveDeck.remainingCards());
 
         for(int i =0; i<15; i++){
             firstCommonObjective= objectiveDeck.firstCardForEachPlayer();
@@ -56,11 +56,11 @@ class ObjectiveDeckTest {
     @Test
     void DrawCardPlayer() {
         objectiveDeck.drawCard(player);
-        assertEquals(15, objectiveDeck.carteRimaste());
+        assertEquals(15, objectiveDeck.remainingCards());
         objectiveDeck.drawCard(player);
         objectiveDeck.drawCard(player);
         objectiveDeck.drawCard(player);
-        assertEquals(13, objectiveDeck.carteRimaste());
+        assertEquals(13, objectiveDeck.remainingCards());
     }
 
     //DA IMPLEMENTARE

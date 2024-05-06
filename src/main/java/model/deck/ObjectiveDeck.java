@@ -28,13 +28,13 @@ public class ObjectiveDeck implements Deck {
 
     public ObjectiveCard firstCardForEachPlayer () {
         if (objectiveCards.isEmpty()) {
-            throw new EmptyDeckException("Deck obiettivo vuoto");
+            throw new EmptyDeckException("Objective Deck is empty");
         }
         try {
             //ObjectiveCard drownCard = (ObjectiveCard) objectiveCards.remove(0);
             return (ObjectiveCard) objectiveCards.remove(0); //return drownCard;
         } catch (Exception e){
-            throw new UknownWhyException("Operazione di estrazione di Objective Card non riuscita", e);
+            throw new UknownWhyException("Operation Failed", e);
         }
     }
 
@@ -51,11 +51,10 @@ public class ObjectiveDeck implements Deck {
         if (objectiveCards.isEmpty()) { //CHECKING IF THE CARD IS MADE IN THE CORRECT WAY
             return null;
         }
-
         try {
             return (ObjectiveCard)objectiveCards.remove(0);
         } catch(Exception e) {
-            throw new AlreadyThreeCardsException("Il giocatore ha già tre carte nella mano.",e); // Eccezione specifica
+            throw new AlreadyThreeCardsException("Operation Failed",e); // Eccezione specifica
         }
     }
 
@@ -75,7 +74,7 @@ public class ObjectiveDeck implements Deck {
     }
 
     //serve per il test
-    public int carteRimaste(){
+    public int remainingCards(){
         return objectiveCards.size();
     }
 }

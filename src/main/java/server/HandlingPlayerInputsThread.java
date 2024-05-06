@@ -76,7 +76,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     game.updateSingleClientView(player);                          //Updating each player ClientView
                     System.out.println(player.getClientView());
                 }
-                System.out.println(game.getObjectiveDeck().carteRimaste());       //Debugging to check if all cards are given correctly
+                System.out.println(game.getObjectiveDeck().remainingCards());       //Debugging to check if all cards are given correctly
                 sendMessageToClient(currentPlayer.getNickName());
                 boolean hasClientQuit= false;
                 while (!hasClientQuit){

@@ -58,7 +58,7 @@ public class LObjectiveCard implements ExtendExtendExtend {
                                         }
                                     }
                                 }
-                            //SE CIO NON è VERO, ALLORA TUTTI E 4 I SECOND FIRST PLACEMENT DEVONO ESSERE FUNGO(?)
+                            //SE CIò NON è VERO, ALLORA TUTTI E 4 I SECOND FIRST PLACEMENT DEVONO ESSERE FUNGO(?)
                             }
                             else  if(nodes[row][column-2].getSecondPlacement()==SpecificSeed.MUSHROOM  && !nodes[row][column - 2].isAlreadyChecked()){
                                     if(nodes[row][column-3].getSecondPlacement()==SpecificSeed.MUSHROOM && !nodes[row][column - 3].isAlreadyChecked() ) {
