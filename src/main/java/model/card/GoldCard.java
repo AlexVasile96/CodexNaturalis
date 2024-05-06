@@ -105,6 +105,7 @@ public class GoldCard extends Card{
         Corner BL = Corner.fromJsonObject(jo.getAsJsonObject("BottomLeftCorner"));
         Corner BR = Corner.fromJsonObject(jo.getAsJsonObject("BottomRightCorner"));
         //return new Card(id, specificSeed, value, TL, TR, BL, BR);
+        return null;
     }
 
 }
