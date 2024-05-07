@@ -30,6 +30,7 @@ public class GUI extends Application {
     private Scene startScene;
     private Scene loginScene;
     private static BufferedReader in;
+    private int isFront=2; //The server need 1 to place the card on the back and 2 to place it on the front
 
     private Button start;
     private Button returnToDesktop;
@@ -72,6 +73,8 @@ public class GUI extends Application {
     public ImageView resourceCard;
     @FXML
     public ImageView goldCard;
+    @FXML
+    public ScrollPane gameBoard;
 
 
     /*public static void main(String[] args) {
@@ -470,6 +473,7 @@ public class GUI extends Application {
     @FXML
     public void flipToBackCard() {
         int idToInt= Integer.parseInt(id);
+        isFront=1;
         if(idToInt>=1 && idToInt <=40) //Resource Card
         {
             String pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
@@ -494,6 +498,7 @@ public class GUI extends Application {
     @FXML
     public void flipToFrontCard() {
         int idToInt= Integer.parseInt(id);
+        isFront=2;
         if(idToInt>=1 && idToInt <=40) //Resource Card
         {
             String pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
@@ -514,14 +519,43 @@ public class GUI extends Application {
         }
     }
 
+    @FXML
+    private void chooseInitCardFrontOrBack(ActionEvent event) throws IOException {
+        in.readLine();
+        out.println(isFront);
+        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        game();
+        primaryStage.setScene(gameScene);
+    }
+
+    private void game() throws IOException {
+        Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/gameLayout.fxml")));
+        Pane root = new Pane();
+        gameBoard.setContent(initCard);
+        root.getChildren().addAll(fxmlGame, gameBoard);
+
+    }
 
 
+    private void addCard(){
+        out.println("playcard");
+        ImageView card = new ImageView();
+    }
 
+    @FXML
+    public void exitClicked(ActionEvent event) throws IOException {
+        try {
+            closeConnection(socket);
+            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            primaryStage.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void closeConnection(Socket socket) throws IOException {
         in.close();
         out.close();
         socket.close();
-
     }
 }

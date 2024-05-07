@@ -10,9 +10,10 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GUI">
    <children>
       <Label layoutX="188.0" layoutY="94.0" text="Clicca il pulsante per girare la carta iniziale" />
-      <Button fx:id="flipToBackInit" layoutX="264.0" layoutY="138.0" mnemonicParsing="false" text="Flip to BACK" onAction="#flipToBackCard"/>
-      <Button fx:id="flipToFrontInit" layoutX="264.0" layoutY="118.0" mnemonicParsing="false" text="Flip to FRONT" onAction="#flipToFrontCard"/>
+      <Button fx:id="flipToBackInit" layoutX="344.0" layoutY="132.0" mnemonicParsing="false" onAction="#flipToBackCard" text="Flip to BACK" />
+      <Button fx:id="flipToFrontInit" layoutX="169.0" layoutY="132.0" mnemonicParsing="false" onAction="#flipToFrontCard" text="Flip to FRONT" />
       <Button fx:id="showInit" layoutX="214.0" layoutY="31.0" mnemonicParsing="false" onAction="#showInit" text="Premimi per vedere la carta!!!" />
-      <ImageView fx:id="initCard" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="initCard" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="182.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="placeInit" layoutX="254.0" layoutY="332.0" mnemonicParsing="false" onAction="#chooseInitCardFrontOrBack" text="Place the card" />
    </children>
 </Pane>
