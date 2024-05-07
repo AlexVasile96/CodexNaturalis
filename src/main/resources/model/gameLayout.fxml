@@ -20,7 +20,10 @@
                   <ImageView fitHeight="113.4" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </HBox>
-            <ScrollPane fx:id="gameBoard" prefHeight="507.0" prefWidth="582.0" style="-fx-background-color: #FFFDDA;" />
+            <ScrollPane fx:id="gameBoard" prefHeight="507.0" prefWidth="582.0" style="-fx-background-color: #FFFDDA;" >
+                <Pane>
+                </Pane>
+            </ScrollPane>
          </children>
       </VBox>
       <VBox prefHeight="557.0" prefWidth="213.0">

@@ -3,6 +3,7 @@ package network.client.gui;
 
 import controller.GuiController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,7 +31,7 @@ public class GUI extends Application {
     private Scene startScene;
     private Scene loginScene;
     private static BufferedReader in;
-    private int isFront=2; //The server need 1 to place the card on the back and 2 to place it on the front
+    private int isFront; //The server need 1 to place the card on the back and 2 to place it on the front
 
     private Button start;
     private Button returnToDesktop;
@@ -67,6 +68,9 @@ public class GUI extends Application {
     public ImageView obiettivo2;
     @FXML
     public Button chooseObj;
+
+
+
     @FXML
     public ImageView initCard;
     @FXML
@@ -77,181 +81,7 @@ public class GUI extends Application {
     public ScrollPane gameBoard;
 
 
-    /*public static void main(String[] args) {
-        launch(args);
-    }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        ConnectionWithServer connectionWithServer= new ConnectionWithServer();
-        this.socket= connectionWithServer.connectToServer();
-        out=new PrintWriter(socket.getOutputStream(), true); //to write
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        window = primaryStage;
-        startMenuScene(primaryStage);
-        window.setScene(startScene);
-        window.setTitle("Codex");
-        window.show();
-    }
-
-    private void startMenuScene(Stage primaryStage) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("/model/mainMenu.fxml"));
-        Image codexLogo = new Image(getClass().getResourceAsStream("/ImmaginiCodex/codexLogo.png"));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(codexLogo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
-        // Imposta lo sfondo del layout
-        StackPane root = new StackPane();
-        root.setBackground(background);
-        root.getChildren().addAll(fxml); // Aggiungi il layout dei bottoni sopra all'immagine di sfondo
-        // Crea la scena di avvio
-        startScene = new Scene(root, 919, 743);
-        primaryStage.setScene(startScene);
-        primaryStage.setTitle("Codex");
-        primaryStage.show();
-
-    }
-
-    @FXML
-    private void startGameClicked(ActionEvent event) {
-        Thread loginThread = new Thread(this::login);
-        loginThread.start();
-
-        //String firstMessage = "login";
-        //        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        //        out.println(firstMessage); //-> il client ha detto login
-        //        loginScene();
-        //        primaryStage.setScene(loginScene);
-    }
-
-    private void login() {
-        try {
-            String firstMessage = "login";
-            //Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); //VADO A REINIZIALIZZARE PRIMARY STAGE
-            out.println(firstMessage);
-            String response = in.readLine();
-            if (response != null ) {
-                Platform.runLater(() -> {
-                    try {
-                        loginScene();
-                        window.setScene(loginScene);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-            } else {
-                System.out.println("Login failed");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void loginScene() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/model/loginScene.fxml"));
-        loginScene = new Scene(root, 800, 600);
-
-
-        //   Parent fxml = FXMLLoader.load(getClass().getResource("/model/loginScene.fxml"));
-        //        StackPane root = new StackPane();
-        //        root.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        //        root.getChildren().addAll(fxml);
-        //        loginScene = new Scene(root, 800, 600);
-    }
-
-    @FXML
-    private void loginButtonClicked(ActionEvent event) {
-        String username = usernameField.getText();
-        if (!username.isEmpty()) {
-            test.setText("Il tuo username è: " + username);
-            out.println(username);
-        } else {
-            System.out.println("Username necessario");
-        }
-        //peciotti + parte un altro thread
-    }
-
-    //@FXML
-    /*private void initialize() {
-        try {
-            ConnectionWithServer connectionWithServer = new ConnectionWithServer();
-            socket = connectionWithServer.connectToServer();
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    /*@Override
-    public void stop() throws Exception {
-        super.stop();
-        if (socket != null) {
-            socket.close();
-        }
-    }
-}*/
-
-
-/*import controller.GameController;
-import controller.GuiController;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import model.game.Dot;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-import server.ServerConnection;
-import view.ClientView;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-public class GUI extends Application {
-
-    private Button start;
-    private Button returnToDesktop;
-    private Button returnToMainMenu;
-    private Stage window;
-    private Scene startScene;
-    private Scene loginScene;
-    private Scene gameScene;
-    private Scene chooseNumOfPlayersScene;
-    private Scene lobbyScene;
-    private int selectedNumOfPlayers;
-    private static GuiController guiController = null;
-
-    private ClientView clientView = new ClientView();
-    private static Socket socket;
-    private static PrintWriter out;
-    @FXML
-    public TextField usernameField;
-    @FXML
-    public Button loginButton;
-    @FXML
-    public Label test;
-    @FXML
-    public ToggleGroup toggleGroup;
-    @FXML
-    public Label testDot;
-    @FXML
-    public ToggleGroup numOfPlayersGroup;
-    @FXML
-    public Label testNumbers;*/
 
 
     public static void main(String[] args) throws IOException {
@@ -293,11 +123,17 @@ public class GUI extends Application {
     }
 
     public void startGameClicked(ActionEvent event) throws IOException {
+        //Must send this string to the server in order to be able to login
         String firstMessage = "login";
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         out.println(firstMessage); //-> il client ha detto login
+        //Creates the login scene
         loginScene();
-        primaryStage.setScene(loginScene);
+        //thread to update GUI
+        Platform.runLater(() -> {
+            primaryStage.setScene(loginScene);
+        });
+
 
     }
 
@@ -305,6 +141,7 @@ public class GUI extends Application {
 
 
     private void loginScene() throws IOException {
+        //Load the scene from fxml
         Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/loginScene.fxml")));
         StackPane root = new StackPane();
         root.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -313,6 +150,7 @@ public class GUI extends Application {
     }
 
     public void loginButtonClicked(ActionEvent event) throws IOException {
+        //player writes his username
         String username = usernameField.getText();
         if(!username.isEmpty()){
             clientView.setUserName(username);
@@ -344,7 +182,10 @@ public class GUI extends Application {
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         chooseNumOfPlayers();
-        primaryStage.setScene(chooseNumOfPlayersScene);
+        Platform.runLater(() -> {
+            primaryStage.setScene(chooseNumOfPlayersScene);
+        });
+
 
 
     }
@@ -380,8 +221,11 @@ public class GUI extends Application {
             //primaryStage.setScene(lobbyScene);
 
             chooseSecretObjective();
+            Platform.runLater(() -> {
+                primaryStage.setScene(chooseSecretObjectiveScene);
+            });
 
-            primaryStage.setScene(chooseSecretObjectiveScene);
+
         }
         else{
             testNumbers.setText("Quello che selezioni non conta niente, SCEMO, il numero di giocatori è: " + selectedNumOfPlayers);
@@ -440,7 +284,10 @@ public class GUI extends Application {
         out.println(1);
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         chooseInitCard();
-        primaryStage.setScene(chooseInitCardScene);
+        Platform.runLater(() -> {
+            primaryStage.setScene(chooseInitCardScene);
+        });
+
     }
 
     @FXML
@@ -448,7 +295,10 @@ public class GUI extends Application {
         out.println(2);
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         chooseInitCard();
-        primaryStage.setScene(chooseInitCardScene);
+        Platform.runLater(() -> {
+            primaryStage.setScene(chooseInitCardScene);
+        });
+
     }
 
     @FXML
@@ -471,7 +321,7 @@ public class GUI extends Application {
     }
 
     @FXML
-    public void flipToBackCard() {
+    public int flipToBackCard() {
         int idToInt= Integer.parseInt(id);
         isFront=1;
         if(idToInt>=1 && idToInt <=40) //Resource Card
@@ -491,12 +341,13 @@ public class GUI extends Application {
             String pathFlipped = "/ImmaginiCodex/CarteBack/Init/" + id + ".png";
             Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
             initCard.setImage(initImage);
+            setInitCard(initCard);
         }
-
+        return isFront;
     }
 
     @FXML
-    public void flipToFrontCard() {
+    public int flipToFrontCard() {
         int idToInt= Integer.parseInt(id);
         isFront=2;
         if(idToInt>=1 && idToInt <=40) //Resource Card
@@ -516,25 +367,42 @@ public class GUI extends Application {
             String pathFlipped = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
             Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
             initCard.setImage(initImage);
+            setInitCard(initCard);
         }
+        return isFront;
     }
 
     @FXML
     private void chooseInitCardFrontOrBack(ActionEvent event) throws IOException {
-        in.readLine();
+
         out.println(isFront);
+        System.out.printf(""+isFront);
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         game();
-        primaryStage.setScene(gameScene);
+        Platform.runLater(() -> {
+            primaryStage.setScene(gameScene);
+        });
     }
 
-    private void game() throws IOException {
-        Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/gameLayout.fxml")));
-        Pane root = new Pane();
-        gameBoard.setContent(initCard);
-        root.getChildren().addAll(fxmlGame, gameBoard);
 
+private void game() throws IOException {
+    Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/gameLayout.fxml")));
+    Pane root = new Pane();
+    Pane fxmlPane = (Pane) fxmlGame;
+    gameBoard = (ScrollPane) fxmlPane.lookup("#gameBoard");
+    if (gameBoard != null) {
+        Pane contentPane = (Pane) gameBoard.getContent();
+        if (contentPane != null) {
+            contentPane.getChildren().add(initCard);
+            root.getChildren().addAll(fxmlPane, gameBoard);
+            gameScene = new Scene(root, 800, 600);
+        } else {
+            System.err.println("Content Pane inside gameBoard is null");
+        }
+    } else {
+        System.err.println("Game Board is null");
     }
+}
 
 
     private void addCard(){
@@ -553,9 +421,15 @@ public class GUI extends Application {
         }
     }
 
+
+
     public void closeConnection(Socket socket) throws IOException {
         in.close();
         out.close();
         socket.close();
+    }
+
+    public void setInitCard(ImageView initCard) {
+        this.initCard = initCard;
     }
 }
