@@ -588,7 +588,6 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println(
                 """
                         Supported commands are:\s
-                        - 'show': display a specific game element
                         - 'actions': display all currently allowed game actions
                         """);
     }
