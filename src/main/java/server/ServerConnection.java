@@ -272,6 +272,7 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println(ultimo);
         player.getClientView().getPlayerStringCards().remove(size-1);
         drawCard();
+        //player.setThePlayerDeckStarted(false);
     }
 
     private void visualizeCommonObjective() throws IOException {
@@ -450,9 +451,14 @@ private void waitUntilItsYourTurn() throws IOException {
         sendMessageToServer("endTurn");
         String answer= in.readLine();
         setCurrentPlayer(answer);
-        System.out.println("Current player: " + currentPlayer);
-        String updatingCurrentPlayer= in.readLine(); //-> aggiornamento del currentPLayer
-        System.out.println(updatingCurrentPlayer);
+        if(answer.equals("All clients have quit")){
+            System.out.println("all clients have quit");
+        }
+        else{
+            System.out.println("Current player: " + currentPlayer);
+            String updatingCurrentPlayer= in.readLine(); //-> aggiornamento del currentPLayer
+            System.out.println(updatingCurrentPlayer);
+        }
         cleanTheSocket();
     }
 

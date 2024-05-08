@@ -90,7 +90,15 @@ public class HandlingPlayerInputsThread implements Runnable {
                 } catch (IOException ex) {
                     System.err.println("Errore durante la chiusura del socket del client: " + ex.getMessage());
                 }
-                System.out.println("Connessione chiusa dal client.");
+                System.out.println("Connection closed with client");
+
+                if(gameController.getSize()==0)
+                {
+                    System.out.println("All players disconnected, thank you for playing codex!");
+                    stdIn.close();
+                    out.close();
+                    clientSocket.close();
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -110,9 +118,11 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("Il client ha selezionato: " + messageFromClient);
             runCommand(messageFromClient, threadPlayer); //->run
             if(messageFromClient.equals("quit")){
+                gameController.setSize(gameController.getSize()-1);
                 messageFromClient = stdIn.readLine(); //endturn
                 runCommand(messageFromClient, threadPlayer); //->run
                 endturnphase=true;
+
             }
 
         }
@@ -351,7 +361,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     private void setCurrentPlayer(Player currentPlayerName) {
         currentPlayer = currentPlayerName;
-        if(playersList.size()==0)
+        if(gameController.getSize()==0)
         {
             System.out.println("All clients quit");
             sendMessageToAllClients("All clients have quit");
