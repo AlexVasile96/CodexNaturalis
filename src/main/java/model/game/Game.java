@@ -89,7 +89,12 @@ public class Game implements WhatCanPlayerDo {
         }
     }
 
-
+    public String getFirstCardOfResourceDeck(){
+        return resourceDeck.sendIdCardToGui();
+    }
+    public String getFirstCardOfGoldDeck(){
+        return goldDeck.sendIdCardToGui();
+    }
 
 
 
@@ -108,7 +113,7 @@ public class Game implements WhatCanPlayerDo {
             player.playCard(player.getBoard(),cardindex,cardChosenOnTheBoard,selectedCardFromTheDeck, (InitialCard) cardPlayerChoose, selectedCorner);
             String finalAnswer="Carta piazzata correttamente";
             player.getClientView().update(player);
-        return finalAnswer;
+            return finalAnswer;
     }
 
 
@@ -144,13 +149,13 @@ public class Game implements WhatCanPlayerDo {
         return String.valueOf(cardsAsString); //ritorna stringa
     }
 
-    public String firstCommonObjectiveCard(){
+    public String firstCommonObjectiveCardId(){
         int id= firstObjectiveCommonCard.getId();
         System.out.println(id);
         return String.valueOf(id);
     }
 
-    public String secondCommonObjectiveCard(){
+    public String secondCommonObjectiveCardId(){
         int id= secondObjectiveCommonCard.getId();
         return String.valueOf(id);
     }
@@ -159,8 +164,7 @@ public class Game implements WhatCanPlayerDo {
 
     @Override
     public String visualizeSecretObjective(Player player) {
-        String result= String.valueOf(player.getSecretChosenCard());
-        return result;
+        return String.valueOf(player.getSecretChosenCard());
     }
 
 

@@ -93,4 +93,8 @@ public class ResourceDeck implements Deck{
     private boolean isAResourceCard(int idCard) {
         return (idCard <= 40 && idCard >0);
     }
+
+    public String sendIdCardToGui(){
+        return String.valueOf(resourceCards.get(0)); //I take the id of the resource card and give it to the GUI
+    }
 }

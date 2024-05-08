@@ -93,5 +93,8 @@ public class GoldDeck implements Deck {
     private boolean isAGoldCard(int idCard) {
         return (idCard > 40 && idCard <= 80);
     }
+    public String sendIdCardToGui(){
+        return String.valueOf(goldCards.get(0)); //I take the id of the resource card and give it to the GUI
+    }
 
 }

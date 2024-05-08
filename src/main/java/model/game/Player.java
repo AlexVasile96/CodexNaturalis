@@ -54,7 +54,7 @@ public class Player implements Observable {
 
     public String drawResourceCard(ResourceDeck deck) {
        deck.drawCard(this);
-       //this.clientView.getPlayerCards().add(drownCard);
+
         return "card drawn correctly from Resource deck";
     }
     public String drawGoldCard(GoldDeck deck) {
@@ -820,3 +820,4 @@ public class Player implements Observable {
 
 
 }
+
