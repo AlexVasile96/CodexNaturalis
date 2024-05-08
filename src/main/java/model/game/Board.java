@@ -313,16 +313,17 @@ public class Board {
     public void setNode(int x, int y, Node node) {
         nodes[x][y] = node;
     }
+
+
     public JsonObject toJsonObject() {
         JsonObject jsonObject = new JsonObject();
-
         // Convert nodes to JSON
         JsonArray nodesArray = new JsonArray();
         for (int row = 0; row < nodes.length; row++) {
             JsonArray rowArray = new JsonArray();
             for (int col = 0; col < nodes[row].length; col++) {
                 JsonObject nodeObject = new JsonObject();
-                nodeObject.addProperty("seed", nodes[row][col].getSeed().ordinal());
+                nodeObject.addProperty("seed", nodes[row][col].getSpecificNodeSeed().ordinal());
                 nodeObject.addProperty("row", row);
                 nodeObject.addProperty("col", col);
                 rowArray.add(nodeObject);
@@ -330,8 +331,6 @@ public class Board {
             nodesArray.add(rowArray);
         }
         jsonObject.add("nodes", nodesArray);
-
-        // Add other properties
         jsonObject.addProperty("numOfEmpty", numOfEmpty);
         jsonObject.addProperty("initEmptyValue", initEmptyValue.ordinal());
 
@@ -339,4 +338,4 @@ public class Board {
     }
 }
 
-}
+
