@@ -442,17 +442,17 @@ public class Game implements WhatCanPlayerDo {
     }
 
     void saveEachPlayerInGame(Path path){                                                   //METHOD TO SAVE CARDS
-        JsonArray jo= new JsonArray();
-        for(Player player: players){
-            jo.add(player.toJsonObject());
-        }
-        String jsonText = jo.toString();
         try (FileWriter fileWriter = new FileWriter(path.toString())) {
-            fileWriter.write(jsonText);
+            for (Player player : players) {
+                String jsonText = player.toJsonObject().toString();
+                fileWriter.write(jsonText + "\n"); // Scrive ogni giocatore su una riga separata
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
     void savePlayers(){
         saveEachPlayerInGame(getDefaultPlayers());

@@ -35,7 +35,6 @@ public class ServerConnection implements Runnable {
     public void run() {
 
     String command;
-    synchronized (this) {
         try {
             System.out.println("Welcome! I'm the server, please type anything to start the conversation!\n");
             while (!isTheWhileActive) {
@@ -76,7 +75,6 @@ public class ServerConnection implements Runnable {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-    }
 }
 
 private void waitUntilItsYourTurn() throws IOException {
@@ -523,7 +521,7 @@ private void waitUntilItsYourTurn() throws IOException {
         }
     }
 
-    private void loginPlayer(Player player) throws IOException, InterruptedException { //LOGIN METHOD
+    private synchronized void loginPlayer(Player player) throws IOException, InterruptedException { //LOGIN METHOD
         String serverResponse = in.readLine();
         System.out.println("Server says: " + serverResponse); //Inserisci il tuo nome per favore
         System.out.println(">");
@@ -538,7 +536,9 @@ private void waitUntilItsYourTurn() throws IOException {
             clientView.setIndex(index);
             index++;
         }
+        synchronized (this){
         chooseYourDotColor();
+        }
         chooseNumberOfPlayers();
     }
 

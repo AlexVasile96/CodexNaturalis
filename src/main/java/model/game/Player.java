@@ -815,6 +815,5 @@ public class Player implements Observable {
         jsonObject.addProperty("clientView", String.valueOf(clientView));
         return jsonObject;
     }
-
 }
 

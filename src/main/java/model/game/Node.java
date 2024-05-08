@@ -23,6 +23,10 @@ public class Node {
         return specificNodeSeed;
     }
 
+    public String getStringSpecificNodeSeed() {
+        return String.valueOf(specificNodeSeed);
+    }
+
     public int getCoordX() {
         return coordX;
     }

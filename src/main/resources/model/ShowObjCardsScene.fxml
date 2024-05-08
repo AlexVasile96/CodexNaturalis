@@ -7,8 +7,8 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GUI">
    <children>
-      <ImageView fx:id="obj1ImageView" fitHeight="112.8" fitWidth="162.6" layoutX="14.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="obj2ImageView" fitHeight="112.8" fitWidth="162.6" layoutX="219.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="obj1" fitHeight="112.8" fitWidth="162.6" layoutX="14.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="obj2" fitHeight="112.8" fitWidth="162.6" layoutX="219.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="112.8" fitWidth="162.6" layoutX="423.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="closeButton" layoutX="274.0" layoutY="338.0" mnemonicParsing="false" text="Close" />
    </children>

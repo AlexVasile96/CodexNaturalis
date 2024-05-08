@@ -411,7 +411,7 @@ public class GUI extends Application {
             if (contentPane != null) {
                 contentPane.getChildren().add(initCard);
                 root.getChildren().addAll(fxmlPane, gameBoard);
-                gameScene = new Scene(root, 1920, 1080);
+                gameScene = new Scene(root, 1500, 800);
             } else {
                 System.err.println("Content Pane inside gameBoard is null");
             }
@@ -422,27 +422,22 @@ public class GUI extends Application {
         GridPane gridPane = (GridPane) fxmlPane.lookup("#gridPane");
         if (gridPane != null) {
             Image image1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/3.png")));
-            firstCardFromWell = new ImageView(image1);
-            firstCardFromWell.setFitWidth(117);
-            firstCardFromWell.setFitHeight(80);
+            ImageView firstCardFromWell = new ImageView(image1);
             gridPane.add(firstCardFromWell, 0, 0);
 
             Image image2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/10.png")));
             ImageView secondCardFromWell = new ImageView(image2);
-            /*secondCardFromWell.setFitWidth(117);
-            secondCardFromWell.setFitHeight(80);*/
+
             gridPane.add(secondCardFromWell, 1, 0);
 
             Image image3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/25.png")));
             ImageView thirdCardFromWell = new ImageView(image3);
-            /*thirdCardFromWell.setFitWidth(117);
-            thirdCardFromWell.setFitHeight(80);*/
+
             gridPane.add(thirdCardFromWell, 0, 1);
 
             Image image4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/31.png")));
             ImageView fourthCardFromWell = new ImageView(image4);
-            /*fourthCardFromWell.setFitWidth(117);
-            fourthCardFromWell.setFitHeight(80);*/
+
             gridPane.add(fourthCardFromWell, 1, 1);
         }
         else {

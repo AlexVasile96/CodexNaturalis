@@ -322,7 +322,7 @@ public class Board {
             JsonArray rowArray = new JsonArray();
             for (int col = 0; col < nodes[row].length; col++) {
                 JsonObject nodeObject = new JsonObject();
-                nodeObject.addProperty("seed", nodes[row][col].getSpecificNodeSeed().ordinal());
+                nodeObject.addProperty("seed", nodes[row][col].getStringSpecificNodeSeed());
                 nodeObject.addProperty("row", row);
                 nodeObject.addProperty("col", col);
                 rowArray.add(nodeObject);

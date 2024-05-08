@@ -135,7 +135,7 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     //PRIVATE METHODS INSIDE HANDLINGPLAYERINPUTS
 
-    private Player loginEachClient() throws IOException, InterruptedException {
+    private synchronized Player loginEachClient() throws IOException, InterruptedException {
         Player player = null;
         if(gameController==null) { //if game controller==null it means the player has to log in!!
             try {
