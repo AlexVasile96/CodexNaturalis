@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,7 +19,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import model.game.Dot;
 import view.ClientView;
@@ -30,6 +30,10 @@ import java.util.Objects;
 public class GUI extends Application {
 
     private static Stage window;
+    public ImageView firstCardFromWell;
+    public ImageView secondCardFromWell;
+    public ImageView fourthCardFromWell;
+    public ImageView thirdCardFromWell;
     private Scene startScene;
     private Scene loginScene;
     private static BufferedReader in;
@@ -76,6 +80,7 @@ public class GUI extends Application {
     public ImageView obj2ImageView;
     @FXML
     public Button closeButton;
+
 
 
 
@@ -406,78 +411,94 @@ public class GUI extends Application {
             if (contentPane != null) {
                 contentPane.getChildren().add(initCard);
                 root.getChildren().addAll(fxmlPane, gameBoard);
-                gameScene = new Scene(root, 800, 600);
+                gameScene = new Scene(root, 1920, 1080);
             } else {
                 System.err.println("Content Pane inside gameBoard is null");
             }
         } else {
             System.err.println("Game Board is null");
         }
+
+        GridPane gridPane = (GridPane) fxmlPane.lookup("#gridPane");
+        if (gridPane != null) {
+            Image image1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/3.png")));
+            firstCardFromWell = new ImageView(image1);
+            firstCardFromWell.setFitWidth(117);
+            firstCardFromWell.setFitHeight(80);
+            gridPane.add(firstCardFromWell, 0, 0);
+
+            Image image2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/10.png")));
+            ImageView secondCardFromWell = new ImageView(image2);
+            /*secondCardFromWell.setFitWidth(117);
+            secondCardFromWell.setFitHeight(80);*/
+            gridPane.add(secondCardFromWell, 1, 0);
+
+            Image image3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/25.png")));
+            ImageView thirdCardFromWell = new ImageView(image3);
+            /*thirdCardFromWell.setFitWidth(117);
+            thirdCardFromWell.setFitHeight(80);*/
+            gridPane.add(thirdCardFromWell, 0, 1);
+
+            Image image4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/31.png")));
+            ImageView fourthCardFromWell = new ImageView(image4);
+            /*fourthCardFromWell.setFitWidth(117);
+            fourthCardFromWell.setFitHeight(80);*/
+            gridPane.add(fourthCardFromWell, 1, 1);
+        }
+        else {
+            System.err.println("GridPane is null");
+        }
+
+        in.readLine();
     }
 
     @FXML
     private void showObjCardsClicked() throws IOException {
+        // Create an HBox to hold the images of the objective cards
+        HBox root = new HBox(20);
 
-        Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/ShowObjCardsScene.fxml")));
-        Pane root = new Pane();
-        root.getChildren().add(fxml);
-
-        Popup popupStage = new Popup();
-        popupStage.getContent().add(root);
-
-        //closeButton.setOnAction(e -> popupStage.close());
-
-
-        in.readLine(); //Server sends player's name
+        // Request the first common objective card from the server
         out.println("firstCommon");
-        int idObj1 = Integer.parseInt(in.readLine());
-        System.out.println(idObj1);
+        int idObj1 = Integer.parseInt(in.readLine()); // Read the ID of the first common objective card
+        System.out.println(idObj1); // Print the ID of the first common objective card
 
+        // Request the second common objective card from the server
         out.println("secondCommon");
-        int idObj2 = Integer.parseInt(in.readLine());
-        System.out.println(idObj2);
+        int idObj2 = Integer.parseInt(in.readLine()); // Read the ID of the second common objective card
+        System.out.println(idObj2); // Print the ID of the second common objective card
 
-        String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/"+idObj1+".png";
+        // Construct the file paths for the images of the objective cards
+        String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/" + idObj1 + ".png";
         Image obj1Image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj1)));
-        obj1ImageView.setImage(obj1Image);
+        obj1ImageView = new ImageView(obj1Image); // Create an ImageView for the first objective card
+        obj1ImageView.setFitWidth(162.6); // Set the width of the ImageView
+        obj1ImageView.setFitHeight(112.8); // Set the height of the ImageView
 
-
-        String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/"+idObj2+".png";
+        String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/" + idObj2 + ".png";
         Image obj2Image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
-        obj2ImageView.setImage(obj2Image);
+        obj2ImageView = new ImageView(obj2Image); // Create an ImageView for the second objective card
+        obj2ImageView.setFitWidth(162.6); // Set the width of the ImageView
+        obj2ImageView.setFitHeight(112.8); // Set the height of the ImageView
 
+        closeButton = new Button("Close");
+        // Define the action to be performed when the Close button is clicked
+        closeButton.setOnAction(e -> ((Stage) closeButton.getScene().getWindow()).close());
 
+        VBox vbox = new VBox(50); // Create a VBox to hold the ImageView and Close button
+        // Add the objective card ImageViews to the HBox
+        root.getChildren().addAll(obj1ImageView, obj2ImageView);
+        vbox.setAlignment(Pos.CENTER); // Set the alignment of the VBox
+        // Add the objective card ImageViews and Close button to the VBox
+        vbox.getChildren().addAll(obj1ImageView, obj2ImageView, closeButton);
 
-
-
-
-        /*in.readLine();
-        out.println("firstCommon");
-
-        int idObj1 = Integer.parseInt(in.readLine());
-        System.out.println(idObj1);
-        out.println("secondCommon");
-        int idObj2 = Integer.parseInt(in.readLine());
-        System.out.println(idObj2);
-        Parent fxmlShowObjCards = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/ShowObjCardsScene.fxml")));
-
-        String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/"+idObj1+".png";
-        String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/"+idObj2+".png";
-        Image obj1Image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj1)));
-        Image obj2Image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
-        obj1ImageView.setImage(obj1Image);
-        obj2ImageView.setImage(obj2Image);
-        Stage showObjPopupStage = new Stage();
-        showObjPopupStage.initModality(Modality.APPLICATION_MODAL);
-        showObjPopupStage.setTitle("Objective cards");
-        closeButton.setOnAction(e -> showObjPopupStage.close());
-        Pane pane = new Pane();
-        //ImageView secretObj = chosenObj;
-        pane.getChildren().addAll(fxmlShowObjCards);
-        Scene showObjCardsScene = new Scene(pane, 800, 600);
-        showObjPopupStage.setScene(showObjCardsScene);
-        showObjPopupStage.showAndWait();*/
-
+        // Create a popup stage to display the objective cards
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL); // Set the modality of the stage
+        popupStage.setTitle("Objective cards"); // Set the title of the stage
+        popupStage.setScene(new Scene(vbox)); // Set the scene of the stage
+        popupStage.setWidth(500); // Set the width of the stage
+        popupStage.setHeight(350); // Set the height of the stage
+        popupStage.showAndWait(); // Display the stage and wait for it to be closed
     }
 
     private void addCard(){

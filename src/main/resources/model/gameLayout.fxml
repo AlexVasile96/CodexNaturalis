@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -10,7 +9,7 @@
    <children>
       <HBox prefHeight="400.0" prefWidth="600.0">
          <children>
-            <ScrollPane prefHeight="400.0" prefWidth="377.0" fx:id="gameBoard">
+            <ScrollPane fx:id="gameBoard" prefHeight="400.0" prefWidth="377.0">
                <content>
                   <Pane prefHeight="400.0" prefWidth="368.0">
                      <children>
@@ -20,7 +19,23 @@
                </content></ScrollPane>
             <VBox prefHeight="400.0" prefWidth="242.0">
                <children>
-                  <Pane prefHeight="402.0" prefWidth="243.0" />
+                  <GridPane prefHeight="160.0" prefWidth="233.0" fx:id="gridPane">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="25.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ImageView fx:id="firstCardFromWell" fitHeight="80.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="secondCardFromWell" fitHeight="80.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+                        <ImageView fx:id="fourthCardFromWell" fitHeight="80.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ImageView fx:id="thirdCardFromWell" fitHeight="80.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
                </children></VBox>
          </children>
       </HBox>
