@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import model.game.Dot;
 import view.ClientView;
@@ -415,11 +416,17 @@ public class GUI extends Application {
     }
 
     @FXML
-    private void showObjCards() throws IOException {
+    private void showObjCardsClicked() throws IOException {
 
         Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/ShowObjCardsScene.fxml")));
         Pane root = new Pane();
         root.getChildren().add(fxml);
+
+        Popup popupStage = new Popup();
+        popupStage.getContent().add(root);
+
+        //closeButton.setOnAction(e -> popupStage.close());
+
 
         in.readLine(); //Server sends player's name
         out.println("firstCommon");
@@ -434,20 +441,14 @@ public class GUI extends Application {
         Image obj1Image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj1)));
         obj1ImageView.setImage(obj1Image);
 
+
         String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/"+idObj2+".png";
         Image obj2Image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
         obj2ImageView.setImage(obj2Image);
 
 
 
-        Stage popupStage = new Stage();
 
-        closeButton.setOnAction(e -> popupStage.close());
-
-        popupStage.initModality(Modality.APPLICATION_MODAL);
-        popupStage.setTitle("Objective cards");
-        popupStage.setScene(new Scene(root));
-        popupStage.showAndWait();
 
 
         /*in.readLine();
@@ -505,5 +506,13 @@ public class GUI extends Application {
 
     public void setInitCard(ImageView initCard) {
         this.initCard = initCard;
+    }
+
+    public void setObj1ImageView(ImageView obj1ImageView) {
+        this.obj1ImageView = obj1ImageView;
+    }
+
+    public void setObj2ImageView(ImageView obj2ImageView) {
+        this.obj2ImageView = obj2ImageView;
     }
 }
