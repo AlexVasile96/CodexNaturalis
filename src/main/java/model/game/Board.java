@@ -317,7 +317,6 @@ public class Board {
 
     public JsonObject toJsonObject() {
         JsonObject jsonObject = new JsonObject();
-        // Convert nodes to JSON
         JsonArray nodesArray = new JsonArray();
         for (int row = 0; row < nodes.length; row++) {
             JsonArray rowArray = new JsonArray();

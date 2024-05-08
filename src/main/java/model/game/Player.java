@@ -810,14 +810,11 @@ public class Player implements Observable {
         jsonObject.addProperty("nickName", nickName);
         jsonObject.addProperty("score", playerScore);
         jsonObject.addProperty("dot", dot.ordinal());
-        jsonObject.addProperty("board", String.valueOf(board));
+        jsonObject.add("board", board.toJsonObject());
         jsonObject.addProperty("playerCards", String.valueOf(playerCards));
         jsonObject.addProperty("clientView", String.valueOf(clientView));
         return jsonObject;
-
     }
-
-
 
 }
 
