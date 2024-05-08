@@ -70,7 +70,12 @@ public class GUI extends Application {
     @FXML
     public ImageView chosenObj;
     @FXML
-    public Button chooseObj;
+    public ImageView obj1ImageView;
+    @FXML
+    public ImageView obj2ImageView;
+    @FXML
+    public Button closeButton;
+
 
 
 
@@ -411,7 +416,41 @@ public class GUI extends Application {
 
     @FXML
     private void showObjCards() throws IOException {
-        in.readLine();
+
+        Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/ShowObjCardsScene.fxml")));
+        Pane root = new Pane();
+        root.getChildren().add(fxml);
+
+        in.readLine(); //Server sends player's name
+        out.println("firstCommon");
+        int idObj1 = Integer.parseInt(in.readLine());
+        System.out.println(idObj1);
+
+        out.println("secondCommon");
+        int idObj2 = Integer.parseInt(in.readLine());
+        System.out.println(idObj2);
+
+        String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/"+idObj1+".png";
+        Image obj1Image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj1)));
+        obj1ImageView.setImage(obj1Image);
+
+        String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/"+idObj2+".png";
+        Image obj2Image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
+        obj2ImageView.setImage(obj2Image);
+
+
+
+        Stage popupStage = new Stage();
+
+        closeButton.setOnAction(e -> popupStage.close());
+
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setTitle("Objective cards");
+        popupStage.setScene(new Scene(root));
+        popupStage.showAndWait();
+
+
+        /*in.readLine();
         out.println("firstCommon");
 
         int idObj1 = Integer.parseInt(in.readLine());
@@ -419,25 +458,24 @@ public class GUI extends Application {
         out.println("secondCommon");
         int idObj2 = Integer.parseInt(in.readLine());
         System.out.println(idObj2);
+        Parent fxmlShowObjCards = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/ShowObjCardsScene.fxml")));
+
         String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/"+idObj1+".png";
         String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/"+idObj2+".png";
         Image obj1Image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj1)));
         Image obj2Image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
-        ImageView obj1ImageView = new ImageView();
         obj1ImageView.setImage(obj1Image);
-        ImageView obj2ImageView = new ImageView();
         obj2ImageView.setImage(obj2Image);
         Stage showObjPopupStage = new Stage();
         showObjPopupStage.initModality(Modality.APPLICATION_MODAL);
         showObjPopupStage.setTitle("Objective cards");
-        Button closeButton = new Button("close");
         closeButton.setOnAction(e -> showObjPopupStage.close());
         Pane pane = new Pane();
         //ImageView secretObj = chosenObj;
-        pane.getChildren().addAll(closeButton, obj1ImageView, obj2ImageView);
+        pane.getChildren().addAll(fxmlShowObjCards);
         Scene showObjCardsScene = new Scene(pane, 800, 600);
         showObjPopupStage.setScene(showObjCardsScene);
-        showObjPopupStage.showAndWait();
+        showObjPopupStage.showAndWait();*/
 
     }
 
