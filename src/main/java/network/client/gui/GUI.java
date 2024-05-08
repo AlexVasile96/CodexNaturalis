@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.game.Dot;
 import view.ClientView;
@@ -31,7 +32,7 @@ public class GUI extends Application {
     private Scene startScene;
     private Scene loginScene;
     private static BufferedReader in;
-    private int isFront; //The server need 1 to place the card on the back and 2 to place it on the front
+    private int isFront=2; //The server need 1 to place the card on the back and 2 to place it on the front
 
     private Button start;
     private Button returnToDesktop;
@@ -66,6 +67,8 @@ public class GUI extends Application {
     public ImageView obiettivo1;
     @FXML
     public ImageView obiettivo2;
+    @FXML
+    public ImageView chosenObj;
     @FXML
     public Button chooseObj;
 
@@ -282,6 +285,7 @@ public class GUI extends Application {
     @FXML
     public void chosenObj1(MouseEvent event) throws IOException {
         out.println(1);
+        chosenObj = obiettivo1;
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         chooseInitCard();
         Platform.runLater(() -> {
@@ -293,6 +297,7 @@ public class GUI extends Application {
     @FXML
     public void chosenObj2(MouseEvent event) throws IOException {
         out.println(2);
+        chosenObj = obiettivo2;
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         chooseInitCard();
         Platform.runLater(() -> {
@@ -376,7 +381,7 @@ public class GUI extends Application {
     private void chooseInitCardFrontOrBack(ActionEvent event) throws IOException {
 
         out.println(isFront);
-        System.out.printf(""+isFront);
+        //System.out.printf(""+isFront);
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         game();
         Platform.runLater(() -> {
@@ -385,25 +390,56 @@ public class GUI extends Application {
     }
 
 
-private void game() throws IOException {
-    Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/gameLayout.fxml")));
-    Pane root = new Pane();
-    Pane fxmlPane = (Pane) fxmlGame;
-    gameBoard = (ScrollPane) fxmlPane.lookup("#gameBoard");
-    if (gameBoard != null) {
-        Pane contentPane = (Pane) gameBoard.getContent();
-        if (contentPane != null) {
-            contentPane.getChildren().add(initCard);
-            root.getChildren().addAll(fxmlPane, gameBoard);
-            gameScene = new Scene(root, 800, 600);
+    private void game() throws IOException {
+        Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/gameLayout.fxml")));
+        Pane root = new Pane();
+        Pane fxmlPane = (Pane) fxmlGame;
+        gameBoard = (ScrollPane) fxmlPane.lookup("#gameBoard");
+        if (gameBoard != null) {
+            Pane contentPane = (Pane) gameBoard.getContent();
+            if (contentPane != null) {
+                contentPane.getChildren().add(initCard);
+                root.getChildren().addAll(fxmlPane, gameBoard);
+                gameScene = new Scene(root, 800, 600);
+            } else {
+                System.err.println("Content Pane inside gameBoard is null");
+            }
         } else {
-            System.err.println("Content Pane inside gameBoard is null");
+            System.err.println("Game Board is null");
         }
-    } else {
-        System.err.println("Game Board is null");
     }
-}
 
+    @FXML
+    private void showObjCards() throws IOException {
+        in.readLine();
+        out.println("firstCommon");
+
+        int idObj1 = Integer.parseInt(in.readLine());
+        System.out.println(idObj1);
+        out.println("secondCommon");
+        int idObj2 = Integer.parseInt(in.readLine());
+        System.out.println(idObj2);
+        String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/"+idObj1+".png";
+        String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/"+idObj2+".png";
+        Image obj1Image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj1)));
+        Image obj2Image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
+        ImageView obj1ImageView = new ImageView();
+        obj1ImageView.setImage(obj1Image);
+        ImageView obj2ImageView = new ImageView();
+        obj2ImageView.setImage(obj2Image);
+        Stage showObjPopupStage = new Stage();
+        showObjPopupStage.initModality(Modality.APPLICATION_MODAL);
+        showObjPopupStage.setTitle("Objective cards");
+        Button closeButton = new Button("close");
+        closeButton.setOnAction(e -> showObjPopupStage.close());
+        Pane pane = new Pane();
+        //ImageView secretObj = chosenObj;
+        pane.getChildren().addAll(closeButton, obj1ImageView, obj2ImageView);
+        Scene showObjCardsScene = new Scene(pane, 800, 600);
+        showObjPopupStage.setScene(showObjCardsScene);
+        showObjPopupStage.showAndWait();
+
+    }
 
     private void addCard(){
         out.println("playcard");

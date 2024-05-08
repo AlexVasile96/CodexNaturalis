@@ -146,6 +146,7 @@ public class Game implements WhatCanPlayerDo {
 
     public String firstCommonObjectiveCard(){
         int id= firstObjectiveCommonCard.getId();
+        System.out.println(id);
         return String.valueOf(id);
     }
 
