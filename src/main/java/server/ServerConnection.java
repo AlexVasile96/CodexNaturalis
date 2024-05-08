@@ -512,13 +512,13 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println("Choose the card you want to draw:\nType 1 if you want to select the first card\nType 2 if you want to select the second card");
         String numberChosen= stdin.readLine();
         int size = Integer.parseInt(numberChosen);
-        if(size==1 || size==2){
+        if(size!=1 && size!=2){
+            System.out.println("Please choose your card correctly!");
+        }
+        else {
             System.out.println("Card chosen correctly");
             out.println(size);
             isNumberCorrect=true;
-        }
-        else{
-            System.out.println("Please choose your card correctly!");
             }
         }
     }

@@ -144,6 +144,18 @@ public class Game implements WhatCanPlayerDo {
         return String.valueOf(cardsAsString); //ritorna stringa
     }
 
+    public String firstCommonObjectiveCard(){
+        int id= firstObjectiveCommonCard.getId();
+        return String.valueOf(id);
+    }
+
+    public String secondCommonObjectiveCard(){
+        int id= secondObjectiveCommonCard.getId();
+        return String.valueOf(id);
+    }
+
+
+
     @Override
     public String visualizeSecretObjective(Player player) {
         String result= String.valueOf(player.getSecretChosenCard());

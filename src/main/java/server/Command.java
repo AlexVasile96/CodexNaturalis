@@ -87,7 +87,11 @@ public class Command { //Command Client sends to Server
             case "quit":
                 game.runEndTurn(player);
                 return "quit";
-            default:
+            case "firstCommon":
+                return game.firstCommonObjectiveCard();
+            case "secondCommon":
+                return game.secondCommonObjectiveCard();
+                default:
                 return "Unknown command.";
         }
     }
