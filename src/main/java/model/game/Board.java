@@ -48,16 +48,16 @@ public class Board {
 
     public String printBoardForServer() { //printBoard method
         StringBuilder stringBoard = new StringBuilder();
-        Boolean aCapo=false;
+        Boolean booleanChecker=false;
 
         //scanner
         int[] res = ScannerCordinate();
 
         for (int i = res[0]; i < res[1] +1; i++) {
             for (int j = res[2] ; j < res[3] +1; j++) {
-                if(!aCapo){
+                if(!booleanChecker){
                     stringBoard.append("\n");
-                    aCapo=true;
+                    booleanChecker=true;
                 }
                 String seed = String.valueOf(nodes[i][j].getSpecificNodeSeed());
                 int spazi = 15 - seed.length();
@@ -68,7 +68,7 @@ public class Board {
                 }
                 stringBoard.append ("\t" + j + "\t" + i + ", value:" + nodes[i][j].getValueCounter() + " |");
             }
-            aCapo=false;
+            booleanChecker=false;
         }
         stringBoard.append("\nfine board");
         return String.valueOf(stringBoard);
