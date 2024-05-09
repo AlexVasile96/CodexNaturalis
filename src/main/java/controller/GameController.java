@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 public class GameController {
     private final Map<String, PrintWriter> players;
@@ -30,6 +31,7 @@ public class GameController {
     private static Deck objectiveDeck;
     private Map<String, ClientView> clientViews = new HashMap<>();
     private static boolean isCornerAlreadyChosen= false;
+    private final CountDownLatch sizeLatch = new CountDownLatch(1);
 
 
 
@@ -45,6 +47,14 @@ public class GameController {
         this.clients=clients;
         this.out= new PrintWriter(socket.getOutputStream(), true);
         this.isSizeSet=false;
+    }
+
+    public GameController() {
+        this.players = new HashMap<>();
+        this.size = 0;
+        this.isGameOver = false;
+        this.isSizeSet = false;
+
     }
 
 
@@ -76,10 +86,9 @@ public class GameController {
 
 
 
-    public void addPlayer(String username, PrintWriter userOut) throws GameFullException, UnknownPlayerNumberException, UsernameAlreadyExistsException, InterruptedException {
-        if (size == 0){
-            throw new UnknownPlayerNumberException();
-
+    public synchronized void addPlayer(String username, PrintWriter userOut) throws GameFullException, UnknownPlayerNumberException, UsernameAlreadyExistsException, InterruptedException {
+        if (!isSizeSet){
+            sizeLatch.await();
         }
 
         if (!players.containsKey(username)) {
@@ -99,9 +108,12 @@ public class GameController {
         if (number < 1 || number > 4) {
             throw new ParametersNotValidException();
         }
-        synchronized (this) {
             size = number;
-        }
+            sizeLatch.countDown();
+            System.out.println(size);
+            setSize(size);
+            setSizeSet(true);
+
     }
     public int getNumOfPlayers() {
         return players.size();
@@ -208,6 +220,7 @@ public class GameController {
     }
     public void setSize(int size) {
         this.size = size;
+        sizeLatch.countDown(); // Sblocca il thread che sta aspettando la dimensione del gioco
     }
     public boolean isGameOver() {
         return isGameOver;

@@ -5,7 +5,7 @@ import view.ClientView;
 
 import java.io.*;
 import java.net.Socket;
-
+import java.util.concurrent.CountDownLatch;
 
 
 public class ServerConnection implements Runnable {
@@ -46,8 +46,9 @@ public class ServerConnection implements Runnable {
                         loginPlayer(player);                                  //Actual Login
                         assigningSecretCard();                                //Choosing the secret Card
                         takingTheInitialCard();                               //Taking the initial Card
-                        currentPlayer = in.readLine();                         //who is the current player?
-                        System.out.println("Server says that first player will be " + currentPlayer);
+                        System.out.println("Login phase ended!");
+                        currentPlayer = in.readLine();                      //who is the current player?
+                        //System.out.println("Server says that first player will be " + currentPlayer);
                     } else {
                         while (!isTheWhileActive){
                             if(isConnectionClosed){
@@ -86,7 +87,8 @@ private void waitUntilItsYourTurn() throws IOException {
                 System.out.println(getCurrentPlayer());
                 in.readLine(); //"endturn"
             }
-            else {System.out.println("Current Player "+ currentPlayer + " is still deciding what's his next move...");}
+            else {
+                System.out.println("Current Player is still deciding what's his next move...");}
         }
 }
     private void makeYourMoves() throws IOException {

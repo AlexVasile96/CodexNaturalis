@@ -45,7 +45,11 @@ public class HandlingPlayerInputsThread implements Runnable {
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         this.playersList = playersinTheGame;
         this.clients = clients;
-        gameController= null;
+        synchronized (HandlingPlayerInputsThread.class) {
+            if (gameController == null) {
+                gameController = new GameController(); // Or whatever initialization logic you have
+            }
+        }
         turnController=null;
         this.lobby=lobby;
         this.userName=null;
@@ -137,7 +141,7 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     private synchronized Player loginEachClient() throws IOException, InterruptedException {
         Player player = null;
-        if(gameController==null) { //if game controller==null it means the player has to log in!!
+        //if game controller==null it means the player has to log in!!
             try {
                 sendMessageToClient("Hello!! You have to log in, please type your username");
                 String request = stdIn.readLine();
@@ -156,15 +160,16 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println(player);
                 gameController = lobby.login(request, out);
                 System.out.println(gameController);
-                setGameSize();
+                int size= setGameSize();
+                System.out.println(size);
                 sendMessageToClient("You have to wait until all clients are connected!");
-                if (playersList.size() < gameController.getSize()) {
+                if (playersList.size() < size) {
                     waitingForClients();
                 }
             } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
                 throw new RuntimeException(e);
             }
-        }
+
         System.out.println(gameController);
         return player;
     }
@@ -197,16 +202,16 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
 
     }
-    private void setGameSize() throws NoSuchElementException {
+    private synchronized int setGameSize() throws NoSuchElementException {
         String message;
+        int size=0;
         if (!gameController.isSizeSet()) {          //If controller number of players has not been decided
-                                                    //Tries to set controller's number of players
             try {
                 sendMessageToClient("At the moment there is: ");
                 sendMessageToClient("1");
                 sendMessageToClient(" player. Choose how many players you want to play with-> players have to be from 2 to 4.");
                 message= stdIn.readLine();
-                int size = Integer.parseInt(message);
+                size = Integer.parseInt(message);
                 System.out.println("Numbers of Player will be " +size);
                 sendMessageToClient("Players number correctly chosen ");
                 gameController.choosePlayerNumber(size);
@@ -224,8 +229,9 @@ public class HandlingPlayerInputsThread implements Runnable {
             sendMessageToClient(String.valueOf(gameController.getSize()));
             sendMessageToClient(" players");
         }
+        return size;
     }
-    private Dot chooseClientDotColor() throws IOException {
+    private synchronized Dot chooseClientDotColor() throws IOException {
         String message;
         Dot dot;
         do{
