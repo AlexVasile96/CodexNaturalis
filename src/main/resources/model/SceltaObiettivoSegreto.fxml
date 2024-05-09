@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GUI">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="/loginLayout.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GUI">
    <children>
-      <Label layoutX="217.0" layoutY="107.0" text="Scegli la carta obiettivo segreta" />
-      <Button fx:id="scegliObj" layoutX="189.0" layoutY="141.0" mnemonicParsing="false" onAction="#chooseSecretObjectiveClicked" text="Premimi per vedere le carte obiettivo!!!" />
-      <ImageView fx:id="obiettivo1" fitHeight="150.0" fitWidth="200.0" layoutX="61.0" layoutY="233.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#chosenObj1"/>
-      <ImageView fx:id="obiettivo2" fitHeight="150.0" fitWidth="200.0" layoutX="323.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#chosenObj2"/>
+      <Text fill="WHITE" layoutX="34.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold" text="Choose your secret objective card" wrappingWidth="316.5078125" />
+
+      <Button fx:id="scegliObj" layoutX="348.0" layoutY="11.0" mnemonicParsing="false" onAction="#chooseSecretObjectiveClicked" text="Click here to see the card" />
+      <ImageView fx:id="obiettivo1" fitHeight="150.0" fitWidth="200.0" layoutX="61.0" layoutY="233.0 " onMouseClicked="#chosenObj1" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="obiettivo2" fitHeight="150.0" fitWidth="200.0" layoutX="323.0" layoutY="236.0" onMouseClicked="#chosenObj2" pickOnBounds="true" preserveRatio="true" />
    </children>
 </Pane>

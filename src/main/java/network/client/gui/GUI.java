@@ -7,7 +7,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -76,6 +75,7 @@ public class GUI extends Application {
     public ImageView obj2ImageView;
     @FXML
     public Button closeButton;
+
 
 
 
@@ -158,25 +158,38 @@ public class GUI extends Application {
     private void loginScene() throws IOException {
         //Load the scene from fxml
         Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/loginScene.fxml")));
+        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
+
+        loginButton = (Button) fxml.lookup("#loginButton");
+
+
         StackPane root = new StackPane();
-        root.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        root.setBackground(background);
         root.getChildren().addAll(fxml);
         loginScene = new Scene(root, 800, 600);
+
     }
 
     public void loginButtonClicked(ActionEvent event) throws IOException {
         //player writes his username
         String username = usernameField.getText();
+
         if(!username.isEmpty()){
             clientView.setUserName(username);
-            test.setText("Il tuo username è: " + clientView.getUserName());
+            //test.setText("Il tuo username è: " + clientView.getUserName());
             out.println(username);
         }else{
             System.out.println("Username necessario");
         }
+
         Toggle dot = toggleGroup.getSelectedToggle();
 
         String realChosenDot=null;
+
+
         if(dot.toString().equals("RadioButton[id=reddot, styleClass=radio-button]'RED'")){
             realChosenDot="RED";
         }
@@ -188,11 +201,14 @@ public class GUI extends Application {
         }
         if(dot.toString().equals("RadioButton[id=greendot, styleClass=radio-button]'GREEN'")){
             realChosenDot="GREEN";
+
         }
 
-        testDot.setText("Il colore scelto è: " + realChosenDot);
+
+        //testDot.setText("Il colore scelto è: " + realChosenDot);
         out.println(realChosenDot);
         clientView.setDot(Dot.valueOf(realChosenDot));
+
 
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -204,7 +220,12 @@ public class GUI extends Application {
 
     private void chooseNumOfPlayers() throws IOException {
         Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/ChooseNumberOfPlayers.fxml")));
+        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
         StackPane root = new StackPane();
+        root.setBackground(background);
         root.getChildren().addAll(fxml);
         chooseNumOfPlayersScene = new Scene(root, 800, 600);
     }
@@ -214,13 +235,13 @@ public class GUI extends Application {
         if(!guiController.isSizeSet()) {
             Toggle numOfPlayers = numOfPlayersGroup.getSelectedToggle();
 
-            if (numOfPlayers.toString().equals("RadioButton[id=2, styleClass=radio-button]'2 Giocatori'")) {
+            if (numOfPlayers.toString().equals("RadioButton[id=2, styleClass=radio-button]'2 Players'")) {
                 selectedNumOfPlayers = 1;
             }
-            if (numOfPlayers.toString().equals("RadioButton[id=3, styleClass=radio-button]'3 Giocatori'")) {
+            if (numOfPlayers.toString().equals("RadioButton[id=3, styleClass=radio-button]'3 Players'")) {
                 selectedNumOfPlayers = 3;
             }
-            if (numOfPlayers.toString().equals("RadioButton[id=4, styleClass=radio-button]'4 Giocatori'")) {
+            if (numOfPlayers.toString().equals("RadioButton[id=4, styleClass=radio-button]'4 Players'")) {
                 selectedNumOfPlayers = 4;
             }
             testNumbers.setText("Il numero di giocatori è: " + selectedNumOfPlayers);
@@ -240,7 +261,7 @@ public class GUI extends Application {
 
         }
         else{
-            testNumbers.setText("Quello che selezioni non conta niente, SCEMO, il numero di giocatori è: " + selectedNumOfPlayers);
+            testNumbers.setText("Number of players already chosen: " + selectedNumOfPlayers);
         }
     }
 
@@ -258,13 +279,19 @@ public class GUI extends Application {
     @FXML
     private void chooseSecretObjective() throws IOException{
         Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/SceltaObiettivoSegreto.fxml")));
+        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
         Pane root = new Pane();
+        root.setBackground(background);
         root.getChildren().addAll(fxmlGame);
         chooseSecretObjectiveScene = new Scene(root, 800, 600);
     }
 
     @FXML
     private void chooseSecretObjectiveClicked() throws IOException {
+
         in.readLine();
         in.readLine();
         in.readLine();
@@ -274,6 +301,7 @@ public class GUI extends Application {
         in.readLine();
         in.readLine();
         in.readLine();
+
         String firstSecretCard = in.readLine();
         String secondSecretCard = in.readLine();
 
@@ -318,7 +346,12 @@ public class GUI extends Application {
     @FXML
     private void chooseInitCard() throws IOException {
         Parent fxmlInit = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/FlipInitCard.fxml")));
+        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
         Pane root = new Pane();
+        root.setBackground(background);
         root.getChildren().addAll(fxmlInit);
         chooseInitCardScene = new Scene(root, 800, 600);
     }

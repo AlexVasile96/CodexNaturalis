@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GUI">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="/loginLayout.css " xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GUI">
    <children>
-      <Label layoutX="188.0" layoutY="94.0" text="Clicca il pulsante per girare la carta iniziale" />
+      <Text fill="WHITE" layoutX="29.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold" text="Choose initial card side" wrappingWidth="206.5078125" />
+
       <Button fx:id="flipToBackInit" layoutX="344.0" layoutY="132.0" mnemonicParsing="false" onAction="#flipToBackCard" text="Flip to BACK" />
       <Button fx:id="flipToFrontInit" layoutX="169.0" layoutY="132.0" mnemonicParsing="false" onAction="#flipToFrontCard" text="Flip to FRONT" />
-      <Button fx:id="showInit" layoutX="214.0" layoutY="31.0" mnemonicParsing="false" onAction="#showInit" text="Premimi per vedere la carta!!!" />
+      <Button fx:id="showInit" layoutX="277.0" layoutY="30.0" mnemonicParsing="false" onAction="#showInit" text="Press here to see your initial card" />
       <ImageView fx:id="initCard" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="182.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="placeInit" layoutX="254.0" layoutY="332.0" mnemonicParsing="false" onAction="#chooseInitCardFrontOrBack" text="Place the card" />
    </children>

@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GUI">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="/loginLayout.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GUI">
    <children>
-      <Label layoutX="140.0" layoutY="107.0" text="Scegli il numero di giocatoris">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <RadioButton fx:id="2" layoutX="261.0" layoutY="169.0" mnemonicParsing="false" text="2 Giocatori">
+      <Text fill="WHITE" layoutX="34.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold" text="Choose number of players" wrappingWidth="254.5078125" />
+
+      <RadioButton fx:id="2" layoutX="61.0" layoutY="60.0" mnemonicParsing="false" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold" text="2 Players">
               <toggleGroup>
                   <ToggleGroup fx:id="numOfPlayersGroup" />
               </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="3" layoutX="61.0" layoutY="327.0" mnemonicParsing="false" text="3 Giocatori" toggleGroup="$numOfPlayersGroup" />
-      <RadioButton fx:id="4" layoutX="468.0" layoutY="327.0" mnemonicParsing="false" text="4 Giocatori" toggleGroup="$numOfPlayersGroup" />
-      <Button layoutX="261.0" layoutY="245.0" mnemonicParsing="false" onAction="#goToLobbyClicked" text="Go to lobby" />
-      <Label layoutX="286.0" layoutY="304.0" text="Label" fx:id="testNumbers"/>
+      <RadioButton fx:id="3" layoutX="261.0" layoutY="60.0" mnemonicParsing="false" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold" text="3 Players" toggleGroup="$numOfPlayersGroup" />
+      <RadioButton fx:id="4" layoutX="468.0" layoutY="60.0" mnemonicParsing="false" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold" text="4 Players" toggleGroup="$numOfPlayersGroup" />
+      <Button layoutX="261.0" layoutY="245.0" mnemonicParsing="false" onAction="#goToLobbyClicked" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold" text="Go to lobby" />
+      <Label fx:id="testNumbers" layoutX="286.0" layoutY="304.0" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold" text=" " />
    </children>
 </Pane>
