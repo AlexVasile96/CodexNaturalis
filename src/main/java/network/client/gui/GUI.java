@@ -421,6 +421,7 @@ public class GUI extends Application {
         //Avendo messo hbox e vbox devo definirle come è stato fatto per gameboard e mettere i pane al loro interno in modo da far capire a java che la CARTA si trova all'interno di vbox
         Image immagineCarta = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Gold/41.png")));
         CARTA.setImage(immagineCarta);
+        //commento
 
 
 
