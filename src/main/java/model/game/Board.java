@@ -45,18 +45,28 @@ public class Board {
         }
     } //PRINTING THE BOARD
 
-   public String printBoardForServer() { //printBoard method
+
+    public String printBoardForServer() { //printBoard method
         StringBuilder stringBoard = new StringBuilder();
         Boolean aCapo=false;
-        for (int i = 0; i < nodes.length; i++) {
-            for (int j = 0; j < nodes[i].length; j++) {
-                if(nodeIsUsed(nodes[i][j].getValueCounter())){
-                    if(!aCapo){
-                        stringBoard.append("\n");
-                        aCapo=true;
-                    }
-                    stringBoard.append(nodes[i][j].getSpecificNodeSeed() + "\t" + j + "\t" + i + ", value:" + nodes[i][j].getValueCounter() + " |");
+
+        //scanner
+        int[] res = ScannerCordinate();
+
+        for (int i = res[0]; i < res[1] +1; i++) {
+            for (int j = res[2] ; j < res[3] +1; j++) {
+                if(!aCapo){
+                    stringBoard.append("\n");
+                    aCapo=true;
                 }
+                String seed = String.valueOf(nodes[i][j].getSpecificNodeSeed());
+                int spazi = 15 - seed.length();
+
+                stringBoard.append(nodes[i][j].getSpecificNodeSeed());
+                for (int k = 0; k < spazi; k++) {
+                    stringBoard.append(" ");
+                }
+                stringBoard.append ("\t" + j + "\t" + i + ", value:" + nodes[i][j].getValueCounter() + " |");
             }
             aCapo=false;
         }
@@ -70,6 +80,25 @@ public class Board {
 
     private boolean nodeIsUsed(int node) {
         return node<2;
+    }
+
+    public int[] ScannerCordinate(){
+        int iGrande=0;
+        int iPiccolo = nodes.length;
+        int jGrande=0;
+        int jPiccolo=nodes.length;
+
+        for (int i = 0; i < nodes.length; i++) {
+            for (int j = 0; j < nodes[i].length; j++) {
+                if(nodeIsUsed(nodes[i][j].getValueCounter())){
+                    if(iPiccolo > i) iPiccolo=i;
+                    if(iGrande < i) iGrande=i;
+                    if(jPiccolo > j) jPiccolo=j;
+                    if(jGrande < j) jGrande=j;
+                }
+            }
+        }
+        return new int[]{iPiccolo, iGrande, jPiccolo, jGrande};
     }
 
     public int[][] getCentralCoordinates() {
