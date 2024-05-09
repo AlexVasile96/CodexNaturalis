@@ -174,44 +174,26 @@ public class GUI extends Application {
     }
 
     public void loginButtonClicked(ActionEvent event) throws IOException {
-        //player writes his username
         String username = usernameField.getText();
-
-        if(!username.isEmpty()){
-            clientView.setUserName(username);
-            //test.setText("Il tuo username è: " + clientView.getUserName());
-            out.println(username);
-        }else{
-            System.out.println("Username necessario");
+        if (username.isEmpty()) {
+            System.out.println("Username necessary");
+            return;
         }
 
         Toggle dot = toggleGroup.getSelectedToggle();
-
-        String realChosenDot=null;
-
-
-        if(dot.toString().equals("RadioButton[id=reddot, styleClass=radio-button]'RED'")){
-            realChosenDot="RED";
-        }
-        if(dot.toString().equals("RadioButton[id=yellowdot, styleClass=radio-button]'YELLOW'")){
-            realChosenDot="YELLOW";
-        }
-        if(dot.toString().equals("RadioButton[id=bluedot, styleClass=radio-button]'BLUE'")){
-            realChosenDot="BLUE";
-        }
-        if(dot.toString().equals("RadioButton[id=greendot, styleClass=radio-button]'GREEN'")){
-            realChosenDot="GREEN";
-
+        if (dot == null) {
+            System.out.println("Choose your dot color please");
+            return;
         }
 
+        clientView.setUserName(username);
+        out.println(username);
 
-        //testDot.setText("Il colore scelto è: " + realChosenDot);
-        out.println(realChosenDot);
+        String realChosenDot = ((RadioButton) dot).getText();
         clientView.setDot(Dot.valueOf(realChosenDot));
-
+        out.println(realChosenDot);
 
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         chooseNumOfPlayers();
         Platform.runLater(() -> {
             primaryStage.setScene(chooseNumOfPlayersScene);
@@ -232,37 +214,40 @@ public class GUI extends Application {
 
     @FXML
     private void goToLobbyClicked(ActionEvent event) throws IOException {
-        if(!guiController.isSizeSet()) {
+        if (!guiController.isSizeSet()) {
             Toggle numOfPlayers = numOfPlayersGroup.getSelectedToggle();
+            guiController.setSizeSet(true);
+            if (numOfPlayers == null) {
+                System.out.println("Select number of players");
+                return;
+            }
 
-            if (numOfPlayers.toString().equals("RadioButton[id=2, styleClass=radio-button]'2 Players'")) {
-                selectedNumOfPlayers = 1;
+            String selectedNumOfPlayersText = ((RadioButton) numOfPlayers).getText();
+            switch (selectedNumOfPlayersText) {
+                case "2 Players":
+                    selectedNumOfPlayers = 1;
+                    break;
+                case "3 Players":
+                    selectedNumOfPlayers = 3;
+                    break;
+                case "4 Players":
+                    selectedNumOfPlayers = 4;
+                    break;
+                default:
+                    System.out.println("Numero di giocatori non valido");
+                    return;
             }
-            if (numOfPlayers.toString().equals("RadioButton[id=3, styleClass=radio-button]'3 Players'")) {
-                selectedNumOfPlayers = 3;
-            }
-            if (numOfPlayers.toString().equals("RadioButton[id=4, styleClass=radio-button]'4 Players'")) {
-                selectedNumOfPlayers = 4;
-            }
+
             testNumbers.setText("Il numero di giocatori è: " + selectedNumOfPlayers);
             out.println(selectedNumOfPlayers);
             guiController.setSizeSet(true);
-
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            //lobby();
-            //primaryStage.setScene(lobbyScene);
-
-            chooseSecretObjective();
-            Platform.runLater(() -> {
-                primaryStage.setScene(chooseSecretObjectiveScene);
-            });
-
-
         }
-        else{
-            testNumbers.setText("Number of players already chosen: " + selectedNumOfPlayers);
-        }
+
+        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        chooseSecretObjective();
+        Platform.runLater(() -> {
+            primaryStage.setScene(chooseSecretObjectiveScene);
+        });
     }
 
     @FXML
