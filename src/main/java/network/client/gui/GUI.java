@@ -79,8 +79,13 @@ public class GUI extends Application {
 
 
 
+    @FXML
+    public HBox hboxGame;
+    @FXML
+    public VBox vboxGame;
 
-
+    @FXML
+    public ImageView CARTA;
     @FXML
     public ImageView initCard;
     @FXML
@@ -399,6 +404,7 @@ public class GUI extends Application {
         Pane root = new Pane();
         Pane fxmlPane = (Pane) fxmlGame;
         gameBoard = (ScrollPane) fxmlPane.lookup("#gameBoard");
+        CARTA = (ImageView) fxmlPane.lookup("#CARTA");
         if (gameBoard != null) {
             Pane contentPane = (Pane) gameBoard.getContent();
             if (contentPane != null) {
@@ -412,40 +418,11 @@ public class GUI extends Application {
             System.err.println("Game Board is null");
         }
 
-        gridPane = (GridPane) fxmlPane.lookup("#gridPane");
-        gridPane.setPrefSize(300,300);
-        if (gridPane != null) {
-            Image image1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/3.png")));
-            Image image3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/3.png")));
-            Image image4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/3.png")));
-            Image image2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/3.png")));
-            firstCardFromWell = new ImageView(image1);
-           secondCardFromWell= new ImageView(image2);
-            thirdCardFromWell= new ImageView(image3);
-            fourthCardFromWell = new ImageView(image4);
+        //Avendo messo hbox e vbox devo definirle come è stato fatto per gameboard e mettere i pane al loro interno in modo da far capire a java che la CARTA si trova all'interno di vbox
+        Image immagineCarta = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Gold/41.png")));
+        CARTA.setImage(immagineCarta);
 
-            // Imposta le dimensioni delle ImageView se necessario
-            firstCardFromWell.setFitWidth(117);
-            firstCardFromWell.setFitHeight(80);
-            secondCardFromWell.setFitWidth(117);
-            secondCardFromWell.setFitHeight(80);
-            thirdCardFromWell.setFitWidth(117);
-            thirdCardFromWell.setFitHeight(80);
-            fourthCardFromWell.setFitWidth(117);
-            fourthCardFromWell.setFitHeight(80);
 
-            // Aggiungi le ImageView al GridPane nelle posizioni desiderate
-            GridPane.setConstraints(firstCardFromWell, 0, 0);
-            GridPane.setConstraints(secondCardFromWell, 1, 0);
-            GridPane.setConstraints(thirdCardFromWell, 0, 1);
-            GridPane.setConstraints(fourthCardFromWell, 1, 1);
-
-            // Aggiungi le ImageView al GridPane
-            gridPane.getChildren().addAll(fxmlGame, secondCardFromWell, thirdCardFromWell, fourthCardFromWell);
-        }
-        else {
-            System.err.println("GridPane is null");
-        }
 
         in.readLine();
     }
@@ -554,3 +531,38 @@ public class GUI extends Application {
         this.obj2ImageView = obj2ImageView;
     }
 }
+
+/*gridPane = (GridPane) fxmlPane.lookup("#gridPane");
+        gridPane.setPrefSize(300,300);
+        if (gridPane != null) {
+            Image image1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/3.png")));
+            Image image3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/3.png")));
+            Image image4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/3.png")));
+            Image image2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Resource/3.png")));
+            firstCardFromWell = new ImageView(image1);
+           secondCardFromWell= new ImageView(image2);
+            thirdCardFromWell= new ImageView(image3);
+            fourthCardFromWell = new ImageView(image4);
+
+            // Imposta le dimensioni delle ImageView se necessario
+            firstCardFromWell.setFitWidth(117);
+            firstCardFromWell.setFitHeight(80);
+            secondCardFromWell.setFitWidth(117);
+            secondCardFromWell.setFitHeight(80);
+            thirdCardFromWell.setFitWidth(117);
+            thirdCardFromWell.setFitHeight(80);
+            fourthCardFromWell.setFitWidth(117);
+            fourthCardFromWell.setFitHeight(80);
+
+            // Aggiungi le ImageView al GridPane nelle posizioni desiderate
+            GridPane.setConstraints(firstCardFromWell, 0, 0);
+            GridPane.setConstraints(secondCardFromWell, 1, 0);
+            GridPane.setConstraints(thirdCardFromWell, 0, 1);
+            GridPane.setConstraints(fourthCardFromWell, 1, 1);
+
+            // Aggiungi le ImageView al GridPane
+            gridPane.getChildren().addAll(fxmlGame, secondCardFromWell, thirdCardFromWell, fourthCardFromWell);
+        }
+        else {
+            System.err.println("GridPane is null");
+        }*/
