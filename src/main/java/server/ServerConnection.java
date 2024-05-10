@@ -104,6 +104,11 @@ private void waitUntilItsYourTurn() throws IOException {
             System.out.println("You already placed and drew a card!");
             return;
         }
+        if(command.equals("endturn")&& !player.isHasThePlayerAlreadyPLacedACard())
+        {
+            System.out.println("You have to place a card first");
+            return;
+        }
         actionsInput(command);
     }
 
@@ -457,6 +462,7 @@ private void waitUntilItsYourTurn() throws IOException {
 
     private void runEndTurn() throws IOException {
         sendMessageToServer("endTurn");
+
         player.setHasThePlayerAlreadyPLacedACard(false);
         System.out.println("You chose to end your turn.");
         String answer= in.readLine();

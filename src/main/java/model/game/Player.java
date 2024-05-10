@@ -24,7 +24,7 @@ public class Player implements Observable {
     private boolean hasThePlayerAlreadyPLacedACard= false;
     private boolean isThePlayerDeckStarted=false;
     private boolean hasThePlayerGot20Points=false;
-
+    //private boolean hasThePlayerPlacedACard=false;
     public Player(String nickName, int playerScore, Dot dot, Board board){ //PLAYER CONSTRUCTOR
         this.nickName = nickName;
         this.playerScore = playerScore;
