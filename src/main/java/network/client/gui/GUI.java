@@ -182,7 +182,7 @@ public class GUI extends Application {
         BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
 
-        loginButton = (Button) fxml.lookup("#loginButton");
+
 
 
         StackPane root = new StackPane();
@@ -547,8 +547,18 @@ public class GUI extends Application {
         vboxGame.setLayoutX(widthWellCards*2);
         vboxGame.setFillWidth(true);
 
+        //all'interno della scrollPane gameBoard c'è insideScrollPane che è un Pane
+        //gameBoard è in una Hbox che è in una Vbox che è contenuto in Root
         ScrollPane gameBoard = new ScrollPane();
         Pane insideScrollPane = new Pane();
+        insideScrollPane.setPrefWidth(window.getWidth()*0.8);
+        insideScrollPane.setPrefHeight(window.getHeight()*0.8);
+        gameBoard.setPannable(true);
+
+
+
+        insideScrollPane.setBackground(background);
+        Pane paneForImages = new Pane();
         HBox secondRow = new HBox();
         HBox firstColomnOfSecondRow = new HBox();
         //Pane paneForImages = new Pane();
@@ -579,12 +589,14 @@ public class GUI extends Application {
 
     private String checkType(String id){
         int intId = Integer.parseInt(id);
+        String type;
         if(intId>0 && intId<=40){
-            return "Resource";
+            type = "Resource";
         }
         else{
-            return "Gold";
+            type = "Gold";
         }
+        return type;
     }
 
 
