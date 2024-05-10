@@ -270,7 +270,27 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println(ultimo);
         player.getClientView().getPlayerStringCards().remove(size-1);
         drawCard();
+        status();
+
+        if(clientView.getPlayerScore()>=20)
+        {
+            player.setHasThePlayerAlreadyPLacedACard(false);
+            System.out.println("You chose to end your turn.");
+            String answer= in.readLine();
+            System.out.println(answer);
+            setCurrentPlayer(answer);
+            String updatingCurrentPlayer= in.readLine(); //-> aggiornamento del currentPLayer
+            System.out.println(updatingCurrentPlayer);
+            cleanTheSocket();
+        }
         //player.setThePlayerDeckStarted(false);
+    }
+
+    private void status() throws IOException {
+        sendMessageToServer("status");
+        String points= in.readLine();
+        System.out.println(points);
+        clientView.setPlayerScore(Integer.parseInt(points));
     }
 
     private void visualizeCommonObjective() throws IOException {
@@ -303,6 +323,7 @@ private void waitUntilItsYourTurn() throws IOException {
         sendMessageToServer("showPoints");
         System.out.println("You chose to visualize your points!\n");
         String result= in.readLine();
+        clientView.setPlayerScore(Integer.parseInt(result));
         System.out.println("At the moment your points are: " + result);
     }
 
@@ -442,6 +463,7 @@ private void waitUntilItsYourTurn() throws IOException {
         setCurrentPlayer(answer);
         String updatingCurrentPlayer= in.readLine(); //-> aggiornamento del currentPLayer
         System.out.println(updatingCurrentPlayer);
+        //clientView.update(player);
         cleanTheSocket();
     }
 
@@ -450,7 +472,7 @@ private void waitUntilItsYourTurn() throws IOException {
         String answer= in.readLine();
         setCurrentPlayer(answer);
         if(answer.equals("All clients have quit")){
-            System.out.println("all clients have quit");
+            System.out.println("All clients have quit");
         }
         else{
             System.out.println("Current player: " + currentPlayer);

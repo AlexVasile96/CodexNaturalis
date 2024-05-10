@@ -86,7 +86,8 @@ public class Command { //Command Client sends to Server
             }
             case "persistenceGame":
                 //game.alreadyExistsAnotherGame();
-
+            case "status":
+                return String.valueOf(game.getCurrentPlayingPLayer().getPlayerScore());
             case "quit":
                 game.runEndTurn(player);
                 return "quit";
