@@ -136,7 +136,6 @@ public class Game implements WhatCanPlayerDo {
     @Override
     public String showCards(Player player) {
         List<Card> cardToSendToServer = player.getPlayerCards();
-        //System.out.println(player.getPlayerCards());
         StringBuilder cardsAsString = new StringBuilder();
         for (Card card : cardToSendToServer) {
             cardsAsString.append(card.toString()).append("\n");
@@ -250,7 +249,17 @@ public class Game implements WhatCanPlayerDo {
         stamp.append("exit");
         return String.valueOf(stamp);
     }
+    public String getDeckID(){
+        List<Card> cardToSendToServer = currentPlayingPLayer.getPlayerCards();
+        StringBuilder cardsAsString = new StringBuilder();
+        for (Card card : cardToSendToServer) {
+            cardsAsString.append(card.getId()).append("\n");
+        }
+        return String.valueOf(cardsAsString); //ritorna stringa
 
+
+
+    }
     public String showBoardForPlacingCards(Player player)
     {
         return player.getBoard().printBoardForServer();

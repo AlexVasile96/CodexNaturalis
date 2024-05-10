@@ -464,7 +464,15 @@ public class GUI extends Application {
         typeCard2 = checkType(idCard2);
         typeCard3 = checkType(idCard3);
         typeCard4 = checkType(idCard4);
+        out.println("deckId");
+        idHandCard1=in.readLine();
+        System.out.println(idHandCard1);
+        idHandCard2=in.readLine();
+        System.out.println(idHandCard2);
+        idHandCard3=in.readLine();
+        System.out.println(idHandCard3);
 
+        in.readLine(); //spazio
 
 
 
