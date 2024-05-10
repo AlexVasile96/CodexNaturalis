@@ -506,12 +506,6 @@ public class GUI extends Application {
         handCard3View.setFitWidth(widthWellCards);
         handCard3View.setFitHeight(heightWellCards);
 
-
-        /*String pathCard1 = "/ImmaginiCodex/CarteFront/Gold/41.png";
-        String pathCard2 = "/ImmaginiCodex/CarteFront/Gold/51.png";
-        String pathCard3 = "/ImmaginiCodex/CarteFront/Gold/61.png";
-        String pathCard4 = "/ImmaginiCodex/CarteFront/Gold/71.png";*/
-
         Image wellCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathCard1)));
         Image wellCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathCard2)));
         Image wellCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathCard3)));
@@ -549,11 +543,17 @@ public class GUI extends Application {
 
         //all'interno della scrollPane gameBoard c'è insideScrollPane che è un Pane
         //gameBoard è in una Hbox che è in una Vbox che è contenuto in Root
-        ScrollPane gameBoard = new ScrollPane();
-        Pane insideScrollPane = new Pane();
-        insideScrollPane.setPrefWidth(window.getWidth()*0.8);
+        ScrollPane gameBoard = new ScrollPane();                //Creating my scrollPane
+        Pane insideScrollPane = new Pane();                     //Creating a pane i'll set inside my scrollpane
+        insideScrollPane.setPrefWidth(window.getWidth()*0.8);   //Setting pane default width and height
         insideScrollPane.setPrefHeight(window.getHeight()*0.8);
         gameBoard.setPannable(true);
+        gameBoard.setFitToWidth(true);
+        gameBoard.setFitToHeight(true);
+        gameBoard.setContent(insideScrollPane);
+        gameBoard.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        gameBoard.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        gameBoard.pannableProperty().set(true);
 
 
 
@@ -570,10 +570,7 @@ public class GUI extends Application {
         gridPaneForWellCards.add(wellCard3View, 1, 0);
         gridPaneForWellCards.add(wellCard4View, 1, 1);
 
-        gameBoard.setFitToWidth(true);
-        gameBoard.setFitToHeight(true);
 
-        gameBoard.setContent(insideScrollPane);
         //paneForImages.getChildren().addAll(wellCard1View, wellCard2View, wellCard3View, wellCard4View);
         vboxGame.getChildren().addAll(gridPaneForWellCards);
         hboxGame.getChildren().addAll(gameBoard, vboxGame);
