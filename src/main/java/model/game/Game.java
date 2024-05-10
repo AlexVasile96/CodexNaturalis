@@ -204,23 +204,23 @@ public class Game implements WhatCanPlayerDo {
     }
 
     public String sendWellIdFirstToGui(){
-        int id1= wellCard1.getId();
+        int id1= well.get(0).getId();
         return String.valueOf(id1);
     }
     public String sendWellIdSecondToGui(){
 
-        int id2= wellCard2.getId();
+        int id2= well.get(1).getId();
        return String.valueOf(id2);
     }
     public String sendWellIdThirdToGui(){
 
-        int id3= wellCard3.getId();
+        int id3=  well.get(2).getId();
         return String.valueOf(id3);
 
     }
     public String sendWellIdFourthToGui(){
 
-        int id4= wellCard4.getId();
+        int id4=  well.get(3).getId();;
         return String.valueOf(id4);
     }
 
@@ -415,10 +415,10 @@ public class Game implements WhatCanPlayerDo {
     //PRIVATE METHODS INSIDE GAME
 
     private void initializewell(){
-        wellCard1= (Card) resourceDeck.drawCard(well);
-        wellCard2= (Card) resourceDeck.drawCard(well);
-        wellCard3= (Card) goldDeck.drawCard(well);
-        wellCard4 = (Card) goldDeck.drawCard(well);
+        resourceDeck.drawCard(well);
+         resourceDeck.drawCard(well);
+         goldDeck.drawCard(well);
+         goldDeck.drawCard(well);
         System.out.println("Cards in the well: ");
         for (Card card : well) {
             System.out.println(card);
