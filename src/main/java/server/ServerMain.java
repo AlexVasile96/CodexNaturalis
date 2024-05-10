@@ -19,6 +19,7 @@ import java.util.concurrent.Executors;
 public class ServerMain {
     private static List<HandlingPlayerInputsThread> clients= new ArrayList<>();
     private static ExecutorService pool = Executors.newFixedThreadPool(4);
+    private static ExecutorService pingpool = Executors.newFixedThreadPool(4);
     private static Game game= new Game();
     private static List< Player> playersInCurrentGame= new ArrayList<>();
 
@@ -65,6 +66,10 @@ public class ServerMain {
                     HandlingPlayerInputsThread clientThread= new HandlingPlayerInputsThread(socket, playersInCurrentGame, clients, lobby, game);
                     clients.add(clientThread);
                     pool.execute(clientThread); //Handling single player client
+                    //PingThread pingThread = new PingThread(socket);
+                    //pingpool.execute(pingThread);
+                    //Thread pingThreadExecutor = new Thread(pingThread);
+                    //pingThreadExecutor.start();   // Ping al client
                 } catch (IOException ex) {
                     System.err.println(ex.getMessage());
                     break;
