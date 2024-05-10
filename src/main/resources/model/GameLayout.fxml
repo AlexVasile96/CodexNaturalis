@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GUI">
+   <children>
+      <ScrollPane fx:id="gameBoard" prefHeight="400.0" prefWidth="366.0">
+         <content>
+            <Pane prefHeight="698.0" prefWidth="1109.0">
+               <children>
+                  <Button layoutX="31.0" layoutY="26.0" mnemonicParsing="false" text="Show obj" />
+               </children>
+            </Pane>
+         </content>
+      </ScrollPane>
+      <ImageView fx:id="CARTA" fitHeight="63.0" fitWidth="93.0" layoutX="367.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="CARTA2" fitHeight="63.0" fitWidth="93.0" layoutX="460.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="CARTA3" fitHeight="63.0" fitWidth="93.0" layoutX="367.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="CARTA4" fitHeight="63.0" fitWidth="93.0" layoutX="460.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</Pane>

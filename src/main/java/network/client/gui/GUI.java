@@ -286,6 +286,7 @@ public class GUI extends Application {
         in.readLine();
         in.readLine();
         in.readLine();
+        in.readLine();
 
         String firstSecretCard = in.readLine();
         String secondSecretCard = in.readLine();
@@ -418,9 +419,11 @@ public class GUI extends Application {
 
 
     private void game() throws IOException {
-        Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/gameLayout.fxml")));
+        Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/GameLayout.fxml")));
         Pane root = new Pane();
         Pane fxmlPane = (Pane) fxmlGame;
+        hboxGame = (HBox) fxmlPane.lookup("#hboxGame");
+        vboxGame = (VBox) fxmlPane.lookup("#vboxGame");
         gameBoard = (ScrollPane) fxmlPane.lookup("#gameBoard");
         CARTA = (ImageView) fxmlPane.lookup("#CARTA");
         if (gameBoard != null) {
