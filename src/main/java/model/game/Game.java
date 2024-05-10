@@ -35,6 +35,10 @@ public class Game implements WhatCanPlayerDo {
     private Card selectedCardFromTheDeck=null;
     private Card cardPlayerChoose=null;
     private List<Player> playersFromDisk;
+    private Card wellCard1;
+    private Card wellCard2;
+    private Card wellCard3;
+    private Card wellCard4;
 
 
     public Game() {                                           //GAME CONSTRUCTOR WHICH INITIALIZED ALL THE CARDS
@@ -197,6 +201,27 @@ public class Game implements WhatCanPlayerDo {
         }
         stamp.append("exit");
         return String.valueOf(stamp);
+    }
+
+    public String sendWellIdFirstToGui(){
+        int id1= wellCard1.getId();
+        return String.valueOf(id1);
+    }
+    public String sendWellIdSecondToGui(){
+
+        int id2= wellCard2.getId();
+       return String.valueOf(id2);
+    }
+    public String sendWellIdThirdToGui(){
+
+        int id3= wellCard3.getId();
+        return String.valueOf(id3);
+
+    }
+    public String sendWellIdFourthToGui(){
+
+        int id4= wellCard4.getId();
+        return String.valueOf(id4);
     }
 
     @Override
@@ -390,10 +415,10 @@ public class Game implements WhatCanPlayerDo {
     //PRIVATE METHODS INSIDE GAME
 
     private void initializewell(){
-        resourceDeck.drawCard(well);
-        resourceDeck.drawCard(well);
-        goldDeck.drawCard(well);
-        goldDeck.drawCard(well);
+        wellCard1= (Card) resourceDeck.drawCard(well);
+        wellCard2= (Card) resourceDeck.drawCard(well);
+        wellCard3= (Card) goldDeck.drawCard(well);
+        wellCard4 = (Card) goldDeck.drawCard(well);
         System.out.println("Cards in the well: ");
         for (Card card : well) {
             System.out.println(card);
