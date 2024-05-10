@@ -95,6 +95,15 @@ public class Command { //Command Client sends to Server
                 return game.firstCommonObjectiveCardId();
             case "secondCommon":
                 return game.secondCommonObjectiveCardId();
+            case "firstWellId":
+                return game.sendWellIdFirstToGui();
+            case "secondWellId":
+                return game.sendWellIdSecondToGui();
+            case "thirdWellId":
+                return game.sendWellIdThirdToGui();
+            case "fourthWellId":
+                return game.sendWellIdFourthToGui();
+
                 default:
                 return "Unknown command.";
         }
