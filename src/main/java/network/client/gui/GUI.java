@@ -39,7 +39,7 @@ public class GUI extends Application {
     private Scene startScene;
     private Scene loginScene;
     private static BufferedReader in;
-    private int isFront=2; //The server need 1 to place the card on the back and 2 to place it on the front
+    private int isFront=1; //The server need 1 to place the card on the back and 0 to place it on the front
     private Scene gameScene;
     private Scene chooseNumOfPlayersScene;
     private Scene lobbyScene;
@@ -357,7 +357,7 @@ public class GUI extends Application {
     @FXML
     public int flipToBackCard() {
         int idToInt= Integer.parseInt(id);
-        isFront=1;
+        isFront=0;
         if(idToInt>=1 && idToInt <=40) //Resource Card
         {
             String pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
@@ -383,7 +383,7 @@ public class GUI extends Application {
     @FXML
     public int flipToFrontCard() {
         int idToInt= Integer.parseInt(id);
-        isFront=2;
+        isFront=1;
         if(idToInt>=1 && idToInt <=40) //Resource Card
         {
             String pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
