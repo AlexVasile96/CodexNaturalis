@@ -33,7 +33,19 @@ public class ServerConnection implements Runnable {
 
 @Override
     public void run() {
-
+    Thread ackThread = new Thread(() -> {
+        try {
+            // Invia periodicamente l'ACK al server ogni 10 secondi
+            while (!Thread.currentThread().isInterrupted()) {
+                out.println("KEEP_ALIVE_ACK");
+                Thread.sleep(10000); // Attendi 10 secondi prima di inviare il prossimo ACK
+                System.out.println("Ack inviato correttamente");
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    });
+    ackThread.start();
     String command;
         try {
             System.out.println("Welcome! I'm the server, please type anything to start the conversation!\n");
@@ -48,7 +60,6 @@ public class ServerConnection implements Runnable {
                         takingTheInitialCard();                               //Taking the initial Card
                         System.out.println("Login phase ended!");
                         currentPlayer = in.readLine();                      //who is the current player?
-                        //System.out.println("Server says that first player will be " + currentPlayer);
                     } else {
                         while (!isTheWhileActive){
                             if(isConnectionClosed){

@@ -64,6 +64,19 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     @Override
     public void run() {
+        Thread keepAliveThread = new Thread(() -> {
+            try {
+                while (!Thread.currentThread().isInterrupted()) {
+                    // Invia il messaggio di keep-alive al client ogni 10 secondi
+                    out.println("KEEP_ALIVE");
+                    Thread.sleep(10000); // Attendi 10 secondi prima di inviare il prossimo messaggio di keep-alive
+                    System.out.println("Mandato il coso");
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        keepAliveThread.start();
         synchronized (this) {
             try {
                 //loadPlayerDataFromDisk();
