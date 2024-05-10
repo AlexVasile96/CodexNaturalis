@@ -133,6 +133,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             {
                 winningPlayer=currentPlayer;
                 GameController.setWinningPlayer(currentPlayer);
+                runCommand("status", threadPlayer);
                 sendMessageToAllClients("All players have one last turn and then the game will end");
                 runCommand("endTurn",threadPlayer);
 

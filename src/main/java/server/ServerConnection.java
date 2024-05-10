@@ -274,6 +274,7 @@ private void waitUntilItsYourTurn() throws IOException {
 
         if(clientView.getPlayerScore()>=20)
         {
+            System.out.println(in.readLine());
             player.setHasThePlayerAlreadyPLacedACard(false);
             System.out.println("You chose to end your turn.");
             String answer= in.readLine();
