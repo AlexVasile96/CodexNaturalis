@@ -28,6 +28,15 @@ import java.util.Objects;
 
 public class GUI extends Application {
 
+    private String idCard1=null;
+    private String idCard2=null;
+    private String idCard3=null;
+    private String idCard4=null;
+    private String typeCard1=null;
+    private String typeCard2=null;
+    private String typeCard3=null;
+    private String typeCard4=null;
+
     private double heightWellCards = 70;
     private double widthWellCards = 101;
     private static Stage window;
@@ -412,38 +421,43 @@ public class GUI extends Application {
         out.println(isFront);
         //System.out.printf(""+isFront);
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        update();
         game();
         Platform.runLater(() -> {
             primaryStage.setScene(gameScene);
         });
     }
 
-    private void game() throws IOException {
+
+    private void update() throws IOException {
         in.readLine();
         out.println("firstWellId");
-        String idCard1 = in.readLine();
+        idCard1 = in.readLine();
 
         System.out.println(idCard1);
 
         out.println("secondWellId");
-        String idCard2 = in.readLine();
+        idCard2 = in.readLine();
 
         System.out.println(idCard2);
 
         out.println("thirdWellId");
-        String idCard3 = in.readLine();
+        idCard3 = in.readLine();
 
         System.out.println(idCard3);
 
         out.println("fourthWellId");
-        String idCard4 = in.readLine();
+        idCard4 = in.readLine();
         System.out.println(idCard4);
 
-        String typeCard1 = checkType(idCard1);
-        String typeCard2 = checkType(idCard2);
-        String typeCard3 = checkType(idCard3);
-        String typeCard4 = checkType(idCard4);
+        typeCard1 = checkType(idCard1);
+        typeCard2 = checkType(idCard2);
+        typeCard3 = checkType(idCard3);
+        typeCard4 = checkType(idCard4);
+    }
 
+
+    private void game() throws IOException {
 
         String pathCard1 = "/ImmaginiCodex/CarteFront/"+typeCard1+"/"+ idCard1 +".png";
         String pathCard2 = "/ImmaginiCodex/CarteFront/"+typeCard2+"/"+ idCard2 +".png";
@@ -512,7 +526,7 @@ public class GUI extends Application {
 
         gameScene = new Scene(root, 600, 400);
 
-        in.readLine();
+        //in.readLine();
     }
 
     private String checkType(String id){
