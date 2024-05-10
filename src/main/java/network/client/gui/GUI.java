@@ -28,6 +28,8 @@ import java.util.Objects;
 
 public class GUI extends Application {
 
+    private double heightWellCards = 70;
+    private double widthWellCards = 101;
     private static Stage window;
     public ImageView firstCardFromWell;
     public ImageView secondCardFromWell;
@@ -75,6 +77,8 @@ public class GUI extends Application {
     public ImageView obj2ImageView;
     @FXML
     public Button closeButton;
+    @FXML
+    public ScrollPane gameBoard;
 
 
 
@@ -92,8 +96,6 @@ public class GUI extends Application {
     public ImageView resourceCard;
     @FXML
     public ImageView goldCard;
-    @FXML
-    public ScrollPane gameBoard;
 
 
 
@@ -416,8 +418,115 @@ public class GUI extends Application {
         });
     }
 
-
     private void game() throws IOException {
+        in.readLine();
+        out.println("firstWellId");
+        String idCard1 = in.readLine();
+
+        System.out.println(idCard1);
+
+        out.println("secondWellId");
+        String idCard2 = in.readLine();
+
+        System.out.println(idCard2);
+
+        out.println("thirdWellId");
+        String idCard3 = in.readLine();
+
+        System.out.println(idCard3);
+
+        out.println("fourthWellId");
+        String idCard4 = in.readLine();
+        System.out.println(idCard4);
+
+        String typeCard1 = checkType(idCard1);
+        String typeCard2 = checkType(idCard2);
+        String typeCard3 = checkType(idCard3);
+        String typeCard4 = checkType(idCard4);
+
+
+        String pathCard1 = "/ImmaginiCodex/CarteFront/"+typeCard1+"/"+ idCard1 +".png";
+        String pathCard2 = "/ImmaginiCodex/CarteFront/"+typeCard2+"/"+ idCard2 +".png";
+        String pathCard3 = "/ImmaginiCodex/CarteFront/"+typeCard3+"/"+ idCard3 +".png";
+        String pathCard4 = "/ImmaginiCodex/CarteFront/"+typeCard4+"/"+ idCard4 +".png";
+
+        /*String pathCard1 = "/ImmaginiCodex/CarteFront/Gold/41.png";
+        String pathCard2 = "/ImmaginiCodex/CarteFront/Gold/51.png";
+        String pathCard3 = "/ImmaginiCodex/CarteFront/Gold/61.png";
+        String pathCard4 = "/ImmaginiCodex/CarteFront/Gold/71.png";*/
+
+        Image wellCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathCard1)));
+        Image wellCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathCard2)));
+        Image wellCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathCard3)));
+        Image wellCard4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathCard4)));
+
+        ImageView wellCard1View = new ImageView(wellCard1);
+        wellCard1View.setFitHeight(heightWellCards);
+        wellCard1View.setFitWidth(widthWellCards);
+
+        ImageView wellCard2View = new ImageView(wellCard2);
+        wellCard2View.setFitHeight(heightWellCards);
+        wellCard2View.setFitWidth(widthWellCards);
+
+        ImageView wellCard3View = new ImageView(wellCard3);
+        wellCard3View.setFitHeight(heightWellCards);
+        wellCard3View.setFitWidth(widthWellCards);
+
+        ImageView wellCard4View = new ImageView(wellCard4);
+        wellCard4View.setFitHeight(heightWellCards);
+        wellCard4View.setFitWidth(widthWellCards);
+
+
+
+        Pane root = new Pane();
+        Image codexLogo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundGameImage = new BackgroundImage(codexLogo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundGameImage);
+        root.setBackground(background);
+
+        HBox hboxGame = new HBox();
+        VBox vboxGame = new VBox();
+        vboxGame.setLayoutX(widthWellCards*2);
+        vboxGame.setFillWidth(true);
+
+        ScrollPane gameBoard = new ScrollPane();
+        Pane insideScrollPane = new Pane();
+        Pane paneForImages = new Pane();
+
+        insideScrollPane.getChildren().add(initCard);
+        GridPane gridPaneForWellCards = new GridPane();
+        gridPaneForWellCards.add(wellCard1View, 0, 0);
+        gridPaneForWellCards.add(wellCard2View, 0, 1);
+        gridPaneForWellCards.add(wellCard3View, 1, 0);
+        gridPaneForWellCards.add(wellCard4View, 1, 1);
+
+        gameBoard.setFitToWidth(true);
+        gameBoard.setFitToHeight(true);
+
+        gameBoard.setContent(insideScrollPane);
+        //paneForImages.getChildren().addAll(wellCard1View, wellCard2View, wellCard3View, wellCard4View);
+        vboxGame.getChildren().addAll(gridPaneForWellCards);
+        hboxGame.getChildren().addAll(gameBoard, vboxGame);
+        root.getChildren().add(hboxGame);
+
+        gameScene = new Scene(root, 600, 400);
+
+        in.readLine();
+    }
+
+    private String checkType(String id){
+        int intId = Integer.parseInt(id);
+        if(intId>0 && intId<=40){
+            return "Resource";
+        }
+        else{
+            return "Gold";
+        }
+    }
+
+
+    /*private void game() throws IOException {
         Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/GameLayout.fxml")));
         Pane root = new Pane();
         Pane fxmlPane = (Pane) fxmlGame;
@@ -446,7 +555,7 @@ public class GUI extends Application {
 
 
         in.readLine();
-    }
+    }*/
 
     @FXML
     private void showObjCardsClicked() throws IOException {
