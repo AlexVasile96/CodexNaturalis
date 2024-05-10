@@ -1,4 +1,8 @@
 package server;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import controller.GameController;
 import controller.TurnController;
 import exceptions.ParametersNotValidException;
@@ -62,6 +66,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     public void run() {
         synchronized (this) {
             try {
+                //loadPlayerDataFromDisk();
                 whichplayerAreYou++;
                 String clientSaysHello = stdIn.readLine();
                 System.out.println("Il client ha detto " + clientSaysHello);    //Client says hello
@@ -387,6 +392,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     public void sendMessageToClient(String message) {
         out.println(message);
     }
+
 
 
 }

@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class GameController {
     private final Map<String, PrintWriter> players;
@@ -32,7 +35,7 @@ public class GameController {
     private Map<String, ClientView> clientViews = new HashMap<>();
     private static boolean isCornerAlreadyChosen= false;
     private final CountDownLatch sizeLatch = new CountDownLatch(1);
-
+    private static final String SAVE_FILE_PATH = "src/main/resources/saveplayers.json";
 
 
 
@@ -115,6 +118,41 @@ public class GameController {
             setSizeSet(true);
 
     }
+    public void loadGameOrStartNewGame() {
+
+        List<String> savedPlayers = loadSavedPlayers();
+        System.out.println(savedPlayers);
+        if (allClientsMatchSavedPlayers(savedPlayers)) {
+
+            System.out.println("Caricamento della partita salvata...");
+        } else {
+
+            System.out.println("Inizio di una nuova partita...");
+        }
+    }
+
+    private List<String> loadSavedPlayers() {
+        List<String> savedPlayers = null;
+        try {
+            Path filePath = Paths.get(SAVE_FILE_PATH);
+            savedPlayers = Files.readAllLines(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return savedPlayers;
+    }
+
+    private boolean allClientsMatchSavedPlayers(List<String> savedPlayers) {
+        return savedPlayers != null && savedPlayers.containsAll(players.keySet());
+    }
+
+
+
+
+
+
+
+
     public int getNumOfPlayers() {
         return players.size();
     }

@@ -34,6 +34,7 @@ public class Game implements WhatCanPlayerDo {
     private static boolean isCornerAlreadyChosen= false;
     private Card selectedCardFromTheDeck=null;
     private Card cardPlayerChoose=null;
+    private List<Player> playersFromDisk;
 
 
     public Game() {                                           //GAME CONSTRUCTOR WHICH INITIALIZED ALL THE CARDS
@@ -419,11 +420,6 @@ public class Game implements WhatCanPlayerDo {
         return Paths.get(home);
     }
 
-    private Path getDefaultPlayers(){
-        String home= ("src/main/resources/saveplayers.json");
-        return Paths.get(home);
-    }
-
     void saveCards(){
         savePath(getDefaultCardPath());
     }
@@ -452,11 +448,16 @@ public class Game implements WhatCanPlayerDo {
         }
     }
 
-
-
     void savePlayers(){
         saveEachPlayerInGame(getDefaultPlayers());
     }
+
+
+    private Path getDefaultPlayers(){
+        String home= ("src/main/resources/saveplayers.json");
+        return Paths.get(home);
+    }
+
 
 
     void load(){
@@ -477,5 +478,10 @@ public class Game implements WhatCanPlayerDo {
             e.printStackTrace();
         }
     }
+
+    public void alreadyExistsAnotherGame(){
+        //playersFromDisk=
+    }
+
 }
 
