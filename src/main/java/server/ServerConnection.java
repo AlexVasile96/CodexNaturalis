@@ -274,17 +274,17 @@ private void waitUntilItsYourTurn() throws IOException {
 
         if(clientView.getPlayerScore()>=20)
         {
-            System.out.println(in.readLine());
+            System.out.println(in.readLine()); //all players have on last turn and then the game will end
             player.setHasThePlayerAlreadyPLacedACard(false);
             System.out.println("You chose to end your turn.");
             String answer= in.readLine();
-            System.out.println(answer);
+            System.out.println("Next player will be " + answer);   //next player will be +...
             setCurrentPlayer(answer);
             String updatingCurrentPlayer= in.readLine(); //-> aggiornamento del currentPLayer
             System.out.println(updatingCurrentPlayer);
             cleanTheSocket();
         }
-        //player.setThePlayerDeckStarted(false);
+
     }
 
     private void status() throws IOException {

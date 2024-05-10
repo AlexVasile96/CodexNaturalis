@@ -21,8 +21,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-
+import java.util.Objects;
 
 
 public class HandlingPlayerInputsThread implements Runnable {
@@ -41,7 +40,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private String userName;
     private static int index=0;
     private static int whichplayerAreYou=0;
-    private static Player winningPlayer=null;
+    private static Player winningPlayer=new Player(null,0, Dot.BLACK, null);
 
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException { //Costructor
@@ -129,25 +128,29 @@ public class HandlingPlayerInputsThread implements Runnable {
         String messageFromClient;
         boolean endturnphase=false;
         while (!endturnphase) {
-            if(currentPlayer.getPlayerScore()>=20)
+            if(currentPlayer.getPlayerScore()>=20 && !currentPlayer.isHasThePlayerGot20Points())
             {
+                currentPlayer.setHasThePlayerGot20Points(true);
                 winningPlayer=currentPlayer;
                 GameController.setWinningPlayer(currentPlayer);
                 runCommand("status", threadPlayer);
                 sendMessageToAllClients("All players have one last turn and then the game will end");
                 runCommand("endTurn",threadPlayer);
-
+            }
+            if(Objects.equals(currentPlayer.getNickName(), winningPlayer.getNickName()))
+            {
+                System.out.println("END OF GAME!");
             }
             System.out.println("I'm waiting current player" + currentPlayer.getNickName() + " mi faccia richiesta");
             messageFromClient = stdIn.readLine();
             System.out.println("Client typed: " + messageFromClient);
             runCommand(messageFromClient, threadPlayer); //->run
+
             if(messageFromClient.equals("quit")){
                 gameController.setSize(gameController.getSize()-1);
                 messageFromClient = stdIn.readLine(); //endturn
                 runCommand(messageFromClient, threadPlayer); //->run
                 endturnphase=true;
-
             }
 
         }

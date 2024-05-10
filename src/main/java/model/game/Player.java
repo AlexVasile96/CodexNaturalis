@@ -23,6 +23,7 @@ public class Player implements Observable {
     private ObjectiveCard secretChosenCard;
     private boolean hasThePlayerAlreadyPLacedACard= false;
     private boolean isThePlayerDeckStarted=false;
+    private boolean hasThePlayerGot20Points=false;
 
     public Player(String nickName, int playerScore, Dot dot, Board board){ //PLAYER CONSTRUCTOR
         this.nickName = nickName;
@@ -814,6 +815,14 @@ public class Player implements Observable {
         jsonObject.addProperty("playerCards", String.valueOf(playerCards));
         jsonObject.addProperty("clientView", String.valueOf(clientView));
         return jsonObject;
+    }
+
+    public boolean isHasThePlayerGot20Points() {
+        return hasThePlayerGot20Points;
+    }
+
+    public void setHasThePlayerGot20Points(boolean hasThePlayerGot20Points) {
+        this.hasThePlayerGot20Points = hasThePlayerGot20Points;
     }
 }
 
