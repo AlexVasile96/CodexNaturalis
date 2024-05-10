@@ -124,10 +124,10 @@ public class GameController {
         System.out.println(savedPlayers);
         if (allClientsMatchSavedPlayers(savedPlayers)) {
 
-            System.out.println("Caricamento della partita salvata...");
+            System.out.println("Loading existing game");
         } else {
 
-            System.out.println("Inizio di una nuova partita...");
+            System.out.println("Creating a new game");
         }
     }
 
