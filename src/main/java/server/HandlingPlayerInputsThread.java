@@ -41,6 +41,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private String userName;
     private static int index=0;
     private static int whichplayerAreYou=0;
+    private static Player winningPlayer=null;
 
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException { //Costructor
@@ -64,20 +65,6 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     @Override
     public void run() {
-        /*Thread keepAliveThread = new Thread(() -> {
-            try {
-                while (!Thread.currentThread().isInterrupted()) {
-                    // Invia il messaggio di keep-alive al client ogni 10 secondi
-                    out.println("KEEP_ALIVE");
-                    stdIn.readLine();
-                    Thread.sleep(10000); // Attendi 10 secondi prima di inviare il prossimo messaggio di keep-alive
-                    System.out.println("Mandato il ping");
-                }
-            } catch (InterruptedException | IOException e) {
-                Thread.currentThread().interrupt();
-            }
-        });
-        keepAliveThread.start();*/
         synchronized (this) {
             try {
                 //loadPlayerDataFromDisk();
@@ -102,6 +89,12 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println(game.getObjectiveDeck().remainingCards());       //Debugging to check if all cards are given correctly
                 sendMessageToClient(currentPlayer.getNickName());
                 boolean hasClientQuit= false;
+
+                //SETTING POINTS FOR ENDGAME DEBUGGING
+                for(Player player: playersList)
+                {
+                    player.setPlayerScore(18);
+                }
                 while (!hasClientQuit){
                     startGame();
                     System.out.println("Il client è cambiato, ora tocca a " + currentPlayer);
@@ -136,9 +129,17 @@ public class HandlingPlayerInputsThread implements Runnable {
         String messageFromClient;
         boolean endturnphase=false;
         while (!endturnphase) {
-            System.out.println("Sto aspettando che il client " + currentPlayer.getNickName() + " mi faccia richiesta");
+            if(currentPlayer.getPlayerScore()>=20)
+            {
+                winningPlayer=currentPlayer;
+                GameController.setWinningPlayer(currentPlayer);
+                sendMessageToAllClients("All players have one last turn and then the game will end");
+                runCommand("endTurn",threadPlayer);
+
+            }
+            System.out.println("I'm waiting current player" + currentPlayer.getNickName() + " mi faccia richiesta");
             messageFromClient = stdIn.readLine();
-            System.out.println("Il client ha selezionato: " + messageFromClient);
+            System.out.println("Client typed: " + messageFromClient);
             runCommand(messageFromClient, threadPlayer); //->run
             if(messageFromClient.equals("quit")){
                 gameController.setSize(gameController.getSize()-1);

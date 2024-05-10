@@ -33,22 +33,6 @@ public class ServerConnection implements Runnable {
 
 @Override
     public void run() {
-    /*Thread ackThread = new Thread(() -> {
-        try {
-            // Invia periodicamente l'ACK al server ogni 10 secondi
-            while (!Thread.currentThread().isInterrupted()) {
-                if(in.readLine().equals("KEEP_ALIVE")){
-                    out.println("KEEP_ALIVE_ACK");
-                    Thread.sleep(10000); // Attendi 10 secondi prima di inviare il prossimo ACK
-                    System.out.println("Ack inviato correttamente");
-                }
-
-            }
-        } catch (InterruptedException | IOException e) {
-            Thread.currentThread().interrupt();
-        }
-    });
-    ackThread.start();*/
     String command;
         try {
             System.out.println("Welcome! I'm the server, please type anything to start the conversation!\n");

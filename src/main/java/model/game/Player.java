@@ -222,8 +222,8 @@ public class Player implements Observable {
         this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
         board.setNumOfEmpty(board.getNumOfEmpty() - 3);
         updatingPoints(selectedCardFromTheDeck); //Updating player Points
-        if (playerScore >= 20) {                //EndGame if the playerpoints=>20 points
-            System.out.println("Player " + getNickName() + "wins!\n");
+        if (playerScore >= 20) {                                            //EndGame if the playerpoints=>20 points
+            System.out.println("Player " + getNickName() + "has reached 20 points!\n");
             EndGame endGame = new EndGame();
         }
     }

@@ -117,6 +117,9 @@ public class Game implements WhatCanPlayerDo {
             return finalAnswer;
     }
 
+    public void endGame(){
+
+    }
 
 
     public String showYourspecificSeeds(Player player){

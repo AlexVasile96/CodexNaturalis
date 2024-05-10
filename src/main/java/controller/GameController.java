@@ -36,6 +36,7 @@ public class GameController {
     private static boolean isCornerAlreadyChosen= false;
     private final CountDownLatch sizeLatch = new CountDownLatch(1);
     private static final String SAVE_FILE_PATH = "src/main/resources/saveplayers.json";
+    private static Player winningPlayer=null;
 
 
 
@@ -288,4 +289,11 @@ public class GameController {
         out.println(message);
     }
 
+    public static Player getWinningPlayer() {
+        return winningPlayer;
+    }
+
+    public static void setWinningPlayer(Player winningPlayer) {
+        GameController.winningPlayer = winningPlayer;
+    }
 }
