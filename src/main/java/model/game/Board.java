@@ -160,28 +160,28 @@ public class Board {
 
     //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
     public ExtendExtendExtend createSpecificSecretCard(ObjectiveCard card, Player player) {
-        if(seedCardEquals("STAIRS", card)){
-
+        String specificSeedObjective= String.valueOf(card.getObjectiveSpecificTypeOfCard());
+        if(specificSeedObjective.equals("STAIRS")){
             StairsObjectiveCard stairsObjectiveCard=new StairsObjectiveCard();
             stairsObjectiveCard.checkPattern(this, card.getType(), player);
         }
-        if(seedCardEquals("L", card))
+        if(specificSeedObjective.equals("L"))
         {
             LObjectiveCard lObjectiveCard=new LObjectiveCard();
             lObjectiveCard.checkPattern(this, card.getType(), player);
         }
-        if(seedCardEquals("MIX", card)) {
+        if(specificSeedObjective.equals("MIX")) {
 
             MixObjectiveCard mixObjectiveCard=new MixObjectiveCard();
             mixObjectiveCard.checkPattern(this, card.getType(), player);
         }
-        if(seedCardEquals("TRIS", card))
+        if(specificSeedObjective.equals("TRIS"))
         {
 
             TrisObjectiveCard trisObjectiveCard=new TrisObjectiveCard();
             trisObjectiveCard.checkPattern(this, card.getType(), player);
         }
-        if(seedCardEquals("BIS", card))
+        if(specificSeedObjective.equals("BIS"))
         {
             BisObjectiveCard bisObjectiveCard=new BisObjectiveCard();
             bisObjectiveCard.checkPattern(this, card.getType(), player);

@@ -96,7 +96,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
                 while (!hasClientQuit){
                     startGame();
-                    System.out.println("Il client è cambiato, ora tocca a " + currentPlayer);
+                    System.out.println("Client changed, now " + currentPlayer +" is playing");
                     hasClientQuit=true;
                 }
                 clients.remove(this);
@@ -109,7 +109,7 @@ public class HandlingPlayerInputsThread implements Runnable {
 
                 if(gameController.getSize()==0)
                 {
-                    System.out.println("All players disconnected, thank you for playing codex!");
+                    System.out.println("All players disconnected, thank you for playing Codex!");
                     stdIn.close();
                     out.close();
                     clientSocket.close();
@@ -140,8 +140,9 @@ public class HandlingPlayerInputsThread implements Runnable {
             if(Objects.equals(currentPlayer.getNickName(), winningPlayer.getNickName()))
             {
                 System.out.println("END OF GAME!");
+                runCommand("endgame",threadPlayer);
             }
-            System.out.println("I'm waiting current player" + currentPlayer.getNickName() + " mi faccia richiesta");
+            System.out.println("I'm waiting current player" + currentPlayer.getNickName() + " request");
             messageFromClient = stdIn.readLine();
             System.out.println("Client typed: " + messageFromClient);
             runCommand(messageFromClient, threadPlayer); //->run

@@ -122,7 +122,35 @@ public class Game implements WhatCanPlayerDo {
     }
 
     public void endGame(){
+        System.out.println("Updating each player points to see who is the real winner!");
+        for(Player player: players)
+        {
+            System.out.println(player.getNickName());
+            System.out.println(player.getPlayerScore());
+            ObjectiveCard secretCard= player.getSecretChosenCard();
+            player.getBoard().createSpecificSecretCard(secretCard,player);
+            player.getBoard().createSpecificSecretCard(firstObjectiveCommonCard,player);
+            player.getBoard().createSpecificSecretCard(secondObjectiveCommonCard, player);
+            System.out.println(player.getPlayerScore());
+        }
+        Player winner= calculateWinner(players);
+        System.out.println("And the winner is...........");
+        System.out.println("Suspance...");
+        System.out.println(winner.getNickName());
+        System.out.println("Lesgooooo");
+    }
+    public Player calculateWinner(List<Player> players) {
+        Player winner = null;
+        int highestScore = currentPlayingPLayer.getPlayerScore();
 
+        for (Player player : players) {
+            int playerScore = player.getPlayerScore();
+            if (playerScore > highestScore) {
+                highestScore = playerScore;
+                winner = player;
+            }
+        }
+        return winner;
     }
 
 

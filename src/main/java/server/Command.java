@@ -105,6 +105,8 @@ public class Command { //Command Client sends to Server
                 return game.sendWellIdFourthToGui();
             case "deckId":
                 return game.getDeckID();
+            case "endgame":
+                game.endGame();
                 default:
                 return "Unknown command.";
         }
