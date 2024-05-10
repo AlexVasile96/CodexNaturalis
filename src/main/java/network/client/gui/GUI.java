@@ -37,6 +37,16 @@ public class GUI extends Application {
     private String typeCard3=null;
     private String typeCard4=null;
 
+    private String typeHandCard1 = null;
+    private String typeHandCard2 = null;
+    private String typeHandCard3 = null;
+    private String typeHandCard4 = null;
+
+    private String idHandCard1 = null;
+    private String idHandCard2 = null;
+    private String idHandCard3 = null;
+    private String idHandCard4 = null;
+
     private double heightWellCards = 70;
     private double widthWellCards = 101;
     private static Stage window;
@@ -454,8 +464,12 @@ public class GUI extends Application {
         typeCard2 = checkType(idCard2);
         typeCard3 = checkType(idCard3);
         typeCard4 = checkType(idCard4);
-    }
 
+
+
+
+
+    }
 
     private void game() throws IOException {
 
@@ -463,6 +477,11 @@ public class GUI extends Application {
         String pathCard2 = "/ImmaginiCodex/CarteFront/"+typeCard2+"/"+ idCard2 +".png";
         String pathCard3 = "/ImmaginiCodex/CarteFront/"+typeCard3+"/"+ idCard3 +".png";
         String pathCard4 = "/ImmaginiCodex/CarteFront/"+typeCard4+"/"+ idCard4 +".png";
+
+        String pathHandCard1 = "/ImmaginiCodex/CarteFront/"+typeHandCard1+"/"+idHandCard1+".png";
+        String pathHandCard2 = "/ImmaginiCodex/CarteFront/"+typeHandCard2+"/"+idHandCard2+".png";
+        String pathHandCard3 = "/ImmaginiCodex/CarteFront/"+typeHandCard3+"/"+idHandCard3+".png";
+        String pathHandCard4 = "/ImmaginiCodex/CarteFront/"+typeHandCard4+"/"+idHandCard4+".png";
 
         /*String pathCard1 = "/ImmaginiCodex/CarteFront/Gold/41.png";
         String pathCard2 = "/ImmaginiCodex/CarteFront/Gold/51.png";
@@ -498,7 +517,7 @@ public class GUI extends Application {
         BackgroundImage backgroundGameImage = new BackgroundImage(codexLogo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundGameImage);
         root.setBackground(background);
-
+        VBox vboxContainer = new VBox();
         HBox hboxGame = new HBox();
         VBox vboxGame = new VBox();
         vboxGame.setLayoutX(widthWellCards*2);
@@ -506,7 +525,9 @@ public class GUI extends Application {
 
         ScrollPane gameBoard = new ScrollPane();
         Pane insideScrollPane = new Pane();
-        Pane paneForImages = new Pane();
+        HBox secondRow = new HBox();
+        HBox firstColomnOfSecondRow = new HBox();
+        //Pane paneForImages = new Pane();
 
         insideScrollPane.getChildren().add(initCard);
         GridPane gridPaneForWellCards = new GridPane();
@@ -522,7 +543,10 @@ public class GUI extends Application {
         //paneForImages.getChildren().addAll(wellCard1View, wellCard2View, wellCard3View, wellCard4View);
         vboxGame.getChildren().addAll(gridPaneForWellCards);
         hboxGame.getChildren().addAll(gameBoard, vboxGame);
-        root.getChildren().add(hboxGame);
+        //firstColomnOfSecondRow.getChildren() qui ci vanno le carte in mano al player
+        secondRow.getChildren().addAll(firstColomnOfSecondRow);
+        vboxContainer.getChildren().addAll(hboxGame, secondRow);
+        root.getChildren().add(vboxContainer);
 
         gameScene = new Scene(root, 600, 400);
 
