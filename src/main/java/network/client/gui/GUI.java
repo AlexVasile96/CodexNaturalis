@@ -286,7 +286,6 @@ public class GUI extends Application {
         in.readLine();
         in.readLine();
         in.readLine();
-        //in.readLine();
 
         String firstSecretCard = in.readLine();
         String secondSecretCard = in.readLine();
