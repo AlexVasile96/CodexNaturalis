@@ -40,12 +40,10 @@ public class GUI extends Application {
     private String typeHandCard1 = null;
     private String typeHandCard2 = null;
     private String typeHandCard3 = null;
-    private String typeHandCard4 = null;
 
     private String idHandCard1 = null;
     private String idHandCard2 = null;
     private String idHandCard3 = null;
-    private String idHandCard4 = null;
 
     private double heightWellCards = 70;
     private double widthWellCards = 101;
@@ -464,6 +462,7 @@ public class GUI extends Application {
         typeCard2 = checkType(idCard2);
         typeCard3 = checkType(idCard3);
         typeCard4 = checkType(idCard4);
+
         out.println("deckId");
         idHandCard1=in.readLine();
         System.out.println(idHandCard1);
@@ -472,10 +471,11 @@ public class GUI extends Application {
         idHandCard3=in.readLine();
         System.out.println(idHandCard3);
 
+        typeHandCard1 = checkType(idHandCard1);
+        typeHandCard2 = checkType(idHandCard2);
+        typeHandCard3 = checkType(idHandCard3);
+
         in.readLine(); //spazio
-
-
-
 
     }
 
@@ -489,7 +489,23 @@ public class GUI extends Application {
         String pathHandCard1 = "/ImmaginiCodex/CarteFront/"+typeHandCard1+"/"+idHandCard1+".png";
         String pathHandCard2 = "/ImmaginiCodex/CarteFront/"+typeHandCard2+"/"+idHandCard2+".png";
         String pathHandCard3 = "/ImmaginiCodex/CarteFront/"+typeHandCard3+"/"+idHandCard3+".png";
-        String pathHandCard4 = "/ImmaginiCodex/CarteFront/"+typeHandCard4+"/"+idHandCard4+".png";
+
+        Image handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
+        Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
+        Image handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
+
+        ImageView handCard1View = new ImageView(handCard1);
+        handCard1View.setFitWidth(widthWellCards);
+        handCard1View.setFitHeight(heightWellCards);
+
+        ImageView handCard2View = new ImageView(handCard2);
+        handCard2View.setFitWidth(widthWellCards);
+        handCard2View.setFitHeight(heightWellCards);
+
+        ImageView handCard3View = new ImageView(handCard3);
+        handCard3View.setFitWidth(widthWellCards);
+        handCard3View.setFitHeight(heightWellCards);
+
 
         /*String pathCard1 = "/ImmaginiCodex/CarteFront/Gold/41.png";
         String pathCard2 = "/ImmaginiCodex/CarteFront/Gold/51.png";
@@ -551,7 +567,7 @@ public class GUI extends Application {
         //paneForImages.getChildren().addAll(wellCard1View, wellCard2View, wellCard3View, wellCard4View);
         vboxGame.getChildren().addAll(gridPaneForWellCards);
         hboxGame.getChildren().addAll(gameBoard, vboxGame);
-        //firstColomnOfSecondRow.getChildren() qui ci vanno le carte in mano al player
+        firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
         secondRow.getChildren().addAll(firstColomnOfSecondRow);
         vboxContainer.getChildren().addAll(hboxGame, secondRow);
         root.getChildren().add(vboxContainer);
