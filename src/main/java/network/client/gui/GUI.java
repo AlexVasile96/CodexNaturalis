@@ -448,52 +448,15 @@ public class GUI extends Application {
 
     private void update() throws IOException {
         in.readLine();
-        out.println("firstWellId");
-        idCard1 = in.readLine();
+        firstWellCard();
+        secondWellCard();
+        thirdWellCard();
+        fourthWellCard();
+        checkTypeWellCards();
+        playerDeck();
+        checkTypePlayerDeck();
+        updatingResourceAndGoldDeck();
 
-        System.out.println(idCard1);
-
-        out.println("secondWellId");
-        idCard2 = in.readLine();
-
-        System.out.println(idCard2);
-
-        out.println("thirdWellId");
-        idCard3 = in.readLine();
-
-        System.out.println(idCard3);
-
-        out.println("fourthWellId");
-        idCard4 = in.readLine();
-        System.out.println(idCard4);
-
-        typeCard1 = checkType(idCard1);
-        typeCard2 = checkType(idCard2);
-        typeCard3 = checkType(idCard3);
-        typeCard4 = checkType(idCard4);
-
-        out.println("deckId");
-        idHandCard1=in.readLine();
-        System.out.println(idHandCard1);
-        idHandCard2=in.readLine();
-        System.out.println(idHandCard2);
-        idHandCard3=in.readLine();
-        System.out.println(idHandCard3);
-
-        typeHandCard1 = checkType(idHandCard1);
-        typeHandCard2 = checkType(idHandCard2);
-        typeHandCard3 = checkType(idHandCard3);
-
-        in.readLine(); //spazio
-
-
-        out.println("firstCardResourceGui");
-        idTopCardResourceDeck = in.readLine();
-        System.out.println("la topCardResourceDeck is: "+idTopCardResourceDeck);
-
-        out.println("firstCardGoldGui");
-        idTopCardGoldDeck = in.readLine();
-        System.out.println("la topCardGoldDeck is: "+idTopCardGoldDeck);
     }
 
     private int cardSelected;
@@ -920,6 +883,59 @@ public class GUI extends Application {
         setWidthAndHeight(wellCard3View);
         wellCard4View = new ImageView(wellCard4);
         setWidthAndHeight(wellCard4View);
+    }
+
+    private void firstWellCard() throws IOException {
+
+        out.println("firstWellId");
+        idCard1 = in.readLine();
+        System.out.println(idCard1);
+    }
+    private void secondWellCard() throws IOException {
+        out.println("secondWellId");
+        idCard2 = in.readLine();
+        System.out.println(idCard2);
+    }
+    private void thirdWellCard() throws IOException {
+        out.println("thirdWellId");
+        idCard3 = in.readLine();
+        System.out.println(idCard3);
+    }
+    private void fourthWellCard() throws IOException {
+        out.println("fourthWellId");
+        idCard4 = in.readLine();
+        System.out.println(idCard4);
+    }
+    private void updatingResourceAndGoldDeck() throws IOException {
+        out.println("firstCardResourceGui");
+        idTopCardResourceDeck = in.readLine();
+        System.out.println("la topCardResourceDeck is: "+idTopCardResourceDeck);
+        out.println("firstCardGoldGui");
+        idTopCardGoldDeck = in.readLine();
+        System.out.println("la topCardGoldDeck is: "+idTopCardGoldDeck);
+    }
+
+    private void checkTypeWellCards()
+    {
+        typeCard1 = checkType(idCard1);
+        typeCard2 = checkType(idCard2);
+        typeCard3 = checkType(idCard3);
+        typeCard4 = checkType(idCard4);
+    }
+    private void playerDeck() throws IOException {
+        out.println("deckId");
+        idHandCard1=in.readLine();
+        System.out.println(idHandCard1);
+        idHandCard2=in.readLine();
+        System.out.println(idHandCard2);
+        idHandCard3=in.readLine();
+        System.out.println(idHandCard3);
+    }
+    private void checkTypePlayerDeck() throws IOException {
+        typeHandCard1 = checkType(idHandCard1);
+        typeHandCard2 = checkType(idHandCard2);
+        typeHandCard3 = checkType(idHandCard3);
+        in.readLine(); //spazio
     }
 
 }
