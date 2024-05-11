@@ -47,6 +47,9 @@ public class GUI extends Application {
     private String idHandCard2 = null;
     private String idHandCard3 = null;
 
+    private String idTopCardResourceDeck = null;
+    private String idTopCardGoldDeck = null;
+
     private double heightWellCards = 70*1.75;
     private double widthWellCards = 101*1.75;
     private static Stage window;
@@ -479,36 +482,42 @@ public class GUI extends Application {
 
         in.readLine(); //spazio
 
+
+        out.println("firstCardResourceGui");
+        idTopCardResourceDeck = in.readLine();
+        System.out.println("la topCardResourceDeck is: "+idTopCardResourceDeck);
+
+        out.println("firstCardGoldGui");
+        idTopCardGoldDeck = in.readLine();
+        System.out.println("la topCardGoldDeck is: "+idTopCardGoldDeck);
     }
 
     private int cardSelected;
 
-    private void game() throws IOException {
 
+    private void game() throws IOException {
+        //patch for decks
+        String pathResourceDeck = "/ImmaginiCodex/CarteBack/Resource/"+idTopCardResourceDeck+".png";
+        String pathGoldDeck = "/ImmaginiCodex/CarteBack/Gold/"+idTopCardGoldDeck+".png";
+
+        //decks images
+        Image topCardResourceDeck = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathResourceDeck)));
+        Image topCardGoldDeck = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathGoldDeck)));
+
+        //decks imageViews
+        ImageView topCardResourceDeckView = new ImageView(topCardResourceDeck);
+        topCardResourceDeckView.setFitWidth(widthWellCards);
+        topCardResourceDeckView.setFitHeight(heightWellCards);
+
+        ImageView topCardGoldDeckView = new ImageView(topCardGoldDeck);
+        topCardGoldDeckView.setFitWidth(widthWellCards);
+        topCardGoldDeckView.setFitHeight(heightWellCards);
+
+        //Creating well
         String pathCard1 = "/ImmaginiCodex/CarteFront/"+typeCard1+"/"+ idCard1 +".png";
         String pathCard2 = "/ImmaginiCodex/CarteFront/"+typeCard2+"/"+ idCard2 +".png";
         String pathCard3 = "/ImmaginiCodex/CarteFront/"+typeCard3+"/"+ idCard3 +".png";
         String pathCard4 = "/ImmaginiCodex/CarteFront/"+typeCard4+"/"+ idCard4 +".png";
-
-        String pathHandCard1 = "/ImmaginiCodex/CarteFront/"+typeHandCard1+"/"+idHandCard1+".png";
-        String pathHandCard2 = "/ImmaginiCodex/CarteFront/"+typeHandCard2+"/"+idHandCard2+".png";
-        String pathHandCard3 = "/ImmaginiCodex/CarteFront/"+typeHandCard3+"/"+idHandCard3+".png";
-
-        Image handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
-        Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
-        Image handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
-
-        ImageView handCard1View = new ImageView(handCard1);
-        handCard1View.setFitWidth(widthWellCards);
-        handCard1View.setFitHeight(heightWellCards);
-
-        ImageView handCard2View = new ImageView(handCard2);
-        handCard2View.setFitWidth(widthWellCards);
-        handCard2View.setFitHeight(heightWellCards);
-
-        ImageView handCard3View = new ImageView(handCard3);
-        handCard3View.setFitWidth(widthWellCards);
-        handCard3View.setFitHeight(heightWellCards);
 
         Image wellCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathCard1)));
         Image wellCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathCard2)));
@@ -547,6 +556,33 @@ public class GUI extends Application {
         StackPane stackPaneInitCard = new StackPane();
         GridPane gridPaneInitCard = new GridPane();
 
+        //end creation of well
+
+        //Creating handCards
+        String pathHandCard1 = "/ImmaginiCodex/CarteFront/"+typeHandCard1+"/"+idHandCard1+".png";
+        String pathHandCard2 = "/ImmaginiCodex/CarteFront/"+typeHandCard2+"/"+idHandCard2+".png";
+        String pathHandCard3 = "/ImmaginiCodex/CarteFront/"+typeHandCard3+"/"+idHandCard3+".png";
+
+        Image handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
+        Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
+        Image handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
+
+        ImageView handCard1View = new ImageView(handCard1);
+        handCard1View.setFitWidth(widthWellCards);
+        handCard1View.setFitHeight(heightWellCards);
+
+        ImageView handCard2View = new ImageView(handCard2);
+        handCard2View.setFitWidth(widthWellCards);
+        handCard2View.setFitHeight(heightWellCards);
+
+        ImageView handCard3View = new ImageView(handCard3);
+        handCard3View.setFitWidth(widthWellCards);
+        handCard3View.setFitHeight(heightWellCards);
+
+        //End creation of handCards
+
+
+        //Createing suddivision of initCard
         StackPane.setAlignment(stackPaneInitCard, Pos.CENTER);
         StackPane.setMargin(stackPaneInitCard, new Insets(0, 0, 0, 0));
 
@@ -593,6 +629,8 @@ public class GUI extends Application {
             cardSelected = 0;
             out.println(cardSelected);
         });
+
+
 // Creare bottone per playCard: salvataggio della carta da voler piazzare e carta su cui piazzare + angolo salvati in variabili, onClick pulsante piazza carta nel posto giusto ezzz
         handCard1View.setOnMouseClicked(event -> {
             System.out.println("Hai selezionato la carta id: "+idHandCard1);
@@ -661,9 +699,12 @@ public class GUI extends Application {
         gridPaneForWellCards.add(wellCard3View, 1, 0);
         gridPaneForWellCards.add(wellCard4View, 1, 1);
 
+        HBox decks = new HBox();
+        decks.getChildren().addAll(topCardResourceDeckView, topCardGoldDeckView);
+
 
         //paneForImages.getChildren().addAll(wellCard1View, wellCard2View, wellCard3View, wellCard4View);
-        vboxGame.getChildren().addAll(gridPaneForWellCards);
+        vboxGame.getChildren().addAll(gridPaneForWellCards, decks);
         hboxGame.getChildren().addAll(gameBoard, vboxGame);
         firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
         secondRow.getChildren().addAll(firstColomnOfSecondRow);
