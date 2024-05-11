@@ -26,7 +26,6 @@ import view.ClientView;
 import java.io.*;
 import java.net.Socket;
 import java.util.Objects;
-import java.util.Stack;
 
 public class GUI extends Application {
 
@@ -50,8 +49,8 @@ public class GUI extends Application {
     private String idTopCardResourceDeck = null;
     private String idTopCardGoldDeck = null;
 
-    private String idCardToPlace = null;
-    private int indexCardToBePlacedOn;
+    private Integer indexCardToPlace = 100;
+    private Integer indexCardToBePlacedOn = 100;
     private String cornerSelected = null;
 
     private double heightWellCards = 70*1.75;
@@ -646,17 +645,37 @@ public class GUI extends Application {
 
         Button playCard = new Button("Play Card");
         playCard.setOnAction(event -> {
-            System.out.println("Hai selezionato la carta id: "+idCardToPlace);
+            if(indexCardToBePlacedOn == 100 || indexCardToPlace == 100 || cornerSelected == null){ //This if prevents player to place card without choosing any card or corner
+                System.out.println("You have not selected any card to place or to be placed on or the corner");
+                return;
+            }
             out.println("playCard"); //sends to server the message to start the playCard method
             try {
-                String actualBoard= in.readLine();
+
+                out.println(indexCardToPlace); //sends to server the id of the card you want your card to be placed on
+                System.out.println(in.readLine());
+
+                out.println(2); //non voglio girare la carta
+
+                String messageFromServer = in.readLine();
                 do{
-                    System.out.println(actualBoard);
-                    actualBoard= in.readLine();
-                }while (!actualBoard.equals("fine board"));
+                    System.out.println(messageFromServer);
+                    messageFromServer= in.readLine();
+                }while (!messageFromServer.equals("exit"));
 
                 out.println(indexCardToBePlacedOn); //sends to server the index of the card you want your card to be placed on
+
+                String avaiableCorners= in.readLine();
+                do{
+                    System.out.println(avaiableCorners);
+                    avaiableCorners= in.readLine();
+                } while(!avaiableCorners.equals("end"));
+
+
                 out.println(cornerSelected); //sends to server the corner of the already placed cards you want your card to be placed on
+
+                String ultimo = in.readLine();
+                System.out.println(ultimo);
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -668,15 +687,15 @@ public class GUI extends Application {
 // Creare bottone per playCard: salvataggio della carta da voler piazzare e carta su cui piazzare + angolo salvati in variabili, onClick pulsante piazza carta nel posto giusto ezzz
         handCard1View.setOnMouseClicked(event -> {
             System.out.println("Hai selezionato la carta id: "+idHandCard1);
-            idCardToPlace = idHandCard1;
+            indexCardToPlace = 0;
         });
         handCard2View.setOnMouseClicked(event -> {
             System.out.println("Hai selezionato la carta id: "+idHandCard2);
-            idCardToPlace = idHandCard2;
+            indexCardToPlace = 1;
         });
         handCard3View.setOnMouseClicked(event -> {
             System.out.println("Hai selezionato la carta id: "+idHandCard3);
-            idCardToPlace = idHandCard3;
+            indexCardToPlace = 2;
         });
 
 
