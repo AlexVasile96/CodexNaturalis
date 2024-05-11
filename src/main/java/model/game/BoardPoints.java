@@ -24,6 +24,12 @@ public class BoardPoints {
                 seedCountMap.put(seed, seedCountMap.get(seed) + 1);
             }
         }
+
+        // Rimuove le voci con valori pari a zero
+        seedCountMap.entrySet().removeIf(entry -> entry.getValue() == 0);
+        seedCountMap.remove(SpecificSeed.EMPTY);
+        seedCountMap.remove(SpecificSeed.NOTTOBEPLACEDON);
+
         System.out.println("Points on the map: " + seedCountMap);
         return seedCountMap;
     }

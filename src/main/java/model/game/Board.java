@@ -129,7 +129,7 @@ public class Board {
             int requiredCount = entry.getValue();       //GET VALUE TAKES THE NUMBER OF THE ATTRIBUTES
             int actualCount = seedCountMap.getOrDefault(requiredSeed, 0); //HOW MANY SPECIFIED DO WE HAVE ACTUALLY ON THE BOARD
             if (actualCount < requiredCount) { //IN CASO CORREGGERE IL SEGNO
-                throw new IllegalPlacementException("Not enough "+ requiredSeed + " on the board!");
+                return false;
             }
         }
         return true;

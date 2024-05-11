@@ -294,8 +294,7 @@ public class Game implements WhatCanPlayerDo {
     {
         return player.getBoard().printBoardForServer();
     }
-    public String showAvaiableCorners(Player player, int cardindex, int cardChosenOnTheBoard)
-    {
+    public String showAvaiableCorners(Player player, int cardindex, int cardChosenOnTheBoard) {
             InitialCard initialCard = (InitialCard) player.getBoard().getCardsOnTheBoardList().getFirst();
             selectedCardFromTheDeck= player.checkingTheChosencard(cardindex);
             cardPlayerChoose= player.gettingCardsFromTheBoard(player.getBoard(), cardChosenOnTheBoard);
