@@ -28,6 +28,7 @@ import java.net.Socket;
 import java.util.Objects;
 
 public class GUI extends Application {
+    private int cardSelected;
     private Background background=null;
     private String pathResourceDeck=null;
     private String pathGoldDeck=null;
@@ -450,14 +451,12 @@ public class GUI extends Application {
 
     }
 
-    private int cardSelected;
 
     private void game() {
         creatingPathForGameMethod();
 
         topCardResourceDeck = createNewPathForImages(pathResourceDeck); //Resource Deck Back Image
         topCardGoldDeck = createNewPathForImages(pathGoldDeck);           //Gold Deck Back Image
-
 
         creatingDeckAndGoldDeckView();
 
@@ -466,7 +465,6 @@ public class GUI extends Application {
         creatingImagesForTheWell();
         creatingImagesViewForTheWell();
         settingWellOnMouseClickedEvent();
-
 
         StackPane stackPaneInitCard = new StackPane();
         GridPane gridPaneInitCard = new GridPane();
