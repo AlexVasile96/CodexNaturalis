@@ -25,6 +25,10 @@ public class Card {
         private int indexOnTheBoard;
         private Node node;
         private boolean isCardBack;
+        private Corner TLIBack;
+        private Corner TRIBack;
+        private Corner BLIBack;
+        private Corner BRIBack;
 
     public Card (int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR){ //Card constructor
             this.id=id;

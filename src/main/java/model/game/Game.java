@@ -10,6 +10,8 @@ import model.deck.InitialCardDeck;
 import model.deck.ObjectiveDeck;
 import model.deck.ResourceDeck;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -45,6 +47,7 @@ public class Game implements WhatCanPlayerDo {
         this.players = new ArrayList<>();
         this.well= new ArrayList<>();
         this.dots= new ArrayList<>();
+        //loadPlayers();
         ResourceCardConstructor constructor = new ResourceCardConstructor();
         resourceDeck = (ResourceDeck) constructor.createCards();
         resourceDeck.shuffle();
@@ -137,12 +140,11 @@ public class Game implements WhatCanPlayerDo {
         System.out.println("And the winner is...........");
         System.out.println("Suspance...");
         System.out.println(winner.getNickName());
-        System.out.println("Lesgooooo");
     }
-    public Player calculateWinner(List<Player> players) {
+
+    public Player calculateWinner(List<Player> players) {               //Calculating who has the highest score
         Player winner = null;
         int highestScore = currentPlayingPLayer.getPlayerScore();
-
         for (Player player : players) {
             int playerScore = player.getPlayerScore();
             if (playerScore > highestScore) {
@@ -292,9 +294,8 @@ public class Game implements WhatCanPlayerDo {
     {
         return player.getBoard().printBoardForServer();
     }
-    public String showAvaiableCorners(Player player, int cardindex, int cardChosenOnTheBoard)
-    {
-            Card initialCard = player.getBoard().getCardsOnTheBoardList().get(0);
+    public String showAvaiableCorners(Player player, int cardindex, int cardChosenOnTheBoard) {
+            InitialCard initialCard = (InitialCard) player.getBoard().getCardsOnTheBoardList().getFirst();
             selectedCardFromTheDeck= player.checkingTheChosencard(cardindex);
             cardPlayerChoose= player.gettingCardsFromTheBoard(player.getBoard(), cardChosenOnTheBoard);
             String result= player.isTheCardChosenTheInitialcard(cardPlayerChoose, initialCard);
@@ -544,8 +545,28 @@ public class Game implements WhatCanPlayerDo {
         }
     }
 
-    public void alreadyExistsAnotherGame(){
-        //playersFromDisk=
+    void loadPlayers() {
+        Path filePath = getDefaultPlayers();
+        if (Files.exists(filePath)) {
+            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath.toFile()))) {
+                String line;
+                Gson gson = new Gson();
+                while ((line = bufferedReader.readLine()) != null) {
+                    JsonObject playerJson = gson.fromJson(line, JsonObject.class);
+                    String nickName = playerJson.get("nickName").getAsString();
+                    int playerScore = playerJson.get("score").getAsInt();
+                    Dot dot = Dot.values()[playerJson.get("dot").getAsInt()];
+                    Board board=null;
+                    if(playerJson.has("board")){
+                    board = Board.fromJsonObject(playerJson.getAsJsonObject("board"));}
+                    Player player = new Player(nickName, playerScore, dot, board);
+                    players.add(player);
+                    System.out.println(players);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

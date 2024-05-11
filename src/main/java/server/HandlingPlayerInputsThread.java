@@ -9,17 +9,17 @@ import exceptions.ParametersNotValidException;
 import exceptions.UnknownPlayerNumberException;
 import exceptions.UsernameAlreadyExistsException;
 import exceptions.turnPlayerErrorException;
+import model.card.Card;
+import model.card.GoldCard;
 import model.card.InitialCard;
 import model.card.ObjectiveCard;
-import model.game.Board;
-import model.game.Dot;
-import model.game.Game;
-import model.game.Player;
+import model.game.*;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -166,7 +166,6 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     private synchronized Player loginEachClient() throws IOException, InterruptedException {
         Player player = null;
-        //if game controller==null it means the player has to log in!!
             try {
                 sendMessageToClient("Hello!! You have to log in, please type your username");
                 String request = stdIn.readLine();
@@ -194,7 +193,6 @@ public class HandlingPlayerInputsThread implements Runnable {
             } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
                 throw new RuntimeException(e);
             }
-
         System.out.println(gameController);
         return player;
     }
@@ -284,9 +282,20 @@ public class HandlingPlayerInputsThread implements Runnable {
                 case "playCard" -> {
                     String sentBoard = "showBoard";
                     gameController.readCommand(sentBoard, player, 0, 0, cornerChosen); //In questo modo, al player viene fatta visualizzare la propria Board
-                    String indexCardChosen = stdIn.readLine(); //Memorizzo quale carta del proprio deck il player ha deciso di giocare
-                    int cardChosenFromHisDeck = Integer.parseInt(indexCardChosen);
-                    System.out.println("Player chose card number " + cardChosenFromHisDeck);
+                    int cardChosenFromHisDeck;
+                    do {
+                        cardChosenFromHisDeck = Integer.parseInt(stdIn.readLine());
+                        System.out.println("Player chose card number " + cardChosenFromHisDeck);
+                        if(player.checkingTheChosencardDue(cardChosenFromHisDeck)){
+                            sendMessageToAllClients("puoi procedere");
+                        }
+                        else {
+                            sendMessageToAllClients("Gold Card not placeable");
+                            GoldCard cartGold = (GoldCard) player.chooseCard(cardChosenFromHisDeck);
+                            sendMessageToAllClients(cartGold.getRequirementsForPlacing().toString());
+                            gameController.readCommand("showYourSpecificSeed", player, 0, 0, null);
+                        }
+                    }while (!player.checkingTheChosencardDue(cardChosenFromHisDeck));
                     String CardOnTheBoardChosen = stdIn.readLine();
                     int boardCardChosen = Integer.parseInt(CardOnTheBoardChosen);
                     System.out.println("Il player ha deciso di giocare la proria carta sulla carta numero " + boardCardChosen);

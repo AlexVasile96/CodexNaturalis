@@ -159,21 +159,33 @@ public class Player implements Observable {
         if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return null;
         return selectedCardFromTheDeck;
     }
+    public boolean checkingTheChosencardDue( int cardIndex) {
+        Card selectedCardFromTheDeck = chooseCard(cardIndex);                   //OKAY
+        checkIfTheCardExist(cardIndex);                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
+        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
+        if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return false;
+        return true;
+    }
+
     public Card gettingCardsFromTheBoard(Board board, int cardChosenONTheBoard)
     {
-        Card initialCard = board.getCardsOnTheBoardList().get(0);               //putting inside initialCard the firstPlacedCard on the board
+        Card initialCard = board.getCardsOnTheBoardList().getFirst();               //putting inside initialCard the firstPlacedCard on the board
         List<Card> cardsPlayerCanChooseFrom = board.getCardsOnTheBoardList();   //VISUALIZING ALL THE CARDS ON THE BOARD SO THE PLAYER CAN CHOOSE ONE OF THEM
         return cardsPlayerCanChooseFrom.get(cardChosenONTheBoard);
     }
-    public String isTheCardChosenTheInitialcard( Card cardPlayerChoose, Card initialCard){
-        List<Corner> availableCorners = creatingCorners((InitialCard)cardPlayerChoose); //Creating 4 corners to handle SelectedCard corners
+    public String isTheCardChosenTheInitialcard( Card cardPlayerChoose, InitialCard initialCard){
+
         if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
-            cardChosenIsTheInitialcard((InitialCard) initialCard,availableCorners);
+            List<Corner> availableCorners = creatingCorners(initialCard);
+            cardChosenIsTheInitialcard(initialCard,availableCorners);
+            return freeScornerosi(availableCorners, cardPlayerChoose);
         } else {                                                        //CARD CHOSEN ISN'T THE INITIAL CARD
-            List<Corner> corner = creatingCorners((InitialCard) cardPlayerChoose);
+            List<Corner> availableCorners= creatingCornersForNotInitialcard(cardPlayerChoose);
+            List<Corner>corner= creatingCornersForNotInitialcard(cardPlayerChoose);
             cardChosenIsNotTheInitialcard(availableCorners,corner);
+            return freeScornerosi(availableCorners, cardPlayerChoose);
         }
-        return freeScornerosi(availableCorners, cardPlayerChoose);
+
     }
 
     public void playCard(Board board, int cardIndex, int cardChosenONTheBoard,Card selectedCardFromTheDeck, InitialCard cardPlayerChoose, String selectedCorner) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
@@ -281,7 +293,7 @@ public class Player implements Observable {
     }
 
     private List<Corner> creatingCorners(InitialCard cardPlayerChoose){
-        List<Corner> availableCorners = new ArrayList<>();                //CREATING CORNERS THAT WILL BE DISPLAYED TO THE PLAYER
+        List<Corner> availableCorners = new ArrayList<>();                          //CREATING CORNERS THAT WILL BE DISPLAYED TO THE PLAYER
         if(cardPlayerChoose.isCardBack()&& cardPlayerChoose.getIndexOnTheBoard()==1)
         {
             availableCorners.add(cardPlayerChoose.getTLIBack());
@@ -302,9 +314,28 @@ public class Player implements Observable {
             availableCorners.add(cardPlayerChoose.getBL());
             availableCorners.add(cardPlayerChoose.getBR());
         }
-
         return availableCorners;
     }
+
+    private List<Corner> creatingCornersForNotInitialcard(Card cardPlayerChoose){
+        List<Corner> availableCorners = new ArrayList<>();                          //CREATING CORNERS THAT WILL BE DISPLAYED TO THE PLAYER
+
+     if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()!=1)
+        {
+            availableCorners.add(cardPlayerChoose.getTLBack());
+            availableCorners.add(cardPlayerChoose.getTRBack());
+            availableCorners.add(cardPlayerChoose.getBLBack());
+            availableCorners.add(cardPlayerChoose.getBRBack());
+        }
+        else if(!cardPlayerChoose.isCardBack()){
+            availableCorners.add(cardPlayerChoose.getTL());
+            availableCorners.add(cardPlayerChoose.getTR());
+            availableCorners.add(cardPlayerChoose.getBL());
+            availableCorners.add(cardPlayerChoose.getBR());
+        }
+        return availableCorners;
+    }
+
 
     private void cardChosenIsTheInitialcard(InitialCard initialCard,List<Corner> availableCorners )
     {
@@ -816,6 +847,19 @@ public class Player implements Observable {
         jsonObject.addProperty("clientView", String.valueOf(clientView));
         return jsonObject;
     }
+
+    public void fromJsonObject(JsonObject jsonObject) {
+        this.nickName = jsonObject.get("nickName").getAsString();
+        this.playerScore = jsonObject.get("score").getAsInt();
+        this.dot = Dot.values()[jsonObject.get("dot").getAsInt()];
+        // Assuming Board and Card classes have appropriate methods for deserialization
+        this.board = Board.fromJsonObject(jsonObject.get("board").getAsJsonObject());
+        // Assuming playerCards and clientView are deserialized appropriately
+        // this.playerCards = ...
+        // this.clientView = ...
+    }
+
+
 
     public boolean isHasThePlayerGot20Points() {
         return hasThePlayerGot20Points;

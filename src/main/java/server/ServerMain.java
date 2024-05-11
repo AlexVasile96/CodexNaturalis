@@ -53,9 +53,6 @@ public class ServerMain {
                 return;
             }
             System.out.println("Server ready for connections!");
-            //Creates the lobby for this server
-
-            //Accepts connections from clients on new threads
             while (true) {
                 try {
                     Socket socket = serverSocket.accept();                                          //aspettando il client
@@ -65,10 +62,6 @@ public class ServerMain {
                     HandlingPlayerInputsThread clientThread= new HandlingPlayerInputsThread(socket, playersInCurrentGame, clients, lobby, game);
                     clients.add(clientThread);
                     pool.execute(clientThread); //Handling single player client
-                    //PingThread pingThread = new PingThread(socket);
-                    //pingpool.execute(pingThread);
-                    //Thread pingThreadExecutor = new Thread(pingThread);
-                    //pingThreadExecutor.start();   // Ping al client
                 } catch (IOException ex) {
                     System.err.println(ex.getMessage());
                     break;
