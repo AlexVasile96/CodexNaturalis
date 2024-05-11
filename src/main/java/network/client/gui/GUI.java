@@ -72,9 +72,6 @@ public class GUI extends Application {
     private Integer indexCardToPlace = 100;
     private Integer indexCardToBePlacedOn = 100;
     private String cornerSelected = null;
-
-    //private double heightWellCards = 70*1.75;
-    //private double widthWellCards = 101*1.75;
     private static Stage window;
     private Scene startScene;
     private Scene loginScene;
@@ -99,8 +96,6 @@ public class GUI extends Application {
     public Label test;
     @FXML
     public ToggleGroup toggleGroup;
-    @FXML
-    public Label testDot;
     @FXML
     public ToggleGroup numOfPlayersGroup;
     @FXML
@@ -181,9 +176,7 @@ public class GUI extends Application {
         //Creates the login scene
         loginScene();
         //thread to update GUI
-        Platform.runLater(() -> {
-            primaryStage.setScene(loginScene);
-        });
+        Platform.runLater(() -> primaryStage.setScene(loginScene));
 
 
     }
@@ -279,9 +272,7 @@ public class GUI extends Application {
 
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         chooseSecretObjective();
-        Platform.runLater(() -> {
-            primaryStage.setScene(chooseSecretObjectiveScene);
-        });
+        Platform.runLater(() -> primaryStage.setScene(chooseSecretObjectiveScene));
     }
 
     @FXML
@@ -761,7 +752,7 @@ public class GUI extends Application {
     }
 
     @FXML
-    public void exitClicked(ActionEvent event) throws IOException {
+    public void exitClicked(ActionEvent event) {
         try {
             closeConnection(socket);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
