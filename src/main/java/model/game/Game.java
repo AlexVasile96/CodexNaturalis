@@ -116,9 +116,19 @@ public class Game implements WhatCanPlayerDo {
 
 
     public String playCard(Player player, int cardindex, int cardChosenOnTheBoard, String selectedCorner) {
-            player.playCard(player.getBoard(),cardindex,cardChosenOnTheBoard,selectedCardFromTheDeck, (InitialCard) cardPlayerChoose, selectedCorner);
+        if(cardPlayerChoose.getId()>=81 && cardPlayerChoose.getId()<=86)
+        {
+            //DA FIXARE
+            //Card is the initial Card
+            //player.playInitCardOnBoard(player.getBoard(),cardindex,selectedCardFromTheDeck, cardPlayerChoose, selectedCorner);
             player.getClientView().update(player);
             return "Carta piazzata correttamente";
+        }
+        else {
+            player.playCard(player.getBoard(), cardindex, cardChosenOnTheBoard, selectedCardFromTheDeck, cardPlayerChoose, selectedCorner);
+            player.getClientView().update(player);
+            return "Carta piazzata correttamente";
+        }
     }
 
     public void endGame(){

@@ -188,7 +188,8 @@ public class Player implements Observable {
 
     }
 
-    public void playCard(Board board, int cardIndex, int cardChosenONTheBoard,Card selectedCardFromTheDeck, InitialCard cardPlayerChoose, String selectedCorner) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
+    public void playInitCardOnBoard(Board board, int cardIndex, Card selectedCardFromTheDeck, InitialCard cardPlayerChoose, String selectedCorner)
+    {
         int x = cardPlayerChoose.getNode().getCoordX(); //SAVING THE TOP LEFT CORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
         int y = cardPlayerChoose.getNode().getCoordY();
         switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECTLY
@@ -221,6 +222,47 @@ public class Player implements Observable {
                 {
                     cardPlayerChoose.getBRIBack().setValueCounter(0);
                 }
+                cardPlayerChoose.getBR().setValueCounter(cardPlayerChoose.getBR().getValueCounter()-1);
+                playYourCardOnTheBottomRightCorner(x,y,selectedCardFromTheDeck);
+                break;
+            case null:
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + selectedCorner);
+        }
+        decreasingAllTheValuesOfTheCornerPlaced(selectedCardFromTheDeck); //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
+        selectedCardFromTheDeck.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new incremented index
+        board.getCardsOnTheBoardList().add(selectedCardFromTheDeck); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
+        this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
+        board.setNumOfEmpty(board.getNumOfEmpty() - 3);
+        updatingPoints(selectedCardFromTheDeck); //Updating player Points
+        if (playerScore >= 20) {                                            //EndGame if the playerpoints=>20 points
+            System.out.println("Player " + getNickName() + "has reached 20 points!\n");
+            EndGame endGame = new EndGame();
+        }
+    }
+
+
+    public void playCard(Board board, int cardIndex, int cardChosenONTheBoard,Card selectedCardFromTheDeck, Card cardPlayerChoose, String selectedCorner) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
+        int x = cardPlayerChoose.getNode().getCoordX(); //SAVING THE TOP LEFT CORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
+        int y = cardPlayerChoose.getNode().getCoordY();
+        switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECTLY
+            case "TL":
+
+                cardPlayerChoose.getTL().setValueCounter(cardPlayerChoose.getTL().getValueCounter()-1);
+                playYourCardOnTheTopLeftCorner(x,y,selectedCardFromTheDeck);
+                break;
+            case "TR":
+
+                cardPlayerChoose.getTR().setValueCounter(cardPlayerChoose.getTR().getValueCounter()-1);
+                playYourCardOnTheTopRightCorner(x,y,selectedCardFromTheDeck);
+                break;
+            case "BL":
+
+                cardPlayerChoose.getBL().setValueCounter(cardPlayerChoose.getBL().getValueCounter()-1);
+                playYourCardOnTheBottomLeftCorner(x,y,selectedCardFromTheDeck);
+                break;
+            case "BR":
                 cardPlayerChoose.getBR().setValueCounter(cardPlayerChoose.getBR().getValueCounter()-1);
                 playYourCardOnTheBottomRightCorner(x,y,selectedCardFromTheDeck);
                 break;

@@ -43,6 +43,10 @@ public class GUI extends Application {
     private Image wellCard2=null;
     private Image wellCard3=null;
     private Image wellCard4=null;
+    private ImageView wellCard1View=null;
+    private ImageView wellCard2View=null;
+    private ImageView wellCard3View=null;
+    private ImageView wellCard4View=null;
     private String idCard1=null;
     private String idCard2=null;
     private String idCard3=null;
@@ -500,24 +504,15 @@ public class GUI extends Application {
         topCardResourceDeck = createNewPathForImages(pathResourceDeck); //Resource Deck Back Image
         topCardGoldDeck = createNewPathForImages(pathGoldDeck);           //Gold Deck Back Image
 
+
         creatingDeckAndGoldDeckView();
+
+        //Handling well creation
         creatingWell();
-        creatingIMagesForTheWell();
+        creatingImagesForTheWell();
+        creatingImagesViewForTheWell();
+        settingWellOnMouseClickedEvent();
 
-        ImageView wellCard1View = new ImageView(wellCard1);
-        setWidthAndHeight(wellCard1View);
-        ImageView wellCard2View = new ImageView(wellCard2);
-        setWidthAndHeight(wellCard2View);
-        ImageView wellCard3View = new ImageView(wellCard3);
-        setWidthAndHeight(wellCard3View);
-        ImageView wellCard4View = new ImageView(wellCard4);
-        setWidthAndHeight(wellCard4View);
-
-
-        wellCard1View.setOnMouseClicked(event -> System.out.println("You chose from well card number: "+idCard1));
-        wellCard2View.setOnMouseClicked(event -> System.out.println("You chose from well card number:: "+idCard2));
-        wellCard3View.setOnMouseClicked(event -> System.out.println("You chose from well card number:: "+idCard3));
-        wellCard4View.setOnMouseClicked(event -> System.out.println("You chose from well card number:: "+idCard4));
 
         StackPane stackPaneInitCard = new StackPane();
         GridPane gridPaneInitCard = new GridPane();
@@ -547,7 +542,7 @@ public class GUI extends Application {
         //End creation of handCards
 
 
-        //Createing suddivision of initCard
+        //Creating subdivision of initCard
         StackPane.setAlignment(stackPaneInitCard, Pos.CENTER);
         StackPane.setMargin(stackPaneInitCard, new Insets(0, 0, 0, 0));
 
@@ -714,7 +709,7 @@ public class GUI extends Application {
 
         HBox decks = new HBox();
 
-        Label decksText = new Label("      Rescource Deck               Gold Deck");
+        Label decksText = new Label("      Resource Deck               Gold Deck");
         decksText.setStyle("-fx-font-weight: bold; -fx-text-fill: white");
 
         decks.setSpacing(4.0);
@@ -904,11 +899,27 @@ public class GUI extends Application {
         wellPathThird = "/ImmaginiCodex/CarteFront/"+typeCard3+"/"+ idCard3 +".png";
         wellPathForth = "/ImmaginiCodex/CarteFront/"+typeCard4+"/"+ idCard4 +".png";
     }
-    private void creatingIMagesForTheWell(){
+    private void creatingImagesForTheWell(){
         wellCard1 = createNewPathForImages(wellPathOne);
         wellCard2 = createNewPathForImages(wellPathSecond);
         wellCard3 = createNewPathForImages(wellPathThird);
         wellCard4 = createNewPathForImages(wellPathForth);
+    }
+    private void settingWellOnMouseClickedEvent(){
+        wellCard1View.setOnMouseClicked(event -> System.out.println("You chose from well card number: "+idCard1));
+        wellCard2View.setOnMouseClicked(event -> System.out.println("You chose from well card number:: "+idCard2));
+        wellCard3View.setOnMouseClicked(event -> System.out.println("You chose from well card number:: "+idCard3));
+        wellCard4View.setOnMouseClicked(event -> System.out.println("You chose from well card number:: "+idCard4));
+    }
+    private void creatingImagesViewForTheWell(){
+        wellCard1View = new ImageView(wellCard1);
+        setWidthAndHeight(wellCard1View);
+        wellCard2View = new ImageView(wellCard2);
+        setWidthAndHeight(wellCard2View);
+        wellCard3View = new ImageView(wellCard3);
+        setWidthAndHeight(wellCard3View);
+        wellCard4View = new ImageView(wellCard4);
+        setWidthAndHeight(wellCard4View);
     }
 
 }

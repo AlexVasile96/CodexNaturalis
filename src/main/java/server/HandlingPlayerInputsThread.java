@@ -92,7 +92,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 //SETTING POINTS FOR ENDGAME DEBUGGING
                 for(Player player: playersList)
                 {
-                    player.setPlayerScore(19);
+                    player.setPlayerScore(15);
                 }
                 while (!hasClientQuit){
                     startGame();
