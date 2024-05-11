@@ -50,6 +50,10 @@ public class GUI extends Application {
     private String idTopCardResourceDeck = null;
     private String idTopCardGoldDeck = null;
 
+    private String idCardToPlace = null;
+    private int indexCardToBePlacedOn;
+    private String cornerSelected = null;
+
     private double heightWellCards = 70*1.75;
     private double widthWellCards = 101*1.75;
     private static Stage window;
@@ -586,36 +590,46 @@ public class GUI extends Application {
         StackPane.setAlignment(stackPaneInitCard, Pos.CENTER);
         StackPane.setMargin(stackPaneInitCard, new Insets(0, 0, 0, 0));
 
+
+
+
         Region regionTopLeft = new Region();
         regionTopLeft.setPrefSize(widthWellCards/2, heightWellCards/2);
         regionTopLeft.setOnMouseClicked(e->{
-            System.out.println("hai cliccato il topLeft della initCard");
-            out.println(0);
-            out.println("TL");
+            indexCardToBePlacedOn = 0;
+            cornerSelected = "TL";
+
+            System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
+
+
+
         });
 
         Region regionBottomLeft = new Region();
         regionBottomLeft.setPrefSize(widthWellCards/2, heightWellCards/2);
         regionBottomLeft.setOnMouseClicked(e->{
-            System.out.println("hai cliccato il bottomLeft della initCard");
-            out.println(0);
-            out.println("BL");
+            indexCardToBePlacedOn = 0;
+            cornerSelected = "BL";
+
+            System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
         });
 
         Region regionTopRight = new Region();
         regionTopRight.setPrefSize(widthWellCards/2, heightWellCards/2);
         regionTopRight.setOnMouseClicked(e->{
-            System.out.println("hai cliccato il topRight della initCard");
-            out.println(0);
-            out.println("TR");
+            indexCardToBePlacedOn = 0;
+            cornerSelected = "TR";
+
+            System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
         });
 
         Region regionBottomRight = new Region();
         regionBottomRight.setPrefSize(widthWellCards/2, heightWellCards/2);
         regionBottomRight.setOnMouseClicked(e->{
-            System.out.println("hai cliccato il bottomRight della initCard");
-            out.println(0);
-            out.println("BR");
+            indexCardToBePlacedOn = 0;
+            cornerSelected = "BR";
+
+            System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
         });
 
         gridPaneInitCard.add(regionTopLeft, 0, 0);
@@ -630,28 +644,39 @@ public class GUI extends Application {
             out.println(cardSelected);
         });
 
-
-// Creare bottone per playCard: salvataggio della carta da voler piazzare e carta su cui piazzare + angolo salvati in variabili, onClick pulsante piazza carta nel posto giusto ezzz
-        handCard1View.setOnMouseClicked(event -> {
-            System.out.println("Hai selezionato la carta id: "+idHandCard1);
-            out.println("playCard");
+        Button playCard = new Button("Play Card");
+        playCard.setOnAction(event -> {
+            System.out.println("Hai selezionato la carta id: "+idCardToPlace);
+            out.println("playCard"); //sends to server the message to start the playCard method
             try {
                 String actualBoard= in.readLine();
                 do{
                     System.out.println(actualBoard);
                     actualBoard= in.readLine();
                 }while (!actualBoard.equals("fine board"));
-                out.println(0);
-                //out.println(cardSelected);
+
+                out.println(indexCardToBePlacedOn); //sends to server the index of the card you want your card to be placed on
+                out.println(cornerSelected); //sends to server the corner of the already placed cards you want your card to be placed on
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+        });
+
+
+// Creare bottone per playCard: salvataggio della carta da voler piazzare e carta su cui piazzare + angolo salvati in variabili, onClick pulsante piazza carta nel posto giusto ezzz
+        handCard1View.setOnMouseClicked(event -> {
+            System.out.println("Hai selezionato la carta id: "+idHandCard1);
+            idCardToPlace = idHandCard1;
         });
         handCard2View.setOnMouseClicked(event -> {
             System.out.println("Hai selezionato la carta id: "+idHandCard2);
+            idCardToPlace = idHandCard2;
         });
         handCard3View.setOnMouseClicked(event -> {
             System.out.println("Hai selezionato la carta id: "+idHandCard3);
+            idCardToPlace = idHandCard3;
         });
 
 
@@ -704,7 +729,7 @@ public class GUI extends Application {
 
 
         //paneForImages.getChildren().addAll(wellCard1View, wellCard2View, wellCard3View, wellCard4View);
-        vboxGame.getChildren().addAll(gridPaneForWellCards, decks);
+        vboxGame.getChildren().addAll(gridPaneForWellCards, decks, playCard);
         hboxGame.getChildren().addAll(gameBoard, vboxGame);
         firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
         secondRow.getChildren().addAll(firstColomnOfSecondRow);
