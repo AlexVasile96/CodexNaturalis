@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -25,6 +26,7 @@ import view.ClientView;
 import java.io.*;
 import java.net.Socket;
 import java.util.Objects;
+import java.util.Stack;
 
 public class GUI extends Application {
 
@@ -45,8 +47,8 @@ public class GUI extends Application {
     private String idHandCard2 = null;
     private String idHandCard3 = null;
 
-    private double heightWellCards = 70;
-    private double widthWellCards = 101;
+    private double heightWellCards = 70*1.75;
+    private double widthWellCards = 101*1.75;
     private static Stage window;
     public ImageView firstCardFromWell;
     public ImageView secondCardFromWell;
@@ -56,7 +58,7 @@ public class GUI extends Application {
     private Scene startScene;
     private Scene loginScene;
     private static BufferedReader in;
-    private int isFront=1; //The server need 1 to place the card on the back and 0 to place it on the front
+    private int isFront=0; //The server need 1 to place the card on the back and 0 to place it on the front
     private Scene gameScene;
     private Scene chooseNumOfPlayersScene;
     private Scene lobbyScene;
@@ -374,7 +376,7 @@ public class GUI extends Application {
     @FXML
     public int flipToBackCard() {
         int idToInt= Integer.parseInt(id);
-        isFront=0;
+        isFront=1;
         if(idToInt>=1 && idToInt <=40) //Resource Card
         {
             String pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
@@ -400,7 +402,7 @@ public class GUI extends Application {
     @FXML
     public int flipToFrontCard() {
         int idToInt= Integer.parseInt(id);
-        isFront=1;
+        isFront=0;
         if(idToInt>=1 && idToInt <=40) //Resource Card
         {
             String pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
@@ -479,6 +481,8 @@ public class GUI extends Application {
 
     }
 
+    private int cardSelected;
+
     private void game() throws IOException {
 
         String pathCard1 = "/ImmaginiCodex/CarteFront/"+typeCard1+"/"+ idCard1 +".png";
@@ -527,18 +531,106 @@ public class GUI extends Application {
         wellCard4View.setFitHeight(heightWellCards);
         wellCard4View.setFitWidth(widthWellCards);
 
+        wellCard1View.setOnMouseClicked(event ->{
+            System.out.println("Hai selezionato la carta id: "+idCard1);
+        });
+        wellCard2View.setOnMouseClicked(event ->{
+            System.out.println("Hai selezionato la carta id: "+idCard2);
+        });
+        wellCard3View.setOnMouseClicked(event ->{
+            System.out.println("Hai selezionato la carta id: "+idCard3);
+        });
+        wellCard4View.setOnMouseClicked(event ->{
+            System.out.println("Hai selezionato la carta id: "+idCard4);
+        });
+
+        StackPane stackPaneInitCard = new StackPane();
+        GridPane gridPaneInitCard = new GridPane();
+
+        StackPane.setAlignment(stackPaneInitCard, Pos.CENTER);
+        StackPane.setMargin(stackPaneInitCard, new Insets(0, 0, 0, 0));
+
+        Region regionTopLeft = new Region();
+        regionTopLeft.setPrefSize(widthWellCards/2, heightWellCards/2);
+        regionTopLeft.setOnMouseClicked(e->{
+            System.out.println("hai cliccato il topLeft della initCard");
+            out.println(0);
+            out.println("TL");
+        });
+
+        Region regionBottomLeft = new Region();
+        regionBottomLeft.setPrefSize(widthWellCards/2, heightWellCards/2);
+        regionBottomLeft.setOnMouseClicked(e->{
+            System.out.println("hai cliccato il bottomLeft della initCard");
+            out.println(0);
+            out.println("BL");
+        });
+
+        Region regionTopRight = new Region();
+        regionTopRight.setPrefSize(widthWellCards/2, heightWellCards/2);
+        regionTopRight.setOnMouseClicked(e->{
+            System.out.println("hai cliccato il topRight della initCard");
+            out.println(0);
+            out.println("TR");
+        });
+
+        Region regionBottomRight = new Region();
+        regionBottomRight.setPrefSize(widthWellCards/2, heightWellCards/2);
+        regionBottomRight.setOnMouseClicked(e->{
+            System.out.println("hai cliccato il bottomRight della initCard");
+            out.println(0);
+            out.println("BR");
+        });
+
+        gridPaneInitCard.add(regionTopLeft, 0, 0);
+        gridPaneInitCard.add(regionTopRight, 1, 0);
+        gridPaneInitCard.add(regionBottomLeft, 0, 1);
+        gridPaneInitCard.add(regionBottomRight, 1, 1);
+
+        stackPaneInitCard.getChildren().addAll(initCard, gridPaneInitCard);
+
+        initCard.setOnMouseClicked(event -> {
+            cardSelected = 0;
+            out.println(cardSelected);
+        });
+// Creare bottone per playCard: salvataggio della carta da voler piazzare e carta su cui piazzare + angolo salvati in variabili, onClick pulsante piazza carta nel posto giusto ezzz
+        handCard1View.setOnMouseClicked(event -> {
+            System.out.println("Hai selezionato la carta id: "+idHandCard1);
+            out.println("playCard");
+            try {
+                String actualBoard= in.readLine();
+                do{
+                    System.out.println(actualBoard);
+                    actualBoard= in.readLine();
+                }while (!actualBoard.equals("fine board"));
+                out.println(0);
+                //out.println(cardSelected);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        handCard2View.setOnMouseClicked(event -> {
+            System.out.println("Hai selezionato la carta id: "+idHandCard2);
+        });
+        handCard3View.setOnMouseClicked(event -> {
+            System.out.println("Hai selezionato la carta id: "+idHandCard3);
+        });
+
 
 
         Pane root = new Pane();
-        Image codexLogo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
+        Image sfondoGame = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundGameImage = new BackgroundImage(codexLogo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        BackgroundImage backgroundGameImage = new BackgroundImage(sfondoGame, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundGameImage);
         root.setBackground(background);
+
+        AnchorPane anchorPane = new AnchorPane();
+        root.getChildren().add(anchorPane);
+
         VBox vboxContainer = new VBox();
         HBox hboxGame = new HBox();
         VBox vboxGame = new VBox();
-        vboxGame.setLayoutX(widthWellCards*2);
         vboxGame.setFillWidth(true);
 
         //all'interno della scrollPane gameBoard c'è insideScrollPane che è un Pane
@@ -558,12 +650,11 @@ public class GUI extends Application {
 
 
         insideScrollPane.setBackground(background);
-        Pane paneForImages = new Pane();
         HBox secondRow = new HBox();
         HBox firstColomnOfSecondRow = new HBox();
         //Pane paneForImages = new Pane();
 
-        insideScrollPane.getChildren().add(initCard);
+        insideScrollPane.getChildren().add(stackPaneInitCard);
         GridPane gridPaneForWellCards = new GridPane();
         gridPaneForWellCards.add(wellCard1View, 0, 0);
         gridPaneForWellCards.add(wellCard2View, 0, 1);
@@ -577,9 +668,22 @@ public class GUI extends Application {
         firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
         secondRow.getChildren().addAll(firstColomnOfSecondRow);
         vboxContainer.getChildren().addAll(hboxGame, secondRow);
-        root.getChildren().add(vboxContainer);
+        anchorPane.getChildren().add(vboxContainer);
 
         gameScene = new Scene(root, 600, 400);
+
+        window.widthProperty().addListener((observable, oldValue, newValue) -> {
+            insideScrollPane.setPrefWidth(window.getWidth()*0.8);
+        });
+        window.heightProperty().addListener((observable, oldValue, newValue) -> {
+            insideScrollPane.setPrefHeight(window.getHeight()*0.8);
+        });
+        /*window.widthProperty().addListener((observable, oldValue, newValue) -> {
+            vboxGame.setPrefWidth(window.getWidth()*0.2);
+        });
+        window.heightProperty().addListener((observable, oldValue, newValue) -> {
+            vboxGame.setPrefHeight(window.getHeight()*0.2);
+        });*/
 
         //in.readLine();
     }
