@@ -84,6 +84,10 @@ public class Command { //Command Client sends to Server
                 System.out.println("Sono entrato in help");
                 return "hai chiesto aiuto";
             }
+            case"firstCardResourceGui":
+                return game.getFirstCardOfResourceDeck();
+            case "firstCardGoldGui":
+                return game.getFirstCardOfGoldDeck();
             case "persistenceGame":
                 //game.alreadyExistsAnotherGame();
             case "status":
