@@ -219,60 +219,57 @@ private void waitUntilItsYourTurn() throws IOException {
     }
 
     private void playCardFromYourDeck() throws IOException {
-        sendMessageToServer("playCard");
-
         player.setHasThePlayerAlreadyPLacedACard(true);
         System.out.println("You chose to play a card from your deck!");
-        System.out.println("This is your board:\n");
-        System.out.print("////////////////////////////////// INIZIO BOARD //////////////////////////////////////////\n");
-        String actualBoard= in.readLine();
-        do{
-            System.out.println(actualBoard);
-            actualBoard= in.readLine();
-        }while (!actualBoard.equals("fine board"));
-        System.out.println();
-        System.out.println("////////////////////////////////// FINE BOARD ////////////////////////////////////////////");
-        System.out.println("\n");
+        showBoard();                    //stampa della board
+        showYourSpecificSeed();
+        sendMessageToServer("playCard");
+
+        //scelta carta dal mazzo
+        System.out.println("\n------------------------------------------------------------------------------------------------");
         System.out.println("These are your deck cards: ");
-        System.out.println("\n");
         System.out.println(player.getClientView().getPlayerStringCards().get(0));
         System.out.println(player.getClientView().getPlayerStringCards().get(1));
         System.out.println(player.getClientView().getPlayerStringCards().get(2));
+        System.out.println("------------------------------------------------------------------------------------------------");
         System.out.println("Which card do you want to play on the board?");
         System.out.println("1-> first card\n2-> second card\n3-> third card");
         String messageFromServer;
         int size;
         do {
-            String result = stdin.readLine();
-            size = Integer.parseInt(result);
+            size = Integer.parseInt(stdin.readLine());
             out.println(size - 1); //Carta scelta dal deck del player, sto mandando al server
             messageFromServer = in.readLine();
-            if (messageFromServer.equals("puoi procedere")){
-                System.out.println("everithing OK!");
-            }
-            else if(messageFromServer.equals("Gold Card not placeable")){
+            if(messageFromServer.equals("Gold Card not placeable")){
                 messageFromServer = in.readLine();
                 System.out.println("gold card requires: " + messageFromServer);
                 messageFromServer = in.readLine();
                 System.out.println("you got: " + messageFromServer);
-                System.out.println("choose another card");
+                System.out.println("For now choose another card");
             }
         }while (!messageFromServer.equals("puoi procedere"));
-        //gestione gold
-        /*char primoChar =player.getClientView().getPlayerStringCards().get(size-1).charAt(0);
-        boolean requirements = true;
-        if(primoChar == 'G'){
-            requirements = canPlaceGold();
-        }
-        else sendMessageToServer("not a gold");*/
+        player.getClientView().getPlayerStringCards().remove(size-1);   //rimuovo dalla view la carta scelta
 
-        System.out.println("Do you want to turn your card?\nBack of all cards has 4 empty corners and 1 attribute representing the specific seed of the card");
-        System.out.println("Please type 1 if you want to turn your card, 2 if you don't want to turn your card");
-
+        //scelta se girare la carta
+        String dalUtente;
+        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("Do you want to turn your card?\n(Back of all cards has 4 empty corners and 1 attribute representing the specific seed of the card)");
+        do{
+        System.out.println("Please type\n" +
+                "-> 1 if you want to turn your card! " +
+                "-> 2 if you don't want to turn your card!");
+        dalUtente = stdin.readLine();
+        }while (!dalUtente.equals("1") && !dalUtente.equals("2"));
+        sendMessageToServer(dalUtente);
         //DA FINIRE
 
+        //carte sulla board
         System.out.println("Su quale carta della board vuoi andare a piazzare la tua carta?");
-        System.out.println("1-> is the initial card");
+        messageFromServer = in.readLine();
+        do{
+            System.out.println(messageFromServer);
+            messageFromServer= in.readLine();
+        }while (!messageFromServer.equals("exit"));
         String chosenCardOnTheBoard= stdin.readLine();
         int paolo= Integer.parseInt(chosenCardOnTheBoard);
         out.println(paolo-1);
@@ -297,7 +294,6 @@ private void waitUntilItsYourTurn() throws IOException {
         }
         String ultimo= in.readLine();
         System.out.println(ultimo);
-        player.getClientView().getPlayerStringCards().remove(size-1);
         drawCard();
         status();
 
@@ -321,12 +317,6 @@ private void waitUntilItsYourTurn() throws IOException {
         String points= in.readLine();
         System.out.println(points);
         clientView.setPlayerScore(Integer.parseInt(points));
-    }
-
-    private boolean canPlaceGold() throws IOException {
-        sendMessageToServer("canPlaceGold");
-        String listaSeed = in.readLine();
-        return true;
     }
 
     private void visualizeCommonObjective() throws IOException {
