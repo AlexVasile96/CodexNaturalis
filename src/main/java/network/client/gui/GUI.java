@@ -376,7 +376,7 @@ public class GUI extends Application {
     @FXML
     public int flipToBackCard() {
         int idToInt= Integer.parseInt(id);
-        isFront=1;
+        isFront=0;
         if(idToInt>=1 && idToInt <=40) //Resource Card
         {
             String pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
@@ -402,7 +402,7 @@ public class GUI extends Application {
     @FXML
     public int flipToFrontCard() {
         int idToInt= Integer.parseInt(id);
-        isFront=0;
+        isFront=1;
         if(idToInt>=1 && idToInt <=40) //Resource Card
         {
             String pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
