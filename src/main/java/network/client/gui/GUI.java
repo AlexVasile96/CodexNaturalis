@@ -39,6 +39,10 @@ public class GUI extends Application {
     private String wellPathSecond = null;
     private String wellPathThird = null;
     private String wellPathForth = null;
+    private Image wellCard1=null;
+    private Image wellCard2=null;
+    private Image wellCard3=null;
+    private Image wellCard4=null;
     private String idCard1=null;
     private String idCard2=null;
     private String idCard3=null;
@@ -223,9 +227,7 @@ public class GUI extends Application {
 
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         chooseNumOfPlayers();
-        Platform.runLater(() -> {
-            primaryStage.setScene(chooseNumOfPlayersScene);
-        });
+        Platform.runLater(() -> primaryStage.setScene(chooseNumOfPlayersScene));
     }
 
     private void chooseNumOfPlayers() throws IOException {
@@ -348,9 +350,7 @@ public class GUI extends Application {
         chosenObj = obiettivo2;
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         chooseInitCard();
-        Platform.runLater(() -> {
-            primaryStage.setScene(chooseInitCardScene);
-        });
+        Platform.runLater(() -> primaryStage.setScene(chooseInitCardScene));
 
     }
 
@@ -438,9 +438,7 @@ public class GUI extends Application {
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         update();
         game();
-        Platform.runLater(() -> {
-            primaryStage.setScene(gameScene);
-        });
+        Platform.runLater(() -> primaryStage.setScene(gameScene));
     }
 
 
@@ -496,7 +494,7 @@ public class GUI extends Application {
 
     private int cardSelected;
 
-    private void game() throws IOException {
+    private void game() {
         creatingPathForGameMethod();
 
         topCardResourceDeck = createNewPathForImages(pathResourceDeck); //Resource Deck Back Image
@@ -504,13 +502,7 @@ public class GUI extends Application {
 
         creatingDeckAndGoldDeckView();
         creatingWell();
-
-
-
-        Image wellCard1 = createNewPathForImages(wellPathOne);
-        Image wellCard2 = createNewPathForImages(wellPathSecond);
-        Image wellCard3 = createNewPathForImages(wellPathThird);
-        Image wellCard4 = createNewPathForImages(wellPathForth);
+        creatingIMagesForTheWell();
 
         ImageView wellCard1View = new ImageView(wellCard1);
         setWidthAndHeight(wellCard1View);
@@ -741,20 +733,9 @@ public class GUI extends Application {
 
         gameScene = new Scene(root, 600, 400);
 
-        window.widthProperty().addListener((observable, oldValue, newValue) -> {
-            insideScrollPane.setPrefWidth(window.getWidth()*0.8);
-        });
-        window.heightProperty().addListener((observable, oldValue, newValue) -> {
-            insideScrollPane.setPrefHeight(window.getHeight()*0.8);
-        });
-        /*window.widthProperty().addListener((observable, oldValue, newValue) -> {
-            vboxGame.setPrefWidth(window.getWidth()*0.2);
-        });
-        window.heightProperty().addListener((observable, oldValue, newValue) -> {
-            vboxGame.setPrefHeight(window.getHeight()*0.2);
-        });*/
+        window.widthProperty().addListener((observable, oldValue, newValue) -> insideScrollPane.setPrefWidth(window.getWidth()*0.8));
+        window.heightProperty().addListener((observable, oldValue, newValue) -> insideScrollPane.setPrefHeight(window.getHeight()*0.8));
 
-        //in.readLine();
     }
 
     private String checkType(String id){
@@ -819,11 +800,6 @@ public class GUI extends Application {
         popupStage.setWidth(500); // Set the width of the stage
         popupStage.setHeight(350); // Set the height of the stage
         popupStage.showAndWait(); // Display the stage and wait for it to be closed
-    }
-
-    private void addCard(){
-        out.println("playcard");
-        ImageView card = new ImageView();
     }
 
     @FXML
@@ -927,6 +903,12 @@ public class GUI extends Application {
         wellPathSecond = "/ImmaginiCodex/CarteFront/"+typeCard2+"/"+ idCard2 +".png";
         wellPathThird = "/ImmaginiCodex/CarteFront/"+typeCard3+"/"+ idCard3 +".png";
         wellPathForth = "/ImmaginiCodex/CarteFront/"+typeCard4+"/"+ idCard4 +".png";
+    }
+    private void creatingIMagesForTheWell(){
+        wellCard1 = createNewPathForImages(wellPathOne);
+        wellCard2 = createNewPathForImages(wellPathSecond);
+        wellCard3 = createNewPathForImages(wellPathThird);
+        wellCard4 = createNewPathForImages(wellPathForth);
     }
 
 }
