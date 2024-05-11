@@ -280,8 +280,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     gameController.readCommand(messageFromClient, player, 0, 0, cornerChosen);
                 }
                 case "playCard" -> {
-                    String sentBoard = "showBoard";
-                    gameController.readCommand(sentBoard, player, 0, 0, cornerChosen); //In questo modo, al player viene fatta visualizzare la propria Board
+                    //scelta carta dal tuo mazzo
                     int cardChosenFromHisDeck;
                     do {
                         cardChosenFromHisDeck = Integer.parseInt(stdIn.readLine());
@@ -296,6 +295,20 @@ public class HandlingPlayerInputsThread implements Runnable {
                             gameController.readCommand("showYourSpecificSeed", player, 0, 0, null);
                         }
                     }while (!player.checkingTheChosencardDue(cardChosenFromHisDeck));
+
+                    //scelta se girare la carta
+                    String giracarta = stdIn.readLine();
+                    if(giracarta.equals("1")){
+                        System.out.println("il player vuole girare la carta");
+                    }
+                    int i=1;
+                    for(Card card : player.getBoard().getCardsOnTheBoardList()){
+                        sendMessageToAllClients("->"+i+": "+card.toString());
+                        i++;
+                    }
+                    sendMessageToAllClients("exit");
+
+                    //scelta carta della board su cui piazzare
                     String CardOnTheBoardChosen = stdIn.readLine();
                     int boardCardChosen = Integer.parseInt(CardOnTheBoardChosen);
                     System.out.println("Il player ha deciso di giocare la proria carta sulla carta numero " + boardCardChosen);
