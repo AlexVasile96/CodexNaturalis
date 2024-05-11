@@ -30,6 +30,11 @@ public class Board {
             }
         }
     } // BOARD CONSTRUCTOR
+
+    public Board() {
+        this(50, 50);
+    }
+
     public void printBoard() { //printBoard method
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes[i].length; j++) {
@@ -327,7 +332,7 @@ public class Board {
     public InitialCard getInitialCard() {
         return initialCard;
     }
-    public ArrayList<Card> getCardsOnTheBoardList() {
+    public List<Card> getCardsOnTheBoardList() {
         return cardsOnTheBoardList;
     }
     public int getNumOfEmpty() {
@@ -344,7 +349,7 @@ public class Board {
     }
 
 
-    public JsonObject toJsonObject() {
+    /*public JsonObject toJsonObject() {
         JsonObject jsonObject = new JsonObject();
         JsonArray nodesArray = new JsonArray();
         for (int row = 0; row < nodes.length; row++) {
@@ -352,8 +357,8 @@ public class Board {
             for (int col = 0; col < nodes[row].length; col++) {
                 JsonObject nodeObject = new JsonObject();
                 nodeObject.addProperty("seed", nodes[row][col].getStringSpecificNodeSeed());
-                nodeObject.addProperty("row", row);
-                nodeObject.addProperty("col", col);
+                nodeObject.addProperty("coordX", row);
+                nodeObject.addProperty("coordY", col);
                 rowArray.add(nodeObject);
             }
             nodesArray.add(rowArray);
@@ -363,7 +368,81 @@ public class Board {
         jsonObject.addProperty("initEmptyValue", initEmptyValue.ordinal());
 
         return jsonObject;
+    }*/
+    public JsonObject toJsonObject() {
+        JsonObject jsonObject = new JsonObject();
+        JsonArray nodesArray = new JsonArray();
+
+        // Add nodes to JSON array
+        for (int row = 0; row < nodes.length; row++) {
+            JsonArray rowArray = new JsonArray();
+            for (int col = 0; col < nodes[row].length; col++) {
+                JsonObject nodeObject = new JsonObject();
+                nodeObject.addProperty("seed", nodes[row][col].getStringSpecificNodeSeed());
+                nodeObject.addProperty("row", row);
+                nodeObject.addProperty("column", col);
+                rowArray.add(nodeObject);
+            }
+            nodesArray.add(rowArray);
+        }
+
+        // Add other attributes to the JSON object
+        jsonObject.add("nodes", nodesArray);
+        jsonObject.addProperty("numOfEmpty", numOfEmpty);
+        jsonObject.addProperty("initEmptyValue", initEmptyValue.ordinal());
+
+        return jsonObject;
     }
+
+
+    public static Board fromJsonObject(JsonObject jsonObject) {
+        JsonArray nodesArray = jsonObject.getAsJsonArray("nodes");
+        int rows = nodesArray.size();
+        int cols = nodesArray.get(0).getAsJsonArray().size();
+        Board board = new Board(rows, cols);
+
+        for (int row = 0; row < rows; row++) {
+            JsonArray rowArray = nodesArray.get(row).getAsJsonArray();
+            for (int col = 0; col < cols; col++) {
+                JsonObject nodeObject = rowArray.get(col).getAsJsonObject();
+                int nodeRow = nodeObject.get("row").getAsInt();
+                int nodeCol = nodeObject.get("column").getAsInt();
+                String seed = nodeObject.get("seed").getAsString();
+                // Assuming you have a method to create a Node from seed
+                Node node = Node.createNodeFromSeed(seed, nodeRow, nodeCol);
+                board.nodes[nodeRow][nodeCol] = node;
+            }
+        }
+
+        board.numOfEmpty = jsonObject.get("numOfEmpty").getAsInt();
+        int emptyValueOrdinal = jsonObject.get("initEmptyValue").getAsInt();
+        board.initEmptyValue = SpecificSeed.values()[emptyValueOrdinal];
+
+        return board;
+    }
+
+   /* public static Board fromJsonObject(JsonObject jsonObject) {
+        Board board = new Board();
+        JsonArray nodesArray = jsonObject.getAsJsonArray("nodes");
+        board.nodes = new Node[nodesArray.size()][];
+        for (int row = 0; row < nodesArray.size(); row++) {
+            JsonArray rowArray = nodesArray.get(row).getAsJsonArray();
+            board.nodes[row] = new Node[rowArray.size()];
+            for (int col = 0; col < rowArray.size(); col++) {
+                JsonObject nodeObject = rowArray.get(col).getAsJsonObject();
+                int nodeRow = nodeObject.get("coordX").getAsInt(); // Leggi la coordinata X
+                int nodeCol = nodeObject.get("coordY").getAsInt(); // Leggi la coordinata Y
+                String seed = nodeObject.get("seed").getAsString();
+                // Assuming you have a method to create a Node from seed
+                Node node = Node.createNodeFromSeed(seed, nodeRow, nodeCol); // Passa le coordinate al metodo
+                board.nodes[nodeRow][nodeCol] = node;
+            }
+        }
+        board.numOfEmpty = jsonObject.get("numOfEmpty").getAsInt();
+        int emptyValueOrdinal = jsonObject.get("initEmptyValue").getAsInt();
+        board.initEmptyValue = SpecificSeed.values()[emptyValueOrdinal];
+        return board;
+    }*/
 }
 
 

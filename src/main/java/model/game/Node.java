@@ -88,4 +88,10 @@ public class Node {
     public int getRow() {
         return coordY;
     }
+    public static Node createNodeFromSeed(String seed, int coordX, int coordY) {
+        SpecificSeed specificNodeSeed = SpecificSeed.valueOf(seed); // Converte la stringa del seme in un'istanza di SpecificSeed
+
+        // Crea un nuovo oggetto Node utilizzando il seme e le coordinate specificate
+        return new Node(specificNodeSeed, coordX, coordY);
+    }
 }

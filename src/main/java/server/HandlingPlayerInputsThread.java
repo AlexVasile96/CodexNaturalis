@@ -166,7 +166,6 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     private synchronized Player loginEachClient() throws IOException, InterruptedException {
         Player player = null;
-        //if game controller==null it means the player has to log in!!
             try {
                 sendMessageToClient("Hello!! You have to log in, please type your username");
                 String request = stdIn.readLine();
@@ -194,7 +193,6 @@ public class HandlingPlayerInputsThread implements Runnable {
             } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
                 throw new RuntimeException(e);
             }
-
         System.out.println(gameController);
         return player;
     }
