@@ -95,6 +95,6 @@ public class ResourceDeck implements Deck{
     }
 
     public String sendIdCardToGui(){
-        return String.valueOf(resourceCards.get(0)); //I take the id of the resource card and give it to the GUI
+        return String.valueOf(resourceCards.get(0).getId()); //I take the id of the resource card and give it to the GUI
     }
 }

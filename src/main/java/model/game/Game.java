@@ -104,8 +104,6 @@ public class Game implements WhatCanPlayerDo {
         return goldDeck.sendIdCardToGui();
     }
 
-
-
     public void placeInitialCard(Board board, InitialCard card){
         board.placeFrontInitialCard(card);
     }

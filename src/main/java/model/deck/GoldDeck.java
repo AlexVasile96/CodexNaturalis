@@ -94,7 +94,7 @@ public class GoldDeck implements Deck {
         return (idCard > 40 && idCard <= 80);
     }
     public String sendIdCardToGui(){
-        return String.valueOf(goldCards.get(0)); //I take the id of the resource card and give it to the GUI
+        return String.valueOf(goldCards.get(0).getId()); //I take the id of the resource card and give it to the GUI
     }
 
 }
