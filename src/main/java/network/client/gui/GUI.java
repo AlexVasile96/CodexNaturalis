@@ -49,12 +49,14 @@ public class GUI extends Application {
     private String idTopCardResourceDeck = null;
     private String idTopCardGoldDeck = null;
 
+    private double heightWellCards = 80;
+    private double widthWellCards = 110;
     private Integer indexCardToPlace = 100;
     private Integer indexCardToBePlacedOn = 100;
     private String cornerSelected = null;
 
-    private double heightWellCards = 70*1.75;
-    private double widthWellCards = 101*1.75;
+    //private double heightWellCards = 70*1.75;
+    //private double widthWellCards = 101*1.75;
     private static Stage window;
     public ImageView firstCardFromWell;
     public ImageView secondCardFromWell;
@@ -733,25 +735,49 @@ public class GUI extends Application {
         gameBoard.pannableProperty().set(true);
 
 
+        //padding between elements
+        Insets padding = new Insets(10, 10, 10, 10);
+        Insets paddingDecks = new Insets(100, 10, 10, 10);
 
         insideScrollPane.setBackground(background);
         HBox secondRow = new HBox();
         HBox firstColomnOfSecondRow = new HBox();
+        firstColomnOfSecondRow.setPadding(padding);
+        firstColomnOfSecondRow.setSpacing(4);
         //Pane paneForImages = new Pane();
+
+        Label wellText = new Label("                    WELL");
+        Label wellText2 = new Label("CARDS");
+        wellText.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14");
+        wellText2.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14");
 
         insideScrollPane.getChildren().add(stackPaneInitCard);
         GridPane gridPaneForWellCards = new GridPane();
+        gridPaneForWellCards.setVgap(4.0);
+        gridPaneForWellCards.setHgap(4.0);
+        gridPaneForWellCards.setPadding(padding);
         gridPaneForWellCards.add(wellCard1View, 0, 0);
         gridPaneForWellCards.add(wellCard2View, 0, 1);
         gridPaneForWellCards.add(wellCard3View, 1, 0);
         gridPaneForWellCards.add(wellCard4View, 1, 1);
+        gridPaneForWellCards.add(wellText, 0,2);
+        gridPaneForWellCards.add(wellText2, 1,2);
+
+
 
         HBox decks = new HBox();
+
+        Label decksText = new Label("      Rescource Deck               Gold Deck");
+        decksText.setStyle("-fx-font-weight: bold; -fx-text-fill: white");
+
+        decks.setSpacing(4.0);
+        decks.setPadding(paddingDecks);
         decks.getChildren().addAll(topCardResourceDeckView, topCardGoldDeckView);
 
 
         //paneForImages.getChildren().addAll(wellCard1View, wellCard2View, wellCard3View, wellCard4View);
-        vboxGame.getChildren().addAll(gridPaneForWellCards, decks, playCard);
+
+        vboxGame.getChildren().addAll(gridPaneForWellCards, decks,decksText, playCard);
         hboxGame.getChildren().addAll(gameBoard, vboxGame);
         firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
         secondRow.getChildren().addAll(firstColomnOfSecondRow);
