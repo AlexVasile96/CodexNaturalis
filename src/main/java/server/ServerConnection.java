@@ -260,7 +260,7 @@ private void waitUntilItsYourTurn() throws IOException {
                 "-> 2 if you don't want to turn your card!");
         dalUtente = stdin.readLine();
         }while (!dalUtente.equals("1") && !dalUtente.equals("2"));
-        sendMessageToServer(dalUtente);
+        sendMessageToServer(dalUtente); //outprintln 2
         //DA FINIRE
 
         //carte sulla board

@@ -28,7 +28,17 @@ import java.net.Socket;
 import java.util.Objects;
 
 public class GUI extends Application {
-
+    private Background background=null;
+    private String pathResourceDeck=null;
+    private String pathGoldDeck=null;
+    private ImageView topCardResourceDeckView=null;
+    private ImageView topCardGoldDeckView=null;
+    private Image topCardResourceDeck=null;
+    private Image topCardGoldDeck=null;
+    private String wellPathOne =null;
+    private String wellPathSecond = null;
+    private String wellPathThird = null;
+    private String wellPathForth = null;
     private String idCard1=null;
     private String idCard2=null;
     private String idCard3=null;
@@ -58,11 +68,6 @@ public class GUI extends Application {
     //private double heightWellCards = 70*1.75;
     //private double widthWellCards = 101*1.75;
     private static Stage window;
-    public ImageView firstCardFromWell;
-    public ImageView secondCardFromWell;
-    public ImageView fourthCardFromWell;
-    public ImageView thirdCardFromWell;
-    public GridPane gridPane;
     private Scene startScene;
     private Scene loginScene;
     private static BufferedReader in;
@@ -111,11 +116,6 @@ public class GUI extends Application {
 
 
     @FXML
-    public HBox hboxGame;
-    @FXML
-    public VBox vboxGame;
-
-    @FXML
     public ImageView CARTA;
     @FXML
     public ImageView initCard;
@@ -135,7 +135,6 @@ public class GUI extends Application {
         out=new PrintWriter(socket.getOutputStream(), true); //to write
         in=new BufferedReader(new InputStreamReader(socket.getInputStream()));
         launch(args); //default
-
     }
 
 
@@ -339,9 +338,7 @@ public class GUI extends Application {
         chosenObj = obiettivo1;
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         chooseInitCard();
-        Platform.runLater(() -> {
-            primaryStage.setScene(chooseInitCardScene);
-        });
+        Platform.runLater(() -> primaryStage.setScene(chooseInitCardScene));
 
     }
 
@@ -499,68 +496,36 @@ public class GUI extends Application {
 
     private int cardSelected;
 
-    private Image createNewPathForImages(String path)
-    {
-        return new Image(Objects.requireNonNull(getClass().getResourceAsStream(path)));
-    }
-
-    private void setWidthAndHeight(ImageView imageView)
-    {
-        imageView.setFitWidth(widthWellCards);
-        imageView.setFitHeight(heightWellCards);
-    }
     private void game() throws IOException {
-        //patch for decks
-        String pathResourceDeck = createPathForBackCards(idTopCardResourceDeck);
-        String pathGoldDeck = createPathForBackCards(idTopCardGoldDeck);
+        creatingPathForGameMethod();
 
-        //decks images
-        Image topCardResourceDeck = createNewPathForImages(pathResourceDeck);
-        Image topCardGoldDeck = createNewPathForImages(pathGoldDeck);
+        topCardResourceDeck = createNewPathForImages(pathResourceDeck); //Resource Deck Back Image
+        topCardGoldDeck = createNewPathForImages(pathGoldDeck);           //Gold Deck Back Image
 
-        //decks imageViews
-        ImageView topCardResourceDeckView = new ImageView(topCardResourceDeck);
-        setWidthAndHeight(topCardResourceDeckView);
+        creatingDeckAndGoldDeckView();
+        creatingWell();
 
-        ImageView topCardGoldDeckView = new ImageView(topCardGoldDeck);
-        setWidthAndHeight(topCardGoldDeckView);
 
-        //Creating well
-        String pathCard1 = "/ImmaginiCodex/CarteFront/"+typeCard1+"/"+ idCard1 +".png";
-        String pathCard2 = "/ImmaginiCodex/CarteFront/"+typeCard2+"/"+ idCard2 +".png";
-        String pathCard3 = "/ImmaginiCodex/CarteFront/"+typeCard3+"/"+ idCard3 +".png";
-        String pathCard4 = "/ImmaginiCodex/CarteFront/"+typeCard4+"/"+ idCard4 +".png";
 
-        Image wellCard1 = createNewPathForImages(pathCard1);
-        Image wellCard2 = createNewPathForImages(pathCard2);
-        Image wellCard3 = createNewPathForImages(pathCard3);
-        Image wellCard4 = createNewPathForImages(pathCard4);
+        Image wellCard1 = createNewPathForImages(wellPathOne);
+        Image wellCard2 = createNewPathForImages(wellPathSecond);
+        Image wellCard3 = createNewPathForImages(wellPathThird);
+        Image wellCard4 = createNewPathForImages(wellPathForth);
 
         ImageView wellCard1View = new ImageView(wellCard1);
         setWidthAndHeight(wellCard1View);
-
         ImageView wellCard2View = new ImageView(wellCard2);
         setWidthAndHeight(wellCard2View);
-
         ImageView wellCard3View = new ImageView(wellCard3);
         setWidthAndHeight(wellCard3View);
-
         ImageView wellCard4View = new ImageView(wellCard4);
         setWidthAndHeight(wellCard4View);
 
 
-        wellCard1View.setOnMouseClicked(event ->{
-            System.out.println("Hai selezionato la carta id: "+idCard1);
-        });
-        wellCard2View.setOnMouseClicked(event ->{
-            System.out.println("Hai selezionato la carta id: "+idCard2);
-        });
-        wellCard3View.setOnMouseClicked(event ->{
-            System.out.println("Hai selezionato la carta id: "+idCard3);
-        });
-        wellCard4View.setOnMouseClicked(event ->{
-            System.out.println("Hai selezionato la carta id: "+idCard4);
-        });
+        wellCard1View.setOnMouseClicked(event -> System.out.println("You chose from well card number: "+idCard1));
+        wellCard2View.setOnMouseClicked(event -> System.out.println("You chose from well card number:: "+idCard2));
+        wellCard3View.setOnMouseClicked(event -> System.out.println("You chose from well card number:: "+idCard3));
+        wellCard4View.setOnMouseClicked(event -> System.out.println("You chose from well card number:: "+idCard4));
 
         StackPane stackPaneInitCard = new StackPane();
         GridPane gridPaneInitCard = new GridPane();
@@ -602,11 +567,7 @@ public class GUI extends Application {
         regionTopLeft.setOnMouseClicked(e->{
             indexCardToBePlacedOn = 0;
             cornerSelected = "TL";
-
             System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
-
-
-
         });
 
         Region regionBottomLeft = new Region();
@@ -614,7 +575,6 @@ public class GUI extends Application {
         regionBottomLeft.setOnMouseClicked(e->{
             indexCardToBePlacedOn = 0;
             cornerSelected = "BL";
-
             System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
         });
 
@@ -623,7 +583,6 @@ public class GUI extends Application {
         regionTopRight.setOnMouseClicked(e->{
             indexCardToBePlacedOn = 0;
             cornerSelected = "TR";
-
             System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
         });
 
@@ -632,7 +591,6 @@ public class GUI extends Application {
         regionBottomRight.setOnMouseClicked(e->{
             indexCardToBePlacedOn = 0;
             cornerSelected = "BR";
-
             System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
         });
 
@@ -706,11 +664,8 @@ public class GUI extends Application {
 
 
         Pane root = new Pane();
-        Image sfondoGame = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundGameImage = new BackgroundImage(sfondoGame, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundGameImage);
-        root.setBackground(background);
+        creatingBackground(root); //Creating backGround for root
+
 
         AnchorPane anchorPane = new AnchorPane();
         root.getChildren().add(anchorPane);
@@ -938,5 +893,41 @@ public class GUI extends Application {
     public void setObj2ImageView(ImageView obj2ImageView) {
         this.obj2ImageView = obj2ImageView;
     }
+
+    private void creatingBackground(Pane root){
+        Image gameBackgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundGameImage = new BackgroundImage(gameBackgroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        background = new Background(backgroundGameImage);
+        root.setBackground(background);
+    }
+    private void creatingPathForGameMethod(){
+        pathResourceDeck = createPathForBackCards(idTopCardResourceDeck);
+        pathGoldDeck = createPathForBackCards(idTopCardGoldDeck);
+    }
+    private Image createNewPathForImages(String path)
+    {
+        return new Image(Objects.requireNonNull(getClass().getResourceAsStream(path)));
+    }
+
+    private void setWidthAndHeight(ImageView imageView)
+    {
+        imageView.setFitWidth(widthWellCards);
+        imageView.setFitHeight(heightWellCards);
+    }
+    private void creatingDeckAndGoldDeckView(){
+        topCardResourceDeckView = new ImageView(topCardResourceDeck); //Resource deck imageview
+        topCardGoldDeckView = new ImageView(topCardGoldDeck);         //Gold Deck imageview
+        setWidthAndHeight(topCardResourceDeckView);
+        setWidthAndHeight(topCardGoldDeckView);
+    }
+    private void creatingWell()
+    {
+        wellPathOne = "/ImmaginiCodex/CarteFront/"+typeCard1+"/"+ idCard1 +".png";
+        wellPathSecond = "/ImmaginiCodex/CarteFront/"+typeCard2+"/"+ idCard2 +".png";
+        wellPathThird = "/ImmaginiCodex/CarteFront/"+typeCard3+"/"+ idCard3 +".png";
+        wellPathForth = "/ImmaginiCodex/CarteFront/"+typeCard4+"/"+ idCard4 +".png";
+    }
+
 }
 
