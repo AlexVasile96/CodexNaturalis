@@ -35,7 +35,7 @@ public class Game implements WhatCanPlayerDo {
     private List<String> dots;
     private static boolean isCornerAlreadyChosen= false;
     private Card selectedCardFromTheDeck=null;
-    private Card cardPlayerChoose=null;
+    private Card cPchoose =null;
     private List<Player> playersFromDisk;
     private Card wellCard1;
     private Card wellCard2;
@@ -116,16 +116,21 @@ public class Game implements WhatCanPlayerDo {
 
 
     public String playCard(Player player, int cardindex, int cardChosenOnTheBoard, String selectedCorner) {
-        if(cardPlayerChoose.getId()>=81 && cardPlayerChoose.getId()<=86)
+        if(cPchoose.getId()>=81 && cPchoose.getId()<=86)
         {
             //DA FIXARE
             //Card is the initial Card
-            //player.playInitCardOnBoard(player.getBoard(),cardindex,selectedCardFromTheDeck, cardPlayerChoose, selectedCorner);
+            InitialCard helpcard= new InitialCard(cPchoose.getId(), cPchoose.getType(), cPchoose.getValueWhenPlaced(), cPchoose.getTL(), cPchoose.getTR(), cPchoose.getBL(), cPchoose.getBR(), cPchoose.getTLBack(), cPchoose.getTRBack(), cPchoose.getBLBack(), cPchoose.getBRBack(), cPchoose.getAttributes());
+            helpcard.setIndexOnTheBoard(cPchoose.getIndexOnTheBoard());
+            helpcard.setNode(cPchoose.getNode());
+            helpcard.setCardBack(cPchoose.isCardBack());
+            player.playInitCardOnBoard(player.getBoard(),cardindex,selectedCardFromTheDeck, helpcard, selectedCorner);
             player.getClientView().update(player);
             return "Carta piazzata correttamente";
         }
         else {
-            player.playCard(player.getBoard(), cardindex, cardChosenOnTheBoard, selectedCardFromTheDeck, cardPlayerChoose, selectedCorner);
+            //Card chosen is not the initial card
+            player.playCard(player.getBoard(), cardindex, cardChosenOnTheBoard, selectedCardFromTheDeck, cPchoose, selectedCorner);
             player.getClientView().update(player);
             return "Carta piazzata correttamente";
         }
@@ -304,8 +309,8 @@ public class Game implements WhatCanPlayerDo {
     public String showAvaiableCorners(Player player, int cardindex, int cardChosenOnTheBoard) {
             InitialCard initialCard = (InitialCard) player.getBoard().getCardsOnTheBoardList().getFirst();
             selectedCardFromTheDeck= player.checkingTheChosencard(cardindex);
-            cardPlayerChoose= player.gettingCardsFromTheBoard(player.getBoard(), cardChosenOnTheBoard);
-            String result= player.isTheCardChosenTheInitialcard(cardPlayerChoose, initialCard);
+            cPchoose = player.gettingCardsFromTheBoard(player.getBoard(), cardChosenOnTheBoard);
+            String result= player.isTheCardChosenTheInitialcard(cPchoose, initialCard);
             System.out.println(result);
             isCornerAlreadyChosen=true;
             return result;
