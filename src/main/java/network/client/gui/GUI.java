@@ -85,6 +85,7 @@ public class GUI extends Application {
     private Button endTurn = new Button("End turn");
 
     private Boolean haveToDraw = false;
+    private Boolean haveToPlay = true;
 
     private String chosenDeckForDrawingNewCard = null;
     private String wellOrDeck = null;
@@ -526,7 +527,8 @@ public class GUI extends Application {
 
 
         Region regionTopLeft = new Region();
-        regionTopLeft.setPrefSize(widthWellCards/2, heightWellCards/2);
+        regionTopLeft.setPrefSize(widthWellCards, heightWellCards);
+        regionTopLeft.setStyle("-fx-background-color: red;");
         regionTopLeft.setOnMouseClicked(e->{
             indexCardToBePlacedOn = 0;
             cornerSelected = "TL";
@@ -534,7 +536,8 @@ public class GUI extends Application {
         });
 
         Region regionBottomLeft = new Region();
-        regionBottomLeft.setPrefSize(widthWellCards/2, heightWellCards/2);
+        regionBottomLeft.setPrefSize(widthWellCards, heightWellCards);
+        regionBottomLeft.setStyle("-fx-background-color: yellow;");
         regionBottomLeft.setOnMouseClicked(e->{
             indexCardToBePlacedOn = 0;
             cornerSelected = "BL";
@@ -542,7 +545,8 @@ public class GUI extends Application {
         });
 
         Region regionTopRight = new Region();
-        regionTopRight.setPrefSize(widthWellCards/2, heightWellCards/2);
+        regionTopRight.setPrefSize(widthWellCards, heightWellCards);
+        regionTopRight.setStyle("-fx-background-color: green;");
         regionTopRight.setOnMouseClicked(e->{
             indexCardToBePlacedOn = 0;
             cornerSelected = "TR";
@@ -550,7 +554,8 @@ public class GUI extends Application {
         });
 
         Region regionBottomRight = new Region();
-        regionBottomRight.setPrefSize(widthWellCards/2, heightWellCards/2);
+        regionBottomRight.setPrefSize(widthWellCards, heightWellCards);
+        regionBottomRight.setStyle("-fx-background-color: blue;");
         regionBottomRight.setOnMouseClicked(e->{
             indexCardToBePlacedOn = 0;
             cornerSelected = "BR";
@@ -570,31 +575,34 @@ public class GUI extends Application {
         });
 
         playCard.setOnAction(event -> {
-            try {
-                controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
-                indexCardPlayedFromHand = indexCardToPlace;
-                haveToDraw = true;
-                if(indexCardPlayedFromHand == 0){
-                    handCard1View.setImage(codexLogo);
-                }
-                if(indexCardPlayedFromHand == 1){
-                    handCard2View.setImage(codexLogo);
-                }
-                if(indexCardPlayedFromHand == 2){
-                    handCard3View.setImage(codexLogo);
-                }
+            if(haveToPlay){
+                try {
+                    controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
+                    indexCardPlayedFromHand = indexCardToPlace;
+                    haveToDraw = true;
+                    if(indexCardPlayedFromHand == 0){
+                        handCard1View.setImage(codexLogo);
+                    }
+                    if(indexCardPlayedFromHand == 1){
+                        handCard2View.setImage(codexLogo);
+                    }
+                    if(indexCardPlayedFromHand == 2){
+                        handCard3View.setImage(codexLogo);
+                    }
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                haveToPlay = false;
             }
-        });
+            else System.out.println("You already placed a card");
+    });
 
         drawCard.setOnAction(e -> {
             if(haveToDraw){
                 try {
-                    String help = controller.drawCard(wellOrDeck, chosenDeckForDrawingNewCard, indexCardPlayedFromHand);
-                    String pathDrownCard = createPathForFrontCards(help);
-                    Image drownCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathDrownCard)));
+                    controller.drawCard(wellOrDeck, chosenDeckForDrawingNewCard, indexCardPlayedFromHand);
+                    Image drownCardImage = createNewPathForImages(pathForResourceCardFront(idTopCardResourceDeck));
                     if(indexCardPlayedFromHand == 0){
                         handCard1View.setImage(drownCardImage);
                     }
@@ -605,6 +613,7 @@ public class GUI extends Application {
                         handCard3View.setImage(drownCardImage);
                     }
                     haveToDraw =false;
+                    //updateDecks(); //implementare metodo per aggiornare i deck una volta pescata la carta
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -702,8 +711,8 @@ public class GUI extends Application {
         GridPane buttonContainer = new GridPane();
 
         buttonContainer.add(playCard,0, 0);
-        /*buttonContainer.add(drawCard, 1, 0);
-        buttonContainer.add(seeYourPoints, 2, 0);
+        buttonContainer.add(drawCard, 1, 0);
+        /*buttonContainer.add(seeYourPoints, 2, 0);
         buttonContainer.add(seeYourSpecificSeeds, 0, 1);
         buttonContainer.add(seeOtherPlayersBoards, 1, 1);
         buttonContainer.add(endTurn, 2, 1);*/
@@ -887,10 +896,12 @@ public class GUI extends Application {
         topCardResourceDeckView.setOnMouseClicked(e-> {
             chosenDeckForDrawingNewCard = "resource";
             wellOrDeck = "deck";
+            System.out.println("resourceDeck clicked");
         });
         topCardGoldDeckView.setOnMouseClicked(e-> {
             chosenDeckForDrawingNewCard = "gold";
             wellOrDeck = "deck";
+            System.out.println("goldDeck clicked");
         });
     }
     private void creatingWell()
