@@ -192,10 +192,6 @@ public class GUI extends Application {
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
-
-
-
-
         StackPane root = new StackPane();
         root.setBackground(background);
         root.getChildren().addAll(fxml);

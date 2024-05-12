@@ -63,7 +63,7 @@ public class ServerMain {
                     clients.add(clientThread);
                     pool.execute(clientThread); //Handling single player client
                 } catch (IOException ex) {
-                    System.err.println(ex.getMessage());
+                    System.err.println("Client disconnection: " + ex.getMessage());
                     break;
                 }
             }

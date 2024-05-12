@@ -116,7 +116,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
 
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Connection lost with client number "+ whichplayerAreYou );
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -191,7 +191,8 @@ public class HandlingPlayerInputsThread implements Runnable {
                     waitingForClients();
                 }
             } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
-                throw new RuntimeException(e);
+                System.err.println(e.getMessage());
+
             }
         System.out.println(gameController);
         return player;
