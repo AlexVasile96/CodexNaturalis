@@ -1,72 +1,43 @@
 {
   "players": [
     {
-      "nickname": "red",
+      "nickname": "Marco",
       "score": 16,
-      "dot": 2,
+      "dot": 3,
       "player_deck": [
         {
-          "id": 26,
-          "type": "ANIMAL",
-          "value": 0,
-          "TL": " PLANT",
-          "TR": " ANIMAL",
-          "BL": " NOTTOBEPLACEDON",
-          "BR": " PARCHMENT"
-        },
-        {
-          "id": 78,
-          "type": "INSECT",
-          "value": 3,
-          "TL": " EMPTY",
-          "TR": " PARCHMENT",
-          "BL": " NOTTOBEPLACEDON",
-          "BR": " NOTTOBEPLACEDON"
-        },
-        {
-          "id": 2,
+          "id": 3,
           "type": "MUSHROOM",
           "value": 0,
-          "TL": " MUSHROOM",
-          "TR": " MUSHROOM",
-          "BL": " NOTTOBEPLACEDON",
-          "BR": " EMPTY"
-        }
-      ]
-    },
-    {
-      "nickname": "luigion",
-      "score": 15,
-      "dot": 1,
-      "player_deck": [
-        {
-          "id": 22,
-          "type": "ANIMAL",
-          "value": 0,
-          "TL": " NOTTOBEPLACEDON",
-          "TR": " EMPTY",
-          "BL": " ANIMAL",
-          "BR": " ANIMAL"
+          "TL": " EMPTY",
+          "TR": " NOTTOBEPLACEDON",
+          "BL": " MUSHROOM",
+          "BR": " MUSHROOM"
         },
         {
-          "id": 68,
+          "id": 69,
           "type": "ANIMAL",
           "value": 3,
-          "TL": " EMPTY",
-          "TR": " INKWELL",
-          "BL": " NOTTOBEPLACEDON",
-          "BR": " NOTTOBEPLACEDON"
-        },
-        {
-          "id": 28,
-          "type": "ANIMAL",
-          "value": 1,
           "TL": " NOTTOBEPLACEDON",
           "TR": " EMPTY",
-          "BL": " ANIMAL",
+          "BL": " NOTTOBEPLACEDON",
+          "BR": " FEATHER"
+        },
+        {
+          "id": 33,
+          "type": "INSECT",
+          "value": 0,
+          "TL": " INSECT",
+          "TR": " NOTTOBEPLACEDON",
+          "BL": " INSECT",
           "BR": " EMPTY"
         }
-      ]
+      ],
+      "secretChosenCard": {
+        "id": 89,
+        "type": "ANIMAL",
+        "value": 2
+      }
     }
   ]
 }

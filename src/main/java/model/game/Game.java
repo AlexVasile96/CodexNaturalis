@@ -552,7 +552,14 @@ public class Game implements WhatCanPlayerDo {
                 playerDeckArray.add(cardObject);
             }
             playerObject.add("player_deck", playerDeckArray);
-
+            if (player.getSecretChosenCard() != null) {
+                JsonObject secretChosenCardObject = new JsonObject();
+                secretChosenCardObject.addProperty("id", player.getSecretChosenCard().getId());
+                secretChosenCardObject.addProperty("type", player.getSecretChosenCard().getType().toString());
+                secretChosenCardObject.addProperty("value", player.getSecretChosenCard().getValue());
+                // Aggiungi altri attributi se necessario
+                playerObject.add("secretChosenCard", secretChosenCardObject);
+            }
             playersArray.add(playerObject);
         }
 
