@@ -887,6 +887,7 @@ public class Player implements Observable {
         jsonObject.add("board", board.toJsonObject());
         jsonObject.addProperty("playerCards", String.valueOf(playerCards));
         jsonObject.addProperty("clientView", String.valueOf(clientView));
+        jsonObject.addProperty("secretCard", String.valueOf(secretChosenCard));
         return jsonObject;
     }
 

@@ -349,26 +349,7 @@ public class Board {
     }
 
 
-    /*public JsonObject toJsonObject() {
-        JsonObject jsonObject = new JsonObject();
-        JsonArray nodesArray = new JsonArray();
-        for (int row = 0; row < nodes.length; row++) {
-            JsonArray rowArray = new JsonArray();
-            for (int col = 0; col < nodes[row].length; col++) {
-                JsonObject nodeObject = new JsonObject();
-                nodeObject.addProperty("seed", nodes[row][col].getStringSpecificNodeSeed());
-                nodeObject.addProperty("coordX", row);
-                nodeObject.addProperty("coordY", col);
-                rowArray.add(nodeObject);
-            }
-            nodesArray.add(rowArray);
-        }
-        jsonObject.add("nodes", nodesArray);
-        jsonObject.addProperty("numOfEmpty", numOfEmpty);
-        jsonObject.addProperty("initEmptyValue", initEmptyValue.ordinal());
 
-        return jsonObject;
-    }*/
     public JsonObject toJsonObject() {
         JsonObject jsonObject = new JsonObject();
         JsonArray nodesArray = new JsonArray();
@@ -421,28 +402,7 @@ public class Board {
         return board;
     }
 
-   /* public static Board fromJsonObject(JsonObject jsonObject) {
-        Board board = new Board();
-        JsonArray nodesArray = jsonObject.getAsJsonArray("nodes");
-        board.nodes = new Node[nodesArray.size()][];
-        for (int row = 0; row < nodesArray.size(); row++) {
-            JsonArray rowArray = nodesArray.get(row).getAsJsonArray();
-            board.nodes[row] = new Node[rowArray.size()];
-            for (int col = 0; col < rowArray.size(); col++) {
-                JsonObject nodeObject = rowArray.get(col).getAsJsonObject();
-                int nodeRow = nodeObject.get("coordX").getAsInt(); // Leggi la coordinata X
-                int nodeCol = nodeObject.get("coordY").getAsInt(); // Leggi la coordinata Y
-                String seed = nodeObject.get("seed").getAsString();
-                // Assuming you have a method to create a Node from seed
-                Node node = Node.createNodeFromSeed(seed, nodeRow, nodeCol); // Passa le coordinate al metodo
-                board.nodes[nodeRow][nodeCol] = node;
-            }
-        }
-        board.numOfEmpty = jsonObject.get("numOfEmpty").getAsInt();
-        int emptyValueOrdinal = jsonObject.get("initEmptyValue").getAsInt();
-        board.initEmptyValue = SpecificSeed.values()[emptyValueOrdinal];
-        return board;
-    }*/
+
 }
 
 
