@@ -1,19 +1,13 @@
 package model.game;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import model.card.*;
 import model.deck.GoldDeck;
 import model.deck.InitialCardDeck;
 import model.deck.ObjectiveDeck;
 import model.deck.ResourceDeck;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -515,7 +509,7 @@ public class Game implements WhatCanPlayerDo {
         }
     }
 
-    void saveEachPlayerInGame(Path path){                                                   //METHOD TO SAVE CARDS
+    /*void saveEachPlayerInGame(Path path){                                                   //METHOD TO SAVE CARDS
         try (FileWriter fileWriter = new FileWriter(path.toString())) {
             for (Player player : players) {
                 String jsonText = player.toJsonObject().toString();
@@ -524,7 +518,55 @@ public class Game implements WhatCanPlayerDo {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }*/
+    void saveEachPlayerInGame(Path path) {
+        JsonObject playersObject = new JsonObject();
+        JsonArray playersArray = new JsonArray();
+
+        for (Player player : players) {
+            JsonObject playerObject = new JsonObject();
+            playerObject.addProperty("nickname", player.getNickName());
+            playerObject.addProperty("score", player.getPlayerScore());
+            playerObject.addProperty("dot", player.getDot().ordinal());
+
+            JsonArray playerDeckArray = new JsonArray();
+            for (Card card : player.getPlayerCards()) {
+                JsonObject cardObject = new JsonObject();
+                cardObject.addProperty("id", card.getId());
+                cardObject.addProperty("type", card.getType().toString());
+                cardObject.addProperty("value", card.getValueWhenPlaced());
+                cardObject.addProperty("TL", card.getTL().toString());
+                cardObject.addProperty("TR", card.getTR().toString());
+                cardObject.addProperty("BL", card.getBL().toString());
+                cardObject.addProperty("BR", card.getBR().toString());
+
+                // Check if the card has requisites
+                /*if (card.getRequisites() != null) {
+                    JsonArray requisitesArray = new JsonArray();
+                    for (String requisite : card.get()) {
+                        requisitesArray.add(requisite);
+                    }
+                    cardObject.add("requisites", requisitesArray);
+                }*/
+
+                playerDeckArray.add(cardObject);
+            }
+            playerObject.add("player_deck", playerDeckArray);
+
+            playersArray.add(playerObject);
+        }
+
+        playersObject.add("players", playersArray);
+
+        try (PrintWriter printWriter = new PrintWriter(new FileWriter(path.toString()))) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String jsonOutput = gson.toJson(playersObject);
+            printWriter.println(jsonOutput);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     void savePlayers(){
         saveEachPlayerInGame(getDefaultPlayers());
