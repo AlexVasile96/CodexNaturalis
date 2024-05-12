@@ -48,6 +48,15 @@ public class GUI extends Application {
     private ImageView wellCard2View=null;
     private ImageView wellCard3View=null;
     private ImageView wellCard4View=null;
+
+    private Image handCard1=null;
+    private Image handCard2=null;
+    private Image handCard3=null;
+
+    private ImageView handCard1View=null;
+    private ImageView handCard2View=null;
+    private ImageView handCard3View=null;
+
     private String idCard1=null;
     private String idCard2=null;
     private String idCard3=null;
@@ -68,10 +77,23 @@ public class GUI extends Application {
     private String idTopCardResourceDeck = null;
     private String idTopCardGoldDeck = null;
 
+    private Button playCard = new Button("Play Card");
+    private Button drawCard = new Button("Draw card");
+    private Button seeYourSpecificSeeds = new Button("See your seeds");
+    private Button seeOtherPlayersBoards = new Button("See other players boards");
+    private Button seeYourPoints = new Button("See your points");
+    private Button endTurn = new Button("End turn");
+
+    private Boolean haveToDraw = false;
+
+    private String chosenDeckForDrawingNewCard = null;
+    private String wellOrDeck = null;
+
     private double heightWellCards = 80;
     private double widthWellCards = 110;
     private Integer indexCardToPlace = 100;
     private Integer indexCardToBePlacedOn = 100;
+    private Integer indexCardPlayedFromHand = 9999999;
     private String cornerSelected = null;
     private static Stage window;
     private Scene startScene;
@@ -89,6 +111,9 @@ public class GUI extends Application {
     private ClientView clientView = new ClientView();
     private static Socket socket;
     private static PrintWriter out;
+
+    Controller controller = new Controller(in, out);
+
     @FXML
     public TextField usernameField;
     @FXML
@@ -116,6 +141,7 @@ public class GUI extends Application {
     @FXML
     public ScrollPane gameBoard;
 
+    private Image codexLogo = null;
 
 
 
@@ -154,7 +180,7 @@ public class GUI extends Application {
 
         // Carica l'immagine di sfondo
         Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/mainMenu.fxml")));
-        Image codexLogo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/codexLogo.png")));
+        codexLogo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/codexLogo.png")));
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage backgroundImage = new BackgroundImage(codexLogo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
@@ -449,6 +475,7 @@ public class GUI extends Application {
 
 
     private void game() {
+
         creatingPathForGameMethod();
 
         topCardResourceDeck = createNewPathForImages(pathResourceDeck); //Resource Deck Back Image
@@ -461,6 +488,7 @@ public class GUI extends Application {
         creatingImagesForTheWell();
         creatingImagesViewForTheWell();
         settingWellOnMouseClickedEvent();
+        settingDecksOnMouseClickedEvent();
 
         StackPane stackPaneInitCard = new StackPane();
         GridPane gridPaneInitCard = new GridPane();
@@ -472,18 +500,18 @@ public class GUI extends Application {
         String pathHandCard2 = "/ImmaginiCodex/CarteFront/"+typeHandCard2+"/"+idHandCard2+".png";
         String pathHandCard3 = "/ImmaginiCodex/CarteFront/"+typeHandCard3+"/"+idHandCard3+".png";
 
-        Image handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
-        Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
-        Image handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
+        handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
+        handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
+        handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
 
-        ImageView handCard1View = new ImageView(handCard1);
+        handCard1View = new ImageView(handCard1);
         setWidthAndHeight(handCard1View);
 
-        ImageView handCard2View = new ImageView(handCard2);
+        handCard2View = new ImageView(handCard2);
         handCard2View.setFitWidth(widthWellCards);
         handCard2View.setFitHeight(heightWellCards);
 
-        ImageView handCard3View = new ImageView(handCard3);
+        handCard3View = new ImageView(handCard3);
         handCard3View.setFitWidth(widthWellCards);
         handCard3View.setFitHeight(heightWellCards);
 
@@ -541,44 +569,47 @@ public class GUI extends Application {
             out.println(cardSelected);
         });
 
-        Button playCard = new Button("Play Card");
         playCard.setOnAction(event -> {
-            if(indexCardToBePlacedOn == 100 || indexCardToPlace == 100 || cornerSelected == null){ //This if prevents player to place card without choosing any card or corner
-                System.out.println("You have not selected any card to place or to be placed on or the corner");
-                return;
-            }
-            out.println("playCard"); //sends to server the message to start the playCard method
             try {
-
-                out.println(indexCardToPlace); //sends to server the id of the card you want your card to be placed on
-                System.out.println(in.readLine());
-
-                out.println(2); //non voglio girare la carta
-
-                String messageFromServer = in.readLine();
-                do{
-                    System.out.println(messageFromServer);
-                    messageFromServer= in.readLine();
-                }while (!messageFromServer.equals("exit"));
-
-                out.println(indexCardToBePlacedOn); //sends to server the index of the card you want your card to be placed on
-
-                String avaiableCorners= in.readLine();
-                do{
-                    System.out.println(avaiableCorners);
-                    avaiableCorners= in.readLine();
-                } while(!avaiableCorners.equals("end"));
-
-
-                out.println(cornerSelected); //sends to server the corner of the already placed cards you want your card to be placed on
-
-                String ultimo = in.readLine();
-                System.out.println(ultimo);
+                controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
+                indexCardPlayedFromHand = indexCardToPlace;
+                haveToDraw = true;
+                if(indexCardPlayedFromHand == 0){
+                    handCard1View.setImage(codexLogo);
+                }
+                if(indexCardPlayedFromHand == 1){
+                    handCard2View.setImage(codexLogo);
+                }
+                if(indexCardPlayedFromHand == 2){
+                    handCard3View.setImage(codexLogo);
+                }
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        });
 
+        drawCard.setOnAction(e -> {
+            if(haveToDraw){
+                try {
+                    String help = controller.drawCard(wellOrDeck, chosenDeckForDrawingNewCard, indexCardPlayedFromHand);
+                    String pathDrownCard = createPathForFrontCards(help);
+                    Image drownCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathDrownCard)));
+                    if(indexCardPlayedFromHand == 0){
+                        handCard1View.setImage(drownCardImage);
+                    }
+                    if(indexCardPlayedFromHand == 1){
+                        handCard2View.setImage(drownCardImage);
+                    }
+                    if(indexCardPlayedFromHand == 2){
+                        handCard3View.setImage(drownCardImage);
+                    }
+                    haveToDraw =false;
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+            else System.out.println("You can't draw any card now");
         });
 
 
@@ -665,9 +696,20 @@ public class GUI extends Application {
         decks.getChildren().addAll(topCardResourceDeckView, topCardGoldDeckView);
 
 
+
         //paneForImages.getChildren().addAll(wellCard1View, wellCard2View, wellCard3View, wellCard4View);
 
-        vboxGame.getChildren().addAll(gridPaneForWellCards, decks,decksText, playCard);
+        GridPane buttonContainer = new GridPane();
+
+        buttonContainer.add(playCard,0, 0);
+        /*buttonContainer.add(drawCard, 1, 0);
+        buttonContainer.add(seeYourPoints, 2, 0);
+        buttonContainer.add(seeYourSpecificSeeds, 0, 1);
+        buttonContainer.add(seeOtherPlayersBoards, 1, 1);
+        buttonContainer.add(endTurn, 2, 1);*/
+
+
+        vboxGame.getChildren().addAll(gridPaneForWellCards, decks,decksText, buttonContainer);
         hboxGame.getChildren().addAll(gameBoard, vboxGame);
         firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
         secondRow.getChildren().addAll(firstColomnOfSecondRow);
@@ -678,7 +720,7 @@ public class GUI extends Application {
 
         window.widthProperty().addListener((observable, oldValue, newValue) -> insideScrollPane.setPrefWidth(window.getWidth()*0.8));
         window.heightProperty().addListener((observable, oldValue, newValue) -> insideScrollPane.setPrefHeight(window.getHeight()*0.8));
-
+        
     }
 
     private String checkType(String id){
@@ -839,6 +881,17 @@ public class GUI extends Application {
         topCardGoldDeckView = new ImageView(topCardGoldDeck);         //Gold Deck imageview
         setWidthAndHeight(topCardResourceDeckView);
         setWidthAndHeight(topCardGoldDeckView);
+    }
+
+    private void settingDecksOnMouseClickedEvent(){
+        topCardResourceDeckView.setOnMouseClicked(e-> {
+            chosenDeckForDrawingNewCard = "resource";
+            wellOrDeck = "deck";
+        });
+        topCardGoldDeckView.setOnMouseClicked(e-> {
+            chosenDeckForDrawingNewCard = "gold";
+            wellOrDeck = "deck";
+        });
     }
     private void creatingWell()
     {

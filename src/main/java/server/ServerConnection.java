@@ -364,9 +364,9 @@ private void waitUntilItsYourTurn() throws IOException {
 
     }
     private void drawCard() throws IOException {
+        showWell();
         sendMessageToServer("drawCard");
         System.out.println("You chose to draw a card!\n");
-        showWell();
         String drawnCard;
         do {
             System.out.println("""
