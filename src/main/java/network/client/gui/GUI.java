@@ -1,6 +1,7 @@
 package network.client.gui;
 
 
+import controller.GameController;
 import controller.GuiController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -30,6 +31,7 @@ import java.util.Objects;
 
 public class GUI extends Application {
     private int cardSelected;
+    private GuiController guiController;
     private Background background=null;
     private String pathResourceDeck=null;
     private String pathGoldDeck=null;
@@ -109,7 +111,7 @@ public class GUI extends Application {
     private Scene chooseSecretObjectiveScene;
     private Scene chooseInitCardScene;
     private int selectedNumOfPlayers;
-    private static GuiController guiController = null;
+
     private String id;
     private ClientView clientView = new ClientView();
     private static Socket socket;
@@ -163,7 +165,7 @@ public class GUI extends Application {
 
 
     public static void main(String[] args) throws IOException {
-
+        GuiController guiController = GuiController.getInstance(); // Ottieni un'istanza di GuiController
         ConnectionWithServer connectionWithServer= new ConnectionWithServer(); //creazione classe
         socket= connectionWithServer.connectToServer();
         out=new PrintWriter(socket.getOutputStream(), true); //to write
@@ -171,12 +173,10 @@ public class GUI extends Application {
         launch(args); //default
     }
 
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
         startMenuScene(primaryStage);
-        guiController = new GuiController(0);
         player=new Player(null,0,null,null );
         clientView=null;
     }
@@ -230,13 +230,11 @@ public class GUI extends Application {
 
     public void loginButtonClicked(ActionEvent event) throws IOException {
         System.out.println( in.readLine()); //Welcome-> you have to log in, please type your username
-
         String username = usernameField.getText();
         if (username.isEmpty()) {
             System.out.println("Username necessary");
             return;
         }
-
         Toggle dot = toggleGroup.getSelectedToggle();
         if (dot == null) {
             System.out.println("Choose your dot color please");
@@ -252,26 +250,9 @@ public class GUI extends Application {
         out.println(realChosenDot); //Sending dot color
         System.out.println(in.readLine());//Color correctly chosen
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        /*synchronized(GUI.class) {
-            if(numPlayersCounter==0)
-            {
-                numPlayersCounter++; // Incrementa il contatore
-                chooseNumOfPlayers();
-                Platform.runLater(() -> primaryStage.setScene(chooseNumOfPlayersScene));
-            }
-            if (numPlayersCounter < MAX_NUM_PLAYERS && numPlayersCounter!=0) {
-                numPlayersCounter++; // Incrementa il contatore
-                //chooseNumOfPlayers();
-                lobby();
-                Platform.runLater(() -> primaryStage.setScene(lobbyScene));
-            }
-        }*/
         chooseNumOfPlayers();
         Platform.runLater(() -> primaryStage.setScene(chooseNumOfPlayersScene));
     }
-
-
 
     private void chooseNumOfPlayers() throws IOException {
         Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/ChooseNumberOfPlayers.fxml")));
@@ -287,9 +268,7 @@ public class GUI extends Application {
 
     @FXML
     private void goToLobbyClicked(ActionEvent event) throws IOException {
-        if (!guiController.isSizeSet()) {
             Toggle numOfPlayers = numOfPlayersGroup.getSelectedToggle();
-            guiController.setSizeSet(true);
             if (numOfPlayers == null) {
                 System.out.println("Select number of players");
                 return;
@@ -305,6 +284,7 @@ public class GUI extends Application {
                 Platform.runLater(() -> primaryStage.setScene(chooseSecretObjectiveScene));
             }
             else {
+
                 System.out.println(in.readLine()); //1
                 System.out.println(in.readLine()); //player.ChooseHowManyPlayers
                 String selectedNumOfPlayersText = ((RadioButton) numOfPlayers).getText();
@@ -322,15 +302,20 @@ public class GUI extends Application {
                         System.out.println("Numero di giocatori non valido");
                         return;
                 }
-                testNumbers.setText("Il numero di giocatori è: " + selectedNumOfPlayers);
+                testNumbers.setText("Number of players is: " + selectedNumOfPlayers);
                 out.println(selectedNumOfPlayers);
                 System.out.println(in.readLine()); //Players number correctly chosen
-                guiController.setSizeSet(true);
+                GuiController.getInstance().setSizeSet(true);
+                GuiController.getInstance().setNumOfPlayersLogged(1);
+                System.out.println(GuiController.getInstance().getNumOfPlayersLogged()); //ok-> 1
+                GuiController.getInstance().setGameSize(selectedNumOfPlayers); //2
+                System.out.println(GuiController.getInstance().getGameSize());
+                System.out.println(selectedNumOfPlayersText);
                 Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 lobby();
                 Platform.runLater(() -> primaryStage.setScene(lobbyScene));
             }
-        }
+
     }
 
     @FXML
@@ -341,6 +326,7 @@ public class GUI extends Application {
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
         root.getChildren().addAll(fxmlLobby);
         lobbyScene = new Scene(root, 800, 600);
+
     }
 
     @FXML
@@ -358,15 +344,16 @@ public class GUI extends Application {
 
     @FXML
     private void chooseSecretObjectiveClicked() throws IOException {
+        if(GuiController.getInstance().getNumOfPlayersLogged()==1)
+        {
+            System.out.println("ciao");
+        }
 
+        System.out.println(GuiController.getInstance().getGameSize());
+        System.out.println(GuiController.getInstance().getNumOfPlayersLogged());
         System.out.println(in.readLine()); //Printing first secret card
         System.out.println(in.readLine()); //printing second secret card
         System.out.println("Secret card printed");
-
-        /*String firstSecretCard = in.readLine();
-        System.out.println(firstSecretCard);
-        String secondSecretCard = in.readLine();
-        System.out.println(secondSecretCard);*/
         String firstCardId = in.readLine();
         String secondCardId = in.readLine();
 
@@ -377,8 +364,7 @@ public class GUI extends Application {
         Image objImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
         obiettivo1.setImage(objImage1);
         obiettivo2.setImage(objImage2);
-        //System.out.println(firstSecretCard);
-        //System.out.println(secondSecretCard);
+
     }
 
     @FXML
@@ -388,7 +374,6 @@ public class GUI extends Application {
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         chooseInitCard();
         Platform.runLater(() -> primaryStage.setScene(chooseInitCardScene));
-
     }
 
     @FXML
@@ -839,7 +824,7 @@ public class GUI extends Application {
 
         window.widthProperty().addListener((observable, oldValue, newValue) -> insideScrollPane.setPrefWidth(window.getWidth()*0.8));
         window.heightProperty().addListener((observable, oldValue, newValue) -> insideScrollPane.setPrefHeight(window.getHeight()*0.8));
-        
+
     }
 
     private String checkType(String id){

@@ -51,7 +51,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         this.clients = clients;
         synchronized (HandlingPlayerInputsThread.class) {
             if (gameController == null) {
-                gameController = new GameController(); // Or whatever initialization logic you have
+                gameController = new GameController();
             }
         }
         turnController=null;

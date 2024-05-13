@@ -8,6 +8,7 @@ public class Controller {
 
     BufferedReader in;
     PrintWriter out;
+    private int gameSize;
 
     public Controller(BufferedReader in, PrintWriter out) {
         this.in = in;
@@ -78,5 +79,13 @@ public class Controller {
         }
 
 
+    }
+
+    public int getGameSize() {
+        return gameSize;
+    }
+
+    public void setGameSize(int gameSize) {
+        this.gameSize = gameSize;
     }
 }
