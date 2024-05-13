@@ -88,13 +88,14 @@ public class GUI extends Application {
     private Boolean haveToPlay = true;
 
     private String chosenDeckForDrawingNewCard = null;
-    private String wellOrDeck = null;
+    private String wellOrDeck = "notSelected";
 
     private double heightWellCards = 80;
     private double widthWellCards = 110;
     private Integer indexCardToPlace = 100;
     private Integer indexCardToBePlacedOn = 100;
     private Integer indexCardPlayedFromHand = 9999999;
+    private Integer indexCardFromWellSelected = 89989898;
     private String cornerSelected = null;
     private static Stage window;
     private Scene startScene;
@@ -112,6 +113,8 @@ public class GUI extends Application {
     private ClientView clientView = new ClientView();
     private static Socket socket;
     private static PrintWriter out;
+    private Image wellCardSelected = null;
+    private String idWellCardSelected = null;
 
     Controller controller = new Controller(in, out);
 
@@ -398,7 +401,7 @@ public class GUI extends Application {
     }
 
     @FXML
-    public int flipToBackCard() {
+    public int flipToBackInitCard() {
         int idToInt= Integer.parseInt(id);
         isFront=0;
         if(idToInt>=1 && idToInt <=40) //Resource Card
@@ -424,7 +427,7 @@ public class GUI extends Application {
     }
 
     @FXML
-    public int flipToFrontCard() {
+    public int flipToFrontInitCard() {
         int idToInt= Integer.parseInt(id);
         isFront=1;
         if(idToInt>=1 && idToInt <=40) //Resource Card
@@ -447,6 +450,35 @@ public class GUI extends Application {
             setInitCard(initCard);
         }
         return isFront;
+    }
+
+    private void flipCardToBack(int id){
+        if(id>=1 && id <=40) //Resource Card
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
+            Image resourceImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            resourceCard.setImage(resourceImage);
+        }
+        else if(id>40 && id<=80) //GoldCard
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteBack/Gold/" + id + ".png";
+            Image goldImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            goldCard.setImage(goldImage);
+        }
+    }
+    private void flipCardToFront(int id){
+        if(id>=1 && id <=40) //Resource Card
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
+            Image resourceImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            resourceCard.setImage(resourceImage);
+        }
+        else if(id>40 && id<=80) //GoldCard
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteFront/Gold/" + id + ".png";
+            Image goldImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            goldCard.setImage(goldImage);
+        }
     }
 
     @FXML
@@ -480,7 +512,7 @@ public class GUI extends Application {
         creatingPathForGameMethod();
 
         topCardResourceDeck = createNewPathForImages(pathResourceDeck); //Resource Deck Back Image
-        topCardGoldDeck = createNewPathForImages(pathGoldDeck);           //Gold Deck Back Image
+        topCardGoldDeck = createNewPathForImages(pathGoldDeck);
 
         creatingDeckAndGoldDeckView();
 
@@ -601,18 +633,71 @@ public class GUI extends Application {
         drawCard.setOnAction(e -> {
             if(haveToDraw){
                 try {
-                    controller.drawCard(wellOrDeck, chosenDeckForDrawingNewCard, indexCardPlayedFromHand);
-                    Image drownCardImage = createNewPathForImages(pathForResourceCardFront(idTopCardResourceDeck));
-                    if(indexCardPlayedFromHand == 0){
-                        handCard1View.setImage(drownCardImage);
+                    controller.drawCard(wellOrDeck, chosenDeckForDrawingNewCard, indexCardFromWellSelected);
+
+                    if(wellOrDeck.equals("deck")) {
+                        if(chosenDeckForDrawingNewCard.equals("resource")) {
+                            Image drownCardImage = createNewPathForImages(pathForResourceCardFront(idTopCardResourceDeck));
+                            if (indexCardPlayedFromHand == 0) {
+                                handCard1View.setImage(drownCardImage);
+                                idHandCard1 = idTopCardResourceDeck;
+                                System.out.println("idHandCard1 = " + idHandCard1);
+                            }
+                            if (indexCardPlayedFromHand == 1) {
+                                handCard2View.setImage(drownCardImage);
+                                idHandCard2 = idTopCardResourceDeck;
+                                System.out.println("idHandCard2 = " + idHandCard2);
+                            }
+                            if (indexCardPlayedFromHand == 2) {
+                                handCard3View.setImage(drownCardImage);
+                                idHandCard3 = idTopCardResourceDeck;
+                                System.out.println("idHandCard3 = " + idHandCard3);
+                            }
+                            haveToDraw =false;
+                        }
+                        if(chosenDeckForDrawingNewCard.equals("gold")) {
+                            Image drownCardImage = createNewPathForImages(pathForGoldCardFront(idTopCardGoldDeck));
+                            if (indexCardPlayedFromHand == 0) {
+                                handCard1View.setImage(drownCardImage);
+                                idHandCard1 = idTopCardGoldDeck;
+                                System.out.println("idHandCard1 = " + idHandCard1);
+                            }
+                            if (indexCardPlayedFromHand == 1) {
+                                handCard2View.setImage(drownCardImage);
+                                idHandCard2 = idTopCardGoldDeck;
+                                System.out.println("idHandCard2 = " + idHandCard2);
+                            }
+                            if (indexCardPlayedFromHand == 2) {
+                                handCard3View.setImage(drownCardImage);
+                                idHandCard3 = idTopCardGoldDeck;
+                                System.out.println("idHandCard3 = " + idHandCard3);
+                            }
+                            haveToDraw =false;
+                        }
                     }
-                    if(indexCardPlayedFromHand == 1){
-                        handCard2View.setImage(drownCardImage);
+                    if(wellOrDeck.equals("well")){
+                        Image drownCardImage = wellCardSelected;
+                        if (indexCardPlayedFromHand == 0) {
+                            handCard1View.setImage(drownCardImage);
+                            idHandCard1 = idWellCardSelected;
+                            System.out.println("idHandCard1 = "+idHandCard1);
+                        }
+                        if (indexCardPlayedFromHand == 1) {
+                            handCard2View.setImage(drownCardImage);
+                            idHandCard2 = idWellCardSelected;
+                            System.out.println("idHandCard2 = "+idHandCard2);
+                        }
+                        if (indexCardPlayedFromHand == 2) {
+                            handCard3View.setImage(drownCardImage);
+                            idHandCard3 = idWellCardSelected;
+                            System.out.println("idHandCard3: "+idHandCard3);
+                        }
+                        haveToDraw =false;
                     }
-                    if(indexCardPlayedFromHand == 2){
-                        handCard3View.setImage(drownCardImage);
+                    else if(wellOrDeck.equals("notSelected")){
+                        System.out.println("devi selezionare una carta da pescare");
                     }
-                    haveToDraw =false;
+
                     //updateDecks(); //implementare metodo per aggiornare i deck una volta pescata la carta
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -897,11 +982,13 @@ public class GUI extends Application {
             chosenDeckForDrawingNewCard = "resource";
             wellOrDeck = "deck";
             System.out.println("resourceDeck clicked");
+            System.out.println(idTopCardResourceDeck);
         });
         topCardGoldDeckView.setOnMouseClicked(e-> {
             chosenDeckForDrawingNewCard = "gold";
             wellOrDeck = "deck";
             System.out.println("goldDeck clicked");
+            System.out.println(idTopCardGoldDeck);
         });
     }
     private void creatingWell()
@@ -917,11 +1004,36 @@ public class GUI extends Application {
         wellCard3 = createNewPathForImages(wellPathThird);
         wellCard4 = createNewPathForImages(wellPathForth);
     }
+
     private void settingWellOnMouseClickedEvent(){
-        wellCard1View.setOnMouseClicked(event -> System.out.println("You chose from well card number: "+idCard1));
-        wellCard2View.setOnMouseClicked(event -> System.out.println("You chose from well card number:: "+idCard2));
-        wellCard3View.setOnMouseClicked(event -> System.out.println("You chose from well card number:: "+idCard3));
-        wellCard4View.setOnMouseClicked(event -> System.out.println("You chose from well card number:: "+idCard4));
+        wellCard1View.setOnMouseClicked(event -> {
+            System.out.println("You chose from well card number: "+idCard1);
+            wellOrDeck="well";
+            wellCardSelected = wellCard1;
+            idWellCardSelected = idCard1;
+            indexCardFromWellSelected=0;
+        });
+        wellCard2View.setOnMouseClicked(event -> {
+            System.out.println("You chose from well card number: "+idCard2);
+            wellOrDeck="well";
+            wellCardSelected = wellCard2;
+            idWellCardSelected = idCard2;
+            indexCardFromWellSelected=1;
+        });
+        wellCard3View.setOnMouseClicked(event -> {
+            System.out.println("You chose from well card number: "+idCard3);
+            wellOrDeck="well";
+            wellCardSelected = wellCard3;
+            idWellCardSelected = idCard3;
+            indexCardFromWellSelected=2;
+        });
+        wellCard4View.setOnMouseClicked(event -> {
+            System.out.println("You chose from well card number: "+idCard4);
+            wellOrDeck="well";
+            wellCardSelected = wellCard4;
+            idWellCardSelected = idCard4;
+            indexCardFromWellSelected=3;
+        });
     }
     private void creatingImagesViewForTheWell(){
         wellCard1View = new ImageView(wellCard1);

@@ -53,20 +53,16 @@ public class Controller {
         }
     }
 
-    public void drawCard(String wellOrDeck, String selectedDeck, Integer indexCardPlaced) throws IOException {
-        String carta1;
-        String carta2;
-        String carta3;
+    public void drawCard(String wellOrDeck, String selectedDeck, Integer indexSelectedCard) throws IOException {
 
         out.println("drawCard");
 
-        if(wellOrDeck.equals("deck")){
+        if (wellOrDeck.equals("deck")) {
             out.println(wellOrDeck);
-            if(selectedDeck.equals("resource")){
+            if (selectedDeck.equals("resource")) {
 
                 out.println("drawCardFromResourceDeck");
                 in.readLine();
-            }
             } else if (selectedDeck.equals("gold")) {
                 out.println("firstCardGoldGui");
                 String cartaPescata = in.readLine();
@@ -74,9 +70,13 @@ public class Controller {
                 out.println("drawCardFromGoldDeck");
                 in.readLine();
             }
+        } else if (wellOrDeck.equals("well")) {
+            out.println(wellOrDeck);
+            out.println("drawCardFromWellDeck");
+            out.println(indexSelectedCard);
+            in.readLine();
         }
 
 
-
-
+    }
 }
