@@ -335,14 +335,14 @@ private void waitUntilItsYourTurn() throws IOException {
     }
     private void showBoard() throws IOException {
         sendMessageToServer("showBoard");
-        System.out.print("////////////////////////////////// INIZIO BOARD ////////////////////////////////////////// \n");
+        System.out.print("////////////////////////////////////////////////////// INIZIO BOARD ////////////////////////////////////////////////////////////// \n");
         String result= in.readLine();
         do{
             System.out.println(result);
             result= in.readLine();
         }while (!result.equals("fine board"));
         System.out.println();
-        System.out.println("////////////////////////////////// FINE BOARD ////////////////////////////////////////////");
+        System.out.println("////////////////////////////////////////////////////// FINE BOARD ////////////////////////////////////////////////////////////////");
     }
     private void showPoints() throws IOException {
         sendMessageToServer("showPoints");
