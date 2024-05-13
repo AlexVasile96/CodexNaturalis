@@ -1,11 +1,8 @@
 package codex;
-import controller.GuiController;
 import network.client.gui.GUI;
-import network.client.gui.GuiControllerProva;
 import server.CliClientApp;
 import server.ServerMain;
 
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
