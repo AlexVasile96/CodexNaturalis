@@ -159,9 +159,6 @@ public class GUI extends Application {
     @FXML
     public ImageView goldCard;
 
-    private static int numPlayersCounter = 0;
-    private static final int MAX_NUM_PLAYERS = 2;
-
 
 
     public static void main(String[] args) throws IOException {
@@ -170,7 +167,7 @@ public class GUI extends Application {
         socket= connectionWithServer.connectToServer();
         out=new PrintWriter(socket.getOutputStream(), true); //to write
         in=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        launch(args); //default
+        launch(args);
     }
 
     @Override

@@ -322,7 +322,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
                 //else if(messageFromClient.equals("drawCardFromWell")){
                 case "drawCard" -> {
-                    //intro
+                    //intro //MOMO NON RIMETTERE QUESTO METODO PLS O CRASHA TUTTO, LASCIA CHE IL WELL NON SI VEDA AL MOMENTO
                     //messageFromClient = stdIn.readLine();
                     //gameController.readCommand(messageFromClient, player, 0, 0, null);// showwell
                     //well o deck?
