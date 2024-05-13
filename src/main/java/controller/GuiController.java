@@ -1,11 +1,13 @@
 package controller;
 
+import model.game.Player;
+
 public class GuiController {
     private static GuiController instance=null;
     private int numOfPlayersLogged;
     private int gameSize;
     private boolean sizeSet;
-
+    private Player currentPlayer;
     private GuiController() {
 
     }
@@ -39,5 +41,17 @@ public class GuiController {
 
     public void setGameSize(int gameSize) {
         this.gameSize = gameSize;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public static void setInstance(GuiController instance) {
+        GuiController.instance = instance;
     }
 }
