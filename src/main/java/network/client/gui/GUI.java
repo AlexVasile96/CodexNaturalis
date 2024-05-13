@@ -21,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.game.Dot;
+import model.game.Player;
 import view.ClientView;
 
 import java.io.*;
@@ -48,7 +49,7 @@ public class GUI extends Application {
     private ImageView wellCard2View=null;
     private ImageView wellCard3View=null;
     private ImageView wellCard4View=null;
-
+    private Player player;
     private Image handCard1=null;
     private Image handCard2=null;
     private Image handCard3=null;
@@ -147,8 +148,6 @@ public class GUI extends Application {
 
     private Image codexLogo = null;
 
-
-
     @FXML
     public ImageView CARTA;
     @FXML
@@ -177,7 +176,8 @@ public class GUI extends Application {
         window = primaryStage;
         startMenuScene(primaryStage);
         guiController = new GuiController(0);
-
+        player=new Player(null,0,null,null );
+        clientView=null;
     }
 
     private void startMenuScene(Stage primaryStage) throws IOException {

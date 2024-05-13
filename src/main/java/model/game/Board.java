@@ -354,23 +354,22 @@ public class Board {
         JsonObject jsonObject = new JsonObject();
         JsonArray nodesArray = new JsonArray();
 
-        // Add nodes to JSON array
         for (int row = 0; row < nodes.length; row++) {
             JsonArray rowArray = new JsonArray();
             for (int col = 0; col < nodes[row].length; col++) {
                 JsonObject nodeObject = new JsonObject();
-                nodeObject.addProperty("seed", nodes[row][col].getStringSpecificNodeSeed());
                 nodeObject.addProperty("row", row);
-                nodeObject.addProperty("column", col);
+                nodeObject.addProperty("col", col);
+                nodeObject.addProperty("specificSeed", nodes[row][col].getSpecificNodeSeed().toString());
+                // Aggiungi altre proprietà del nodo se necessario
                 rowArray.add(nodeObject);
             }
             nodesArray.add(rowArray);
         }
 
-        // Add other attributes to the JSON object
-        jsonObject.add("nodes", nodesArray);
+        jsonObject.add("board", nodesArray);
         jsonObject.addProperty("numOfEmpty", numOfEmpty);
-        jsonObject.addProperty("initEmptyValue", initEmptyValue.ordinal());
+        jsonObject.addProperty("initEmptyValue", initEmptyValue.toString());
 
         return jsonObject;
     }
@@ -401,7 +400,17 @@ public class Board {
 
         return board;
     }
+    public int getRows() {
+        return nodes.length;
+    }
 
+    public int getCols() {
+        if (nodes.length > 0) {
+            return nodes[0].length;
+        } else {
+            return 0;
+        }
+    }
 
 }
 

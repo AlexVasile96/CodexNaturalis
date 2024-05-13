@@ -63,5 +63,13 @@ public class Corner extends Node{
 
         return corner;
     }
+    public JsonObject toJsonObject() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("specificCornerSeed", specificCornerSeed.toString());
+        jsonObject.addProperty("x", x);
+        jsonObject.addProperty("y", y);
+        return jsonObject;
+    }
+
 
 }
