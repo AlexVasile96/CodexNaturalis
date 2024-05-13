@@ -3,6 +3,7 @@ package network.client.gui;
 
 import controller.GameController;
 import controller.GuiController;
+import exceptions.ParametersNotValidException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -30,8 +31,8 @@ import java.net.Socket;
 import java.util.Objects;
 
 public class GUI extends Application {
+    private static GuiController guiController;
     private int cardSelected;
-    private GuiController guiController;
     private Background background=null;
     private String pathResourceDeck=null;
     private String pathGoldDeck=null;
@@ -59,7 +60,7 @@ public class GUI extends Application {
     private ImageView handCard1View=null;
     private ImageView handCard2View=null;
     private ImageView handCard3View=null;
-
+    private String currentPlayerNickname=null;
     private String idCard1=null;
     private String idCard2=null;
     private String idCard3=null;
@@ -118,7 +119,7 @@ public class GUI extends Application {
     private static PrintWriter out;
     private Image wellCardSelected = null;
     private String idWellCardSelected = null;
-
+    private Player currentPlayer=null;
     Controller controller = new Controller(in, out);
 
     @FXML
@@ -162,7 +163,7 @@ public class GUI extends Application {
 
 
     public static void main(String[] args) throws IOException {
-        GuiController guiController = GuiController.getInstance(); // Ottieni un'istanza di GuiController
+        //GuiController guiController = GuiController.getInstance(); // Ottieni un'istanza di GuiController
         ConnectionWithServer connectionWithServer= new ConnectionWithServer(); //creazione classe
         socket= connectionWithServer.connectToServer();
         out=new PrintWriter(socket.getOutputStream(), true); //to write
@@ -174,8 +175,8 @@ public class GUI extends Application {
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
         startMenuScene(primaryStage);
-        player=new Player(null,0,null,null );
-        clientView=null;
+        this.clientView=clientView;
+
     }
 
     private void startMenuScene(Stage primaryStage) throws IOException {
@@ -223,6 +224,7 @@ public class GUI extends Application {
         root.getChildren().addAll(fxml);
         loginScene = new Scene(root, 800, 600);
 
+
     }
 
     public void loginButtonClicked(ActionEvent event) throws IOException {
@@ -239,6 +241,7 @@ public class GUI extends Application {
         }
 
         clientView.setUserName(username);
+        System.out.println(clientView.getUserName());
         out.println(username);
         System.out.println( in.readLine());//Login succesfully done
         System.out.println(in.readLine());//Choose your dot color
@@ -264,7 +267,7 @@ public class GUI extends Application {
     }
 
     @FXML
-    private void goToLobbyClicked(ActionEvent event) throws IOException {
+    private void goToLobbyClicked(ActionEvent event) throws IOException, InterruptedException {
             Toggle numOfPlayers = numOfPlayersGroup.getSelectedToggle();
             if (numOfPlayers == null) {
                 System.out.println("Select number of players");
@@ -296,7 +299,7 @@ public class GUI extends Application {
                         selectedNumOfPlayers = 4;
                         break;
                     default:
-                        System.out.println("Numero di giocatori non valido");
+                        System.out.println("Not valid number of players");
                         return;
                 }
                 testNumbers.setText("Number of players is: " + selectedNumOfPlayers);
@@ -308,15 +311,16 @@ public class GUI extends Application {
                 GuiController.getInstance().setGameSize(selectedNumOfPlayers); //2
                 System.out.println(GuiController.getInstance().getGameSize());
                 System.out.println(selectedNumOfPlayersText);
+
                 Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 lobby();
                 Platform.runLater(() -> primaryStage.setScene(lobbyScene));
+                Platform.runLater(() -> primaryStage.setScene(chooseSecretObjectiveScene));
             }
-
     }
 
     @FXML
-    private void lobby() throws IOException{
+    private void lobby() throws IOException, InterruptedException {
         System.out.println(in.readLine()); //You have to wait all players
         Parent fxmlLobby = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/lobby.fxml")));
         Pane root = new Pane();
@@ -341,27 +345,17 @@ public class GUI extends Application {
 
     @FXML
     private void chooseSecretObjectiveClicked() throws IOException {
-        if(GuiController.getInstance().getNumOfPlayersLogged()==1)
-        {
-            System.out.println("ciao");
-        }
-
-        System.out.println(GuiController.getInstance().getGameSize());
-        System.out.println(GuiController.getInstance().getNumOfPlayersLogged());
         System.out.println(in.readLine()); //Printing first secret card
         System.out.println(in.readLine()); //printing second secret card
         System.out.println("Secret card printed");
         String firstCardId = in.readLine();
         String secondCardId = in.readLine();
-
         String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/" + firstCardId + ".png";
         String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/" + secondCardId + ".png";
-
         Image objImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj1)));
         Image objImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
         obiettivo1.setImage(objImage1);
         obiettivo2.setImage(objImage2);
-
     }
 
     @FXML
@@ -501,7 +495,7 @@ public class GUI extends Application {
 
 
     private void update() throws IOException {
-        in.readLine();
+        currentPlayerNickname= in.readLine();
         firstWellCard();
         secondWellCard();
         thirdWellCard();
@@ -510,6 +504,7 @@ public class GUI extends Application {
         playerDeck();
         checkTypePlayerDeck();
         updatingResourceAndGoldDeck();
+        //System.out.println(in.readLine());
 
     }
 
@@ -613,6 +608,7 @@ public class GUI extends Application {
             out.println(cardSelected);
         });
 
+        //if(clientView.getUserName().equals(currentPlayerNickname)){
         playCard.setOnAction(event -> {
             if(haveToPlay){
                 try {
@@ -635,7 +631,11 @@ public class GUI extends Application {
                 haveToPlay = false;
             }
             else System.out.println("You already placed a card");
-    });
+    });//}
+        /*else{
+            System.out.println("non è il tuo turno");
+            return;
+        }*/
 
         drawCard.setOnAction(e -> {
             if(haveToDraw){
@@ -1057,22 +1057,22 @@ public class GUI extends Application {
 
         out.println("firstWellId");
         idCard1 = in.readLine();
-        System.out.println(idCard1);
+        //System.out.println(idCard1);
     }
     private void secondWellCard() throws IOException {
         out.println("secondWellId");
         idCard2 = in.readLine();
-        System.out.println(idCard2);
+        //System.out.println(idCard2);
     }
     private void thirdWellCard() throws IOException {
         out.println("thirdWellId");
         idCard3 = in.readLine();
-        System.out.println(idCard3);
+        //System.out.println(idCard3);
     }
     private void fourthWellCard() throws IOException {
         out.println("fourthWellId");
         idCard4 = in.readLine();
-        System.out.println(idCard4);
+        //System.out.println(idCard4);
     }
     private void updatingResourceAndGoldDeck() throws IOException {
         out.println("firstCardResourceGui");
@@ -1106,5 +1106,12 @@ public class GUI extends Application {
         in.readLine(); //spazio
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
 }
 

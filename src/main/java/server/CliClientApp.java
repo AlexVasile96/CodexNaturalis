@@ -1,5 +1,7 @@
 package server;
 
+import javafx.stage.Stage;
+import network.client.gui.GUI;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -8,7 +10,8 @@ import java.io.*;
 import java.net.Socket;
 
 public class CliClientApp {
-    public static void main(String[] args) throws IOException, InterruptedException {
+
+    public static void main(String[] args) throws Exception {
         FileReader reader = new FileReader("src/main/resources/HostAndPort.json"); // Reading JSON file to get host name and port number
         JSONObject jsonObject = new JSONObject(new JSONTokener(reader));
         JSONArray hostAndPortArray = jsonObject.getJSONArray("hostandport");
@@ -26,7 +29,7 @@ public class CliClientApp {
         ClientView clientView= new ClientView();                                        //Giving the client a personal view
         ServerConnection serverConnection= new ServerConnection(socket,clientView);     //Creating a new thread that will handle clients interactions
         serverConnection.run();                                                         //Starting each client thread
-
+        GUI.main(null);
     }
 }
 
