@@ -157,7 +157,8 @@ public class GUI extends Application {
     @FXML
     public ImageView goldCard;
 
-
+    private static int numPlayersCounter = 0;
+    private static final int MAX_NUM_PLAYERS = 2;
 
 
 
@@ -208,8 +209,6 @@ public class GUI extends Application {
         loginScene();
         //thread to update GUI
         Platform.runLater(() -> primaryStage.setScene(loginScene));
-
-
     }
 
 
@@ -230,6 +229,8 @@ public class GUI extends Application {
     }
 
     public void loginButtonClicked(ActionEvent event) throws IOException {
+        System.out.println( in.readLine()); //Welcome-> you have to log in, please type your username
+
         String username = usernameField.getText();
         if (username.isEmpty()) {
             System.out.println("Username necessary");
@@ -244,15 +245,33 @@ public class GUI extends Application {
 
         clientView.setUserName(username);
         out.println(username);
-
+        System.out.println( in.readLine());//Login succesfully done
+        System.out.println(in.readLine());//Choose your dot color
         String realChosenDot = ((RadioButton) dot).getText();
         clientView.setDot(Dot.valueOf(realChosenDot));
-        out.println(realChosenDot);
-
+        out.println(realChosenDot); //Sending dot color
+        System.out.println(in.readLine());//Color correctly chosen
         Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        /*synchronized(GUI.class) {
+            if(numPlayersCounter==0)
+            {
+                numPlayersCounter++; // Incrementa il contatore
+                chooseNumOfPlayers();
+                Platform.runLater(() -> primaryStage.setScene(chooseNumOfPlayersScene));
+            }
+            if (numPlayersCounter < MAX_NUM_PLAYERS && numPlayersCounter!=0) {
+                numPlayersCounter++; // Incrementa il contatore
+                //chooseNumOfPlayers();
+                lobby();
+                Platform.runLater(() -> primaryStage.setScene(lobbyScene));
+            }
+        }*/
         chooseNumOfPlayers();
         Platform.runLater(() -> primaryStage.setScene(chooseNumOfPlayersScene));
     }
+
+
 
     private void chooseNumOfPlayers() throws IOException {
         Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/ChooseNumberOfPlayers.fxml")));
@@ -275,41 +294,52 @@ public class GUI extends Application {
                 System.out.println("Select number of players");
                 return;
             }
-
-            String selectedNumOfPlayersText = ((RadioButton) numOfPlayers).getText();
-            switch (selectedNumOfPlayersText) {
-                case "2 Players":
-                    selectedNumOfPlayers = 1;
-                    break;
-                case "3 Players":
-                    selectedNumOfPlayers = 3;
-                    break;
-                case "4 Players":
-                    selectedNumOfPlayers = 4;
-                    break;
-                default:
-                    System.out.println("Numero di giocatori non valido");
-                    return;
+            String howManyPlayersAreThere = in.readLine();
+            System.out.println(howManyPlayersAreThere); //At the moment there is
+            if (howManyPlayersAreThere.equals("There's already someone online! You will be ")) {
+                System.out.println(in.readLine()); //2
+                System.out.println(in.readLine());//players
+                System.out.println(in.readLine()); //You have to wait until all clients are connected;
+                Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                chooseSecretObjective();
+                Platform.runLater(() -> primaryStage.setScene(chooseSecretObjectiveScene));
             }
-
-            testNumbers.setText("Il numero di giocatori è: " + selectedNumOfPlayers);
-            out.println(selectedNumOfPlayers);
-            guiController.setSizeSet(true);
+            else {
+                System.out.println(in.readLine()); //1
+                System.out.println(in.readLine()); //player.ChooseHowManyPlayers
+                String selectedNumOfPlayersText = ((RadioButton) numOfPlayers).getText();
+                switch (selectedNumOfPlayersText) {
+                    case "2 Players":
+                        selectedNumOfPlayers = 2;
+                        break;
+                    case "3 Players":
+                        selectedNumOfPlayers = 3;
+                        break;
+                    case "4 Players":
+                        selectedNumOfPlayers = 4;
+                        break;
+                    default:
+                        System.out.println("Numero di giocatori non valido");
+                        return;
+                }
+                testNumbers.setText("Il numero di giocatori è: " + selectedNumOfPlayers);
+                out.println(selectedNumOfPlayers);
+                System.out.println(in.readLine()); //Players number correctly chosen
+                guiController.setSizeSet(true);
+                Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                lobby();
+                Platform.runLater(() -> primaryStage.setScene(lobbyScene));
+            }
         }
-
-        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        chooseSecretObjective();
-        Platform.runLater(() -> primaryStage.setScene(chooseSecretObjectiveScene));
     }
 
     @FXML
     private void lobby() throws IOException{
+        System.out.println(in.readLine()); //You have to wait all players
         Parent fxmlLobby = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/lobby.fxml")));
-
         Pane root = new Pane();
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
         root.getChildren().addAll(fxmlLobby);
-
         lobbyScene = new Scene(root, 800, 600);
     }
 
@@ -329,19 +359,14 @@ public class GUI extends Application {
     @FXML
     private void chooseSecretObjectiveClicked() throws IOException {
 
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
-        in.readLine();
+        System.out.println(in.readLine()); //Printing first secret card
+        System.out.println(in.readLine()); //printing second secret card
+        System.out.println("Secret card printed");
 
-        String firstSecretCard = in.readLine();
+        /*String firstSecretCard = in.readLine();
+        System.out.println(firstSecretCard);
         String secondSecretCard = in.readLine();
-
+        System.out.println(secondSecretCard);*/
         String firstCardId = in.readLine();
         String secondCardId = in.readLine();
 
@@ -352,8 +377,8 @@ public class GUI extends Application {
         Image objImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
         obiettivo1.setImage(objImage1);
         obiettivo2.setImage(objImage2);
-        System.out.println(firstSecretCard);
-        System.out.println(secondSecretCard);
+        //System.out.println(firstSecretCard);
+        //System.out.println(secondSecretCard);
     }
 
     @FXML
