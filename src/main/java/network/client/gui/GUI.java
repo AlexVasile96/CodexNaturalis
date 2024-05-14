@@ -79,6 +79,8 @@ public class GUI extends Application {
     private String idTopCardGoldDeck = null;
 
     private Button playCard = new Button("Play Card");
+    private Button flipCardToBack = new Button("Flip Card to back");
+    private Button flipCardToFront = new Button("Flip Card to front");
     private Button drawCard = new Button("Draw card");
     private Button seeYourSpecificSeeds = new Button("See your seeds");
     private Button seeOtherPlayersBoards = new Button("See other players boards");
@@ -116,6 +118,7 @@ public class GUI extends Application {
     private static PrintWriter out;
     private Image wellCardSelected = null;
     private String idWellCardSelected = null;
+    private Image cardFlipped = null;
 
     Controller controller = new Controller(in, out);
 
@@ -452,33 +455,37 @@ public class GUI extends Application {
         return isFront;
     }
 
-    private void flipCardToBack(int id){
+    private Image flipCardToBack(String stringId){
+        int id = Integer.parseInt(stringId);
         if(id>=1 && id <=40) //Resource Card
         {
             String pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
-            Image resourceImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            resourceCard.setImage(resourceImage);
+            cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            //resourceCard.setImage(cardFlipped);
         }
         else if(id>40 && id<=80) //GoldCard
         {
             String pathFlipped = "/ImmaginiCodex/CarteBack/Gold/" + id + ".png";
-            Image goldImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            goldCard.setImage(goldImage);
+            cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            //goldCard.setImage(cardFlipped);
         }
+        return cardFlipped;
     }
-    private void flipCardToFront(int id){
+    private Image flipCardToFront(String stringId){
+        int id = Integer.parseInt(stringId);
         if(id>=1 && id <=40) //Resource Card
         {
             String pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
-            Image resourceImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            resourceCard.setImage(resourceImage);
+            cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            //resourceCard.setImage(resourceImage);
         }
         else if(id>40 && id<=80) //GoldCard
         {
             String pathFlipped = "/ImmaginiCodex/CarteFront/Gold/" + id + ".png";
-            Image goldImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            goldCard.setImage(goldImage);
+            cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            //goldCard.setImage(goldImage);
         }
+        return cardFlipped;
     }
 
     @FXML
@@ -706,19 +713,51 @@ public class GUI extends Application {
             else System.out.println("You can't draw any card now");
         });
 
+        flipCardToBack.setOnAction(e->{
+            if(indexCardToPlace == 0){
+                handCard1View.setImage(flipCardToBack(idHandCard1));
+            }
+            if(indexCardToPlace == 1){
+                handCard2View.setImage(flipCardToBack(idHandCard2));
+            }
+            if(indexCardToPlace == 2){
+                handCard3View.setImage(flipCardToBack(idHandCard3));
+            }
+            else{
+                System.out.println("You chose an unflippable card");
+            }
+        });
+
+        flipCardToFront.setOnAction(e->{
+            if(indexCardToPlace == 0){
+                handCard1View.setImage(flipCardToFront(idHandCard1));
+            }
+            if(indexCardToPlace == 1){
+                handCard2View.setImage(flipCardToFront(idHandCard2));
+            }
+            if(indexCardToPlace == 2){
+                handCard3View.setImage(flipCardToFront(idHandCard3));
+            }
+            else{
+                System.out.println("You chose an unflippable card");
+            }
+        });
 
 // Creare bottone per playCard: salvataggio della carta da voler piazzare e carta su cui piazzare + angolo salvati in variabili, onClick pulsante piazza carta nel posto giusto ezzz
         handCard1View.setOnMouseClicked(event -> {
             System.out.println("Hai selezionato la carta id: "+idHandCard1);
             indexCardToPlace = 0;
+            System.out.println("indexCardPlayedFromHand = "+indexCardToPlace);
         });
         handCard2View.setOnMouseClicked(event -> {
             System.out.println("Hai selezionato la carta id: "+idHandCard2);
             indexCardToPlace = 1;
+            System.out.println("indexCardPlayedFromHand = "+indexCardToPlace);
         });
         handCard3View.setOnMouseClicked(event -> {
             System.out.println("Hai selezionato la carta id: "+idHandCard3);
             indexCardToPlace = 2;
+            System.out.println("indexCardPlayedFromHand = "+indexCardToPlace);
         });
 
 
@@ -797,6 +836,8 @@ public class GUI extends Application {
 
         buttonContainer.add(playCard,0, 0);
         buttonContainer.add(drawCard, 1, 0);
+        buttonContainer.add(flipCardToBack, 0,1);
+        buttonContainer.add(flipCardToFront, 0,2);
         /*buttonContainer.add(seeYourPoints, 2, 0);
         buttonContainer.add(seeYourSpecificSeeds, 0, 1);
         buttonContainer.add(seeOtherPlayersBoards, 1, 1);
