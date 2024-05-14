@@ -16,7 +16,7 @@ public class Controller {
 
 
     public void playCardClick(int indexCardToBePlacedOn, int indexCardToPlace, String cornerSelected) throws IOException {
-        if(indexCardToBePlacedOn == 100 || indexCardToPlace == 100 || cornerSelected == null){ //This if prevents player to place card without choosing any card or corner
+        if(indexCardToBePlacedOn == 100 || indexCardToPlace == 100 || cornerSelected.equals("notSelected")){ //This if prevents player to place card without choosing any card or corner
             System.out.println("You have not selected any card to place or to be placed on or the corner");
             return;
         }
@@ -78,5 +78,24 @@ public class Controller {
         }
 
 
+    }
+
+    public String showSpecificSeed() throws IOException {
+        out.println("showYourSpecificSeed");
+        return in.readLine();
+    }
+
+    public String showPoints() throws IOException {
+        out.println("showPoints");
+        return in.readLine();
+    }
+
+    public void endTurn() throws IOException {
+        out.println("endTurn");
+        System.out.println("Your turn ended");
+        String answer = in.readLine();
+    }
+    public void showBoards() throws IOException {
+        //è da implementare diversamente da gui, però non so come
     }
 }

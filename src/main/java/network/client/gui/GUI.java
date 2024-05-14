@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.game.Dot;
@@ -78,6 +79,10 @@ public class GUI extends Application {
     private String idTopCardResourceDeck = null;
     private String idTopCardGoldDeck = null;
 
+    private Pane specificSeedsPane;
+    private Text specificSeedsText;
+    private Label specificSeedsLabel;
+
     private Button playCard = new Button("Play Card");
     private Button flipCardToBack = new Button("Flip Card to back");
     private Button flipCardToFront = new Button("Flip Card to front");
@@ -99,7 +104,7 @@ public class GUI extends Application {
     private Integer indexCardToBePlacedOn = 100;
     private Integer indexCardPlayedFromHand = 9999999;
     private Integer indexCardFromWellSelected = 89989898;
-    private String cornerSelected = null;
+    private String cornerSelected = "notSelected";
     private static Stage window;
     private Scene startScene;
     private Scene loginScene;
@@ -760,6 +765,37 @@ public class GUI extends Application {
             System.out.println("indexCardPlayedFromHand = "+indexCardToPlace);
         });
 
+        seeYourSpecificSeeds.setOnMouseClicked(e->{
+            try {
+                String yourSeeds = controller.showSpecificSeed();
+                System.out.println(yourSeeds);
+                specificSeedsLabel.setText(yourSeeds);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+
+        });
+
+        seeYourPoints.setOnMouseClicked(e->{
+            try {
+                String yourPoints = controller.showPoints();
+                System.out.println("your points are: "+yourPoints);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        seeOtherPlayersBoards.setOnMouseClicked(e->{
+            System.out.println("Per ora guardati la tua board");
+        });
+
+        endTurn.setOnMouseClicked(e->{
+            try {
+                controller.endTurn();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
 
         Pane root = new Pane();
@@ -828,23 +864,26 @@ public class GUI extends Application {
         decks.setPadding(paddingDecks);
         decks.getChildren().addAll(topCardResourceDeckView, topCardGoldDeckView);
 
+        specificSeedsPane = new Pane();
+        specificSeedsText = new Text("Your specific Seeds are: ");
+        specificSeedsLabel = new Label();
 
-
-        //paneForImages.getChildren().addAll(wellCard1View, wellCard2View, wellCard3View, wellCard4View);
+        specificSeedsPane.getChildren().addAll(specificSeedsText, specificSeedsLabel);
 
         GridPane buttonContainer = new GridPane();
 
         buttonContainer.add(playCard,0, 0);
         buttonContainer.add(drawCard, 1, 0);
+        buttonContainer.add(seeYourSpecificSeeds, 2, 0);
         buttonContainer.add(flipCardToBack, 0,1);
         buttonContainer.add(flipCardToFront, 0,2);
-        /*buttonContainer.add(seeYourPoints, 2, 0);
-        buttonContainer.add(seeYourSpecificSeeds, 0, 1);
+        buttonContainer.add(seeYourPoints, 0, 3);
+        buttonContainer.add(endTurn, 2, 1);
         buttonContainer.add(seeOtherPlayersBoards, 1, 1);
-        buttonContainer.add(endTurn, 2, 1);*/
 
 
-        vboxGame.getChildren().addAll(gridPaneForWellCards, decks,decksText, buttonContainer);
+
+        vboxGame.getChildren().addAll(gridPaneForWellCards, decks,decksText, specificSeedsPane, buttonContainer);
         hboxGame.getChildren().addAll(gameBoard, vboxGame);
         firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
         secondRow.getChildren().addAll(firstColomnOfSecondRow);
