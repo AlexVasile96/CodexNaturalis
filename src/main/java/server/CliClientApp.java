@@ -29,7 +29,7 @@ public class CliClientApp {
         ClientView clientView= new ClientView();                                        //Giving the client a personal view
         ServerConnection serverConnection= new ServerConnection(socket,clientView);     //Creating a new thread that will handle clients interactions
         serverConnection.run();                                                         //Starting each client thread
-        GUI.main(null);
+
     }
 }
 

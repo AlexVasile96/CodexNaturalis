@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
-
+import java.util.concurrent.CountDownLatch;
 
 public class HandlingPlayerInputsThread implements Runnable {
     private static GameController gameController;
@@ -41,7 +41,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static int index=0;
     private static int whichplayerAreYou=0;
     private static Player winningPlayer=new Player(null,0, Dot.BLACK, null);
-
+    private final CountDownLatch sizeLatch = new CountDownLatch(1);
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException { //Costructor
         this.clientSocket = socket;
@@ -86,7 +86,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     System.out.println(player.getClientView());
                 }
                 System.out.println(game.getObjectiveDeck().remainingCards());       //Debugging to check if all cards are given correctly
-                sendMessageToClient(currentPlayer.getNickName());
+                sendMessageToClient(currentPlayer.getNickName()); //Mnadato a tutti i client il current player
                 boolean hasClientQuit= false;
 
                 //SETTING POINTS FOR ENDGAME DEBUGGING
@@ -184,12 +184,12 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println(player);
                 gameController = lobby.login(request, out);
                 System.out.println(gameController);
+                //gameController.setCurrentNumsOfPlayers(gameController.getCurrentNumsOfPlayers()+1);
+                System.out.println("Current numb of players: " + gameController.getCurrentNumsOfPlayers());
                 int size= setGameSize();
                 System.out.println(size);
                 sendMessageToClient("You have to wait until all clients are connected!");
-                if (playersList.size() < size) {
-                    waitingForClients(size);
-                }
+                gameController.waitingForPLayers();
             } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
                 System.err.println(e.getMessage());
 
@@ -197,6 +197,9 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println(gameController);
         return player;
     }
+private synchronized void waitingNOtification() throws InterruptedException {
+        sizeLatch.await();
+}
 
     private synchronized void assigningSecretCard() throws IOException {
         List<ObjectiveCard> secretCards = new ArrayList<>();
@@ -358,7 +361,8 @@ public class HandlingPlayerInputsThread implements Runnable {
             {
                 wait(10000);
             }
-        }
+        } sendMessageToAllClients("All clients correctly logged");
+        sizeLatch.countDown();
     }
     private void initializeCards(){
         game.assignResourcesAndGoldCardsToPlayers();

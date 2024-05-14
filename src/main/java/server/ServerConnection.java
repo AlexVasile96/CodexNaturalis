@@ -1,12 +1,11 @@
 package server;
 import exceptions.OperationCancelledException;
-import model.card.Card;
 import model.game.*;
 import view.ClientView;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.concurrent.CountDownLatch;
+
 
 
 public class ServerConnection implements Runnable {
@@ -38,12 +37,15 @@ public class ServerConnection implements Runnable {
         try {
             System.out.println("Welcome! I'm the server, please type anything to start the conversation!\n");
             while (!isTheWhileActive) {
-                try {                                                       //il client scrive un messaggio
+                try {                                                       //il client type a message
                     if (clientView.getUserName() == null) {                 //If client hasn't made the login yet, he has to log first.
                         System.out.print(">");
                         command = stdin.readLine();
                         sendMessageToServer(command);
                         loginPlayer(player);                                  //Actual Login
+
+                        String areAllConnected= in.readLine(); //Allplayers are connected
+                        System.out.println(areAllConnected);
                         assigningSecretCard();                                //Choosing the secret Card
                         takingTheInitialCard();                               //Taking the initial Card
                         System.out.println("Login phase ended!");
@@ -76,6 +78,8 @@ public class ServerConnection implements Runnable {
             throw new RuntimeException(e);
         }
 }
+
+
 
 private void waitUntilItsYourTurn() throws IOException {
         while(!clientView.getUserName().equals(getCurrentPlayer()))
@@ -487,7 +491,7 @@ private void waitUntilItsYourTurn() throws IOException {
         String answer= in.readLine();
         System.out.println(answer);
         setCurrentPlayer(answer);
-        String updatingCurrentPlayer= in.readLine(); //-> aggiornamento del currentPLayer
+        String updatingCurrentPlayer= in.readLine(); //-> updating currentPLayer
         System.out.println(updatingCurrentPlayer);
         //clientView.update(player);
         cleanTheSocket();
@@ -502,7 +506,7 @@ private void waitUntilItsYourTurn() throws IOException {
         }
         else{
             System.out.println("Current player: " + currentPlayer);
-            String updatingCurrentPlayer= in.readLine(); //-> aggiornamento del currentPLayer
+            String updatingCurrentPlayer= in.readLine(); //-> updating currentPLayer
             System.out.println(updatingCurrentPlayer);
         }
         cleanTheSocket();
@@ -546,12 +550,10 @@ private void waitUntilItsYourTurn() throws IOException {
 
     private synchronized void assigningSecretCard() throws IOException {
         boolean isNumberCorrect=false;
-        String stringSecretCard= in.readLine(); //carta
-        String stringSecondCard= in.readLine(); //carta
+        String stringSecretCard= in.readLine(); //card
+        String stringSecondCard= in.readLine(); //card
         in.readLine(); //id
          in.readLine(); //id
-        //int firstID= Integer.parseInt(firstCardID);
-        //int secondID= Integer.parseInt(secondCardID);
         System.out.println("Server says: your first objective card is" + stringSecretCard);
         System.out.println("Server says: your second objective card is" + stringSecondCard);
         while(!isNumberCorrect){
@@ -605,7 +607,7 @@ private void waitUntilItsYourTurn() throws IOException {
             }while (messageFromServer.equals("Chosen color not available!"));
     }
 
-    private void chooseNumberOfPlayers() throws IOException {
+    private synchronized void chooseNumberOfPlayers() throws IOException, InterruptedException {
         StringBuilder numberOfPlayers= new StringBuilder();
         String stringNumberOfPlayers;
         numberOfPlayers.append(in.readLine());
@@ -616,6 +618,7 @@ private void waitUntilItsYourTurn() throws IOException {
         if(Integer.parseInt(stringNumberOfPlayers)>1) {
             String answer = in.readLine();
             System.out.println("Server says: " + answer);
+
             return;
         }
         System.out.println(">");

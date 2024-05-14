@@ -37,8 +37,9 @@ public class GameController {
     private final CountDownLatch sizeLatch = new CountDownLatch(1);
     private static final String SAVE_FILE_PATH = "src/main/resources/saveplayers.json";
     private static Player winningPlayer=null;
-
-
+    private boolean areAllPlayersLogged=false;
+    private int currentNumsOfPlayers=0;
+    private CountDownLatch numbgames = new CountDownLatch(0);
 
     //CONSTRUCTORS
 
@@ -94,7 +95,6 @@ public class GameController {
         if (!isSizeSet){
             sizeLatch.await();
         }
-
         if (!players.containsKey(username)) {
             if (players.size() >= size || isGameOver) {
                 throw new GameFullException();
@@ -103,7 +103,13 @@ public class GameController {
             throw new UsernameAlreadyExistsException();
         }
         players.put(username, userOut);
-    }
+        if(getCurrentNumsOfPlayers()==0)
+        {
+            setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+2);
+        }
+        else  setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+1);
+
+         }
 
     public void choosePlayerNumber(int number) throws PlayerNumberAlreadySetException, ParametersNotValidException {
         if (size > 0) {
@@ -113,9 +119,11 @@ public class GameController {
             throw new ParametersNotValidException();
         }
             size = number;
+            numbgames = new CountDownLatch(size-1);
             sizeLatch.countDown();
             System.out.println(size);
             setSize(size);
+        System.out.println("size: " + getSize());
             setSizeSet(true);
 
     }
@@ -147,7 +155,21 @@ public class GameController {
         return savedPlayers != null && savedPlayers.containsAll(players.keySet());
     }
 
+public synchronized void waitingForPLayers() throws InterruptedException {
+        if(currentNumsOfPlayers==getSize())
+        {
+            //numbgames.countDown();
+            sendMessageToAllClients("All clients connected");
+            notifyAll();
 
+        }
+        else{
+            System.out.println("current numb of players da gamecontroller " + currentNumsOfPlayers);
+            System.out.println("size dal gamecontroller "+  getSize());
+            //numbgames.await();
+            wait();
+        }
+}
 
 
 
@@ -295,5 +317,21 @@ public class GameController {
 
     public static void setWinningPlayer(Player winningPlayer) {
         GameController.winningPlayer = winningPlayer;
+    }
+
+    public boolean isAreAllPlayersLogged() {
+        return areAllPlayersLogged;
+    }
+
+    public void setAreAllPlayersLogged(boolean areAllPlayersLogged) {
+        this.areAllPlayersLogged = areAllPlayersLogged;
+    }
+
+    public int getCurrentNumsOfPlayers() {
+        return currentNumsOfPlayers;
+    }
+
+    public void setCurrentNumsOfPlayers(int currentNumsOfPlayers) {
+        this.currentNumsOfPlayers = currentNumsOfPlayers;
     }
 }

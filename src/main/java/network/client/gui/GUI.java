@@ -216,8 +216,10 @@ public class GUI extends Application {
         loginScene();
         //thread to update GUI
         Platform.runLater(() -> primaryStage.setScene(loginScene));
+
     }
 
+    //Changescene-> url login->
 
 
 
@@ -324,7 +326,7 @@ public class GUI extends Application {
                 Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 lobby();
                 Platform.runLater(() -> primaryStage.setScene(lobbyScene));
-                Platform.runLater(() -> primaryStage.setScene(chooseSecretObjectiveScene));
+                //Platform.runLater(() -> primaryStage.setScene(chooseSecretObjectiveScene));
             }
     }
 
@@ -336,6 +338,7 @@ public class GUI extends Application {
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
         root.getChildren().addAll(fxmlLobby);
         lobbyScene = new Scene(root, 800, 600);
+        //in.readLine();
 
     }
 
@@ -818,6 +821,8 @@ public class GUI extends Application {
         VBox vboxGame = new VBox();
         vboxGame.setFillWidth(true);
 
+
+
         //all'interno della scrollPane gameBoard c'è insideScrollPane che è un Pane
         //gameBoard è in una Hbox che è in una Vbox che è contenuto in Root
         ScrollPane gameBoard = new ScrollPane();                //Creating my scrollPane
@@ -897,7 +902,6 @@ public class GUI extends Application {
         secondRow.getChildren().addAll(firstColomnOfSecondRow);
         vboxContainer.getChildren().addAll(hboxGame, secondRow);
         anchorPane.getChildren().add(vboxContainer);
-
         gameScene = new Scene(root, 600, 400);
 
         window.widthProperty().addListener((observable, oldValue, newValue) -> insideScrollPane.setPrefWidth(window.getWidth()*0.8));
@@ -1196,3 +1200,7 @@ public class GUI extends Application {
     }
 }
 
+
+//controller-> metodi x reagire agli eventi-> button
+//initialize implements initializable
+//changescene

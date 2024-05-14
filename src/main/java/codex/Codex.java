@@ -7,7 +7,7 @@ import server.ServerMain;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+//Prendi game controller e fai -1 dai player
 public class Codex {
 
     public static void main(String[] args) throws Exception {
@@ -20,7 +20,7 @@ public class Codex {
                         
                         """);
         Scanner scanner = new Scanner(System.in);
-        GuiController guiController = GuiController.getInstance();
+        //GuiController guiController = GuiController.getInstance();
         int input = 0;
         try {
             input = scanner.nextInt();
@@ -35,8 +35,7 @@ public class Codex {
                 CliClientApp.main(null); }
             case 2 -> {
                 System.out.println("You selected the GUI interface, have fun!\nStarting...");
-                //GUI gui = new GUI(guiController);
-               GUI.main(null);
+                GUI.main(null);
             }
             default -> System.err.println("Invalid argument, please run the executable again with one of these options:\n1.server\n2.client");
         }
