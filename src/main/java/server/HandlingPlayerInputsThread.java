@@ -184,7 +184,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println(player);
                 gameController = lobby.login(request, out);
                 System.out.println(gameController);
-                //gameController.setCurrentNumsOfPlayers(gameController.getCurrentNumsOfPlayers()+1);
                 System.out.println("Current numb of players: " + gameController.getCurrentNumsOfPlayers());
                 int size= setGameSize();
                 System.out.println(size);
@@ -197,9 +196,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println(gameController);
         return player;
     }
-private synchronized void waitingNOtification() throws InterruptedException {
-        sizeLatch.await();
-}
+
 
     private synchronized void assigningSecretCard() throws IOException {
         List<ObjectiveCard> secretCards = new ArrayList<>();
@@ -355,15 +352,7 @@ private synchronized void waitingNOtification() throws InterruptedException {
             }
         }
     }
-    private synchronized void waitingForClients(int size) throws InterruptedException {
-        System.out.println("Waiting other players");
-        while (playersList.size() != size) {
-            {
-                wait(10000);
-            }
-        } sendMessageToAllClients("All clients correctly logged");
-        sizeLatch.countDown();
-    }
+
     private void initializeCards(){
         game.assignResourcesAndGoldCardsToPlayers();
         checkGameInizialization = true;
