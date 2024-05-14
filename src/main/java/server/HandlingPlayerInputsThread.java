@@ -51,7 +51,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         this.clients = clients;
         synchronized (HandlingPlayerInputsThread.class) {
             if (gameController == null) {
-                gameController = new GameController(); // Or whatever initialization logic you have
+                gameController = new GameController();
             }
         }
         turnController=null;
@@ -188,7 +188,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println(size);
                 sendMessageToClient("You have to wait until all clients are connected!");
                 if (playersList.size() < size) {
-                    waitingForClients();
+                    waitingForClients(size);
                 }
             } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
                 System.err.println(e.getMessage());
@@ -208,6 +208,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         int secondID= secondCard.getId();
         System.out.println(firstid); //debugging
         System.out.println(secondID);
+
         sendMessageToClient(String.valueOf(firstCard));
         sendMessageToClient(String.valueOf(secondCard));
         sendMessageToClient(String.valueOf(firstid)); //sending the correct card id to the client
@@ -322,7 +323,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
                 //else if(messageFromClient.equals("drawCardFromWell")){
                 case "drawCard" -> {
-                    //intro
+                    //intro //MOMO NON RIMETTERE QUESTO METODO PLS O CRASHA TUTTO, LASCIA CHE IL WELL NON SI VEDA AL MOMENTO
                     //messageFromClient = stdIn.readLine();
                     //gameController.readCommand(messageFromClient, player, 0, 0, null);// showwell
                     //well o deck?
@@ -351,9 +352,9 @@ public class HandlingPlayerInputsThread implements Runnable {
             }
         }
     }
-    private synchronized void waitingForClients() throws InterruptedException {
+    private synchronized void waitingForClients(int size) throws InterruptedException {
         System.out.println("Waiting other players");
-        while (playersList.size() != 2) {
+        while (playersList.size() != size) {
             {
                 wait(10000);
             }

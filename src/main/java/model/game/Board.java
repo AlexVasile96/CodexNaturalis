@@ -53,27 +53,35 @@ public class Board {
 
     public String printBoardForServer() { //printBoard method
         StringBuilder stringBoard = new StringBuilder();
-        Boolean booleanChecker=false;
+        Boolean booleanNewLine=false;
 
         //scanner
         int[] res = ScannerCordinate();
 
         for (int i = res[0]; i < res[1] +1; i++) {
             for (int j = res[2] ; j < res[3] +1; j++) {
-                if(!booleanChecker){
+                if (!booleanNewLine) {
                     stringBoard.append("\n");
-                    booleanChecker=true;
+                    booleanNewLine = true;
                 }
-                String seed = String.valueOf(nodes[i][j].getSpecificNodeSeed());
-                int spazi = 15 - seed.length();
+                if (nodeIsUsed(nodes[i][j].getValueCounter())) {
+                    String seed = String.valueOf(nodes[i][j].getSpecificNodeSeed());
+                    int spazi = 15 - seed.length();
 
-                stringBoard.append(nodes[i][j].getSpecificNodeSeed());
-                for (int k = 0; k < spazi; k++) {
-                    stringBoard.append(" ");
+                    stringBoard.append(nodes[i][j].getSpecificNodeSeed());
+                    for (int k = 0; k < spazi; k++) {
+                        stringBoard.append(" ");
+                    }
+                    stringBoard.append("\t" + j + "\t" + i + ", value:" + nodes[i][j].getValueCounter() + " |");
                 }
-                stringBoard.append ("\t" + j + "\t" + i + ", value:" + nodes[i][j].getValueCounter() + " |");
+                else {
+                    //stringBoard.append("                                 |");
+                    //stringBoard.append("NOTTOBEPLACEDON\t23\t24, value:1 |");
+                    stringBoard.append("/              \t  \t            |");
+                    //stringBoard.append("/////////////////////////////////|");
+                }
             }
-            booleanChecker=false;
+            booleanNewLine=false;
         }
         stringBoard.append("\nfine board");
         return String.valueOf(stringBoard);

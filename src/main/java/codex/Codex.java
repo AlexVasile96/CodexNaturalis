@@ -1,15 +1,16 @@
 package codex;
+import controller.GuiController;
+import javafx.application.Application;
 import network.client.gui.GUI;
 import server.CliClientApp;
 import server.ServerMain;
 
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Codex {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws Exception {
         System.out.println("Hi! Welcome to Codex!!!\nWhat do you want to launch?");
         System.out.println(
                 """
@@ -19,6 +20,7 @@ public class Codex {
                         
                         """);
         Scanner scanner = new Scanner(System.in);
+        GuiController guiController = GuiController.getInstance();
         int input = 0;
         try {
             input = scanner.nextInt();
@@ -33,7 +35,8 @@ public class Codex {
                 CliClientApp.main(null); }
             case 2 -> {
                 System.out.println("You selected the GUI interface, have fun!\nStarting...");
-                GUI.main(null);
+                //GUI gui = new GUI(guiController);
+               GUI.main(null);
             }
             default -> System.err.println("Invalid argument, please run the executable again with one of these options:\n1.server\n2.client");
         }

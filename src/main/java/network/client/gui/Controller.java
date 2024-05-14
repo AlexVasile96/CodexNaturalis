@@ -8,6 +8,7 @@ public class Controller {
 
     BufferedReader in;
     PrintWriter out;
+    private int gameSize;
 
     public Controller(BufferedReader in, PrintWriter out) {
         this.in = in;
@@ -16,7 +17,7 @@ public class Controller {
 
 
     public void playCardClick(int indexCardToBePlacedOn, int indexCardToPlace, String cornerSelected) throws IOException {
-        if(indexCardToBePlacedOn == 100 || indexCardToPlace == 100 || cornerSelected.equals("notSelected")){ //This if prevents player to place card without choosing any card or corner
+        if(indexCardToBePlacedOn == 100 || indexCardToPlace == 100 || cornerSelected == null){ //This if prevents player to place card without choosing any card or corner
             System.out.println("You have not selected any card to place or to be placed on or the corner");
             return;
         }
@@ -78,6 +79,14 @@ public class Controller {
         }
 
 
+    }
+
+    public int getGameSize() {
+        return gameSize;
+    }
+
+    public void setGameSize(int gameSize) {
+        this.gameSize = gameSize;
     }
 
     public String showSpecificSeed() throws IOException {
