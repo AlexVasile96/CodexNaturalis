@@ -124,10 +124,6 @@ public class GUI extends Application {
 
 
     @FXML
-    public ImageView obiettivo1;
-    @FXML
-    public ImageView obiettivo2;
-    @FXML
     public ImageView chosenObj;
     @FXML
     public ImageView obj1ImageView;
@@ -172,20 +168,6 @@ public class GUI extends Application {
 
     @FXML
     private void chooseSecretObjective() throws IOException{
-        /*Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/SceltaObiettivoSegreto.fxml")));
-        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
-        Pane root = new Pane();
-        root.setBackground(background);
-        root.getChildren().addAll(fxmlGame);
-        //chooseSecretObjectiveScene = new Scene(root, 800, 600);
-    }
-
-    @FXML
-    private void chooseSecretObjectiveClicked() throws IOException {
-        chooseSecretObjectiveScene = new Scene(root, 800, 600);*/
         System.out.println(in.readLine()); //Printing first secret card
         System.out.println(in.readLine()); //printing second secret card
         System.out.println("Secret card printed");
@@ -195,8 +177,8 @@ public class GUI extends Application {
         String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/" + secondCardId + ".png";
         Image objImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj1)));
         Image objImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
-        obiettivo1.setImage(objImage1);
-        obiettivo2.setImage(objImage2);
+        ImageView obiettivo1 = new ImageView(objImage1);
+        ImageView obiettivo2 = new ImageView(objImage2);
 
         Pane root = new Pane();
         Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
@@ -212,39 +194,37 @@ public class GUI extends Application {
         text.setStrokeWidth(0);
         text.setFill(Color.WHITE);
         text.setFont(Font.font("Arial", FontWeight.BOLD, 17));
-        ImageView imageView = new ImageView();
 
+        vBox.getChildren().addAll(text, obiettivo1, obiettivo2);
+        root.getChildren().addAll(vBox);
+        Scene chooseSecretObjectiveScene = new Scene(root, 800, 600);
 
-    }
-
-    @FXML
-    private void chooseSecretObjectiveClicked() throws IOException {
-
-    }
-
-
-    @FXML
-    public void chosenObj1(MouseEvent event) throws IOException {
-        out.println(1);
-        chosenObj = obiettivo1;
-        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        chooseInitCard();
-        Platform.runLater(() -> primaryStage.setScene(chooseInitCardScene));
-    }
-
-    @FXML
-    public void chosenObj2(MouseEvent event) throws IOException {
-        out.println(2);
-        chosenObj = obiettivo2;
-        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        chooseInitCard();
-        Platform.runLater(() -> primaryStage.setScene(chooseInitCardScene));
+        obiettivo1.setOnMouseClicked(e-> {
+            try {
+                out.println(1);
+                chosenObj = obiettivo1;
+                chooseInitCard();
+                Platform.runLater(()-> window.setScene(chooseInitCardScene));
+            }catch(Exception action){
+                action.printStackTrace();
+            }
+        });
+        obiettivo2.setOnMouseClicked(e-> {
+            try{
+                out.println(2);
+                chosenObj = obiettivo2;
+                chooseInitCard();
+                Platform.runLater(()-> window.setScene(chooseInitCardScene));
+            }catch(Exception action){
+                action.printStackTrace();
+            }
+        });
 
     }
 
     @FXML
     private void chooseInitCard() throws IOException {
-        Parent fxmlInit = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/FlipInitCard.fxml")));
+        /*Parent fxmlInit = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/FlipInitCard.fxml")));
         Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
@@ -252,10 +232,63 @@ public class GUI extends Application {
         Pane root = new Pane();
         root.setBackground(background);
         root.getChildren().addAll(fxmlInit);
-        chooseInitCardScene = new Scene(root, 800, 600);
+        chooseInitCardScene = new Scene(root, 800, 600);*/
+
+        Pane root = new Pane();
+        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
+        root.setBackground(background);
+
+        VBox vbox = new VBox();
+        HBox hbox = new HBox();
+
+        Text initText = new Text("YOUR INIT CARD");
+        System.out.println(in.readLine());
+        System.out.println(in.readLine());
+        System.out.println(in.readLine());
+        String id = in.readLine();
+        String pathInit = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
+        Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathInit)));
+        ImageView initCard = new ImageView(initImage);
+
+        Button turnBack = new Button("Turn card to back");
+        Button turnFront = new Button("Turn card to front");
+
+        hbox.getChildren().addAll(turnFront, turnBack);
+
+        vbox.getChildren().addAll(initText, initCard, hbox);
+
+        turnBack.setOnMouseClicked(e->{
+            int idToInt= Integer.parseInt(id);
+            isFront=0;
+            if(idToInt>=81 && idToInt<=86) //InitCard
+            {
+                String pathFlipped = "/ImmaginiCodex/CarteBack/Init/" + id + ".png";
+                Image initImageBack = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+                initCard.setImage(initImageBack);
+                //setInitCard(initCard);
+            }
+        });
+
+        turnFront.setOnMouseClicked(e->{
+            int idToInt= Integer.parseInt(id);
+            isFront=1;
+            if(idToInt>=81 && idToInt<=86) //InitCard
+            {
+                String pathFlipped = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
+                Image initImageFront = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+                initCard.setImage(initImageFront);
+                //setInitCard(initCard);
+            }
+        });
+
+
+
     }
 
-    @FXML
+    /*@FXML
     public void showInit() throws IOException {
         System.out.println(in.readLine());
         System.out.println(in.readLine());
@@ -316,7 +349,7 @@ public class GUI extends Application {
             setInitCard(initCard);
         }
         return isFront;
-    }
+    }*/
 
     private Image flipToBackCard(String stringId){
         int id = Integer.parseInt(stringId);

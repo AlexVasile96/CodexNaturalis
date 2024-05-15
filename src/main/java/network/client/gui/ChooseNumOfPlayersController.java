@@ -72,6 +72,6 @@ public class ChooseNumOfPlayersController {
         }
         System.out.println(in.readLine()); //You have to wait until all players are connected
         LobbyScene lobbySceneHandler = new LobbyScene();
-        lobbySceneHandler.createLobbyScene(primaryStage);
+        lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in);
     }
 }
