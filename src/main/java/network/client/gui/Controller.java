@@ -24,7 +24,7 @@ public class Controller {
         out.println("playCard"); //sends to server the message to start the playCard method
         try {
 
-            out.println(indexCardToPlace); //sends to server the id of the card you want your card to be placed on
+            out.println(indexCardToPlace); //sends to server the id of the card you want your card to be placed
             System.out.println(in.readLine());
 
             out.println(2); //non voglio girare la carta
