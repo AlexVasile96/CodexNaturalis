@@ -29,7 +29,10 @@ public class LobbyScene {
                 root.getChildren().addAll(fxmlLobby);
                 lobbyScene = new Scene(root, 800, 600);
                 primaryStage.setScene(lobbyScene);
-                controller.waitAllPlayers();
+                Platform.runLater(()-> {
+                    controller.waitAllPlayers();
+                });
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
