@@ -149,9 +149,6 @@ public class GUI extends Application {
     @FXML
     public ImageView goldCard;
 
-    private ImageView obiettivo1;
-    private ImageView obiettivo2;
-
     public static void main(String[] args) throws IOException {
         ConnectionWithServer connectionWithServer= new ConnectionWithServer(); //creazione classe
         socket= connectionWithServer.connectToServer();
