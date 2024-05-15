@@ -1,9 +1,6 @@
 package network.client.gui;
 
-
-import controller.GameController;
 import controller.GuiController;
-import exceptions.ParametersNotValidException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -23,7 +20,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.game.Dot;
 import model.game.Player;
 import view.ClientView;
 
@@ -109,16 +105,13 @@ public class GUI extends Application {
     private Integer indexCardFromWellSelected = 89989898;
     private String cornerSelected = "notSelected";
     private static Stage window;
-    private Scene startScene;
-    private Scene loginScene;
+
     private static BufferedReader in;
     private int isFront=0; //The server need 1 to place the card on the back and 0 to place it on the front
     private Scene gameScene;
-    private Scene chooseNumOfPlayersScene;
     private Scene lobbyScene;
     private Scene chooseSecretObjectiveScene;
     private Scene chooseInitCardScene;
-    private int selectedNumOfPlayers;
 
     private String id;
     private ClientView clientView = new ClientView();
@@ -131,18 +124,8 @@ public class GUI extends Application {
     private Player currentPlayer=null;
     Controller controller = new Controller(in, out);
 
-    @FXML
-    public TextField usernameField;
-    @FXML
-    public Button loginButton;
-    @FXML
-    public Label test;
-    @FXML
-    public ToggleGroup toggleGroup;
-    @FXML
-    public ToggleGroup numOfPlayersGroup;
-    @FXML
-    public Label testNumbers;
+
+
     @FXML
     public ImageView obiettivo1;
     @FXML
@@ -172,7 +155,6 @@ public class GUI extends Application {
 
 
     public static void main(String[] args) throws IOException {
-        //GuiController guiController = GuiController.getInstance(); // Ottieni un'istanza di GuiController
         ConnectionWithServer connectionWithServer= new ConnectionWithServer(); //creazione classe
         socket= connectionWithServer.connectToServer();
         out=new PrintWriter(socket.getOutputStream(), true); //to write
@@ -180,166 +162,37 @@ public class GUI extends Application {
         launch(args);
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        window = primaryStage;
-        startMenuScene(primaryStage);
-        this.clientView=clientView;
-
-    }
-
-    private void startMenuScene(Stage primaryStage) throws IOException {
-
-        // Carica l'immagine di sfondo
-        Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/mainMenu.fxml")));
-        codexLogo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/codexLogo.png")));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(codexLogo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
-        // Imposta lo sfondo del layout
-        StackPane root = new StackPane();
-        root.setBackground(background);
-        root.getChildren().addAll(fxml); // Aggiungi il layout dei bottoni sopra all'immagine di sfondo
-        // Crea la scena di avvio
-        startScene = new Scene(root, 919, 743);
-        primaryStage.setScene(startScene);
-        primaryStage.setTitle("Codex");
-        primaryStage.show();
-    }
-
-    public void startGameClicked(ActionEvent event) throws IOException {
-        //Must send this string to the server in order to be able to login
-        String firstMessage = "login";
-        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        out.println(firstMessage); //-> il client ha detto login
-        //Creates the login scene
-        loginScene();
-        //thread to update GUI
-        Platform.runLater(() -> primaryStage.setScene(loginScene));
-
-    }
-
-    //Changescene-> url login->
+   @Override
+   public void start(Stage primaryStage) throws Exception {
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("/model/mainMenu.fxml"));
+       Parent root = loader.load();
+       MainMenuController controller = loader.getController();
+       controller.initData(primaryStage, out, socket,in);
+       Scene scene = new Scene(root, 919, 743);
+       primaryStage.setScene(scene);
+       primaryStage.setTitle("Codex");
+       primaryStage.show();
+       controller.startMenuScene(primaryStage);
+   }
 
 
-
-    private void loginScene() throws IOException {
-        //Load the scene from fxml
-        Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/loginScene.fxml")));
-        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
-        StackPane root = new StackPane();
-        root.setBackground(background);
-        root.getChildren().addAll(fxml);
-        loginScene = new Scene(root, 800, 600);
-
-
-    }
-
-    public void loginButtonClicked(ActionEvent event) throws IOException {
-        System.out.println( in.readLine()); //Welcome-> you have to log in, please type your username
-        String username = usernameField.getText();
-        if (username.isEmpty()) {
-            System.out.println("Username necessary");
-            return;
-        }
-        Toggle dot = toggleGroup.getSelectedToggle();
-        if (dot == null) {
-            System.out.println("Choose your dot color please");
-            return;
-        }
-
-        clientView.setUserName(username);
-        System.out.println(clientView.getUserName());
-        out.println(username);
-        System.out.println( in.readLine());//Login succesfully done
-        System.out.println(in.readLine());//Choose your dot color
-        String realChosenDot = ((RadioButton) dot).getText();
-        clientView.setDot(Dot.valueOf(realChosenDot));
-        out.println(realChosenDot); //Sending dot color
-        System.out.println(in.readLine());//Color correctly chosen
-        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        chooseNumOfPlayers();
-        Platform.runLater(() -> primaryStage.setScene(chooseNumOfPlayersScene));
-    }
-
-    private void chooseNumOfPlayers() throws IOException {
-        Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/ChooseNumberOfPlayers.fxml")));
-        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
-        StackPane root = new StackPane();
-        root.setBackground(background);
-        root.getChildren().addAll(fxml);
-        chooseNumOfPlayersScene = new Scene(root, 800, 600);
-    }
-
-    @FXML
-    private void goToLobbyClicked(ActionEvent event) throws IOException, InterruptedException {
-            Toggle numOfPlayers = numOfPlayersGroup.getSelectedToggle();
-            if (numOfPlayers == null) {
-                System.out.println("Select number of players");
-                return;
-            }
-            String howManyPlayersAreThere = in.readLine();
-            System.out.println(howManyPlayersAreThere); //At the moment there is
-            if (howManyPlayersAreThere.equals("There's already someone online! You will be ")) {
-                System.out.println(in.readLine()); //2
-                System.out.println(in.readLine());//players
-                System.out.println(in.readLine()); //You have to wait until all clients are connected;
-                Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                chooseSecretObjective();
-                Platform.runLater(() -> primaryStage.setScene(chooseSecretObjectiveScene));
-            }
-            else {
-
-                System.out.println(in.readLine()); //1
-                System.out.println(in.readLine()); //player.ChooseHowManyPlayers
-                String selectedNumOfPlayersText = ((RadioButton) numOfPlayers).getText();
-                switch (selectedNumOfPlayersText) {
-                    case "2 Players":
-                        selectedNumOfPlayers = 2;
-                        break;
-                    case "3 Players":
-                        selectedNumOfPlayers = 3;
-                        break;
-                    case "4 Players":
-                        selectedNumOfPlayers = 4;
-                        break;
-                    default:
-                        System.out.println("Not valid number of players");
-                        return;
-                }
-                testNumbers.setText("Number of players is: " + selectedNumOfPlayers);
-                out.println(selectedNumOfPlayers);
-                System.out.println(in.readLine()); //Players number correctly chosen
-                GuiController.getInstance().setSizeSet(true);
-                GuiController.getInstance().setNumOfPlayersLogged(1);
-                System.out.println(GuiController.getInstance().getNumOfPlayersLogged()); //ok-> 1
-                GuiController.getInstance().setGameSize(selectedNumOfPlayers); //2
-                System.out.println(GuiController.getInstance().getGameSize());
-                System.out.println(selectedNumOfPlayersText);
-
-                Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                lobby();
-                Platform.runLater(() -> primaryStage.setScene(lobbyScene));
-                //Platform.runLater(() -> primaryStage.setScene(chooseSecretObjectiveScene));
-            }
-    }
 
     @FXML
     private void lobby() throws IOException, InterruptedException {
-        System.out.println(in.readLine()); //You have to wait all players
+        System.out.println(in.readLine()); //You have to all clients are connected
+        String areAllClientsConnected= in.readLine();
+        if(areAllClientsConnected.equals("All clients connected"))
+            {
+
+                chooseSecretObjective();
+                Platform.runLater(() -> window.setScene(chooseSecretObjectiveScene));
+            }
+
         Parent fxmlLobby = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/lobby.fxml")));
         Pane root = new Pane();
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
         root.getChildren().addAll(fxmlLobby);
         lobbyScene = new Scene(root, 800, 600);
-        //in.readLine();
-
     }
 
     @FXML

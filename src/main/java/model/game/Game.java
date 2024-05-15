@@ -349,6 +349,7 @@ public class Game implements WhatCanPlayerDo {
 
     }
 
+
     @Override
     public int getPlayerScore(Player player) {
         return player.getPlayerScore();

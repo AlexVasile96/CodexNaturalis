@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="/loginLayout.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.GUI">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="/loginLayout.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.client.gui.LoginController">
    <children>
       <TextField fx:id="usernameField" layoutX="34.0" layoutY="60.0" promptText="Insert your username here..." />
       <Text fill="WHITE" layoutX="34.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold; -fx-border-color: black; -fx-border-width: 5px;" text="Write your username:" wrappingWidth="254.5078125" />

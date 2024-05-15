@@ -43,7 +43,6 @@ public class ServerConnection implements Runnable {
                         command = stdin.readLine();
                         sendMessageToServer(command);
                         loginPlayer(player);                                  //Actual Login
-
                         String areAllConnected= in.readLine(); //Allplayers are connected
                         System.out.println(areAllConnected);
                         assigningSecretCard();                                //Choosing the secret Card
@@ -275,8 +274,8 @@ private void waitUntilItsYourTurn() throws IOException {
             messageFromServer= in.readLine();
         }while (!messageFromServer.equals("exit"));
         String chosenCardOnTheBoard= stdin.readLine();
-        int paolo= Integer.parseInt(chosenCardOnTheBoard);
-        out.println(paolo-1);
+        int indexCardOnTheBoard= Integer.parseInt(chosenCardOnTheBoard);
+        out.println(indexCardOnTheBoard-1);
         String avaiableCorners= in.readLine();
         do{
             System.out.println(avaiableCorners);
@@ -606,6 +605,9 @@ private void waitUntilItsYourTurn() throws IOException {
                 System.out.println(messageFromServer);
             }while (messageFromServer.equals("Chosen color not available!"));
     }
+
+    //////////
+
 
     private synchronized void chooseNumberOfPlayers() throws IOException, InterruptedException {
         StringBuilder numberOfPlayers= new StringBuilder();

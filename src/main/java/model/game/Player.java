@@ -134,6 +134,7 @@ public class Player implements Observable {
             }
         }
     } //METHOD TO CHOOSE THE SECRET CARD (THE PLAYER HAS A CHOICE BETWEEN 2 CARDS)
+
     public void turnYourCard(Card card) //METHOD TO TURN YOUR CARD IN CASE THE PLAYER WANTS TO PLACE THE CARD ON HER BACK
     {
         if (!card.isCardBack()) {
@@ -143,7 +144,7 @@ public class Player implements Observable {
             card.getBL().setSpecificCornerSeed(SpecificSeed.EMPTY);
             card.getBR().setSpecificCornerSeed(SpecificSeed.EMPTY);
         } else {
-            card.setCardBack(false); //CARD IS ON HER ORIGINAL CONFIGURATION
+            card.setCardBack(false);                                                       //CARD IS ON HER ORIGINAL CONFIGURATION
             card.getTL().setSpecificCornerSeed(card.getTLBack().getSpecificCornerSeed()); //BACKUPPING ALL CORNERS
             card.getTR().setSpecificCornerSeed(card.getTRBack().getSpecificCornerSeed());
             card.getBL().setSpecificCornerSeed(card.getBLBack().getSpecificCornerSeed());
@@ -248,7 +249,6 @@ public class Player implements Observable {
         int y = cardPlayerChoose.getNode().getCoordY();
         switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECTLY
             case "TL":
-
                 cardPlayerChoose.getTL().setValueCounter(cardPlayerChoose.getTL().getValueCounter()-1);
                 playYourCardOnTheTopLeftCorner(x,y,selectedCardFromTheDeck);
                 break;
@@ -547,7 +547,7 @@ public class Player implements Observable {
     {
         selectedCardFromTheDeck.getBL().setValueCounter(selectedCardFromTheDeck.getBL().getValueCounter()-1);
 
-        board.getNode(x - 1, y + 1).setSpecificNodeSeed(selectedCardFromTheDeck.getTL().getSpecificCornerSeed()); //SETTING THE NODE
+        board.getNode(x - 1, y + 1).setSpecificNodeSeed(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
         if (board.getNode(x - 1, y + 1).getValueCounter() == 2) {
             board.getNode(x - 1, y + 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
         } else if (board.getNode(x - 1, y + 1).getValueCounter() == 1) {
