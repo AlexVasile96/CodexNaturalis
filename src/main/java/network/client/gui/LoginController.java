@@ -96,10 +96,11 @@ public class LoginController {
         String realChosenDot = ((RadioButton) dot).getText();
         //clientView.setDot(Dot.valueOf(realChosenDot));
         out.println(realChosenDot);
-        System.out.println(in.readLine());
-        //IF->IN.READLINE SBORRATA ->>>>> ALLORA LABEL === COLOR CHOSEN NOT AVAILABLE ->>> RETURN
-        //primaryStage.setScene(chooseNumOfPlayersScene);
-        //inizializzazione controller
+        if(in.readLine().equals("Chosen color not available!")){
+            return;
+        }
+
+
         ChooseNumOfPlayersScene chooseNumOfPlayersScene= new ChooseNumOfPlayersScene();
         chooseNumOfPlayersScene.createChooseNumOfPlayersScene(primaryStage,out,socket,in);
     }
