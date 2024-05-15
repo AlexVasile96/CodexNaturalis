@@ -44,7 +44,7 @@ public class ServerConnection implements Runnable {
                         sendMessageToServer(command);
                         loginPlayer(player);                                  //Actual Login
 
-                        String areAllConnected= in.readLine(); //Allplayers are connected
+                        String areAllConnected= in.readLine();                  //Allplayers are connected
                         System.out.println(areAllConnected);
                         assigningSecretCard();                                //Choosing the secret Card
                         takingTheInitialCard();                               //Taking the initial Card

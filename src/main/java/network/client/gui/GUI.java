@@ -1,9 +1,5 @@
 package network.client.gui;
 
-
-import controller.GameController;
-import controller.GuiController;
-import exceptions.ParametersNotValidException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -20,10 +16,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.game.Dot;
 import model.game.Player;
 import view.ClientView;
 
@@ -32,7 +29,6 @@ import java.net.Socket;
 import java.util.Objects;
 
 public class GUI extends Application {
-    private static GuiController guiController;
     private int cardSelected;
     private Background background=null;
     private String pathResourceDeck=null;
@@ -53,7 +49,6 @@ public class GUI extends Application {
     private ImageView wellCard2View=null;
     private ImageView wellCard3View=null;
     private ImageView wellCard4View=null;
-    private Player player;
     private Image handCard1=null;
     private Image handCard2=null;
     private Image handCard3=null;
@@ -109,16 +104,11 @@ public class GUI extends Application {
     private Integer indexCardFromWellSelected = 89989898;
     private String cornerSelected = "notSelected";
     private static Stage window;
-    private Scene startScene;
-    private Scene loginScene;
+
     private static BufferedReader in;
     private int isFront=0; //The server need 1 to place the card on the back and 0 to place it on the front
     private Scene gameScene;
-    private Scene chooseNumOfPlayersScene;
-    private Scene lobbyScene;
-    private Scene chooseSecretObjectiveScene;
     private Scene chooseInitCardScene;
-    private int selectedNumOfPlayers;
 
     private String id;
     private ClientView clientView = new ClientView();
@@ -131,22 +121,8 @@ public class GUI extends Application {
     private Player currentPlayer=null;
     Controller controller = new Controller(in, out);
 
-    @FXML
-    public TextField usernameField;
-    @FXML
-    public Button loginButton;
-    @FXML
-    public Label test;
-    @FXML
-    public ToggleGroup toggleGroup;
-    @FXML
-    public ToggleGroup numOfPlayersGroup;
-    @FXML
-    public Label testNumbers;
-    @FXML
-    public ImageView obiettivo1;
-    @FXML
-    public ImageView obiettivo2;
+
+
     @FXML
     public ImageView chosenObj;
     @FXML
@@ -169,10 +145,7 @@ public class GUI extends Application {
     @FXML
     public ImageView goldCard;
 
-
-
     public static void main(String[] args) throws IOException {
-        //GuiController guiController = GuiController.getInstance(); // Ottieni un'istanza di GuiController
         ConnectionWithServer connectionWithServer= new ConnectionWithServer(); //creazione classe
         socket= connectionWithServer.connectToServer();
         out=new PrintWriter(socket.getOutputStream(), true); //to write
@@ -180,183 +153,21 @@ public class GUI extends Application {
         launch(args);
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        window = primaryStage;
-        startMenuScene(primaryStage);
-        this.clientView=clientView;
-
-    }
-
-    private void startMenuScene(Stage primaryStage) throws IOException {
-
-        // Carica l'immagine di sfondo
-        Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/mainMenu.fxml")));
-        codexLogo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/codexLogo.png")));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(codexLogo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
-        // Imposta lo sfondo del layout
-        StackPane root = new StackPane();
-        root.setBackground(background);
-        root.getChildren().addAll(fxml); // Aggiungi il layout dei bottoni sopra all'immagine di sfondo
-        // Crea la scena di avvio
-        startScene = new Scene(root, 919, 743);
-        primaryStage.setScene(startScene);
-        primaryStage.setTitle("Codex");
-        primaryStage.show();
-    }
-
-    public void startGameClicked(ActionEvent event) throws IOException {
-        //Must send this string to the server in order to be able to login
-        String firstMessage = "login";
-        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        out.println(firstMessage); //-> il client ha detto login
-        //Creates the login scene
-        loginScene();
-        //thread to update GUI
-        Platform.runLater(() -> primaryStage.setScene(loginScene));
-
-    }
-
-    //Changescene-> url login->
-
-
-
-    private void loginScene() throws IOException {
-        //Load the scene from fxml
-        Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/loginScene.fxml")));
-        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
-        StackPane root = new StackPane();
-        root.setBackground(background);
-        root.getChildren().addAll(fxml);
-        loginScene = new Scene(root, 800, 600);
-
-
-    }
-
-    public void loginButtonClicked(ActionEvent event) throws IOException {
-        System.out.println( in.readLine()); //Welcome-> you have to log in, please type your username
-        String username = usernameField.getText();
-        if (username.isEmpty()) {
-            System.out.println("Username necessary");
-            return;
-        }
-        Toggle dot = toggleGroup.getSelectedToggle();
-        if (dot == null) {
-            System.out.println("Choose your dot color please");
-            return;
-        }
-
-        clientView.setUserName(username);
-        System.out.println(clientView.getUserName());
-        out.println(username);
-        System.out.println( in.readLine());//Login succesfully done
-        System.out.println(in.readLine());//Choose your dot color
-        String realChosenDot = ((RadioButton) dot).getText();
-        clientView.setDot(Dot.valueOf(realChosenDot));
-        out.println(realChosenDot); //Sending dot color
-        System.out.println(in.readLine());//Color correctly chosen
-        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        chooseNumOfPlayers();
-        Platform.runLater(() -> primaryStage.setScene(chooseNumOfPlayersScene));
-    }
-
-    private void chooseNumOfPlayers() throws IOException {
-        Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/ChooseNumberOfPlayers.fxml")));
-        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
-        StackPane root = new StackPane();
-        root.setBackground(background);
-        root.getChildren().addAll(fxml);
-        chooseNumOfPlayersScene = new Scene(root, 800, 600);
-    }
-
-    @FXML
-    private void goToLobbyClicked(ActionEvent event) throws IOException, InterruptedException {
-            Toggle numOfPlayers = numOfPlayersGroup.getSelectedToggle();
-            if (numOfPlayers == null) {
-                System.out.println("Select number of players");
-                return;
-            }
-            String howManyPlayersAreThere = in.readLine();
-            System.out.println(howManyPlayersAreThere); //At the moment there is
-            if (howManyPlayersAreThere.equals("There's already someone online! You will be ")) {
-                System.out.println(in.readLine()); //2
-                System.out.println(in.readLine());//players
-                System.out.println(in.readLine()); //You have to wait until all clients are connected;
-                Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                chooseSecretObjective();
-                Platform.runLater(() -> primaryStage.setScene(chooseSecretObjectiveScene));
-            }
-            else {
-
-                System.out.println(in.readLine()); //1
-                System.out.println(in.readLine()); //player.ChooseHowManyPlayers
-                String selectedNumOfPlayersText = ((RadioButton) numOfPlayers).getText();
-                switch (selectedNumOfPlayersText) {
-                    case "2 Players":
-                        selectedNumOfPlayers = 2;
-                        break;
-                    case "3 Players":
-                        selectedNumOfPlayers = 3;
-                        break;
-                    case "4 Players":
-                        selectedNumOfPlayers = 4;
-                        break;
-                    default:
-                        System.out.println("Not valid number of players");
-                        return;
-                }
-                testNumbers.setText("Number of players is: " + selectedNumOfPlayers);
-                out.println(selectedNumOfPlayers);
-                System.out.println(in.readLine()); //Players number correctly chosen
-                GuiController.getInstance().setSizeSet(true);
-                GuiController.getInstance().setNumOfPlayersLogged(1);
-                System.out.println(GuiController.getInstance().getNumOfPlayersLogged()); //ok-> 1
-                GuiController.getInstance().setGameSize(selectedNumOfPlayers); //2
-                System.out.println(GuiController.getInstance().getGameSize());
-                System.out.println(selectedNumOfPlayersText);
-
-                Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                lobby();
-                Platform.runLater(() -> primaryStage.setScene(lobbyScene));
-                //Platform.runLater(() -> primaryStage.setScene(chooseSecretObjectiveScene));
-            }
-    }
-
-    @FXML
-    private void lobby() throws IOException, InterruptedException {
-        System.out.println(in.readLine()); //You have to wait all players
-        Parent fxmlLobby = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/lobby.fxml")));
-        Pane root = new Pane();
-        root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-        root.getChildren().addAll(fxmlLobby);
-        lobbyScene = new Scene(root, 800, 600);
-        //in.readLine();
-
-    }
+   @Override
+   public void start(Stage primaryStage) throws Exception {
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("/model/mainMenu.fxml"));
+       Parent root = loader.load();
+       MainMenuController controller = loader.getController();
+       controller.initData(primaryStage, out, socket,in);
+       Scene scene = new Scene(root, 919, 743);
+       primaryStage.setScene(scene);
+       primaryStage.setTitle("Codex");
+       primaryStage.show();
+       controller.startMenuScene(primaryStage);
+   }
 
     @FXML
     private void chooseSecretObjective() throws IOException{
-        Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/SceltaObiettivoSegreto.fxml")));
-        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
-        Pane root = new Pane();
-        root.setBackground(background);
-        root.getChildren().addAll(fxmlGame);
-        chooseSecretObjectiveScene = new Scene(root, 800, 600);
-    }
-
-    @FXML
-    private void chooseSecretObjectiveClicked() throws IOException {
         System.out.println(in.readLine()); //Printing first secret card
         System.out.println(in.readLine()); //printing second secret card
         System.out.println("Secret card printed");
@@ -366,32 +177,54 @@ public class GUI extends Application {
         String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/" + secondCardId + ".png";
         Image objImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj1)));
         Image objImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
-        obiettivo1.setImage(objImage1);
-        obiettivo2.setImage(objImage2);
-    }
+        ImageView obiettivo1 = new ImageView(objImage1);
+        ImageView obiettivo2 = new ImageView(objImage2);
 
-    @FXML
-    public void chosenObj1(MouseEvent event) throws IOException {
-        out.println(1);
-        chosenObj = obiettivo1;
-        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        chooseInitCard();
-        Platform.runLater(() -> primaryStage.setScene(chooseInitCardScene));
-    }
+        Pane root = new Pane();
+        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
+        root.setBackground(background);
+        VBox vBox = new VBox();
+        Text text = new Text("Choose your secret objective card");
+        text.setLayoutX(34);
+        text.setLayoutY(31);
+        text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        text.setStrokeWidth(0);
+        text.setFill(Color.WHITE);
+        text.setFont(Font.font("Arial", FontWeight.BOLD, 17));
 
-    @FXML
-    public void chosenObj2(MouseEvent event) throws IOException {
-        out.println(2);
-        chosenObj = obiettivo2;
-        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        chooseInitCard();
-        Platform.runLater(() -> primaryStage.setScene(chooseInitCardScene));
+        vBox.getChildren().addAll(text, obiettivo1, obiettivo2);
+        root.getChildren().addAll(vBox);
+        Scene chooseSecretObjectiveScene = new Scene(root, 800, 600);
+
+        obiettivo1.setOnMouseClicked(e-> {
+            try {
+                out.println(1);
+                chosenObj = obiettivo1;
+                chooseInitCard();
+                Platform.runLater(()-> window.setScene(chooseInitCardScene));
+            }catch(Exception action){
+                action.printStackTrace();
+            }
+        });
+        obiettivo2.setOnMouseClicked(e-> {
+            try{
+                out.println(2);
+                chosenObj = obiettivo2;
+                chooseInitCard();
+                Platform.runLater(()-> window.setScene(chooseInitCardScene));
+            }catch(Exception action){
+                action.printStackTrace();
+            }
+        });
 
     }
 
     @FXML
     private void chooseInitCard() throws IOException {
-        Parent fxmlInit = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/FlipInitCard.fxml")));
+        /*Parent fxmlInit = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/FlipInitCard.fxml")));
         Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
@@ -399,10 +232,63 @@ public class GUI extends Application {
         Pane root = new Pane();
         root.setBackground(background);
         root.getChildren().addAll(fxmlInit);
-        chooseInitCardScene = new Scene(root, 800, 600);
+        chooseInitCardScene = new Scene(root, 800, 600);*/
+
+        Pane root = new Pane();
+        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
+        root.setBackground(background);
+
+        VBox vbox = new VBox();
+        HBox hbox = new HBox();
+
+        Text initText = new Text("YOUR INIT CARD");
+        System.out.println(in.readLine());
+        System.out.println(in.readLine());
+        System.out.println(in.readLine());
+        String id = in.readLine();
+        String pathInit = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
+        Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathInit)));
+        ImageView initCard = new ImageView(initImage);
+
+        Button turnBack = new Button("Turn card to back");
+        Button turnFront = new Button("Turn card to front");
+
+        hbox.getChildren().addAll(turnFront, turnBack);
+
+        vbox.getChildren().addAll(initText, initCard, hbox);
+
+        turnBack.setOnMouseClicked(e->{
+            int idToInt= Integer.parseInt(id);
+            isFront=0;
+            if(idToInt>=81 && idToInt<=86) //InitCard
+            {
+                String pathFlipped = "/ImmaginiCodex/CarteBack/Init/" + id + ".png";
+                Image initImageBack = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+                initCard.setImage(initImageBack);
+                //setInitCard(initCard);
+            }
+        });
+
+        turnFront.setOnMouseClicked(e->{
+            int idToInt= Integer.parseInt(id);
+            isFront=1;
+            if(idToInt>=81 && idToInt<=86) //InitCard
+            {
+                String pathFlipped = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
+                Image initImageFront = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+                initCard.setImage(initImageFront);
+                //setInitCard(initCard);
+            }
+        });
+
+
+
     }
 
-    @FXML
+    /*@FXML
     public void showInit() throws IOException {
         System.out.println(in.readLine());
         System.out.println(in.readLine());
@@ -440,7 +326,7 @@ public class GUI extends Application {
     }
 
     @FXML
-    public int flipToFrontInitCard() {
+    public int flipToFrontCard() {
         int idToInt= Integer.parseInt(id);
         isFront=1;
         if(idToInt>=1 && idToInt <=40) //Resource Card
@@ -463,9 +349,9 @@ public class GUI extends Application {
             setInitCard(initCard);
         }
         return isFront;
-    }
+    }*/
 
-    private Image flipCardToBack(String stringId){
+    private Image flipToBackCard(String stringId){
         int id = Integer.parseInt(stringId);
         if(id>=1 && id <=40) //Resource Card
         {
@@ -523,7 +409,55 @@ public class GUI extends Application {
         //System.out.println(in.readLine());
 
     }
+    private int counter = 0;
+    private void creaRegionPerNuovaCarta(ImageView cartaSelezionata){
+        Region regionTopLeft = new Region();
+        regionTopLeft.setPrefSize(widthWellCards, heightWellCards);
+        regionTopLeft.setStyle("-fx-background-color: red;");
+        regionTopLeft.setOnMouseClicked(e->{
+            try {
 
+                indexCardToBePlacedOn = (Integer) cartaSelezionata.getUserData();
+                cartaSelezionata.setUserData(counter);
+
+                cornerSelected = "TL";
+                System.out.println("hai cliccato il " + cornerSelected + " della carta numero " + indexCardToBePlacedOn);
+            }catch (Exception suca){
+                suca.printStackTrace();
+            }
+        });
+
+        Region regionBottomLeft = new Region();
+        regionBottomLeft.setPrefSize(widthWellCards, heightWellCards);
+        regionBottomLeft.setStyle("-fx-background-color: yellow;");
+        regionBottomLeft.setOnMouseClicked(e->{
+            cartaSelezionata.setUserData(counter);
+
+            indexCardToBePlacedOn = (Integer) cartaSelezionata.getUserData();
+            cornerSelected = "BL";
+            System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
+        });
+
+        Region regionTopRight = new Region();
+        regionTopRight.setPrefSize(widthWellCards, heightWellCards);
+        regionTopRight.setStyle("-fx-background-color: green;");
+        regionTopRight.setOnMouseClicked(e->{
+            cartaSelezionata.setUserData(counter);
+            indexCardToBePlacedOn = (Integer) cartaSelezionata.getUserData();
+            cornerSelected = "TR";
+            System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
+        });
+
+        Region regionBottomRight = new Region();
+        regionBottomRight.setPrefSize(widthWellCards, heightWellCards);
+        regionBottomRight.setStyle("-fx-background-color: blue;");
+        regionBottomRight.setOnMouseClicked(e->{
+            cartaSelezionata.setUserData(counter);
+            indexCardToBePlacedOn = (Integer) cartaSelezionata.getUserData();
+            cornerSelected = "BR";
+            System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
+        });
+    }
 
     private void game() {
 
@@ -580,16 +514,26 @@ public class GUI extends Application {
         regionTopLeft.setPrefSize(widthWellCards, heightWellCards);
         regionTopLeft.setStyle("-fx-background-color: red;");
         regionTopLeft.setOnMouseClicked(e->{
-            indexCardToBePlacedOn = 0;
-            cornerSelected = "TL";
-            System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
+            try {
+                out.println("WE che carta sono?");
+                in.readLine();
+                indexCardToBePlacedOn = (Integer) initCard.getUserData();
+                initCard.setUserData(counter);
+
+                cornerSelected = "TL";
+                System.out.println("hai cliccato il " + cornerSelected + " della carta numero " + indexCardToBePlacedOn);
+            }catch (Exception suca){
+                suca.printStackTrace();
+            }
         });
 
         Region regionBottomLeft = new Region();
         regionBottomLeft.setPrefSize(widthWellCards, heightWellCards);
         regionBottomLeft.setStyle("-fx-background-color: yellow;");
         regionBottomLeft.setOnMouseClicked(e->{
-            indexCardToBePlacedOn = 0;
+            initCard.setUserData(counter);
+
+            indexCardToBePlacedOn = (Integer) initCard.getUserData();
             cornerSelected = "BL";
             System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
         });
@@ -598,7 +542,8 @@ public class GUI extends Application {
         regionTopRight.setPrefSize(widthWellCards, heightWellCards);
         regionTopRight.setStyle("-fx-background-color: green;");
         regionTopRight.setOnMouseClicked(e->{
-            indexCardToBePlacedOn = 0;
+            initCard.setUserData(counter);
+            indexCardToBePlacedOn = (Integer) initCard.getUserData();
             cornerSelected = "TR";
             System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
         });
@@ -607,7 +552,7 @@ public class GUI extends Application {
         regionBottomRight.setPrefSize(widthWellCards, heightWellCards);
         regionBottomRight.setStyle("-fx-background-color: blue;");
         regionBottomRight.setOnMouseClicked(e->{
-            indexCardToBePlacedOn = 0;
+            initCard.setUserData(counter);
             cornerSelected = "BR";
             System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
         });
@@ -619,10 +564,6 @@ public class GUI extends Application {
 
         stackPaneInitCard.getChildren().addAll(initCard, gridPaneInitCard);
 
-        initCard.setOnMouseClicked(event -> {
-            cardSelected = 0;
-            out.println(cardSelected);
-        });
 
         //if(clientView.getUserName().equals(currentPlayerNickname)){
         playCard.setOnAction(event -> {
@@ -731,13 +672,13 @@ public class GUI extends Application {
 
         flipCardToBack.setOnAction(e->{
             if(indexCardToPlace == 0){
-                handCard1View.setImage(flipCardToBack(idHandCard1));
+                handCard1View.setImage(flipToBackCard(idHandCard1));
             }
             if(indexCardToPlace == 1){
-                handCard2View.setImage(flipCardToBack(idHandCard2));
+                handCard2View.setImage(flipToBackCard(idHandCard2));
             }
             if(indexCardToPlace == 2){
-                handCard3View.setImage(flipCardToBack(idHandCard3));
+                handCard3View.setImage(flipToBackCard(idHandCard3));
             }
             else{
                 System.out.println("You chose an unflippable card");
@@ -759,7 +700,7 @@ public class GUI extends Application {
             }
         });
 
-// Creare bottone per playCard: salvataggio della carta da voler piazzare e carta su cui piazzare + angolo salvati in variabili, onClick pulsante piazza carta nel posto giusto ezzz
+
         handCard1View.setOnMouseClicked(event -> {
             System.out.println("Hai selezionato la carta id: "+idHandCard1);
             indexCardToPlace = 0;
@@ -973,16 +914,6 @@ public class GUI extends Application {
         popupStage.showAndWait(); // Display the stage and wait for it to be closed
     }
 
-    @FXML
-    public void exitClicked(ActionEvent event) {
-        try {
-            closeConnection(socket);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private String createPathForBackCards(String cardId) {
         if (Integer.parseInt(cardId)<41 ) {
@@ -1023,11 +954,6 @@ public class GUI extends Application {
         return correctPath + cardId + ".png";
     }
 
-    public void closeConnection(Socket socket) throws IOException {
-        in.close();
-        out.close();
-        socket.close();
-    }
 
     public void setInitCard(ImageView initCard) {
         this.initCard = initCard;
