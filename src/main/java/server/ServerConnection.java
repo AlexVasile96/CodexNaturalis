@@ -223,9 +223,14 @@ private void waitUntilItsYourTurn() throws IOException {
     }
 
     private void playCardFromYourDeck() throws IOException {
-        player.setHasThePlayerAlreadyPLacedACard(true);
-        System.out.println("You chose to play a card from your deck!");
-        showBoard();                    //stampa della board
+        String messageFromServer, inputFromClient;
+        int size;
+        String[] validInputs;
+        boolean check;
+
+        player.setHasThePlayerAlreadyPLacedACard(true);//player puo giocare una volta per turno
+        System.out.println("Play a card from your deck!");
+        showBoard();
         showYourSpecificSeed();
         sendMessageToServer("playCard");
 
@@ -238,10 +243,9 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println("------------------------------------------------------------------------------------------------");
         System.out.println("Which card do you want to play on the board?");
         System.out.println("1-> first card\n2-> second card\n3-> third card");
-        String messageFromServer;
-        int size;
+        validInputs = new String[]{"1", "2", "3"};
         do {
-            size = Integer.parseInt(stdin.readLine());
+            size = Integer.parseInt(controlInputFromUser(validInputs));
             out.println(size - 1); //Carta scelta dal deck del player, sto mandando al server
             messageFromServer = in.readLine();
             if(messageFromServer.equals("Gold Card not placeable")){
@@ -255,47 +259,63 @@ private void waitUntilItsYourTurn() throws IOException {
         player.getClientView().getPlayerStringCards().remove(size-1);   //rimuovo dalla view la carta scelta
 
         //scelta se girare la carta
-        String dalUtente;
         System.out.println("------------------------------------------------------------------------------------------------");
         System.out.println("Do you want to turn your card?\n(Back of all cards has 4 empty corners and 1 attribute representing the specific seed of the card)");
-        do{
-        System.out.println("Please type\n" +
-                "-> 1 if you want to turn your card! " +
-                "-> 2 if you don't want to turn your card!");
-        dalUtente = stdin.readLine();
-        }while (!dalUtente.equals("1") && !dalUtente.equals("2"));
-        sendMessageToServer(dalUtente); //outprintln 2
+        System.out.println("Please type\n" + "-> 1 if you want to turn your card! " + "-> 2 if you don't want to turn your card!");
+        validInputs = new String[]{"1", "2"};
+        inputFromClient = controlInputFromUser(validInputs);
+        sendMessageToServer(inputFromClient); //outprintln 2
         //DA FINIRE
 
         //carte sulla board
         System.out.println("Su quale carta della board vuoi andare a piazzare la tua carta?");
         messageFromServer = in.readLine();
+        int numeroCarte=0;
         do{
-            System.out.println(messageFromServer);
+            if(messageFromServer.equals("incrementaContatore")) numeroCarte++;
+            else System.out.println(messageFromServer);
             messageFromServer= in.readLine();
         }while (!messageFromServer.equals("exit"));
-        String chosenCardOnTheBoard= stdin.readLine();
-        int paolo= Integer.parseInt(chosenCardOnTheBoard);
-        out.println(paolo-1);
-        String avaiableCorners= in.readLine();
+
+        //controllo input
+        validInputs = new String[numeroCarte];
+        for (int j=0; j<numeroCarte; j++)
+            validInputs[j] = String.valueOf(j+1);
+        size= Integer.parseInt(controlInputFromUser(validInputs));
+        out.println(size-1);
+
+
+        //avaiableCorners
+        String[] angoli ={"TL","TR","BR","BL"};
+        validInputs = new String[4];
+        check = false;
+        size=0;
+        messageFromServer = in.readLine();
         do{
-            System.out.println(avaiableCorners);
-            avaiableCorners= in.readLine();
-        } while(!avaiableCorners.equals("end"));
+            for (String corner: angoli){
+                if(messageFromServer.equals(corner) && !check){
+                    validInputs[size]=messageFromServer;
+                    size++;
+                    check = true;
+                }
+            }
+            if(!check) System.out.println(messageFromServer);
+            check = false;
+            messageFromServer= in.readLine();
+        } while(!messageFromServer.equals("end"));
         System.out.println();
-        boolean isTheCornerCorrect=false;
-        while(!isTheCornerCorrect) {
-            System.out.print("Choose the corner you want to place the card on: ");
-            String cornerChosen = stdin.readLine().toUpperCase();
-            if (cornerChosen.equals("TL") || cornerChosen.equals("TR") || cornerChosen.equals("BL") || cornerChosen.equals("BR")) {
-                System.out.println("Corner correctly chosen!");
-                out.println(cornerChosen);
-                isTheCornerCorrect = true;
+        System.out.print("Choose the corner you want to place the card on: ");
+        if(size<4){
+            angoli = new String[size];
+            for (int i=0; i<size; i++) {
+                angoli[i]=validInputs[i];
             }
-            else {
-                System.out.println("This is not an available corner!");
-            }
+            inputFromClient = controlInputFromUser(angoli);
         }
+        else inputFromClient = controlInputFromUser(validInputs);
+
+        out.println(inputFromClient);
+
         String ultimo= in.readLine();
         System.out.println(ultimo);
         drawCard();
@@ -316,10 +336,29 @@ private void waitUntilItsYourTurn() throws IOException {
 
     }
 
+    private String controlInputFromUser(String[] elements) throws IOException {
+        String inputClient;
+        boolean found = false;
+        do {
+            inputClient = stdin.readLine().toUpperCase();
+            for (String element : elements) {
+                if (inputClient.equals(element.toUpperCase())) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                System.out.println("Input errato! Riprova!");
+            }
+        } while (!found);
+        return inputClient;
+    }
+
+
     private void status() throws IOException {
         sendMessageToServer("status");
         String points= in.readLine();
-        System.out.println(points);
+        System.out.println("you got: "+ points + " points!");
         clientView.setPlayerScore(Integer.parseInt(points));
     }
 
