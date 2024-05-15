@@ -1,6 +1,5 @@
 package network.client.gui;
 
-import controller.GuiController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -16,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -28,7 +26,6 @@ import java.net.Socket;
 import java.util.Objects;
 
 public class GUI extends Application {
-    private static GuiController guiController;
     private int cardSelected;
     private Background background=null;
     private String pathResourceDeck=null;
@@ -49,7 +46,6 @@ public class GUI extends Application {
     private ImageView wellCard2View=null;
     private ImageView wellCard3View=null;
     private ImageView wellCard4View=null;
-    private Player player;
     private Image handCard1=null;
     private Image handCard2=null;
     private Image handCard3=null;
@@ -109,8 +105,6 @@ public class GUI extends Application {
     private static BufferedReader in;
     private int isFront=0; //The server need 1 to place the card on the back and 0 to place it on the front
     private Scene gameScene;
-    private Scene lobbyScene;
-    private Scene chooseSecretObjectiveScene;
     private Scene chooseInitCardScene;
 
     private String id;
@@ -175,26 +169,6 @@ public class GUI extends Application {
        controller.startMenuScene(primaryStage);
    }
 
-
-
-    @FXML
-    private void lobby() throws IOException, InterruptedException {
-        System.out.println(in.readLine()); //You have to all clients are connected
-        String areAllClientsConnected= in.readLine();
-        if(areAllClientsConnected.equals("All clients connected"))
-            {
-
-                chooseSecretObjective();
-                Platform.runLater(() -> window.setScene(chooseSecretObjectiveScene));
-            }
-
-        Parent fxmlLobby = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/lobby.fxml")));
-        Pane root = new Pane();
-        root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-        root.getChildren().addAll(fxmlLobby);
-        lobbyScene = new Scene(root, 800, 600);
-    }
-
     @FXML
     private void chooseSecretObjective() throws IOException{
         Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/SceltaObiettivoSegreto.fxml")));
@@ -205,7 +179,7 @@ public class GUI extends Application {
         Pane root = new Pane();
         root.setBackground(background);
         root.getChildren().addAll(fxmlGame);
-        chooseSecretObjectiveScene = new Scene(root, 800, 600);
+        //chooseSecretObjectiveScene = new Scene(root, 800, 600);
     }
 
     @FXML
@@ -293,7 +267,7 @@ public class GUI extends Application {
     }
 
     @FXML
-    public int flipToFrontInitCard() {
+    public int flipToFrontCard() {
         int idToInt= Integer.parseInt(id);
         isFront=1;
         if(idToInt>=1 && idToInt <=40) //Resource Card
@@ -318,7 +292,7 @@ public class GUI extends Application {
         return isFront;
     }
 
-    private Image flipCardToBack(String stringId){
+    private Image flipToBackCard(String stringId){
         int id = Integer.parseInt(stringId);
         if(id>=1 && id <=40) //Resource Card
         {
@@ -584,13 +558,13 @@ public class GUI extends Application {
 
         flipCardToBack.setOnAction(e->{
             if(indexCardToPlace == 0){
-                handCard1View.setImage(flipCardToBack(idHandCard1));
+                handCard1View.setImage(flipToBackCard(idHandCard1));
             }
             if(indexCardToPlace == 1){
-                handCard2View.setImage(flipCardToBack(idHandCard2));
+                handCard2View.setImage(flipToBackCard(idHandCard2));
             }
             if(indexCardToPlace == 2){
-                handCard3View.setImage(flipCardToBack(idHandCard3));
+                handCard3View.setImage(flipToBackCard(idHandCard3));
             }
             else{
                 System.out.println("You chose an unflippable card");
@@ -826,16 +800,6 @@ public class GUI extends Application {
         popupStage.showAndWait(); // Display the stage and wait for it to be closed
     }
 
-    @FXML
-    public void exitClicked(ActionEvent event) {
-        try {
-            closeConnection(socket);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            primaryStage.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private String createPathForBackCards(String cardId) {
         if (Integer.parseInt(cardId)<41 ) {
@@ -876,11 +840,6 @@ public class GUI extends Application {
         return correctPath + cardId + ".png";
     }
 
-    public void closeConnection(Socket socket) throws IOException {
-        in.close();
-        out.close();
-        socket.close();
-    }
 
     public void setInitCard(ImageView initCard) {
         this.initCard = initCard;

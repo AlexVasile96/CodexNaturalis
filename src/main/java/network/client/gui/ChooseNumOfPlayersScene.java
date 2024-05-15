@@ -28,8 +28,6 @@ public class ChooseNumOfPlayersScene {
         Scene chooseScene = new Scene(root, 800, 600);
         primaryStage.setScene(chooseScene);
 
-
-
     }
 }
 

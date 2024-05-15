@@ -70,9 +70,8 @@ public class ChooseNumOfPlayersController {
             System.out.println(in.readLine()); //Players number correctly chosen
             System.out.println(selectedNumOfPlayersText);
         }
-
-        Stage primaryStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        //lobby();
-        //Platform.runLater(() -> primaryStage.setScene(lobbyScene));
+        System.out.println(in.readLine()); //You have to wait until all players are connected
+        LobbyScene lobbySceneHandler = new LobbyScene();
+        lobbySceneHandler.createLobbyScene(primaryStage);
     }
 }
