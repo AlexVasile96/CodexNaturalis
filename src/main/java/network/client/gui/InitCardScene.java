@@ -81,12 +81,12 @@ public class InitCardScene {
             }
         });
 
-        placeCard.setOnMouseClicked(e->{
+        /*placeCard.setOnMouseClicked(e->{
             out.println(isFront);
             Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             update();
             game();
             Platform.runLater(() -> primaryStage.setScene(gameScene));
-        });
+        });*/
     }
 }

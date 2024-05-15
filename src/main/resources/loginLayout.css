@@ -8,7 +8,7 @@
 .button{
     -fx-font-family: 'Arial Bold Italic';
     -fx-text-fill: white;
-    -fx-border-color: red;
+    -fx-border-color: #EF8156;
     -fx-background-color: transparent;
     -fx-border-width: 2;
     -fx-font-size: 14;
@@ -17,14 +17,14 @@
 .text-field{
     -fx-font-family: 'Arial Bold Italic';
     -fx-text-fill: white;
-    -fx-border-color: red;
+    -fx-border-color: #EF8156;
     -fx-background-color: transparent;
     -fx-border-width: 2;
     -fx-font-size: 14;
     -fx-border-radius:5;
 }
 .image-view {
-    -fx-border-color: red;
+    -fx-border-color: #EF8156;
     -fx-border-width: 10;
     -fx-border-radius: 5;
 }

@@ -25,6 +25,8 @@ public class LoginController {
     @FXML
     public Label test;
     @FXML
+    public Label loginLabel;
+    @FXML
     public ToggleGroup toggleGroup;
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) {
@@ -35,18 +37,56 @@ public class LoginController {
     }
 
     @FXML
+    public void initialize() {
+        // Disabilita il pulsante di login all'avvio
+        loginButton.setDisable(true);
+
+        // Aggiungi un listener per verificare quando uno dei campi viene compilato
+        usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            checkFields();
+        });
+
+        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            checkFields();
+        });
+    }
+
+    private void checkFields() {
+        // Controlla se entrambi i campi sono compilati
+        String username = usernameField.getText();
+        Toggle dot = toggleGroup.getSelectedToggle();
+
+        // Abilita il pulsante di login solo se entrambi i campi sono compilati
+        loginButton.setDisable(username.isEmpty() || dot == null);
+    }
+
+    @FXML
     public void loginButtonClicked(ActionEvent event) throws IOException {
+
         System.out.println(in.readLine());
         String username = usernameField.getText();
-        if (username.isEmpty()) {
-            System.out.println("Username necessary");
-            return;
-        }
         Toggle dot = toggleGroup.getSelectedToggle();
-        if (dot == null) {
-            System.out.println("Choose your dot color please");
+
+        if(username.isEmpty() || dot == null){
+            if (username.isEmpty()) {
+                System.out.println("Username necessary");
+                loginLabel.setText("Write your username");
+            }
+
+            if (dot == null) {
+                loginLabel.setText("choose a dot color");
+                loginLabel.setStyle("-fx-font-size: 20px;" + // Dimensione del font
+                        "-fx-font-family: Arial;" + // Famiglia del font
+                        "-fx-text-fill: #EF8156;" + // Colore del testo
+                        "-fx-padding: 10px;" + // Spaziatura interna
+                        "-fx-border-color: #EF8156;" + // Colore del bordo
+                        "-fx-border-width: 1px;" + // Spessore del bordo
+                        "-fx-border-radius: 5px;" );// Arrotondamento del bordo
+                System.out.println("Choose your dot color please");
+            }
             return;
         }
+
 
         //clientView.setUserName(username);
         //System.out.println(clientView.getUserName());
