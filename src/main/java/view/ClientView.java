@@ -21,6 +21,7 @@ public class ClientView {
     private int index;
     private ArrayList<Card> playerCards;
     private ObjectiveCard secretChosenCard;
+    private int numOfCardsOnTheBoard=1;
 
     public String getUserName() {
         return userName;
@@ -128,5 +129,13 @@ public class ClientView {
                 ", playerCards=" + playerCards +
                 ", secretChosenCard=" + secretChosenCard +
                 '}';
+    }
+
+    public int getNumOfCardsOnTheBoard() {
+        return numOfCardsOnTheBoard;
+    }
+
+    public void setNumOfCardsOnTheBoard(int numOfCardsOnTheBoard) {
+        this.numOfCardsOnTheBoard = numOfCardsOnTheBoard;
     }
 }

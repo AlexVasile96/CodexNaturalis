@@ -363,10 +363,10 @@ public class Player implements Observable {
 
      if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()!=1)
         {
-            availableCorners.add(cardPlayerChoose.getTLBack());
-            availableCorners.add(cardPlayerChoose.getTRBack());
-            availableCorners.add(cardPlayerChoose.getBLBack());
-            availableCorners.add(cardPlayerChoose.getBRBack());
+            availableCorners.add(cardPlayerChoose.getTL());
+            availableCorners.add(cardPlayerChoose.getTR());
+            availableCorners.add(cardPlayerChoose.getBL());
+            availableCorners.add(cardPlayerChoose.getBR());
         }
         else if(!cardPlayerChoose.isCardBack()){
             availableCorners.add(cardPlayerChoose.getTL());
@@ -468,10 +468,10 @@ public class Player implements Observable {
             cornerLabels.put(((InitialCard) cardPlayerChoose).getBRIBack(), "BR");}
         else if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()!=1)
         {
-            cornerLabels.put(cardPlayerChoose.getTLBack(), "TL");
-            cornerLabels.put(cardPlayerChoose.getTRBack(), "TR");
-            cornerLabels.put(cardPlayerChoose.getBLBack(), "BL");
-            cornerLabels.put(cardPlayerChoose.getBRBack(), "BR");
+            cornerLabels.put(cardPlayerChoose.getTL(), "TL");
+            cornerLabels.put(cardPlayerChoose.getTR(), "TR");
+            cornerLabels.put(cardPlayerChoose.getBL(), "BL");
+            cornerLabels.put(cardPlayerChoose.getBR(), "BR");
 
         }
         else if(!cardPlayerChoose.isCardBack())

@@ -43,7 +43,6 @@ public class ServerConnection implements Runnable {
                         command = stdin.readLine();
                         sendMessageToServer(command);
                         loginPlayer(player);                                  //Actual Login
-
                         String areAllConnected= in.readLine();                  //Allplayers are connected
                         System.out.println(areAllConnected);
                         assigningSecretCard();                                //Choosing the secret Card
@@ -275,17 +274,22 @@ private void waitUntilItsYourTurn() throws IOException {
 
         //carte sulla board
         System.out.println("Su quale carta della board vuoi andare a piazzare la tua carta?");
-        messageFromServer = in.readLine();
-        int numeroCarte=0;
+        messageFromServer = in.readLine();  //initial card
+       // int numeroCarte=0;
         do{
-            if(messageFromServer.equals("incrementaContatore")) numeroCarte++;
-            else System.out.println(messageFromServer);
+            /*if(messageFromServer.equals("incrementaContatore")) //numeroCarte++;
+            {
+
+            }*/
+            //else
+             System.out.println(messageFromServer);
             messageFromServer= in.readLine();
         }while (!messageFromServer.equals("exit"));
 
         //controllo input
-        String[] validInputs = new String[numeroCarte];
-        for (int j=0; j<numeroCarte; j++)
+
+        String[] validInputs = new String[player.getClientView().getNumOfCardsOnTheBoard()]; //se c'è solo la carta iniziale è pari ad 1
+        for (int j=0; j<player.getClientView().getNumOfCardsOnTheBoard(); j++)
             validInputs[j] = String.valueOf(j+1);
         size= Integer.parseInt(controlInputFromUser(validInputs));
         out.println(size-1);
@@ -325,7 +329,7 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println(ultimo);
         drawCard();
         status();
-
+        player.getClientView().setNumOfCardsOnTheBoard(player.getClientView().getNumOfCardsOnTheBoard()+1);
         if(clientView.getPlayerScore()>=20)
         {
             System.out.println(in.readLine()); //all players have on last turn and then the game will end
