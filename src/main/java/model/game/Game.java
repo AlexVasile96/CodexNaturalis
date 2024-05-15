@@ -128,6 +128,11 @@ public class Game implements WhatCanPlayerDo {
         }
     }
 
+    public void turnCard(Player player, int cardIndex){
+        Card cartaScelta =player.getPlayerCards().get(cardIndex);
+        player.turnYourCard(cartaScelta);
+    }
+
     public void endGame() {
         System.out.println("Updating each player points to see who is the real winner!");
         for (Player player : players) {

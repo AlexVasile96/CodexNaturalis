@@ -1,8 +1,4 @@
 package server;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import controller.GameController;
 import controller.TurnController;
 import exceptions.ParametersNotValidException;
@@ -19,7 +15,6 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
@@ -260,7 +255,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         String message;
         Dot dot;
         do{
-            sendMessageToClient("Choose the color of your dot, you can choose between: " + game.getDots());
+            sendMessageToClient("Choose the color of your dot between: " + game.getDots());
             message = stdIn.readLine();
             if (!game.isInDots(message)) {
                 sendMessageToClient("Chosen color not available!");
@@ -284,10 +279,11 @@ public class HandlingPlayerInputsThread implements Runnable {
                 case "playCard" -> {
                     //scelta carta dal tuo mazzo
                     int cardChosenFromHisDeck;
+                    boolean turnedCardAlredy = false;
                     do {
                         cardChosenFromHisDeck = Integer.parseInt(stdIn.readLine());
                         System.out.println("Player chose card number " + cardChosenFromHisDeck);
-                        if(player.checkingTheChosencardDue(cardChosenFromHisDeck)){
+                        if(player.checkingTheChosenCardForGoldPurpose(cardChosenFromHisDeck)){
                             sendMessageToAllClients("puoi procedere");
                         }
                         else {
@@ -295,14 +291,24 @@ public class HandlingPlayerInputsThread implements Runnable {
                             GoldCard cartGold = (GoldCard) player.chooseCard(cardChosenFromHisDeck);
                             sendMessageToAllClients(cartGold.getRequirementsForPlacing().toString());
                             gameController.readCommand("showYourSpecificSeed", player, 0, 0, null);
+                            messageFromClient = stdIn.readLine();
+                            if(messageFromClient.equals("2")){
+                                System.out.println("il player vuole girare la carta");
+                                gameController.readCommand("TurnCard", player, cardChosenFromHisDeck, 0, null);
+                                turnedCardAlredy = true;
+                            }
                         }
-                    }while (!player.checkingTheChosencardDue(cardChosenFromHisDeck));
+                    }while (!player.checkingTheChosenCardForGoldPurpose(cardChosenFromHisDeck) && !turnedCardAlredy);
 
                     //scelta se girare la carta
-                    String giracarta = stdIn.readLine();
-                    if(giracarta.equals("1")){
-                        System.out.println("il player vuole girare la carta");
+                    if(!turnedCardAlredy) {
+                        messageFromClient = stdIn.readLine();
+                        if (messageFromClient.equals("1")) {
+                            System.out.println("il player vuole girare la carta");
+                            gameController.readCommand("TurnCard", player, cardChosenFromHisDeck, 0, null);
+                        }
                     }
+
 
                     //stampa delle carte sulla board
                     int i=1;
@@ -317,10 +323,10 @@ public class HandlingPlayerInputsThread implements Runnable {
                     String CardOnTheBoardChosen = stdIn.readLine();
                     int boardCardChosen = Integer.parseInt(CardOnTheBoardChosen);
                     System.out.println("Il player ha deciso di giocare la proria carta sulla carta numero " + boardCardChosen);
-                    gameController.readCommand(messageFromClient, player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
+                    gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
                     cornerChosen = stdIn.readLine();
                     System.out.println(cornerChosen);
-                    gameController.readCommand(messageFromClient, player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
+                    gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
                     messageFromClient = stdIn.readLine();
                     runCommand(messageFromClient, player);
                 }

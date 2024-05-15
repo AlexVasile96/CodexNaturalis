@@ -154,14 +154,14 @@ public class Player implements Observable {
     public Card checkingTheChosencard( int cardIndex)
     {
         Card selectedCardFromTheDeck = chooseCard(cardIndex);                   //OKAY
-        checkIfTheCardExist(cardIndex);                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
+        System.out.println("esistenza carta:"+ checkIfTheCardExist(cardIndex)+ "\n(se zero-> non esiste)");                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
         boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
         if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return null;
         return selectedCardFromTheDeck;
     }
-    public boolean checkingTheChosencardDue( int cardIndex) {
+    public boolean checkingTheChosenCardForGoldPurpose(int cardIndex) {
         Card selectedCardFromTheDeck = chooseCard(cardIndex);                   //OKAY
-        checkIfTheCardExist(cardIndex);                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
+        System.out.println("esistenza carta:"+ checkIfTheCardExist(cardIndex)+ "\n(se zero-> non esiste)");                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
         boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
         if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return false;
         return true;
@@ -309,12 +309,11 @@ public class Player implements Observable {
     }
     private boolean isTheCardGold(Card selectedCard)
     {
-        if (selectedCard instanceof GoldCard) {
+        if(!selectedCard.isCardBack())
+            return true;
+        else if (selectedCard instanceof GoldCard )
             return board.placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing());
-        }
-        else {
-            return false;
-        }
+        else return false;
     }
 
     private Card selectTheCardFromTheBoard(List<Card> cardsPlayerCanChooseFrom, Scanner scanner){
@@ -492,7 +491,7 @@ public class Player implements Observable {
             options.append((i + 1)).append(". ").append(corner).append(" -> ").append(cornerLabel).append("|Please press ").append(cornerLabel).append(" to select the corner\n");
         }
         options.append("\nend");
-        System.out.println(options);
+        //System.out.println(options);
         return options.toString();
 
 
