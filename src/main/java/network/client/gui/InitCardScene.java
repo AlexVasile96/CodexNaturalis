@@ -20,6 +20,8 @@ public class InitCardScene {
 
     private int isFront=0; //The server need 1 to place the card on the back and 0 to place it on the front
 
+    private String id;
+
     public void chooseInitCard(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) throws IOException {
         Pane root = new Pane();
         Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
@@ -35,7 +37,7 @@ public class InitCardScene {
         System.out.println(in.readLine());
         System.out.println(in.readLine());
         System.out.println(in.readLine());
-        String id = in.readLine();
+        id = in.readLine();
         System.out.println(id);
         String pathInit = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
         Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathInit)));
@@ -65,7 +67,7 @@ public class InitCardScene {
                 String pathFlipped = "/ImmaginiCodex/CarteBack/Init/" + id + ".png";
                 Image initImageBack = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
                 initCard.setImage(initImageBack);
-                //setInitCard(initCard);
+
             }
         });
 
@@ -77,16 +79,23 @@ public class InitCardScene {
                 String pathFlipped = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
                 Image initImageFront = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
                 initCard.setImage(initImageFront);
-                //setInitCard(initCard);
+
             }
         });
 
-        /*placeCard.setOnMouseClicked(e->{
+        placeCard.setOnMouseClicked(e->{
             out.println(isFront);
-            Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            update();
-            game();
-            Platform.runLater(() -> primaryStage.setScene(gameScene));
-        });*/
+            GameScene gameScene= null;
+            try {
+                gameScene = new GameScene(primaryStage, out, socket, in,id);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            try {
+                gameScene.game(); //update di tutte le variabili inziiali
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
     }
 }
