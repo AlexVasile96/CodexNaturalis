@@ -28,7 +28,10 @@ public class Command { //Command Client sends to Server
 
                 }
             }
-          case "visualizeCommonObjectiveCards":
+            case "TurnCard":
+                game.turnCard(player, size);
+                return "carta girata";
+            case "visualizeCommonObjectiveCards":
                 String commonCards;
                 commonCards= game.visualizeCommonObjective(player);
                 return commonCards;
@@ -111,7 +114,7 @@ public class Command { //Command Client sends to Server
                 return game.getDeckID();
             case "endgame":
                 game.endGame();
-                default:
+            default:
                 return "Unknown command.";
         }
     }
