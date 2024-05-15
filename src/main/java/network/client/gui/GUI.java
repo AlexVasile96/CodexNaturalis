@@ -15,6 +15,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -146,7 +149,8 @@ public class GUI extends Application {
     @FXML
     public ImageView goldCard;
 
-
+    private ImageView obiettivo1;
+    private ImageView obiettivo2;
 
     public static void main(String[] args) throws IOException {
         ConnectionWithServer connectionWithServer= new ConnectionWithServer(); //creazione classe
@@ -171,7 +175,7 @@ public class GUI extends Application {
 
     @FXML
     private void chooseSecretObjective() throws IOException{
-        Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/SceltaObiettivoSegreto.fxml")));
+        /*Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/SceltaObiettivoSegreto.fxml")));
         Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
@@ -184,6 +188,7 @@ public class GUI extends Application {
 
     @FXML
     private void chooseSecretObjectiveClicked() throws IOException {
+        chooseSecretObjectiveScene = new Scene(root, 800, 600);*/
         System.out.println(in.readLine()); //Printing first secret card
         System.out.println(in.readLine()); //printing second secret card
         System.out.println("Secret card printed");
@@ -195,7 +200,31 @@ public class GUI extends Application {
         Image objImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
         obiettivo1.setImage(objImage1);
         obiettivo2.setImage(objImage2);
+
+        Pane root = new Pane();
+        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
+        root.setBackground(background);
+        VBox vBox = new VBox();
+        Text text = new Text("Choose your secret objective card");
+        text.setLayoutX(34);
+        text.setLayoutY(31);
+        text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        text.setStrokeWidth(0);
+        text.setFill(Color.WHITE);
+        text.setFont(Font.font("Arial", FontWeight.BOLD, 17));
+        ImageView imageView = new ImageView();
+
+
     }
+
+    @FXML
+    private void chooseSecretObjectiveClicked() throws IOException {
+
+    }
+
 
     @FXML
     public void chosenObj1(MouseEvent event) throws IOException {
@@ -350,7 +379,55 @@ public class GUI extends Application {
         //System.out.println(in.readLine());
 
     }
+    private int counter = 0;
+    private void creaRegionPerNuovaCarta(ImageView cartaSelezionata){
+        Region regionTopLeft = new Region();
+        regionTopLeft.setPrefSize(widthWellCards, heightWellCards);
+        regionTopLeft.setStyle("-fx-background-color: red;");
+        regionTopLeft.setOnMouseClicked(e->{
+            try {
 
+                indexCardToBePlacedOn = (Integer) cartaSelezionata.getUserData();
+                cartaSelezionata.setUserData(counter);
+
+                cornerSelected = "TL";
+                System.out.println("hai cliccato il " + cornerSelected + " della carta numero " + indexCardToBePlacedOn);
+            }catch (Exception suca){
+                suca.printStackTrace();
+            }
+        });
+
+        Region regionBottomLeft = new Region();
+        regionBottomLeft.setPrefSize(widthWellCards, heightWellCards);
+        regionBottomLeft.setStyle("-fx-background-color: yellow;");
+        regionBottomLeft.setOnMouseClicked(e->{
+            cartaSelezionata.setUserData(counter);
+
+            indexCardToBePlacedOn = (Integer) cartaSelezionata.getUserData();
+            cornerSelected = "BL";
+            System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
+        });
+
+        Region regionTopRight = new Region();
+        regionTopRight.setPrefSize(widthWellCards, heightWellCards);
+        regionTopRight.setStyle("-fx-background-color: green;");
+        regionTopRight.setOnMouseClicked(e->{
+            cartaSelezionata.setUserData(counter);
+            indexCardToBePlacedOn = (Integer) cartaSelezionata.getUserData();
+            cornerSelected = "TR";
+            System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
+        });
+
+        Region regionBottomRight = new Region();
+        regionBottomRight.setPrefSize(widthWellCards, heightWellCards);
+        regionBottomRight.setStyle("-fx-background-color: blue;");
+        regionBottomRight.setOnMouseClicked(e->{
+            cartaSelezionata.setUserData(counter);
+            indexCardToBePlacedOn = (Integer) cartaSelezionata.getUserData();
+            cornerSelected = "BR";
+            System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
+        });
+    }
 
     private void game() {
 
@@ -407,16 +484,26 @@ public class GUI extends Application {
         regionTopLeft.setPrefSize(widthWellCards, heightWellCards);
         regionTopLeft.setStyle("-fx-background-color: red;");
         regionTopLeft.setOnMouseClicked(e->{
-            indexCardToBePlacedOn = 0;
-            cornerSelected = "TL";
-            System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
+            try {
+                out.println("WE che carta sono?");
+                in.readLine();
+                indexCardToBePlacedOn = (Integer) initCard.getUserData();
+                initCard.setUserData(counter);
+
+                cornerSelected = "TL";
+                System.out.println("hai cliccato il " + cornerSelected + " della carta numero " + indexCardToBePlacedOn);
+            }catch (Exception suca){
+                suca.printStackTrace();
+            }
         });
 
         Region regionBottomLeft = new Region();
         regionBottomLeft.setPrefSize(widthWellCards, heightWellCards);
         regionBottomLeft.setStyle("-fx-background-color: yellow;");
         regionBottomLeft.setOnMouseClicked(e->{
-            indexCardToBePlacedOn = 0;
+            initCard.setUserData(counter);
+
+            indexCardToBePlacedOn = (Integer) initCard.getUserData();
             cornerSelected = "BL";
             System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
         });
@@ -425,7 +512,8 @@ public class GUI extends Application {
         regionTopRight.setPrefSize(widthWellCards, heightWellCards);
         regionTopRight.setStyle("-fx-background-color: green;");
         regionTopRight.setOnMouseClicked(e->{
-            indexCardToBePlacedOn = 0;
+            initCard.setUserData(counter);
+            indexCardToBePlacedOn = (Integer) initCard.getUserData();
             cornerSelected = "TR";
             System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
         });
@@ -434,7 +522,7 @@ public class GUI extends Application {
         regionBottomRight.setPrefSize(widthWellCards, heightWellCards);
         regionBottomRight.setStyle("-fx-background-color: blue;");
         regionBottomRight.setOnMouseClicked(e->{
-            indexCardToBePlacedOn = 0;
+            initCard.setUserData(counter);
             cornerSelected = "BR";
             System.out.println("hai cliccato il "+cornerSelected+" della carta numero "+indexCardToBePlacedOn);
         });
@@ -446,10 +534,6 @@ public class GUI extends Application {
 
         stackPaneInitCard.getChildren().addAll(initCard, gridPaneInitCard);
 
-        initCard.setOnMouseClicked(event -> {
-            cardSelected = 0;
-            out.println(cardSelected);
-        });
 
         //if(clientView.getUserName().equals(currentPlayerNickname)){
         playCard.setOnAction(event -> {
@@ -586,7 +670,7 @@ public class GUI extends Application {
             }
         });
 
-// Creare bottone per playCard: salvataggio della carta da voler piazzare e carta su cui piazzare + angolo salvati in variabili, onClick pulsante piazza carta nel posto giusto ezzz
+
         handCard1View.setOnMouseClicked(event -> {
             System.out.println("Hai selezionato la carta id: "+idHandCard1);
             indexCardToPlace = 0;

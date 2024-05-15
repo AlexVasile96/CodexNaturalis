@@ -303,8 +303,11 @@ public class HandlingPlayerInputsThread implements Runnable {
                     if(giracarta.equals("1")){
                         System.out.println("il player vuole girare la carta");
                     }
+
+                    //stampa delle carte sulla board
                     int i=1;
                     for(Card card : player.getBoard().getCardsOnTheBoardList()){
+                        sendMessageToAllClients("incrementaContatore");
                         sendMessageToAllClients("->"+i+": "+card.toString());
                         i++;
                     }

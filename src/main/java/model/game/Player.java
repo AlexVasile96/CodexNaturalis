@@ -488,6 +488,7 @@ public class Player implements Observable {
         for (int i = 0; i < availableCorners.size(); i++) {
             Corner corner = availableCorners.get(i);
             String cornerLabel = cornerLabels.get(corner);
+            options.append(cornerLabel).append("\n");//mi serve nel serverconnection per permettergli di selezionare
             options.append((i + 1)).append(". ").append(corner).append(" -> ").append(cornerLabel).append("|Please press ").append(cornerLabel).append(" to select the corner\n");
         }
         options.append("\nend");
