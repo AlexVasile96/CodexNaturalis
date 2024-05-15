@@ -106,7 +106,7 @@ public class GUI extends Application {
     private static Stage window;
 
     private static BufferedReader in;
-    private int isFront=0; //The server need 1 to place the card on the back and 0 to place it on the front
+
     private Scene gameScene;
     private Scene chooseInitCardScene;
 
@@ -166,190 +166,6 @@ public class GUI extends Application {
        controller.startMenuScene(primaryStage);
    }
 
-    @FXML
-    private void chooseSecretObjective() throws IOException{
-        System.out.println(in.readLine()); //Printing first secret card
-        System.out.println(in.readLine()); //printing second secret card
-        System.out.println("Secret card printed");
-        String firstCardId = in.readLine();
-        String secondCardId = in.readLine();
-        String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/" + firstCardId + ".png";
-        String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/" + secondCardId + ".png";
-        Image objImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj1)));
-        Image objImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
-        ImageView obiettivo1 = new ImageView(objImage1);
-        ImageView obiettivo2 = new ImageView(objImage2);
-
-        Pane root = new Pane();
-        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
-        root.setBackground(background);
-        VBox vBox = new VBox();
-        Text text = new Text("Choose your secret objective card");
-        text.setLayoutX(34);
-        text.setLayoutY(31);
-        text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        text.setStrokeWidth(0);
-        text.setFill(Color.WHITE);
-        text.setFont(Font.font("Arial", FontWeight.BOLD, 17));
-
-        vBox.getChildren().addAll(text, obiettivo1, obiettivo2);
-        root.getChildren().addAll(vBox);
-        Scene chooseSecretObjectiveScene = new Scene(root, 800, 600);
-
-        obiettivo1.setOnMouseClicked(e-> {
-            try {
-                out.println(1);
-                chosenObj = obiettivo1;
-                chooseInitCard();
-                Platform.runLater(()-> window.setScene(chooseInitCardScene));
-            }catch(Exception action){
-                action.printStackTrace();
-            }
-        });
-        obiettivo2.setOnMouseClicked(e-> {
-            try{
-                out.println(2);
-                chosenObj = obiettivo2;
-                chooseInitCard();
-                Platform.runLater(()-> window.setScene(chooseInitCardScene));
-            }catch(Exception action){
-                action.printStackTrace();
-            }
-        });
-
-    }
-
-    @FXML
-    private void chooseInitCard() throws IOException {
-        /*Parent fxmlInit = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/FlipInitCard.fxml")));
-        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
-        Pane root = new Pane();
-        root.setBackground(background);
-        root.getChildren().addAll(fxmlInit);
-        chooseInitCardScene = new Scene(root, 800, 600);*/
-
-        Pane root = new Pane();
-        Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
-        root.setBackground(background);
-
-        VBox vbox = new VBox();
-        HBox hbox = new HBox();
-
-        Text initText = new Text("YOUR INIT CARD");
-        System.out.println(in.readLine());
-        System.out.println(in.readLine());
-        System.out.println(in.readLine());
-        String id = in.readLine();
-        String pathInit = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
-        Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathInit)));
-        ImageView initCard = new ImageView(initImage);
-
-        Button turnBack = new Button("Turn card to back");
-        Button turnFront = new Button("Turn card to front");
-
-        hbox.getChildren().addAll(turnFront, turnBack);
-
-        vbox.getChildren().addAll(initText, initCard, hbox);
-
-        turnBack.setOnMouseClicked(e->{
-            int idToInt= Integer.parseInt(id);
-            isFront=0;
-            if(idToInt>=81 && idToInt<=86) //InitCard
-            {
-                String pathFlipped = "/ImmaginiCodex/CarteBack/Init/" + id + ".png";
-                Image initImageBack = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-                initCard.setImage(initImageBack);
-                //setInitCard(initCard);
-            }
-        });
-
-        turnFront.setOnMouseClicked(e->{
-            int idToInt= Integer.parseInt(id);
-            isFront=1;
-            if(idToInt>=81 && idToInt<=86) //InitCard
-            {
-                String pathFlipped = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
-                Image initImageFront = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-                initCard.setImage(initImageFront);
-                //setInitCard(initCard);
-            }
-        });
-
-
-
-    }
-
-    /*@FXML
-    public void showInit() throws IOException {
-        System.out.println(in.readLine());
-        System.out.println(in.readLine());
-        System.out.println(in.readLine());
-        id = in.readLine();
-        String pathInit = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
-        Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathInit)));
-        initCard.setImage(initImage);
-    }
-
-    @FXML
-    public int flipToBackInitCard() {
-        int idToInt= Integer.parseInt(id);
-        isFront=0;
-        if(idToInt>=1 && idToInt <=40) //Resource Card
-        {
-            String pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
-            Image resourceImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            resourceCard.setImage(resourceImage);
-        }
-        else if(idToInt>40 && idToInt<=80) //GoldCard
-        {
-            String pathFlipped = "/ImmaginiCodex/CarteBack/Gold/" + id + ".png";
-            Image goldImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            goldCard.setImage(goldImage);
-        }
-        else if(idToInt>=81 && idToInt<=86) //InitCard
-        {
-            String pathFlipped = "/ImmaginiCodex/CarteBack/Init/" + id + ".png";
-            Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            initCard.setImage(initImage);
-            setInitCard(initCard);
-        }
-        return isFront;
-    }
-
-    @FXML
-    public int flipToFrontCard() {
-        int idToInt= Integer.parseInt(id);
-        isFront=1;
-        if(idToInt>=1 && idToInt <=40) //Resource Card
-        {
-            String pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
-            Image resourceImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            resourceCard.setImage(resourceImage);
-        }
-        else if(idToInt>40 && idToInt<=80) //GoldCard
-        {
-            String pathFlipped = "/ImmaginiCodex/CarteFront/Gold/" + id + ".png";
-            Image goldImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            goldCard.setImage(goldImage);
-        }
-        else if(idToInt>=81 && idToInt<=86) //InitCard
-        {
-            String pathFlipped = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
-            Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            initCard.setImage(initImage);
-            setInitCard(initCard);
-        }
-        return isFront;
-    }*/
 
     private Image flipToBackCard(String stringId){
         int id = Integer.parseInt(stringId);
@@ -384,7 +200,7 @@ public class GUI extends Application {
         return cardFlipped;
     }
 
-    @FXML
+   /* @FXML
     private void chooseInitCardFrontOrBack(ActionEvent event) throws IOException {
 
         out.println(isFront);
@@ -393,7 +209,7 @@ public class GUI extends Application {
         update();
         game();
         Platform.runLater(() -> primaryStage.setScene(gameScene));
-    }
+    }*/
 
 
     private void update() throws IOException {
@@ -422,8 +238,8 @@ public class GUI extends Application {
 
                 cornerSelected = "TL";
                 System.out.println("hai cliccato il " + cornerSelected + " della carta numero " + indexCardToBePlacedOn);
-            }catch (Exception suca){
-                suca.printStackTrace();
+            }catch (Exception exception){
+                exception.printStackTrace();
             }
         });
 

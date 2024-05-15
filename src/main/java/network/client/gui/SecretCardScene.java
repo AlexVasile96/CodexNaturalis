@@ -1,11 +1,16 @@
 package network.client.gui;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -16,22 +21,76 @@ import java.util.Objects;
 public class SecretCardScene {
     private Scene chooseSecretObjectiveScene;
 
-    public void chooseSecretCard(Stage primaryStage) {
+    @FXML
+    public ImageView chosenObj;
+
+    public void chooseSecretCard(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) {
         Platform.runLater(() -> {
             try {
-                Parent fxmlGame = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/SceltaObiettivoSegreto.fxml")));
+                System.out.println(in.readLine()); //Printing first secret card
+                System.out.println(in.readLine()); //printing second secret card
+                System.out.println("Secret card printed");
+                String firstCardId = in.readLine();
+                String secondCardId = in.readLine();
+                String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/" + firstCardId + ".png";
+                String pathObj2 = "/ImmaginiCodex/CarteFront/Objective/" + secondCardId + ".png";
+                Image objImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj1)));
+                Image objImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathObj2)));
+                ImageView obiettivo1 = new ImageView(objImage1);
+                ImageView obiettivo2 = new ImageView(objImage2);
+
+                System.out.println("CIAO SIAMO QUA");
+
+                Pane root = new Pane();
                 Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
                 BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
                 BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
                 Background background = new Background(backgroundImage);
-                Pane root = new Pane();
                 root.setBackground(background);
-                root.getChildren().addAll(fxmlGame);
-                chooseSecretObjectiveScene = new Scene(root, 800, 600);
+                VBox vBox = new VBox();
+                Text text = new Text("Choose your secret objective card");
+                text.setLayoutX(34);
+                text.setLayoutY(31);
+                text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+                text.setStrokeWidth(0);
+                text.setFill(Color.WHITE);
+                text.setFont(Font.font("Arial", FontWeight.BOLD, 17));
+
+                obiettivo1.setFitHeight(120);
+                obiettivo2.setFitHeight(120);
+                obiettivo1.setFitWidth(165);
+                obiettivo2.setFitWidth(165);
+
+                vBox.getChildren().addAll(text, obiettivo1, obiettivo2);
+                root.getChildren().addAll(vBox);
+                Scene chooseSecretObjectiveScene = new Scene(root, 800, 600);
                 primaryStage.setScene(chooseSecretObjectiveScene);
-            } catch (IOException e) {
+
+
+                obiettivo1.setOnMouseClicked(e -> {
+                    try {
+                        out.println(1);
+                        chosenObj = obiettivo1;
+                        InitCardScene initCardSceneHandler = new InitCardScene();
+                        initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in);
+                    } catch (Exception action) {
+                        action.printStackTrace();
+                    }
+                });
+                obiettivo2.setOnMouseClicked(e -> {
+                    try {
+                        out.println(2);
+                        chosenObj = obiettivo2;
+                        InitCardScene initCardSceneHandler = new InitCardScene();
+                        initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in);
+                    } catch (Exception action) {
+                        action.printStackTrace();
+                    }
+                });
+            }catch (IOException e){
                 e.printStackTrace();
             }
         });
+
     }
 }
