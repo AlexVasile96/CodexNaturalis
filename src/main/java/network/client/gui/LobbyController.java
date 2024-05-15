@@ -42,8 +42,7 @@ public class LobbyController {
                             System.out.println("ciao");
                             SecretCardScene secretCardSceneHandler = new SecretCardScene();
                             secretCardSceneHandler.chooseSecretCard(primaryStage, out, socket, in);
-                            // Aggiorna l'interfaccia utente o esegui altre operazioni necessarie
-                        });
+                                 });
                         break;
                     }
                 }

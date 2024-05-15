@@ -212,7 +212,7 @@ public class GUI extends Application {
     }*/
 
 
-    private void update() throws IOException {
+  /*  private void update() throws IOException {
         currentPlayerNickname= in.readLine();
         firstWellCard();
         secondWellCard();
@@ -224,7 +224,8 @@ public class GUI extends Application {
         updatingResourceAndGoldDeck();
         //System.out.println(in.readLine());
 
-    }
+    }*/
+
     private int counter = 0;
     private void creaRegionPerNuovaCarta(ImageView cartaSelezionata){
         Region regionTopLeft = new Region();
@@ -666,18 +667,6 @@ public class GUI extends Application {
 
     }
 
-    private String checkType(String id){
-        int intId = Integer.parseInt(id);
-        String type;
-        if(intId>0 && intId<=40){
-            type = "Resource";
-        }
-        else{
-            type = "Gold";
-        }
-        return type;
-    }
-
 
 
 
@@ -880,58 +869,7 @@ public class GUI extends Application {
         setWidthAndHeight(wellCard4View);
     }
 
-    private void firstWellCard() throws IOException {
 
-        out.println("firstWellId");
-        idCard1 = in.readLine();
-        //System.out.println(idCard1);
-    }
-    private void secondWellCard() throws IOException {
-        out.println("secondWellId");
-        idCard2 = in.readLine();
-        //System.out.println(idCard2);
-    }
-    private void thirdWellCard() throws IOException {
-        out.println("thirdWellId");
-        idCard3 = in.readLine();
-        //System.out.println(idCard3);
-    }
-    private void fourthWellCard() throws IOException {
-        out.println("fourthWellId");
-        idCard4 = in.readLine();
-        //System.out.println(idCard4);
-    }
-    private void updatingResourceAndGoldDeck() throws IOException {
-        out.println("firstCardResourceGui");
-        idTopCardResourceDeck = in.readLine();
-        System.out.println("la topCardResourceDeck is: "+idTopCardResourceDeck);
-        out.println("firstCardGoldGui");
-        idTopCardGoldDeck = in.readLine();
-        System.out.println("la topCardGoldDeck is: "+idTopCardGoldDeck);
-    }
-
-    private void checkTypeWellCards()
-    {
-        typeCard1 = checkType(idCard1);
-        typeCard2 = checkType(idCard2);
-        typeCard3 = checkType(idCard3);
-        typeCard4 = checkType(idCard4);
-    }
-    private void playerDeck() throws IOException {
-        out.println("deckId");
-        idHandCard1=in.readLine();
-        System.out.println(idHandCard1);
-        idHandCard2=in.readLine();
-        System.out.println(idHandCard2);
-        idHandCard3=in.readLine();
-        System.out.println(idHandCard3);
-    }
-    private void checkTypePlayerDeck() throws IOException {
-        typeHandCard1 = checkType(idHandCard1);
-        typeHandCard2 = checkType(idHandCard2);
-        typeHandCard3 = checkType(idHandCard3);
-        in.readLine(); //spazio
-    }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
@@ -941,8 +879,320 @@ public class GUI extends Application {
         this.currentPlayer = currentPlayer;
     }
 }
-
-
 //controller-> metodi x reagire agli eventi-> button
 //initialize implements initializable
 //changescene
+
+
+//
+//@SuppressWarnings("DataFlowIssue")
+//public class HelloApplication extends Application {
+//    private AnchorPane root;
+//    private static ImageView clickedImageView;
+//    private static int angoloSelezionato;
+//
+//    @Override
+//    public void start(Stage stage) {
+//        root = new AnchorPane();
+//        Scene scene = new Scene(root, 800, 600);
+//        stage.setScene(scene);
+//        stage.show();
+//
+//        gameboardScene(stage);
+//    }
+//
+//    public static void main(String[] args) {
+//        launch();
+//    }
+//
+//    public void gameboardScene(Stage stage) {
+//
+//
+//        Image immagineBack = new Image(getClass().getResourceAsStream("/ImmaginiCarte/990796-neutral-backgrounds-3000x1661-for-desktop-2880789718.jpg"));
+//        BackgroundImage backgroundImage = new BackgroundImage(immagineBack,BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,BackgroundSize.DEFAULT);
+//        Background background = new Background(backgroundImage);
+//
+//        //Creo uno scroll pane che conterrà tutto
+//        ScrollPane perScrollare = new ScrollPane();
+//        int dimensioneBoard = 500;
+//
+//        //Creo il TilePane che conterrà uno StackPane e gli piazzo il background
+//        GridPane gameboard = new GridPane(dimensioneBoard,dimensioneBoard);
+//
+//
+//
+//        gameboard.setBackground(background);
+//        gameboard.setHgap(0);
+//        gameboard.setVgap(0);
+//        gameboard.setAlignment(Pos.CENTER);
+//
+//
+//
+//
+//        //Salvo la dimensione della finestra (root) in due variabili
+//        double larghezzaFinestra = root.getWidth();
+//        double altezzaFinestra = root.getHeight();
+//
+//        //Imposto la grandezza del TilePane all'80% della dimensione (iniziale) della finestra
+//        gameboard.setPrefSize(larghezzaFinestra * 0.8, altezzaFinestra * 0.8);
+//
+//        //Creo immagine e ImageView della carta iniziale che dovrò piazzare al centro
+//
+//        Image cartaIniziale = new Image(getClass().getResourceAsStream("/ImmaginiCarte/15.png"));
+//        GridPane immagineDivisa = dividiImmagineEpiazzalaInUnGridPane(cartaIniziale);
+//
+//
+//        //CARTA INIZIALE -> ogni cella del gridpane viene castata a ImageView
+//        ImageView img1 = (ImageView) immagineDivisa.getChildren().get(0);
+//        ImageView img2 = (ImageView) immagineDivisa.getChildren().get(1);
+//        ImageView img3 = (ImageView) immagineDivisa.getChildren().get(2);
+//        ImageView img4 = (ImageView) immagineDivisa.getChildren().get(3);
+//
+//        //Ogni imageView viene resa clickabile
+//        img1.setPickOnBounds(true);
+//        img2.setPickOnBounds(true);
+//        img3.setPickOnBounds(true);
+//        img4.setPickOnBounds(true);
+//
+//
+//
+//        //AGGIUNTA CARTA INIZIALE ogni imageView sopra creata viene aggiunta alla gameboard
+//        gameboard.add(img1,dimensioneBoard/2,dimensioneBoard/2);
+//        gameboard.add(img2,dimensioneBoard/2+1,dimensioneBoard/2);
+//        gameboard.add(img3,dimensioneBoard/2,dimensioneBoard/2+1);
+//        gameboard.add(img4,dimensioneBoard/2+1,dimensioneBoard/2+1);
+//
+//        img1.setOnMouseClicked(event -> {
+//            setClickedImageView(img1);
+//            angoloSelezionato = 1;
+//        });
+//        img2.setOnMouseClicked(event -> {
+//            setClickedImageView(img2);
+//            angoloSelezionato = 2;
+//        });
+//        img3.setOnMouseClicked(event -> {
+//            setClickedImageView(img3);
+//            angoloSelezionato = 3;
+//        });
+//        img4.setOnMouseClicked(event -> {
+//            setClickedImageView(img4);
+//            angoloSelezionato = 4;
+//        });
+//
+////        Print di debugging, non servono ai fini del funzionamento
+////        System.out.println("Coordinata x dell'immagine 1 TL: "+getX(img1));
+////        System.out.println("Coordinata y dell'immagine 1 TL: "+getY(img1));
+////        System.out.println("Coordinata x dell'immagine 2 TR: "+getX(img2));
+////        System.out.println("Coordinata y dell'immagine 2 TR: "+getY(img2));
+////        System.out.println("Coordinata x dell'immagine 3 BL: "+getX(img3));
+////        System.out.println("Coordinata y dell'immagine 3 BL: "+getY(img3));
+////        System.out.println("Coordinata x dell'immagine 4 BR: "+getX(img4));
+////        System.out.println("Coordinata y dell'immagine 4 BR: "+getY(img4));
+//
+//        perScrollare.setContent(gameboard);
+//        BorderPane layout = new BorderPane();
+//        layout.setCenter(perScrollare);
+//
+//        Button playcard = new Button("Play Card");
+//        playcard.setOnAction(e->{
+//            if( angoloSelezionato == 3 ){
+//                piazzaCartaBL(getClickedImageView(), gameboard, 32);}
+//            else if( angoloSelezionato == 4 ){
+//                piazzaCartaBR(getClickedImageView(), gameboard, 32);
+//            }
+//            else if( angoloSelezionato == 1 ){
+//                piazzaCartaTL(getClickedImageView(), gameboard, 32);
+//            }
+//            else if( angoloSelezionato == 2 ){
+//                piazzaCartaTR(getClickedImageView(), gameboard, 32);
+//            }
+//        });
+//
+//        //Piazza il pulsante a sinistra
+//        layout.setRight(playcard);
+//        root.getChildren().add(layout);
+//    }
+//
+//    //Prende un'immagine e crea un gridPane 2x2 che avrà in ogni cella un quarto dell'immagine
+//    public GridPane dividiImmagineEpiazzalaInUnGridPane(Image image){
+//        double larghezzaA = image.getWidth()/2;
+//        double altezzaA = image.getHeight()/2;
+//
+//        int altezza = (int) altezzaA;
+//        int larghezza = (int) larghezzaA;
+//
+//        Image image1 = new WritableImage(image.getPixelReader(),0,0,larghezza,altezza);
+//        Image image2 = new WritableImage(image.getPixelReader(),larghezza,0,larghezza,altezza);
+//        Image image3 = new WritableImage(image.getPixelReader(),0,altezza,larghezza,altezza);
+//        Image image4 = new WritableImage(image.getPixelReader(),larghezza,altezza,larghezza,altezza);
+//
+//        ImageView imageView1 = new ImageView(image1);
+//        ImageView imageView2 = new ImageView(image2);
+//        ImageView imageView3 = new ImageView(image3);
+//        ImageView imageView4 = new ImageView(image4);
+//
+//        imageView1.setFitWidth(100);
+//        imageView1.setPreserveRatio(true);
+//        imageView2.setFitWidth(100);
+//        imageView2.setPreserveRatio(true);
+//        imageView3.setFitWidth(100);
+//        imageView3.setPreserveRatio(true);
+//        imageView4.setFitWidth(100);
+//        imageView4.setPreserveRatio(true);
+//
+//        GridPane gridPane = new GridPane();
+//        gridPane.setPadding(new Insets(0));
+//        gridPane.setHgap(0);
+//        gridPane.setVgap(0);
+//
+//        gridPane.add(imageView1, 0, 0);
+//        gridPane.add(imageView2, 1, 0);
+//        gridPane.add(imageView3, 0, 1);
+//        gridPane.add(imageView4, 1, 1);
+//
+//        imageView1.setPickOnBounds(true);
+//        imageView2.setPickOnBounds(true);
+//        imageView3.setPickOnBounds(true);
+//        imageView4.setPickOnBounds(true);
+//
+//        imageView1.setOnMouseClicked(event -> {
+//            setClickedImageView(imageView1);
+//            angoloSelezionato = 1;
+//        });
+//
+//        imageView2.setOnMouseClicked(event -> {
+//            setClickedImageView(imageView2);
+//            angoloSelezionato = 2;
+//        });
+//
+//        imageView3.setOnMouseClicked(event -> {
+//            setClickedImageView(imageView3);
+//            angoloSelezionato = 3;
+//        });
+//
+//        imageView4.setOnMouseClicked(event -> {
+//            setClickedImageView(imageView4);
+//            angoloSelezionato = 4;
+//        });
+//
+//        return gridPane;
+//    }
+//
+//
+//    public int getX (ImageView img){
+//        return GridPane.getRowIndex(img);
+//    }
+//
+//    public int getY (ImageView img){
+//        return GridPane.getColumnIndex(img);
+//    }
+//
+//    public void piazzaCartaBR(ImageView cartaSuCuiPiazzo, GridPane board, int id){
+//
+//        Image secondaImmagine = new Image(getClass().getResourceAsStream("/ImmaginiCarte/"+id+".png"));
+//
+//        int x = getX(cartaSuCuiPiazzo);
+//        int y = getY(cartaSuCuiPiazzo);
+//
+//        GridPane piazzare = dividiImmagineEpiazzalaInUnGridPane(secondaImmagine);
+//
+//        ImageView im1 = (ImageView) piazzare.getChildren().get(0);
+//        ImageView im2 = (ImageView) piazzare.getChildren().get(1);
+//        ImageView im3 = (ImageView) piazzare.getChildren().get(2);
+//        ImageView im4 = (ImageView) piazzare.getChildren().get(3);
+//
+//        im1.setPickOnBounds(true);
+//        im2.setPickOnBounds(true);
+//        im3.setPickOnBounds(true);
+//        im4.setPickOnBounds(true);
+//
+//        board.add(im1,y,x);
+//        board.add(im2,(y+1),x);
+//        board.add(im3,y,(x+1));
+//        board.add(im4,(y+1),(x+1));
+//    }
+//
+//    public void piazzaCartaBL(ImageView cartaSuCuiPiazzo, GridPane board, int id){
+//
+//        Image secondaImmagine = new Image(getClass().getResourceAsStream("/ImmaginiCarte/"+id+".png"));
+//
+//        int x = getX(cartaSuCuiPiazzo);
+//        int y = getY(cartaSuCuiPiazzo);
+//
+//        GridPane piazzare = dividiImmagineEpiazzalaInUnGridPane(secondaImmagine);
+//
+//        ImageView im1 = (ImageView) piazzare.getChildren().get(0);
+//        ImageView im2 = (ImageView) piazzare.getChildren().get(1);
+//        ImageView im3 = (ImageView) piazzare.getChildren().get(2);
+//        ImageView im4 = (ImageView) piazzare.getChildren().get(3);
+//
+//        im1.setPickOnBounds(true);
+//        im2.setPickOnBounds(true);
+//        im3.setPickOnBounds(true);
+//        im4.setPickOnBounds(true);
+//
+//        board.add(im1,(y-1),(x));
+//        board.add(im2,(y),(x));
+//        board.add(im3,(y-1),(x+1));
+//        board.add(im4,(y),(x+1));
+//    }
+//
+//    public void piazzaCartaTL(ImageView cartaSuCuiPiazzo, GridPane board, int id){
+//
+//        Image secondaImmagine = new Image(getClass().getResourceAsStream("/ImmaginiCarte/"+id+".png"));
+//
+//        int x = getX(cartaSuCuiPiazzo);
+//        int y = getY(cartaSuCuiPiazzo);
+//
+//        GridPane piazzare = dividiImmagineEpiazzalaInUnGridPane(secondaImmagine);
+//
+//        ImageView im1 = (ImageView) piazzare.getChildren().get(0);
+//        ImageView im2 = (ImageView) piazzare.getChildren().get(1);
+//        ImageView im3 = (ImageView) piazzare.getChildren().get(2);
+//        ImageView im4 = (ImageView) piazzare.getChildren().get(3);
+//
+//        im1.setPickOnBounds(true);
+//        im2.setPickOnBounds(true);
+//        im3.setPickOnBounds(true);
+//        im4.setPickOnBounds(true);
+//
+//        board.add(im1,(y-1),(x-1));
+//        board.add(im2,(y),(x-1));
+//        board.add(im3,(y-1),(x));
+//        board.add(im4,(y),(x));
+//    }
+//
+//    public void piazzaCartaTR(ImageView cartaSuCuiPiazzo, GridPane board, int id){
+//
+//        Image secondaImmagine = new Image(getClass().getResourceAsStream("/ImmaginiCarte/"+id+".png"));
+//
+//        int x = getX(cartaSuCuiPiazzo);
+//        int y = getY(cartaSuCuiPiazzo);
+//
+//        GridPane piazzare = dividiImmagineEpiazzalaInUnGridPane(secondaImmagine);
+//
+//        ImageView im1 = (ImageView) piazzare.getChildren().get(0);
+//        ImageView im2 = (ImageView) piazzare.getChildren().get(1);
+//        ImageView im3 = (ImageView) piazzare.getChildren().get(2);
+//        ImageView im4 = (ImageView) piazzare.getChildren().get(3);
+//
+//        im1.setPickOnBounds(true);
+//        im2.setPickOnBounds(true);
+//        im3.setPickOnBounds(true);
+//        im4.setPickOnBounds(true);
+//
+//        board.add(im1,(y),(x-1));
+//        board.add(im2,(y+1),(x-1));
+//        board.add(im3,(y),(x));
+//        board.add(im4,(y+1),(x));
+//    }
+//
+//    public ImageView getClickedImageView() {
+//        return clickedImageView;
+//    }
+//
+//    public void setClickedImageView(ImageView clickedImageView) {
+//        this.clickedImageView = clickedImageView;
+//    }
+
+
