@@ -239,10 +239,9 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println(player.getClientView().getPlayerStringCards().get(1));
         System.out.println(player.getClientView().getPlayerStringCards().get(2));
         System.out.println("------------------------------------------------------------------------------------------------");
-        System.out.println("Which card do you want to play on the board?");
-        System.out.println("1-> first card\n2-> second card\n3-> third card");
         boolean turnedCardAlredy=false;
         do {
+            System.out.println("Which card do you want to play on the board?\n1-> first card\n2-> second card\n3-> third card");
             size = Integer.parseInt(controlInputFromUser(new String[]{"1", "2", "3"}));
             out.println(size - 1); //Carta scelta dal deck del player, sto mandando al server
             messageFromServer = in.readLine();//Gold Card not placeable oppure puoi procedere
@@ -253,13 +252,14 @@ private void waitUntilItsYourTurn() throws IOException {
                 System.out.println("you got: " + messageFromServer);
                 System.out.println("You can:\n1-> choose another card\n2-> turn the card");
                 inputFromClient =controlInputFromUser(new String[]{"1", "2"});
-                if(inputFromClient.equals("2"))
+                if(inputFromClient.equals("2")) {
                     turnedCardAlredy = true;
-                else System.out.println("Which card do you want to play on the board?\n1-> first card\n2-> second card\n3-> third card");
+                    messageFromServer = "puoi procedere";
+                }
                 sendMessageToServer(inputFromClient);
                 in.readLine();//il ritorno della carta girata!
             }
-        }while (!messageFromServer.equals("puoi procedere") && !turnedCardAlredy);
+        }while (!messageFromServer.equals("puoi procedere"));
         player.getClientView().getPlayerStringCards().remove(size-1);   //rimuovo dalla view la carta scelta
 
         //scelta se girare la carta

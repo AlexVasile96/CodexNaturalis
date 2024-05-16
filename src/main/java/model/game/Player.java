@@ -157,6 +157,7 @@ public class Player implements Observable {
         Card selectedCardFromTheDeck = chooseCard(cardIndex);                   //OKAY
         System.out.println("esistenza carta:"+ checkIfTheCardExist(cardIndex)+ "\n(se zero-> non esiste)");                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
         boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
+        if(selectedCardFromTheDeck.isCardBack()) return selectedCardFromTheDeck;
         if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return null;
         return selectedCardFromTheDeck;
     }
@@ -182,7 +183,7 @@ public class Player implements Observable {
             return freeScornerosi(availableCorners, cardPlayerChoose);
         } else {                                                        //CARD CHOSEN ISN'T THE INITIAL CARD
             List<Corner> availableCorners= creatingCornersForNotInitialcard(cardPlayerChoose);
-            List<Corner>corner= creatingCornersForNotInitialcard(cardPlayerChoose);
+            List<Corner> corner= creatingCornersForNotInitialcard(cardPlayerChoose);
             cardChosenIsNotTheInitialcard(availableCorners,corner);
             return freeScornerosi(availableCorners, cardPlayerChoose);
         }
@@ -309,9 +310,7 @@ public class Player implements Observable {
     }
     private boolean isTheCardGold(Card selectedCard)
     {
-        if(!selectedCard.isCardBack())
-            return true;
-        else if (selectedCard instanceof GoldCard )
+        if (selectedCard instanceof GoldCard )
             return board.placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing());
         else return false;
     }
