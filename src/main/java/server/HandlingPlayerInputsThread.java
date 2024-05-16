@@ -280,6 +280,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     //scelta carta dal tuo mazzo
                     int cardChosenFromHisDeck;
                     boolean turnedCardAlredy = false;
+                    StringBuilder forClientView = new StringBuilder();
                     do {
                         cardChosenFromHisDeck = Integer.parseInt(stdIn.readLine());
                         System.out.println("Player chose card number " + cardChosenFromHisDeck);
@@ -298,7 +299,13 @@ public class HandlingPlayerInputsThread implements Runnable {
                                 turnedCardAlredy = true;
                             }
                         }
+
                     }while (!player.checkingTheChosenCardForGoldPurpose(cardChosenFromHisDeck) && !turnedCardAlredy);
+                    //aggiorno la client view
+                    Card chosenCard = player.chooseCard(cardChosenFromHisDeck);
+                    if (chosenCard instanceof GoldCard) {
+                        forClientView.append("Gold Card\n");
+                    }else forClientView.append("Resource Card\n");
 
                     //scelta se girare la carta
                     if(!turnedCardAlredy) {
@@ -306,18 +313,9 @@ public class HandlingPlayerInputsThread implements Runnable {
                         if (messageFromClient.equals("1")) {
                             System.out.println("il player vuole girare la carta");
                             gameController.readCommand("TurnCard", player, cardChosenFromHisDeck, 0, null);
-                        }
-                    }
-
-
-                    //stampa delle carte sulla board
-                    int i=1;
-                    for(Card card : player.getBoard().getCardsOnTheBoardList()){
-                        sendMessageToAllClients("incrementaContatore");
-                        sendMessageToAllClients("->"+i+": "+card.toString());
-                        i++;
-                    }
-                    sendMessageToAllClients("exit");
+                            forClientView.append("(back)");
+                        }else forClientView.append("(front)");
+                    }else forClientView.append("(back)");
 
                     //scelta carta della board su cui piazzare
                     String CardOnTheBoardChosen = stdIn.readLine();
@@ -325,8 +323,11 @@ public class HandlingPlayerInputsThread implements Runnable {
                     System.out.println("Il player ha deciso di giocare la proria carta sulla carta numero " + boardCardChosen);
                     gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
                     cornerChosen = stdIn.readLine();
+                    //
                     System.out.println(cornerChosen);
                     gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
+                    forClientView.append("\n("+ chosenCard.getNode().getCoordY()+ " "+ chosenCard.getNode().getCoordX()+")");
+                    sendMessageToAllClients(String.valueOf(forClientView));
                     messageFromClient = stdIn.readLine();
                     runCommand(messageFromClient, player);
                 }
