@@ -252,12 +252,12 @@ private void waitUntilItsYourTurn() throws IOException {
                 System.out.println("you got: " + messageFromServer);
                 System.out.println("You can:\n1-> choose another card\n2-> turn the card");
                 inputFromClient =controlInputFromUser(new String[]{"1", "2"});
+                sendMessageToServer(inputFromClient);
                 if(inputFromClient.equals("2")) {
                     turnedCardAlredy = true;
                     messageFromServer = "puoi procedere";
+                    in.readLine();//il ritorno della carta girata!
                 }
-                sendMessageToServer(inputFromClient);
-                in.readLine();//il ritorno della carta girata!
             }
         }while (!messageFromServer.equals("puoi procedere"));
         player.getClientView().getPlayerStringCards().remove(size-1);   //rimuovo dalla view la carta scelta
