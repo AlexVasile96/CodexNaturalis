@@ -68,7 +68,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 clientSocket.setSoTimeout(60000);
                 whichplayerAreYou++;
                 String clientSaysHello = stdIn.readLine();
-                System.out.println("Il client ha detto " + clientSaysHello);    //Client says hello
+                System.out.println("Client says " + clientSaysHello);    //Client says hello
                 threadPlayer = loginEachClient();                               //EveryClient has to log in, we save his name information inside threadPLayer
                 handlingTurns(playersList);                                     //Handling turns, first client will be the first player inside the game
                 addingPlayersToTheGame();                                       //Adding players to the current game
@@ -102,7 +102,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 try {
                     clientSocket.close();
                 } catch (IOException ex) {
-                    System.err.println("Errore durante la chiusura del socket del client: " + ex.getMessage());
+                    System.err.println("Error while closing client's socket " + ex.getMessage());
                 }
                 System.out.println("Connection closed with client");
 
