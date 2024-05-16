@@ -269,27 +269,20 @@ private void waitUntilItsYourTurn() throws IOException {
             System.out.println("Please type\n" + "1-> To TURN your card\n" + "2-> To NOT TURN your card");
             inputFromClient = controlInputFromUser(new String[]{"1", "2"});
             sendMessageToServer(inputFromClient);
-            in.readLine();//il ritorno della carta girata!
+            if(inputFromClient.equals("1")) in.readLine();//il ritorno della carta girata!
         }
 
         //carte sulla board
-        System.out.println("Su quale carta della board vuoi andare a piazzare la tua carta?");
-        messageFromServer = in.readLine();  //initial card
-       // int numeroCarte=0;
-        do{
-            /*if(messageFromServer.equals("incrementaContatore")) //numeroCarte++;
-            {
-
-            }*/
-            //else
-             System.out.println(messageFromServer);
-            messageFromServer= in.readLine();
-        }while (!messageFromServer.equals("exit"));
+        System.out.println("Your cards on the board: ");
+        for (String s : player.getClientView().getCardsOnTheBoard()) {
+            System.out.println(s);
+        }
+        System.out.println("\nWhich card on the board do you want to place your card on?");
 
         //controllo input
-
-        String[] validInputs = new String[player.getClientView().getNumOfCardsOnTheBoard()]; //se c'è solo la carta iniziale è pari ad 1
-        for (int j=0; j<player.getClientView().getNumOfCardsOnTheBoard(); j++)
+        int numeroCarte=player.getClientView().getNumOfCardsOnTheBoard();
+        String[] validInputs = new String[numeroCarte]; //se c'è solo la carta iniziale è pari ad 1
+        for (int j=0; j<numeroCarte; j++)
             validInputs[j] = String.valueOf(j+1);
         size= Integer.parseInt(controlInputFromUser(validInputs));
         out.println(size-1);
@@ -313,7 +306,6 @@ private void waitUntilItsYourTurn() throws IOException {
             check = false;
             messageFromServer= in.readLine();
         } while(!messageFromServer.equals("end"));
-        System.out.println();
         System.out.print("Choose the corner you want to place the card on: ");
         if(size<4){
             angoli = new String[size];
@@ -325,8 +317,12 @@ private void waitUntilItsYourTurn() throws IOException {
         else inputFromClient = controlInputFromUser(validInputs);
         out.println(inputFromClient);
 
-        String ultimo= in.readLine();
-        System.out.println(ultimo);
+        System.out.println(in.readLine()); //carta placed
+        String typeCard = in.readLine();
+        String isBack = in.readLine();
+        String cordinateTl = in.readLine();
+        player.getClientView().addCardOnTheBoard((numeroCarte+1)+"->"+typeCard+": "+cordinateTl+" "+ isBack);
+
         drawCard();
         status();
         player.getClientView().setNumOfCardsOnTheBoard(player.getClientView().getNumOfCardsOnTheBoard()+1);
@@ -577,23 +573,17 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println("server says: " + firstCard);
         System.out.println(FrontalCorners);
         System.out.println(BackCorners);
-        String integer=null;
         int size;
         System.out.println("Do you want to turn your card?");
-        while(!hasTheCardAlreadyBeenTurn){
-        System.out.println("Please type 1 if you want to turn your card\nPlease type 2 if you don't want to turn your card");
-        integer= stdin.readLine();
-        if(integer.equals("1")|| integer.equals("2")){
-            System.out.println("Okay!");
-            hasTheCardAlreadyBeenTurn=true;
-         }
-        else{
-            System.out.println("You didn't type correctly!");
-            }
-        }
-        size = Integer.parseInt(integer);
+        System.out.println("1-> To turn your card\n2->to NOT turn your card");
+        size = Integer.parseInt(controlInputFromUser(new String[]{"1", "2"}));
+        String isBack;
+        if (size==1) isBack= "(back)";
+        else isBack = "(front)";
         out.println(size-1);
         System.out.println("Initial Card correctly placed!");
+        //aggiorno la view
+        player.getClientView().addCardOnTheBoard("1->Initial Card: (24 24) " + isBack);
     }
 
     private synchronized void assigningSecretCard() throws IOException {
@@ -622,7 +612,7 @@ private void waitUntilItsYourTurn() throws IOException {
     private synchronized void loginPlayer(Player player) throws IOException, InterruptedException { //LOGIN METHOD
         String serverResponse = in.readLine();
         System.out.println("Server says: " + serverResponse); //Inserisci il tuo nome per favore
-        System.out.println(">");
+        System.out.print(">");
         String loginName = stdin.readLine();
         sendMessageToServer(loginName);
         String correctLogin = in.readLine();
