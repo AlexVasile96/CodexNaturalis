@@ -1,9 +1,5 @@
 package network.client.gui;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -26,7 +22,7 @@ public class InitCardScene {
 
     private String id;
 
-    public void chooseInitCard(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) throws IOException {
+    public Scene chooseInitCard(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) throws IOException {
         Pane root = new Pane();
         Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
         BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
@@ -40,12 +36,15 @@ public class InitCardScene {
         initText.setFill(Color.WHITE); // Cambia il colore del testo
         initText.setFont(Font.font("Arial", FontWeight.BOLD, 20)); // Cambia il font e la dimensione del testo
 
+        System.out.println("1");
         System.out.println(in.readLine());
         System.out.println(in.readLine());
         System.out.println(in.readLine());
         id = in.readLine();
         System.out.println(id);
-        String pathInit = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
+        System.out.println("Ho letto tutte e 4 le cards");
+        String pathInit = "/ImmaginiCodex/CarteFront/Init/" +id + ".png";
+        System.out.println(pathInit);
         Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathInit)));
         ImageView initCard = new ImageView(initImage);
 
@@ -118,6 +117,7 @@ public class InitCardScene {
                 throw new RuntimeException(ex);
             }
         });
+        return initCardScene;
     }
 
 

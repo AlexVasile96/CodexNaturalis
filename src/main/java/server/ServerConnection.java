@@ -5,7 +5,7 @@ import view.ClientView;
 
 import java.io.*;
 import java.net.Socket;
-
+import java.net.SocketException;
 
 
 public class ServerConnection implements Runnable {
@@ -19,7 +19,7 @@ public class ServerConnection implements Runnable {
     private String currentPlayer= null;
     private boolean isConnectionClosed= false;
     private boolean isTheWhileActive=false;
-
+    private boolean hasTheServerCrashed=false;
 
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
@@ -35,6 +35,7 @@ public class ServerConnection implements Runnable {
     public void run() {
     String command;
         try {
+            socket.setSoTimeout(5000); // Imposta il timeout a 5 secondi
             System.out.println("Welcome! I'm the server, please type anything to start the conversation!\n");
             while (!isTheWhileActive) {
                 try {                                                       //il client type a message
@@ -61,19 +62,38 @@ public class ServerConnection implements Runnable {
                         }
                     }
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Timeout: server crashed");
+                    hasTheServerCrashed=true;
+                    isTheWhileActive=true;
                 }
             }
-            try {
-                exitFromGame();
+            if(hasTheServerCrashed)
+            {
                 in.close();
                 out.close();
                 socket.close();
                 System.out.println("Connection with server has been closed, thank you for playing Codex!");
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+            else{
+                try {
+                        exitFromGame();
+                        in.close();
+                        out.close();
+                        socket.close();
+                        System.out.println("Connection with server has been closed, thank you for playing Codex!");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+            }
+
         } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (SocketException e) {
+            System.out.println("Timeout: il server non ha risposto entro 5 secondi.");
+            // Gestire la chiusura della connessione o altre azioni necessarie
+            // Chiudi la socket e esci dal thread, se necessario
+            isTheWhileActive = true; // Uscire dal ciclo principale
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 }

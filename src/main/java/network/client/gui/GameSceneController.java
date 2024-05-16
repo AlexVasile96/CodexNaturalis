@@ -25,14 +25,13 @@ public class GameSceneController {
     private AnchorPane root=new AnchorPane();
     private static ImageView clickedImageView;
     private static int selectedCorner;
-
+    private static volatile boolean isFirstThread = true;
     //PRE ALEX
     private Stage primaryStage;
     private PrintWriter out;
     private Socket socket;
     private BufferedReader in;
     private int cardSelected;
-    private Background background = null;
     private String pathResourceDeck = null;
     private String pathGoldDeck = null;
     private ImageView topCardResourceDeckView = null;
@@ -51,14 +50,7 @@ public class GameSceneController {
     private ImageView wellCard2View = null;
     private ImageView wellCard3View = null;
     private ImageView wellCard4View = null;
-    private Image handCard1 = null;
-    private Image handCard2 = null;
-    private Image handCard3 = null;
 
-    private ImageView handCard1View = null;
-    private ImageView handCard2View = null;
-    private ImageView handCard3View = null;
-    private String currentPlayerNickname = null;
     private String idCard1 = null;
     private String idCard2 = null;
     private String idCard3 = null;
@@ -111,27 +103,31 @@ public class GameSceneController {
 
     private Player currentPlayer = null;
     Controller controller = new Controller(in, out);
-
+    private String currentPlayerNickname;
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) throws IOException {
         this.primaryStage = primaryStage;
         this.out = new PrintWriter(socket.getOutputStream(), true);
         this.socket = socket;
         this.in = in;
+        this.currentPlayerNickname = in.readLine();
     }
 
     public void updateFirst() throws IOException {
-        currentPlayerNickname = in.readLine();
-        firstWellCard();
-        secondWellCard();
-        thirdWellCard();
-        fourthWellCard();
-        checkTypeWellCards();
-        playerDeck();
-        checkTypePlayerDeck();
-        updatingResourceAndGoldDeck();
-        //System.out.println(in.readLine());
+        //synchronized (GameSceneController.class) {
+            //if (isFirstThread) {
 
+                firstWellCard();
+                secondWellCard();
+                thirdWellCard();
+                fourthWellCard();
+                checkTypeWellCards();
+                playerDeck();
+                checkTypePlayerDeck();
+                updatingResourceAndGoldDeck();
+                isFirstThread = false;
+            //}
+       // }
     }
 
     public void startGame(String initCardId) {
@@ -155,18 +151,18 @@ public class GameSceneController {
         String pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
         String pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
 
-        handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
-        handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
-        handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
+        Image handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
+        Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
+        Image handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
 
-        handCard1View = new ImageView(handCard1);
+        ImageView handCard1View = new ImageView(handCard1);
         setWidthAndHeight(handCard1View);
 
-        handCard2View = new ImageView(handCard2);
+        ImageView handCard2View = new ImageView(handCard2);
         handCard2View.setFitWidth(widthWellCards);
         handCard2View.setFitHeight(heightWellCards);
 
-        handCard3View = new ImageView(handCard3);
+        ImageView handCard3View = new ImageView(handCard3);
         handCard3View.setFitWidth(widthWellCards);
         handCard3View.setFitHeight(heightWellCards);
         //Creo uno scroll pane che conterrà tutto
@@ -510,7 +506,7 @@ public class GameSceneController {
         Image gameBackgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage backgroundGameImage = new BackgroundImage(gameBackgroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        background = new Background(backgroundGameImage);
+        Background background = new Background(backgroundGameImage);
         root.setBackground(background);
     }
 

@@ -70,19 +70,22 @@ public class SecretCardScene {
                 vBox.layoutXProperty().bind(chooseSecretObjectiveScene.widthProperty().subtract(vBox.widthProperty()).divide(2));
                 vBox.layoutYProperty().bind(chooseSecretObjectiveScene.heightProperty().subtract(vBox.heightProperty()).divide(2));
 
-                primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
+                /*primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
                     root.setPrefWidth((double) newVal); // Ridimensiona il VBox orizzontalmente.
                 });
                 primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
                     root.setPrefHeight((double) newVal); // Ridimensiona il VBox verticalmente.
-                });
+                });*/
 
                 obiettivo1.setOnMouseClicked(e -> {
                     try {
                         out.println(1);
                         chosenObj = obiettivo1;
+                        System.out.println("Choose first card");
                         InitCardScene initCardSceneHandler = new InitCardScene();
-                        initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in);
+                        //initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in);
+                        primaryStage.setScene(initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in));
+
                     } catch (Exception action) {
                         action.printStackTrace();
                     }
@@ -91,8 +94,10 @@ public class SecretCardScene {
                     try {
                         out.println(2);
                         chosenObj = obiettivo2;
+                        System.out.println("Choose second card");
                         InitCardScene initCardSceneHandler = new InitCardScene();
-                        initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in);
+                        //initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in);
+                        primaryStage.setScene(initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in));
                     } catch (Exception action) {
                         action.printStackTrace();
                     }

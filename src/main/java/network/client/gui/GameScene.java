@@ -45,7 +45,6 @@ public class GameScene {
         controller.initData(primaryStage, out, socket,in);
         controller.updateFirst();
         controller.startGame(initCardId);
-
     }
 
 

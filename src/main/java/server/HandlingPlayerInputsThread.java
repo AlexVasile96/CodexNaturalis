@@ -10,9 +10,10 @@ import model.card.GoldCard;
 import model.card.InitialCard;
 import model.card.ObjectiveCard;
 import model.game.*;
-
+import java.net.SocketException;
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -38,6 +39,8 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static Player winningPlayer=new Player(null,0, Dot.BLACK, null);
     private final CountDownLatch sizeLatch = new CountDownLatch(1);
 
+
+
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException { //Costructor
         this.clientSocket = socket;
         stdIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -62,6 +65,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         synchronized (this) {
             try {
                 //loadPlayerDataFromDisk();
+                clientSocket.setSoTimeout(60000);
                 whichplayerAreYou++;
                 String clientSaysHello = stdIn.readLine();
                 System.out.println("Il client ha detto " + clientSaysHello);    //Client says hello
@@ -110,8 +114,17 @@ public class HandlingPlayerInputsThread implements Runnable {
                     clientSocket.close();
                 }
 
+            }catch (SocketTimeoutException e) {
+                System.out.println("Timeout: client crashed.");
+                try {
+                    clientSocket.close(); // Chiude la connessione con il client
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                clients.remove(this); // Rimuove il client dalla lista dei client gestiti dal server
+
             } catch (IOException e) {
-                System.out.println("Connection lost with client number "+ whichplayerAreYou );
+                System.out.println("Connection lost with client number ");
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -388,8 +401,8 @@ public class HandlingPlayerInputsThread implements Runnable {
     private void assignInitialCard() throws IOException {
         InitialCard initialCard= game.getInitialCardDeck().firstCardInitialGame();
         int initCardId= initialCard.getId();                                //For gui purpose
-        sendMessageToClient("This is your first card " +initialCard ); //Sending the card
-        sendMessageToClient(String.valueOf(initCardId)); //Sending the id (for gui purpose)
+        sendMessageToClient("This is your first card " +initialCard );      //Sending the card
+        sendMessageToClient(String.valueOf(initCardId));                    //Sending the id (for gui purpose)
         String integerString = stdIn.readLine();
         int size = Integer.parseInt(integerString);
         System.out.println(size);
@@ -405,7 +418,6 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("Initial Card correctly placed");
         }
         threadPlayer.getBoard().printBoard();
-
     }
 
 
