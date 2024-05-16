@@ -38,7 +38,7 @@ public class GameController {
     private static final String SAVE_FILE_PATH = "src/main/resources/saveplayers.json";
     private static Player winningPlayer=null;
     private boolean areAllPlayersLogged=false;
-    private int currentNumsOfPlayers=1;
+    private int currentNumsOfPlayers=0;
     private CountDownLatch numbgames = new CountDownLatch(0);
 
     //CONSTRUCTORS
@@ -104,11 +104,11 @@ public class GameController {
         }
         players.put(username, userOut);
         //mettere currentNumsOfPlayers = 0 prima di reintegrare il codice
-        /*if(getCurrentNumsOfPlayers()==0)
+        if(getCurrentNumsOfPlayers()==0)
         {
             setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+2);
         }
-        else*/  setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+1);
+        else  setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+1);
 
          }
 

@@ -15,7 +15,7 @@
       </RadioButton>
       <RadioButton fx:id="3" layoutX="261.0" layoutY="60.0" mnemonicParsing="false" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold" text="3 Players" toggleGroup="$numOfPlayersGroup" />
       <RadioButton fx:id="4" layoutX="468.0" layoutY="60.0" mnemonicParsing="false" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold" text="4 Players" toggleGroup="$numOfPlayersGroup" />
-      <Button layoutX="261.0" layoutY="245.0" mnemonicParsing="false" onAction="#goToLobbyClicked" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold" text="Go to lobby" />
+      <Button fx:id="button" layoutX="261.0" layoutY="245.0" mnemonicParsing="false" onAction="#goToLobbyClicked" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold" text="Go to lobby" />
       <Label fx:id="testNumbers" layoutX="286.0" layoutY="304.0" style="-fx-text-fill: white; -fx-font-family: 'Arial Bold Italic'; -fx-font-size: 17; -fx-opacity: 1.0; -fx-font-weight: bold" text=" " />
    </children>
 </Pane>

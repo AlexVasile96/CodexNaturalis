@@ -1,10 +1,7 @@
 package network.client.gui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -24,8 +21,8 @@ public class ChooseNumOfPlayersController {
     private ToggleGroup numOfPlayersGroup;
     @FXML
     public Label testNumbers;
-
-
+    @FXML
+    Button button;
     private int selectedNumOfPlayers;
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) {
@@ -33,6 +30,23 @@ public class ChooseNumOfPlayersController {
         this.out = out;
         this.socket=socket;
         this.in = in;
+    }
+
+    @FXML
+    public void initialize() {
+        // Disabilita il pulsante di login all'avvio
+        button.setDisable(true);
+
+        numOfPlayersGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            checkFields();
+        });
+    }
+
+    private void checkFields() {
+        Toggle numOfPlayers = numOfPlayersGroup.getSelectedToggle();
+
+        // Abilita il pulsante di login solo se entrambi i campi sono compilati
+        button.setDisable(numOfPlayers == null);
     }
 
     @FXML

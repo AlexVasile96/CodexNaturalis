@@ -26,7 +26,7 @@ public class LoginScene {
         BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
         root.setBackground(background);
-        Scene loginScene = new Scene(root, 800, 600);
+        Scene loginScene = new Scene(root, 1111, 600);
         primaryStage.setScene(loginScene);
     }
 }

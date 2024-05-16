@@ -2,6 +2,7 @@ package network.client.gui;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -39,22 +40,20 @@ public class SecretCardScene {
                 ImageView obiettivo1 = new ImageView(objImage1);
                 ImageView obiettivo2 = new ImageView(objImage2);
 
-                System.out.println("CIAO SIAMO QUA");
-
                 Pane root = new Pane();
                 Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
                 BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
                 BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
                 Background background = new Background(backgroundImage);
                 root.setBackground(background);
+
                 VBox vBox = new VBox();
+                vBox.setSpacing(20); // Aggiunge spazio tra gli elementi
+                vBox.setAlignment(Pos.CENTER);
+
                 Text text = new Text("Choose your secret objective card");
-                text.setLayoutX(34);
-                text.setLayoutY(31);
-                text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-                text.setStrokeWidth(0);
-                text.setFill(Color.WHITE);
-                text.setFont(Font.font("Arial", FontWeight.BOLD, 17));
+                text.setFill(Color.WHITE); // Cambia il colore del testo
+                text.setFont(Font.font("Arial", FontWeight.BOLD, 17)); // Cambia il font e la dimensione del testo
 
                 obiettivo1.setFitHeight(120);
                 obiettivo2.setFitHeight(120);
@@ -63,9 +62,20 @@ public class SecretCardScene {
 
                 vBox.getChildren().addAll(text, obiettivo1, obiettivo2);
                 root.getChildren().addAll(vBox);
+
                 Scene chooseSecretObjectiveScene = new Scene(root, 800, 600);
                 primaryStage.setScene(chooseSecretObjectiveScene);
 
+                // Centra la radice
+                vBox.layoutXProperty().bind(chooseSecretObjectiveScene.widthProperty().subtract(vBox.widthProperty()).divide(2));
+                vBox.layoutYProperty().bind(chooseSecretObjectiveScene.heightProperty().subtract(vBox.heightProperty()).divide(2));
+
+                primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
+                    root.setPrefWidth((double) newVal); // Ridimensiona il VBox orizzontalmente.
+                });
+                primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
+                    root.setPrefHeight((double) newVal); // Ridimensiona il VBox verticalmente.
+                });
 
                 obiettivo1.setOnMouseClicked(e -> {
                     try {
@@ -87,10 +97,10 @@ public class SecretCardScene {
                         action.printStackTrace();
                     }
                 });
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-
     }
+
 }

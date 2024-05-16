@@ -1,6 +1,8 @@
 package network.client.gui;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -25,15 +29,17 @@ public class InitCardScene {
     public void chooseInitCard(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) throws IOException {
         Pane root = new Pane();
         Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
-        root.setBackground(background);
+        BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        root.setBackground(new Background(backgroundImage));
 
         VBox vbox = new VBox();
-        HBox hbox = new HBox();
+        vbox.setSpacing(20); // Aggiunge spazio tra gli elementi
+        vbox.setAlignment(Pos.CENTER);
 
         Text initText = new Text("YOUR INIT CARD");
+        initText.setFill(Color.WHITE); // Cambia il colore del testo
+        initText.setFont(Font.font("Arial", FontWeight.BOLD, 20)); // Cambia il font e la dimensione del testo
+
         System.out.println(in.readLine());
         System.out.println(in.readLine());
         System.out.println(in.readLine());
@@ -47,9 +53,15 @@ public class InitCardScene {
         initCard.setFitHeight(120);
 
         Button turnBack = new Button("Turn card to back");
+        turnBack.setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-font-weight: bold;"); // Stile CSS per il pulsante
         Button turnFront = new Button("Turn card to front");
+        turnFront.setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-font-weight: bold;"); // Stile CSS per il pulsante
         Button placeCard = new Button("Place the init card on the board");
+        placeCard.setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-font-weight: bold;"); // Stile CSS per il pulsante
 
+        HBox hbox = new HBox();
+        hbox.setSpacing(20);
+        hbox.setAlignment(Pos.CENTER);
         hbox.getChildren().addAll(turnFront, turnBack);
 
         vbox.getChildren().addAll(initText, initCard, hbox, placeCard);
@@ -59,35 +71,44 @@ public class InitCardScene {
         Scene initCardScene = new Scene(root, 800, 600);
         primaryStage.setScene(initCardScene);
 
-        turnBack.setOnMouseClicked(e->{
-            int idToInt= Integer.parseInt(id);
-            isFront=0;
-            if(idToInt>=81 && idToInt<=86) //InitCard
+        // Centra la radice
+        vbox.layoutXProperty().bind(initCardScene.widthProperty().subtract(vbox.widthProperty()).divide(2));
+        vbox.layoutYProperty().bind(initCardScene.heightProperty().subtract(vbox.heightProperty()).divide(2));
+
+        primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
+            root.setPrefWidth((double) newVal); // Ridimensiona il VBox orizzontalmente.
+        });
+        primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
+            root.setPrefHeight((double) newVal); // Ridimensiona il VBox verticalmente.
+        });
+
+        turnBack.setOnMouseClicked(e -> {
+            int idToInt = Integer.parseInt(id);
+            isFront = 0;
+            if (idToInt >= 81 && idToInt <= 86) //InitCard
             {
                 String pathFlipped = "/ImmaginiCodex/CarteBack/Init/" + id + ".png";
                 Image initImageBack = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
                 initCard.setImage(initImageBack);
-
             }
         });
 
-        turnFront.setOnMouseClicked(e->{
-            int idToInt= Integer.parseInt(id);
-            isFront=1;
-            if(idToInt>=81 && idToInt<=86) //InitCard
+        turnFront.setOnMouseClicked(e -> {
+            int idToInt = Integer.parseInt(id);
+            isFront = 1;
+            if (idToInt >= 81 && idToInt <= 86) //InitCard
             {
                 String pathFlipped = "/ImmaginiCodex/CarteFront/Init/" + id + ".png";
                 Image initImageFront = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
                 initCard.setImage(initImageFront);
-
             }
         });
 
-        placeCard.setOnMouseClicked(e->{
+        placeCard.setOnMouseClicked(e -> {
             out.println(isFront);
-            GameScene gameScene= null;
+            GameScene gameScene = null;
             try {
-                gameScene = new GameScene(primaryStage, out, socket, in,id);
+                gameScene = new GameScene(primaryStage, out, socket, in, id);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -98,4 +119,6 @@ public class InitCardScene {
             }
         });
     }
+
+
 }
