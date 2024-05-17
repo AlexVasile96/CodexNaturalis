@@ -31,6 +31,8 @@ public class GameScene {
     private static BufferedReader in;
     private String initCardId;
     private ClientView clientView;
+    private String currentPlayernickname= null;
+
     public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id, ClientView clientView) throws IOException {
         this.primaryStage = primaryStage;
         this.out = new PrintWriter(socket.getOutputStream(), true);
@@ -39,13 +41,16 @@ public class GameScene {
         this.initCardId=id;
         this.clientView=clientView;
         System.out.println(initCardId); //debugging
+        this.currentPlayernickname=in.readLine();
     }
 
     public void game() throws IOException {
 
         GameSceneController controller = new GameSceneController();
-        controller.initData(primaryStage, out, socket,in, clientView);
-        //controller.updateFirst();
+        controller.initData(primaryStage, out, socket,in, clientView, currentPlayernickname);
+        if(currentPlayernickname.equals(clientView.getUserName())) {
+            controller.updateFirst();
+        }
         controller.startGame(initCardId);
     }
 

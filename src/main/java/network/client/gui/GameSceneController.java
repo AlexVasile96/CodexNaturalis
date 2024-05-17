@@ -107,13 +107,13 @@ public class GameSceneController {
     private String currentPlayerNickname;
     private ClientView clientView;
 
-    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) throws IOException {
+    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
         this.primaryStage = primaryStage;
         this.out = new PrintWriter(socket.getOutputStream(), true);
         this.socket = socket;
         this.in = in;
-        this.currentPlayerNickname = in.readLine();
-        System.out.println(currentPlayerNickname); //salvato il nome del current player
+        this.currentPlayerNickname = currentPlayerNickname;
+        System.out.println("Current Player nickname " + currentPlayerNickname); //salvato il nome del current player
         this.clientView=clientView;
 
     }
@@ -124,8 +124,8 @@ public class GameSceneController {
 
 
     public void updateFirst() throws IOException {
-        //synchronized (GameSceneController.class) {
-            //if (isFirstThread) {
+        synchronized (GameSceneController.class) {
+            if (clientView.getUserName().equals(currentPlayerNickname)) {
                 firstWellCard();
                 secondWellCard();
                 thirdWellCard();
@@ -134,9 +134,8 @@ public class GameSceneController {
                 playerDeck();
                 checkTypePlayerDeck();
                 updatingResourceAndGoldDeck();
-                isFirstThread = false;
-            //}
-       // }
+            }
+        }
     }
 
     public void startGame(String initCardId) {

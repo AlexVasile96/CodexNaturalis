@@ -65,7 +65,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         synchronized (this) {
             try {
                 //loadPlayerDataFromDisk();
-                clientSocket.setSoTimeout(60000);
+                //clientSocket.setSoTimeout(60000);
                 whichplayerAreYou++;
                 String clientSaysHello = stdIn.readLine();
                 System.out.println("Client says " + clientSaysHello);    //Client says hello

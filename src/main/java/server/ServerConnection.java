@@ -35,7 +35,7 @@ public class ServerConnection implements Runnable {
     public void run() {
     String command;
         try {
-            socket.setSoTimeout(5000); // Imposta il timeout a 5 secondi
+            //socket.setSoTimeout(5000); // Imposta il timeout a 5 secondi
             System.out.println("Welcome! I'm the server, please type anything to start the conversation!\n");
             while (!isTheWhileActive) {
                 try {                                                       //il client type a message
