@@ -81,8 +81,6 @@ public class Command { //Command Client sends to Server
             case "endTurn":
                 game.runEndTurn(player);
                 return "fine turno";
-            case "actions": //finito
-                return "Hai selezionato actions";
             case "help":{ //finito
                 System.out.println("Sono entrato in help");
                 return "hai chiesto aiuto";
