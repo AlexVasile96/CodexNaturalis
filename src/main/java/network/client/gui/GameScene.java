@@ -55,7 +55,7 @@ public class GameScene {
             out.println("SETUPFINISHED");
             System.out.println(in.readLine());
         }
-        System.out.println("Starting game for client");
+        System.out.println("Starting game for client: ");
         controller.startGame(initCardId);
     }
 }

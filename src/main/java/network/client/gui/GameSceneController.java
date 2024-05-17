@@ -274,13 +274,13 @@ public class GameSceneController {
         gridPaneForWellCards.setVgap(4.0);
         gridPaneForWellCards.setHgap(4.0);
         gridPaneForWellCards.setPadding(padding);
-        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard1View(), 0, 0);
-        System.out.println(SharedObjectsInGui.getWellCard1View());
-        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard2View(), 0, 1);
-        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard3View(), 1, 0);
-        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard4View(), 1, 1);
-        gridPaneForWellCards.add(wellText, 0, 2);
-        gridPaneForWellCards.add(wellText2, 1, 2);
+//        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard1View(), 0, 0);
+//        System.out.println(SharedObjectsInGui.getWellCard1View());
+//        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard2View(), 0, 1);
+//        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard3View(), 1, 0);
+//        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard4View(), 1, 1);
+//        gridPaneForWellCards.add(wellText, 0, 2);
+//        gridPaneForWellCards.add(wellText2, 1, 2);
 
 
         HBox decks = new HBox();
@@ -290,7 +290,7 @@ public class GameSceneController {
 
         decks.setSpacing(4.0);
         decks.setPadding(paddingDecks);
-        decks.getChildren().addAll(SharedObjectsInGui.getTopCardResourceDeckView(), SharedObjectsInGui.getTopCardGoldDeckView());
+        //decks.getChildren().addAll(SharedObjectsInGui.getTopCardResourceDeckView(), SharedObjectsInGui.getTopCardGoldDeckView());
 
         specificSeedsPane = new Pane();
         specificSeedsText = new Text("Your specific Seeds are: ");
