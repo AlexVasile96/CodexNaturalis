@@ -79,7 +79,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
                 assigningSecretCard();                                            //Each thread will assign the secret card to the player
                 assignInitialCard();                                              //Each client places his first card
-
                 for (Player player : playersList) {
                     game.updateSingleClientView(player);                          //Updating each player ClientView
                     System.out.println(player.getClientView());
@@ -105,14 +104,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     System.err.println("Error while closing client's socket " + ex.getMessage());
                 }
                 System.out.println("Connection closed with client");
-
-                if(gameController.getSize()==0)
-                {
-                    System.out.println("All players disconnected, thank you for playing Codex!");
-                    stdIn.close();
-                    out.close();
-                    clientSocket.close();
-                }
+                checkIfTheGameControllerIsEmpty();
 
             }catch (SocketTimeoutException e) {
                 System.out.println("Timeout: client crashed.");
@@ -125,6 +117,11 @@ public class HandlingPlayerInputsThread implements Runnable {
 
             } catch (IOException e) {
                 System.out.println("Connection lost with client");
+                try {
+                    checkIfTheGameControllerIsEmpty();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -454,6 +451,15 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     public void sendMessageToClient(String message) {
         out.println(message);
+    }
+    public void checkIfTheGameControllerIsEmpty() throws IOException {
+        if(gameController.getSize()==0)
+        {
+            System.out.println("All players disconnected, thank you for playing Codex!");
+            stdIn.close();
+            out.close();
+            clientSocket.close();
+        }
     }
 
 
