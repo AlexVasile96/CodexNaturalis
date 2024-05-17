@@ -116,7 +116,6 @@ public class GameSceneController {
     public void updateFirst() throws IOException {
         //synchronized (GameSceneController.class) {
             //if (isFirstThread) {
-
                 firstWellCard();
                 secondWellCard();
                 thirdWellCard();
@@ -131,41 +130,41 @@ public class GameSceneController {
     }
 
     public void startGame(String initCardId) {
-        creatingPathForGameMethod();
-        topCardResourceDeck = createNewPathForImages(pathResourceDeck); //Resource Deck Back Image
-        topCardGoldDeck = createNewPathForImages(pathGoldDeck);
-        creatingDeckAndGoldDeckView();
-        //Handling well creation
-        creatingWell();
-        creatingImagesForTheWell();
-        creatingImagesViewForTheWell();
-        settingWellOnMouseClickedEvent();
-        settingDecksOnMouseClickedEvent();
+//        creatingPathForGameMethod();
+//        topCardResourceDeck = createNewPathForImages(pathResourceDeck); //Resource Deck Back Image
+//        topCardGoldDeck = createNewPathForImages(pathGoldDeck);
+//        creatingDeckAndGoldDeckView();
+//        //Handling well creation
+//        creatingWell();
+//        creatingImagesForTheWell();
+//        creatingImagesViewForTheWell();
+//        settingWellOnMouseClickedEvent();
+//        settingDecksOnMouseClickedEvent();
 
         //Setting background
         Image backGroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
         BackgroundImage backgroundImage = new BackgroundImage(backGroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
 
-        String pathHandCard1 = "/ImmaginiCodex/CarteFront/" + typeHandCard1 + "/" + idHandCard1 + ".png";
-        String pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
-        String pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
+//        String pathHandCard1 = "/ImmaginiCodex/CarteFront/" + typeHandCard1 + "/" + idHandCard1 + ".png";
+//        String pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
+//        String pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
+//
+//        Image handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
+//        Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
+//        Image handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
 
-        Image handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
-        Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
-        Image handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
-
-        ImageView handCard1View = new ImageView(handCard1);
-        setWidthAndHeight(handCard1View);
-
-        ImageView handCard2View = new ImageView(handCard2);
-        handCard2View.setFitWidth(widthWellCards);
-        handCard2View.setFitHeight(heightWellCards);
-
-        ImageView handCard3View = new ImageView(handCard3);
-        handCard3View.setFitWidth(widthWellCards);
-        handCard3View.setFitHeight(heightWellCards);
-        //Creo uno scroll pane che conterrà tutto
+//        ImageView handCard1View = new ImageView(handCard1);
+//        setWidthAndHeight(handCard1View);
+//
+//        ImageView handCard2View = new ImageView(handCard2);
+//        handCard2View.setFitWidth(widthWellCards);
+//        handCard2View.setFitHeight(heightWellCards);
+//
+//        ImageView handCard3View = new ImageView(handCard3);
+//        handCard3View.setFitWidth(widthWellCards);
+//        handCard3View.setFitHeight(heightWellCards);
+//        //Creo uno scroll pane che conterrà tutto
         ScrollPane cardsOntheBoardScrollPane = new ScrollPane();
         int boardDimension = 500;
 
