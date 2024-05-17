@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import view.ClientView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,11 +26,11 @@ public class SecretCardScene {
     @FXML
     public ImageView chosenObj;
 
-    public void chooseSecretCard(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) {
+    public void chooseSecretCard(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) {
         Platform.runLater(() -> {
             try {
-                System.out.println(in.readLine()); //Printing first secret card
-                System.out.println(in.readLine()); //printing second secret card
+                String firstObjectiveCard= in.readLine();
+                String secondObjectoveCard= in.readLine();
                 System.out.println("Secret card printed");
                 String firstCardId = in.readLine();
                 String secondCardId = in.readLine();
@@ -83,8 +84,8 @@ public class SecretCardScene {
                         chosenObj = obiettivo1;
                         System.out.println("Choose first card");
                         InitCardScene initCardSceneHandler = new InitCardScene();
-                        //initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in);
-                        primaryStage.setScene(initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in));
+                        clientView.setObjectiveCard(firstObjectiveCard);
+                        primaryStage.setScene(initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in, clientView));
 
                     } catch (Exception action) {
                         action.printStackTrace();
@@ -96,8 +97,8 @@ public class SecretCardScene {
                         chosenObj = obiettivo2;
                         System.out.println("Choose second card");
                         InitCardScene initCardSceneHandler = new InitCardScene();
-                        //initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in);
-                        primaryStage.setScene(initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in));
+                        clientView.setObjectiveCard(secondObjectoveCard);
+                        primaryStage.setScene(initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in, clientView));
                     } catch (Exception action) {
                         action.printStackTrace();
                     }

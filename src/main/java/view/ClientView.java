@@ -21,6 +21,7 @@ public class ClientView {
     private int index;
     private ArrayList<Card> playerCards;
     private ObjectiveCard secretChosenCard;
+    private String objectiveCard;
     private int numOfCardsOnTheBoard=1;
     private List<String> cardsOnTheBoard= new ArrayList<>();
 
@@ -148,5 +149,11 @@ public class ClientView {
         this.cardsOnTheBoard.add(card);
     }
 
+    public String getObjectiveCard() {
+        return objectiveCard;
+    }
 
+    public void setObjectiveCard(String objectiveCard) {
+        this.objectiveCard = objectiveCard;
+    }
 }

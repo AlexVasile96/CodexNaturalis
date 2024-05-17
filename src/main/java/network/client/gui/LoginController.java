@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import model.game.Dot;
+import view.ClientView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,12 +30,15 @@ public class LoginController {
     public Label loginLabel;
     @FXML
     public ToggleGroup toggleGroup;
+    private ClientView clientView= new ClientView();
 
-    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) {
+    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView cl) {
         this.primaryStage = primaryStage;
         this.out = out;
         this.socket = socket;
         this.in=in;
+        this.clientView=cl;
+
     }
 
     @FXML
@@ -87,21 +92,19 @@ public class LoginController {
             return;
         }
 
-
-        //clientView.setUserName(username);
-        //System.out.println(clientView.getUserName());
+        clientView.setUserName(username);
+        System.out.println("This clientview username is: " + clientView.getUserName());
         out.println(username);
         System.out.println(in.readLine());
         System.out.println(in.readLine());
         String realChosenDot = ((RadioButton) dot).getText();
-        //clientView.setDot(Dot.valueOf(realChosenDot));
+        clientView.setDot(Dot.valueOf(realChosenDot));
         out.println(realChosenDot);
         if(in.readLine().equals("Chosen color not available!")){
             return;
         }
 
-
         ChooseNumOfPlayersScene chooseNumOfPlayersScene= new ChooseNumOfPlayersScene();
-        chooseNumOfPlayersScene.createChooseNumOfPlayersScene(primaryStage,out,socket,in);
+        chooseNumOfPlayersScene.createChooseNumOfPlayersScene(primaryStage,out,socket,in, clientView);
     }
 }

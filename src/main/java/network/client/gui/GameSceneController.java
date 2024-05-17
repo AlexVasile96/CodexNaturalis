@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.game.Player;
+import view.ClientView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -104,14 +105,23 @@ public class GameSceneController {
     private Player currentPlayer = null;
     Controller controller = new Controller(in, out);
     private String currentPlayerNickname;
+    private ClientView clientView;
 
-    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) throws IOException {
+    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) throws IOException {
         this.primaryStage = primaryStage;
         this.out = new PrintWriter(socket.getOutputStream(), true);
         this.socket = socket;
         this.in = in;
         this.currentPlayerNickname = in.readLine();
+        System.out.println(currentPlayerNickname); //salvato il nome del current player
+        this.clientView=clientView;
+
     }
+
+    // currentplayer-> initializeGame-> inizializzato il well, inizializzato deck risorsa e deck gold.
+    //ogni giocatore->pesca le 3 carte
+
+
 
     public void updateFirst() throws IOException {
         //synchronized (GameSceneController.class) {

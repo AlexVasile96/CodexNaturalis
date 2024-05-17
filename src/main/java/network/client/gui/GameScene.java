@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import view.ClientView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,20 +30,21 @@ public class GameScene {
     private static Socket socket;
     private static BufferedReader in;
     private String initCardId;
-
-    public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id) throws IOException {
+    private ClientView clientView;
+    public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id, ClientView clientView) throws IOException {
         this.primaryStage = primaryStage;
         this.out = new PrintWriter(socket.getOutputStream(), true);
         this.socket = socket;
         this.in=in;
         this.initCardId=id;
+        this.clientView=clientView;
         System.out.println(initCardId); //debugging
     }
 
     public void game() throws IOException {
 
         GameSceneController controller = new GameSceneController();
-        controller.initData(primaryStage, out, socket,in);
+        controller.initData(primaryStage, out, socket,in, clientView);
         //controller.updateFirst();
         controller.startGame(initCardId);
     }

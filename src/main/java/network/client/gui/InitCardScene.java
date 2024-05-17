@@ -10,6 +10,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import view.ClientView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class InitCardScene {
 
     private String id;
 
-    public Scene chooseInitCard(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) throws IOException {
+    public Scene chooseInitCard(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) throws IOException {
         Pane root = new Pane();
         Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
         BackgroundImage backgroundImage = new BackgroundImage(loginBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
@@ -107,7 +108,7 @@ public class InitCardScene {
             out.println(isFront);
             GameScene gameScene = null;
             try {
-                gameScene = new GameScene(primaryStage, out, socket, in, id);
+                gameScene = new GameScene(primaryStage, out, socket, in, id, clientView);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

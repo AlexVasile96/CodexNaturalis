@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import view.ClientView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,15 +22,16 @@ public class MainMenuController {
     private static PrintWriter out;
     private static Socket socket;
     private static BufferedReader in;
-
+    private ClientView clientview=new ClientView();
 
     private Image codexLogo = null;
     private Scene startScene;
-    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) throws IOException {
+    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView cl) throws IOException {
         this.primaryStage = primaryStage;
         this.out = new PrintWriter(socket.getOutputStream(), true);
         this.socket = socket;
         this.in=in;
+        this.clientview=cl;
 
     }
 
@@ -60,12 +62,12 @@ public class MainMenuController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/model/loginScene.fxml"));
                 Pane root = loader.load();
                 LoginController controller = loader.getController();
-                controller.initData(primaryStage, out, socket,in);
+                controller.initData(primaryStage, out, socket,in, clientview);
                 Scene loginScene = new Scene(root, 800, 600);
                 primaryStage.setScene(loginScene);
                 primaryStage.setTitle("Login");
                 LoginScene loginSceneHandler = new LoginScene();
-                loginSceneHandler.showLoginScene(primaryStage, out, socket, in);
+                loginSceneHandler.showLoginScene(primaryStage, out, socket, in, clientview);
             } catch (IOException e) {
                 e.printStackTrace();
             }

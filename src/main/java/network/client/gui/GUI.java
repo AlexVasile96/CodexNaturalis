@@ -117,7 +117,7 @@ public class GUI extends Application {
     private Image wellCardSelected = null;
     private String idWellCardSelected = null;
     private Image cardFlipped = null;
-
+    private ClientView clientview= new ClientView();
     private Player currentPlayer=null;
     Controller controller = new Controller(in, out);
 
@@ -158,7 +158,7 @@ public class GUI extends Application {
        FXMLLoader loader = new FXMLLoader(getClass().getResource("/model/mainMenu.fxml"));
        Parent root = loader.load();
        MainMenuController controller = loader.getController();
-       controller.initData(primaryStage, out, socket,in);
+       controller.initData(primaryStage, out, socket,in, clientview);
        Scene scene = new Scene(root, 919, 743);
        primaryStage.setScene(scene);
        primaryStage.setTitle("Codex");

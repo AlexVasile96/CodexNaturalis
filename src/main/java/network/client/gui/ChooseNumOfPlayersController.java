@@ -5,6 +5,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import view.ClientView;
+import view.cli.Cli;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,12 +26,14 @@ public class ChooseNumOfPlayersController {
     @FXML
     Button button;
     private int selectedNumOfPlayers;
+    private ClientView clientView;
 
-    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) {
+    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView cl) {
         this.primaryStage = primaryStage;
         this.out = out;
         this.socket=socket;
         this.in = in;
+        this.clientView=cl;
     }
 
     @FXML
@@ -86,6 +90,6 @@ public class ChooseNumOfPlayersController {
         }
         System.out.println(in.readLine()); //You have to wait until all players are connected
         LobbyScene lobbySceneHandler = new LobbyScene();
-        lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in);
+        lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView);
     }
 }

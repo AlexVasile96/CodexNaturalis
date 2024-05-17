@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import view.ClientView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,14 +23,15 @@ public class LobbyController {
     private Socket socket;
     private BufferedReader in;
     private ExecutorService executor;
+    private ClientView clientview;
 
-
-    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) {
+    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView cl) {
         this.primaryStage = primaryStage;
         this.out = out;
         this.socket = socket;
         this.in=in;
         this.executor = Executors.newSingleThreadExecutor();
+        this.clientview=cl;
     }
     public void waitAllPlayers() {
         executor.execute(() -> {
@@ -41,7 +43,7 @@ public class LobbyController {
                         Platform.runLater(() -> {
                             System.out.println("ciao");
                             SecretCardScene secretCardSceneHandler = new SecretCardScene();
-                            secretCardSceneHandler.chooseSecretCard(primaryStage, out, socket, in);
+                            secretCardSceneHandler.chooseSecretCard(primaryStage, out, socket, in, clientview);
                                  });
                         break;
                     }
