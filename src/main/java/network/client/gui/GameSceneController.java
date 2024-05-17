@@ -119,6 +119,7 @@ public class GameSceneController {
                     settingDecksOnMouseClickedEvent();
                     SharedObjectsInGui.setInitialized(true);
                     System.out.println("Setup finished");
+
                 }
             }
         }
