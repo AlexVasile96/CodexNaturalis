@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import model.game.Game;
 import view.ClientView;
 
 import java.io.BufferedReader;
@@ -50,8 +51,15 @@ public class LobbyController {
                     if (message.equals("All clients chose the init Card")) {
                         Platform.runLater(() -> {
                             System.out.println("seconda lobby");
-                            SecretCardScene secretCardSceneHandler = new SecretCardScene();
-                            secretCardSceneHandler.chooseSecretCard(primaryStage, out, socket, in, clientview);
+                            try {
+                                String currentPlayerNickname = in.readLine();
+                                System.out.println("CurrentPlayerNickname is: "+currentPlayerNickname);
+                                GameScene gameSceneHandler = new GameScene(primaryStage, out, socket, in, "82", clientview, currentPlayerNickname);
+                                gameSceneHandler.game();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
                         });
                         break;
                     }

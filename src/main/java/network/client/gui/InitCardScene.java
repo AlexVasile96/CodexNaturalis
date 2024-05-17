@@ -106,19 +106,10 @@ public class InitCardScene {
 
         placeCard.setOnMouseClicked(e -> {
             out.println(isFront);
-            GameScene gameScene = null;
-            try {
-                String currentPlayer= in.readLine();
-                System.out.println(currentPlayer);
-                gameScene = new GameScene(primaryStage, out, socket, in, id, clientView,currentPlayer);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            try {
-                gameScene.game(); //update di tutte le variabili iniziali
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+
+            LobbyScene lobbySceneHandler = new LobbyScene();
+            lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView);
+
         });
         return initCardScene;
     }
