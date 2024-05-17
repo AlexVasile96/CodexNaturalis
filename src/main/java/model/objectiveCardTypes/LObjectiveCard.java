@@ -7,6 +7,8 @@ import model.game.SpecificSeed;
 public class LObjectiveCard implements ExtendExtendExtend {
 
     public boolean checkColumnPattern(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2) {
+        //seed1-> carta singola
+        //seed 2-> 2 carte
        if(seed1==SpecificSeed.PLANT && seed2==SpecificSeed.MUSHROOM){
            onePlantAndTwoMushrooms(board,player,seed1,seed2);
        }
