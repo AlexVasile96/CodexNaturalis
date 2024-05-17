@@ -113,7 +113,7 @@ public class InitCardScene {
                 throw new RuntimeException(ex);
             }
             try {
-                gameScene.game(); //update di tutte le variabili inziiali
+                gameScene.game(); //update di tutte le variabili iniziali
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

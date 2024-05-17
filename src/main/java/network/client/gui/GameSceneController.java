@@ -176,6 +176,7 @@ public class GameSceneController {
 //        handCard3View.setFitHeight(heightWellCards);
 //        //Creo uno scroll pane che conterrà tutto
         ScrollPane cardsOntheBoardScrollPane = new ScrollPane();
+        cardsOntheBoardScrollPane.setPrefSize(400.00,400.00);
         int boardDimension = 500;
 
         GridPane gameBoard = new GridPane(boardDimension, boardDimension);  //Creo il gridpane che conterrà uno StackPane e gli piazzo il background
