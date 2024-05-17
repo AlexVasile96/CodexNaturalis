@@ -122,33 +122,28 @@ public class GameSceneController {
     //ogni giocatore->pesca le 3 carte
 
 
-
     public void updateFirst() throws IOException {
         synchronized (GameSceneController.class) {
             if (clientView.getUserName().equals(currentPlayerNickname)) {
-                firstWellCard();
-                secondWellCard();
-                thirdWellCard();
-                fourthWellCard();
-                checkTypeWellCards();
-                playerDeck();
-                checkTypePlayerDeck();
-                updatingResourceAndGoldDeck();
+                initializeWell(); //prendo le carte dal server(id) e inizializzo il well
+                updatingResourceAndGoldDeck(); //inizializzazione del deck gold e del deck risorsaacreatingPathForGameMethod();
+                topCardResourceDeck = createNewPathForImages(pathResourceDeck); //Resource Deck Back Image
+                topCardGoldDeck = createNewPathForImages(pathGoldDeck);
+                creatingDeckAndGoldDeckView();
+                //Handling well creation
+                creatingWell();
+                creatingImagesForTheWell();
+                creatingImagesViewForTheWell();
+                settingWellOnMouseClickedEvent();
+                settingDecksOnMouseClickedEvent();
             }
         }
     }
 
+//    playerDeck(); //pesca 2 carte r e 1 carta g dal server(id)
+//    checkTypePlayerDeck(); //serve x creare i path correttamente
     public void startGame(String initCardId) {
-//        creatingPathForGameMethod();
-//        topCardResourceDeck = createNewPathForImages(pathResourceDeck); //Resource Deck Back Image
-//        topCardGoldDeck = createNewPathForImages(pathGoldDeck);
-//        creatingDeckAndGoldDeckView();
-//        //Handling well creation
-//        creatingWell();
-//        creatingImagesForTheWell();
-//        creatingImagesViewForTheWell();
-//        settingWellOnMouseClickedEvent();
-//        settingDecksOnMouseClickedEvent();
+//
 
         //Setting background
         Image backGroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
@@ -646,6 +641,14 @@ public class GameSceneController {
     private String pathForGoldCardBack(String cardId) {
         String correctPath = "/ImmaginiCodex/CarteBack/Gold/";
         return correctPath + cardId + ".png";
+    }
+
+    private void initializeWell() throws IOException {
+        firstWellCard();
+        secondWellCard();
+        thirdWellCard();
+        fourthWellCard();
+        checkTypeWellCards();
     }
 }
 

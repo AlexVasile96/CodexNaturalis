@@ -200,31 +200,8 @@ public class GUI extends Application {
         return cardFlipped;
     }
 
-   /* @FXML
-    private void chooseInitCardFrontOrBack(ActionEvent event) throws IOException {
-
-        out.println(isFront);
-        //System.out.printf(""+isFront);
-        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        update();
-        game();
-        Platform.runLater(() -> primaryStage.setScene(gameScene));
-    }*/
 
 
-  /*  private void update() throws IOException {
-        currentPlayerNickname= in.readLine();
-        firstWellCard();
-        secondWellCard();
-        thirdWellCard();
-        fourthWellCard();
-        checkTypeWellCards();
-        playerDeck();
-        checkTypePlayerDeck();
-        updatingResourceAndGoldDeck();
-        //System.out.println(in.readLine());
-
-    }*/
 
     private int counter = 0;
     private void creaRegionPerNuovaCarta(ImageView cartaSelezionata){
