@@ -124,7 +124,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 clients.remove(this); // Rimuove il client dalla lista dei client gestiti dal server
 
             } catch (IOException e) {
-                System.out.println("Connection lost with client number ");
+                System.out.println("Connection lost with client");
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -391,6 +391,10 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     private void handlingTurns(List<Player> playerList)
     {
+        if(threadPlayer==null)
+        {
+            return;
+        }
         turnController= new TurnController(playerList);
         System.out.println(turnController.getPlayers());
         currentPlayer = turnController.getCurrentPlayer(); //viene preso il primo
