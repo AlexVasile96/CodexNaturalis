@@ -19,15 +19,15 @@ public class GoldCard extends Card{
         this.requirementsForPlacing=requirements;
         this.multiplier=multiplier;
         this.isCardBack=false;
-        Corner TLBack = new Corner(SpecificSeed.EMPTY, 0, 0);
-        Corner TRBack = new Corner(SpecificSeed.EMPTY, 0, 0);
-        Corner BLBack = new Corner(SpecificSeed.EMPTY, 0, 0);
-        Corner BRBack = new Corner(SpecificSeed.EMPTY, 0, 0);
+        Corner TLBack = new Corner(SpecificSeed.EMPTY, 0, 0,type);
+        Corner TRBack = new Corner(SpecificSeed.EMPTY, 0, 0,type);
+        Corner BLBack = new Corner(SpecificSeed.EMPTY, 0, 0,type);
+        Corner BRBack = new Corner(SpecificSeed.EMPTY, 0, 0,type);
         //BACKUPORIGINAL CORNERS
-        TLBack.setSpecificCornerSeed(TL.getSpecificCornerSeed());
-        TRBack.setSpecificCornerSeed(TR.getSpecificCornerSeed());
-        BLBack.setSpecificCornerSeed(BL.getSpecificCornerSeed());
-        BRBack.setSpecificCornerSeed(BR.getSpecificCornerSeed());
+        TLBack.setSpecificCornerSeed(TL.getSpecificCornerSeed(),type);
+        TRBack.setSpecificCornerSeed(TR.getSpecificCornerSeed(),type);
+        BLBack.setSpecificCornerSeed(BL.getSpecificCornerSeed(),type);
+        BRBack.setSpecificCornerSeed(BR.getSpecificCornerSeed(),type);
     }
 
     @Override

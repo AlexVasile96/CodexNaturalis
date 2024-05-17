@@ -139,16 +139,16 @@ public class Player implements Observable {
     {
         if (!card.isCardBack()) {
             card.setCardBack(true); //CARD IS NOW ON HER BACK
-            card.getTL().setSpecificCornerSeed(SpecificSeed.EMPTY); //SETTING ALL THE CORNERS AS EMPTY
-            card.getTR().setSpecificCornerSeed(SpecificSeed.EMPTY);
-            card.getBL().setSpecificCornerSeed(SpecificSeed.EMPTY);
-            card.getBR().setSpecificCornerSeed(SpecificSeed.EMPTY);
+            card.getTL().setSpecificCornerSeed(SpecificSeed.EMPTY,card.getTL().getCardSeed()); //SETTING ALL THE CORNERS AS EMPTY
+            card.getTR().setSpecificCornerSeed(SpecificSeed.EMPTY,card.getTR().getCardSeed());
+            card.getBL().setSpecificCornerSeed(SpecificSeed.EMPTY,card.getBL().getCardSeed());
+            card.getBR().setSpecificCornerSeed(SpecificSeed.EMPTY,card.getBR().getCardSeed());
         } else {
             card.setCardBack(false);                                                       //CARD IS ON HER ORIGINAL CONFIGURATION
-            card.getTL().setSpecificCornerSeed(card.getTLBack().getSpecificCornerSeed()); //BACKUPPING ALL CORNERS
-            card.getTR().setSpecificCornerSeed(card.getTRBack().getSpecificCornerSeed());
-            card.getBL().setSpecificCornerSeed(card.getBLBack().getSpecificCornerSeed());
-            card.getBR().setSpecificCornerSeed(card.getBRBack().getSpecificCornerSeed());
+            card.getTL().setSpecificCornerSeed(card.getTLBack().getSpecificCornerSeed(),card.getTL().getCardSeed()); //BACKUPPING ALL CORNERS
+            card.getTR().setSpecificCornerSeed(card.getTRBack().getSpecificCornerSeed(),card.getTR().getCardSeed());
+            card.getBL().setSpecificCornerSeed(card.getBLBack().getSpecificCornerSeed(),card.getBL().getCardSeed());
+            card.getBR().setSpecificCornerSeed(card.getBRBack().getSpecificCornerSeed(), card.getBR().getCardSeed());
         }
     }
 

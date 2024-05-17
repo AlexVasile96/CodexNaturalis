@@ -11,15 +11,15 @@ public class ResourceCard extends Card{
     private Node node;
     public ResourceCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR) {
         super(id, type, value, TL, TR, BL, BR);
-        Corner TLBack = new Corner(SpecificSeed.EMPTY, 0, 0); //intellij suggetion, first it was declared as attribute
-        Corner TRBack = new Corner(SpecificSeed.EMPTY, 0, 0);
-        Corner BLBack = new Corner(SpecificSeed.EMPTY, 0, 0);
-        Corner BRBack = new Corner(SpecificSeed.EMPTY, 0, 0);
+        Corner TLBack = new Corner(SpecificSeed.EMPTY, 0, 0,type); //intellij suggetion, first it was declared as attribute
+        Corner TRBack = new Corner(SpecificSeed.EMPTY, 0, 0,type);
+        Corner BLBack = new Corner(SpecificSeed.EMPTY, 0, 0,type);
+        Corner BRBack = new Corner(SpecificSeed.EMPTY, 0, 0,type);
         //BACKUPORIGINAL CORNERS
-        TLBack.setSpecificCornerSeed(TL.getSpecificCornerSeed());
-        TRBack.setSpecificCornerSeed(TR.getSpecificCornerSeed());
-        BLBack.setSpecificCornerSeed(BL.getSpecificCornerSeed());
-        BRBack.setSpecificCornerSeed(BR.getSpecificCornerSeed());
+        TLBack.setSpecificCornerSeed(TL.getSpecificCornerSeed(),type);
+        TRBack.setSpecificCornerSeed(TR.getSpecificCornerSeed(),type);
+        BLBack.setSpecificCornerSeed(BL.getSpecificCornerSeed(),type);
+        BRBack.setSpecificCornerSeed(BR.getSpecificCornerSeed(),type);
     }
     @Override
     public Node getNode() {

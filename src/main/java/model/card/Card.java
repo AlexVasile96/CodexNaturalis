@@ -39,15 +39,15 @@ public class Card {
             this.BL=BL;
             this.BR=BR;
             this.isCardBack=false;
-            this.TLBack = new Corner(SpecificSeed.EMPTY,0,0);
-            this.TRBack = new Corner(SpecificSeed.EMPTY,0,0);
-            this.BLBack = new Corner(SpecificSeed.EMPTY,0,0);
-            this.BRBack = new Corner(SpecificSeed.EMPTY,0,0);
+            this.TLBack = new Corner(SpecificSeed.EMPTY,0,0,type);
+            this.TRBack = new Corner(SpecificSeed.EMPTY,0,0,type);
+            this.BLBack = new Corner(SpecificSeed.EMPTY,0,0,type);
+            this.BRBack = new Corner(SpecificSeed.EMPTY,0,0,type);
             //BACKUP-ORIGINAL CORNERS
-            this.TLBack.setSpecificCornerSeed(TL.getSpecificCornerSeed());
-            this.TRBack.setSpecificCornerSeed(TR.getSpecificCornerSeed());
-            this.BLBack.setSpecificCornerSeed(BL.getSpecificCornerSeed());
-            this.BRBack.setSpecificCornerSeed(BR.getSpecificCornerSeed());
+            this.TLBack.setSpecificCornerSeed(TL.getSpecificCornerSeed(),type);
+            this.TRBack.setSpecificCornerSeed(TR.getSpecificCornerSeed(),type);
+            this.BLBack.setSpecificCornerSeed(BL.getSpecificCornerSeed(),type);
+            this.BRBack.setSpecificCornerSeed(BR.getSpecificCornerSeed(),type);
         }
 
         @Override

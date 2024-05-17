@@ -8,20 +8,22 @@ public class Corner extends Node{
     private int x;
     private int y;
     //private Card card;
+    private SpecificSeed cardSeed;
 
-    public Corner(SpecificSeed specificNodeSeed, int coordX, int coordY) {
+    public Corner(SpecificSeed specificNodeSeed, int coordX, int coordY, SpecificSeed type) {
         super(specificNodeSeed, coordX, coordY);
         this.isThisCornerFree=true;
         this.specificCornerSeed=specificNodeSeed;
-
+        this.cardSeed=type;
     }
 
     public void setThisCornerFree(boolean thisCornerFree) {
         isThisCornerFree = thisCornerFree;
     }
 
-    public void setSpecificCornerSeed(SpecificSeed specificCornerSeed) {
+    public void setSpecificCornerSeed(SpecificSeed specificCornerSeed, SpecificSeed cardType) {
         this.specificCornerSeed = specificCornerSeed;
+        this.cardSeed=cardType;
     }
     public boolean isThisCornerFree() {
         return isThisCornerFree;
@@ -57,8 +59,9 @@ public class Corner extends Node{
         SpecificSeed specificSeed = SpecificSeed.values()[specificSeedIndex];
         int x = jo.get("x").getAsInt();
         int y = jo.get("y").getAsInt();
-
-        Corner corner = new Corner(specificSeed, x, y);
+        int cardSeed= jo.get("cardSeed").getAsInt();
+        SpecificSeed type= SpecificSeed.values()[cardSeed];
+        Corner corner = new Corner(specificSeed, x, y, type);
         //corner.setThisCornerFree(jo.get("isThisCornerFree").getAsBoolean());
 
         return corner;
@@ -71,5 +74,11 @@ public class Corner extends Node{
         return jsonObject;
     }
 
+    public SpecificSeed getCardSeed() {
+        return cardSeed;
+    }
 
+    public void setCardSeed(SpecificSeed cardSeed) {
+        this.cardSeed = cardSeed;
+    }
 }
