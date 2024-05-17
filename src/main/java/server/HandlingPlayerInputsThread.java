@@ -196,7 +196,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                 gameController.waitingForPLayers();
             } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
                 System.err.println(e.getMessage());
-
             }
         System.out.println(gameController);
         return player;

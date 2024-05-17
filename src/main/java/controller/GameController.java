@@ -11,10 +11,7 @@ import view.ClientView;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -153,7 +150,7 @@ public class GameController {
     }
 
     private boolean allClientsMatchSavedPlayers(List<String> savedPlayers) {
-        return savedPlayers != null && savedPlayers.containsAll(players.keySet());
+        return savedPlayers != null && new HashSet<>(savedPlayers).containsAll(players.keySet());
     }
 
 public synchronized void waitingForPLayers() throws InterruptedException {
