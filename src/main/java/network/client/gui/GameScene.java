@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import server.HandlingPlayerInputsThread;
 import view.ClientView;
 
 import java.io.BufferedReader;
@@ -32,25 +33,32 @@ public class GameScene {
     private String initCardId;
     private ClientView clientView;
     private String currentPlayernickname= null;
+    private static GameSceneController controller;
 
-    public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id, ClientView clientView) throws IOException {
+    public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id, ClientView clientView, String currentPlayernickname) throws IOException {
         this.primaryStage = primaryStage;
         this.out = new PrintWriter(socket.getOutputStream(), true);
         this.socket = socket;
         this.in=in;
         this.initCardId=id;
         this.clientView=clientView;
+        this.currentPlayernickname=currentPlayernickname;
         System.out.println(initCardId); //debugging
-        this.currentPlayernickname=in.readLine();
+        synchronized (GameScene.class) {
+            if(controller!=null)
+            {
+                System.out.println("miao");
+            }
+            if (controller == null) {
+                System.out.println("CIAO");
+                controller = new GameSceneController();
+            }
+        }
     }
 
     public void game() throws IOException {
-
-        GameSceneController controller = new GameSceneController();
         controller.initData(primaryStage, out, socket,in, clientView, currentPlayernickname);
-        if(currentPlayernickname.equals(clientView.getUserName())) {
-            controller.updateFirst();
-        }
+        //controller.updateFirst();
         controller.startGame(initCardId);
     }
 

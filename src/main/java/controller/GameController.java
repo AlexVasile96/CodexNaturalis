@@ -37,7 +37,7 @@ public class GameController {
     private boolean areAllPlayersLogged=false;
     private int currentNumsOfPlayers=0;
     private CountDownLatch numbgames = new CountDownLatch(0);
-
+    private int playerChoseinitialcard=0;
     //CONSTRUCTORS
 
     public GameController(String username, PrintWriter userOut, List<HandlingPlayerInputsThread> clients, Socket socket, Game game) throws IOException {
@@ -168,6 +168,21 @@ public synchronized void waitingForPLayers() throws InterruptedException {
             wait();
         }
 }
+
+
+    public synchronized void waitingForPLayersAfterInitialcard() throws InterruptedException {
+        if(playerChoseinitialcard==getSize())
+        {
+            sendMessageToAllClients("All clients chose the init Card");
+            notifyAll();
+
+        }
+        else{
+            System.out.println("current numb of players da gamecontroller " + currentNumsOfPlayers);
+            System.out.println("size dal gamecontroller "+  getSize());
+            wait();
+        }
+    }
 
 
 
@@ -331,5 +346,13 @@ public synchronized void waitingForPLayers() throws InterruptedException {
 
     public void setCurrentNumsOfPlayers(int currentNumsOfPlayers) {
         this.currentNumsOfPlayers = currentNumsOfPlayers;
+    }
+
+    public int getPlayerChoseinitialcard() {
+        return playerChoseinitialcard;
+    }
+
+    public void setPlayerChoseinitialcard(int playerChoseinitialcard) {
+        this.playerChoseinitialcard = playerChoseinitialcard;
     }
 }

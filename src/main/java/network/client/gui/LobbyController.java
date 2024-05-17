@@ -47,6 +47,14 @@ public class LobbyController {
                                  });
                         break;
                     }
+                    if (message.equals("All clients chose the init Card")) {
+                        Platform.runLater(() -> {
+                            System.out.println("seconda lobby");
+                            SecretCardScene secretCardSceneHandler = new SecretCardScene();
+                            secretCardSceneHandler.chooseSecretCard(primaryStage, out, socket, in, clientview);
+                        });
+                        break;
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();

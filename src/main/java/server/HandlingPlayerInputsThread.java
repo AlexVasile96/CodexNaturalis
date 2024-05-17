@@ -395,7 +395,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         game.setCurrentPlayingPLayer(currentPlayer);
 
     }
-    private void assignInitialCard() throws IOException {
+    private void assignInitialCard() throws IOException, InterruptedException {
         InitialCard initialCard= game.getInitialCardDeck().firstCardInitialGame();
         int initCardId= initialCard.getId();                                //For gui purpose
         sendMessageToClient("This is your first card " +initialCard );      //Sending the card
@@ -414,7 +414,8 @@ public class HandlingPlayerInputsThread implements Runnable {
             game.placeInitialCard(threadPlayer.getBoard(),initialCard);
             System.out.println("Initial Card correctly placed");
         }
-        threadPlayer.getBoard().printBoard();
+        gameController.setPlayerChoseinitialcard(gameController.getPlayerChoseinitialcard()+1);
+        gameController.waitingForPLayersAfterInitialcard();
     }
 
 

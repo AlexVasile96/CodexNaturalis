@@ -108,7 +108,9 @@ public class InitCardScene {
             out.println(isFront);
             GameScene gameScene = null;
             try {
-                gameScene = new GameScene(primaryStage, out, socket, in, id, clientView);
+                String currentPlayer= in.readLine();
+                System.out.println(currentPlayer);
+                gameScene = new GameScene(primaryStage, out, socket, in, id, clientView,currentPlayer);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

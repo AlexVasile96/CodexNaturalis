@@ -33,33 +33,33 @@ public class GameSceneController {
     private Socket socket;
     private BufferedReader in;
     private int cardSelected;
-    private String pathResourceDeck = null;
-    private String pathGoldDeck = null;
-    private ImageView topCardResourceDeckView = null;
-    private ImageView topCardGoldDeckView = null;
-    private Image topCardResourceDeck = null;
-    private Image topCardGoldDeck = null;
-    private String wellPathOne = null;
-    private String wellPathSecond = null;
-    private String wellPathThird = null;
-    private String wellPathForth = null;
-    private Image wellCard1 = null;
-    private Image wellCard2 = null;
-    private Image wellCard3 = null;
-    private Image wellCard4 = null;
-    private ImageView wellCard1View = null;
-    private ImageView wellCard2View = null;
-    private ImageView wellCard3View = null;
-    private ImageView wellCard4View = null;
+    private static String pathResourceDeck;
+    private static String pathGoldDeck ;
+    private static ImageView topCardResourceDeckView;
+    private static ImageView topCardGoldDeckView ;
+    private static Image topCardResourceDeck ;
+    private static Image topCardGoldDeck;
+    private static String wellPathOne;
+    private  static String wellPathSecond;
+    private static String wellPathThird;
+    private static String wellPathForth;
+    private static Image wellCard1;
+    private static Image wellCard2;
+    private static Image wellCard3;
+    private static   Image wellCard4;
+    private  static ImageView wellCard1View ;
+    private  static ImageView wellCard2View;
+    private static  ImageView wellCard3View;
+    private  static ImageView wellCard4View;
 
-    private String idCard1 = null;
-    private String idCard2 = null;
-    private String idCard3 = null;
-    private String idCard4 = null;
-    private String typeCard1 = null;
-    private String typeCard2 = null;
-    private String typeCard3 = null;
-    private String typeCard4 = null;
+    private static  String idCard1 ;
+    private static  String idCard2 ;
+    private  static String idCard3 ;
+    private static  String idCard4 ;
+    private static  String typeCard1 ;
+    private static  String typeCard2 ;
+    private static  String typeCard3 ;
+    private  static String typeCard4;
 
     private String typeHandCard1 = null;
     private String typeHandCard2 = null;
@@ -68,8 +68,8 @@ public class GameSceneController {
     private String idHandCard1 = null;
     private String idHandCard2 = null;
     private String idHandCard3 = null;
-    private String idTopCardResourceDeck = null;
-    private String idTopCardGoldDeck = null;
+    private String idTopCardResourceDeck ;
+    private String idTopCardGoldDeck ;
 
     private Pane specificSeedsPane;
     private Text specificSeedsText;
@@ -278,12 +278,12 @@ public class GameSceneController {
         gridPaneForWellCards.setVgap(4.0);
         gridPaneForWellCards.setHgap(4.0);
         gridPaneForWellCards.setPadding(padding);
-        gridPaneForWellCards.add(wellCard1View, 0, 0);
-        gridPaneForWellCards.add(wellCard2View, 0, 1);
-        gridPaneForWellCards.add(wellCard3View, 1, 0);
-        gridPaneForWellCards.add(wellCard4View, 1, 1);
-        gridPaneForWellCards.add(wellText, 0,2);
-        gridPaneForWellCards.add(wellText2, 1,2);
+//        gridPaneForWellCards.add(wellCard1View, 0, 0);
+//        gridPaneForWellCards.add(wellCard2View, 0, 1);
+//        gridPaneForWellCards.add(wellCard3View, 1, 0);
+//        gridPaneForWellCards.add(wellCard4View, 1, 1);
+//        gridPaneForWellCards.add(wellText, 0,2);
+//        gridPaneForWellCards.add(wellText2, 1,2);
 
 
         HBox decks = new HBox();
@@ -293,7 +293,7 @@ public class GameSceneController {
 
         decks.setSpacing(4.0);
         decks.setPadding(paddingDecks);
-        decks.getChildren().addAll(topCardResourceDeckView, topCardGoldDeckView);
+        //decks.getChildren().addAll(topCardResourceDeckView, topCardGoldDeckView);
 
         specificSeedsPane = new Pane();
         specificSeedsText = new Text("Your specific Seeds are: ");
@@ -313,7 +313,7 @@ public class GameSceneController {
         buttonContainer.add(seeOtherPlayersBoards, 1, 1);
 
         vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, specificSeedsPane, buttonContainer);
-        layout.setRight(vboxGame);
+        //layout.setRight(vboxGame);
         /*firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
         secondRow.getChildren().addAll(firstColomnOfSecondRow);
         layout.setBottom(secondRow);*/
