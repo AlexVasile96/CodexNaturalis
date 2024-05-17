@@ -35,8 +35,9 @@ public class GameScene {
     private String currentPlayerNickname= null;
     private static GameSceneController controller;
     private static boolean isFirstClientInitialized = false; // Per tracciare se il primo client ha eseguito updateFirst
+    private static boolean isFirstClient;
 
-    public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id, ClientView clientView, String currentPlayerNickname) throws IOException {
+    public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id, ClientView clientView, String currentPlayerNickname, boolean isFirstClient) throws IOException {
         this.primaryStage = primaryStage;
         this.out = new PrintWriter(socket.getOutputStream(), true);
         this.socket = socket;
@@ -44,12 +45,13 @@ public class GameScene {
         this.initCardId = id;
         this.clientView = clientView;
         this.currentPlayerNickname = currentPlayerNickname;
+        this.isFirstClient=isFirstClient;
         System.out.println(initCardId); // debugging
         synchronized (GameScene.class) {
-            if (controller != null) {
+            if (!isFirstClient) {
                 System.out.println("miao");
             }
-            if (controller == null) {
+            else  {
                 System.out.println("CIAO");
                 controller = new GameSceneController();
             }

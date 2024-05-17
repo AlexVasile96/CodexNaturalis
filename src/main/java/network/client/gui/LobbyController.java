@@ -24,6 +24,7 @@ public class LobbyController {
     private BufferedReader in;
     private ExecutorService executor;
     private ClientView clientview;
+    private static GameScene gameScene;
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView cl) {
         this.primaryStage = primaryStage;
@@ -39,7 +40,6 @@ public class LobbyController {
             try {
                 String message;
                 while ((message = in.readLine()) != null) {
-                    System.out.println(message);
                     if (message.equals("All clients connected")) {
                         Platform.runLater(() -> {
                             System.out.println("ciao");
@@ -47,38 +47,22 @@ public class LobbyController {
                             secretCardSceneHandler.chooseSecretCard(primaryStage, out, socket, in, clientview);
                         });
                         break;
-                    }
-                    if (message.equals("All clients chose the init Card")) {
+                    } else if (message.equals("All clients chose the init Card")) {
+                        System.out.println("Received message: " + message); // Debug per gli altri if
                         Platform.runLater(() -> {
                             System.out.println("seconda lobby");
-                            try {
-                                String currentPlayerNickname = in.readLine();
-                                System.out.println("CurrentPlayerNickname is: " + currentPlayerNickname);
-                                if (in.readLine().equals("You are the first client")) {
-                                    GameScene gameSceneHandler = new GameScene(primaryStage, out, socket, in, "82", clientview, currentPlayerNickname);
-                                    gameSceneHandler.game(true);
-                                } else {
-                                    // Il client non è il primo, rimane in attesa di un altro messaggio
-                                    System.out.println("Waiting for game to start...");
-                                }
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                            handleInitCardChoice();
                         });
                         break;
-                    }
-                    if (message.equals("SETUPFINISHED")) {
-                        Platform.runLater(() -> {
+                    } else if (message.equals("SETUPFINISHED")) {
+                        System.out.println("Received message: " + message); // Debug per gli altri if
                             System.out.println("Setup finished, starting game...");
-                            try {
-                                String currentPlayerNickname = in.readLine();
-                                GameScene gameSceneHandler = new GameScene(primaryStage, out, socket, in, "82", clientview, currentPlayerNickname);
-                                gameSceneHandler.game(false);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
-                        break;
+                            handleSetupFinished();
+
+                    } else {
+                        // Se il messaggio non è riconosciuto, continua ad aspettare
+                        System.out.println("Unknown message, waiting for correct message..."); // Debug per gli altri if
+                        waitAllPlayers();
                     }
                 }
             } catch (IOException e) {
@@ -86,5 +70,51 @@ public class LobbyController {
             }
         });
     }
-}
 
+    private void handleInitCardChoice() {
+        try {
+            String currentPlayerNickname = in.readLine();
+            System.out.println("CurrentPlayerNickname is: " + currentPlayerNickname);
+            if (in.readLine().equals("You are the first client")) {
+                // Inizializza GameScene solo se non è già stato inizializzato
+                synchronized (LobbyController.class) {
+                    if (gameScene == null) {
+                        System.out.println("Initializing GameScene for the first client.");
+                        gameScene = new GameScene(primaryStage, out, socket, in, "82", clientview, currentPlayerNickname, true);
+                    }
+                }
+                gameScene.game(true);
+            } else {
+                // Altri client aspettano il messaggio di setup finito
+                synchronized (LobbyController.class) {
+                    if (gameScene == null) {
+                        System.out.println("Initializing GameScene for other clients.");
+                        gameScene = new GameScene(primaryStage, out, socket, in, "82", clientview, currentPlayerNickname, false);
+                    }
+                }
+                System.out.println("Waiting for game to start...");
+                waitAllPlayers();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void handleSetupFinished() {
+        try {
+            String currentPlayerNickname = in.readLine();
+            System.out.println("CurrentPlayerNickname in setup finished: " + currentPlayerNickname);
+            // Verifica che gameScene sia inizializzato
+            System.out.println("Sono qua");
+            synchronized (LobbyController.class) {
+                if (gameScene == null) {
+                    System.out.println("Initializing GameScene in setup finished.");
+                    gameScene = new GameScene(primaryStage, out, socket, in, "82", clientview, currentPlayerNickname, false);
+                }
+            }
+            gameScene.game(false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}

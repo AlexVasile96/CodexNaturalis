@@ -602,6 +602,7 @@ public class GUI extends Application {
         gridPaneForWellCards.add(wellText2, 1,2);
 
         HBox decks = new HBox();
+
         Label decksText = new Label("      Resource Deck               Gold Deck");
         decksText.setStyle("-fx-font-weight: bold; -fx-text-fill: white");
 

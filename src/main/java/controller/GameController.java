@@ -65,9 +65,12 @@ public class GameController {
     public synchronized void readCommand(String commandString, Player player, int size, int paolo, String cornerChosen) {
         if (game != null) {
             Command command = new Command();
-            if(commandString.equals("allclientsgui"))
+            if(commandString.equals("SETUPFINISHED"))
             {
+
                 sendMessageToAllClients("SETUPFINISHED");
+                game.setCurrentPlayer(player.getClientView().getUserName());
+                sendMessageToAllClients(game.getCurrentPlayer());
             }
             if(commandString.equals("playCard"))
             {
