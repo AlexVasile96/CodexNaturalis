@@ -22,7 +22,52 @@ public class SharedObjectsInGui {
     private static ImageView wellCard2View;
     private static ImageView wellCard3View;
     private static ImageView wellCard4View;
+    private static boolean initialized = false;
+    private static String idCard1;
+    private static String idCard2;
+    private static String idCard3;
+    private static String idCard4;
 
+    // Getter e setter per le nuove variabili
+    public static String getIdCard1() {
+        return idCard1;
+    }
+
+    public static void setIdCard1(String idCard1) {
+        SharedObjectsInGui.idCard1 = idCard1;
+    }
+
+    public static String getIdCard2() {
+        return idCard2;
+    }
+
+    public static void setIdCard2(String idCard2) {
+        SharedObjectsInGui.idCard2 = idCard2;
+    }
+
+    public static String getIdCard3() {
+        return idCard3;
+    }
+
+    public static void setIdCard3(String idCard3) {
+        SharedObjectsInGui.idCard3 = idCard3;
+    }
+
+    public static String getIdCard4() {
+        return idCard4;
+    }
+
+    public static void setIdCard4(String idCard4) {
+        SharedObjectsInGui.idCard4 = idCard4;
+    }
+
+    public static synchronized boolean isInitialized() {
+        return initialized;
+    }
+
+    public static synchronized void setInitialized(boolean initialized) {
+        SharedObjectsInGui.initialized = initialized;
+    }
     public static String getPathResourceDeck() {
         return pathResourceDeck;
     }

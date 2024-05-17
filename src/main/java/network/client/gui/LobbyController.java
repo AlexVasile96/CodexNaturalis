@@ -56,13 +56,14 @@ public class LobbyController {
                         break;
                     } else if (message.equals("SETUPFINISHED")) {
                         System.out.println("Received message: " + message); // Debug per gli altri if
+                        Platform.runLater(() -> {
                             System.out.println("Setup finished, starting game...");
                             handleSetupFinished();
-
+                        });
+                        break;
                     } else {
                         // Se il messaggio non è riconosciuto, continua ad aspettare
                         System.out.println("Unknown message, waiting for correct message..."); // Debug per gli altri if
-                        waitAllPlayers();
                     }
                 }
             } catch (IOException e) {
@@ -112,6 +113,7 @@ public class LobbyController {
                     gameScene = new GameScene(primaryStage, out, socket, in, "82", clientview, currentPlayerNickname, false);
                 }
             }
+            System.out.println("Ready to start");
             gameScene.game(false);
         } catch (IOException e) {
             throw new RuntimeException(e);
