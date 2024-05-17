@@ -100,7 +100,7 @@ public class ServerConnection implements Runnable {
 
 
 
-private void waitUntilItsYourTurn() throws IOException {
+    private void waitUntilItsYourTurn() throws IOException {
         while(!clientView.getUserName().equals(getCurrentPlayer()))
         {
             String waitForCall= in.readLine();
@@ -113,6 +113,7 @@ private void waitUntilItsYourTurn() throws IOException {
                 System.out.println("Current Player is still deciding what's his next move...");}
         }
 }
+
     private void makeYourMoves() throws IOException {
         if(!player.isThePlayerDeckStarted())
         {
@@ -135,8 +136,6 @@ private void waitUntilItsYourTurn() throws IOException {
         }
         actionsInput(command);
     }
-
-
 
     private void actionsInput(String userInput) throws IOException { //GAME STARTED
         try {
@@ -193,7 +192,6 @@ private void waitUntilItsYourTurn() throws IOException {
         }
     }
 
-
     private void showEachPlayerBoard() throws IOException {
         sendMessageToServer("showEachPlayerBoard");
         System.out.println("You decided to print all players boards!");
@@ -204,6 +202,7 @@ private void waitUntilItsYourTurn() throws IOException {
         }while (!messageFromServer.equals("exit"));
         System.out.println("All Boards Printed!");
     }
+
     private void showYourSpecificSeed() throws IOException {
         sendMessageToServer("showYourSpecificSeed");
         System.out.println("Your specific seeds: ");
@@ -219,9 +218,6 @@ private void waitUntilItsYourTurn() throws IOException {
             messageFromServer = in.readLine();
         }while (!messageFromServer.equals("exit"));
     }
-
-
-
 
     private void updatingView(String firstCard, String secondCard, String thirdCard){
         String[] carte = {firstCard, secondCard, thirdCard};
@@ -299,14 +295,13 @@ private void waitUntilItsYourTurn() throws IOException {
         }
         System.out.println("\nWhich card on the board do you want to place your card on?");
 
-        //controllo input
+        //inizializzazione array input validi
         int numeroCarte=player.getClientView().getNumOfCardsOnTheBoard();
         String[] validInputs = new String[numeroCarte]; //se c'è solo la carta iniziale è pari ad 1
         for (int j=0; j<numeroCarte; j++)
             validInputs[j] = String.valueOf(j+1);
         size= Integer.parseInt(controlInputFromUser(validInputs));
         out.println(size-1);
-
 
         //avaiableCorners
         String[] angoli ={"TL","TR","BR","BL"};
@@ -337,15 +332,17 @@ private void waitUntilItsYourTurn() throws IOException {
         else inputFromClient = controlInputFromUser(validInputs);
         out.println(inputFromClient);
 
+        //final part
         System.out.println(in.readLine()); //carta placed
+        //updating the view
         String typeCard = in.readLine();
         String isBack = in.readLine();
         String cordinateTl = in.readLine();
         player.getClientView().addCardOnTheBoard((numeroCarte+1)+"->"+typeCard+": "+cordinateTl+" "+ isBack);
-
-        drawCard();
-        status();
-        player.getClientView().setNumOfCardsOnTheBoard(player.getClientView().getNumOfCardsOnTheBoard()+1);
+        player.getClientView().setNumOfCardsOnTheBoard(numeroCarte+1);
+        drawCard(); //pescaggio
+        status();   //punteggio
+        System.out.println();
         if(clientView.getPlayerScore()>=20)
         {
             System.out.println(in.readLine()); //all players have on last turn and then the game will end
@@ -379,7 +376,6 @@ private void waitUntilItsYourTurn() throws IOException {
         return inputClient;
     }
 
-
     private void status() throws IOException {
         sendMessageToServer("status");
         String points= in.readLine();
@@ -393,6 +389,7 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println(in.readLine());//first common card
         System.out.println(in.readLine());//second common card
     }
+
     private void visualizeSecretObjective() throws IOException {
         sendMessageToServer("secret");
         System.out.println("You chose to visualize your secret card!\n");
@@ -401,6 +398,7 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println("\n");
         System.out.println("This is your objective card!");
     }
+
     private void showBoard() throws IOException {
         sendMessageToServer("showBoard");
         System.out.print("////////////////////////////////////////////////////// INIZIO BOARD ////////////////////////////////////////////////////////////// \n");
@@ -412,6 +410,7 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println();
         System.out.println("////////////////////////////////////////////////////// FINE BOARD ////////////////////////////////////////////////////////////////");
     }
+
     private void showPoints() throws IOException {
         sendMessageToServer("showPoints");
         System.out.println("You chose to visualize your points!\n");
@@ -431,6 +430,7 @@ private void waitUntilItsYourTurn() throws IOException {
         System.out.println("------------------------------------------------------------------------------------------");
 
     }
+
     private void drawCard() throws IOException {
         showWell();
         sendMessageToServer("drawCard");
@@ -701,9 +701,6 @@ private void waitUntilItsYourTurn() throws IOException {
     }
 
     private void printActions() throws IOException {
-        sendMessageToServer("actions");
-        String serviceString=in.readLine();
-        System.out.println(serviceString);
         System.out.println(
                 """
                         Supported commands:

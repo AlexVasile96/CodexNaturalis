@@ -332,9 +332,9 @@ public class HandlingPlayerInputsThread implements Runnable {
                     System.out.println("Il player ha deciso di giocare la proria carta sulla carta numero " + boardCardChosen);
                     gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
                     cornerChosen = stdIn.readLine();
-                    //
                     System.out.println(cornerChosen);
                     gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
+
                     forClientView.append("\n("+ chosenCard.getNode().getCoordY()+ " "+ chosenCard.getNode().getCoordX()+")");
                     sendMessageToAllClients(String.valueOf(forClientView));
                     messageFromClient = stdIn.readLine();
@@ -342,9 +342,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
                 //else if(messageFromClient.equals("drawCardFromWell")){
                 case "drawCard" -> {
-                    //intro //MOMO NON RIMETTERE QUESTO METODO PLS O CRASHA TUTTO, LASCIA CHE IL WELL NON SI VEDA AL MOMENTO
-                    //messageFromClient = stdIn.readLine();
-                    //gameController.readCommand(messageFromClient, player, 0, 0, null);// showwell
                     //well o deck?
                     messageFromClient = stdIn.readLine();
                     if (messageFromClient.equals("deck")) {
