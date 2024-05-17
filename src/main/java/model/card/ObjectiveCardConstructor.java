@@ -30,10 +30,10 @@ public class ObjectiveCardConstructor {
                 SpecificSeed topRight = SpecificSeed.valueOf(card.getString("TR")); //get the top right corner attribute
                 SpecificSeed bottomLeft = SpecificSeed.valueOf(card.getString("BL")); //get the bottom left corner attribute
                 SpecificSeed bottomRight = SpecificSeed.valueOf(card.getString("BR")); //get the bottom right corner attribute
-                Corner TL = new Corner(topLeft,0,0);
-                Corner TR = new Corner(topRight,0,0);
-                Corner BL = new Corner(bottomLeft,0,0);
-                Corner BR = new Corner(bottomRight,0,0);
+                Corner TL = new Corner(topLeft,0,0,type);
+                Corner TR = new Corner(topRight,0,0,type);
+                Corner BL = new Corner(bottomLeft,0,0,type);
+                Corner BR = new Corner(bottomRight,0,0,type);
                 int numberOfWhenTheGameEnds = card.getInt("numberOfWhenTheGameEnds"); //card id
                 ObjectiveSpecificTypeOfCard objectiveSpecificTypeOfCard = ObjectiveSpecificTypeOfCard.valueOf(card.getString("objectiveSpecificTypeOfCard")); //card specific seed (plant,animal...)
                 ObjectiveCard cards = new ObjectiveCard(id,type,value,TL,TR, BL, BR, numberOfWhenTheGameEnds,objectiveSpecificTypeOfCard); //creating all the resource cards

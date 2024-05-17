@@ -28,6 +28,7 @@ public class Command { //Command Client sends to Server
 
                 }
             }
+
             case "TurnCard":
                 game.turnCard(player, size);
                 return "carta girata";

@@ -18,7 +18,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class LobbyController {
-    //guarda in.readLine stampa e vedi cosa stampa allCLients logged
     private Stage primaryStage;
     private PrintWriter out;
     private Socket socket;
@@ -30,10 +29,11 @@ public class LobbyController {
         this.primaryStage = primaryStage;
         this.out = out;
         this.socket = socket;
-        this.in=in;
+        this.in = in;
         this.executor = Executors.newSingleThreadExecutor();
-        this.clientview=cl;
+        this.clientview = cl;
     }
+
     public void waitAllPlayers() {
         executor.execute(() -> {
             try {
@@ -45,7 +45,7 @@ public class LobbyController {
                             System.out.println("ciao");
                             SecretCardScene secretCardSceneHandler = new SecretCardScene();
                             secretCardSceneHandler.chooseSecretCard(primaryStage, out, socket, in, clientview);
-                                 });
+                        });
                         break;
                     }
                     if (message.equals("All clients chose the init Card")) {
@@ -53,13 +53,30 @@ public class LobbyController {
                             System.out.println("seconda lobby");
                             try {
                                 String currentPlayerNickname = in.readLine();
-                                System.out.println("CurrentPlayerNickname is: "+currentPlayerNickname);
-                                GameScene gameSceneHandler = new GameScene(primaryStage, out, socket, in, "82", clientview, currentPlayerNickname);
-                                gameSceneHandler.game();
+                                System.out.println("CurrentPlayerNickname is: " + currentPlayerNickname);
+                                if (in.readLine().equals("You are the first client")) {
+                                    GameScene gameSceneHandler = new GameScene(primaryStage, out, socket, in, "82", clientview, currentPlayerNickname);
+                                    gameSceneHandler.game(true);
+                                } else {
+                                    // Il client non è il primo, rimane in attesa di un altro messaggio
+                                    System.out.println("Waiting for game to start...");
+                                }
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
-
+                        });
+                        break;
+                    }
+                    if (message.equals("SETUPFINISHED")) {
+                        Platform.runLater(() -> {
+                            System.out.println("Setup finished, starting game...");
+                            try {
+                                String currentPlayerNickname = in.readLine();
+                                GameScene gameSceneHandler = new GameScene(primaryStage, out, socket, in, "82", clientview, currentPlayerNickname);
+                                gameSceneHandler.game(false);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         });
                         break;
                     }
@@ -70,3 +87,4 @@ public class LobbyController {
         });
     }
 }
+

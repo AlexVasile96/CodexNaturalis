@@ -137,6 +137,8 @@ public class GameSceneController {
                 creatingImagesViewForTheWell();
                 settingWellOnMouseClickedEvent();
                 settingDecksOnMouseClickedEvent();
+
+                System.out.println("Setup finished");
             }
         }
     }
@@ -278,12 +280,12 @@ public class GameSceneController {
         gridPaneForWellCards.setVgap(4.0);
         gridPaneForWellCards.setHgap(4.0);
         gridPaneForWellCards.setPadding(padding);
-//        gridPaneForWellCards.add(wellCard1View, 0, 0);
-//        gridPaneForWellCards.add(wellCard2View, 0, 1);
-//        gridPaneForWellCards.add(wellCard3View, 1, 0);
-//        gridPaneForWellCards.add(wellCard4View, 1, 1);
-//        gridPaneForWellCards.add(wellText, 0,2);
-//        gridPaneForWellCards.add(wellText2, 1,2);
+        gridPaneForWellCards.add(wellCard1View, 0, 0);
+        gridPaneForWellCards.add(wellCard2View, 0, 1);
+        gridPaneForWellCards.add(wellCard3View, 1, 0);
+        gridPaneForWellCards.add(wellCard4View, 1, 1);
+        gridPaneForWellCards.add(wellText, 0,2);
+        gridPaneForWellCards.add(wellText2, 1,2);
 
 
         HBox decks = new HBox();
@@ -293,7 +295,7 @@ public class GameSceneController {
 
         decks.setSpacing(4.0);
         decks.setPadding(paddingDecks);
-        //decks.getChildren().addAll(topCardResourceDeckView, topCardGoldDeckView);
+        decks.getChildren().addAll(topCardResourceDeckView, topCardGoldDeckView);
 
         specificSeedsPane = new Pane();
         specificSeedsText = new Text("Your specific Seeds are: ");
@@ -313,7 +315,7 @@ public class GameSceneController {
         buttonContainer.add(seeOtherPlayersBoards, 1, 1);
 
         vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, specificSeedsPane, buttonContainer);
-        //layout.setRight(vboxGame);
+        layout.setRight(vboxGame);
         /*firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
         secondRow.getChildren().addAll(firstColomnOfSecondRow);
         layout.setBottom(secondRow);*/

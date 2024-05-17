@@ -65,6 +65,10 @@ public class GameController {
     public synchronized void readCommand(String commandString, Player player, int size, int paolo, String cornerChosen) {
         if (game != null) {
             Command command = new Command();
+            if(commandString.equals("allclientsgui"))
+            {
+                sendMessageToAllClients("SETUPFINISHED");
+            }
             if(commandString.equals("playCard"))
             {
                 if(!isCornerAlreadyChosen) {
@@ -174,6 +178,7 @@ public synchronized void waitingForPLayers() throws InterruptedException {
         if(playerChoseinitialcard==getSize())
         {
             sendMessageToAllClients("All clients chose the init Card");
+
             notifyAll();
 
         }

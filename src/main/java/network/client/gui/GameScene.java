@@ -32,21 +32,21 @@ public class GameScene {
     private static BufferedReader in;
     private String initCardId;
     private ClientView clientView;
-    private String currentPlayernickname= null;
+    private String currentPlayerNickname= null;
     private static GameSceneController controller;
+    private static boolean isFirstClientInitialized = false; // Per tracciare se il primo client ha eseguito updateFirst
 
-    public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id, ClientView clientView, String currentPlayernickname) throws IOException {
+    public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id, ClientView clientView, String currentPlayerNickname) throws IOException {
         this.primaryStage = primaryStage;
         this.out = new PrintWriter(socket.getOutputStream(), true);
         this.socket = socket;
-        this.in=in;
-        this.initCardId=id;
-        this.clientView=clientView;
-        this.currentPlayernickname=currentPlayernickname;
-        System.out.println(initCardId); //debugging
+        this.in = in;
+        this.initCardId = id;
+        this.clientView = clientView;
+        this.currentPlayerNickname = currentPlayerNickname;
+        System.out.println(initCardId); // debugging
         synchronized (GameScene.class) {
-            if(controller!=null)
-            {
+            if (controller != null) {
                 System.out.println("miao");
             }
             if (controller == null) {
@@ -56,9 +56,14 @@ public class GameScene {
         }
     }
 
-    public void game() throws IOException {
-        controller.initData(primaryStage, out, socket,in, clientView, currentPlayernickname);
-        //controller.updateFirst();
+    public void game(boolean isFirstClient) throws IOException {
+        controller.initData(primaryStage, out, socket, in, clientView, currentPlayerNickname);
+        if (isFirstClient) {
+            controller.updateFirst();
+            // Notifica al server che l'inizializzazione è completa
+            out.println("SETUPFINISHED");
+            System.out.println(in.readLine());
+        }
         controller.startGame(initCardId);
     }
 

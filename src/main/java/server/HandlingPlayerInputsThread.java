@@ -37,7 +37,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static int index=0;
     private static int whichplayerAreYou=0;
     private static Player winningPlayer=new Player(null,0, Dot.BLACK, null);
-    private final CountDownLatch sizeLatch = new CountDownLatch(1);
+    private static HandlingPlayerInputsThread firstClient = null;
 
 
 
@@ -57,6 +57,9 @@ public class HandlingPlayerInputsThread implements Runnable {
         this.userName=null;
         this.game=game;
         checkGameInizialization=false;
+        if (firstClient == null) {
+            firstClient = this;
+        }
     }
 
 
@@ -83,8 +86,13 @@ public class HandlingPlayerInputsThread implements Runnable {
                     game.updateSingleClientView(player);                          //Updating each player ClientView
                     System.out.println(player.getClientView());
                 }
+
                 System.out.println(game.getObjectiveDeck().remainingCards());       //Debugging to check if all cards are given correctly
-                sendMessageToClient(currentPlayer.getNickName()); //Mnadato a tutti i client il current player
+                sendMessageToClient(currentPlayer.getNickName()); //Manadato a tutti i client il current player
+                if (this == firstClient) {
+                    sendMessageToClient("You are the first client");
+                }
+
                 boolean hasClientQuit= false;
 
                 //SETTING POINTS FOR ENDGAME DEBUGGING

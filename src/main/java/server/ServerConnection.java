@@ -48,10 +48,13 @@ public class ServerConnection implements Runnable {
                         System.out.println(areAllConnected);
                         assigningSecretCard();                                //Choosing the secret Card
                         takingTheInitialCard();                               //Taking the initial Card
-                        String elisa= in.readLine();                  //Allclienti scelsero carta elisa
-                        System.out.println(elisa);
+                        String waitingAllClientsTOChooseInitialcard= in.readLine();                  //Allclienti scelsero
+                        System.out.println(waitingAllClientsTOChooseInitialcard);
                         System.out.println("Login phase ended!");
                         currentPlayer = in.readLine();                      //who is the current player?
+                        if ("You are the first client".equals(in.readLine())) {
+                            System.out.println("You are the first client! Initializing game...");
+                        }
                     } else {
                         while (!isTheWhileActive){
                             if(isConnectionClosed){
