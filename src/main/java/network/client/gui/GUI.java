@@ -635,7 +635,7 @@ public class GUI extends Application {
         hboxGame.getChildren().addAll(gameBoard, vboxGame);
         firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
         secondRow.getChildren().addAll(firstColomnOfSecondRow);
-        vboxContainer.getChildren().addAll(hboxGame, secondRow);
+        //vboxContainer.getChildren().addAll(hboxGame, secondRow);
         anchorPane.getChildren().add(vboxContainer);
         gameScene = new Scene(root, 600, 400);
 

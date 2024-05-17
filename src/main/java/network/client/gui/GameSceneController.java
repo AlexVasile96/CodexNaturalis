@@ -127,6 +127,7 @@ public class GameSceneController {
             if (clientView.getUserName().equals(currentPlayerNickname)) {
                 initializeWell(); //prendo le carte dal server(id) e inizializzo il well
                 updatingResourceAndGoldDeck(); //inizializzazione del deck gold e del deck risorsaacreatingPathForGameMethod();
+                creatingPathForGameMethod();
                 topCardResourceDeck = createNewPathForImages(pathResourceDeck); //Resource Deck Back Image
                 topCardGoldDeck = createNewPathForImages(pathGoldDeck);
                 creatingDeckAndGoldDeckView();
@@ -252,8 +253,71 @@ public class GameSceneController {
                 piazzaCartaBR(getClickedImageView(), gameBoard, indexCardToPlace);
             }
         });
-        //Piazza il pulsante a sinistra
-        layout.setRight(playcard);
+
+
+        VBox vboxContainer = new VBox();
+        HBox hboxGame = new HBox();
+        VBox vboxGame = new VBox();
+        vboxGame.setFillWidth(true);
+
+        Insets padding = new Insets(10, 10, 10, 10);
+        Insets paddingDecks = new Insets(100, 10, 10, 10);
+
+        HBox secondRow = new HBox();
+        HBox firstColomnOfSecondRow = new HBox();
+        firstColomnOfSecondRow.setPadding(padding);
+        firstColomnOfSecondRow.setSpacing(4);
+
+        Label wellText = new Label("                    WELL");
+        Label wellText2 = new Label("CARDS");
+        wellText.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14");
+        wellText2.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14");
+
+
+        GridPane gridPaneForWellCards = new GridPane();
+        gridPaneForWellCards.setVgap(4.0);
+        gridPaneForWellCards.setHgap(4.0);
+        gridPaneForWellCards.setPadding(padding);
+        gridPaneForWellCards.add(wellCard1View, 0, 0);
+        gridPaneForWellCards.add(wellCard2View, 0, 1);
+        gridPaneForWellCards.add(wellCard3View, 1, 0);
+        gridPaneForWellCards.add(wellCard4View, 1, 1);
+        gridPaneForWellCards.add(wellText, 0,2);
+        gridPaneForWellCards.add(wellText2, 1,2);
+
+
+        HBox decks = new HBox();
+
+        Label decksText = new Label("      Resource Deck               Gold Deck");
+        decksText.setStyle("-fx-font-weight: bold; -fx-text-fill: white");
+
+        decks.setSpacing(4.0);
+        decks.setPadding(paddingDecks);
+        decks.getChildren().addAll(topCardResourceDeckView, topCardGoldDeckView);
+
+        specificSeedsPane = new Pane();
+        specificSeedsText = new Text("Your specific Seeds are: ");
+        specificSeedsLabel = new Label();
+
+        specificSeedsPane.getChildren().addAll(specificSeedsText, specificSeedsLabel);
+
+        GridPane buttonContainer = new GridPane();
+
+        buttonContainer.add(playCard,0, 0);
+        buttonContainer.add(drawCard, 1, 0);
+        buttonContainer.add(seeYourSpecificSeeds, 2, 0);
+        buttonContainer.add(flipCardToBack, 0,1);
+        buttonContainer.add(flipCardToFront, 0,2);
+        buttonContainer.add(seeYourPoints, 0, 3);
+        buttonContainer.add(endTurn, 2, 1);
+        buttonContainer.add(seeOtherPlayersBoards, 1, 1);
+
+        vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, specificSeedsPane, buttonContainer);
+        layout.setRight(vboxGame);
+        /*firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
+        secondRow.getChildren().addAll(firstColomnOfSecondRow);
+        layout.setBottom(secondRow);*/
+
         root.getChildren().add(layout);
         Scene gameScene = new Scene(root, 600, 400);
         primaryStage.setScene(gameScene);
