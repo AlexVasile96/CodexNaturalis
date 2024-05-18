@@ -64,8 +64,6 @@ public class Controller {
             System.out.println(cordinateTl);
             //player.getClientView().addCardOnTheBoard((numeroCarte+1)+"->"+typeCard+": "+cordinateTl+" "+ isBack);
             //player.getClientView().setNumOfCardsOnTheBoard(numeroCarte+1);
-
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -105,20 +103,18 @@ public class Controller {
             String result = in.readLine();
             if(result.equals("operation performed correctly")) {
                 System.out.println("Operation 'Draw card from Well' performed correctly");
-
+                out.println("showYourCardDeck");
+                System.out.println("Your Deck:" );
+                System.out.println("--------------------------------------------------------------------------------------");
+                receivingAndPrintingCards();
+                System.out.println("--------------------------------------------------------------------------------------");
+                showWell();
             }
             else{
                 System.out.println("Operation failed");
 
             }
-            /*
-            out.println("drawCardFromWell");
-            out.println(indexSelectedCard);
-            System.out.println("Server says: "+in.readLine());
-            System.out.println("Server says: "+in.readLine());
-            System.out.println("Server says: "+in.readLine());
-            System.out.println("Server says: "+in.readLine());
-            System.out.println("Server says: "+in.readLine());*/
+
         }
 
 
@@ -126,6 +122,17 @@ public class Controller {
 
 
 
+    private void showWell() throws IOException {
+        out.println("showWell");
+        System.out.println("Common Well:\n------------------------------------------------------------------------------------------");
+        System.out.println(in.readLine());//prima carta nel pozzo
+        System.out.println(in.readLine());//seconda carta nel pozzo
+        System.out.println(in.readLine());//terza carta nel pozzo
+        System.out.println(in.readLine());//quarta carta nel pozzo
+        in.readLine();//spazio
+        System.out.println("------------------------------------------------------------------------------------------");
+
+    }
 
 
     public int getGameSize() {
@@ -158,5 +165,12 @@ public class Controller {
     private boolean wrongChoice(String selectedCard) {
         int num = Integer.parseInt(selectedCard);
         return num < 0 || num > 3;
+    }
+    private void receivingAndPrintingCards() throws IOException {
+        String firstCard = in.readLine(); //Reading all three cards
+        String secondCard = in.readLine();
+        String thirdCard = in.readLine();
+        in.readLine();//the space
+
     }
 }
