@@ -102,6 +102,7 @@ public class Controller {
             //ora gestisco le risposte del server
             String result = in.readLine();
             if(result.equals("operation performed correctly")) {
+
                 System.out.println("Operation 'Draw card from Well' performed correctly");
                 out.println("showYourCardDeck");
                 System.out.println("Your Deck:" );
@@ -119,7 +120,6 @@ public class Controller {
 
 
     }
-
 
 
     private void showWell() throws IOException {

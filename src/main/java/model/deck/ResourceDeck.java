@@ -95,6 +95,6 @@ public class ResourceDeck implements Deck{
     }
 
     public synchronized String sendIdCardToGui(){
-        return String.valueOf(resourceCards.get(0).getId()); //I take the id of the resource card and give it to the GUI
+        return String.valueOf(resourceCards.getFirst().getId()); //I take the id of the resource card and give it to the GUI
     }
 }
