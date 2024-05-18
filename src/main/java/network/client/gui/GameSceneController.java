@@ -234,18 +234,186 @@ public class GameSceneController {
 
         Button playcard = new Button("Play Card");
         playcard.setOnAction(e -> {
-            if (selectedCorner == 1) {
-                piazzaCartaTL(getClickedImageView(), gameBoard, indexCardToPlace);
+            if(haveToPlay){
+                try {
+                    System.out.println("il cliente vorrebbe dire playcard, vediamo se qualcuno ascolta diocane");
+                    controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
+                    indexCardPlayedFromHand = indexCardToPlace;
+                    haveToDraw = true;
+                    if(indexCardPlayedFromHand == 0){
+                        handCard1View.setImage(null);
+                    }
+                    if(indexCardPlayedFromHand == 1){
+                        handCard2View.setImage(null);
+                    }
+                    if(indexCardPlayedFromHand == 2){
+                        handCard3View.setImage(null);
+                    }
+
+                } catch (IOException exception) {
+                    throw new RuntimeException(exception);
+                }
+                haveToPlay = false;
             }
-            if (selectedCorner == 2) {
-                piazzaCartaTR(getClickedImageView(), gameBoard, indexCardToPlace);
-            }
-            if (selectedCorner == 3) {
-                piazzaCartaBL(getClickedImageView(), gameBoard, indexCardToPlace);
-            } else if (selectedCorner == 4) {
-                piazzaCartaBR(getClickedImageView(), gameBoard, indexCardToPlace);
+            else{
+                System.out.println("You already placed a card");
             }
         });
+
+        drawCard.setOnAction(e -> {
+            if(haveToDraw){
+                try {
+                    controller.drawCard(wellOrDeck, chosenDeckForDrawingNewCard, indexCardFromWellSelected);
+
+                    if(wellOrDeck.equals("deck")) {
+                        if(chosenDeckForDrawingNewCard.equals("resource")) {
+                            Image drownCardImage = createNewPathForImages(pathForResourceCardFront(idTopCardResourceDeck));
+                            if (indexCardPlayedFromHand == 0) {
+                                handCard1View.setImage(drownCardImage);
+                                idHandCard1 = idTopCardResourceDeck;
+                                System.out.println("idHandCard1 = " + idHandCard1);
+                            }
+                            if (indexCardPlayedFromHand == 1) {
+                                handCard2View.setImage(drownCardImage);
+                                idHandCard2 = idTopCardResourceDeck;
+                                System.out.println("idHandCard2 = " + idHandCard2);
+                            }
+                            if (indexCardPlayedFromHand == 2) {
+                                handCard3View.setImage(drownCardImage);
+                                idHandCard3 = idTopCardResourceDeck;
+                                System.out.println("idHandCard3 = " + idHandCard3);
+                            }
+                            haveToDraw =false;
+                        }
+                        if(chosenDeckForDrawingNewCard.equals("gold")) {
+                            Image drownCardImage = createNewPathForImages(pathForGoldCardFront(idTopCardGoldDeck));
+                            if (indexCardPlayedFromHand == 0) {
+                                handCard1View.setImage(drownCardImage);
+                                idHandCard1 = idTopCardGoldDeck;
+                                System.out.println("idHandCard1 = " + idHandCard1);
+                            }
+                            if (indexCardPlayedFromHand == 1) {
+                                handCard2View.setImage(drownCardImage);
+                                idHandCard2 = idTopCardGoldDeck;
+                                System.out.println("idHandCard2 = " + idHandCard2);
+                            }
+                            if (indexCardPlayedFromHand == 2) {
+                                handCard3View.setImage(drownCardImage);
+                                idHandCard3 = idTopCardGoldDeck;
+                                System.out.println("idHandCard3 = " + idHandCard3);
+                            }
+                            haveToDraw =false;
+                        }
+                    }
+                    if(wellOrDeck.equals("well")){
+                        Image drownCardImage = wellCardSelected;
+                        if (indexCardPlayedFromHand == 0) {
+                            handCard1View.setImage(drownCardImage);
+                            idHandCard1 = idWellCardSelected;
+                            System.out.println("idHandCard1 = "+idHandCard1);
+                        }
+                        if (indexCardPlayedFromHand == 1) {
+                            handCard2View.setImage(drownCardImage);
+                            idHandCard2 = idWellCardSelected;
+                            System.out.println("idHandCard2 = "+idHandCard2);
+                        }
+                        if (indexCardPlayedFromHand == 2) {
+                            handCard3View.setImage(drownCardImage);
+                            idHandCard3 = idWellCardSelected;
+                            System.out.println("idHandCard3: "+idHandCard3);
+                        }
+                        haveToDraw =false;
+                    }
+                    else if(wellOrDeck.equals("notSelected")){
+                        System.out.println("devi selezionare una carta da pescare");
+                    }
+
+                    //updateDecks(); //implementare metodo per aggiornare i deck una volta pescata la carta
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+            else System.out.println("You can't draw any card now");
+        });
+
+        flipCardToBack.setOnAction(e->{
+            if(indexCardToPlace == 0){
+                handCard1View.setImage(flipToBackCard(idHandCard1));
+            }
+            if(indexCardToPlace == 1){
+                handCard2View.setImage(flipToBackCard(idHandCard2));
+            }
+            if(indexCardToPlace == 2){
+                handCard3View.setImage(flipToBackCard(idHandCard3));
+            }
+            else{
+                System.out.println("You chose an unflippable card");
+            }
+        });
+
+        flipCardToFront.setOnAction(e->{
+            if(indexCardToPlace == 0){
+                handCard1View.setImage(flipCardToFront(idHandCard1));
+            }
+            if(indexCardToPlace == 1){
+                handCard2View.setImage(flipCardToFront(idHandCard2));
+            }
+            if(indexCardToPlace == 2){
+                handCard3View.setImage(flipCardToFront(idHandCard3));
+            }
+            else{
+                System.out.println("You chose an unflippable card");
+            }
+        });
+
+        handCard1View.setOnMouseClicked(event -> {
+            System.out.println("Hai selezionato la carta id: "+idHandCard1);
+            indexCardToPlace = 0;
+            System.out.println("indexCardPlayedFromHand = "+indexCardToPlace);
+        });
+        handCard2View.setOnMouseClicked(event -> {
+            System.out.println("Hai selezionato la carta id: "+idHandCard2);
+            indexCardToPlace = 1;
+            System.out.println("indexCardPlayedFromHand = "+indexCardToPlace);
+        });
+        handCard3View.setOnMouseClicked(event -> {
+            System.out.println("Hai selezionato la carta id: "+idHandCard3);
+            indexCardToPlace = 2;
+            System.out.println("indexCardPlayedFromHand = "+indexCardToPlace);
+        });
+
+        seeYourSpecificSeeds.setOnMouseClicked(e->{
+            try {
+                String yourSeeds = controller.showSpecificSeed();
+                System.out.println(yourSeeds);
+                specificSeedsLabel.setText(yourSeeds);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+
+        });
+
+        seeYourPoints.setOnMouseClicked(e->{
+            try {
+                String yourPoints = controller.showPoints();
+                System.out.println("your points are: "+yourPoints);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        seeOtherPlayersBoards.setOnMouseClicked(e->{
+            System.out.println("Per ora guardati la tua board");
+        });
+
+        endTurn.setOnMouseClicked(e->{
+            try {
+                controller.endTurn();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
 
 
         VBox vboxContainer = new VBox();
@@ -315,6 +483,39 @@ public class GameSceneController {
         root.getChildren().add(layout);
         Scene gameScene = new Scene(root, 600, 400);
         primaryStage.setScene(gameScene);
+    }
+
+    private Image flipToBackCard(String stringId){
+        int id = Integer.parseInt(stringId);
+        if(id>=1 && id <=40) //Resource Card
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
+            cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            //resourceCard.setImage(cardFlipped);
+        }
+        else if(id>40 && id<=80) //GoldCard
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteBack/Gold/" + id + ".png";
+            cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            //goldCard.setImage(cardFlipped);
+        }
+        return cardFlipped;
+    }
+    private Image flipCardToFront(String stringId){
+        int id = Integer.parseInt(stringId);
+        if(id>=1 && id <=40) //Resource Card
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
+            cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            //resourceCard.setImage(resourceImage);
+        }
+        else if(id>40 && id<=80) //GoldCard
+        {
+            String pathFlipped = "/ImmaginiCodex/CarteFront/Gold/" + id + ".png";
+            cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            //goldCard.setImage(goldImage);
+        }
+        return cardFlipped;
     }
 
     //Prende un'immagine e crea un gridPane 2x2 che avrà in ogni cella un quarto dell'immagine
@@ -606,13 +807,13 @@ public class GameSceneController {
             chosenDeckForDrawingNewCard = "resource";
             wellOrDeck = "deck";
             System.out.println("resourceDeck clicked");
-            System.out.println(idTopCardResourceDeck);
+            System.out.println(SharedObjectsInGui.getTopCardResourceDeck());
         });
         SharedObjectsInGui.getTopCardGoldDeckView().setOnMouseClicked(e -> {
             chosenDeckForDrawingNewCard = "gold";
             wellOrDeck = "deck";
             System.out.println("goldDeck clicked");
-            System.out.println(idTopCardGoldDeck);
+            System.out.println(SharedObjectsInGui.getTopCardGoldDeck());
         });
     }
 

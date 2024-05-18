@@ -24,6 +24,7 @@ public class Controller {
             System.out.println("You have not selected any card to place or to be placed on or the corner");
             return;
         }
+        System.out.println("il cliente ha detto playcard");
         out.println("playCard"); //sends to server the message to start the playCard method
         try {
 
