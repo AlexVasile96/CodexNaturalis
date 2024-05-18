@@ -79,7 +79,8 @@ public class GameSceneController {
     private Image wellCardSelected = null;
     private String idWellCardSelected = null;
     private Image cardFlipped = null;
-
+    private static final Object syncObject = new Object(); // Oggetto di sincronizzazione
+    //PRE ALEX
     private Player currentPlayer = null;
     Controller controller = new Controller(in, out);
     private String currentPlayerNickname;
@@ -101,24 +102,20 @@ public class GameSceneController {
 
 
     public void updateFirst() throws IOException {
-        synchronized (GameSceneController.class) {
-            if (!SharedObjectsInGui.isInitialized()) {
-                if (clientView.getUserName().equals(currentPlayerNickname)) {
-                    initializeWell(); // Inizializza il pozzo
-                    updatingResourceAndGoldDeck(); // Inizializza i deck
-                    creatingPathForGameMethod();
-                    SharedObjectsInGui.setTopCardResourceDeck(createNewPathForImages(SharedObjectsInGui.getPathResourceDeck()));
-                    SharedObjectsInGui.setTopCardGoldDeck(createNewPathForImages(SharedObjectsInGui.getPathGoldDeck()));
-                    creatingDeckAndGoldDeckView();
-                    creatingWell();
-                    creatingImagesForTheWell();
-                    creatingImagesViewForTheWell();
-                    settingWellOnMouseClickedEvent();
-                    settingDecksOnMouseClickedEvent();
-                    SharedObjectsInGui.setInitialized(true);
-                    System.out.println("Setup finished");
-                }
-            }
+        synchronized (syncObject) { // Uso dell'oggetto di sincronizzazione
+            initializeWell(); // Inizializza il pozzo
+            updatingResourceAndGoldDeck(); // Inizializza i deck
+            creatingPathForGameMethod();
+            SharedObjectsInGui.setTopCardResourceDeck(createNewPathForImages(SharedObjectsInGui.getPathResourceDeck()));
+            SharedObjectsInGui.setTopCardGoldDeck(createNewPathForImages(SharedObjectsInGui.getPathGoldDeck()));
+            creatingDeckAndGoldDeckView();
+            creatingWell();
+            creatingImagesForTheWell();
+            creatingImagesViewForTheWell();
+            settingWellOnMouseClickedEvent();
+            settingDecksOnMouseClickedEvent();
+            //SharedObjectsInGui.setInitialized(true);
+            System.out.println("Setup finished");
         }
     }
     private void creatingWell() {
@@ -272,13 +269,13 @@ public class GameSceneController {
         gridPaneForWellCards.setVgap(4.0);
         gridPaneForWellCards.setHgap(4.0);
         gridPaneForWellCards.setPadding(padding);
-//        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard1View(), 0, 0);
-//        System.out.println(SharedObjectsInGui.getWellCard1View());
-//        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard2View(), 0, 1);
-//        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard3View(), 1, 0);
-//        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard4View(), 1, 1);
-//        gridPaneForWellCards.add(wellText, 0, 2);
-//        gridPaneForWellCards.add(wellText2, 1, 2);
+        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard1View(), 0, 0);
+        System.out.println(SharedObjectsInGui.getWellCard1View());
+        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard2View(), 0, 1);
+        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard3View(), 1, 0);
+        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard4View(), 1, 1);
+        gridPaneForWellCards.add(wellText, 0, 2);
+        gridPaneForWellCards.add(wellText2, 1, 2);
 
 
         HBox decks = new HBox();
@@ -288,7 +285,7 @@ public class GameSceneController {
 
         decks.setSpacing(4.0);
         decks.setPadding(paddingDecks);
-        //decks.getChildren().addAll(SharedObjectsInGui.getTopCardResourceDeckView(), SharedObjectsInGui.getTopCardGoldDeckView());
+        decks.getChildren().addAll(SharedObjectsInGui.getTopCardResourceDeckView(), SharedObjectsInGui.getTopCardGoldDeckView());
 
         specificSeedsPane = new Pane();
         specificSeedsText = new Text("Your specific Seeds are: ");
@@ -499,21 +496,25 @@ public class GameSceneController {
     private void firstWellCard() throws IOException {
         out.println("firstWellId");
         SharedObjectsInGui.setIdCard1(in.readLine());
+        System.out.println(SharedObjectsInGui.getIdCard1());
     }
 
     private void secondWellCard() throws IOException {
         out.println("secondWellId");
         SharedObjectsInGui.setIdCard2(in.readLine());
+        System.out.println(SharedObjectsInGui.getIdCard2());
     }
 
     private void thirdWellCard() throws IOException {
         out.println("thirdWellId");
         SharedObjectsInGui.setIdCard3(in.readLine());
+        System.out.println(SharedObjectsInGui.getIdCard3());
     }
 
     private void fourthWellCard() throws IOException {
         out.println("fourthWellId");
         SharedObjectsInGui.setIdCard4(in.readLine());
+        System.out.println(SharedObjectsInGui.getIdCard4());
     }
 
     private void updatingResourceAndGoldDeck() throws IOException {

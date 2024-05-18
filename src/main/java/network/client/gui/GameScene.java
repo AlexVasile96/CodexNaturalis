@@ -46,7 +46,7 @@ public class GameScene {
     }
 
     public void game(boolean isFirstClient) throws IOException {
-        System.out.println("Initializing game data for client: " + currentPlayerNickname);
+        System.out.println("Initializing game data for client: " + clientView.getUserName());
         controller.initData(primaryStage, out, socket, in, clientView, currentPlayerNickname);
         if (isFirstClient) {
             System.out.println("First client updating setup");
@@ -54,6 +54,11 @@ public class GameScene {
             // Notifica al server che l'inizializzazione è completa
             out.println("SETUPFINISHED");
             System.out.println(in.readLine());
+        }
+        else{
+            System.out.println(in.readLine());
+            System.out.println("Second cient updating setup");
+            controller.updateFirst();
         }
         System.out.println("Starting game for client: ");
         controller.startGame(initCardId);
