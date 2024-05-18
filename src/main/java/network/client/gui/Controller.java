@@ -153,11 +153,17 @@ public class Controller {
         return in.readLine();
     }
 
-    public void endTurn() throws IOException {
+    public String endTurn() throws IOException {
         out.println("endTurn");
         System.out.println("Your turn ended");
-        String answer = in.readLine();
+        String currentPlayerNickname = in.readLine();
+        System.out.println(currentPlayerNickname);
+        String update = in.readLine();
+        System.out.println(update);
+        out.flush();
+        return currentPlayerNickname;
     }
+
     public void showBoards() throws IOException {
         //è da implementare diversamente da gui, però non so come
     }
