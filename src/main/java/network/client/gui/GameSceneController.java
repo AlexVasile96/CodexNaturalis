@@ -107,10 +107,8 @@ public class GameSceneController {
                     initializeWell(); // Inizializza il pozzo
                     updatingResourceAndGoldDeck(); // Inizializza i deck
                     creatingPathForGameMethod();
-
                     SharedObjectsInGui.setTopCardResourceDeck(createNewPathForImages(SharedObjectsInGui.getPathResourceDeck()));
                     SharedObjectsInGui.setTopCardGoldDeck(createNewPathForImages(SharedObjectsInGui.getPathGoldDeck()));
-
                     creatingDeckAndGoldDeckView();
                     creatingWell();
                     creatingImagesForTheWell();
@@ -119,7 +117,6 @@ public class GameSceneController {
                     settingDecksOnMouseClickedEvent();
                     SharedObjectsInGui.setInitialized(true);
                     System.out.println("Setup finished");
-
                 }
             }
         }
