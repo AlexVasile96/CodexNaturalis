@@ -114,8 +114,11 @@ public class GameSceneController {
             creatingImagesViewForTheWell();
             settingWellOnMouseClickedEvent();
             settingDecksOnMouseClickedEvent();
+            playerDeck(); //pesca 2 carte r e 1 carta g dal server(id)
+            checkTypePlayerDeck(); //serve x creare i path correttamente
             //SharedObjectsInGui.setInitialized(true);
-            System.out.println("Setup finished");
+            System.out.println("Setup finished");//
+
         }
     }
     private void creatingWell() {
@@ -132,8 +135,7 @@ public class GameSceneController {
         System.out.println("Well Path Forth: " + SharedObjectsInGui.getWellPathForth());
     }
 
-//    playerDeck(); //pesca 2 carte r e 1 carta g dal server(id)
-//    checkTypePlayerDeck(); //serve x creare i path correttamente
+
     public void startGame(String initCardId) {
 //
 
@@ -142,25 +144,25 @@ public class GameSceneController {
         BackgroundImage backgroundImage = new BackgroundImage(backGroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
 
-//        String pathHandCard1 = "/ImmaginiCodex/CarteFront/" + typeHandCard1 + "/" + idHandCard1 + ".png";
-//        String pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
-//        String pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
-//
-//        Image handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
-//        Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
-//        Image handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
+        String pathHandCard1 = "/ImmaginiCodex/CarteFront/" + typeHandCard1 + "/" + idHandCard1 + ".png";
+        String pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
+        String pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
 
-//        ImageView handCard1View = new ImageView(handCard1);
-//        setWidthAndHeight(handCard1View);
-//
-//        ImageView handCard2View = new ImageView(handCard2);
-//        handCard2View.setFitWidth(widthWellCards);
-//        handCard2View.setFitHeight(heightWellCards);
-//
-//        ImageView handCard3View = new ImageView(handCard3);
-//        handCard3View.setFitWidth(widthWellCards);
-//        handCard3View.setFitHeight(heightWellCards);
-//        //Creo uno scroll pane che conterrà tutto
+        Image handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
+        Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
+        Image handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
+
+        ImageView handCard1View = new ImageView(handCard1);
+        setWidthAndHeight(handCard1View);
+
+        ImageView handCard2View = new ImageView(handCard2);
+        handCard2View.setFitWidth(widthWellCards);
+        handCard2View.setFitHeight(heightWellCards);
+
+        ImageView handCard3View = new ImageView(handCard3);
+        handCard3View.setFitWidth(widthWellCards);
+        handCard3View.setFitHeight(heightWellCards);
+        //Creo uno scroll pane che conterrà tutto
         ScrollPane cardsOntheBoardScrollPane = new ScrollPane();
         cardsOntheBoardScrollPane.setPrefSize(400.00,400.00);
         int boardDimension = 500;
@@ -306,9 +308,9 @@ public class GameSceneController {
 
         vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, specificSeedsPane, buttonContainer);
         layout.setRight(vboxGame);
-        /*firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
+        firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
         secondRow.getChildren().addAll(firstColomnOfSecondRow);
-        layout.setBottom(secondRow);*/
+        layout.setBottom(secondRow);
 
         root.getChildren().add(layout);
         Scene gameScene = new Scene(root, 600, 400);

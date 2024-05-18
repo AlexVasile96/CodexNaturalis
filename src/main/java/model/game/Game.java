@@ -31,10 +31,7 @@ public class Game implements WhatCanPlayerDo {
     private Card selectedCardFromTheDeck = null;
     private Card cPchoose = null;
     private List<Player> playersFromDisk;
-    private Card wellCard1;
-    private Card wellCard2;
-    private Card wellCard3;
-    private Card wellCard4;
+
 
 
     public Game() {                                           //GAME CONSTRUCTOR WHICH INITIALIZED ALL THE CARDS
@@ -286,8 +283,8 @@ public class Game implements WhatCanPlayerDo {
         return String.valueOf(stamp);
     }
 
-    public String getDeckID() {
-        List<Card> cardToSendToServer = currentPlayingPLayer.getPlayerCards();
+    public String getDeckID(Player player) {
+        List<Card> cardToSendToServer = player.getPlayerCards();
         StringBuilder cardsAsString = new StringBuilder();
         for (Card card : cardToSendToServer) {
             cardsAsString.append(card.getId()).append("\n");

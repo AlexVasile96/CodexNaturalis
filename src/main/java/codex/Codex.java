@@ -20,7 +20,6 @@ public class Codex {
                         
                         """);
         Scanner scanner = new Scanner(System.in);
-        //GuiController guiController = GuiController.getInstance();
         int input = 0;
         try {
             input = scanner.nextInt();

@@ -29,7 +29,6 @@ import java.net.Socket;
 import java.util.Objects;
 
 public class GUI extends Application {
-    private int cardSelected;
     private Background background=null;
     private String pathResourceDeck=null;
     private String pathGoldDeck=null;
@@ -140,10 +139,6 @@ public class GUI extends Application {
     public ImageView CARTA;
     @FXML
     public ImageView initCard;
-    @FXML
-    public ImageView resourceCard;
-    @FXML
-    public ImageView goldCard;
 
     public static void main(String[] args) throws IOException {
         ConnectionWithServer connectionWithServer= new ConnectionWithServer(); //creazione classe

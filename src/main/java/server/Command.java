@@ -110,7 +110,7 @@ public class Command { //Command Client sends to Server
             case "fourthWellId":
                 return game.sendWellIdFourthToGui();
             case "deckId":
-                return game.getDeckID();
+                return game.getDeckID(player);
             case "endgame":
                 game.endGame();
             default:
