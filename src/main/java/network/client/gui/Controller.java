@@ -32,17 +32,17 @@ public class Controller {
         try {
 
             out.println(indexCardToPlace); //sends to server the id of the card you want your card to be placed
-            System.out.println(in.readLine());
+            System.out.println(in.readLine()); //puoi procede
 
-            out.println(2); //non voglio girare la carta
-
-            String messageFromServer = in.readLine();
+            out.println(2); //non voglio girare la carta //IMPLEMENTARE IF
+            System.out.println("Non voglio girare la mia carta");
+            /*String messageFromServer = in.readLine();
             do{
                 System.out.println(messageFromServer);
                 messageFromServer= in.readLine();
-            }while (!messageFromServer.equals("exit"));
+            }while (!messageFromServer.equals("exit"));*/
 
-            out.println(indexCardToBePlacedOn); //sends to server the index of the card you want your card to be placed on
+            out.println(indexCardToBePlacedOn-1); //sends to server the index of the card you want your card to be placed on
 
             String avaiableCorners= in.readLine();
             do{

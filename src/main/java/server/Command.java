@@ -25,9 +25,10 @@ public class Command { //Command Client sends to Server
                     String finalResult="Carta placed";
                     checkIfTheBoardHadAlreadyBeenPrinted--;
                     return finalResult;
-
                 }
             }
+
+
 
             case "TurnCard":
                 game.turnCard(player, size);
