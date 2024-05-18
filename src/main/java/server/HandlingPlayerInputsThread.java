@@ -348,9 +348,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     messageFromClient = stdIn.readLine();
                     runCommand(messageFromClient, player);
                 }
-                case "playCardGUI"->{
 
-                }
                 //else if(messageFromClient.equals("drawCardFromWell")){
                 case "drawCard" -> {
                     //well o deck?

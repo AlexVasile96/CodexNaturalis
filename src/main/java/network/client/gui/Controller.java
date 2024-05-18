@@ -30,31 +30,41 @@ public class Controller {
         System.out.println("il cliente ha detto playcard");
         out.println("playCard"); //sends to server the message to start the playCard method
         try {
-
-            out.println(indexCardToPlace); //sends to server the id of the card you want your card to be placed
-            System.out.println(in.readLine()); //puoi procede
-
-            out.println(2); //non voglio girare la carta //IMPLEMENTARE IF
-            System.out.println("Non voglio girare la mia carta");
-            /*String messageFromServer = in.readLine();
+            out.println(indexCardToPlace); //267
+            System.out.println(in.readLine()); //puoi procedere
+            //Vuoi girare la tua carta?
+            out.println(2); //Non voglio girare la mia carta
+            System.out.println("non voglio girare la mia carta");
+            out.println(indexCardToBePlacedOn-1);
+            String[] angoli ={"TL","TR","BR","BL"};
+            String [] validInputs = new String[4];
+           boolean check = false;
+            int size=0;
+           String  messageFromServer = in.readLine();
             do{
-                System.out.println(messageFromServer);
+                for (String corner: angoli){
+                    if(messageFromServer.equals(corner) && !check){
+                        validInputs[size]=messageFromServer;
+                        size++;
+                        check = true;
+                    }
+                }
+                if(!check) System.out.println(messageFromServer);
+                check = false;
                 messageFromServer= in.readLine();
-            }while (!messageFromServer.equals("exit"));*/
+            } while(!messageFromServer.equals("end"));
+            System.out.print("Choose the corner you want to place the card on: ");
+            out.println("TL");
+            System.out.println(in.readLine()); //carta placed
+            String typeCard = in.readLine();
+            String isBack = in.readLine();
+            String cordinateTl = in.readLine();
+            System.out.println(typeCard);
+            System.out.println(isBack);
+            System.out.println(cordinateTl);
+            //player.getClientView().addCardOnTheBoard((numeroCarte+1)+"->"+typeCard+": "+cordinateTl+" "+ isBack);
+            //player.getClientView().setNumOfCardsOnTheBoard(numeroCarte+1);
 
-            out.println(indexCardToBePlacedOn-1); //sends to server the index of the card you want your card to be placed on
-
-            String avaiableCorners= in.readLine();
-            do{
-                System.out.println(avaiableCorners);
-                avaiableCorners= in.readLine();
-            } while(!avaiableCorners.equals("end"));
-
-
-            out.println(cornerSelected); //sends to server the corner of the already placed cards you want your card to be placed on
-
-            String ultimo = in.readLine();
-            System.out.println(ultimo);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
