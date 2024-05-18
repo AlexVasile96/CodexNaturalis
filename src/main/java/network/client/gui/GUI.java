@@ -168,13 +168,13 @@ public class GUI extends Application {
         {
             String pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
             cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            //resourceCard.setImage(cardFlipped);
+
         }
         else if(id>40 && id<=80) //GoldCard
         {
             String pathFlipped = "/ImmaginiCodex/CarteBack/Gold/" + id + ".png";
             cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            //goldCard.setImage(cardFlipped);
+
         }
         return cardFlipped;
     }

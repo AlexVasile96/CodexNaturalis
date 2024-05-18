@@ -21,7 +21,7 @@ public class ResourceDeck implements Deck{
         }
     }
     @Override
-    public Card drawCard(Player player) {  //DRAWING CARD FROM THE DECK
+    public synchronized Card drawCard(Player player) {  //DRAWING CARD FROM THE DECK
         if (resourceCards.isEmpty()) {
             return null; //empty deck
         }
@@ -94,7 +94,7 @@ public class ResourceDeck implements Deck{
         return (idCard <= 40 && idCard >0);
     }
 
-    public String sendIdCardToGui(){
+    public synchronized String sendIdCardToGui(){
         return String.valueOf(resourceCards.get(0).getId()); //I take the id of the resource card and give it to the GUI
     }
 }

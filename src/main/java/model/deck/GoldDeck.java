@@ -23,7 +23,7 @@ public class GoldDeck implements Deck {
             System.out.println(card);
         }
     }
-    public Card drawCard(Player player) {
+    public synchronized Card drawCard(Player player) {
         if (goldCards.isEmpty()) {
             return null;
         }
@@ -66,7 +66,7 @@ public class GoldDeck implements Deck {
         return null;
     }
     @Override
-    public List<Card> drawCard(List<Card> pozzo) {
+    public synchronized List<Card> drawCard(List<Card> pozzo) {
         if (goldCards.isEmpty()) {
             return null; //empty deck
         }
@@ -93,7 +93,7 @@ public class GoldDeck implements Deck {
     private boolean isAGoldCard(int idCard) {
         return (idCard > 40 && idCard <= 80);
     }
-    public String sendIdCardToGui(){
+    public synchronized String sendIdCardToGui(){
         return String.valueOf(goldCards.get(0).getId()); //I take the id of the resource card and give it to the GUI
     }
 

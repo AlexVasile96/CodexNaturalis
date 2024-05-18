@@ -104,7 +104,7 @@ public class GameSceneController {
     //ogni giocatore->pesca le 3 carte
 
 
-    public void updateFirst() throws IOException {
+    public synchronized void  updateFirst() throws IOException {
         synchronized (syncObject) {
             initializeWell();
             updatingResourceAndGoldDeck();
@@ -718,31 +718,31 @@ public class GameSceneController {
         GameSceneController.clickedImageView = clickedImageView;
     }
 
-    private void firstWellCard() throws IOException {
+    private synchronized void firstWellCard() throws IOException {
         out.println("firstWellId");
         SharedObjectsInGui.setIdCard1(in.readLine());
         System.out.println(SharedObjectsInGui.getIdCard1());
     }
 
-    private void secondWellCard() throws IOException {
+    private synchronized void secondWellCard() throws IOException {
         out.println("secondWellId");
         SharedObjectsInGui.setIdCard2(in.readLine());
         System.out.println(SharedObjectsInGui.getIdCard2());
     }
 
-    private void thirdWellCard() throws IOException {
+    private synchronized  void thirdWellCard() throws IOException {
         out.println("thirdWellId");
         SharedObjectsInGui.setIdCard3(in.readLine());
         System.out.println(SharedObjectsInGui.getIdCard3());
     }
 
-    private void fourthWellCard() throws IOException {
+    private synchronized void fourthWellCard() throws IOException {
         out.println("fourthWellId");
         SharedObjectsInGui.setIdCard4(in.readLine());
         System.out.println(SharedObjectsInGui.getIdCard4());
     }
 
-    private void updatingResourceAndGoldDeck() throws IOException {
+    private synchronized void updatingResourceAndGoldDeck() throws IOException {
         out.println("firstCardResourceGui");
         SharedObjectsInGui.setPathResourceDeck(in.readLine());
         System.out.println("la topCardResourceDeck is: " + SharedObjectsInGui.getPathResourceDeck());
@@ -759,7 +759,7 @@ public class GameSceneController {
         SharedObjectsInGui.setWellPathForth(createPathForFrontCards(SharedObjectsInGui.getIdCard4()));
     }
 
-    private void playerDeck() throws IOException {
+    private synchronized void playerDeck() throws IOException {
         out.println("deckId");
         idHandCard1 = in.readLine();
         System.out.println(idHandCard1);
@@ -769,7 +769,7 @@ public class GameSceneController {
         System.out.println(idHandCard3);
     }
 
-    private void checkTypePlayerDeck() throws IOException {
+    private synchronized void checkTypePlayerDeck() throws IOException {
         typeHandCard1 = checkType(idHandCard1);
         typeHandCard2 = checkType(idHandCard2);
         typeHandCard3 = checkType(idHandCard3);

@@ -40,6 +40,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static Player winningPlayer = new Player(null, 0, Dot.BLACK, null);
     private static HandlingPlayerInputsThread firstClient = null;
     private static CountDownLatch setupLatch;
+    private static int updateOrder = 0;
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException {
         this.clientSocket = socket;
@@ -59,6 +60,11 @@ public class HandlingPlayerInputsThread implements Runnable {
         checkGameInizialization = false;
         if (firstClient == null) {
             firstClient = this;
+        }
+        synchronized (HandlingPlayerInputsThread.class) {
+            if (setupLatch == null) {
+                setupLatch = new CountDownLatch(1); // Inizializza il CountDownLatch per il primo client
+            }
         }
     }
 
@@ -438,4 +444,19 @@ public class HandlingPlayerInputsThread implements Runnable {
     private void notifyClientSetupComplete() {
         setupLatch.countDown();
     }
+    public synchronized void incrementUpdateOrder() {
+        updateOrder++;
+        notifyAll();
+    }
+
+    public synchronized int getUpdateOrder() {
+        return updateOrder;
+    }
+
+    public synchronized void waitForTurn(int clientOrder) throws InterruptedException {
+        while (updateOrder < clientOrder) {
+            wait();
+        }
+    }
+
 }

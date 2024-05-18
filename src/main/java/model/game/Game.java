@@ -80,7 +80,7 @@ public class Game implements WhatCanPlayerDo {
         this.currentPlayingPLayer = currentPlayingPLayer;
     }
 
-    public void assignResourcesAndGoldCardsToPlayers() {
+    public synchronized void assignResourcesAndGoldCardsToPlayers() {
         for (Player player : players) {
             player.drawResourceCard(resourceDeck);
             player.drawResourceCard(resourceDeck);
