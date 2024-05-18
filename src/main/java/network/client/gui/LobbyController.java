@@ -48,22 +48,21 @@ public class LobbyController {
                         });
                         break;
                     } else if (message.equals("All clients chose the init Card")) {
-                        System.out.println("Received message: " + message); // Debug per gli altri if
+                        System.out.println("Received message: " + message);
                         Platform.runLater(() -> {
                             System.out.println("seconda lobby");
                             handleInitCardChoice();
                         });
                         break;
                     } else if (message.equals("SETUPFINISHED")) {
-                        System.out.println("Received message: " + message); // Debug per gli altri if
+                        System.out.println("Received message: " + message);
                         Platform.runLater(() -> {
                             System.out.println("Setup finished, starting game...");
                             handleSetupFinished();
                         });
                         break;
                     } else {
-                        // Se il messaggio non è riconosciuto, continua ad aspettare
-                        System.out.println("Unknown message, waiting for correct message..."); // Debug per gli altri if
+                        System.out.println("Unknown message, waiting for correct message...");
                     }
                 }
             } catch (IOException e) {
@@ -77,7 +76,6 @@ public class LobbyController {
             String currentPlayerNickname = in.readLine();
             System.out.println("CurrentPlayerNickname is: " + currentPlayerNickname);
             if (in.readLine().equals("You are the first client")) {
-                // Inizializza GameScene solo se non è già stato inizializzato
                 synchronized (LobbyController.class) {
                     if (gameScene == null) {
                         System.out.println("Initializing GameScene for the first client.");
@@ -86,7 +84,6 @@ public class LobbyController {
                 }
                 gameScene.game(true);
             } else {
-                // Altri client aspettano il messaggio di setup finito
                 synchronized (LobbyController.class) {
                     if (gameScene == null) {
                         System.out.println("Initializing GameScene for other clients.");
@@ -105,7 +102,6 @@ public class LobbyController {
         try {
             String currentPlayerNickname = in.readLine();
             System.out.println("CurrentPlayerNickname in setup finished: " + currentPlayerNickname);
-            // Verifica che gameScene sia inizializzato
             System.out.println("Sono qua");
             synchronized (LobbyController.class) {
                 if (gameScene == null) {
@@ -117,6 +113,19 @@ public class LobbyController {
             gameScene.game(false);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void waitForSetupCompletion() {
+        try {
+            String message = in.readLine();
+            if (message.equals("SETUPFINISHED")) {
+                synchronized (this) {
+                    notifyAll();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

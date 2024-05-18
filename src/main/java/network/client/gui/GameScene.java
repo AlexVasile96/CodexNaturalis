@@ -53,12 +53,19 @@ public class GameScene {
             controller.updateFirst();
             // Notifica al server che l'inizializzazione è completa
             out.println("SETUPFINISHED");
-            System.out.println(in.readLine());
-        }
-        else{
-            System.out.println(in.readLine());
-            System.out.println("Second cient updating setup");
+        } else {
+            System.out.println("Second client updating setup");
+            in.readLine();
             controller.updateFirst();
+            // Notifica al server che l'inizializzazione è completa
+           out.println("SETUPFINISHED");
+        }
+        // Attende conferma dal server
+        while (true) {
+            String message = in.readLine();
+            if (message.equals("SETUPFINISHED")) {
+                break;
+            }
         }
         System.out.println("Starting game for client: ");
         controller.startGame(initCardId);

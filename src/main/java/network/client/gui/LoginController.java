@@ -107,4 +107,5 @@ public class LoginController {
         ChooseNumOfPlayersScene chooseNumOfPlayersScene= new ChooseNumOfPlayersScene();
         chooseNumOfPlayersScene.createChooseNumOfPlayersScene(primaryStage,out,socket,in, clientView);
     }
+
 }
