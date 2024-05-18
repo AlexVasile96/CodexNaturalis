@@ -319,6 +319,8 @@ public class GameSceneController {
                             haveToDraw = false;
                         }
                     } else if (wellOrDeck.equals("well")) {
+
+
                         Image drownCardImage = wellCardSelected;
                         String idTopCard = idWellCardSelected;
                         switch (indexCardPlayedFromHand) {
@@ -338,11 +340,30 @@ public class GameSceneController {
                         System.out.println("idHandCard" + (indexCardPlayedFromHand + 1) + " = " + idTopCard);
 
                         // Aggiorna la carta del well con la prossima carta disponibile
-                        String path = "/ImmaginiCodex/CarteFront/Resource/" + idTopCardResourceDeck + ".png";
+                        String pathResource = "/ImmaginiCodex/CarteFront/Resource/" + idTopCardResourceDeck + ".png";
                         System.out.println(idTopCardResourceDeck);
-                        System.out.println(path);
-                        Image newWellCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(path)));
-                        SharedObjectsInGui.getWellCard1View().setImage(newWellCardImage);
+                        System.out.println(pathResource);
+                        Image newWellResourceCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathResource)));
+
+                        String pathGold = "/ImmaginiCodex/CarteFront/Gold/" + idTopCardGoldDeck + ".png";
+                        System.out.println(idTopCardGoldDeck);
+                        System.out.println(pathGold);
+                        Image newWellGoldCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathGold)));
+                        if(indexCardFromWellSelected == 0){
+                            SharedObjectsInGui.getWellCard1View().setImage(newWellResourceCardImage);
+                        }
+                        else if(indexCardFromWellSelected == 1){
+                            SharedObjectsInGui.getWellCard2View().setImage(newWellResourceCardImage);
+                        }
+                        else if(indexCardFromWellSelected == 2){
+                            SharedObjectsInGui.getWellCard3View().setImage(newWellGoldCardImage);
+                        }
+                        else if(indexCardFromWellSelected == 3) {
+                            SharedObjectsInGui.getWellCard4View().setImage(newWellGoldCardImage);
+                        }
+
+
+
                         System.out.println("Aggiornata carta nel well");
 
                         haveToDraw = false;
@@ -466,7 +487,6 @@ public class GameSceneController {
         gridPaneForWellCards.setHgap(4.0);
         gridPaneForWellCards.setPadding(padding);
         gridPaneForWellCards.add(SharedObjectsInGui.getWellCard1View(), 0, 0);
-        System.out.println(SharedObjectsInGui.getWellCard1View());
         gridPaneForWellCards.add(SharedObjectsInGui.getWellCard2View(), 0, 1);
         gridPaneForWellCards.add(SharedObjectsInGui.getWellCard3View(), 1, 0);
         gridPaneForWellCards.add(SharedObjectsInGui.getWellCard4View(), 1, 1);
