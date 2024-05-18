@@ -16,7 +16,7 @@
             </Pane>
          </content>
       </ScrollPane>
-      <ImageView fx:id="CARTA" fitHeight="63.0" fitWidth="93.0" layoutX="367.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="card" fitHeight="63.0" fitWidth="93.0" layoutX="367.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="CARTA2" fitHeight="63.0" fitWidth="93.0" layoutX="460.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="CARTA3" fitHeight="63.0" fitWidth="93.0" layoutX="367.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="CARTA4" fitHeight="63.0" fitWidth="93.0" layoutX="460.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" />

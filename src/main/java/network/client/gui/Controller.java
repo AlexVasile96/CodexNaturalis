@@ -179,5 +179,13 @@ public class Controller {
         in.readLine();//the space
 
     }
+    public void waitForTurn(String playerNickname) throws IOException {
+        String message;
+        while (!(message = in.readLine()).equals(playerNickname)) {
+            // Scarta i messaggi ricevuti finché non è il turno del giocatore
+            System.out.println("Received message while waiting for turn: " + message);
+        }
+        System.out.println("It's now " + playerNickname + "'s turn");
+    }
 
 }

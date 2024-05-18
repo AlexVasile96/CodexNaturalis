@@ -1,5 +1,6 @@
 package network.client.gui;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -143,11 +144,8 @@ public class GameSceneController {
         System.out.println("Well Path Forth: " + SharedObjectsInGui.getWellPathForth());
     }
 
-
     public void startGame(String initCardId) throws IOException {
-//
-
-        //Setting background
+        // Setting background
         Image backGroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
         BackgroundImage backgroundImage = new BackgroundImage(backGroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
@@ -170,325 +168,97 @@ public class GameSceneController {
         ImageView handCard3View = new ImageView(handCard3);
         handCard3View.setFitWidth(widthWellCards);
         handCard3View.setFitHeight(heightWellCards);
-        //Creo uno scroll pane che conterrà tutto
+
+        // Creo uno scroll pane che conterrà tutto
         ScrollPane cardsOntheBoardScrollPane = new ScrollPane();
-        cardsOntheBoardScrollPane.setPrefSize(400.00,400.00);
+        cardsOntheBoardScrollPane.setPrefSize(400.00, 400.00);
         int boardDimension = 500;
 
-        GridPane gameBoard = new GridPane(boardDimension, boardDimension);  //Creo il gridpane che conterrà uno StackPane e gli piazzo il background
-
+        GridPane gameBoard = new GridPane(boardDimension, boardDimension);  // Creo il gridpane che conterrà uno StackPane e gli piazzo il background
         gameBoard.setBackground(background);
         gameBoard.setHgap(0);
         gameBoard.setVgap(0);
-        gameBoard.setAlignment(Pos.CENTER); //init card in the middle
+        gameBoard.setAlignment(Pos.CENTER); // init card in the middle
 
-        double windowdLenght = root.getWidth(); //Salvo la dimensione della finestra (root) in due variabili
+        double windowdLenght = root.getWidth(); // Salvo la dimensione della finestra (root) in due variabili
         double windowHight = root.getHeight();
 
-        gameBoard.setPrefSize(windowdLenght * 0.8, windowHight * 0.8); //Imposto la grandezza del gridpane all'80% della dimensione (iniziale) della finestra
+        gameBoard.setPrefSize(windowdLenght * 0.8, windowHight * 0.8); // Imposto la grandezza del gridpane all'80% della dimensione (iniziale) della finestra
 
-        //Creo immagine e ImageView della carta iniziale che dovrò piazzare al centro
-
+        // Creo immagine e ImageView della carta iniziale che dovrò piazzare al centro
         Image initCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Init/" + initCardId + ".png")));
         GridPane initCardDividedINFourRegions = subnettingEachImage(initCardImage);
 
-
-        //CARTA INIZIALE -> ogni cella del gridpane viene castata a ImageView
-        ImageView tlImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(0); //Tl
+        // Carta iniziale -> ogni cella del gridpane viene castata a ImageView
+        ImageView tlImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(0); // TL
         ImageView trImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(1);
         ImageView blImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(2);
         ImageView brImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(3);
 
-        //Ogni imageView viene resa clickabile
+        // Ogni imageView viene resa clickabile
         tlImageView.setPickOnBounds(true);
         trImageView.setPickOnBounds(true);
         blImageView.setPickOnBounds(true);
         brImageView.setPickOnBounds(true);
 
-        //InitializeInitCard-> all
-
-        //Adding each imageview to the gameBoard
-
+        // Adding each imageview to the gameBoard
         gameBoard.add(tlImageView, boardDimension / 2, boardDimension / 2);
         gameBoard.add(trImageView, boardDimension / 2 + 1, boardDimension / 2);
         gameBoard.add(blImageView, boardDimension / 2, boardDimension / 2 + 1);
         gameBoard.add(brImageView, boardDimension / 2 + 1, boardDimension / 2 + 1);
 
+        // Set onMouseClicked event for each corner of the initial card
         tlImageView.setOnMouseClicked(event -> {
             setClickedImageView(tlImageView);
-            System.out.println("YOu clicked tl");
+            System.out.println("You clicked TL");
             cornerSelected = "TL";
             indexCardToBePlacedOn = 1;
         });
         trImageView.setOnMouseClicked(event -> {
             setClickedImageView(trImageView);
-            System.out.println("YOu clicked tr");
+            System.out.println("You clicked TR");
             cornerSelected = "TR";
             indexCardToBePlacedOn = 1;
         });
         blImageView.setOnMouseClicked(event -> {
             setClickedImageView(blImageView);
-            System.out.println("YOu clicked bl");
+            System.out.println("You clicked BL");
             cornerSelected = "BL";
             indexCardToBePlacedOn = 1;
         });
         brImageView.setOnMouseClicked(event -> {
             setClickedImageView(brImageView);
-            System.out.println("YOu clicked br");
+            System.out.println("You clicked BR");
             cornerSelected = "BR";
             indexCardToBePlacedOn = 1;
         });
 
-
         cardsOntheBoardScrollPane.setContent(gameBoard);
         BorderPane layout = new BorderPane();
-        layout.setCenter(cardsOntheBoardScrollPane); //initcard in the middle
+        layout.setCenter(cardsOntheBoardScrollPane); // init card in the middle
 
-        /*if (selectedCorner == 1) {
-            piazzaCartaTL(getClickedImageView(), gameBoard, indexCardToPlace);
-        }
-        if (selectedCorner == 2) {
-            piazzaCartaTR(getClickedImageView(), gameBoard, indexCardToPlace);
-        }
-        if (selectedCorner == 3) {
-            piazzaCartaBL(getClickedImageView(), gameBoard, indexCardToPlace);
-        } else if (selectedCorner == 4) {
-            piazzaCartaBR(getClickedImageView(), gameBoard, indexCardToPlace);
-        }*/
-
-        if(currentPlayerNickname.equals(clientView.getUserName())){
-            playCard.setOnAction(e -> {
-                if(haveToPlay){
-                    try {
-                        System.out.println("il cliente vorrebbe dire playcard, vediamo se qualcuno ascolta diocane");
-                        controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
-                        indexCardPlayedFromHand = indexCardToPlace;
-                        haveToDraw = true;
-                        if(indexCardPlayedFromHand == 0){
-                            handCard1View.setImage(null);
-                        }
-                        if(indexCardPlayedFromHand == 1){
-                            handCard2View.setImage(null);
-                        }
-                        if(indexCardPlayedFromHand == 2){
-                            handCard3View.setImage(null);
-                        }
-
-                    } catch (IOException exception) {
-                        throw new RuntimeException(exception);
-                    }
-                    haveToPlay = false;
-                }
-                else{
-                    System.out.println("You already placed a card");
-                }
-            });
-//            if(!haveToDraw && !haveToPlay) {
-                System.out.println("puoi fare la endTurn se vuoi");
-                endTurn.setOnMouseClicked(e -> {
-                    try {
-                        currentPlayerNickname = controller.endTurn();
-                        haveToPlay = true;
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
-//            }
-            /*else{
-                System.out.println("You can't end your turn now");
-            }*/
-        }
-        else{
-            while(!clientView.getUserName().equals(currentPlayerNickname)){
-                String waitForCall = in.readLine();
-                if(waitForCall.equals(clientView.getUserName())){
-                    currentPlayerNickname = waitForCall;
-                    System.out.println(currentPlayerNickname);
-                    in.readLine();
-                }
-                else {
-                    System.out.println("E' il turno di "+ currentPlayerNickname);
-                }
-
-            }
-
-        }
-
-
-
-        drawCard.setOnAction(e -> {
-            if (haveToDraw) {
+        if (currentPlayerNickname.equals(clientView.getUserName())) {
+            // Il client può iniziare subito a giocare perché è il suo turno
+            setupGameActions(handCard1View, handCard2View, handCard3View);
+        } else {
+            // Il client deve aspettare il suo turno
+            new Thread(() -> {
                 try {
-                    controller.drawCard(wellOrDeck, chosenDeckForDrawingNewCard, indexCardFromWellSelected);
-
-                    if (wellOrDeck.equals("deck")) {
-                        Image drownCardImage = null;
-                        String idTopCard = null;
-
-                        if (chosenDeckForDrawingNewCard.equals("resource")) {
-                            drownCardImage = createNewPathForImages(pathForResourceCardFront(idTopCardResourceDeck));
-                            idTopCard = idTopCardResourceDeck;
-                        } else if (chosenDeckForDrawingNewCard.equals("gold")) {
-                            drownCardImage = createNewPathForImages(pathForGoldCardFront(idTopCardGoldDeck));
-                            idTopCard = idTopCardGoldDeck;
+                    controller.waitForTurn(clientView.getUserName());
+                    Platform.runLater(() -> {
+                        try {
+                            setupGameActions(handCard1View, handCard2View, handCard3View);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-
-                        if (drownCardImage != null && idTopCard != null) {
-                            switch (indexCardPlayedFromHand) {
-                                case 0:
-                                    handCard1View.setImage(drownCardImage);
-                                    idHandCard1 = idTopCard;
-                                    break;
-                                case 1:
-                                    handCard2View.setImage(drownCardImage);
-                                    idHandCard2 = idTopCard;
-                                    break;
-                                case 2:
-                                    handCard3View.setImage(drownCardImage);
-                                    idHandCard3 = idTopCard;
-                                    break;
-                            }
-                            System.out.println("idHandCard" + (indexCardPlayedFromHand + 1) + " = " + idTopCard);
-                            haveToDraw = false;
-                        }
-                    } else if (wellOrDeck.equals("well")) {
-
-
-                        Image drownCardImage = wellCardSelected;
-                        String idTopCard = idWellCardSelected;
-                        switch (indexCardPlayedFromHand) {
-                            case 0:
-                                handCard1View.setImage(drownCardImage);
-                                idHandCard1 = idTopCard;
-                                break;
-                            case 1:
-                                handCard2View.setImage(drownCardImage);
-                                idHandCard2 = idTopCard;
-                                break;
-                            case 2:
-                                handCard3View.setImage(drownCardImage);
-                                idHandCard3 = idTopCard;
-                                break;
-                        }
-                        System.out.println("idHandCard" + (indexCardPlayedFromHand + 1) + " = " + idTopCard);
-
-                        // Aggiorna la carta del well con la prossima carta disponibile
-                        String pathResource = "/ImmaginiCodex/CarteFront/Resource/" + idTopCardResourceDeck + ".png";
-                        System.out.println(idTopCardResourceDeck);
-                        System.out.println(pathResource);
-                        Image newWellResourceCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathResource)));
-
-                        String pathGold = "/ImmaginiCodex/CarteFront/Gold/" + idTopCardGoldDeck + ".png";
-                        System.out.println(idTopCardGoldDeck);
-                        System.out.println(pathGold);
-                        Image newWellGoldCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathGold)));
-                        if(indexCardFromWellSelected == 0){
-                            SharedObjectsInGui.getWellCard1View().setImage(newWellResourceCardImage);
-                        }
-                        else if(indexCardFromWellSelected == 1){
-                            SharedObjectsInGui.getWellCard2View().setImage(newWellResourceCardImage);
-                        }
-                        else if(indexCardFromWellSelected == 2){
-                            SharedObjectsInGui.getWellCard3View().setImage(newWellGoldCardImage);
-                        }
-                        else if(indexCardFromWellSelected == 3) {
-                            SharedObjectsInGui.getWellCard4View().setImage(newWellGoldCardImage);
-                        }
-
-
-
-                        System.out.println("Aggiornata carta nel well");
-
-                        haveToDraw = false;
-                    } else if (wellOrDeck.equals("notSelected")) {
-                        System.out.println("Devi selezionare una carta da pescare");
-                    }
-
-                    // updateDecks(); // Implementare metodo per aggiornare i deck una volta pescata la carta
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } else {
-                System.out.println("You can't draw any card now");
-            }
-        });
+            }).start();
+        }
 
-        flipCardToBack.setOnAction(e->{
-            if(indexCardToPlace == 0){
-                handCard1View.setImage(flipToBackCard(idHandCard1));
-            }
-            if(indexCardToPlace == 1){
-                handCard2View.setImage(flipToBackCard(idHandCard2));
-            }
-            if(indexCardToPlace == 2){
-                handCard3View.setImage(flipToBackCard(idHandCard3));
-            }
-            else{
-                System.out.println("You chose an unflippable card");
-            }
-        });
-
-        flipCardToFront.setOnAction(e->{
-            if(indexCardToPlace == 0){
-                handCard1View.setImage(flipCardToFront(idHandCard1));
-            }
-            if(indexCardToPlace == 1){
-                handCard2View.setImage(flipCardToFront(idHandCard2));
-            }
-            if(indexCardToPlace == 2){
-                handCard3View.setImage(flipCardToFront(idHandCard3));
-            }
-            else{
-                System.out.println("You chose an unflippable card");
-            }
-        });
-
-        handCard1View.setOnMouseClicked(event -> {
-            System.out.println("Hai selezionato la carta id: "+idHandCard1);
-            indexCardToPlace = 0;
-            System.out.println("indexCardPlayedFromHand = "+indexCardToPlace);
-        });
-        handCard2View.setOnMouseClicked(event -> {
-            System.out.println("Hai selezionato la carta id: "+idHandCard2);
-            indexCardToPlace = 1;
-            System.out.println("indexCardPlayedFromHand = "+indexCardToPlace);
-        });
-        handCard3View.setOnMouseClicked(event -> {
-            System.out.println("Hai selezionato la carta id: "+idHandCard3);
-            indexCardToPlace = 2;
-            System.out.println("indexCardPlayedFromHand = "+indexCardToPlace);
-        });
-
-        seeYourSpecificSeeds.setOnMouseClicked(e->{
-            try {
-                String yourSeeds = controller.showSpecificSeed();
-                System.out.println(yourSeeds);
-                specificSeedsLabel.setText(yourSeeds);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-
-        });
-
-        seeYourPoints.setOnMouseClicked(e->{
-            try {
-                boardPointsScene = new BoardPointsScene(primaryStage, out, socket, in);
-                boardPointsScene.popupBoardPoints(); //opens the boardPoints popupScene
-
-                /*String yourPoints = controller.showPoints();
-                System.out.println("your points are: "+yourPoints);*/
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
-        seeOtherPlayersBoards.setOnMouseClicked(e->{
-            System.out.println("Per ora guardati la tua board");
-        });
-
-
-
-
+        // Configura l'interfaccia e altre componenti del gioco
 
         VBox vboxContainer = new VBox();
         HBox hboxGame = new HBox();
@@ -508,7 +278,6 @@ public class GameSceneController {
         wellText.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14");
         wellText2.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14");
 
-
         GridPane gridPaneForWellCards = new GridPane();
         gridPaneForWellCards.setVgap(4.0);
         gridPaneForWellCards.setHgap(4.0);
@@ -520,9 +289,7 @@ public class GameSceneController {
         gridPaneForWellCards.add(wellText, 0, 2);
         gridPaneForWellCards.add(wellText2, 1, 2);
 
-
         HBox decks = new HBox();
-
         Label decksText = new Label("      Resource Deck               Gold Deck");
         decksText.setStyle("-fx-font-weight: bold; -fx-text-fill: white");
 
@@ -538,58 +305,240 @@ public class GameSceneController {
 
         GridPane buttonContainer = new GridPane();
 
-        buttonContainer.add(playCard,0, 0);
+        buttonContainer.add(playCard, 0, 0);
         buttonContainer.add(drawCard, 1, 0);
         buttonContainer.add(seeYourSpecificSeeds, 2, 0);
-        buttonContainer.add(flipCardToBack, 0,1);
-        buttonContainer.add(flipCardToFront, 0,2);
+        buttonContainer.add(flipCardToBack, 0, 1);
+        buttonContainer.add(flipCardToFront, 0, 2);
         buttonContainer.add(seeYourPoints, 0, 3);
         buttonContainer.add(endTurn, 2, 1);
         buttonContainer.add(seeOtherPlayersBoards, 1, 1);
-
         vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, specificSeedsPane, buttonContainer);
         layout.setRight(vboxGame);
         firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
         secondRow.getChildren().addAll(firstColomnOfSecondRow);
         layout.setBottom(secondRow);
-
         root.getChildren().add(layout);
         Scene gameScene = new Scene(root, 600, 400);
         primaryStage.setScene(gameScene);
     }
 
-    private Image flipToBackCard(String stringId){
+    private void setupGameActions(ImageView handCard1View, ImageView handCard2View, ImageView handCard3View) throws IOException {
+        playCard.setOnAction(e -> {
+            if (haveToPlay) {
+                try {
+                    System.out.println("Il cliente vorrebbe dire playcard, vediamo se qualcuno ascolta");
+                    controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
+                    indexCardPlayedFromHand = indexCardToPlace;
+                    haveToDraw = true;
+                    if (indexCardPlayedFromHand == 0) {
+                        handCard1View.setImage(null);
+                    }
+                    if (indexCardPlayedFromHand == 1) {
+                        handCard2View.setImage(null);
+                    }
+                    if (indexCardPlayedFromHand == 2) {
+                        handCard3View.setImage(null);
+                    }
+                } catch (IOException exception) {
+                    throw new RuntimeException(exception);
+                }
+                haveToPlay = false;
+            } else {
+                System.out.println("You already placed a card");
+            }
+        });
+
+        endTurn.setOnMouseClicked(e -> {
+            try {
+                currentPlayerNickname = controller.endTurn();
+                haveToPlay = true;
+                // Inizia a aspettare di nuovo il turno
+                new Thread(() -> {
+                    try {
+                        controller.waitForTurn(clientView.getUserName());
+                        Platform.runLater(() -> {
+                            try {
+                                setupGameActions(handCard1View, handCard2View, handCard3View);
+                            } catch (IOException exception) {
+                                exception.printStackTrace();
+                            }
+                        });
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }).start();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        drawCard.setOnAction(e -> {
+            if (haveToDraw) {
+                try {
+                    controller.drawCard(wellOrDeck, chosenDeckForDrawingNewCard, indexCardFromWellSelected);
+
+                    if (wellOrDeck.equals("deck")) {
+                        Image drawnCardImage = null;
+                        String idTopCard = null;
+
+                        if (chosenDeckForDrawingNewCard.equals("resource")) {
+                            drawnCardImage = createNewPathForImages(pathForResourceCardFront(idTopCardResourceDeck));
+                            idTopCard = idTopCardResourceDeck;
+                        } else if (chosenDeckForDrawingNewCard.equals("gold")) {
+                            drawnCardImage = createNewPathForImages(pathForGoldCardFront(idTopCardGoldDeck));
+                            idTopCard = idTopCardGoldDeck;
+                        }
+
+                        if (drawnCardImage != null && idTopCard != null) {
+                            switch (indexCardPlayedFromHand) {
+                                case 0:
+                                    handCard1View.setImage(drawnCardImage);
+                                    idHandCard1 = idTopCard;
+                                    break;
+                                case 1:
+                                    handCard2View.setImage(drawnCardImage);
+                                    idHandCard2 = idTopCard;
+                                    break;
+                                case 2:
+                                    handCard3View.setImage(drawnCardImage);
+                                    idHandCard3 = idTopCard;
+                                    break;
+                            }
+                            System.out.println("idHandCard" + (indexCardPlayedFromHand + 1) + " = " + idTopCard);
+                            haveToDraw = false;
+                        }
+                    } else if (wellOrDeck.equals("well")) {
+                        Image drawnCardImage = wellCardSelected;
+                        String idTopCard = idWellCardSelected;
+                        switch (indexCardPlayedFromHand) {
+                            case 0:
+                                handCard1View.setImage(drawnCardImage);
+                                idHandCard1 = idTopCard;
+                                break;
+                            case 1:
+                                handCard2View.setImage(drawnCardImage);
+                                idHandCard2 = idTopCard;
+                                break;
+                            case 2:
+                                handCard3View.setImage(drawnCardImage);
+                                idHandCard3 = idTopCard;
+                                break;
+                        }
+                        System.out.println("idHandCard" + (indexCardPlayedFromHand + 1) + " = " + idTopCard);
+                        haveToDraw = false;
+                    } else {
+                        System.out.println("Devi selezionare una carta da pescare");
+                    }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            } else {
+                System.out.println("You can't draw any card now");
+            }
+        });
+
+        flipCardToBack.setOnAction(e -> {
+            switch (indexCardToPlace) {
+                case 0:
+                    handCard1View.setImage(flipToBackCard(idHandCard1));
+                    break;
+                case 1:
+                    handCard2View.setImage(flipToBackCard(idHandCard2));
+                    break;
+                case 2:
+                    handCard3View.setImage(flipToBackCard(idHandCard3));
+                    break;
+                default:
+                    System.out.println("You chose an unflippable card");
+                    break;
+            }
+        });
+
+        flipCardToFront.setOnAction(e -> {
+            switch (indexCardToPlace) {
+                case 0:
+                    handCard1View.setImage(flipCardToFront(idHandCard1));
+                    break;
+                case 1:
+                    handCard2View.setImage(flipCardToFront(idHandCard2));
+                    break;
+                case 2:
+                    handCard3View.setImage(flipCardToFront(idHandCard3));
+                    break;
+                default:
+                    System.out.println("You chose an unflippable card");
+                    break;
+            }
+        });
+
+        handCard1View.setOnMouseClicked(event -> {
+            System.out.println("Hai selezionato la carta id: " + idHandCard1);
+            indexCardToPlace = 0;
+            System.out.println("indexCardPlayedFromHand = " + indexCardToPlace);
+        });
+
+        handCard2View.setOnMouseClicked(event -> {
+            System.out.println("Hai selezionato la carta id: " + idHandCard2);
+            indexCardToPlace = 1;
+            System.out.println("indexCardPlayedFromHand = " + indexCardToPlace);
+        });
+
+        handCard3View.setOnMouseClicked(event -> {
+            System.out.println("Hai selezionato la carta id: " + idHandCard3);
+            indexCardToPlace = 2;
+            System.out.println("indexCardPlayedFromHand = " + indexCardToPlace);
+        });
+
+        seeYourSpecificSeeds.setOnMouseClicked(e -> {
+            try {
+                String yourSeeds = controller.showSpecificSeed();
+                System.out.println(yourSeeds);
+                specificSeedsLabel.setText(yourSeeds);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        seeYourPoints.setOnMouseClicked(e -> {
+            try {
+                boardPointsScene = new BoardPointsScene(primaryStage, out, socket, in);
+                boardPointsScene.popupBoardPoints(); // opens the boardPoints popupScene
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        seeOtherPlayersBoards.setOnMouseClicked(e -> {
+            System.out.println("Per ora guardati la tua board");
+        });
+    }
+
+    private Image flipToBackCard(String stringId) {
         int id = Integer.parseInt(stringId);
-        if(id>=1 && id <=40) //Resource Card
-        {
+        if (id >= 1 && id <= 40) { // Resource Card
             String pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
-            cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            //resourceCard.setImage(cardFlipped);
-        }
-        else if(id>40 && id<=80) //GoldCard
-        {
+            return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+        } else if (id > 40 && id <= 80) { // Gold Card
             String pathFlipped = "/ImmaginiCodex/CarteBack/Gold/" + id + ".png";
-            cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            //goldCard.setImage(cardFlipped);
+            return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
         }
-        return cardFlipped;
+        return null;
     }
-    private Image flipCardToFront(String stringId){
+
+    private Image flipCardToFront(String stringId) {
         int id = Integer.parseInt(stringId);
-        if(id>=1 && id <=40) //Resource Card
-        {
+        if (id >= 1 && id <= 40) { // Resource Card
             String pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
-            cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            //resourceCard.setImage(resourceImage);
-        }
-        else if(id>40 && id<=80) //GoldCard
-        {
+            return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+        } else if (id > 40 && id <= 80) { // Gold Card
             String pathFlipped = "/ImmaginiCodex/CarteFront/Gold/" + id + ".png";
-            cardFlipped= new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
-            //goldCard.setImage(goldImage);
+            return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
         }
-        return cardFlipped;
+        return null;
     }
+
+
 
     //Prende un'immagine e crea un gridPane 2x2 che avrà in ogni cella un quarto dell'immagine
     public GridPane subnettingEachImage(Image image) {
