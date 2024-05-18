@@ -105,9 +105,9 @@ public class GameSceneController {
 
 
     public void updateFirst() throws IOException {
-        synchronized (syncObject) { // Uso dell'oggetto di sincronizzazione
-            initializeWell(); // Inizializza il pozzo
-            updatingResourceAndGoldDeck(); // Inizializza i deck
+        synchronized (syncObject) {
+            initializeWell();
+            updatingResourceAndGoldDeck();
             creatingPathForGameMethod();
             SharedObjectsInGui.setTopCardResourceDeck(createNewPathForImages(SharedObjectsInGui.getPathResourceDeck()));
             SharedObjectsInGui.setTopCardGoldDeck(createNewPathForImages(SharedObjectsInGui.getPathGoldDeck()));
@@ -117,13 +117,12 @@ public class GameSceneController {
             creatingImagesViewForTheWell();
             settingWellOnMouseClickedEvent();
             settingDecksOnMouseClickedEvent();
-            playerDeck(); //pesca 2 carte r e 1 carta g dal server(id)
-            checkTypePlayerDeck(); //serve x creare i path correttamente
-            //SharedObjectsInGui.setInitialized(true);
-            System.out.println("Setup finished");//
-
+            playerDeck();
+            checkTypePlayerDeck();
+            System.out.println("Setup finished");
         }
     }
+
     private void creatingWell() {
         System.out.println("Creating paths for well cards...");
         SharedObjectsInGui.setWellPathOne(createPathForFrontCards(SharedObjectsInGui.getIdCard1()));
@@ -937,6 +936,7 @@ public class GameSceneController {
         fourthWellCard();
         checkTypeWellCards();
     }
+
 }
 
 
