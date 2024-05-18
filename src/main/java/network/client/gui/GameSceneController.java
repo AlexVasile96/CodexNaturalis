@@ -85,7 +85,7 @@ public class GameSceneController {
     private Controller controller = null;
     private String currentPlayerNickname;
     private ClientView clientView;
-
+    private BoardPointsScene boardPointsScene;
 
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
@@ -413,8 +413,11 @@ public class GameSceneController {
 
         seeYourPoints.setOnMouseClicked(e->{
             try {
-                String yourPoints = controller.showPoints();
-                System.out.println("your points are: "+yourPoints);
+                boardPointsScene = new BoardPointsScene(primaryStage, out, socket, in);
+                boardPointsScene.popupBoardPoints(); //opens the boardPoints popupScene
+
+                /*String yourPoints = controller.showPoints();
+                System.out.println("your points are: "+yourPoints);*/
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
