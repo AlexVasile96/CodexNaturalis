@@ -529,7 +529,7 @@ public class ServerConnection implements Runnable {
             showWell();
         }
         else{
-            System.out.println("Operation performed incorrectly");
+            System.out.println("Operation failed");
             System.out.println("Server says: "+ result);
             System.out.println("Your Deck:" );
             System.out.println("--------------------------------------------------------------------------------------");

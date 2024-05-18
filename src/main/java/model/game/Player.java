@@ -93,7 +93,7 @@ public class Player implements Observable {
                 for (Card card : cardwell) {
                     System.out.println(card);
                 }
-                Card drownCard= choosingTheSpecificCardFromTheWellForServer(index, cardwell); //Choosing the card and saving it in drowncard
+                Card drownCard = choosingTheSpecificCardFromTheWellForServer(index, cardwell); //Choosing the card and saving it in drowncard
                 fillingTheWellWithTheCorrectCard(drownCard,rc,gd, cardwell);           //Filling The Well
                 playerCards.add(drownCard);                                             //Adding the card to the player hand
             } catch (Exception e) {

@@ -80,9 +80,13 @@ public class Controller {
             }
         } else if (wellOrDeck.equals("well")) {
             out.println(wellOrDeck);
-            out.println("drawCardFromWellDeck");
+            out.println("drawCardFromWell");
             out.println(indexSelectedCard);
-            in.readLine();
+            System.out.println("Server says: "+in.readLine());
+            System.out.println("Server says: "+in.readLine());
+            System.out.println("Server says: "+in.readLine());
+            System.out.println("Server says: "+in.readLine());
+            System.out.println("Server says: "+in.readLine());
         }
 
 
