@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import view.ClientView;
@@ -52,3 +51,12 @@ public class GUI extends Application {
 }
 
 
+//TO DO LIST IN GUI
+
+//SINCRONIZZARE BENE LE CARTE
+//FINIRE SINCRONIZZAZIONE DEI TURNI
+//DOT SULLA BOARDPOINTS CHE PRENDA I PUNTI DEL PLAYER E CI FICCHI SOPRA IL CAZZAFà
+//PIAZZARE LA CARTA
+//FARE IN MODO CHE VENGA ANCHE AGGIORNATA LA TOP CARD DEI DUE DECK
+//AGGIORNARE LA GAMESCENE DELL'ALTRO PLAYER CON LA ENDTURN
+//BOTTONE QUIT
