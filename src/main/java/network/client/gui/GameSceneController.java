@@ -144,7 +144,7 @@ public class GameSceneController {
     }
 
 
-    public void startGame(String initCardId) {
+    public void startGame(String initCardId) throws IOException {
 //
 
         //Setting background
@@ -256,33 +256,66 @@ public class GameSceneController {
             piazzaCartaBR(getClickedImageView(), gameBoard, indexCardToPlace);
         }*/
 
+        if(currentPlayerNickname.equals(clientView.getUserName())){
+            playCard.setOnAction(e -> {
+                if(haveToPlay){
+                    try {
+                        System.out.println("il cliente vorrebbe dire playcard, vediamo se qualcuno ascolta diocane");
+                        controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
+                        indexCardPlayedFromHand = indexCardToPlace;
+                        haveToDraw = true;
+                        if(indexCardPlayedFromHand == 0){
+                            handCard1View.setImage(null);
+                        }
+                        if(indexCardPlayedFromHand == 1){
+                            handCard2View.setImage(null);
+                        }
+                        if(indexCardPlayedFromHand == 2){
+                            handCard3View.setImage(null);
+                        }
 
-        playCard.setOnAction(e -> {
-            if(haveToPlay){
-                try {
-                    System.out.println("il cliente vorrebbe dire playcard, vediamo se qualcuno ascolta diocane");
-                    controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
-                    indexCardPlayedFromHand = indexCardToPlace;
-                    haveToDraw = true;
-                    if(indexCardPlayedFromHand == 0){
-                        handCard1View.setImage(null);
+                    } catch (IOException exception) {
+                        throw new RuntimeException(exception);
                     }
-                    if(indexCardPlayedFromHand == 1){
-                        handCard2View.setImage(null);
-                    }
-                    if(indexCardPlayedFromHand == 2){
-                        handCard3View.setImage(null);
-                    }
-
-                } catch (IOException exception) {
-                    throw new RuntimeException(exception);
+                    haveToPlay = false;
                 }
-                haveToPlay = false;
+                else{
+                    System.out.println("You already placed a card");
+                }
+            });
+//            if(!haveToDraw && !haveToPlay) {
+                System.out.println("puoi fare la endTurn se vuoi");
+                endTurn.setOnMouseClicked(e -> {
+                    try {
+                        currentPlayerNickname = controller.endTurn();
+                        haveToPlay = true;
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+//            }
+            /*else{
+                System.out.println("You can't end your turn now");
+            }*/
+        }
+        else{
+            while(!clientView.getUserName().equals(currentPlayerNickname)){
+                String waitForCall = in.readLine();
+                if(waitForCall.equals(clientView.getUserName())){
+                    currentPlayerNickname = waitForCall;
+                    System.out.println(currentPlayerNickname);
+                    in.readLine();
+                }
+                else {
+                    System.out.println("E' il turno di "+ currentPlayerNickname);
+                }
+
             }
-            else{
-                System.out.println("You already placed a card");
-            }
-        });
+
+        }
+
+
+
         drawCard.setOnAction(e -> {
             if (haveToDraw) {
                 try {
@@ -453,13 +486,7 @@ public class GameSceneController {
             System.out.println("Per ora guardati la tua board");
         });
 
-        endTurn.setOnMouseClicked(e->{
-            try {
-                controller.endTurn();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
+
 
 
 
