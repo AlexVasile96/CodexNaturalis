@@ -515,11 +515,11 @@ public class ServerConnection implements Runnable {
                 System.out.println("Wrong choice, try again");
             }
         }while(wrongChoice(selectedCard));
-        sendMessageToServer(selectedCard);
+        sendMessageToServer(selectedCard); //mando 0
 
         //ora gestisco le risposte del server
         String result = in.readLine();
-        if(result.equals("Operation performed correctly")) {
+        if(result.equals("operation performed correctly")) {
             System.out.println("Operation 'Draw card from Well' performed correctly");
             sendMessageToServer("showYourCardDeck");
             System.out.println("Your Deck:" );

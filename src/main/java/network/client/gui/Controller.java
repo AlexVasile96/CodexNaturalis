@@ -74,7 +74,7 @@ public class Controller {
     public void drawCard(String wellOrDeck, String selectedDeck, Integer indexSelectedCard) throws IOException {
 
         out.println("drawCard");
-
+        System.out.println("You chose to draw a card!");
         if (wellOrDeck.equals("deck")) {
             out.println(wellOrDeck);
             if (selectedDeck.equals("resource")) {
@@ -89,14 +89,36 @@ public class Controller {
                 in.readLine();
             }
         } else if (wellOrDeck.equals("well")) {
-            out.println(wellOrDeck);
+            out.println("well");
+            out.println("showWell");
+            System.out.println("Which card from the well do you want to draw?");
+            System.out.println("------------------------------------------------------------------------------------------");
+            System.out.println("Select '0' for"+in.readLine()); //cards in the well
+            System.out.println("Select '1' for"+in.readLine());
+            System.out.println("Select '2' for"+in.readLine());
+            System.out.println("Select '3' for"+in.readLine());
+            in.readLine();//spazio
+            System.out.println("------------------------------------------------------------------------------------------");
+            out.println(indexSelectedCard);
+
+            //ora gestisco le risposte del server
+            String result = in.readLine();
+            if(result.equals("operation performed correctly")) {
+                System.out.println("Operation 'Draw card from Well' performed correctly");
+
+            }
+            else{
+                System.out.println("Operation failed");
+
+            }
+            /*
             out.println("drawCardFromWell");
             out.println(indexSelectedCard);
             System.out.println("Server says: "+in.readLine());
             System.out.println("Server says: "+in.readLine());
             System.out.println("Server says: "+in.readLine());
             System.out.println("Server says: "+in.readLine());
-            System.out.println("Server says: "+in.readLine());
+            System.out.println("Server says: "+in.readLine());*/
         }
 
 
@@ -131,5 +153,10 @@ public class Controller {
     }
     public void showBoards() throws IOException {
         //è da implementare diversamente da gui, però non so come
+    }
+
+    private boolean wrongChoice(String selectedCard) {
+        int num = Integer.parseInt(selectedCard);
+        return num < 0 || num > 3;
     }
 }
