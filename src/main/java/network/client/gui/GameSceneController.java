@@ -232,8 +232,8 @@ public class GameSceneController {
         BorderPane layout = new BorderPane();
         layout.setCenter(cardsOntheBoardScrollPane); //initcard in the middle
 
-        Button playcard = new Button("Play Card");
-        playcard.setOnAction(e -> {
+        playCard.setOnAction(e -> {
+            System.out.println("Play Card button clicked");
             if(haveToPlay){
                 try {
                     System.out.println("il cliente vorrebbe dire playcard, vediamo se qualcuno ascolta diocane");
@@ -578,6 +578,41 @@ public class GameSceneController {
         });
         return gridPane;
     }
+   /* private void updateHandCardViewAfterDraw() throws IOException {
+        // Update the hand card view after drawing a card
+        if (wellOrDeck.equals("deck")) {
+            Image drawnCardImage;
+            if (chosenDeckForDrawingNewCard.equals("resource")) {
+                drawnCardImage = createNewPathForImages(pathForResourceCardFront(idTopCardResourceDeck));
+            } else {
+                drawnCardImage = createNewPathForImages(pathForGoldCardFront(idTopCardGoldDeck));
+            }
+
+            if (indexCardPlayedFromHand == 0) {
+                handCard1View.setImage(drawnCardImage);
+                idHandCard1 = idTopCardResourceDeck;
+            } else if (indexCardPlayedFromHand == 1) {
+                handCard2View.setImage(drawnCardImage);
+                idHandCard2 = idTopCardResourceDeck;
+            } else if (indexCardPlayedFromHand == 2) {
+                handCard3View.setImage(drawnCardImage);
+                idHandCard3 = idTopCardResourceDeck;
+            }
+        } else if (wellOrDeck.equals("well")) {
+            Image drawnCardImage = wellCardSelected;
+
+            if (indexCardPlayedFromHand == 0) {
+                handCard1View.setImage(drawnCardImage);
+                idHandCard1 = idWellCardSelected;
+            } else if (indexCardPlayedFromHand == 1) {
+                handCard2View.setImage(drawnCardImage);
+                idHandCard2 = idWellCardSelected;
+            } else if (indexCardPlayedFromHand == 2) {
+                handCard3View.setImage(drawnCardImage);
+                idHandCard3 = idWellCardSelected;
+            }
+        }
+    }*/
 
 
     public int getX(ImageView img) {

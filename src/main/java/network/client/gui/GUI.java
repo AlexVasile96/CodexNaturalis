@@ -205,10 +205,8 @@ public class GUI extends Application {
         regionTopLeft.setStyle("-fx-background-color: red;");
         regionTopLeft.setOnMouseClicked(e->{
             try {
-
                 indexCardToBePlacedOn = (Integer) cartaSelezionata.getUserData();
                 cartaSelezionata.setUserData(counter);
-
                 cornerSelected = "TL";
                 System.out.println("hai cliccato il " + cornerSelected + " della carta numero " + indexCardToBePlacedOn);
             }catch (Exception exception){
