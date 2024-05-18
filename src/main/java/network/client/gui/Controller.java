@@ -4,7 +4,9 @@ import model.game.Player;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.Socket;
 
 public class Controller {
 
@@ -13,13 +15,14 @@ public class Controller {
     private int gameSize;
     private String currentPlayerNickname;
 
-    public Controller(BufferedReader in, PrintWriter out) {
+    public Controller(BufferedReader in, PrintWriter out) throws IOException {
         this.in = in;
         this.out = out;
     }
 
 
     public void playCardClick(int indexCardToBePlacedOn, int indexCardToPlace, String cornerSelected) throws IOException {
+        System.out.println("indexToBePlacedOn"+indexCardToBePlacedOn + " indexToPlace" + indexCardToPlace + " corner" + cornerSelected);
         if(indexCardToBePlacedOn == 100 || indexCardToPlace == 100 || cornerSelected == null){ //This if prevents player to place card without choosing any card or corner
             System.out.println("You have not selected any card to place or to be placed on or the corner");
             return;

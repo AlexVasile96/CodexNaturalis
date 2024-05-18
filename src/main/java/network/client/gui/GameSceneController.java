@@ -82,9 +82,11 @@ public class GameSceneController {
     private static final Object syncObject = new Object(); // Oggetto di sincronizzazione
     //PRE ALEX
     private Player currentPlayer = null;
-    Controller controller = new Controller(in, out);
+    private Controller controller = null;
     private String currentPlayerNickname;
     private ClientView clientView;
+
+
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
         this.primaryStage = primaryStage;
@@ -94,6 +96,7 @@ public class GameSceneController {
         this.currentPlayerNickname = currentPlayerNickname;
         System.out.println("Current Player nickname " + currentPlayerNickname); //salvato il nome del current player
         this.clientView=clientView;
+        controller = new Controller(in, out);
 
     }
 
@@ -209,22 +212,26 @@ public class GameSceneController {
         tlImageView.setOnMouseClicked(event -> {
             setClickedImageView(tlImageView);
             System.out.println("YOu clicked tl");
-            selectedCorner = 1;
+            cornerSelected = "TL";
+            indexCardToBePlacedOn = 1;
         });
         trImageView.setOnMouseClicked(event -> {
             setClickedImageView(trImageView);
             System.out.println("YOu clicked tr");
-            selectedCorner = 2;
+            cornerSelected = "TR";
+            indexCardToBePlacedOn = 1;
         });
         blImageView.setOnMouseClicked(event -> {
             setClickedImageView(blImageView);
             System.out.println("YOu clicked bl");
-            selectedCorner = 3;
+            cornerSelected = "BL";
+            indexCardToBePlacedOn = 1;
         });
         brImageView.setOnMouseClicked(event -> {
             setClickedImageView(brImageView);
             System.out.println("YOu clicked br");
-            selectedCorner = 4;
+            cornerSelected = "BR";
+            indexCardToBePlacedOn = 1;
         });
 
 
@@ -232,8 +239,20 @@ public class GameSceneController {
         BorderPane layout = new BorderPane();
         layout.setCenter(cardsOntheBoardScrollPane); //initcard in the middle
 
-        Button playcard = new Button("Play Card");
-        playcard.setOnAction(e -> {
+        /*if (selectedCorner == 1) {
+            piazzaCartaTL(getClickedImageView(), gameBoard, indexCardToPlace);
+        }
+        if (selectedCorner == 2) {
+            piazzaCartaTR(getClickedImageView(), gameBoard, indexCardToPlace);
+        }
+        if (selectedCorner == 3) {
+            piazzaCartaBL(getClickedImageView(), gameBoard, indexCardToPlace);
+        } else if (selectedCorner == 4) {
+            piazzaCartaBR(getClickedImageView(), gameBoard, indexCardToPlace);
+        }*/
+
+
+        playCard.setOnAction(e -> {
             if(haveToPlay){
                 try {
                     System.out.println("il cliente vorrebbe dire playcard, vediamo se qualcuno ascolta diocane");
@@ -560,21 +579,25 @@ public class GameSceneController {
         imageView1.setOnMouseClicked(event -> {
             setClickedImageView(imageView1);
             selectedCorner = 1;
+            indexCardToBePlacedOn=1;
         });
 
         imageView2.setOnMouseClicked(event -> {
             setClickedImageView(imageView2);
             selectedCorner = 2;
+            indexCardToBePlacedOn=1;
         });
 
         imageView3.setOnMouseClicked(event -> {
             setClickedImageView(imageView3);
             selectedCorner = 3;
+            indexCardToBePlacedOn=1;
         });
 
         imageView4.setOnMouseClicked(event -> {
             setClickedImageView(imageView4);
             selectedCorner = 4;
+            indexCardToBePlacedOn=1;
         });
         return gridPane;
     }

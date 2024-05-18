@@ -118,7 +118,7 @@ public class GUI extends Application {
     private Image cardFlipped = null;
     private ClientView clientview= new ClientView();
     private Player currentPlayer=null;
-    Controller controller = new Controller(in, out);
+    //Controller controller = new Controller(in, out);
 
 
 
@@ -355,7 +355,7 @@ public class GUI extends Application {
 
 
         //if(clientView.getUserName().equals(currentPlayerNickname)){
-        playCard.setOnAction(event -> {
+        /*playCard.setOnAction(event -> {
             if(haveToPlay){
                 try {
                     controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
@@ -383,7 +383,7 @@ public class GUI extends Application {
             return;
         }*/
 
-        drawCard.setOnAction(e -> {
+        /*drawCard.setOnAction(e -> {
             if(haveToDraw){
                 try {
                     controller.drawCard(wellOrDeck, chosenDeckForDrawingNewCard, indexCardFromWellSelected);
@@ -457,7 +457,7 @@ public class GUI extends Application {
                 }
             }
             else System.out.println("You can't draw any card now");
-        });
+        });*/
 
         flipCardToBack.setOnAction(e->{
             if(indexCardToPlace == 0){
@@ -506,7 +506,7 @@ public class GUI extends Application {
             System.out.println("indexCardPlayedFromHand = "+indexCardToPlace);
         });
 
-        seeYourSpecificSeeds.setOnMouseClicked(e->{
+        /*seeYourSpecificSeeds.setOnMouseClicked(e->{
             try {
                 String yourSeeds = controller.showSpecificSeed();
                 System.out.println(yourSeeds);
@@ -536,7 +536,7 @@ public class GUI extends Application {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-        });
+        });*/
 
 
         Pane root = new Pane();
