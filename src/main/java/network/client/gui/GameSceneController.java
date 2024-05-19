@@ -375,13 +375,18 @@ public class GameSceneController {
                             }
                             else if(indexCardFromWellSelected == 2){
                                 SharedObjectsInGui.getWellCard3View().setImage(newWellGoldCardImage);
+                                out.println("goldDeckUpdate");
+                                System.out.println(in.readLine());
+                                updatedGoldDeckTopCard();
                             }
                             else if(indexCardFromWellSelected == 3) {
                                 SharedObjectsInGui.getWellCard4View().setImage(newWellGoldCardImage);
+                                SharedObjectsInGui.getWellCard3View().setImage(newWellGoldCardImage);
+                                out.println("goldDeckUpdate");
+                                System.out.println(in.readLine());
+                                updatedGoldDeckTopCard();
                             }
-
                             System.out.println("Well card updated");
-
                             haveToDraw = false;
                         } else {
                             System.out.println("You have to choose a card to draw");
@@ -912,12 +917,21 @@ public class GameSceneController {
         out.println("firstCardResourceGui");
         String newTopCardResourceDeckId = in.readLine();
         System.out.println(newTopCardResourceDeckId);
-
         String newPathResource = "/ImmaginiCodex/CarteBack/Resource/" + newTopCardResourceDeckId + ".png";
         Image newTopCardResourceDeckImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPathResource)));
         SharedObjectsInGui.getTopCardResourceDeckView().setImage(newTopCardResourceDeckImage);
         SharedObjectsInGui.setPathResourceDeck(newPathResource);
         SharedObjectsInGui.setTopCardResourceDeck(newTopCardResourceDeckImage);
+    }
+    private void updatedGoldDeckTopCard() throws IOException {
+        out.println("firstCardGoldGui");
+        String newTopCardGoldDeckId = in.readLine();
+        System.out.println(newTopCardGoldDeckId);
+        String newPathGold = "/ImmaginiCodex/CarteBack/Gold/" + newTopCardGoldDeckId + ".png";
+        Image newTopCardGoldImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPathGold)));
+        SharedObjectsInGui.getTopCardGoldDeckView().setImage(newTopCardGoldImage);
+        SharedObjectsInGui.setPathGoldDeck(newPathGold);
+        SharedObjectsInGui.setTopCardGoldDeck(newTopCardGoldImage);
     }
 
 }

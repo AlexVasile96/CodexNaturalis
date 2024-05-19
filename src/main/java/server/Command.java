@@ -117,6 +117,9 @@ public class Command { //Command Client sends to Server
             case "resourceDeckUpdate":
                 game.resourceDeckUpdateForGUi();
                 return "Resource Deck Correctly updated";
+            case "goldDeckUpdate":
+                game.goldDeckUpdateForGUI();
+                return "Gold Deck Correctly Updated";
             default:
                 return "Unknown command.";
         }
