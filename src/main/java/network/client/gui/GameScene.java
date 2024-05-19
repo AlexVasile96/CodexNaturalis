@@ -30,7 +30,7 @@ public class GameScene {
     private String initCardId;
     private ClientView clientView;
     private String currentPlayerNickname;
-    private GameSceneController controller;
+    private GameSceneController GameSceneController;
     private boolean isFirstClient;
 
     public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id, ClientView clientView, String currentPlayerNickname, boolean isFirstClient) throws IOException {
@@ -42,20 +42,20 @@ public class GameScene {
         this.clientView = clientView;
         this.currentPlayerNickname = currentPlayerNickname;
         this.isFirstClient = isFirstClient;
-        this.controller = new GameSceneController();
+        this.GameSceneController = new GameSceneController();
     }
 
     public void game(boolean isFirstClient) throws IOException {
         System.out.println("Initializing game data for client: " + clientView.getUserName());
-        controller.initData(primaryStage, out, socket, in, clientView, currentPlayerNickname);
+        GameSceneController.initData(primaryStage, out, socket, in, clientView, currentPlayerNickname);
         if (isFirstClient) {
             System.out.println("First client updating setup");
-            controller.updateFirst();
+            GameSceneController.updateFirst();
             out.println("SETUPFINISHED");
         } else {
             //System.out.println("Second client updating setup");
             in.readLine();
-            controller.updateFirst();
+            GameSceneController.updateFirst();
             out.println("SETUPFINISHED");
         }
         while (true) {
@@ -65,6 +65,6 @@ public class GameScene {
             }
         }
         System.out.println("Starting game for client: " + clientView.getUserName());
-        controller.startGame(initCardId);
+        GameSceneController.startGame(initCardId);
     }
 }

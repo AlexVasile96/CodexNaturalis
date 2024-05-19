@@ -335,7 +335,36 @@ public class GameSceneController {
                                     idHandCard3 = idTopCard;
                                     break;
                             }
+                            System.out.println("idHandCard" + (indexCardPlayedFromHand + 1) + " = " + idTopCard);
+
+                            // Aggiorna la carta del well con la prossima carta disponibile
+                            String pathResource = "/ImmaginiCodex/CarteFront/Resource/" + idTopCardResourceDeck + ".png";
+                            System.out.println(idTopCardResourceDeck);
+                            System.out.println(pathResource);
+                            Image newWellResourceCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathResource)));
+
+                            String pathGold = "/ImmaginiCodex/CarteFront/Gold/" + idTopCardGoldDeck + ".png";
+                            System.out.println(idTopCardGoldDeck);
+                            System.out.println(pathGold);
+                            Image newWellGoldCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathGold)));
+                            if(indexCardFromWellSelected == 0){
+                                SharedObjectsInGui.getWellCard1View().setImage(newWellResourceCardImage);
+                            }
+                            else if(indexCardFromWellSelected == 1){
+                                SharedObjectsInGui.getWellCard2View().setImage(newWellResourceCardImage);
+                            }
+                            else if(indexCardFromWellSelected == 2){
+                                SharedObjectsInGui.getWellCard3View().setImage(newWellGoldCardImage);
+                            }
+                            else if(indexCardFromWellSelected == 3) {
+                                SharedObjectsInGui.getWellCard4View().setImage(newWellGoldCardImage);
+                            }
+
+                            System.out.println("Aggiornata carta nel well");
+
                             haveToDraw = false;
+                        } else {
+                            System.out.println("You have to choose a card to draw");
                         }
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
