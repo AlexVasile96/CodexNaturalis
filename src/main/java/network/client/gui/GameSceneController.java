@@ -514,7 +514,10 @@ public class GameSceneController {
                 Platform.runLater(() -> {
                     updateTurnState(true);
                     try {
+
                         setupGameActions(handCard1View, handCard2View, handCard3View);
+                        System.out.println(in.readLine()); //Fine turno
+                        updateGUI();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -917,6 +920,7 @@ public class GameSceneController {
         String newTopCardResourceDeckId = in.readLine();
         System.out.println(newTopCardResourceDeckId);
         String newPathResource = "/ImmaginiCodex/CarteBack/Resource/" + newTopCardResourceDeckId + ".png";
+        System.out.println(newPathResource);
         Image newTopCardResourceDeckImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPathResource)));
         SharedObjectsInGui.getTopCardResourceDeckView().setImage(newTopCardResourceDeckImage);
         SharedObjectsInGui.setPathResourceDeck(newPathResource);
@@ -933,4 +937,8 @@ public class GameSceneController {
         SharedObjectsInGui.setTopCardGoldDeck(newTopCardGoldImage);
     }
 
+    private void updateGUI() throws IOException {
+        updateResourceDeckTopCard();
+        updatedGoldDeckTopCard();
+    }
 }
