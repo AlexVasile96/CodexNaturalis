@@ -22,11 +22,12 @@ public class Controller {
 
 
     public void playCardClick(int indexCardToBePlacedOn, int indexCardToPlace, String cornerSelected) throws IOException {
-        System.out.println("indexToBePlacedOn"+indexCardToBePlacedOn + " indexToPlace" + indexCardToPlace + " corner" + cornerSelected);
+        System.out.println("indexToBePlacedOn "+indexCardToBePlacedOn + " indexToPlace " + indexCardToPlace + " corner " + cornerSelected);
         if(indexCardToBePlacedOn == 100 || indexCardToPlace == 100 || cornerSelected == null){ //This if prevents player to place card without choosing any card or corner
             System.out.println("You have not selected any card to place or to be placed on or the corner");
             return;
         }
+        else{
         System.out.println("il cliente ha detto playcard");
         out.println("playCard"); //sends to server the message to start the playCard method
         try {
@@ -66,6 +67,7 @@ public class Controller {
             //player.getClientView().setNumOfCardsOnTheBoard(numeroCarte+1);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
         }
     }
 
@@ -181,6 +183,7 @@ public class Controller {
     }
     public void waitForTurn(String playerNickname) throws IOException {
         String message;
+        String disabile=in.readLine(); //mi mangio il nome, gnam
         while (!(message = in.readLine()).equals(playerNickname)) {
             // Scarta i messaggi ricevuti finché non è il turno del giocatore
             System.out.println("Received message while waiting for turn: " + message);

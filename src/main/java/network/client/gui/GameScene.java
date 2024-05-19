@@ -51,16 +51,13 @@ public class GameScene {
         if (isFirstClient) {
             System.out.println("First client updating setup");
             controller.updateFirst();
-            // Notifica al server che l'inizializzazione è completa
             out.println("SETUPFINISHED");
         } else {
-            System.out.println("Second client updating setup");
+            //System.out.println("Second client updating setup");
             in.readLine();
             controller.updateFirst();
-            // Notifica al server che l'inizializzazione è completa
             out.println("SETUPFINISHED");
         }
-        // Attende conferma dal server
         while (true) {
             String message = in.readLine();
             if (message.equals("SETUPFINISHED")) {
