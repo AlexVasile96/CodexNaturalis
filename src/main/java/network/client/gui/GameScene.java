@@ -58,7 +58,7 @@ public class GameScene {
             in.readLine();
             controller.updateFirst();
             // Notifica al server che l'inizializzazione è completa
-           out.println("SETUPFINISHED");
+            out.println("SETUPFINISHED");
         }
         // Attende conferma dal server
         while (true) {
@@ -67,7 +67,7 @@ public class GameScene {
                 break;
             }
         }
-        System.out.println("Starting game for client: ");
+        System.out.println("Starting game for client: " + clientView.getUserName());
         controller.startGame(initCardId);
     }
 }

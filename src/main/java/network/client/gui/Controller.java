@@ -38,9 +38,9 @@ public class Controller {
             out.println(indexCardToBePlacedOn-1);
             String[] angoli ={"TL","TR","BR","BL"};
             String [] validInputs = new String[4];
-           boolean check = false;
+            boolean check = false;
             int size=0;
-           String  messageFromServer = in.readLine();
+            String  messageFromServer = in.readLine();
             do{
                 for (String corner: angoli){
                     if(messageFromServer.equals(corner) && !check){
