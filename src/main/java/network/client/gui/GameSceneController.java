@@ -69,6 +69,10 @@ public class GameSceneController {
     private BoardPointsScene boardPointsScene;
     private boolean isCurrentPlayerTurn = false;
     GridPane buttonContainer = new GridPane();
+    Label chosenCardToPlace = new Label();
+    Label chosenCardToBePlacedOn = new Label();
+    Label chosenCorner = new Label();
+    Label chosenDeckOrWell = new Label();
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
         this.primaryStage = primaryStage;
@@ -225,9 +229,14 @@ public class GameSceneController {
         //inizialmente disabled per tutti
         buttonContainer.setDisable(true);
 
+        VBox secondColumnOfSecondRow = new VBox();
+
+        secondColumnOfSecondRow.getChildren().addAll(chosenCardToPlace, chosenCardToBePlacedOn, chosenCorner, chosenDeckOrWell);
+        chosenDeckOrWell.setText("Drawing from: "+wellOrDeck);
+
         layout.setRight(vboxGame);
         firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
-        secondRow.getChildren().addAll(firstColomnOfSecondRow);
+        secondRow.getChildren().addAll(firstColomnOfSecondRow, secondColumnOfSecondRow);
         layout.setBottom(secondRow);
         root.getChildren().add(layout);
         Scene gameScene = new Scene(root, 600, 400);
@@ -249,7 +258,9 @@ public class GameSceneController {
         if (isCurrentPlayerTurn) {
             setClickedImageView(imageView);
             cornerSelected = corner;
+            chosenCorner.setText("Corner: "+cornerSelected);
             indexCardToBePlacedOn = 1;
+            chosenCardToBePlacedOn.setText("Place your card on: "+indexCardToBePlacedOn);
         } else {
             showAlert("Not your turn", "It's not your turn yet.");
         }
@@ -308,6 +319,7 @@ public class GameSceneController {
                         String idTopCard = null;
 
                         if (wellOrDeck.equals("deck")) {
+                            System.out.println(wellOrDeck);
                             if (chosenDeckForDrawingNewCard.equals("resource")) {
                                 drawnCardImage = createNewPathForImages(pathForResourceCardFront(idTopCardResourceDeck));
                                 idTopCard = idTopCardResourceDeck;
@@ -316,6 +328,7 @@ public class GameSceneController {
                                 idTopCard = idTopCardGoldDeck;
                             }
                         } else if (wellOrDeck.equals("well")) {
+                            System.out.println(wellOrDeck);
                             drawnCardImage = wellCardSelected;
                             idTopCard = idWellCardSelected;
                         }
@@ -422,6 +435,7 @@ public class GameSceneController {
         handCard1View.setOnMouseClicked(event -> {
             if (isCurrentPlayerTurn) {
                 indexCardToPlace = 0;
+                chosenCardToPlace.setText("First card of your hand");
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -430,6 +444,7 @@ public class GameSceneController {
         handCard2View.setOnMouseClicked(event -> {
             if (isCurrentPlayerTurn) {
                 indexCardToPlace = 1;
+                chosenCardToPlace.setText("Second card of your hand");
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -438,6 +453,7 @@ public class GameSceneController {
         handCard3View.setOnMouseClicked(event -> {
             if (isCurrentPlayerTurn) {
                 indexCardToPlace = 2;
+                chosenCardToPlace.setText("Third card of your hand");
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
