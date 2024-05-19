@@ -91,6 +91,9 @@ public class Game implements WhatCanPlayerDo {
     public synchronized String getFirstCardOfResourceDeck() {
         return resourceDeck.sendIdCardToGui();
     }
+    public synchronized void resourceDeckUpdateForGUi(){
+        resourceDeck.drawCardForGui();
+    }
 
     public synchronized String getFirstCardOfGoldDeck() {
         return goldDeck.sendIdCardToGui();

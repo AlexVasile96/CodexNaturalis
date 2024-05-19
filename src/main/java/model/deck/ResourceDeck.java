@@ -36,7 +36,7 @@ public class ResourceDeck implements Deck{
         }
         return null;
     }
-    public List<Card> drawCard(List<Card> pozzo) { //METHOD TO PLACE CARDS ON THE POZZO
+    public List<Card> drawCard(List<Card> pozzo) { //METHOD TO PLACE CARDS ON THE WELL
         if (resourceCards.isEmpty()) {
             return null; //empty deck
         }
@@ -99,5 +99,10 @@ public class ResourceDeck implements Deck{
     }
     public Card returnFirstCard(){
         return resourceCards.getFirst();
+    }
+    public void drawCardForGui ()
+    {
+        resourceCards.remove(0);
+        System.out.println(resourceCards.getFirst());
     }
 }

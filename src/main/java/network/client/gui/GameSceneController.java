@@ -350,7 +350,6 @@ public class GameSceneController {
                             }
                             System.out.println("idHandCard" + (indexCardPlayedFromHand + 1) + " = " + idTopCard);
 
-                            // Aggiorna la carta del well con la prossima carta disponibile
                             String pathResource = "/ImmaginiCodex/CarteFront/Resource/" + idTopCardResourceDeck + ".png";
                             System.out.println(idTopCardResourceDeck);
                             System.out.println(pathResource);
@@ -362,9 +361,17 @@ public class GameSceneController {
                             Image newWellGoldCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathGold)));
                             if(indexCardFromWellSelected == 0){
                                 SharedObjectsInGui.getWellCard1View().setImage(newWellResourceCardImage);
+                                out.println("resourceDeckUpdate");
+                                System.out.println(in.readLine());
+                                updateResourceDeckTopCard();
+
                             }
                             else if(indexCardFromWellSelected == 1){
                                 SharedObjectsInGui.getWellCard2View().setImage(newWellResourceCardImage);
+                                out.println("resourceDeckUpdate");
+                                System.out.println(in.readLine());
+                                updateResourceDeckTopCard();
+
                             }
                             else if(indexCardFromWellSelected == 2){
                                 SharedObjectsInGui.getWellCard3View().setImage(newWellGoldCardImage);
@@ -373,7 +380,7 @@ public class GameSceneController {
                                 SharedObjectsInGui.getWellCard4View().setImage(newWellGoldCardImage);
                             }
 
-                            System.out.println("Aggiornata carta nel well");
+                            System.out.println("Well card updated");
 
                             haveToDraw = false;
                         } else {
@@ -901,4 +908,16 @@ public class GameSceneController {
         fourthWellCard();
         checkTypeWellCards();
     }
+    private void updateResourceDeckTopCard() throws IOException {
+        out.println("firstCardResourceGui");
+        String newTopCardResourceDeckId = in.readLine();
+        System.out.println(newTopCardResourceDeckId);
+
+        String newPathResource = "/ImmaginiCodex/CarteBack/Resource/" + newTopCardResourceDeckId + ".png";
+        Image newTopCardResourceDeckImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPathResource)));
+        SharedObjectsInGui.getTopCardResourceDeckView().setImage(newTopCardResourceDeckImage);
+        SharedObjectsInGui.setPathResourceDeck(newPathResource);
+        SharedObjectsInGui.setTopCardResourceDeck(newTopCardResourceDeckImage);
+    }
+
 }

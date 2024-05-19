@@ -114,6 +114,9 @@ public class Command { //Command Client sends to Server
                 return game.getDeckID(player);
             case "endgame":
                 game.endGame();
+            case "resourceDeckUpdate":
+                game.resourceDeckUpdateForGUi();
+                return "Resource Deck Correctly updated";
             default:
                 return "Unknown command.";
         }
