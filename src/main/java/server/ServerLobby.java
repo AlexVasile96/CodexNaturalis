@@ -25,12 +25,12 @@ public class ServerLobby {
     }
 
     public synchronized GameController login(String username, PrintWriter userOut) throws UnknownPlayerNumberException, UsernameAlreadyExistsException, IOException {
-        if (currentGames.isEmpty() || currentGames.get(0).getNumOfPlayers() >= 4) {
+        if (currentGames.isEmpty() || currentGames.getFirst().getNumOfPlayers() >= 4) {
             GameController newGame = new GameController(username, userOut, clients, socket, game);
             currentGames.add(newGame);
             return newGame;
         } else {
-            GameController game = currentGames.get(0);
+            GameController game = currentGames.getFirst();
             try {
                 game.addPlayer(username, userOut);
                 return game;

@@ -57,7 +57,6 @@ public class GameController {
         this.size = 0;
         this.isGameOver = false;
         this.isSizeSet = false;
-
     }
 
 
@@ -111,7 +110,6 @@ public class GameController {
             throw new UsernameAlreadyExistsException();
         }
         players.put(username, userOut);
-        //mettere currentNumsOfPlayers = 0 prima di reintegrare il codice
         if(getCurrentNumsOfPlayers()==0)
         {
             setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+2);

@@ -616,7 +616,7 @@ public class ServerConnection implements Runnable {
         String stringSecretCard= in.readLine(); //card
         String stringSecondCard= in.readLine(); //card
         in.readLine(); //id
-         in.readLine(); //id
+        in.readLine(); //id
         System.out.println("Server says: your first objective card is" + stringSecretCard);
         System.out.println("Server says: your second objective card is" + stringSecondCard);
         while(!isNumberCorrect){
@@ -674,13 +674,13 @@ public class ServerConnection implements Runnable {
         String stringNumberOfPlayers;
         numberOfPlayers.append(in.readLine());
         stringNumberOfPlayers = in.readLine();
+        System.out.println(stringNumberOfPlayers);
         numberOfPlayers.append(stringNumberOfPlayers);
         numberOfPlayers.append(in.readLine());
         System.out.println("server says: "+ numberOfPlayers);              //Choose numbers of players
         if(Integer.parseInt(stringNumberOfPlayers)>1) {
             String answer = in.readLine();
             System.out.println("Server says: " + answer);
-
             return;
         }
         System.out.println(">");

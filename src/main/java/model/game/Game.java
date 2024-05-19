@@ -324,6 +324,10 @@ public class Game implements WhatCanPlayerDo {
         //saveCards();
         savePlayers();
         System.out.println("Carte salvate correttamente");
+        System.out.println(well.getFirst());
+        System.out.println(well.get(1));
+        System.out.println(well.get(2));
+        System.out.println(well.getLast());
     }
 
     public String showWell() {

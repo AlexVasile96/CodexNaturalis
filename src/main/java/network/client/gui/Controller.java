@@ -183,7 +183,7 @@ public class Controller {
     }
     public void waitForTurn(String playerNickname) throws IOException {
         String message;
-        String disabile=in.readLine(); //mi mangio il nome, gnam
+        String disable=in.readLine();
 
         while (!(message = in.readLine()).equals(playerNickname)) {
 

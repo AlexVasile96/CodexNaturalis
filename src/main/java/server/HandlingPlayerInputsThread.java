@@ -63,7 +63,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
         synchronized (HandlingPlayerInputsThread.class) {
             if (setupLatch == null) {
-                setupLatch = new CountDownLatch(1); // Inizializza il CountDownLatch per il primo client
+                setupLatch = new CountDownLatch(1);
             }
         }
     }
