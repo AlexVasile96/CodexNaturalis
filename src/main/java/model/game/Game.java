@@ -88,11 +88,11 @@ public class Game implements WhatCanPlayerDo {
         }
     }
 
-    public String getFirstCardOfResourceDeck() {
+    public synchronized String getFirstCardOfResourceDeck() {
         return resourceDeck.sendIdCardToGui();
     }
 
-    public String getFirstCardOfGoldDeck() {
+    public synchronized String getFirstCardOfGoldDeck() {
         return goldDeck.sendIdCardToGui();
     }
 
@@ -191,13 +191,13 @@ public class Game implements WhatCanPlayerDo {
         return String.valueOf(cardsAsString); //ritorna stringa
     }
 
-    public String firstCommonObjectiveCardId() {
+    public synchronized String firstCommonObjectiveCardId() {
         int id = firstObjectiveCommonCard.getId();
         System.out.println(id);
         return String.valueOf(id);
     }
 
-    public String secondCommonObjectiveCardId() {
+    public synchronized String secondCommonObjectiveCardId() {
         int id = secondObjectiveCommonCard.getId();
         return String.valueOf(id);
     }
@@ -233,25 +233,25 @@ public class Game implements WhatCanPlayerDo {
         return String.valueOf(stamp);
     }
 
-    public String sendWellIdFirstToGui() {
-        int id1 = well.get(0).getId();
+    public synchronized String sendWellIdFirstToGui() {
+        int id1 = well.getFirst().getId();
         return String.valueOf(id1);
     }
 
-    public String sendWellIdSecondToGui() {
+    public synchronized String sendWellIdSecondToGui() {
 
         int id2 = well.get(1).getId();
         return String.valueOf(id2);
     }
 
-    public String sendWellIdThirdToGui() {
+    public synchronized String sendWellIdThirdToGui() {
 
         int id3 = well.get(2).getId();
         return String.valueOf(id3);
 
     }
 
-    public String sendWellIdFourthToGui() {
+    public synchronized String sendWellIdFourthToGui() {
 
         int id4 = well.get(3).getId();
         ;
@@ -283,7 +283,7 @@ public class Game implements WhatCanPlayerDo {
         return String.valueOf(stamp);
     }
 
-    public String getDeckID(Player player) {
+    public synchronized String getDeckID(Player player) {
         List<Card> cardToSendToServer = player.getPlayerCards();
         StringBuilder cardsAsString = new StringBuilder();
         for (Card card : cardToSendToServer) {
@@ -473,7 +473,7 @@ public class Game implements WhatCanPlayerDo {
     }
 
 
-    private void commonObjectiveCards() {
+    private synchronized void commonObjectiveCards() {
         this.firstObjectiveCommonCard = objectiveDeck.firstCardForEachPlayer(); //common objective cards
         this.secondObjectiveCommonCard = objectiveDeck.firstCardForEachPlayer();
         System.out.println("First common objective card is " + firstObjectiveCommonCard);
