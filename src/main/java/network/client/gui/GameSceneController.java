@@ -381,7 +381,6 @@ public class GameSceneController {
                             }
                             else if(indexCardFromWellSelected == 3) {
                                 SharedObjectsInGui.getWellCard4View().setImage(newWellGoldCardImage);
-                                SharedObjectsInGui.getWellCard3View().setImage(newWellGoldCardImage);
                                 out.println("goldDeckUpdate");
                                 System.out.println(in.readLine());
                                 updatedGoldDeckTopCard();
