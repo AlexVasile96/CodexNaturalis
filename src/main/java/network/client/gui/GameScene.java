@@ -61,6 +61,7 @@ public class GameScene {
         while (true) {
             String message = in.readLine();
             if (message.equals("SETUPFINISHED")) {
+                System.out.println("Current player " + in.readLine());
                 break;
             }
         }

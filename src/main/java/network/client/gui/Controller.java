@@ -184,9 +184,11 @@ public class Controller {
     public void waitForTurn(String playerNickname) throws IOException {
         String message;
         String disabile=in.readLine(); //mi mangio il nome, gnam
+
         while (!(message = in.readLine()).equals(playerNickname)) {
-            // Scarta i messaggi ricevuti finché non è il turno del giocatore
+
             System.out.println("Received message while waiting for turn: " + message);
+            System.out.println("Not your turn, please wait");
         }
         System.out.println("It's now " + playerNickname + "'s turn");
     }

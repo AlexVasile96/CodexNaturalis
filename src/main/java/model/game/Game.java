@@ -600,5 +600,48 @@ public class Game implements WhatCanPlayerDo {
 
 
     }
+    public String serializeGameState() {
+        JsonObject gameState = new JsonObject();
+        gameState.add("well", serializeWell()); //Well serializing
+        //gameState.add("resourceDeck", serializeResourceDeck(resourceDeck));
+       // gameState.add("goldDeck", serializeGoldDeck(goldDeck));
+        return new Gson().toJson(gameState);
+    }
+
+    private JsonArray serializeWell() {
+        JsonArray wellArray = new JsonArray();
+        for (Card card : well) {
+            JsonObject cardObject = new JsonObject();
+            cardObject.addProperty("id", card.getId());
+            // Aggiungi altri attributi della carta, se necessario
+            wellArray.add(cardObject);
+        }
+        return wellArray;
+    }
+
+   /* private JsonArray serializeResourceDeck(ResourceDeck deck) {
+        JsonArray deckArray = new JsonArray();
+        for (Card card : deck.getCards()) {
+            JsonObject cardObject = new JsonObject();
+            cardObject.addProperty("id", card.getId());
+            cardObject.addProperty("type", card.getType());
+            // Aggiungi altri attributi della carta, se necessario
+            deckArray.add(cardObject);
+        }
+        return deckArray;
+
+    }*/
+   /* private JsonArray serializeGoldDeck(GoldDeck deck) {
+        JsonArray deckArray = new JsonArray();
+        for (Card card : deck.getCards()) {
+            JsonObject cardObject = new JsonObject();
+            cardObject.addProperty("id", card.getId());
+            // Aggiungi altri attributi della carta, se necessario
+            deckArray.add(cardObject);
+        }
+        return deckArray;
+    }*/
+
 
 }
+

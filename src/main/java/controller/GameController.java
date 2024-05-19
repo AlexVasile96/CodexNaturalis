@@ -38,6 +38,7 @@ public class GameController {
     private int currentNumsOfPlayers=0;
     private CountDownLatch numbgames = new CountDownLatch(0);
     private int playerChoseinitialcard=0;
+    private static boolean isTheFirstPlayer= false;
     //CONSTRUCTORS
 
     public GameController(String username, PrintWriter userOut, List<HandlingPlayerInputsThread> clients, Socket socket, Game game) throws IOException {
@@ -69,7 +70,10 @@ public class GameController {
             {
 
                 sendMessageToAllClients("SETUPFINISHED");
+                if(!isTheFirstPlayer){
                 game.setCurrentPlayer(player.getClientView().getUserName());
+                isTheFirstPlayer=true;
+                }
                 sendMessageToAllClients(game.getCurrentPlayer());
             }
             if(commandString.equals("playCard"))
