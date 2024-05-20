@@ -71,13 +71,6 @@ public class SecretCardScene {
                 vBox.layoutXProperty().bind(chooseSecretObjectiveScene.widthProperty().subtract(vBox.widthProperty()).divide(2));
                 vBox.layoutYProperty().bind(chooseSecretObjectiveScene.heightProperty().subtract(vBox.heightProperty()).divide(2));
 
-                /*primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
-                    root.setPrefWidth((double) newVal); // Ridimensiona il VBox orizzontalmente.
-                });
-                primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
-                    root.setPrefHeight((double) newVal); // Ridimensiona il VBox verticalmente.
-                });*/
-
                 obiettivo1.setOnMouseClicked(e -> {
                     try {
                         out.println(1);

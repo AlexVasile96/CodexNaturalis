@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class GameSceneController {
-    private AnchorPane root = new AnchorPane();
+    private StackPane root = new StackPane();
     private static ImageView clickedImageView;
     private static int selectedCorner;
     private static final Object syncObject = new Object();
@@ -213,6 +213,9 @@ public class GameSceneController {
         cardsOntheBoardScrollPane.setContent(gameBoard);
         BorderPane layout = new BorderPane();
         layout.setCenter(cardsOntheBoardScrollPane);
+        layout.setStyle("-fx-background-color: #212121;");
+
+
 
         VBox vboxContainer = new VBox();
         HBox hboxGame = new HBox();
@@ -272,7 +275,11 @@ public class GameSceneController {
         secondRow.getChildren().addAll(firstColumnOfSecondRow, secondColumnOfSecondRow);
         layout.setBottom(secondRow);
         root.getChildren().add(layout);
-        Scene gameScene = new Scene(root, 600, 400);
+        Scene gameScene = new Scene(root, 1200, 900);
+
+        /*layout.layoutXProperty().bind(gameScene.widthProperty().subtract(layout.widthProperty()).divide(2));
+        layout.layoutYProperty().bind(gameScene.heightProperty().subtract(layout.heightProperty()).divide(2));*/
+
         primaryStage.setScene(gameScene);
 
         if (currentPlayerNickname.equals(clientView.getUserName())) {

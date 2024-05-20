@@ -100,6 +100,7 @@ public class GameScene {
                 break;
             }
         }
+
         System.out.println("Starting game for client: " + clientView.getUserName());
         gameSceneController.startGame(initCardId);
     }
