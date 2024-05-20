@@ -827,16 +827,37 @@ public class GameSceneController {
         SharedObjectsInGui.setWellCard4(createNewPathForImages(SharedObjectsInGui.getWellPathForth()));
     }
 
-    private void creatingImagesViewForTheWell() {
+   /* private void creatingImagesViewForTheWell() {
         SharedObjectsInGui.setWellCard1View(new ImageView(SharedObjectsInGui.getWellCard1()));
+        System.out.println(SharedObjectsInGui.getWellCard1View());
         SharedObjectsInGui.setWellCard2View(new ImageView(SharedObjectsInGui.getWellCard2()));
+        System.out.println(SharedObjectsInGui.getWellCard2View());
         SharedObjectsInGui.setWellCard3View(new ImageView(SharedObjectsInGui.getWellCard3()));
+        System.out.println(SharedObjectsInGui.getWellCard3View());
         SharedObjectsInGui.setWellCard4View(new ImageView(SharedObjectsInGui.getWellCard4()));
+        System.out.println(SharedObjectsInGui.getWellCard4View());
         setWidthAndHeight(SharedObjectsInGui.getWellCard1View());
         setWidthAndHeight(SharedObjectsInGui.getWellCard2View());
         setWidthAndHeight(SharedObjectsInGui.getWellCard3View());
         setWidthAndHeight(SharedObjectsInGui.getWellCard4View());
-    }
+    }*/
+   private void creatingImagesViewForTheWell() {
+       ImageView wellCard1View = new ImageView(SharedObjectsInGui.getWellCard1());
+       ImageView wellCard2View = new ImageView(SharedObjectsInGui.getWellCard2());
+       ImageView wellCard3View = new ImageView(SharedObjectsInGui.getWellCard3());
+       ImageView wellCard4View = new ImageView(SharedObjectsInGui.getWellCard4());
+
+       setWidthAndHeight(wellCard1View);
+       setWidthAndHeight(wellCard2View);
+       setWidthAndHeight(wellCard3View);
+       setWidthAndHeight(wellCard4View);
+
+       SharedObjectsInGui.setWellCard1View(wellCard1View);
+       SharedObjectsInGui.setWellCard2View(wellCard2View);
+       SharedObjectsInGui.setWellCard3View(wellCard3View);
+       SharedObjectsInGui.setWellCard4View(wellCard4View);
+   }
+
 
     private void settingWellOnMouseClickedEvent() {
         SharedObjectsInGui.getWellCard1View().setOnMouseClicked(event -> {
@@ -944,15 +965,28 @@ public class GameSceneController {
     private void updateWellAfterDrawing() throws IOException {
         initializeWell();
         creatingWell();
-        creatingImagesViewForTheWell();
-        settingWellOnMouseClickedEvent();
+        creatingImagesForTheWell();
+        Platform.runLater(() -> {
+            creatingImagesViewForTheWell();
+            settingWellOnMouseClickedEvent();
+
+            // Debug prints
+            System.out.println("Updated Well Card 1 View: " + SharedObjectsInGui.getWellCard1View());
+            System.out.println("Updated Well Card 2 View: " + SharedObjectsInGui.getWellCard2View());
+            System.out.println("Updated Well Card 3 View: " + SharedObjectsInGui.getWellCard3View());
+            System.out.println("Updated Well Card 4 View: " + SharedObjectsInGui.getWellCard4View());
+        });
     }
 
     private void updateGUI() throws IOException {
-        updateResourceDeckTopCard();
-        updatedGoldDeckTopCard();
-        updateWellAfterDrawing();
-        creatingImagesForTheWell();
-
+        Platform.runLater(() -> {
+            try {
+                updateResourceDeckTopCard();
+                updatedGoldDeckTopCard();
+                updateWellAfterDrawing();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }
