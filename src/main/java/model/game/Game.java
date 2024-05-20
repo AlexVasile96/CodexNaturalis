@@ -351,7 +351,10 @@ public class Game implements WhatCanPlayerDo {
     }
 
     public String drawCardFromWell(Player player, int index) {
-        return player.chooseCardFromWellForServer(well, index, resourceDeck, goldDeck);
+        String result=player.chooseCardFromWellForServer(well, index, resourceDeck, goldDeck);
+        sortWell();
+        System.out.println(well);
+        return result;
     }
 
     @Override

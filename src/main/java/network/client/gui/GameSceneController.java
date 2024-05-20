@@ -714,21 +714,25 @@ public class GameSceneController {
     private synchronized void firstWellCard() throws IOException {
         out.println("firstWellId");
         SharedObjectsInGui.setIdCard1(in.readLine());
+        System.out.println("First well card id: " + SharedObjectsInGui.getIdCard1());
     }
 
     private synchronized void secondWellCard() throws IOException {
         out.println("secondWellId");
         SharedObjectsInGui.setIdCard2(in.readLine());
+        System.out.println("Second well card id: " + SharedObjectsInGui.getIdCard2());
     }
 
     private synchronized void thirdWellCard() throws IOException {
         out.println("thirdWellId");
         SharedObjectsInGui.setIdCard3(in.readLine());
+        System.out.println("Third well card id: " + SharedObjectsInGui.getIdCard3());
     }
 
     private synchronized void fourthWellCard() throws IOException {
         out.println("fourthWellId");
         SharedObjectsInGui.setIdCard4(in.readLine());
+        System.out.println("Fourth well card id: " + SharedObjectsInGui.getIdCard4());
     }
 
     private synchronized void updatingResourceAndGoldDeck() throws IOException {
@@ -937,10 +941,15 @@ public class GameSceneController {
         SharedObjectsInGui.setTopCardGoldDeck(newTopCardGoldImage);
     }
 
-    private void updateWellAfterDrawing(){}
+    private void updateWellAfterDrawing() throws IOException {
+        initializeWell();
+        creatingWell();
+    }
 
     private void updateGUI() throws IOException {
         updateResourceDeckTopCard();
         updatedGoldDeckTopCard();
+        updateWellAfterDrawing();
+        creatingImagesForTheWell();
     }
 }
