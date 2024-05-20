@@ -15,11 +15,14 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import view.ClientView;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class GameSceneController {
@@ -69,11 +72,24 @@ public class GameSceneController {
     private ClientView clientView;
     private BoardPointsScene boardPointsScene;
     private boolean isCurrentPlayerTurn = false;
+    private ScrollPane cardsOntheBoardScrollPane;
+    private GridPane gameBoard;
     GridPane buttonContainer = new GridPane();
     Label chosenCardToPlace = new Label();
     Label chosenCardToBePlacedOn = new Label();
     Label chosenCorner = new Label();
     Label chosenDeckOrWell = new Label();
+    private List<CardView> allCardViews = new ArrayList<>();
+    private static CardView clickedCardView;
+    private Map<CardView, Integer> cardIndices = new HashMap<>();
+    private int nextCardIndex = 0; // Contatore per i prossimi indici delle carte
+    private String pathHandCard1;
+    private String pathHandCard2;
+    private String pathHandCard3;
+    private String pathChosen;
+    private String playedcard;
+
+
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
         this.primaryStage = primaryStage;
@@ -114,9 +130,9 @@ public class GameSceneController {
         BackgroundImage backgroundImage = new BackgroundImage(backGroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
 
-        String pathHandCard1 = "/ImmaginiCodex/CarteFront/" + typeHandCard1 + "/" + idHandCard1 + ".png";
-        String pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
-        String pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
+        pathHandCard1 = "/ImmaginiCodex/CarteFront/" + typeHandCard1 + "/" + idHandCard1 + ".png";
+        pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
+        pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
 
         Image handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
         Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
@@ -133,28 +149,45 @@ public class GameSceneController {
         handCard3View.setFitWidth(widthWellCards);
         handCard3View.setFitHeight(heightWellCards);
 
-        ScrollPane cardsOntheBoardScrollPane = new ScrollPane();
+        cardsOntheBoardScrollPane = new ScrollPane();
         cardsOntheBoardScrollPane.setPrefSize(400.00, 400.00);
         int boardDimension = 500;
 
-        GridPane gameBoard = new GridPane(boardDimension, boardDimension);
+        gameBoard = new GridPane(boardDimension, boardDimension);
         gameBoard.setBackground(background);
         gameBoard.setHgap(0);
         gameBoard.setVgap(0);
         gameBoard.setAlignment(Pos.CENTER);
 
-        double windowdLenght = root.getWidth();
-        double windowHight = root.getHeight();
+        double windowedLength = root.getWidth();
+        double windowHeight = root.getHeight();
 
-        gameBoard.setPrefSize(windowdLenght * 0.8, windowHight * 0.8);
+        gameBoard.setPrefSize(windowedLength * 0.8, windowHeight * 0.8);
 
         Image initCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Init/" + initCardId + ".png")));
-        GridPane initCardDividedINFourRegions = subnettingEachImage(initCardImage);
+        GridPane initCardDividedINFourRegions = subnettingEachImage(initCardImage,initCardId);
 
         ImageView tlImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(0);
         ImageView trImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(1);
         ImageView blImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(2);
         ImageView brImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(3);
+
+        CardView tlCardView = new CardView(tlImageView, initCardId, "TL");
+        CardView trCardView = new CardView(trImageView, initCardId, "TR");
+        CardView blCardView = new CardView(blImageView, initCardId, "BL");
+        CardView brCardView = new CardView(brImageView, initCardId, "BR");
+
+        nextCardIndex++; //1 for initial card
+        //All the index of the same card has the same value
+        cardIndices.put(tlCardView, nextCardIndex);
+        System.out.println("Added TL CardView with index: " + nextCardIndex);
+        cardIndices.put(trCardView, nextCardIndex);
+        System.out.println("Added TR CardView with index: " + nextCardIndex);
+        cardIndices.put(blCardView, nextCardIndex);
+        System.out.println("Added BL CardView with index: " + nextCardIndex);
+        cardIndices.put(brCardView, nextCardIndex);
+        System.out.println("Added BR CardView with index: " + nextCardIndex);
+
 
         tlImageView.setPickOnBounds(true);
         trImageView.setPickOnBounds(true);
@@ -166,10 +199,16 @@ public class GameSceneController {
         gameBoard.add(blImageView, boardDimension / 2, boardDimension / 2 + 1);
         gameBoard.add(brImageView, boardDimension / 2 + 1, boardDimension / 2 + 1);
 
-        tlImageView.setOnMouseClicked(event -> handleCardClick(tlImageView, "TL"));
-        trImageView.setOnMouseClicked(event -> handleCardClick(trImageView, "TR"));
-        blImageView.setOnMouseClicked(event -> handleCardClick(blImageView, "BL"));
-        brImageView.setOnMouseClicked(event -> handleCardClick(brImageView, "BR"));
+//        tlImageView.setOnMouseClicked(event -> handleCardClick(tlImageView, "TL"));
+//        trImageView.setOnMouseClicked(event -> handleCardClick(trImageView, "TR"));
+//        blImageView.setOnMouseClicked(event -> handleCardClick(blImageView, "BL"));
+//        brImageView.setOnMouseClicked(event -> handleCardClick(brImageView, "BR"));
+
+//        allCardViews.add(tlImageView);
+//        allImageViews.add(trImageView);
+//        allImageViews.add(blImageView);
+//        allImageViews.add(brImageView);
+//        System.out.println(allImageViews);
 
         cardsOntheBoardScrollPane.setContent(gameBoard);
         BorderPane layout = new BorderPane();
@@ -184,9 +223,9 @@ public class GameSceneController {
         Insets paddingDecks = new Insets(100, 10, 10, 10);
 
         HBox secondRow = new HBox();
-        HBox firstColomnOfSecondRow = new HBox();
-        firstColomnOfSecondRow.setPadding(padding);
-        firstColomnOfSecondRow.setSpacing(4);
+        HBox firstColumnOfSecondRow = new HBox();
+        firstColumnOfSecondRow.setPadding(padding);
+        firstColumnOfSecondRow.setSpacing(4);
 
         Label wellText = new Label("                    WELL");
         Label wellText2 = new Label("CARDS");
@@ -217,15 +256,7 @@ public class GameSceneController {
         specificSeedsLabel = new Label();
         specificSeedsPane.getChildren().addAll(specificSeedsText, specificSeedsLabel);
 
-
-        buttonContainer.add(playCard, 0, 0);
-        buttonContainer.add(drawCard, 1, 0);
-        buttonContainer.add(seeYourSpecificSeeds, 2, 0);
-        buttonContainer.add(flipCardToBack, 0, 1);
-        buttonContainer.add(flipCardToFront, 0, 2);
-        buttonContainer.add(seeYourPoints, 0, 3);
-        buttonContainer.add(endTurn, 2, 1);
-        buttonContainer.add(seeOtherPlayersBoards, 1, 1);
+        creatingButtons();
         buttonContainer.add(quit, 2,2);
         vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, specificSeedsPane, buttonContainer);
         //inizialmente disabled per tutti
@@ -237,8 +268,8 @@ public class GameSceneController {
         chosenDeckOrWell.setText("Drawing from: "+wellOrDeck);
 
         layout.setRight(vboxGame);
-        firstColomnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
-        secondRow.getChildren().addAll(firstColomnOfSecondRow, secondColumnOfSecondRow);
+        firstColumnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
+        secondRow.getChildren().addAll(firstColumnOfSecondRow, secondColumnOfSecondRow);
         layout.setBottom(secondRow);
         root.getChildren().add(layout);
         Scene gameScene = new Scene(root, 600, 400);
@@ -256,13 +287,27 @@ public class GameSceneController {
 
     }
 
-    private void handleCardClick(ImageView imageView, String corner) {
+    private void handleCardClick(CardView cardView) {
         if (isCurrentPlayerTurn) {
-            setClickedImageView(imageView);
-            cornerSelected = corner;
-            chosenCorner.setText("Corner: "+cornerSelected);
-            indexCardToBePlacedOn = 1;
-            chosenCardToBePlacedOn.setText("Place your card on: "+indexCardToBePlacedOn);
+            setClickedCardView(cardView);
+            cornerSelected = cardView.getPosition();
+            Integer cardIndex = cardIndices.get(cardView);
+
+            // Debug: stampa il CardView cliccato e la mappa
+            System.out.println("Clicked CardView: " + cardView);
+            System.out.println("Current cardIndices map:");
+            for (Map.Entry<CardView, Integer> entry : cardIndices.entrySet()) {
+                System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+            }
+
+            if (cardIndex != null) {
+                indexCardToBePlacedOn = cardIndex;
+                System.out.println("Card Clicked: indexCardToBePlacedOn = " + indexCardToBePlacedOn + ", cornerSelected = " + cornerSelected);
+            } else {
+                System.out.println("Card Clicked: cardIndex not found, cornerSelected = " + cornerSelected);
+            }
+            chosenCorner.setText("Corner: " + cornerSelected);
+            chosenCardToBePlacedOn.setText("Place your card on: " + indexCardToBePlacedOn);
         } else {
             showAlert("Not your turn", "It's not your turn yet.");
         }
@@ -274,16 +319,38 @@ public class GameSceneController {
                 if (haveToPlay) {
                     try {
                         controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
+                        switch(cornerSelected) {
+                            case "TL":
+                               piazzaCartaTL(getClickedImageView().getImageView(),gameBoard,indexCardToPlace);
+                                break;
+                            case "TR":
+                                piazzaCartaTR(getClickedImageView().getImageView(),gameBoard,indexCardToPlace);
+                                break;
+                            case "BL":
+                                piazzaCartaBL(getClickedImageView().getImageView(),gameBoard,indexCardToPlace);
+                                break;
+                            case "BR":
+                                piazzaCartaBR(getClickedImageView().getImageView(),gameBoard,indexCardToPlace);
+                                break;
+                            default:
+
+                                break;
+                        }
                         indexCardPlayedFromHand = indexCardToPlace;
                         haveToDraw = true;
-                        if (indexCardPlayedFromHand == 0) {
-                            handCard1View.setImage(null);
-                        }
-                        if (indexCardPlayedFromHand == 1) {
-                            handCard2View.setImage(null);
-                        }
-                        if (indexCardPlayedFromHand == 2) {
-                            handCard3View.setImage(null);
+                        switch (indexCardPlayedFromHand) {
+                            case 0:
+                                handCard1View.setImage(null);
+                                break;
+                            case 1:
+                                handCard2View.setImage(null);
+                                break;
+                            case 2:
+                                handCard3View.setImage(null);
+                                break;
+                            default:
+                                // Handle unexpected values if necessary
+                                break;
                         }
                     } catch (IOException exception) {
                         throw new RuntimeException(exception);
@@ -334,26 +401,29 @@ public class GameSceneController {
                             drawnCardImage = wellCardSelected;
                             idTopCard = idWellCardSelected;
                         }
-
+                        System.out.println(idTopCard);
                         if (drawnCardImage != null && idTopCard != null) {
                             switch (indexCardPlayedFromHand) {
                                 case 0:
                                     handCard1View.setImage(drawnCardImage);
+                                    pathHandCard1= "/ImmaginiCodex/CarteFront/" +checkType(idTopCard) + "/" + idTopCard + ".png";
                                     idHandCard1 = idTopCard;
                                     break;
                                 case 1:
                                     handCard2View.setImage(drawnCardImage);
+                                    pathHandCard2= "/ImmaginiCodex/CarteFront/" +checkType(idTopCard) + "/" + idTopCard + ".png";
                                     idHandCard2 = idTopCard;
                                     break;
                                 case 2:
                                     handCard3View.setImage(drawnCardImage);
+                                    pathHandCard3= "/ImmaginiCodex/CarteFront/" +checkType(idTopCard) + "/" + idTopCard + ".png";
                                     idHandCard3 = idTopCard;
                                     break;
                             }
                             System.out.println("idHandCard" + (indexCardPlayedFromHand + 1) + " = " + idTopCard);
                             String pathResource = "/ImmaginiCodex/CarteFront/Resource/" + idTopCardResourceDeck + ".png";
-                            System.out.println(idTopCardResourceDeck);
-                            System.out.println(pathResource);
+                            System.out.println("Idtopcardresourcedeck:" + idTopCardResourceDeck);
+                            System.out.println("path: " +  pathResource);
                             Image newWellResourceCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathResource)));
 
                             String pathGold = "/ImmaginiCodex/CarteFront/Gold/" + idTopCardGoldDeck + ".png";
@@ -363,28 +433,19 @@ public class GameSceneController {
 
                             if(indexCardFromWellSelected == 0){
                                 SharedObjectsInGui.getWellCard1View().setImage(newWellResourceCardImage);
-                                //out.println("resourceDeckUpdate");
-                                //System.out.println(in.readLine());
                                 updateResourceDeckTopCard();
-
                             }
                             else if(indexCardFromWellSelected == 1){
                                 SharedObjectsInGui.getWellCard2View().setImage(newWellResourceCardImage);
-                                //out.println("resourceDeckUpdate");
-                                //System.out.println(in.readLine());
                                 updateResourceDeckTopCard();
 
                             }
                             else if(indexCardFromWellSelected == 2){
                                 SharedObjectsInGui.getWellCard3View().setImage(newWellGoldCardImage);
-//                                out.println("goldDeckUpdate");
-//                                System.out.println(in.readLine());
                                 updatedGoldDeckTopCard();
                             }
                             else if(indexCardFromWellSelected == 3) {
                                 SharedObjectsInGui.getWellCard4View().setImage(newWellGoldCardImage);
-//                                out.println("goldDeckUpdate");
-//                                System.out.println(in.readLine());
                                 updatedGoldDeckTopCard();
                             }
                             System.out.println("Well card updated");
@@ -449,6 +510,8 @@ public class GameSceneController {
             if (isCurrentPlayerTurn) {
                 indexCardToPlace = 0;
                 chosenCardToPlace.setText("First card of your hand");
+                pathChosen=pathHandCard1;
+
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -458,6 +521,7 @@ public class GameSceneController {
             if (isCurrentPlayerTurn) {
                 indexCardToPlace = 1;
                 chosenCardToPlace.setText("Second card of your hand");
+                pathChosen=pathHandCard2;
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -467,6 +531,7 @@ public class GameSceneController {
             if (isCurrentPlayerTurn) {
                 indexCardToPlace = 2;
                 chosenCardToPlace.setText("Third card of your hand");
+                pathChosen=pathHandCard3;
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -586,15 +651,15 @@ public class GameSceneController {
         return null;
     }
 
-    public GridPane subnettingEachImage(Image image) {
-        double larghezzaA = image.getWidth() / 2;
-        double altezzaA = image.getHeight() / 2;
-        int altezza = (int) altezzaA;
-        int larghezza = (int) larghezzaA;
-        Image image1 = new WritableImage(image.getPixelReader(), 0, 0, larghezza, altezza);
-        Image image2 = new WritableImage(image.getPixelReader(), larghezza, 0, larghezza, altezza);
-        Image image3 = new WritableImage(image.getPixelReader(), 0, altezza, larghezza, altezza);
-        Image image4 = new WritableImage(image.getPixelReader(), larghezza, altezza, larghezza, altezza);
+    public GridPane subnettingEachImage(Image image, String cardId) {
+        double width = image.getWidth() / 2;
+        double height = image.getHeight() / 2;
+        int heightInt = (int) height;
+        int widthInt = (int) width;
+        Image image1 = new WritableImage(image.getPixelReader(), 0, 0, widthInt, heightInt);
+        Image image2 = new WritableImage(image.getPixelReader(), widthInt, 0, widthInt, heightInt);
+        Image image3 = new WritableImage(image.getPixelReader(), 0, heightInt, widthInt, heightInt);
+        Image image4 = new WritableImage(image.getPixelReader(), widthInt, heightInt, widthInt, heightInt);
         ImageView imageView1 = new ImageView(image1);
         ImageView imageView2 = new ImageView(image2);
         ImageView imageView3 = new ImageView(image3);
@@ -608,6 +673,21 @@ public class GameSceneController {
         imageView4.setFitWidth(100);
         imageView4.setPreserveRatio(true);
 
+        CardView cardView1 = new CardView(imageView1, cardId, "TL");
+        CardView cardView2 = new CardView(imageView2, cardId, "TR");
+        CardView cardView3 = new CardView(imageView3, cardId, "BL");
+        CardView cardView4 = new CardView(imageView4, cardId, "BR");
+
+        allCardViews.add(cardView1);
+        allCardViews.add(cardView2);
+        allCardViews.add(cardView3);
+        allCardViews.add(cardView4);
+
+        imageView1.setOnMouseClicked(event -> handleCardClick(cardView1));
+        imageView2.setOnMouseClicked(event -> handleCardClick(cardView2));
+        imageView3.setOnMouseClicked(event -> handleCardClick(cardView3));
+        imageView4.setOnMouseClicked(event -> handleCardClick(cardView4));
+
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(0));
         gridPane.setHgap(0);
@@ -617,31 +697,15 @@ public class GameSceneController {
         gridPane.add(imageView3, 0, 1);
         gridPane.add(imageView4, 1, 1);
 
-        imageView1.setPickOnBounds(true);
-        imageView2.setPickOnBounds(true);
-        imageView3.setPickOnBounds(true);
-        imageView4.setPickOnBounds(true);
-
-        imageView1.setOnMouseClicked(event -> handleCardClick(imageView1, "TL"));
-        imageView2.setOnMouseClicked(event -> handleCardClick(imageView2, "TR"));
-        imageView3.setOnMouseClicked(event -> handleCardClick(imageView3, "BL"));
-        imageView4.setOnMouseClicked(event -> handleCardClick(imageView4, "BR"));
         return gridPane;
     }
 
-    public int getX(ImageView img) {
-        return GridPane.getRowIndex(img);
-    }
-
-    public int getY(ImageView img) {
-        return GridPane.getColumnIndex(img);
-    }
-
     public void piazzaCartaBR(ImageView cartaSuCuiPiazzo, GridPane board, int id) {
-        Image secondaImmagine = new Image(getClass().getResourceAsStream("/ImmaginiCarte/" + id + ".png"));
+        nextCardIndex++;
+        Image secondaImmagine = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
         int x = getX(cartaSuCuiPiazzo);
         int y = getY(cartaSuCuiPiazzo);
-        GridPane piazzare = subnettingEachImage(secondaImmagine);
+        GridPane piazzare = subnettingEachImage(secondaImmagine,String.valueOf(id));
         ImageView im1 = (ImageView) piazzare.getChildren().get(0);
         ImageView im2 = (ImageView) piazzare.getChildren().get(1);
         ImageView im3 = (ImageView) piazzare.getChildren().get(2);
@@ -654,13 +718,23 @@ public class GameSceneController {
         board.add(im2, (y + 1), x);
         board.add(im3, y, (x + 1));
         board.add(im4, (y + 1), (x + 1));
+        allCardViews.add(new CardView(im1, String.valueOf(id), "TL"));
+        allCardViews.add(new CardView(im2, String.valueOf(id), "TR"));
+        allCardViews.add(new CardView(im3, String.valueOf(id), "BL"));
+        allCardViews.add(new CardView(im4, String.valueOf(id), "BR"));
+        cardIndices.put(new CardView(im1, String.valueOf(id), "TL"), nextCardIndex);
+        cardIndices.put(new CardView(im2, String.valueOf(id), "TR"), nextCardIndex);
+        cardIndices.put(new CardView(im3, String.valueOf(id), "BL"), nextCardIndex);
+        cardIndices.put(new CardView(im4, String.valueOf(id), "BR"), nextCardIndex);
+        playedcard=pathChosen;
     }
 
     public void piazzaCartaBL(ImageView cartaSuCuiPiazzo, GridPane board, int id) {
-        Image secondaImmagine = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCarte/" + id + ".png")));
+        nextCardIndex++;
+        Image secondaImmagine = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
         int x = getX(cartaSuCuiPiazzo);
         int y = getY(cartaSuCuiPiazzo);
-        GridPane piazzare = subnettingEachImage(secondaImmagine);
+        GridPane piazzare = subnettingEachImage(secondaImmagine, String.valueOf(id));
         ImageView im1 = (ImageView) piazzare.getChildren().get(0);
         ImageView im2 = (ImageView) piazzare.getChildren().get(1);
         ImageView im3 = (ImageView) piazzare.getChildren().get(2);
@@ -673,13 +747,22 @@ public class GameSceneController {
         board.add(im2, (y), (x));
         board.add(im3, (y - 1), (x + 1));
         board.add(im4, (y), (x + 1));
+        allCardViews.add(new CardView(im1, String.valueOf(id), "TL"));
+        allCardViews.add(new CardView(im2, String.valueOf(id), "TR"));
+        allCardViews.add(new CardView(im3, String.valueOf(id), "BL"));
+        allCardViews.add(new CardView(im4, String.valueOf(id), "BR"));
+        cardIndices.put(new CardView(im1, String.valueOf(id), "TL"), nextCardIndex);
+        cardIndices.put(new CardView(im2, String.valueOf(id), "TR"), nextCardIndex);
+        cardIndices.put(new CardView(im3, String.valueOf(id), "BL"), nextCardIndex);
+        cardIndices.put(new CardView(im4, String.valueOf(id), "BR"), nextCardIndex);
     }
 
     public void piazzaCartaTL(ImageView cartaSuCuiPiazzo, GridPane board, int id) {
-        Image secondaImmagine = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCarte/" + id + ".png")));
+        nextCardIndex++;
+        Image secondaImmagine = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
         int x = getX(cartaSuCuiPiazzo);
         int y = getY(cartaSuCuiPiazzo);
-        GridPane piazzare = subnettingEachImage(secondaImmagine);
+        GridPane piazzare = subnettingEachImage(secondaImmagine, String.valueOf(id));
         ImageView im1 = (ImageView) piazzare.getChildren().get(0);
         ImageView im2 = (ImageView) piazzare.getChildren().get(1);
         ImageView im3 = (ImageView) piazzare.getChildren().get(2);
@@ -692,13 +775,22 @@ public class GameSceneController {
         board.add(im2, (y), (x - 1));
         board.add(im3, (y - 1), (x));
         board.add(im4, (y), (x));
+        allCardViews.add(new CardView(im1, String.valueOf(id), "TL"));
+        allCardViews.add(new CardView(im2, String.valueOf(id), "TR"));
+        allCardViews.add(new CardView(im3, String.valueOf(id), "BL"));
+        allCardViews.add(new CardView(im4, String.valueOf(id), "BR"));
+        cardIndices.put(new CardView(im1, String.valueOf(id), "TL"), nextCardIndex);
+        cardIndices.put(new CardView(im2, String.valueOf(id), "TR"), nextCardIndex);
+        cardIndices.put(new CardView(im3, String.valueOf(id), "BL"), nextCardIndex);
+        cardIndices.put(new CardView(im4, String.valueOf(id), "BR"), nextCardIndex);
     }
 
     public void piazzaCartaTR(ImageView cartaSuCuiPiazzo, GridPane board, int id) {
-        Image secondaImmagine = new Image(getClass().getResourceAsStream("/ImmaginiCarte/" + id + ".png"));
+        nextCardIndex++;
+        Image secondaImmagine = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
         int x = getX(cartaSuCuiPiazzo);
         int y = getY(cartaSuCuiPiazzo);
-        GridPane piazzare = subnettingEachImage(secondaImmagine);
+        GridPane piazzare = subnettingEachImage(secondaImmagine, String.valueOf(id));
         ImageView im1 = (ImageView) piazzare.getChildren().get(0);
         ImageView im2 = (ImageView) piazzare.getChildren().get(1);
         ImageView im3 = (ImageView) piazzare.getChildren().get(2);
@@ -711,14 +803,22 @@ public class GameSceneController {
         board.add(im2, (y + 1), (x - 1));
         board.add(im3, (y), (x));
         board.add(im4, (y + 1), (x));
+        allCardViews.add(new CardView(im1, String.valueOf(id), "TL"));
+        allCardViews.add(new CardView(im2, String.valueOf(id), "TR"));
+        allCardViews.add(new CardView(im3, String.valueOf(id), "BL"));
+        allCardViews.add(new CardView(im4, String.valueOf(id), "BR"));
+        cardIndices.put(new CardView(im1, String.valueOf(id), "TL"), nextCardIndex);
+        cardIndices.put(new CardView(im2, String.valueOf(id), "TR"), nextCardIndex);
+        cardIndices.put(new CardView(im3, String.valueOf(id), "BL"), nextCardIndex);
+        cardIndices.put(new CardView(im4, String.valueOf(id), "BR"), nextCardIndex);
     }
 
-    public ImageView getClickedImageView() {
-        return clickedImageView;
+    public CardView getClickedImageView() {
+        return clickedCardView;
     }
 
-    public void setClickedImageView(ImageView clickedImageView) {
-        GameSceneController.clickedImageView = clickedImageView;
+    public void setClickedImageView(CardView clickedCardView) {
+        GameSceneController.clickedCardView = clickedCardView;
     }
 
     private synchronized void firstWellCard() throws IOException {
@@ -941,6 +1041,7 @@ public class GameSceneController {
         SharedObjectsInGui.setWellPathSecond(createPathForFrontCards(SharedObjectsInGui.getIdCard2()));
         SharedObjectsInGui.setWellPathThird(createPathForFrontCards(SharedObjectsInGui.getIdCard3()));
         SharedObjectsInGui.setWellPathForth(createPathForFrontCards(SharedObjectsInGui.getIdCard4()));
+        //SharedObjectsInGui.getWellCard1View().setImage(newWellResourceCardImage);
     }
 
     private void initializeWell() throws IOException {
@@ -972,31 +1073,49 @@ public class GameSceneController {
         SharedObjectsInGui.setTopCardGoldDeck(newTopCardGoldImage);
     }
 
-    private void updateWellAfterDrawing() throws IOException {
-        initializeWell();
-        creatingWell();
-        creatingImagesForTheWell();
-        Platform.runLater(() -> {
-            creatingImagesViewForTheWell();
-            settingWellOnMouseClickedEvent();
-
-            // Debug prints
-            System.out.println("Updated Well Card 1 View: " + SharedObjectsInGui.getWellCard1View());
-            System.out.println("Updated Well Card 2 View: " + SharedObjectsInGui.getWellCard2View());
-            System.out.println("Updated Well Card 3 View: " + SharedObjectsInGui.getWellCard3View());
-            System.out.println("Updated Well Card 4 View: " + SharedObjectsInGui.getWellCard4View());
-        });
-    }
-
     private void updateGUI() throws IOException {
         Platform.runLater(() -> {
             try {
                 updateResourceDeckTopCard();
                 updatedGoldDeckTopCard();
-                updateWellAfterDrawing();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
     }
-}
+
+    public int getX(ImageView img) {
+        return GridPane.getRowIndex(img);
+    }
+
+    public int getY(ImageView img) {
+        return GridPane.getColumnIndex(img);
+    }
+    private void creatingButtons(){
+        buttonContainer.add(playCard, 0, 0);
+        buttonContainer.add(drawCard, 1, 0);
+        buttonContainer.add(seeYourSpecificSeeds, 2, 0);
+        buttonContainer.add(flipCardToBack, 0, 1);
+        buttonContainer.add(flipCardToFront, 0, 2);
+        buttonContainer.add(seeYourPoints, 0, 3);
+        buttonContainer.add(endTurn, 2, 1);
+        buttonContainer.add(seeOtherPlayersBoards, 1, 1);
+    }
+    private void addImageViewToBoard(ImageView imageView, int col, int row, GridPane board) {
+        board.add(imageView, col, row);
+        allCardViews.add(new CardView(imageView, "", ""));
+    }
+
+        private void removeImageViewFromBoard(ImageView imageView, GridPane board) {
+            board.getChildren().remove(imageView);
+            allCardViews.removeIf(cardView -> cardView.getImageView().equals(imageView));
+        }
+        public void setClickedCardView(CardView cardView) {
+            GameSceneController.clickedCardView = cardView;
+        }
+
+        public static CardView getClickedCardView() {
+            return clickedCardView;
+        }
+    }
+

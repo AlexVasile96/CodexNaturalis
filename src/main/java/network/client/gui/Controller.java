@@ -29,9 +29,10 @@ public class Controller {
             return;
         }
         else{
-        System.out.println("il cliente ha detto playcard");
+        System.out.println("Client decided to place a card");
         out.println("playCard"); //sends to server the message to start the playCard method
         try {
+           // System.out.println(in.readLine());
             out.println(indexCardToPlace); //267
             System.out.println(in.readLine()); //puoi procedere
             //Vuoi girare la tua carta?
@@ -56,7 +57,25 @@ public class Controller {
                 messageFromServer= in.readLine();
             } while(!messageFromServer.equals("end"));
             System.out.print("Choose the corner you want to place the card on: ");
-            out.println("TL");
+            switch(cornerSelected) {
+                case "TL":
+                    out.println("TL");
+                    break;
+                case "TR":
+                    out.println("TR");
+                    break;
+                case "BL":
+                    out.println("BL");
+                    break;
+                case "BR":
+                    out.println("BR");
+                    break;
+                default:
+                    out.println("Invalid corner selected");
+                    break;
+            }
+
+
             System.out.println(in.readLine()); //carta placed
             String typeCard = in.readLine();
             String isBack = in.readLine();

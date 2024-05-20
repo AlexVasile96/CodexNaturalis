@@ -47,7 +47,7 @@ public class BoardPointsScene {
         VBox vBoxContainer = new VBox(10);
         StackPane paneForButton = new StackPane();
 
-        Image boardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Board_points.png")));
+        Image boardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/Board_points.png")));
         ImageView boardImageView = new ImageView(boardImage);
         boardImageView.setFitHeight(938);
         boardImageView.setFitWidth(479);
