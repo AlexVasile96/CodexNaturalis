@@ -1,5 +1,6 @@
 package network.client.gui;
 
+import javafx.stage.Stage;
 import model.game.Player;
 
 import java.io.BufferedReader;
@@ -134,6 +135,12 @@ public class Controller {
         in.readLine();//spazio
         System.out.println("------------------------------------------------------------------------------------------");
 
+    }
+
+    public void quit(Stage primaryStage){
+        out.println("quit");
+        QuitScene quitScene = new QuitScene();
+        quitScene.quit(primaryStage);
     }
 
 

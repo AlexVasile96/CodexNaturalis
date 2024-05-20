@@ -1,6 +1,10 @@
 package network.client.gui;
 
 import controller.GameController;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -30,8 +34,39 @@ public class GameScene {
     private String initCardId;
     private ClientView clientView;
     private String currentPlayerNickname;
-    private GameSceneController GameSceneController;
+    private GameSceneController gameSceneController;
     private boolean isFirstClient;
+
+    private AnchorPane root = new AnchorPane();
+    private String typeHandCard1 = null;
+    private String typeHandCard2 = null;
+    private String typeHandCard3 = null;
+    private String idHandCard1 = null;
+    private String idHandCard2 = null;
+    private String idHandCard3 = null;
+    private String idTopCardResourceDeck;
+    private String idTopCardGoldDeck;
+    private Pane specificSeedsPane;
+    private Text specificSeedsText;
+    private Label specificSeedsLabel;
+    private Button playCard = new Button("Play Card");
+    private Button flipCardToBack = new Button("Flip Card to back");
+    private Button flipCardToFront = new Button("Flip Card to front");
+    private Button drawCard = new Button("Draw card");
+    private Button seeYourSpecificSeeds = new Button("See your seeds");
+    private Button seeOtherPlayersBoards = new Button("See other players boards");
+    private Button seeYourPoints = new Button("See your points");
+    private Button endTurn = new Button("End turn");
+    private String wellOrDeck = "notSelected";
+    private double heightWellCards = 80;
+    private double widthWellCards = 110;
+    GridPane buttonContainer = new GridPane();
+    Label chosenCardToPlace = new Label();
+    Label chosenCardToBePlacedOn = new Label();
+    Label chosenCorner = new Label();
+    Label chosenDeckOrWell = new Label();
+
+    private boolean isCurrentPlayerTurn = false;
 
     public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id, ClientView clientView, String currentPlayerNickname, boolean isFirstClient) throws IOException {
         this.primaryStage = primaryStage;
@@ -42,20 +77,20 @@ public class GameScene {
         this.clientView = clientView;
         this.currentPlayerNickname = currentPlayerNickname;
         this.isFirstClient = isFirstClient;
-        this.GameSceneController = new GameSceneController();
+        this.gameSceneController = new GameSceneController();
     }
 
     public void game(boolean isFirstClient) throws IOException {
         System.out.println("Initializing game data for client: " + clientView.getUserName());
-        GameSceneController.initData(primaryStage, out, socket, in, clientView, currentPlayerNickname);
+        gameSceneController.initData(primaryStage, out, socket, in, clientView, currentPlayerNickname);
         if (isFirstClient) {
             System.out.println("First client updating setup");
-            GameSceneController.updateFirst();
+            gameSceneController.updateFirst();
             out.println("SETUPFINISHED");
         } else {
             //System.out.println("Second client updating setup");
             in.readLine();
-            GameSceneController.updateFirst();
+            gameSceneController.updateFirst();
             out.println("SETUPFINISHED");
         }
         while (true) {
@@ -66,6 +101,6 @@ public class GameScene {
             }
         }
         System.out.println("Starting game for client: " + clientView.getUserName());
-        GameSceneController.startGame(initCardId);
+        gameSceneController.startGame(initCardId);
     }
 }

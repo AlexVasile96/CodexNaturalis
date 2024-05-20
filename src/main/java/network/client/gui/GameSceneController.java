@@ -50,6 +50,7 @@ public class GameSceneController {
     private Button seeOtherPlayersBoards = new Button("See other players boards");
     private Button seeYourPoints = new Button("See your points");
     private Button endTurn = new Button("End turn");
+    private Button quit = new Button("Quit");
     private Boolean haveToDraw = false;
     private Boolean haveToPlay = true;
     private String chosenDeckForDrawingNewCard = null;
@@ -225,6 +226,7 @@ public class GameSceneController {
         buttonContainer.add(seeYourPoints, 0, 3);
         buttonContainer.add(endTurn, 2, 1);
         buttonContainer.add(seeOtherPlayersBoards, 1, 1);
+        buttonContainer.add(quit, 2,2);
         vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, specificSeedsPane, buttonContainer);
         //inizialmente disabled per tutti
         buttonContainer.setDisable(true);
@@ -499,6 +501,14 @@ public class GameSceneController {
         seeOtherPlayersBoards.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
                 showAlert("Action unavailable", "This action is currently not implemented.");
+            } else {
+                showAlert("Not your turn", "It's not your turn yet.");
+            }
+        });
+
+        quit.setOnMouseClicked(e->{
+            if (isCurrentPlayerTurn) {
+                controller.quit(primaryStage);
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
