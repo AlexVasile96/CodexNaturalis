@@ -349,7 +349,6 @@ public class GameSceneController {
                                     break;
                             }
                             System.out.println("idHandCard" + (indexCardPlayedFromHand + 1) + " = " + idTopCard);
-
                             String pathResource = "/ImmaginiCodex/CarteFront/Resource/" + idTopCardResourceDeck + ".png";
                             System.out.println(idTopCardResourceDeck);
                             System.out.println(pathResource);
@@ -359,17 +358,18 @@ public class GameSceneController {
                             System.out.println(idTopCardGoldDeck);
                             System.out.println(pathGold);
                             Image newWellGoldCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathGold)));
+
                             if(indexCardFromWellSelected == 0){
                                 SharedObjectsInGui.getWellCard1View().setImage(newWellResourceCardImage);
-                                out.println("resourceDeckUpdate");
-                                System.out.println(in.readLine());
+                                //out.println("resourceDeckUpdate");
+                                //System.out.println(in.readLine());
                                 updateResourceDeckTopCard();
 
                             }
                             else if(indexCardFromWellSelected == 1){
                                 SharedObjectsInGui.getWellCard2View().setImage(newWellResourceCardImage);
-                                out.println("resourceDeckUpdate");
-                                System.out.println(in.readLine());
+                                //out.println("resourceDeckUpdate");
+                                //System.out.println(in.readLine());
                                 updateResourceDeckTopCard();
 
                             }
@@ -936,6 +936,8 @@ public class GameSceneController {
         SharedObjectsInGui.setPathGoldDeck(newPathGold);
         SharedObjectsInGui.setTopCardGoldDeck(newTopCardGoldImage);
     }
+
+    private void updateWellAfterDrawing(){}
 
     private void updateGUI() throws IOException {
         updateResourceDeckTopCard();
