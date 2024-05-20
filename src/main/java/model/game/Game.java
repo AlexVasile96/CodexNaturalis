@@ -12,6 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Game implements WhatCanPlayerDo {
@@ -475,12 +477,22 @@ public class Game implements WhatCanPlayerDo {
         resourceDeck.drawCard(well);
         goldDeck.drawCard(well);
         goldDeck.drawCard(well);
+        sortWell();
         System.out.println("Cards in the well: ");
         for (Card card : well) {
             System.out.println(card);
         }
         System.out.println("\n");
     }
+    private void sortWell() {
+        Collections.sort(well, new Comparator<Card>() {
+            @Override
+            public int compare(Card c1, Card c2) {
+                return Integer.compare(c1.getId(), c2.getId());
+            }
+        });
+    }
+
 
 
     private synchronized void commonObjectiveCards() {
