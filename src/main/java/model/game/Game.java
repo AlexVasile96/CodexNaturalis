@@ -34,7 +34,7 @@ public class Game implements WhatCanPlayerDo {
     private Card cPchoose = null;
     private List<Player> playersFromDisk;
     private final Semaphore semaphore = new Semaphore(1);
-
+    private int totalNumberOfPLayer=0;
 
     public Game() {                                           //GAME CONSTRUCTOR WHICH INITIALIZED ALL THE CARDS
         this.players = new ArrayList<>();
@@ -245,27 +245,55 @@ public class Game implements WhatCanPlayerDo {
     }
 
     public synchronized String sendWellIdFirstToGui() {
-        int id1 = well.getFirst().getId();
-        return String.valueOf(id1);
+        try {
+            semaphore.acquire();
+            int id1 = well.getFirst().getId();
+            return String.valueOf(id1);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return null; // Gestire l'eccezione in modo appropriato
+        } finally {
+            semaphore.release();
+        }
     }
 
     public synchronized String sendWellIdSecondToGui() {
-
-        int id2 = well.get(1).getId();
-        return String.valueOf(id2);
+        try {
+            semaphore.acquire();
+            int id2 = well.get(1).getId();
+            return String.valueOf(id2);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return null; // Gestire l'eccezione in modo appropriato
+        } finally {
+            semaphore.release();
+        }
     }
 
     public synchronized String sendWellIdThirdToGui() {
-
-        int id3 = well.get(2).getId();
-        return String.valueOf(id3);
-
+        try {
+            semaphore.acquire();
+            int id3 = well.get(2).getId();
+            return String.valueOf(id3);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return null; // Gestire l'eccezione in modo appropriato
+        } finally {
+            semaphore.release();
+        }
     }
 
     public synchronized String sendWellIdFourthToGui() {
-
-        int id4 = well.get(3).getId();
-        return String.valueOf(id4);
+        try {
+            semaphore.acquire();
+            int id4 = well.get(3).getId();
+            return String.valueOf(id4);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return null; // Gestire l'eccezione in modo appropriato
+        } finally {
+            semaphore.release();
+        }
     }
 
     @Override
@@ -294,25 +322,33 @@ public class Game implements WhatCanPlayerDo {
     }
 
     public synchronized String getDeckID(Player player) {
-        List<Card> cardToSendToServer = player.getPlayerCards();
-        System.out.println("STAMPANDO LE CARTE");
-        System.out.println(player.getPlayerCards().getFirst());
-        System.out.println(player.getPlayerCards().get(1));
-        System.out.println(player.getPlayerCards().getLast());
-        StringBuilder cardsAsString = new StringBuilder();
-        for (Card card : cardToSendToServer) {
-            cardsAsString.append(card.getId()).append("\n");
-        }
-        return String.valueOf(cardsAsString);
-    }
-    public void initializeClientAttributes(int clientId) throws InterruptedException {
-        semaphore.acquire();
         try {
-            getDeckID(currentPlayingPLayer);
+            semaphore.acquire();
+            List<Card> cardToSendToServer = player.getPlayerCards();
+            System.out.println("STAMPANDO LE CARTE");
+            System.out.println(player.getPlayerCards().getFirst());
+            System.out.println(player.getPlayerCards().get(1));
+            System.out.println(player.getPlayerCards().getLast());
+            StringBuilder cardsAsString = new StringBuilder();
+            for (Card card : cardToSendToServer) {
+                cardsAsString.append(card.getId()).append("\n");
+            }
+            return String.valueOf(cardsAsString);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return null; // Gestire l'eccezione in modo appropriato
         } finally {
             semaphore.release();
         }
     }
+
+    public void nextTurn() {
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        currentPlayingPLayer = players.get(currentPlayerIndex);
+        currentPlayer=currentPlayingPLayer.getNickName();
+        System.out.println("Turno del giocatore: " + currentPlayingPLayer.getNickName());
+    }
+
 
     public String showBoardForPlacingCards(Player player) {
         return player.getBoard().printBoardForServer();
@@ -680,6 +716,12 @@ public class Game implements WhatCanPlayerDo {
         return deckArray;
     }*/
 
+    public int getTotalNumberOfPLayer() {
+        return totalNumberOfPLayer;
+    }
 
+    public void setTotalNumberOfPLayer(int totalNumberOfPLayer) {
+        this.totalNumberOfPLayer = totalNumberOfPLayer;
+    }
 }
 

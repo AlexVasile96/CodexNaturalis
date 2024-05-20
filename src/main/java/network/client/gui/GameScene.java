@@ -36,37 +36,9 @@ public class GameScene {
     private String currentPlayerNickname;
     private GameSceneController gameSceneController;
     private boolean isFirstClient;
+    private static int totalPlayers=0;
+    private static int loggedInPlayers = 0;  // Static field to keep track of logged-in players
 
-    private AnchorPane root = new AnchorPane();
-    private String typeHandCard1 = null;
-    private String typeHandCard2 = null;
-    private String typeHandCard3 = null;
-    private String idHandCard1 = null;
-    private String idHandCard2 = null;
-    private String idHandCard3 = null;
-    private String idTopCardResourceDeck;
-    private String idTopCardGoldDeck;
-    private Pane specificSeedsPane;
-    private Text specificSeedsText;
-    private Label specificSeedsLabel;
-    private Button playCard = new Button("Play Card");
-    private Button flipCardToBack = new Button("Flip Card to back");
-    private Button flipCardToFront = new Button("Flip Card to front");
-    private Button drawCard = new Button("Draw card");
-    private Button seeYourSpecificSeeds = new Button("See your seeds");
-    private Button seeOtherPlayersBoards = new Button("See other players boards");
-    private Button seeYourPoints = new Button("See your points");
-    private Button endTurn = new Button("End turn");
-    private String wellOrDeck = "notSelected";
-    private double heightWellCards = 80;
-    private double widthWellCards = 110;
-    GridPane buttonContainer = new GridPane();
-    Label chosenCardToPlace = new Label();
-    Label chosenCardToBePlacedOn = new Label();
-    Label chosenCorner = new Label();
-    Label chosenDeckOrWell = new Label();
-
-    private boolean isCurrentPlayerTurn = false;
 
     public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id, ClientView clientView, String currentPlayerNickname, boolean isFirstClient) throws IOException {
         this.primaryStage = primaryStage;
@@ -76,6 +48,7 @@ public class GameScene {
         this.initCardId = id;
         this.clientView = clientView;
         this.currentPlayerNickname = currentPlayerNickname;
+        System.out.println("Current player in init data is:" + currentPlayerNickname);
         this.isFirstClient = isFirstClient;
         this.gameSceneController = new GameSceneController();
     }
@@ -83,17 +56,34 @@ public class GameScene {
     public void game(boolean isFirstClient) throws IOException {
         System.out.println("Initializing game data for client: " + clientView.getUserName());
         gameSceneController.initData(primaryStage, out, socket, in, clientView, currentPlayerNickname);
+        out.println("updateLoggedPlayers");                                         //+1 dei logged players
+        System.out.println("Server says: " + in.readLine());                                         //Update loggedPlayers
+        out.println("howManyPlayers");
+        loggedInPlayers= Integer.parseInt(in.readLine());
+        System.out.println("Logged in players: " + loggedInPlayers);
+
         if (isFirstClient) {
             System.out.println("First client updating setup");
             gameSceneController.updateFirst();
+            out.println("totPlayers");
+            totalPlayers= Integer.parseInt(in.readLine());
+            System.out.println("Total PLayers in the game: " + totalPlayers);
             out.println("SETUPFINISHED");
             System.out.println(in.readLine()); //stampo la setupfinished
-            System.out.println("Current player is " + in.readLine());
+            System.out.println("First Player in game is "+ in.readLine());
+            System.out.println("Next player to setup is " + in.readLine());
         } else {
-            System.out.println("Second client updating setup");
-            System.out.println("SETUPFINISHED =="+ in.readLine());
+            System.out.println("Not First client updating setup");
             gameSceneController.updateFirst();
-            //out.println("SETUPFINISHED");
+            out.println("totPlayers");
+            totalPlayers= Integer.parseInt(in.readLine());
+            System.out.println("Total PLayers in the game: " + totalPlayers);
+            if (loggedInPlayers<totalPlayers) {
+                out.println("SETUPFINISHED");
+                System.out.println(in.readLine()); //stampo la setupfinished
+                System.out.println("First Player in game is "+ in.readLine());
+                System.out.println("Next player to setup is " + in.readLine());
+           }
 
         }
 

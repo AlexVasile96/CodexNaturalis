@@ -97,6 +97,7 @@ public class GameSceneController {
         this.socket = socket;
         this.in = in;
         this.currentPlayerNickname = currentPlayerNickname;
+        System.out.println("Current player in initData is:" + currentPlayerNickname);
         this.clientView = clientView;
         controller = new Controller(in, out);
         isCurrentPlayerTurn = clientView.getUserName().equals(currentPlayerNickname);
@@ -105,7 +106,7 @@ public class GameSceneController {
 
     public synchronized void updateFirst() throws IOException {
         synchronized (syncObject) {
-
+            System.out.println("Sono dentro la updateFirst");
             initializeWell();
             updatingResourceAndGoldDeck();
             creatingPathForGameMethod();
@@ -275,7 +276,7 @@ public class GameSceneController {
         /*layout.layoutXProperty().bind(gameScene.widthProperty().subtract(layout.widthProperty()).divide(2));
         layout.layoutYProperty().bind(gameScene.heightProperty().subtract(layout.heightProperty()).divide(2));*/
 
-        primaryStage.setScene(gameScene);
+        Platform.runLater(() -> { primaryStage.setScene(gameScene);});
 
         if (currentPlayerNickname.equals(clientView.getUserName())) {
             isCurrentPlayerTurn = true;
@@ -835,8 +836,10 @@ public class GameSceneController {
     }
 
     private synchronized void firstWellCard() throws IOException {
+        System.out.println("Sent first Well Card Request");
         out.println("firstWellId");
         SharedObjectsInGui.setIdCard1(in.readLine());
+        System.out.println("ragno");
         System.out.println("First well card id: " + SharedObjectsInGui.getIdCard1());
     }
 

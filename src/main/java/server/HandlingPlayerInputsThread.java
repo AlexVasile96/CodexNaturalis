@@ -72,7 +72,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("Hi i'm the third thread");
         } else if (fourthClient==null) {
             fourthClient=this;
-            System.out.println("Momo smettila di remarci contro");
+            System.out.println("HI i'm the fourth thread");
         }
         synchronized (HandlingPlayerInputsThread.class) {
             if (setupLatch == null) {
@@ -294,6 +294,31 @@ public class HandlingPlayerInputsThread implements Runnable {
             String cornerChosen = null;
             System.out.println("Received command: " + messageFromClient);
             switch (messageFromClient) {
+                case"updateLoggedPlayers"->{
+                    gameController.setLogginPlayers(gameController.getLogginPlayers()+1);
+                    sendMessageToAllClients("Login Players updated correctly");
+                    break;
+                }
+                case"howManyPlayers"->{
+                    int size= gameController.getLogginPlayers();
+                    sendMessageToAllClients(String.valueOf(size));
+                    break;
+                }
+                case"SETUPFINISHED"->{
+                    sendMessageToAllClients("SETUPFINISHED");
+                    if (!GameController.isIsTheFirstPlayer()) {
+                        game.setCurrentPlayer(player.getClientView().getUserName());
+                        GameController.setIsTheFirstPlayer(true);
+                    }
+                    String currentPlayerName = game.getCurrentPlayer();
+                    System.out.println("Current Player Name set to: " + currentPlayerName);
+                    sendMessageToAllClients(currentPlayerName);
+                    game.nextTurn(); // Avanza al turno successivo
+                    String nextPlayer = game.getCurrentPlayer();
+                    System.out.println("Next Player is: " + nextPlayer);
+                    sendMessageToAllClients(nextPlayer);
+                    break;
+                }
                 case "endTurn" -> {
                     endTurn(player, turnController);
                     gameController.readCommand(messageFromClient, player, 0, 0, cornerChosen);

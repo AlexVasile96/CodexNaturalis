@@ -39,6 +39,8 @@ public class GameController {
     private CountDownLatch numbgames = new CountDownLatch(0);
     private int playerChoseinitialcard=0;
     private static boolean isTheFirstPlayer= false;
+    private static String currentPlayerName=null;
+    private int logginPlayers=0;
     //CONSTRUCTORS
 
     public GameController(String username, PrintWriter userOut, List<HandlingPlayerInputsThread> clients, Socket socket, Game game) throws IOException {
@@ -59,43 +61,60 @@ public class GameController {
         this.isSizeSet = false;
     }
 
-
+//gigi->pietro->alex
+    //gigi
+    //pietro-> confronto con la clientview
 
 
     public synchronized void readCommand(String commandString, Player player, int size, int paolo, String cornerChosen) {
         if (game != null) {
             Command command = new Command();
-            System.out.println("Command received :" + commandString +" i'm in gamecontroller");
-            if(commandString.equals("SETUPFINISHED"))
-            {
-                String result = command.runCommand(game, commandString, player,size,paolo, cornerChosen);
-                sendMessageToAllClients(result);
-                if(!isTheFirstPlayer){
-                game.setCurrentPlayer(player.getClientView().getUserName());
-                isTheFirstPlayer=true;
-                }
-                sendMessageToAllClients(game.getCurrentPlayer());
-            }
-            if(commandString.equals("playCard"))
-            {
-                if(!isCornerAlreadyChosen) {
-                    String cornersAvailable = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
-                    sendMessageToAllClients(cornersAvailable); //Mando al client i corners disponibili
-                    isCornerAlreadyChosen=true;
-                }
-                else {
-                    String cornersChosen= command.runCommand(game,commandString,player,size,paolo,cornerChosen);
-                    sendMessageToAllClients(cornersChosen);
-                    isCornerAlreadyChosen=false;
-                }
-            }
-            else {
-                String result = command.runCommand(game, commandString, player,size,paolo, cornerChosen);
-                sendMessageToAllClients(result);
+            System.out.println("Command received :" + commandString + " i'm in gamecontroller");
+            String result;
+            switch (commandString) {
+//                case "SETUPFINISHED":
+//                    result = command.runCommand(game, commandString, player, size, paolo, cornerChosen); // restituisce SETUPFINISHED
+//                    sendMessageToAllClients(result);
+//                    if (!isTheFirstPlayer) {
+//                        game.setCurrentPlayer(player.getClientView().getUserName());
+//                        isTheFirstPlayer = true;
+//                    }
+//                    currentPlayerName = game.getCurrentPlayer();
+//                    System.out.println("Current Player Name set to: " + currentPlayerName);
+//                    sendMessageToAllClients(currentPlayerName);
+//                    game.nextTurn(); // Avanza al turno successivo
+//                    String nextPlayer = game.getCurrentPlayer();
+//                    System.out.println("Next Player is: " + nextPlayer);
+//                    sendMessageToAllClients(nextPlayer);
+//                    break;
+
+                case "playCard":
+                    if (!isCornerAlreadyChosen) {
+                        String cornersAvailable = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
+                        sendMessageToAllClients(cornersAvailable); // Mando al client i corners disponibili
+                        isCornerAlreadyChosen = true;
+                    } else {
+                        String cornersChosen = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
+                        sendMessageToAllClients(cornersChosen);
+                        isCornerAlreadyChosen = false;
+                    }
+                    break;
+
+//                case "updateLoggedPlayers":
+//                    result= command.runCommand(game,commandString,player,size,paolo,cornerChosen);
+//                    logginPlayers++;
+//                    break;
+//                case "howManyPlayers":
+//                    System.out.println("Game controller says: at the moment "+ logginPlayers + " players are logged correctly");
+//                    result= command.runCommand(game,commandString,player,size,paolo,cornerChosen);
+//                    sendMessageToAllClients(String.valueOf(logginPlayers));
+                default:
+                    result = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
+                    sendMessageToAllClients(result);
+                    break;
             }
         }
     }
-
 
 
 
@@ -111,6 +130,7 @@ public class GameController {
             throw new UsernameAlreadyExistsException();
         }
         players.put(username, userOut);
+
         if(getCurrentNumsOfPlayers()==0)
         {
             setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+2);
@@ -131,8 +151,9 @@ public class GameController {
             sizeLatch.countDown();
             System.out.println(size);
             setSize(size);
-        System.out.println("size: " + getSize());
+            System.out.println("size: " + getSize());
             setSizeSet(true);
+            game.setTotalNumberOfPLayer(size);
 
     }
     public void loadGameOrStartNewGame() {
@@ -365,5 +386,21 @@ public synchronized void waitingForPLayers() throws InterruptedException {
 
     public void setPlayerChoseinitialcard(int playerChoseinitialcard) {
         this.playerChoseinitialcard = playerChoseinitialcard;
+    }
+
+    public int getLogginPlayers() {
+        return logginPlayers;
+    }
+
+    public static boolean isIsTheFirstPlayer() {
+        return isTheFirstPlayer;
+    }
+
+    public static void setIsTheFirstPlayer(boolean isTheFirstPlayer) {
+        GameController.isTheFirstPlayer = isTheFirstPlayer;
+    }
+
+    public void setLogginPlayers(int logginPlayers) {
+        this.logginPlayers = logginPlayers;
     }
 }

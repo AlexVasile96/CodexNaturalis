@@ -25,6 +25,7 @@ public class LobbyController {
     private ExecutorService executor;
     private ClientView clientview;
     private static GameScene gameScene;
+    private String currentPlayerNickname=null;
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView cl) {
         this.primaryStage = primaryStage;
@@ -42,25 +43,33 @@ public class LobbyController {
                 while ((message = in.readLine()) != null) {
                     if (message.equals("All clients connected")) {
                         Platform.runLater(() -> {
-                            System.out.println("ciao");
+                            System.out.println("All clients are connected, choosing secret cards...");
                             SecretCardScene secretCardSceneHandler = new SecretCardScene();
                             secretCardSceneHandler.chooseSecretCard(primaryStage, out, socket, in, clientview);
                         });
                         break;
                     } else if (message.equals("All clients chose the init Card")) {
-                        System.out.println("Received message: " + message);
                         Platform.runLater(() -> {
-                            System.out.println("seconda lobby");
+                            System.out.println("All clients chose the initial card, starting game...");
                             handleInitCardChoice();
                         });
                         break;
                     } else if (message.equals("SETUPFINISHED")) {
-                        System.out.println("Received message: " + message);
-                        Platform.runLater(() -> {
-                            System.out.println("Setup finished, starting game...");
-                            handleSetupFinished();
-                        });
-                        break;
+                        System.out.println(message);
+                        currentPlayerNickname = in.readLine();
+                        System.out.println("Current Player:" +currentPlayerNickname);
+                        String nextPlayer = in.readLine();
+                        System.out.println("Next PLayer is:" + nextPlayer);
+
+                            if (nextPlayer.equals(clientview.getUserName())) {
+                                System.out.println("Setup finished, starting game...");
+                                handleSetupFinished(currentPlayerNickname);
+                            } else {
+                                System.out.println("Not your turn, waiting for setup...");
+                                waitForSetupCompletion();
+                            }
+
+
                     } else {
                         System.out.println("Unknown message, waiting for correct message...");
                     }
@@ -73,7 +82,7 @@ public class LobbyController {
 
     private void handleInitCardChoice() {
         try {
-            String currentPlayerNickname = in.readLine();
+            currentPlayerNickname= in.readLine();
             System.out.println("CurrentPlayerNickname is: " + currentPlayerNickname);
             if (in.readLine().equals("You are the first client")) {
                 synchronized (LobbyController.class) {
@@ -98,10 +107,9 @@ public class LobbyController {
         }
     }
 
-    private void handleSetupFinished() {
+    private void handleSetupFinished(String currentPlayerNickname) {
         try {
-            String currentPlayerNickname = in.readLine();
-            System.out.println("CurrentPlayerNickname in setup finished: " + currentPlayerNickname);
+
             System.out.println("Sono qua");
             synchronized (LobbyController.class) {
                 if (gameScene == null) {

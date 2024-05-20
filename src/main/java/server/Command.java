@@ -120,9 +120,14 @@ public class Command { //Command Client sends to Server
             case "goldDeckUpdate":
                 game.goldDeckUpdateForGUI();
                 return "Gold Deck Correctly Updated";
-            case "SETUPFINISHED":
-                return "SETUPFINISHED";
-
+//            case "SETUPFINISHED":
+//                return "SETUPFINISHED";
+            case "totPlayers":
+                return String.valueOf(game.getTotalNumberOfPLayer());
+//            case "howManyPlayers":
+//                return "How many players are in the game?";
+//            case "updateLoggedPlayers":
+//                return "Updating number of players";
             default:
                 System.out.println("Mi sono sminchiato");
                 System.out.println("Unknown command received: " + commandString);
