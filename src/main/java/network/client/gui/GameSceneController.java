@@ -257,6 +257,11 @@ public class GameSceneController {
 
         VBox secondColumnOfSecondRow = new VBox();
 
+        chosenCardToPlace.setStyle("-fx-text-fill: white;");
+        chosenCardToBePlacedOn.setStyle("-fx-text-fill: white;");
+        chosenCorner.setStyle("-fx-text-fill: white;");
+        chosenDeckOrWell.setStyle("-fx-text-fill: white;");
+
         secondColumnOfSecondRow.getChildren().addAll(chosenCardToPlace, chosenCardToBePlacedOn, chosenCorner, chosenDeckOrWell);
         chosenDeckOrWell.setText("Drawing from: "+wellOrDeck);
 
@@ -571,9 +576,22 @@ public class GameSceneController {
 
         quit.setOnMouseClicked(e->{
             if (isCurrentPlayerTurn) {
-                controller.quit(primaryStage);
+                if(haveToDraw){
+                    showAlert("Quit", "You can't quit right now, draw any card.");
+                }
+                else {
+                    String nextPlayerNickname;
+                    try {
+                        nextPlayerNickname = controller.endTurn();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    updateTurnState(nextPlayerNickname.equals(clientView.getUserName()));
+                    haveToPlay = true;
+                    controller.quit(primaryStage);
+                }
             } else {
-                showAlert("Not your turn", "It's not your turn yet.");
+                controller.quit(primaryStage);
             }
         });
 

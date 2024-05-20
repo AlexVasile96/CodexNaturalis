@@ -38,9 +38,9 @@ public class BoardPointsScene {
     private int getScore() throws IOException {
         out.println("showPoints");
 
-        for(int i = 1; i<16;i++){
+        /*for(int i = 1; i<18;i++){
             System.out.println(in.readLine());
-        }
+        }*/
 
 
         String stringa = in.readLine();
