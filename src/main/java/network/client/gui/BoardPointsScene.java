@@ -1,9 +1,7 @@
 package network.client.gui;
 
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -11,7 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import view.ClientView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,6 +25,7 @@ public class BoardPointsScene {
     private Socket socket;
     private BufferedReader in;
     private String initCardId;
+    private int playerScore;
     List<Circle> checkpoints = new ArrayList<>();
 
     public BoardPointsScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) throws IOException {
@@ -37,8 +35,26 @@ public class BoardPointsScene {
         this.in = in;
     }
 
-    public void popupBoardPoints(){
+    private int getScore() throws IOException {
+        out.println("showPoints");
+
+        for(int i = 1; i<16;i++){
+            System.out.println(in.readLine());
+        }
+
+
+        String stringa = in.readLine();
+        if(stringa.equals("Unknown command.")) {
+            return 25;
+        }
+        System.out.println(stringa);
+        return Integer.parseInt(stringa);
+    }
+
+    public void popupBoardPoints() throws IOException {
         Stage popupStage = new Stage();
+
+        playerScore = getScore();
 
         popupStage.setTitle("Board Points");
         popupStage.setResizable(false);
@@ -61,10 +77,8 @@ public class BoardPointsScene {
 
         createCheckpoints();
         positionCheckpoints();
-
-        /*Circle checkpoint0 = createCheckpoint(131,862,35);
-        Circle checkpoint1 = createCheckpoint(238.5,862,35);
-        Circle checkpoint2 = createCheckpoint(346,862,35);*/
+        updateCheckpoint();
+        System.out.println(playerScore);
 
         paneForButton.getChildren().addAll(closeButton);
 
@@ -83,7 +97,6 @@ public class BoardPointsScene {
     private void createCheckpoints(){
         for(int i = 0;i<30;i++){
             Circle circle = new Circle();
-            circle.setFill(Color.RED);
             circle.setRadius(34.5);
             checkpoints.add(circle);
         }
@@ -112,6 +125,15 @@ public class BoardPointsScene {
                 checkpoints.get(i).setCenterX(positions[i][0]);
                 checkpoints.get(i).setCenterY(positions[i][1]);
             }
+        }
+    }
+    private void updateCheckpoint(){
+        for(Circle circle : checkpoints){
+            circle.setVisible(false);
+        }
+        if(playerScore >= 0 && playerScore < checkpoints.size()){
+            checkpoints.get(playerScore).setVisible(true);
+            checkpoints.get(playerScore).setFill(Color.RED);
         }
     }
 }
