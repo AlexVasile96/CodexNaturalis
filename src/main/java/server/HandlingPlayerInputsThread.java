@@ -169,6 +169,12 @@ public class HandlingPlayerInputsThread implements Runnable {
         try {
             sendMessageToClient("Hello!! You have to log in, please type your username");
             String request = stdIn.readLine();
+            while (isUsernameTaken(request)) {
+                sendMessageToClient("Username already taken. Please choose another username:");
+                System.out.println("Username already taken. Please choose another username:");
+                request = stdIn.readLine();
+                System.out.println("Received new username: " + request);
+            }
             System.out.println("Client name is " + request);
             sendMessageToClient("Login successfully done!");
             Board board = new Board(50, 50);
@@ -457,6 +463,14 @@ public class HandlingPlayerInputsThread implements Runnable {
         while (updateOrder < clientOrder) {
             wait();
         }
+    }
+    private boolean isUsernameTaken(String username) {
+        for (Player player : playersList) {
+            if (player.getNickName().equals(username)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

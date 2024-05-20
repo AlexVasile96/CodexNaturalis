@@ -635,12 +635,24 @@ public class ServerConnection implements Runnable {
     }
 
     private synchronized void loginPlayer(Player player) throws IOException, InterruptedException { //LOGIN METHOD
+        boolean isTheNameAlreadyTaken=false;
         String serverResponse = in.readLine();
+        String loginName=null;
+        String correctLogin=null;
         System.out.println("Server says: " + serverResponse); //Inserisci il tuo nome per favore
         System.out.print(">");
-        String loginName = stdin.readLine();
-        sendMessageToServer(loginName);
-        String correctLogin = in.readLine();
+        while(!isTheNameAlreadyTaken){
+            loginName = stdin.readLine();
+            sendMessageToServer(loginName);
+            correctLogin = in.readLine();
+            if((correctLogin).equals("Username already taken. Please choose another username:"))
+            {
+                System.out.println("Username already taken. Please choose another username:");
+                System.out.println(">");
+            }
+            else isTheNameAlreadyTaken=true;
+        }
+
         System.out.println("Server says: " + correctLogin);     //Login succesfully done
         player.getClientView().setUserName(loginName);
         clientView.setUserName(loginName);                      //UPDATING CLIENT VIEW

@@ -43,21 +43,13 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        // Disabilita il pulsante di login all'avvio
-        loginButton.setDisable(true);
-
-        // Aggiungi un listener per verificare quando uno dei campi viene compilato
-        usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
-            checkFields();
-        });
-
-        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-            checkFields();
-        });
+        loginButton.setDisable(true); //disabling login button unless client has insert his username
+        usernameField.textProperty().addListener((observable, oldValue, newValue) -> checkFields());        //Listener to see if the field has been completed
+        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> checkFields());
     }
 
     private void checkFields() {
-        // Controlla se entrambi i campi sono compilati
+        // Checking both fields
         String username = usernameField.getText();
         Toggle dot = toggleGroup.getSelectedToggle();
 
@@ -68,7 +60,8 @@ public class LoginController {
     @FXML
     public void loginButtonClicked(ActionEvent event) throws IOException {
 
-        System.out.println(in.readLine());
+        String serverResponse=in.readLine();
+        System.out.println(serverResponse);
         String username = usernameField.getText();
         Toggle dot = toggleGroup.getSelectedToggle();
 
@@ -92,18 +85,38 @@ public class LoginController {
             return;
         }
 
+            out.println(username); //Sending username to the server
+            serverResponse = in.readLine();
+            System.out.println(serverResponse);
+            if (serverResponse.equals("Username already taken. Please choose another username:")) {
+                loginLabel.setText("Username already taken. Please choose another username:");
+                loginLabel.setStyle("-fx-font-size: 20px;" + // Dimensione del font
+                        "-fx-font-family: Arial;" + // Famiglia del font
+                        "-fx-text-fill: #EF8156;" + // Colore del testo
+                        "-fx-padding: 10px;" + // Spaziatura interna
+                        "-fx-border-color: #EF8156;" + // Colore del bordo
+                        "-fx-border-width: 1px;" + // Spessore del bordo
+                        "-fx-border-radius: 5px;"); // Arrotondamento del bordo
+                return;
+            }
+
         clientView.setUserName(username);
         System.out.println("This clientview username is: " + clientView.getUserName());
-        out.println(username);
-        System.out.println(in.readLine());
         System.out.println(in.readLine());
         String realChosenDot = ((RadioButton) dot).getText();
         clientView.setDot(Dot.valueOf(realChosenDot));
         out.println(realChosenDot);
         if(in.readLine().equals("Chosen color not available!")){
+            loginLabel.setText("Chosen color not available! Choose another color:");
+            loginLabel.setStyle("-fx-font-size: 20px;" +
+                    "-fx-font-family: Arial;" +
+                    "-fx-text-fill: #EF8156;" +
+                    "-fx-padding: 10px;" +
+                    "-fx-border-color: #EF8156;" +
+                    "-fx-border-width: 1px;" +
+                    "-fx-border-radius: 5px;");
             return;
         }
-
         ChooseNumOfPlayersScene chooseNumOfPlayersScene= new ChooseNumOfPlayersScene();
         chooseNumOfPlayersScene.createChooseNumOfPlayersScene(primaryStage,out,socket,in, clientView);
     }
