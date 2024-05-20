@@ -570,6 +570,14 @@ public class GameSceneController {
 
         quit.setOnMouseClicked(e->{
             if (isCurrentPlayerTurn) {
+                String nextPlayerNickname;
+                try {
+                    nextPlayerNickname = controller.endTurn();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                updateTurnState(nextPlayerNickname.equals(clientView.getUserName()));
+                haveToPlay = true;
                 controller.quit(primaryStage);
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
