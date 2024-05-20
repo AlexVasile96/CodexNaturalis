@@ -256,6 +256,11 @@ public class GameSceneController {
 
         VBox secondColumnOfSecondRow = new VBox();
 
+        chosenCardToPlace.setStyle("-fx-text-fill: white;");
+        chosenCardToBePlacedOn.setStyle("-fx-text-fill: white;");
+        chosenCorner.setStyle("-fx-text-fill: white;");
+        chosenDeckOrWell.setStyle("-fx-text-fill: white;");
+
         secondColumnOfSecondRow.getChildren().addAll(chosenCardToPlace, chosenCardToBePlacedOn, chosenCorner, chosenDeckOrWell);
         chosenDeckOrWell.setText("Drawing from: "+wellOrDeck);
 
