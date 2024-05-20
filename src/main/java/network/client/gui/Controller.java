@@ -75,7 +75,6 @@ public class Controller {
                     break;
             }
 
-
             System.out.println(in.readLine()); //carta placed
             String typeCard = in.readLine();
             String isBack = in.readLine();
@@ -88,6 +87,7 @@ public class Controller {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         }
     }
 
@@ -212,7 +212,6 @@ public class Controller {
         String disable=in.readLine();
 
         while (!(message = in.readLine()).equals(playerNickname)) {
-
             System.out.println("Received message while waiting for turn: " + message);
             System.out.println("Not your turn, please wait");
         }

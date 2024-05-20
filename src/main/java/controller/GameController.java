@@ -19,7 +19,7 @@ import java.nio.file.Paths;
 
 public class GameController {
     private final Map<String, PrintWriter> players;
-    int size    ;
+    int size;
     boolean isGameOver;
     private Game game;
     private List<HandlingPlayerInputsThread> clients;
@@ -65,9 +65,9 @@ public class GameController {
     public synchronized void readCommand(String commandString, Player player, int size, int paolo, String cornerChosen) {
         if (game != null) {
             Command command = new Command();
+            System.out.println("Command received :" + commandString +" i'm in gamecontroller");
             if(commandString.equals("SETUPFINISHED"))
             {
-
                 sendMessageToAllClients("SETUPFINISHED");
                 if(!isTheFirstPlayer){
                 game.setCurrentPlayer(player.getClientView().getUserName());

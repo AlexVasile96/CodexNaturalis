@@ -6,7 +6,9 @@ public class Command { //Command Client sends to Server
     private static int checkIfTheBoardHadAlreadyBeenPrinted= 0;
 
     public String runCommand(Game game, String commandString, Player player, int size, int paolo, String cornerChosen) { //chiama sempre il game
+        System.out.println(commandString);
         switch (commandString) {
+
             case "showYourCardDeck":{ //finito-> funzionante
                 String deckprinted;
                 deckprinted= game.showCards(player); //salva nella stringa il deck del giocatore
@@ -27,8 +29,6 @@ public class Command { //Command Client sends to Server
                     return finalResult;
                 }
             }
-
-
 
             case "TurnCard":
                 game.turnCard(player, size);
@@ -120,7 +120,11 @@ public class Command { //Command Client sends to Server
             case "goldDeckUpdate":
                 game.goldDeckUpdateForGUI();
                 return "Gold Deck Correctly Updated";
+            case "SETUPFINISHED":
+
             default:
+                System.out.println("Mi sono sminchiato");
+                System.out.println("Unknown command received: " + commandString);
                 return "Unknown command.";
         }
     }
