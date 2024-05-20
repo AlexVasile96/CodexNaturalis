@@ -944,6 +944,8 @@ public class GameSceneController {
     private void updateWellAfterDrawing() throws IOException {
         initializeWell();
         creatingWell();
+        creatingImagesViewForTheWell();
+        settingWellOnMouseClickedEvent();
     }
 
     private void updateGUI() throws IOException {
@@ -951,5 +953,6 @@ public class GameSceneController {
         updatedGoldDeckTopCard();
         updateWellAfterDrawing();
         creatingImagesForTheWell();
+
     }
 }
