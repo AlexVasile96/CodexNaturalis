@@ -68,7 +68,8 @@ public class GameController {
             System.out.println("Command received :" + commandString +" i'm in gamecontroller");
             if(commandString.equals("SETUPFINISHED"))
             {
-                sendMessageToAllClients("SETUPFINISHED");
+                String result = command.runCommand(game, commandString, player,size,paolo, cornerChosen);
+                sendMessageToAllClients(result);
                 if(!isTheFirstPlayer){
                 game.setCurrentPlayer(player.getClientView().getUserName());
                 isTheFirstPlayer=true;

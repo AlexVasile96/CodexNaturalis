@@ -47,7 +47,7 @@ public class ObjectiveDeck implements Deck {
         return (ObjectiveCard) objectiveCards.remove(0); //return drownCard;
     }
 
-    public ObjectiveCard drawObjectiveCard(){
+    public synchronized ObjectiveCard drawObjectiveCard(){
         if (objectiveCards.isEmpty()) { //CHECKING IF THE CARD IS MADE IN THE CORRECT WAY
             return null;
         }

@@ -105,6 +105,7 @@ public class GameSceneController {
 
     public synchronized void updateFirst() throws IOException {
         synchronized (syncObject) {
+
             initializeWell();
             updatingResourceAndGoldDeck();
             creatingPathForGameMethod();
@@ -1022,7 +1023,7 @@ public class GameSceneController {
         //SharedObjectsInGui.getWellCard1View().setImage(newWellResourceCardImage);
     }
 
-    private void initializeWell() throws IOException {
+    private synchronized void initializeWell() throws IOException {
         firstWellCard();
         secondWellCard();
         thirdWellCard();

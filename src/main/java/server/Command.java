@@ -5,7 +5,7 @@ import model.game.Player;
 public class Command { //Command Client sends to Server
     private static int checkIfTheBoardHadAlreadyBeenPrinted= 0;
 
-    public String runCommand(Game game, String commandString, Player player, int size, int paolo, String cornerChosen) { //chiama sempre il game
+    public String runCommand(Game game, String commandString, Player player, int size, int paolo, String cornerChosen)  { //chiama sempre il game
         System.out.println(commandString);
         switch (commandString) {
 
@@ -121,6 +121,7 @@ public class Command { //Command Client sends to Server
                 game.goldDeckUpdateForGUI();
                 return "Gold Deck Correctly Updated";
             case "SETUPFINISHED":
+                return "SETUPFINISHED";
 
             default:
                 System.out.println("Mi sono sminchiato");

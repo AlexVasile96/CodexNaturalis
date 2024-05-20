@@ -78,7 +78,7 @@ public class ResourceDeck implements Deck{
     }
 
     //serve per il test
-    public int carteRimaste(){
+    public int leftCardINDeck(){
         return resourceCards.size();
     }
 
@@ -100,9 +100,9 @@ public class ResourceDeck implements Deck{
     public Card returnFirstCard(){
         return resourceCards.getFirst();
     }
-    public void drawCardForGui ()
+    public synchronized void drawCardForGui ()
     {
-        resourceCards.remove(0);
+        resourceCards.removeFirst();
         System.out.println(resourceCards.getFirst());
     }
 }

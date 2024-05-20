@@ -53,12 +53,11 @@ public class Player implements Observable {
 
 //IN GAME METHODS
 
-    public String drawResourceCard(ResourceDeck deck) {
-       deck.drawCard(this);
-
+    public synchronized String drawResourceCard(ResourceDeck deck) {
+        deck.drawCard(this);
         return "card drawn correctly from Resource deck";
     }
-    public String drawGoldCard(GoldDeck deck) {
+    public synchronized String drawGoldCard(GoldDeck deck) {
         deck.drawCard(this);
         return "card drawn correctly from Gold deck";
     }

@@ -41,7 +41,7 @@ class ResourceDeckTest {
             resourceDeck.drawCard(player);
         }
         assertEquals(3, player.getPlayerCards().size());
-        assertEquals(37, resourceDeck.carteRimaste());
+        assertEquals(37, resourceDeck.leftCardINDeck());
     }
 
     @Test //Test del metodo che aggiunge una carta risorse dal deck carte risorse alle carte del pozzo
@@ -49,7 +49,7 @@ class ResourceDeckTest {
         List<Card> pozzo= new ArrayList<>();
         resourceDeck.drawCard(pozzo);
         assertEquals(1, pozzo.size());
-        assertEquals(39, resourceDeck.carteRimaste());
+        assertEquals(39, resourceDeck.leftCardINDeck());
 
     }
 

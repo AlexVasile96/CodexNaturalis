@@ -39,6 +39,9 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static int whichplayerAreYou = 0;
     private static Player winningPlayer = new Player(null, 0, Dot.BLACK, null);
     private static HandlingPlayerInputsThread firstClient = null;
+    private static HandlingPlayerInputsThread secondClient = null;
+    private static HandlingPlayerInputsThread thirdClient = null;
+    private static HandlingPlayerInputsThread fourthClient = null;
     private static CountDownLatch setupLatch;
     private static int updateOrder = 0;
 
@@ -60,6 +63,16 @@ public class HandlingPlayerInputsThread implements Runnable {
         checkGameInizialization = false;
         if (firstClient == null) {
             firstClient = this;
+            System.out.println("ciao sono il primo thread");
+        } else if (secondClient==null) {
+            secondClient=this;
+            System.out.println("ciao sono il secondo thread");
+        } else if (thirdClient==null) {
+            thirdClient=this;
+            System.out.println("Hi i'm the third thread");
+        } else if (fourthClient==null) {
+            fourthClient=this;
+            System.out.println("Momo smettila di remarci contro");
         }
         synchronized (HandlingPlayerInputsThread.class) {
             if (setupLatch == null) {
@@ -83,6 +96,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                         initializeCards();
                     }
                 }
+
                 assigningSecretCard();
                 assignInitialCard();
                 for (Player player : playersList) {
@@ -189,7 +203,6 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("Players in game " + playersList);
             System.out.println(player);
             gameController = lobby.login(request, out);
-            System.out.println(gameController);
             System.out.println("Current numb of players: " + gameController.getCurrentNumsOfPlayers());
             int size = setGameSize();
             System.out.println(size);

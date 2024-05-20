@@ -39,7 +39,7 @@ class GoldDeckTest {
             goldDeck.drawCard(player);
         }
         assertEquals(3, player.getPlayerCards().size());
-        assertEquals(37, goldDeck.carteRimaste());
+        assertEquals(37, goldDeck.cardLefInDeck());
     }
 
     @Test //Test del metodo che aggiunge una carta risorse dal deck carte risorse alle carte del pozzo
@@ -47,7 +47,7 @@ class GoldDeckTest {
         List<Card> pozzo= new ArrayList<>();
         goldDeck.drawCard(pozzo);
         assertEquals(1, pozzo.size());
-        assertEquals(39, goldDeck.carteRimaste());
+        assertEquals(39, goldDeck.cardLefInDeck());
     }
 
     @Test

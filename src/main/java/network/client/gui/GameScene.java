@@ -87,19 +87,14 @@ public class GameScene {
             System.out.println("First client updating setup");
             gameSceneController.updateFirst();
             out.println("SETUPFINISHED");
+            System.out.println(in.readLine()); //stampo la setupfinished
+            System.out.println("Current player is " + in.readLine());
         } else {
             System.out.println("Second client updating setup");
             System.out.println("SETUPFINISHED =="+ in.readLine());
             gameSceneController.updateFirst();
-            out.println("SETUPFINISHED");
+            //out.println("SETUPFINISHED");
 
-        }
-        while (true) {
-            String message = in.readLine();
-            if (message.equals("SETUPFINISHED")) {
-                System.out.println("Current player is " + in.readLine());
-                break;
-            }
         }
 
         System.out.println("Starting game for client: " + clientView.getUserName());

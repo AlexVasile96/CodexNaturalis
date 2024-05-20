@@ -78,7 +78,7 @@ public class GoldDeck implements Deck {
             throw new IllegalStateException("Player already has 3 card in his deck"); // Specific Exception
         }
     }
-    public int carteRimaste(){
+    public int cardLefInDeck(){
         return goldCards.size();
     }
 
@@ -93,10 +93,11 @@ public class GoldDeck implements Deck {
     private boolean isAGoldCard(int idCard) {
         return (idCard > 40 && idCard <= 80);
     }
+
     public synchronized String sendIdCardToGui(){
         return String.valueOf(goldCards.get(0).getId()); //I take the id of the resource card and give it to the GUI
     }
-    public void drawCardForGoldGui ()
+    public synchronized void drawCardForGoldGui ()
     {
         goldCards.remove(0);
         System.out.println(goldCards.getFirst());

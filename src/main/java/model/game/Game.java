@@ -8,13 +8,13 @@ import model.deck.ObjectiveDeck;
 import model.deck.ResourceDeck;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 public class Game implements WhatCanPlayerDo {
     private List<Player> players;
@@ -33,7 +33,7 @@ public class Game implements WhatCanPlayerDo {
     private Card selectedCardFromTheDeck = null;
     private Card cPchoose = null;
     private List<Player> playersFromDisk;
-
+    private final Semaphore semaphore = new Semaphore(1);
 
 
     public Game() {                                           //GAME CONSTRUCTOR WHICH INITIALIZED ALL THE CARDS
@@ -85,8 +85,11 @@ public class Game implements WhatCanPlayerDo {
     public synchronized void assignResourcesAndGoldCardsToPlayers() {
         for (Player player : players) {
             player.drawResourceCard(resourceDeck);
+            System.out.println(player.getPlayerCards().getFirst());
             player.drawResourceCard(resourceDeck);
+            System.out.println(player.getPlayerCards().get(1));
             player.drawGoldCard(goldDeck);
+            System.out.println(player.getPlayerCards().getLast());
         }
     }
 
@@ -262,7 +265,6 @@ public class Game implements WhatCanPlayerDo {
     public synchronized String sendWellIdFourthToGui() {
 
         int id4 = well.get(3).getId();
-        ;
         return String.valueOf(id4);
     }
 
@@ -293,13 +295,23 @@ public class Game implements WhatCanPlayerDo {
 
     public synchronized String getDeckID(Player player) {
         List<Card> cardToSendToServer = player.getPlayerCards();
+        System.out.println("STAMPANDO LE CARTE");
+        System.out.println(player.getPlayerCards().getFirst());
+        System.out.println(player.getPlayerCards().get(1));
+        System.out.println(player.getPlayerCards().getLast());
         StringBuilder cardsAsString = new StringBuilder();
         for (Card card : cardToSendToServer) {
             cardsAsString.append(card.getId()).append("\n");
         }
-        return String.valueOf(cardsAsString); //ritorna stringa
-
-
+        return String.valueOf(cardsAsString);
+    }
+    public void initializeClientAttributes(int clientId) throws InterruptedException {
+        semaphore.acquire();
+        try {
+            getDeckID(currentPlayingPLayer);
+        } finally {
+            semaphore.release();
+        }
     }
 
     public String showBoardForPlacingCards(Player player) {
@@ -451,11 +463,11 @@ public class Game implements WhatCanPlayerDo {
     }
 
     public int CardsIndeck() {
-        return resourceDeck.carteRimaste();
+        return resourceDeck.leftCardINDeck();
     }
 
     public int GoldsIndeck() {
-        return goldDeck.carteRimaste();
+        return goldDeck.cardLefInDeck();
     }
 
     public synchronized List<String> getDots() {
