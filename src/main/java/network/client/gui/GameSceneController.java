@@ -255,7 +255,8 @@ public class GameSceneController {
         //specificSeedsLabel = new Label();
         //specificSeedsLabel.setStyle("-fx-text-fill: white");
         //specificSeedsPane.getChildren().addAll(specificSeedsText, specificSeedsLabel);
-
+        buttonContainer.setHgap(2);
+        buttonContainer.setVgap(2);
         creatingButtons();
         vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, buttonContainer);
         //inizialmente disabled per tutti
@@ -276,7 +277,7 @@ public class GameSceneController {
         secondRow.getChildren().addAll(firstColumnOfSecondRow, secondColumnOfSecondRow);
         layout.setBottom(secondRow);
         root.getChildren().add(layout);
-        Scene gameScene = new Scene(root, 1200, 900);
+        Scene gameScene = new Scene(root, 430, 625);
 
         Platform.runLater(() -> { primaryStage.setScene(gameScene);});
 
@@ -323,45 +324,50 @@ public class GameSceneController {
         playCard.setOnAction(e -> {
             if (isCurrentPlayerTurn) {
                 if (haveToPlay) {
-                    try {
-                        controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
-                        switch(cornerSelected) {
-                            case "TL":
-                               piazzaCartaTL(getClickedImageView().getImageView(),gameBoard,indexCardToPlace);
-                                break;
-                            case "TR":
-                                piazzaCartaTR(getClickedImageView().getImageView(),gameBoard,indexCardToPlace);
-                                break;
-                            case "BL":
-                                piazzaCartaBL(getClickedImageView().getImageView(),gameBoard,indexCardToPlace);
-                                break;
-                            case "BR":
-                                piazzaCartaBR(getClickedImageView().getImageView(),gameBoard,indexCardToPlace);
-                                break;
-                            default:
+                    if(!cornerSelected.equals("notSelected") && indexCardToPlace < 4) {
+                        try {
+                            controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
+                            switch (cornerSelected) {
+                                case "TL":
+                                    piazzaCartaTL(getClickedImageView().getImageView(), gameBoard, indexCardToPlace);
+                                    break;
+                                case "TR":
+                                    piazzaCartaTR(getClickedImageView().getImageView(), gameBoard, indexCardToPlace);
+                                    break;
+                                case "BL":
+                                    piazzaCartaBL(getClickedImageView().getImageView(), gameBoard, indexCardToPlace);
+                                    break;
+                                case "BR":
+                                    piazzaCartaBR(getClickedImageView().getImageView(), gameBoard, indexCardToPlace);
+                                    break;
+                                default:
 
-                                break;
+                                    break;
+                            }
+                            indexCardPlayedFromHand = indexCardToPlace;
+                            haveToDraw = true;
+                            switch (indexCardPlayedFromHand) {
+                                case 0:
+                                    handCard1View.setImage(null);
+                                    break;
+                                case 1:
+                                    handCard2View.setImage(null);
+                                    break;
+                                case 2:
+                                    handCard3View.setImage(null);
+                                    break;
+                                default:
+                                    // Handle unexpected values if necessary
+                                    break;
+                            }
+                        } catch (IOException exception) {
+                            throw new RuntimeException(exception);
                         }
-                        indexCardPlayedFromHand = indexCardToPlace;
-                        haveToDraw = true;
-                        switch (indexCardPlayedFromHand) {
-                            case 0:
-                                handCard1View.setImage(null);
-                                break;
-                            case 1:
-                                handCard2View.setImage(null);
-                                break;
-                            case 2:
-                                handCard3View.setImage(null);
-                                break;
-                            default:
-                                // Handle unexpected values if necessary
-                                break;
-                        }
-                    } catch (IOException exception) {
-                        throw new RuntimeException(exception);
+                        haveToPlay = false;
                     }
-                    haveToPlay = false;
+                    else{
+                        showAlert("Action not allowed", "Choose the ricght cards.");
+                    }
                 } else {
                     showAlert("Action not allowed", "You have already played a card.");
                 }
@@ -1102,15 +1108,23 @@ public class GameSceneController {
     }
     private void creatingButtons(){
         buttonContainer.add(playCard, 0, 0);
-        buttonContainer.add(flipCardToBack, 0, 1);
-        buttonContainer.add(flipCardToFront, 0, 2);
-        buttonContainer.add(seeYourPoints, 0, 3);
         buttonContainer.add(drawCard, 1, 0);
-        buttonContainer.add(seeOtherPlayersBoards, 1, 1);
-        buttonContainer.add(showObjective, 1,2);
-        buttonContainer.add(seeYourSpecificSeeds, 2, 0);
-        buttonContainer.add(endTurn, 2, 1);
-        buttonContainer.add(quit, 2,2);
+        buttonContainer.add(flipCardToFront, 0, 1);
+        buttonContainer.add(flipCardToBack, 1, 1);
+        buttonContainer.add(seeYourPoints, 0, 2);
+        buttonContainer.add(seeYourSpecificSeeds, 1, 2);
+        buttonContainer.add(showObjective, 0,3);
+        buttonContainer.add(endTurn, 1, 3);
+        buttonContainer.add(quit, 0,4);
+
+        Double buttonsWidth = 120.00;
+
+        for(var node : buttonContainer.getChildren()){
+            if(node instanceof Button){
+                ((Button)node).setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-font-weight: bold;");
+                ((Button)node).setPrefWidth(buttonsWidth);
+            }
+        }
     }
 
         public void setClickedCardView(CardView cardView) {
@@ -1140,6 +1154,7 @@ public class GameSceneController {
                 updateResourceDeckTopCard();
                 updatedGoldDeckTopCard();
                 updateWell();
+                updateFirst(); //con questo funziona la mano ma non i deck ed il well
             } catch (IOException e) {
                 e.printStackTrace();
             }
