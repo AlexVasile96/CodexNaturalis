@@ -559,8 +559,7 @@ public class GameSceneController {
         seeYourPoints.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
                 try {
-
-                    boardPointsScene = new BoardPointsScene(primaryStage, out, socket, in);
+                    boardPointsScene = new BoardPointsScene(primaryStage, out, socket, in, clientView);
                     boardPointsScene.popupBoardPoints();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
