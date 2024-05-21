@@ -129,19 +129,5 @@ public class LobbyController {
         }
     }
 
-    public void waitForSetupCompletion() {
-        try {
-            String message = in.readLine();
-            while (!message.equals("SETUPFINISHED")) {
-                System.out.println("waiting for SETUPFINISHED");
-                message = in.readLine();
-                }synchronized (this) {
-                    notifyAll();
-                System.out.println("Ricevuto il comando");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 }
