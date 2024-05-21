@@ -124,12 +124,10 @@ public class Command { //Command Client sends to Server
 //                return "SETUPFINISHED";
             case "totPlayers":
                 return String.valueOf(game.getTotalNumberOfPLayer());
-//            case "howManyPlayers":
-//                return "How many players are in the game?";
-//            case "updateLoggedPlayers":
-//                return "Updating number of players";
+            case "STARTGUI":
+                return "STARTGUI";
             default:
-                System.out.println("Mi sono sminchiato");
+                System.out.println("Something gone wrong");
                 System.out.println("Unknown command received: " + commandString);
                 return "Unknown command.";
         }

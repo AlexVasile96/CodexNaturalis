@@ -72,22 +72,6 @@ public class GameController {
             System.out.println("Command received :" + commandString + " i'm in gamecontroller");
             String result;
             switch (commandString) {
-//                case "SETUPFINISHED":
-//                    result = command.runCommand(game, commandString, player, size, paolo, cornerChosen); // restituisce SETUPFINISHED
-//                    sendMessageToAllClients(result);
-//                    if (!isTheFirstPlayer) {
-//                        game.setCurrentPlayer(player.getClientView().getUserName());
-//                        isTheFirstPlayer = true;
-//                    }
-//                    currentPlayerName = game.getCurrentPlayer();
-//                    System.out.println("Current Player Name set to: " + currentPlayerName);
-//                    sendMessageToAllClients(currentPlayerName);
-//                    game.nextTurn(); // Avanza al turno successivo
-//                    String nextPlayer = game.getCurrentPlayer();
-//                    System.out.println("Next Player is: " + nextPlayer);
-//                    sendMessageToAllClients(nextPlayer);
-//                    break;
-
                 case "playCard":
                     if (!isCornerAlreadyChosen) {
                         String cornersAvailable = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
@@ -99,15 +83,6 @@ public class GameController {
                         isCornerAlreadyChosen = false;
                     }
                     break;
-
-//                case "updateLoggedPlayers":
-//                    result= command.runCommand(game,commandString,player,size,paolo,cornerChosen);
-//                    logginPlayers++;
-//                    break;
-//                case "howManyPlayers":
-//                    System.out.println("Game controller says: at the moment "+ logginPlayers + " players are logged correctly");
-//                    result= command.runCommand(game,commandString,player,size,paolo,cornerChosen);
-//                    sendMessageToAllClients(String.valueOf(logginPlayers));
                 default:
                     result = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
                     sendMessageToAllClients(result);

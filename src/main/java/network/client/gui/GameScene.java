@@ -84,7 +84,13 @@ public class GameScene {
                 System.out.println("First Player in game is "+ in.readLine());
                 System.out.println("Next player to setup is " + in.readLine());
            }
-
+            if(loggedInPlayers==totalPlayers)
+            {
+                System.out.println("LAST PLAYER!");
+                out.println("STARTGUI");
+                String STARTGUI=in.readLine();
+                System.out.println("All clients updated the data, Server says " + STARTGUI);
+            }
         }
 
         System.out.println("Starting game for client: " + clientView.getUserName());
