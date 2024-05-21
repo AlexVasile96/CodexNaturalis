@@ -70,7 +70,8 @@ public class LobbyController {
                             }
 
 
-                    } else {
+                    } //PROVO AD AGGIUNGERE BREAK QUA
+                    else {
                         System.out.println("Unknown message, waiting for correct message...");
                     }
                 }
