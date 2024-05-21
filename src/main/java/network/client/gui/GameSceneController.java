@@ -249,13 +249,15 @@ public class GameSceneController {
         decks.setPadding(paddingDecks);
         decks.getChildren().addAll(SharedObjectsInGui.getTopCardResourceDeckView(), SharedObjectsInGui.getTopCardGoldDeckView());
 
-        specificSeedsPane = new Pane();
-        specificSeedsText = new Text("Your specific Seeds are: ");
-        specificSeedsLabel = new Label();
-        specificSeedsPane.getChildren().addAll(specificSeedsText, specificSeedsLabel);
+        //specificSeedsPane = new Pane();
+        //specificSeedsText = new Text("Your specific Seeds are: ");
+        //specificSeedsText.setStyle("fx-text-fill: #ffff");
+        //specificSeedsLabel = new Label();
+        //specificSeedsLabel.setStyle("-fx-text-fill: white");
+        //specificSeedsPane.getChildren().addAll(specificSeedsText, specificSeedsLabel);
 
         creatingButtons();
-        vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, specificSeedsPane, buttonContainer);
+        vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, buttonContainer);
         //inizialmente disabled per tutti
         buttonContainer.setDisable(true);
 
@@ -546,7 +548,8 @@ public class GameSceneController {
             if (isCurrentPlayerTurn) {
                 try {
                     String yourSeeds = controller.showSpecificSeed();
-                    specificSeedsLabel.setText(yourSeeds);
+                    //specificSeedsLabel.setText(yourSeeds);
+                    showAlert("Your seeds at the moment", yourSeeds);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
