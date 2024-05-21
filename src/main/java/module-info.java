@@ -4,6 +4,7 @@ module com.example.proj {
     requires org.json;
     requires java.logging;
     requires com.google.gson;
+    requires javafx.media;
 
     opens network.client.gui to javafx.fxml;
     opens model to javafx.fxml;

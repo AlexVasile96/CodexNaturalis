@@ -135,14 +135,20 @@ public class Controller {
             }
             else{
                 System.out.println("Operation failed");
-
             }
-
         }
-
-
     }
 
+    public String firstCommon() throws IOException {
+        out.println("firstCommon");
+        String firstCommon = in.readLine();
+        return firstCommon;
+    }
+    public String secondCommon() throws IOException {
+        out.println("secondCommon");
+        String secondCommon = in.readLine();
+        return secondCommon;
+    }
 
     private void showWell() throws IOException {
         out.println("showWell");
