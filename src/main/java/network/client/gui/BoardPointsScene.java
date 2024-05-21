@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import view.ClientView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,25 +25,40 @@ public class BoardPointsScene {
     private PrintWriter out;
     private Socket socket;
     private BufferedReader in;
-    private String initCardId;
     private int playerScore;
+    private ClientView clientView;
+    String dot;
     List<Circle> checkpoints = new ArrayList<>();
+    Color dotColor;
 
-    public BoardPointsScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in) throws IOException {
+    public BoardPointsScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) throws IOException {
         this.primaryStage = primaryStage;
         this.out = out;
         this.socket = socket;
         this.in = in;
+        this.clientView = clientView;
+    }
+
+    private void getDotColor(){
+        dot = clientView.getDot().toString(); //testa se funziona getDotColor
+        System.out.println("Il dot è: "+dot);
+        if(dot.contains("RED")){
+            dot = "RED";
+        }
+        if(dot.contains("GREEN")){
+            dot = "GREEN";
+        }
+        if(dot.contains("BLUE")){
+            dot = "BLUE";
+        }
+        if(dot.contains("YELLOW")){
+            dot = "YELLOW";
+        }
+        dotColor = Color.web(dot);
     }
 
     private int getScore() throws IOException {
         out.println("showPoints");
-
-        /*for(int i = 1; i<18;i++){
-            System.out.println(in.readLine());
-        }*/
-
-
         String stringa = in.readLine();
         if(stringa.equals("Unknown command.")) {
             return 25;
@@ -75,6 +91,7 @@ public class BoardPointsScene {
 
         closeButton.setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-font-weight: bold;"); // Stile CSS per il pulsante
 
+        getDotColor();
         createCheckpoints();
         positionCheckpoints();
         updateCheckpoint();
@@ -133,7 +150,7 @@ public class BoardPointsScene {
         }
         if(playerScore >= 0 && playerScore < checkpoints.size()){
             checkpoints.get(playerScore).setVisible(true);
-            checkpoints.get(playerScore).setFill(Color.RED);
+            checkpoints.get(playerScore).setFill(dotColor);
         }
     }
 }
