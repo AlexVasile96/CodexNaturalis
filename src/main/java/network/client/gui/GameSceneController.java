@@ -280,7 +280,6 @@ public class GameSceneController {
 
         if (currentPlayerNickname.equals(clientView.getUserName())) {
             isCurrentPlayerTurn = true;
-            //entra in wait until message FINISHEDFORALL received
             waitUntilLastMessage();
             setupGameActions(handCard1View, handCard2View, handCard3View);
             buttonContainer.setDisable(false);
@@ -624,7 +623,7 @@ public class GameSceneController {
                 Platform.runLater(() -> {
                     updateTurnState(true);
                     try {
-
+                        System.out.println("IN Gamescenecontroller");
                         setupGameActions(handCard1View, handCard2View, handCard3View);
                         System.out.println(in.readLine()); //Fine turno
                         updateGUI();

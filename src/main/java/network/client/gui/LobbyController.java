@@ -66,13 +66,15 @@ public class LobbyController {
                                 handleSetupFinished(currentPlayerNickname);
                             } else {
                                 System.out.println("Not your turn, waiting for setup...");
-                                waitForSetupCompletion();
+                               waitForSetupCompletion();
                             }
+                            break;
+                    }
+                    else if(message.equals("STARTGUI"))
+                    {
+                        System.out.println("All clients logged!");
+                        executor.shutdown();
 
-
-                    } //PROVO AD AGGIUNGERE BREAK QUA
-                    else {
-                        System.out.println("Unknown message, waiting for correct message...");
                     }
                 }
             } catch (IOException e) {
@@ -120,6 +122,8 @@ public class LobbyController {
             }
             System.out.println("Ready to start");
             gameScene.game(false);
+            //executor.shutdownNow();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -137,4 +141,5 @@ public class LobbyController {
             e.printStackTrace();
         }
     }
+
 }
