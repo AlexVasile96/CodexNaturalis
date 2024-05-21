@@ -279,7 +279,7 @@ public class GameSceneController {
         root.getChildren().add(layout);
         Scene gameScene = new Scene(root, 430, 625);
 
-        Platform.runLater(() -> { primaryStage.setScene(gameScene);});
+        Platform.runLater(() -> primaryStage.setScene(gameScene));
 
         if (currentPlayerNickname.equals(clientView.getUserName())) {
             isCurrentPlayerTurn = true;
@@ -433,6 +433,7 @@ public class GameSceneController {
                                     break;
                             }
                             System.out.println("idHandCard" + (indexCardPlayedFromHand + 1) + " = " + idTopCard);
+
                             String pathResource = "/ImmaginiCodex/CarteFront/Resource/" + idTopCardResourceDeck + ".png";
                             System.out.println("Idtopcardresourcedeck:" + idTopCardResourceDeck);
                             System.out.println("path: " +  pathResource);
@@ -445,19 +446,23 @@ public class GameSceneController {
 
                             if(indexCardFromWellSelected == 0){
                                 SharedObjectsInGui.getWellCard1View().setImage(newWellResourceCardImage);
+                                System.out.println("am i here?-> first well card");
                                 updateResourceDeckTopCard();
                             }
                             else if(indexCardFromWellSelected == 1){
                                 SharedObjectsInGui.getWellCard2View().setImage(newWellResourceCardImage);
+                                System.out.println("am i here?-> second well card");
                                 updateResourceDeckTopCard();
 
                             }
                             else if(indexCardFromWellSelected == 2){
                                 SharedObjectsInGui.getWellCard3View().setImage(newWellGoldCardImage);
+                                System.out.println("am i here?-> third well card");
                                 updatedGoldDeckTopCard();
                             }
                             else if(indexCardFromWellSelected == 3) {
                                 SharedObjectsInGui.getWellCard4View().setImage(newWellGoldCardImage);
+                                System.out.println("am i here?-> fourth well card");
                                 updatedGoldDeckTopCard();
                             }
                             System.out.println("Well card updated");
@@ -631,10 +636,11 @@ public class GameSceneController {
                 Platform.runLater(() -> {
                     updateTurnState(true);
                     try {
-                        System.out.println("IN Gamescenecontroller");
-                        setupGameActions(handCard1View, handCard2View, handCard3View);
+                        System.out.println("In Gamescenecontroller");
                         System.out.println(in.readLine()); //Fine turno
                         updateGUI();
+                        setupGameActions(handCard1View, handCard2View, handCard3View);
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -1149,16 +1155,10 @@ public class GameSceneController {
     }
 
     private void updateGUI() throws IOException {
-        Platform.runLater(() -> {
-            try {
                 updateResourceDeckTopCard();
                 updatedGoldDeckTopCard();
                 updateWell();
                 updateFirst(); //con questo funziona la mano ma non i deck ed il well
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 
     private void waitUntilLastMessage() throws IOException {
