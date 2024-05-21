@@ -1,6 +1,5 @@
 package codex;
-import controller.GuiController;
-import javafx.application.Application;
+
 import network.client.gui.GUI;
 import server.CliClientApp;
 import server.ServerMain;

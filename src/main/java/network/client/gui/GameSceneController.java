@@ -276,13 +276,12 @@ public class GameSceneController {
         root.getChildren().add(layout);
         Scene gameScene = new Scene(root, 1200, 900);
 
-        /*layout.layoutXProperty().bind(gameScene.widthProperty().subtract(layout.widthProperty()).divide(2));
-        layout.layoutYProperty().bind(gameScene.heightProperty().subtract(layout.heightProperty()).divide(2));*/
-
         Platform.runLater(() -> { primaryStage.setScene(gameScene);});
 
         if (currentPlayerNickname.equals(clientView.getUserName())) {
             isCurrentPlayerTurn = true;
+            //entra in wait until message FINISHEDFORALL received
+            waitUntilLastMessage();
             setupGameActions(handCard1View, handCard2View, handCard3View);
             buttonContainer.setDisable(false);
             //enableOrDisableGameActions();
@@ -1145,5 +1144,13 @@ public class GameSceneController {
         });
     }
 
+    private void waitUntilLastMessage() throws IOException {
+        String messageFromServer = in.readLine();
+        while (!messageFromServer.equals("STARTGUI")) {
+            System.out.println("Server says " + messageFromServer);
+            messageFromServer=in.readLine();
+            }
+        System.out.println("Game finally starting!");
+        }
     }
 

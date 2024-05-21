@@ -216,7 +216,7 @@ public class Controller {
     public void waitForTurn(String playerNickname) throws IOException {
         String message;
         String disable=in.readLine();
-
+        System.out.println("Sono entrato nella wait, aspetto il mio nome");
         while (!(message = in.readLine()).equals(playerNickname)) {
             System.out.println("Received message while waiting for turn: " + message);
             System.out.println("Not your turn, please wait");
