@@ -52,6 +52,7 @@ public class GameSceneController {
     private Button seeYourSpecificSeeds = new Button("See your seeds");
     private Button seeOtherPlayersBoards = new Button("See other players boards");
     private Button seeYourPoints = new Button("See your points");
+    Button showObjective = new Button("Show Objective");
     private Button endTurn = new Button("End turn");
     private Button quit = new Button("Quit");
     private Boolean haveToDraw = false;
@@ -88,6 +89,9 @@ public class GameSceneController {
     private String pathHandCard3;
     private String pathChosen;
     private  GridPane gridPaneForWellCards;
+    String firstCommonId;
+    String secondCommonId;
+    ShowObjectiveScene objectiveScene;
 
 
 
@@ -251,7 +255,6 @@ public class GameSceneController {
         specificSeedsPane.getChildren().addAll(specificSeedsText, specificSeedsLabel);
 
         creatingButtons();
-        buttonContainer.add(quit, 2,2);
         vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, specificSeedsPane, buttonContainer);
         //inizialmente disabled per tutti
         buttonContainer.setDisable(true);
@@ -570,6 +573,22 @@ public class GameSceneController {
         seeOtherPlayersBoards.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
                 showAlert("Action unavailable", "This action is currently not implemented.");
+            } else {
+                showAlert("Not your turn", "It's not your turn yet.");
+            }
+        });
+
+        showObjective.setOnMouseClicked(e->{
+            if (isCurrentPlayerTurn) {
+                try {
+                    objectiveScene = new ShowObjectiveScene(primaryStage, out, socket, in);
+                    firstCommonId = controller.firstCommon();
+                    secondCommonId = controller.secondCommon();
+                    objectiveScene.popupObjectiveScene(firstCommonId, secondCommonId);
+
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -1083,13 +1102,15 @@ public class GameSceneController {
     }
     private void creatingButtons(){
         buttonContainer.add(playCard, 0, 0);
-        buttonContainer.add(drawCard, 1, 0);
-        buttonContainer.add(seeYourSpecificSeeds, 2, 0);
         buttonContainer.add(flipCardToBack, 0, 1);
         buttonContainer.add(flipCardToFront, 0, 2);
         buttonContainer.add(seeYourPoints, 0, 3);
-        buttonContainer.add(endTurn, 2, 1);
+        buttonContainer.add(drawCard, 1, 0);
         buttonContainer.add(seeOtherPlayersBoards, 1, 1);
+        buttonContainer.add(showObjective, 1,2);
+        buttonContainer.add(seeYourSpecificSeeds, 2, 0);
+        buttonContainer.add(endTurn, 2, 1);
+        buttonContainer.add(quit, 2,2);
     }
 
         public void setClickedCardView(CardView cardView) {
