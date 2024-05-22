@@ -336,22 +336,31 @@ public class GameSceneController {
                     if (!cornerSelected.equals("notSelected") && indexCardToPlace < 4) {
                         try {
                             String isTheCardFlipped=null;
-                            switch (indexCardPlayedFromHand) {
+                            String actualId=null;
+                            switch (indexCardToPlace) {
                                 case 0:
+                                    System.out.println("gay");
                                     handCard1View.setImage(null);
+                                    actualId=idHandCard1;
                                     isTheCardFlipped=handCard1View.getId();
                                     break;
                                 case 1:
+                                    System.out.println("gay");
                                     handCard2View.setImage(null);
+                                    actualId=idHandCard2;
                                     isTheCardFlipped=handCard2View.getId();
                                     break;
                                 case 2:
+                                    System.out.println("gay");
                                     handCard3View.setImage(null);
+                                    actualId=idHandCard3;
                                     isTheCardFlipped=handCard3View.getId();
                                     break;
                                 default:
+                                    System.out.println("sono nullo");
                                     break;
                             }
+
                             controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected,isTheCardFlipped);
                             switch (cornerSelected) {
                                 case "TL":
@@ -1373,6 +1382,32 @@ public class GameSceneController {
     private Path getDefaultGuiPath() {
         String home = ("src/main/resources/sharedElementsInGui.json");
         return Paths.get(home);
+    }
+    private boolean checkGoldCardRequirements(String goldCardId) throws IOException {
+        // Retrieve the requirements for the specific gold card
+        out.println("getGoldCardRequirements");
+        //out.println(goldCardId);
+        String requirements = in.readLine(); // Assuming the server sends requirements as a JSON string
+
+        JsonObject requirementsJson = JsonParser.parseString(requirements).getAsJsonObject();
+
+        // Retrieve the current attributes from the board
+        out.println("getCurrentAttributes");
+        String currentAttributes = in.readLine(); // Assuming the server sends current attributes as a JSON string
+
+        JsonObject currentAttributesJson = JsonParser.parseString(currentAttributes).getAsJsonObject();
+
+        // Check if all required attributes are met
+        for (Map.Entry<String, JsonElement> entry : requirementsJson.entrySet()) {
+            String attribute = entry.getKey();
+            int requiredValue = entry.getValue().getAsInt();
+            int currentValue = currentAttributesJson.has(attribute) ? currentAttributesJson.get(attribute).getAsInt() : 0;
+
+            if (currentValue < requiredValue) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
