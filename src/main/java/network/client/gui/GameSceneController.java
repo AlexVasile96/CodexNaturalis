@@ -89,6 +89,7 @@ public class GameSceneController {
     String secondCommonId;
     ShowObjectiveScene objectiveScene;
     private boolean cardOnHerBack=false;
+    private String pathFlipped;
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
         this.primaryStage = primaryStage;
@@ -370,7 +371,9 @@ public class GameSceneController {
                             }
                             indexCardPlayedFromHand = indexCardToPlace;
                             haveToDraw = true;
-
+                            handCard1View.setId("Front");
+                            handCard2View.setId("Front");
+                            handCard3View.setId("Front");
                         } catch (IOException exception) {
                             throw new RuntimeException(exception);
                         }
@@ -527,7 +530,17 @@ public class GameSceneController {
             if (isCurrentPlayerTurn) {
                 indexCardToPlace = 0;
                 chosenCardToPlace.setText("First card of your hand");
-                pathChosen = pathHandCard1;
+
+                if(handCard1View.getId()==null|| handCard1View.getId().equals("Front"))
+                {
+                    pathChosen = pathHandCard1;
+                    System.out.println("Front");
+                }
+                else{
+                    pathChosen=pathFlipped;
+                    System.out.println(pathChosen);
+                    System.out.println("Back");
+                }
 
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
@@ -539,6 +552,7 @@ public class GameSceneController {
                 indexCardToPlace = 1;
                 chosenCardToPlace.setText("Second card of your hand");
                 pathChosen = pathHandCard2;
+
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -549,6 +563,7 @@ public class GameSceneController {
                 indexCardToPlace = 2;
                 chosenCardToPlace.setText("Third card of your hand");
                 pathChosen = pathHandCard3;
+
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -677,10 +692,10 @@ public class GameSceneController {
     private Image flipToBackCard(String stringId) {
         int id = Integer.parseInt(stringId);
         if (id >= 1 && id <= 40) {
-            String pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
+            pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
             return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
         } else if (id > 40 && id <= 80) {
-            String pathFlipped = "/ImmaginiCodex/CarteBack/Gold/" + id + ".png";
+            pathFlipped = "/ImmaginiCodex/CarteBack/Gold/" + id + ".png";
             return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
         }
         return null;
@@ -689,10 +704,10 @@ public class GameSceneController {
     private Image flipCardToFront(String stringId) {
         int id = Integer.parseInt(stringId);
         if (id >= 1 && id <= 40) {
-            String pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
+            pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
             return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
         } else if (id > 40 && id <= 80) {
-            String pathFlipped = "/ImmaginiCodex/CarteFront/Gold/" + id + ".png";
+             pathFlipped = "/ImmaginiCodex/CarteFront/Gold/" + id + ".png";
             return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
         }
         return null;
@@ -784,11 +799,11 @@ public class GameSceneController {
         return gridPane;
     }
 
-    public void placingBottomRightCard(ImageView cartaSuCuiPiazzo, GridPane board, int id) {
+    public void placingBottomRightCard(ImageView cardOnTheBoard, GridPane board, int id) {
         nextCardIndex++;
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
-        int x = getX(cartaSuCuiPiazzo);
-        int y = getY(cartaSuCuiPiazzo);
+        int x = getX(cardOnTheBoard);
+        int y = getY(cardOnTheBoard);
         GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
 
         ImageView TL = (ImageView) gridPanePlacingOn.getChildren().get(0);
@@ -841,11 +856,11 @@ public class GameSceneController {
 
     }
 
-    public void placingBottomLeftCard(ImageView cartaSuCuiPiazzo, GridPane board, int id) {
+    public void placingBottomLeftCard(ImageView cardOnTheBoard, GridPane board, int id) {
         nextCardIndex++;
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
-        int x = getX(cartaSuCuiPiazzo);
-        int y = getY(cartaSuCuiPiazzo);
+        int x = getX(cardOnTheBoard);
+        int y = getY(cardOnTheBoard);
         GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
 
         ImageView TL = (ImageView) gridPanePlacingOn.getChildren().get(0);
@@ -897,12 +912,11 @@ public class GameSceneController {
         TR.setDisable(true);
     }
 
-    public void placingTopLeftCard(ImageView cartaSuCuiPiazzo, GridPane board, int id) {
+    public void placingTopLeftCard(ImageView cardOnTheBoard, GridPane board, int id) {
         nextCardIndex++;
-
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
-        int x = getX(cartaSuCuiPiazzo);
-        int y = getY(cartaSuCuiPiazzo);
+        int x = getX(cardOnTheBoard);
+        int y = getY(cardOnTheBoard);
         GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
 
         ImageView TL = (ImageView) gridPanePlacingOn.getChildren().get(0);
@@ -1361,11 +1375,4 @@ public class GameSceneController {
         return Paths.get(home);
     }
 
-    public boolean isCardOnHerBack() {
-        return cardOnHerBack;
-    }
-
-    public void setCardOnHerBack(boolean cardOnHerBack) {
-        this.cardOnHerBack = cardOnHerBack;
-    }
 }
