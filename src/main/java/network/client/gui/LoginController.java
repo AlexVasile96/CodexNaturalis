@@ -1,4 +1,5 @@
 package network.client.gui;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
@@ -59,66 +60,95 @@ public class LoginController {
 
     @FXML
     public void loginButtonClicked(ActionEvent event) throws IOException {
+        new Thread(() -> {
+            try {
+                String serverResponse = in.readLine();
+                System.out.println(serverResponse);
+                String username = usernameField.getText();
+                Toggle dot = toggleGroup.getSelectedToggle();
 
-        String serverResponse=in.readLine();
-        System.out.println(serverResponse);
-        String username = usernameField.getText();
-        Toggle dot = toggleGroup.getSelectedToggle();
+                if (username.isEmpty() || dot == null) {
+                    Platform.runLater(() -> {
+                        if (username.isEmpty()) {
+                            System.out.println("Username necessary");
+                            loginLabel.setText("Write your username");
+                        }
 
-        if(username.isEmpty() || dot == null){
-            if (username.isEmpty()) {
-                System.out.println("Username necessary");
-                loginLabel.setText("Write your username");
+                        if (dot == null) {
+                            loginLabel.setText("Choose a dot color");
+                            loginLabel.setStyle("-fx-font-size: 20px;" + // Dimensione del font
+                                    "-fx-font-family: Arial;" + // Famiglia del font
+                                    "-fx-text-fill: #EF8156;" + // Colore del testo
+                                    "-fx-padding: 10px;" + // Spaziatura interna
+                                    "-fx-border-color: #EF8156;" + // Colore del bordo
+                                    "-fx-border-width: 1px;" + // Spessore del bordo
+                                    "-fx-border-radius: 5px;"); // Arrotondamento del bordo
+                            System.out.println("Choose your dot color please");
+                        }
+                    });
+                    return;
+                }
+
+                out.println(username); // Sending username to the server
+                serverResponse = in.readLine();
+                System.out.println(serverResponse);
+
+                if (serverResponse.equals("Username already taken. Please choose another username:")) {
+                    Platform.runLater(() -> {
+                        loginLabel.setText("Username already taken. Please choose another username:");
+                        loginLabel.setStyle("-fx-font-size: 20px;" + // Dimensione del font
+                                "-fx-font-family: Arial;" + // Famiglia del font
+                                "-fx-text-fill: #EF8156;" + // Colore del testo
+                                "-fx-padding: 10px;" + // Spaziatura interna
+                                "-fx-border-color: #EF8156;" + // Colore del bordo
+                                "-fx-border-width: 1px;" + // Spessore del bordo
+                                "-fx-border-radius: 5px;"); // Arrotondamento del bordo
+                        out.println(usernameField.getText());
+                        usernameField.clear();
+                        usernameField.requestFocus();
+                        loginButton.setDisable(true);
+                        try {
+                            System.out.println(in.readLine());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+
+                    return;
+                }
+
+                clientView.setUserName(username);
+                System.out.println("This clientview username is: " + clientView.getUserName());
+                System.out.println(in.readLine());
+                String realChosenDot = ((RadioButton) dot).getText();
+                clientView.setDot(Dot.valueOf(realChosenDot));
+                out.println(realChosenDot);
+                if (in.readLine().equals("Chosen color not available!")) {
+                    Platform.runLater(() -> {
+                        loginLabel.setText("Chosen color not available! Choose another color:");
+                        loginLabel.setStyle("-fx-font-size: 20px;" +
+                                "-fx-font-family: Arial;" +
+                                "-fx-text-fill: #EF8156;" +
+                                "-fx-padding: 10px;" +
+                                "-fx-border-color: #EF8156;" +
+                                "-fx-border-width: 1px;" +
+                                "-fx-border-radius: 5px;");
+                    });
+                    return;
+                }
+
+                Platform.runLater(() -> {
+                    ChooseNumOfPlayersScene chooseNumOfPlayersScene = new ChooseNumOfPlayersScene();
+                    try {
+                        chooseNumOfPlayersScene.createChooseNumOfPlayersScene(primaryStage, out, socket, in, clientView);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            if (dot == null) {
-                loginLabel.setText("choose a dot color");
-                loginLabel.setStyle("-fx-font-size: 20px;" + // Dimensione del font
-                        "-fx-font-family: Arial;" + // Famiglia del font
-                        "-fx-text-fill: #EF8156;" + // Colore del testo
-                        "-fx-padding: 10px;" + // Spaziatura interna
-                        "-fx-border-color: #EF8156;" + // Colore del bordo
-                        "-fx-border-width: 1px;" + // Spessore del bordo
-                        "-fx-border-radius: 5px;" );// Arrotondamento del bordo
-                System.out.println("Choose your dot color please");
-            }
-            return;
-        }
-
-            out.println(username); //Sending username to the server
-            serverResponse = in.readLine();
-            System.out.println(serverResponse);
-            if (serverResponse.equals("Username already taken. Please choose another username:")) {
-                loginLabel.setText("Username already taken. Please choose another username:");
-                loginLabel.setStyle("-fx-font-size: 20px;" + // Dimensione del font
-                        "-fx-font-family: Arial;" + // Famiglia del font
-                        "-fx-text-fill: #EF8156;" + // Colore del testo
-                        "-fx-padding: 10px;" + // Spaziatura interna
-                        "-fx-border-color: #EF8156;" + // Colore del bordo
-                        "-fx-border-width: 1px;" + // Spessore del bordo
-                        "-fx-border-radius: 5px;"); // Arrotondamento del bordo
-                return;
-            }
-
-        clientView.setUserName(username);
-        System.out.println("This clientview username is: " + clientView.getUserName());
-        System.out.println(in.readLine());
-        String realChosenDot = ((RadioButton) dot).getText();
-        clientView.setDot(Dot.valueOf(realChosenDot));
-        out.println(realChosenDot);
-        if(in.readLine().equals("Chosen color not available!")){
-            loginLabel.setText("Chosen color not available! Choose another color:");
-            loginLabel.setStyle("-fx-font-size: 20px;" +
-                    "-fx-font-family: Arial;" +
-                    "-fx-text-fill: #EF8156;" +
-                    "-fx-padding: 10px;" +
-                    "-fx-border-color: #EF8156;" +
-                    "-fx-border-width: 1px;" +
-                    "-fx-border-radius: 5px;");
-            return;
-        }
-        ChooseNumOfPlayersScene chooseNumOfPlayersScene= new ChooseNumOfPlayersScene();
-        chooseNumOfPlayersScene.createChooseNumOfPlayersScene(primaryStage,out,socket,in, clientView);
+        }).start();
     }
-
 }
