@@ -19,8 +19,8 @@ import java.net.Socket;
 import java.util.Objects;
 public class InitCardScene {
 
-    private int isFront=0; //The server need 1 to place the card on the back and 0 to place it on the front
-
+    private int isFront=1; //The server need 1 to place the card on the back and 0 to place it on the front
+        //DEFAULT->NOBACK
     private String id;
 
     public Scene chooseInitCard(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) throws IOException {
@@ -107,7 +107,7 @@ public class InitCardScene {
         placeCard.setOnMouseClicked(e -> {
             out.println(isFront);
             LobbyScene lobbySceneHandler = new LobbyScene();
-            lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView,id);
+            lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView,id,isFront);
 
         });
         return initCardScene;

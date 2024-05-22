@@ -32,6 +32,7 @@ public class GameScene {
     private Socket socket;
     private BufferedReader in;
     private String initCardId;
+    private int isFront;
     private ClientView clientView;
     private String currentPlayerNickname;
     private GameSceneController gameSceneController;
@@ -40,7 +41,7 @@ public class GameScene {
     private static int loggedInPlayers = 0;  // Static field to keep track of logged-in players
 
 
-    public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id, ClientView clientView, String currentPlayerNickname, boolean isFirstClient) throws IOException {
+    public GameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, String id, ClientView clientView, String currentPlayerNickname, boolean isFirstClient, int isFirst) throws IOException {
         this.primaryStage = primaryStage;
         this.out = out;
         this.socket = socket;
@@ -51,6 +52,7 @@ public class GameScene {
         System.out.println("Current player in init data is:" + currentPlayerNickname);
         this.isFirstClient = isFirstClient;
         this.gameSceneController = new GameSceneController();
+        this.isFront=isFirst;
     }
 
     public void game(boolean isFirstClient) throws IOException {
@@ -94,6 +96,6 @@ public class GameScene {
         }
 
         System.out.println("Starting game for client: " + clientView.getUserName());
-        gameSceneController.startGame(initCardId);
+        gameSceneController.startGame(initCardId, isFront);
     }
 }
