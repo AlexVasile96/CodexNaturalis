@@ -12,5 +12,6 @@ public enum SpecificSeed {
     NOTTOBEPLACEDON,
     NUMOFCOVEREDCORNERS,
     MISSINGMULTIPLIER,
-    MIX
+    MIX,
+    NULL
 }
