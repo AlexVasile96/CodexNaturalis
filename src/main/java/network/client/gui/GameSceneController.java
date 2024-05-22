@@ -94,7 +94,9 @@ public class GameSceneController {
     private ImageView handCard1View;
     private ImageView handCard2View;
     private ImageView handCard3View;
-
+    private Image handCard1;
+    private Image handCard2;
+    private Image handCard3;
 
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
@@ -141,9 +143,9 @@ public class GameSceneController {
         pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
         pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
 
-        Image handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
-        Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
-        Image handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
+        handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
+        handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
+        handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
 
         handCard1View = new ImageView(handCard1);
         setWidthAndHeight(handCard1View);
@@ -1146,8 +1148,11 @@ public class GameSceneController {
     private synchronized void playerDeck() throws IOException {
         out.println("deckId");
         idHandCard1 = in.readLine();
+        System.out.println("first card of deck:" + idHandCard1);
         idHandCard2 = in.readLine();
+        System.out.println("Second card of deck:" + idHandCard2);
         idHandCard3 = in.readLine();
+        System.out.println("Third card of deck:" + idHandCard3);
     }
 
     private synchronized void checkTypePlayerDeck() throws IOException {
@@ -1388,6 +1393,20 @@ public class GameSceneController {
         handCard3View.setId("Front");
         cornerSelected=null;
         indexCardToPlace=100;
+        playerDeck();
+        checkTypePlayerDeck();
+        pathHandCard1 = "/ImmaginiCodex/CarteFront/" + typeHandCard1 + "/" + idHandCard1 + ".png";
+        System.out.println(pathHandCard1);
+        pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
+        System.out.println(pathHandCard2);
+        pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
+        System.out.println(pathHandCard3);
+        handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
+        handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
+        handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
+        handCard1View.setImage(handCard1);
+        handCard2View.setImage(handCard2);
+        handCard3View.setImage(handCard3);
     }
 
     private void newPathAfterUpdate(){
