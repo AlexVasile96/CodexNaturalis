@@ -309,7 +309,24 @@ public class GameSceneController {
                 if (haveToPlay) {
                     if (!cornerSelected.equals("notSelected") && indexCardToPlace < 4) {
                         try {
-                            controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
+                            String isTheCardFlipped=null;
+                            switch (indexCardPlayedFromHand) {
+                                case 0:
+                                    handCard1View.setImage(null);
+                                    isTheCardFlipped=handCard1View.getId();
+                                    break;
+                                case 1:
+                                    handCard2View.setImage(null);
+                                    isTheCardFlipped=handCard2View.getId();
+                                    break;
+                                case 2:
+                                    handCard3View.setImage(null);
+                                    isTheCardFlipped=handCard3View.getId();
+                                    break;
+                                default:
+                                    break;
+                            }
+                            controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected,isTheCardFlipped);
                             switch (cornerSelected) {
                                 case "TL":
                                     placingTopLeftCard(getClickedImageView().getImageView(), gameBoard, indexCardToPlace);
@@ -328,20 +345,7 @@ public class GameSceneController {
                             }
                             indexCardPlayedFromHand = indexCardToPlace;
                             haveToDraw = true;
-                            switch (indexCardPlayedFromHand) {
-                                case 0:
-                                    handCard1View.setImage(null);
-                                    break;
-                                case 1:
-                                    handCard2View.setImage(null);
-                                    break;
-                                case 2:
-                                    handCard3View.setImage(null);
-                                    break;
-                                default:
-                                    // Handle unexpected values if necessary
-                                    break;
-                            }
+
                         } catch (IOException exception) {
                             throw new RuntimeException(exception);
                         }
@@ -451,12 +455,15 @@ public class GameSceneController {
                 switch (indexCardToPlace) {
                     case 0:
                         handCard1View.setImage(flipToBackCard(idHandCard1));
+                        handCard1View.setId("Flipped");
                         break;
                     case 1:
                         handCard2View.setImage(flipToBackCard(idHandCard2));
+                        handCard2View.setId("Flipped");
                         break;
                     case 2:
                         handCard3View.setImage(flipToBackCard(idHandCard3));
+                        handCard3View.setId("Flipped");
                         break;
                     default:
                         showAlert("Invalid action", "You chose an unflippable card.");
@@ -472,12 +479,15 @@ public class GameSceneController {
                 switch (indexCardToPlace) {
                     case 0:
                         handCard1View.setImage(flipCardToFront(idHandCard1));
+                        handCard1View.setId("Normal");
                         break;
                     case 1:
                         handCard2View.setImage(flipCardToFront(idHandCard2));
+                        handCard2View.setId("Normal");
                         break;
                     case 2:
                         handCard3View.setImage(flipCardToFront(idHandCard3));
+                        handCard3View.setId("Normal");
                         break;
                     default:
                         showAlert("Invalid action", "You chose an unflippable card.");
