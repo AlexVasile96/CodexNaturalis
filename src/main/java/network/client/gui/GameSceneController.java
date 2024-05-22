@@ -592,7 +592,7 @@ public class GameSceneController {
                 pathChosen = pathHandCard2;
                 if(handCard2View.getId()==null|| handCard2View.getId().equals("Front"))
                 {
-                    pathChosen = pathHandCard1;
+                    pathChosen = pathHandCard2;
                     System.out.println("Front");
                 }
                 else{
@@ -612,7 +612,7 @@ public class GameSceneController {
                 pathChosen = pathHandCard3;
                 if(handCard3View.getId()==null|| handCard3View.getId().equals("Front"))
                 {
-                    pathChosen = pathHandCard1;
+                    pathChosen = pathHandCard3;
                     System.out.println("Front");
                 }
                 else{
@@ -883,6 +883,7 @@ public class GameSceneController {
         int lastIndex=nextCardIndex;
         nextCardIndex++;
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
+        System.out.println(pathChosen);
         int x = getX(cardOnTheBoard);
         int y = getY(cardOnTheBoard);
         GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
