@@ -9,6 +9,3 @@
   ]
 }
 
-
-//potrei mettere il type delle init card a null e mettere gestire gli attributi del back e del front separatamente
-//magari aggiungendo un campo attributes_back, però poi sarà un casino (forse) costruire la carta, vediamo
