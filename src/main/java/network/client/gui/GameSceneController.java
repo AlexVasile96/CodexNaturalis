@@ -1,5 +1,6 @@
 package network.client.gui;
 
+import com.google.gson.*;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,12 +15,14 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.game.Player;
 import view.ClientView;
+
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,11 +91,10 @@ public class GameSceneController {
     private String pathHandCard2;
     private String pathHandCard3;
     private String pathChosen;
-    private  GridPane gridPaneForWellCards;
+    private GridPane gridPaneForWellCards;
     String firstCommonId;
     String secondCommonId;
     ShowObjectiveScene objectiveScene;
-
 
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
@@ -171,7 +173,7 @@ public class GameSceneController {
         gameBoard.setPrefSize(windowedLength * 0.8, windowHeight * 0.8);
 
         Image initCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Init/" + initCardId + ".png")));
-        GridPane initCardDividedINFourRegions = subnettingEachImage(initCardImage,initCardId);
+        GridPane initCardDividedINFourRegions = subnettingEachImage(initCardImage, initCardId);
 
         ImageView tlImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(0);
         ImageView trImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(1);
@@ -209,7 +211,6 @@ public class GameSceneController {
         BorderPane layout = new BorderPane();
         layout.setCenter(cardsOntheBoardScrollPane);
         layout.setStyle("-fx-background-color: #212121;");
-
 
 
         VBox vboxGame = new VBox();
@@ -270,7 +271,7 @@ public class GameSceneController {
         chosenDeckOrWell.setStyle("-fx-text-fill: white;");
 
         secondColumnOfSecondRow.getChildren().addAll(chosenCardToPlace, chosenCardToBePlacedOn, chosenCorner, chosenDeckOrWell);
-        chosenDeckOrWell.setText("Drawing from: "+wellOrDeck);
+        chosenDeckOrWell.setText("Drawing from: " + wellOrDeck);
 
         layout.setRight(vboxGame);
         firstColumnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
@@ -288,7 +289,7 @@ public class GameSceneController {
             buttonContainer.setDisable(false);
             //enableOrDisableGameActions();
         } else {
-            isCurrentPlayerTurn=false;
+            isCurrentPlayerTurn = false;
             waitForTurn(handCard1View, handCard2View, handCard3View);
         }
 
@@ -324,7 +325,7 @@ public class GameSceneController {
         playCard.setOnAction(e -> {
             if (isCurrentPlayerTurn) {
                 if (haveToPlay) {
-                    if(!cornerSelected.equals("notSelected") && indexCardToPlace < 4) {
+                    if (!cornerSelected.equals("notSelected") && indexCardToPlace < 4) {
                         try {
                             controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected);
                             switch (cornerSelected) {
@@ -364,8 +365,7 @@ public class GameSceneController {
                             throw new RuntimeException(exception);
                         }
                         haveToPlay = false;
-                    }
-                    else{
+                    } else {
                         showAlert("Action not allowed", "Choose the ricght cards.");
                     }
                 } else {
@@ -379,6 +379,7 @@ public class GameSceneController {
         endTurn.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
                 try {
+                    savePath();
                     String nextPlayerNickname = controller.endTurn();
                     updateTurnState(nextPlayerNickname.equals(clientView.getUserName()));
                     haveToPlay = true;
@@ -418,17 +419,17 @@ public class GameSceneController {
                             switch (indexCardPlayedFromHand) {
                                 case 0:
                                     handCard1View.setImage(drawnCardImage);
-                                    pathHandCard1= "/ImmaginiCodex/CarteFront/" +checkType(idTopCard) + "/" + idTopCard + ".png";
+                                    pathHandCard1 = "/ImmaginiCodex/CarteFront/" + checkType(idTopCard) + "/" + idTopCard + ".png";
                                     idHandCard1 = idTopCard;
                                     break;
                                 case 1:
                                     handCard2View.setImage(drawnCardImage);
-                                    pathHandCard2= "/ImmaginiCodex/CarteFront/" +checkType(idTopCard) + "/" + idTopCard + ".png";
+                                    pathHandCard2 = "/ImmaginiCodex/CarteFront/" + checkType(idTopCard) + "/" + idTopCard + ".png";
                                     idHandCard2 = idTopCard;
                                     break;
                                 case 2:
                                     handCard3View.setImage(drawnCardImage);
-                                    pathHandCard3= "/ImmaginiCodex/CarteFront/" +checkType(idTopCard) + "/" + idTopCard + ".png";
+                                    pathHandCard3 = "/ImmaginiCodex/CarteFront/" + checkType(idTopCard) + "/" + idTopCard + ".png";
                                     idHandCard3 = idTopCard;
                                     break;
                             }
@@ -436,7 +437,7 @@ public class GameSceneController {
 
                             String pathResource = "/ImmaginiCodex/CarteFront/Resource/" + idTopCardResourceDeck + ".png";
                             System.out.println("Idtopcardresourcedeck:" + idTopCardResourceDeck);
-                            System.out.println("path: " +  pathResource);
+                            System.out.println("path: " + pathResource);
                             Image newWellResourceCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathResource)));
 
                             String pathGold = "/ImmaginiCodex/CarteFront/Gold/" + idTopCardGoldDeck + ".png";
@@ -444,23 +445,20 @@ public class GameSceneController {
                             System.out.println(pathGold);
                             Image newWellGoldCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathGold)));
 
-                            if(indexCardFromWellSelected == 0){
+                            if (indexCardFromWellSelected == 0) {
                                 SharedObjectsInGui.getWellCard1View().setImage(newWellResourceCardImage);
                                 System.out.println("am i here?-> first well card");
                                 updateResourceDeckTopCard();
-                            }
-                            else if(indexCardFromWellSelected == 1){
+                            } else if (indexCardFromWellSelected == 1) {
                                 SharedObjectsInGui.getWellCard2View().setImage(newWellResourceCardImage);
                                 System.out.println("am i here?-> second well card");
                                 updateResourceDeckTopCard();
 
-                            }
-                            else if(indexCardFromWellSelected == 2){
+                            } else if (indexCardFromWellSelected == 2) {
                                 SharedObjectsInGui.getWellCard3View().setImage(newWellGoldCardImage);
                                 System.out.println("am i here?-> third well card");
                                 updatedGoldDeckTopCard();
-                            }
-                            else if(indexCardFromWellSelected == 3) {
+                            } else if (indexCardFromWellSelected == 3) {
                                 SharedObjectsInGui.getWellCard4View().setImage(newWellGoldCardImage);
                                 System.out.println("am i here?-> fourth well card");
                                 updatedGoldDeckTopCard();
@@ -527,7 +525,7 @@ public class GameSceneController {
             if (isCurrentPlayerTurn) {
                 indexCardToPlace = 0;
                 chosenCardToPlace.setText("First card of your hand");
-                pathChosen=pathHandCard1;
+                pathChosen = pathHandCard1;
 
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
@@ -538,7 +536,7 @@ public class GameSceneController {
             if (isCurrentPlayerTurn) {
                 indexCardToPlace = 1;
                 chosenCardToPlace.setText("Second card of your hand");
-                pathChosen=pathHandCard2;
+                pathChosen = pathHandCard2;
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -548,7 +546,7 @@ public class GameSceneController {
             if (isCurrentPlayerTurn) {
                 indexCardToPlace = 2;
                 chosenCardToPlace.setText("Third card of your hand");
-                pathChosen=pathHandCard3;
+                pathChosen = pathHandCard3;
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -589,7 +587,7 @@ public class GameSceneController {
             }
         });
 
-        showObjective.setOnMouseClicked(e->{
+        showObjective.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
                 try {
                     objectiveScene = new ShowObjectiveScene(primaryStage, out, socket, in);
@@ -605,12 +603,11 @@ public class GameSceneController {
             }
         });
 
-        quit.setOnMouseClicked(e->{
+        quit.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
-                if(haveToDraw){
+                if (haveToDraw) {
                     showAlert("Quit", "You can't quit right now, draw any card.");
-                }
-                else {
+                } else {
                     String nextPlayerNickname;
                     try {
                         nextPlayerNickname = controller.endTurn();
@@ -640,6 +637,7 @@ public class GameSceneController {
                         System.out.println(in.readLine()); //Fine turno
                         updateGUI();
                         setupGameActions(handCard1View, handCard2View, handCard3View);
+
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -753,7 +751,7 @@ public class GameSceneController {
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
         int x = getX(cartaSuCuiPiazzo);
         int y = getY(cartaSuCuiPiazzo);
-        GridPane gridPanePlacingOn = subnettingEachImage(newImage,String.valueOf(id));
+        GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
         ImageView im1 = (ImageView) gridPanePlacingOn.getChildren().get(0);
         ImageView im2 = (ImageView) gridPanePlacingOn.getChildren().get(1);
         ImageView im3 = (ImageView) gridPanePlacingOn.getChildren().get(2);
@@ -762,10 +760,10 @@ public class GameSceneController {
         im2.setPickOnBounds(true);
         im3.setPickOnBounds(true);
         im4.setPickOnBounds(true);
-        board.add(im1,y, x);
-        board.add(im2,(y + 1), x);
-        board.add(im3,y, (x + 1));
-        board.add(im4,(y + 1), (x + 1));
+        board.add(im1, y, x);
+        board.add(im2, (y + 1), x);
+        board.add(im3, y, (x + 1));
+        board.add(im4, (y + 1), (x + 1));
         allCardViews.add(new CardView(im1, String.valueOf(id), "TL"));
         allCardViews.add(new CardView(im2, String.valueOf(id), "TR"));
         allCardViews.add(new CardView(im3, String.valueOf(id), "BL"));
@@ -820,10 +818,10 @@ public class GameSceneController {
         im2.setPickOnBounds(true);
         im3.setPickOnBounds(true);
         im4.setPickOnBounds(true);
-        board.add(im1,(y - 1), (x - 1));
-        board.add(im2,(y), (x - 1));
-        board.add(im3,(y - 1),(x));
-        board.add(im4,(y),(x));
+        board.add(im1, (y - 1), (x - 1));
+        board.add(im2, (y), (x - 1));
+        board.add(im3, (y - 1), (x));
+        board.add(im4, (y), (x));
         allCardViews.add(new CardView(im1, String.valueOf(id), "TL"));
         allCardViews.add(new CardView(im2, String.valueOf(id), "TR"));
         allCardViews.add(new CardView(im3, String.valueOf(id), "BL"));
@@ -984,20 +982,20 @@ public class GameSceneController {
         SharedObjectsInGui.setWellCard4(createNewPathForImages(SharedObjectsInGui.getWellPathForth()));
     }
 
-   private void creatingImagesViewForTheWell() {
-       ImageView wellCard1View = new ImageView(SharedObjectsInGui.getWellCard1());
-       ImageView wellCard2View = new ImageView(SharedObjectsInGui.getWellCard2());
-       ImageView wellCard3View = new ImageView(SharedObjectsInGui.getWellCard3());
-       ImageView wellCard4View = new ImageView(SharedObjectsInGui.getWellCard4());
-       setWidthAndHeight(wellCard1View);
-       setWidthAndHeight(wellCard2View);
-       setWidthAndHeight(wellCard3View);
-       setWidthAndHeight(wellCard4View);
-       SharedObjectsInGui.setWellCard1View(wellCard1View);
-       SharedObjectsInGui.setWellCard2View(wellCard2View);
-       SharedObjectsInGui.setWellCard3View(wellCard3View);
-       SharedObjectsInGui.setWellCard4View(wellCard4View);
-   }
+    private void creatingImagesViewForTheWell() {
+        ImageView wellCard1View = new ImageView(SharedObjectsInGui.getWellCard1());
+        ImageView wellCard2View = new ImageView(SharedObjectsInGui.getWellCard2());
+        ImageView wellCard3View = new ImageView(SharedObjectsInGui.getWellCard3());
+        ImageView wellCard4View = new ImageView(SharedObjectsInGui.getWellCard4());
+        setWidthAndHeight(wellCard1View);
+        setWidthAndHeight(wellCard2View);
+        setWidthAndHeight(wellCard3View);
+        setWidthAndHeight(wellCard4View);
+        SharedObjectsInGui.setWellCard1View(wellCard1View);
+        SharedObjectsInGui.setWellCard2View(wellCard2View);
+        SharedObjectsInGui.setWellCard3View(wellCard3View);
+        SharedObjectsInGui.setWellCard4View(wellCard4View);
+    }
 
 
     private void settingWellOnMouseClickedEvent() {
@@ -1072,7 +1070,7 @@ public class GameSceneController {
         SharedObjectsInGui.setWellPathSecond(createPathForFrontCards(SharedObjectsInGui.getIdCard2()));
         SharedObjectsInGui.setWellPathThird(createPathForFrontCards(SharedObjectsInGui.getIdCard3()));
         SharedObjectsInGui.setWellPathForth(createPathForFrontCards(SharedObjectsInGui.getIdCard4()));
-        //SharedObjectsInGui.getWellCard1View().setImage(newWellResourceCardImage);
+
     }
 
     private synchronized void initializeWell() throws IOException {
@@ -1082,6 +1080,7 @@ public class GameSceneController {
         fourthWellCard();
         checkTypeWellCards();
     }
+
     private void updateResourceDeckTopCard() throws IOException {
         out.println("firstCardResourceGui");
         String newTopCardResourceDeckId = in.readLine();
@@ -1093,6 +1092,7 @@ public class GameSceneController {
         SharedObjectsInGui.setPathResourceDeck(newPathResource);
         SharedObjectsInGui.setTopCardResourceDeck(newTopCardResourceDeckImage);
     }
+
     private void updatedGoldDeckTopCard() throws IOException {
         out.println("firstCardGoldGui");
         String newTopCardGoldDeckId = in.readLine();
@@ -1112,30 +1112,32 @@ public class GameSceneController {
     public int getY(ImageView img) {
         return GridPane.getColumnIndex(img);
     }
-    private void creatingButtons(){
+
+    private void creatingButtons() {
         buttonContainer.add(playCard, 0, 0);
         buttonContainer.add(drawCard, 1, 0);
         buttonContainer.add(flipCardToFront, 0, 1);
         buttonContainer.add(flipCardToBack, 1, 1);
         buttonContainer.add(seeYourPoints, 0, 2);
         buttonContainer.add(seeYourSpecificSeeds, 1, 2);
-        buttonContainer.add(showObjective, 0,3);
+        buttonContainer.add(showObjective, 0, 3);
         buttonContainer.add(endTurn, 1, 3);
-        buttonContainer.add(quit, 0,4);
+        buttonContainer.add(quit, 0, 4);
 
         Double buttonsWidth = 120.00;
 
-        for(var node : buttonContainer.getChildren()){
-            if(node instanceof Button){
-                ((Button)node).setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-font-weight: bold;");
-                ((Button)node).setPrefWidth(buttonsWidth);
+        for (var node : buttonContainer.getChildren()) {
+            if (node instanceof Button) {
+                ((Button) node).setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-font-weight: bold;");
+                ((Button) node).setPrefWidth(buttonsWidth);
             }
         }
     }
 
-        public void setClickedCardView(CardView cardView) {
-            GameSceneController.clickedCardView = cardView;
-        }
+    public void setClickedCardView(CardView cardView) {
+        GameSceneController.clickedCardView = cardView;
+    }
+
     private void updateWell() throws IOException {
         firstWellCard();
         secondWellCard();
@@ -1155,19 +1157,70 @@ public class GameSceneController {
     }
 
     private void updateGUI() throws IOException {
-                updateResourceDeckTopCard();
-                updatedGoldDeckTopCard();
-                updateWell();
-                updateFirst(); //con questo funziona la mano ma non i deck ed il well
+//        updateResourceDeckTopCard();
+//        updatedGoldDeckTopCard();
+//        updateWell();
+//        updateFirst(); //con questo funziona la mano ma non i deck ed il well
+        load();
     }
 
     private void waitUntilLastMessage() throws IOException {
         String messageFromServer = in.readLine();
         while (!messageFromServer.equals("STARTGUI")) {
             System.out.println("Server says " + messageFromServer);
-            messageFromServer=in.readLine();
-            }
+            messageFromServer = in.readLine();
+        }
         System.out.println("Game finally starting!");
+    }
+
+    public void saveElementsInGui(Path path) {
+        JsonObject sharedElementsObject = new JsonObject();
+        sharedElementsObject.add("idTopResourceCardDeck", new JsonPrimitive(idTopCardResourceDeck));
+        sharedElementsObject.add("idTopGoldCardDeck", new JsonPrimitive(idTopCardGoldDeck));
+        sharedElementsObject.add("wellPathOne", new JsonPrimitive(SharedObjectsInGui.getWellPathOne()));
+        sharedElementsObject.add("wellPathSecond", new JsonPrimitive(SharedObjectsInGui.getWellPathSecond()));
+        sharedElementsObject.add("wellPathThird", new JsonPrimitive(SharedObjectsInGui.getWellPathThird()));
+        sharedElementsObject.add("wellPathForth", new JsonPrimitive(SharedObjectsInGui.getWellPathForth()));
+        sharedElementsObject.add("idCard1", new JsonPrimitive(SharedObjectsInGui.getIdCard1()));
+        sharedElementsObject.add("idCard2", new JsonPrimitive(SharedObjectsInGui.getIdCard2()));
+        sharedElementsObject.add("idCard3", new JsonPrimitive(SharedObjectsInGui.getIdCard3()));
+        sharedElementsObject.add("idCard4", new JsonPrimitive(SharedObjectsInGui.getIdCard4()));
+
+        try (FileWriter file = new FileWriter(path.toFile())) {
+            Gson gson = new Gson();
+            gson.toJson(sharedElementsObject, file);
+            System.out.println("File saved successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void loadElementsFromGui(Path path) {
+        try (FileReader reader = new FileReader(path.toFile())) {
+            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
+            idTopCardResourceDeck = jsonObject.get("idTopResourceCardDeck").getAsString();
+            idTopCardGoldDeck = jsonObject.get("idTopGoldCardDeck").getAsString();
+            SharedObjectsInGui.setWellPathOne(jsonObject.get("wellPathOne").getAsString());
+            SharedObjectsInGui.setWellPathSecond(jsonObject.get("wellPathSecond").getAsString());
+            SharedObjectsInGui.setWellPathThird(jsonObject.get("wellPathThird").getAsString());
+            SharedObjectsInGui.setWellPathForth(jsonObject.get("wellPathForth").getAsString());
+            SharedObjectsInGui.setIdCard1(jsonObject.get("idCard1").getAsString());
+            SharedObjectsInGui.setIdCard2(jsonObject.get("idCard2").getAsString());
+            SharedObjectsInGui.setIdCard3(jsonObject.get("idCard3").getAsString());
+            SharedObjectsInGui.setIdCard4(jsonObject.get("idCard4").getAsString());
+            System.out.println("File loaded successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
+    public void load(){
+        loadElementsFromGui(getDefaultGuiPath());
+    }
+    public void savePath(){
+        saveElementsInGui(getDefaultGuiPath());
+    }
+    private Path getDefaultGuiPath() {
+        String home = ("src/main/resources/sharedElementsInGui.json");
+        return Paths.get(home);
+    }
+}
