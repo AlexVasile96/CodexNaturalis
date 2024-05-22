@@ -22,23 +22,27 @@ public class Controller {
     }
 
 
-    public void playCardClick(int indexCardToBePlacedOn, int indexCardToPlace, String cornerSelected) throws IOException {
+    public void playCardClick(int indexCardToBePlacedOn, int indexCardToPlace, String cornerSelected, String isTheCardFlipped) throws IOException {
         System.out.println("indexToBePlacedOn "+indexCardToBePlacedOn + " indexToPlace " + indexCardToPlace + " corner " + cornerSelected);
         if(indexCardToBePlacedOn == 100 || indexCardToPlace == 100 || cornerSelected == null){ //This if prevents player to place card without choosing any card or corner
             System.out.println("You have not selected any card to place or to be placed on or the corner");
-            return;
         }
         else{
         System.out.println("Client decided to place a card");
         out.println("playCard"); //sends to server the message to start the playCard method
         try {
-           // System.out.println(in.readLine());
-            out.println(indexCardToPlace); //267
-            System.out.println(in.readLine()); //puoi procedere
-            //Vuoi girare la tua carta?
-            out.println(2); //Non voglio girare la mia carta
-            System.out.println("non voglio girare la mia carta");
-            out.println(indexCardToBePlacedOn-1);
+
+            out.println(indexCardToPlace); //Sending to server the index of the card we want to place
+            System.out.println(in.readLine()); //Server says we can continue
+            if(isTheCardFlipped == null || isTheCardFlipped.equals("Front"))
+            {
+                out.println(2); //My card is flipped
+            }
+            else{
+                out.println(1); //My crud is not flipped
+            }
+
+            out.println(indexCardToBePlacedOn-1); //Sending to the server the index of the card on the board
             String[] angoli ={"TL","TR","BR","BL"};
             String [] validInputs = new String[4];
             boolean check = false;
@@ -75,24 +79,21 @@ public class Controller {
                     break;
             }
 
-            System.out.println(in.readLine()); //carta placed
+            System.out.println(in.readLine()); //card correctly placed
             String typeCard = in.readLine();
             String isBack = in.readLine();
-            String cordinateTl = in.readLine();
+            String coordinate = in.readLine();
             System.out.println(typeCard);
             System.out.println(isBack);
-            System.out.println(cordinateTl);
-            //player.getClientView().addCardOnTheBoard((numeroCarte+1)+"->"+typeCard+": "+cordinateTl+" "+ isBack);
-            //player.getClientView().setNumOfCardsOnTheBoard(numeroCarte+1);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(coordinate);
         }
-
+        catch (IOException e) {
+            throw new RuntimeException(e);
+            }
         }
     }
 
     public void drawCard(String wellOrDeck, String selectedDeck, Integer indexSelectedCard) throws IOException {
-
         out.println("drawCard");
         System.out.println("You chose to draw a card!");
         if (wellOrDeck.equals("deck")) {

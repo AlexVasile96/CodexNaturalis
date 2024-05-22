@@ -106,9 +106,8 @@ public class InitCardScene {
 
         placeCard.setOnMouseClicked(e -> {
             out.println(isFront);
-
             LobbyScene lobbySceneHandler = new LobbyScene();
-            lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView);
+            lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView,id);
 
         });
         return initCardScene;
