@@ -391,14 +391,22 @@ public class GameSceneController {
 
         endTurn.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
-                try {
-                    savePath();
-                    String nextPlayerNickname = controller.endTurn();
-                    updateTurnState(nextPlayerNickname.equals(clientView.getUserName()));
-                    haveToPlay = true;
-                    waitForTurn(handCard1View, handCard2View, handCard3View);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                if(!haveToDraw && !haveToPlay){
+                    try {
+                        savePath();
+                        String nextPlayerNickname = controller.endTurn();
+                        updateTurnState(nextPlayerNickname.equals(clientView.getUserName()));
+                        haveToPlay = true;
+                        waitForTurn(handCard1View, handCard2View, handCard3View);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                else if(haveToDraw){
+                    showAlert("HavetoDraw", "You have to draw a card first");
+                }
+                else{
+                    showAlert("HavetoPlay", "You have to place a card first");
                 }
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
