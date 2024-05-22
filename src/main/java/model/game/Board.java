@@ -419,6 +419,18 @@ public class Board {
             return 0;
         }
     }
+    public Map<SpecificSeed, Integer> countActualSeeds() {
+        Map<SpecificSeed, Integer> seedCountMap = new HashMap<>();
+        for (int i = 0; i < nodes.length; i++) {
+            for (int j = 0; j < nodes[i].length; j++) {
+                SpecificSeed seed = nodes[i][j].getSpecificNodeSeed();
+                if (seed != SpecificSeed.EMPTY) {
+                    seedCountMap.put(seed, seedCountMap.getOrDefault(seed, 0) + 1);
+                }
+            }
+        }
+        return seedCountMap;
+    }
 
 }
 

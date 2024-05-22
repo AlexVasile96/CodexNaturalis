@@ -50,3 +50,7 @@ public class GUI extends Application {
     }
 }
 
+//GOLD CARD
+//NOTTOBEPLACEDON
+//SPECIFICSEEDS
+//DRAWCARD->ENDTURN

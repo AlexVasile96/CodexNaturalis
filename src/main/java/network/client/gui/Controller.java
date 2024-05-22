@@ -39,9 +39,8 @@ public class Controller {
                 out.println(2); //My card is flipped
             }
             else{
-                out.println(1); //My crud is not flipped
+                out.println(1); //My card is not flipped
             }
-
             out.println(indexCardToBePlacedOn-1); //Sending to the server the index of the card on the board
             String[] angoli ={"TL","TR","BR","BL"};
             String [] validInputs = new String[4];
