@@ -29,6 +29,7 @@ public class ClientView {
         return userName;
     }
     private List<String> PlayerStringCards= new ArrayList<>();
+    private List<String> printCards= new ArrayList<>();
 
     public void setUserName(String userName) {
         this.userName = userName;
@@ -75,8 +76,8 @@ public class ClientView {
         return PlayerStringCards;
     }
 
-    public void setPlayerStringCards(List<String> playerStringCards) {
-        PlayerStringCards = playerStringCards;
+    public List<String> getPrintCards() {
+        return printCards;
     }
 
     public Dot getDot() {

@@ -60,7 +60,12 @@ public class Card {
                     ", TR=" + TR +
                     ", BL=" + BL +
                     ", BR=" + BR ;
-    } //TO-STRING METHOD
+        } //TO-STRING METHOD
+
+        public String printCardRedably() {
+            return "Card-> id=" + id + ", value=" + valueWhenPlaced + ", type=" + type + ", Corners:\n     TL=" + TL + ", TR=" + TR+
+                    "\n     BL=" + BL + ", BR=" + BR ;
+        }
 
 
         //GETTER AND SETTER
