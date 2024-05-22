@@ -388,7 +388,7 @@ public class GameSceneController {
                         }
                         haveToPlay = false;
                     } else {
-                        showAlert("Action not allowed", "Choose the ricght cards.");
+                        showAlert("Action not allowed", "Choose the right cards.");
                     }
                 } else {
                     showAlert("Action not allowed", "You have already played a card.");
