@@ -782,7 +782,7 @@ public class GameSceneController {
 
     public void placingTopLeftCard(ImageView cartaSuCuiPiazzo, GridPane board, int id) {
         nextCardIndex++;
-        if(cartaSuCuiPiazzo.getId().equals("Flipped"))
+
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
         int x = getX(cartaSuCuiPiazzo);
         int y = getY(cartaSuCuiPiazzo);
