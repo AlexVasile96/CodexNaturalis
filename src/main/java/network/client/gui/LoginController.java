@@ -62,7 +62,7 @@ public class LoginController {
     public void loginButtonClicked(ActionEvent event) throws IOException {
         new Thread(() -> {
             try {
-                String serverResponse = in.readLine();
+                String serverResponse = in.readLine(); //HELLO YOU HAVE TO LOG IN PLEASEY INSERT YOUR USERNAME
                 System.out.println(serverResponse);
                 String username = usernameField.getText();
                 Toggle dot = toggleGroup.getSelectedToggle();
@@ -89,11 +89,12 @@ public class LoginController {
                     return;
                 }
 
-                out.println(username); // Sending username to the server
-                serverResponse = in.readLine();
-                System.out.println(serverResponse);
+                String chosenName= usernameField.getText();
 
-                if (serverResponse.equals("Username already taken. Please choose another username:")) {
+                out.println(chosenName); // Sending username to the server
+                String whatServerSays= in.readLine();
+                System.out.println(whatServerSays);
+                if (whatServerSays.equals("Username already taken. Please choose another username:")) {
                     Platform.runLater(() -> {
                         loginLabel.setText("Username already taken. Please choose another username:");
                         loginLabel.setStyle("-fx-font-size: 20px;" + // Dimensione del font
@@ -103,15 +104,10 @@ public class LoginController {
                                 "-fx-border-color: #EF8156;" + // Colore del bordo
                                 "-fx-border-width: 1px;" + // Spessore del bordo
                                 "-fx-border-radius: 5px;"); // Arrotondamento del bordo
-                        out.println(usernameField.getText());
+                        //out.println(usernameField.getText());
                         usernameField.clear();
-                        usernameField.requestFocus();
-                        loginButton.setDisable(true);
-                        try {
-                            System.out.println(in.readLine());
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                       //usernameField.requestFocus();
+                        //loginButton.setDisable(true);
                     });
 
                     return;
@@ -119,10 +115,11 @@ public class LoginController {
 
                 clientView.setUserName(username);
                 System.out.println("This clientview username is: " + clientView.getUserName());
-                System.out.println(in.readLine());
+                System.out.println(in.readLine()); //Choose the color of
                 String realChosenDot = ((RadioButton) dot).getText();
                 clientView.setDot(Dot.valueOf(realChosenDot));
                 out.println(realChosenDot);
+
                 if (in.readLine().equals("Chosen color not available!")) {
                     Platform.runLater(() -> {
                         loginLabel.setText("Chosen color not available! Choose another color:");

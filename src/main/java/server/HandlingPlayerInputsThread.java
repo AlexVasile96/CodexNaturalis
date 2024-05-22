@@ -112,7 +112,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 waitForAllClientsToSetup();
                 boolean hasClientQuit = false;
                 for (Player player : playersList) {
-                    player.setPlayerScore(15);
+                    player.setPlayerScore(1);
                 }
                 while (!hasClientQuit) {
                     startGame();
@@ -186,9 +186,11 @@ public class HandlingPlayerInputsThread implements Runnable {
             while (isUsernameTaken(request)) {
                 sendMessageToClient("Username already taken. Please choose another username:");
                 System.out.println("Username already taken. Please choose another username:");
+                System.out.println("Waiting for new Username");
                 request = stdIn.readLine();
                 System.out.println("Received new username: " + request);
             }
+            System.out.println("Username correct");
             System.out.println("Client name is " + request);
             sendMessageToClient("Login successfully done!");
             Board board = new Board(50, 50);
