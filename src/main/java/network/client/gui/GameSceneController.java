@@ -388,7 +388,7 @@ public class GameSceneController {
                         }
                         haveToPlay = false;
                     } else {
-                        showAlert("Action not allowed", "Choose the ricght cards.");
+                        showAlert("Action not allowed", "Choose the right cards.");
                     }
                 } else {
                     showAlert("Action not allowed", "You have already played a card.");
@@ -400,14 +400,22 @@ public class GameSceneController {
 
         endTurn.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
-                try {
-                    savePath();
-                    String nextPlayerNickname = controller.endTurn();
-                    updateTurnState(nextPlayerNickname.equals(clientView.getUserName()));
-                    haveToPlay = true;
-                    waitForTurn(handCard1View, handCard2View, handCard3View);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                if(!haveToDraw && !haveToPlay){
+                    try {
+                        savePath();
+                        String nextPlayerNickname = controller.endTurn();
+                        updateTurnState(nextPlayerNickname.equals(clientView.getUserName()));
+                        haveToPlay = true;
+                        waitForTurn(handCard1View, handCard2View, handCard3View);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                else if(haveToDraw){
+                    showAlert("HavetoDraw", "You have to draw a card first");
+                }
+                else{
+                    showAlert("HavetoPlay", "You have to place a card first");
                 }
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
