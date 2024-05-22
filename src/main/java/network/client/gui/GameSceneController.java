@@ -89,6 +89,13 @@ public class GameSceneController {
     String secondCommonId;
     ShowObjectiveScene objectiveScene;
     private boolean cardOnHerBack=false;
+    private String pathFlipped;
+    private Image initCardImage;
+    private ImageView handCard1View;
+    private ImageView handCard2View;
+    private ImageView handCard3View;
+
+
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
         this.primaryStage = primaryStage;
@@ -125,7 +132,7 @@ public class GameSceneController {
         }
     }
 
-    public void startGame(String initCardId) throws IOException {
+    public void startGame(String initCardId, int isFront) throws IOException {
         Image backGroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
         BackgroundImage backgroundImage = new BackgroundImage(backGroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
@@ -138,14 +145,14 @@ public class GameSceneController {
         Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
         Image handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
 
-        ImageView handCard1View = new ImageView(handCard1);
+        handCard1View = new ImageView(handCard1);
         setWidthAndHeight(handCard1View);
 
-        ImageView handCard2View = new ImageView(handCard2);
+        handCard2View = new ImageView(handCard2);
         handCard2View.setFitWidth(widthWellCards);
         handCard2View.setFitHeight(heightWellCards);
 
-        ImageView handCard3View = new ImageView(handCard3);
+        handCard3View = new ImageView(handCard3);
         handCard3View.setFitWidth(widthWellCards);
         handCard3View.setFitHeight(heightWellCards);
 
@@ -163,28 +170,54 @@ public class GameSceneController {
         double windowHeight = root.getHeight();
 
         gameBoard.setPrefSize(windowedLength * 0.8, windowHeight * 0.8);
+        if(isFront==1)
+        {
+          initCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Init/" + initCardId + ".png")));
+        }
+        else {
+            initCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteBack/Init/" + initCardId + ".png")));
+        }
 
-        Image initCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Init/" + initCardId + ".png")));
-        GridPane initCardDividedINFourRegions = subnettingEachImage(initCardImage, initCardId);
+        GridPane initCardDividedInNineRegions = subnettingEachImage(initCardImage, initCardId);
 
-        ImageView tlImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(0);
-        ImageView trImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(1);
-        ImageView blImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(2);
-        ImageView brImageView = (ImageView) initCardDividedINFourRegions.getChildren().get(3);
+        ImageView tlImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(0);
+        ImageView tcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(1);
+        ImageView trImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(2);
+        ImageView lcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(3);
+        ImageView ccImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(4);
+        ImageView rcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(5);
+        ImageView blImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(6);
+        ImageView bcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(7);
+        ImageView brImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(8);
 
         CardView tlCardView = new CardView(tlImageView, initCardId, "TL");
+        CardView tcCardView = new CardView(tcImageView, initCardId, "TC");
         CardView trCardView = new CardView(trImageView, initCardId, "TR");
+        CardView lcCardView = new CardView(lcImageView, initCardId, "LC");
+        CardView ccCardView = new CardView(ccImageView, initCardId, "CC");
+        CardView rcCardView = new CardView(rcImageView, initCardId, "RC");
         CardView blCardView = new CardView(blImageView, initCardId, "BL");
+        CardView bcCardView = new CardView(bcImageView, initCardId, "BC");
         CardView brCardView = new CardView(brImageView, initCardId, "BR");
 
         nextCardIndex++; //1 for initial card
         //All the index of the same card has the same value
         cardIndices.put(tlCardView, nextCardIndex);
         System.out.println("Added TL CardView with index: " + nextCardIndex);
+        cardIndices.put(tcCardView, nextCardIndex);
+        System.out.println("Added TC CardView with index: " + nextCardIndex);
         cardIndices.put(trCardView, nextCardIndex);
         System.out.println("Added TR CardView with index: " + nextCardIndex);
+        cardIndices.put(lcCardView, nextCardIndex);
+        System.out.println("Added LC CardView with index: " + nextCardIndex);
+        cardIndices.put(ccCardView, nextCardIndex);
+        System.out.println("Added CC CardView with index: " + nextCardIndex);
+        cardIndices.put(rcCardView, nextCardIndex);
+        System.out.println("Added RC CardView with index: " + nextCardIndex);
         cardIndices.put(blCardView, nextCardIndex);
         System.out.println("Added BL CardView with index: " + nextCardIndex);
+        cardIndices.put(bcCardView, nextCardIndex);
+        System.out.println("Added BC CardView with index: " + nextCardIndex);
         cardIndices.put(brCardView, nextCardIndex);
         System.out.println("Added BR CardView with index: " + nextCardIndex);
 
@@ -194,10 +227,15 @@ public class GameSceneController {
         blImageView.setPickOnBounds(true);
         brImageView.setPickOnBounds(true);
 
-        gameBoard.add(tlImageView, boardDimension / 2, boardDimension / 2);
-        gameBoard.add(trImageView, boardDimension / 2 + 1, boardDimension / 2);
-        gameBoard.add(blImageView, boardDimension / 2, boardDimension / 2 + 1);
-        gameBoard.add(brImageView, boardDimension / 2 + 1, boardDimension / 2 + 1);
+        gameBoard.add(tlImageView, boardDimension / 3, boardDimension / 3);
+        gameBoard.add(tcImageView, boardDimension / 3+1, boardDimension / 3);
+        gameBoard.add(trImageView, boardDimension / 3+2, boardDimension / 3);
+        gameBoard.add(lcImageView, boardDimension / 3, boardDimension / 3+1);
+        gameBoard.add(ccImageView, boardDimension / 3+1, boardDimension / 3+1);
+        gameBoard.add(rcImageView, boardDimension / 3+2, boardDimension / 3+1);
+        gameBoard.add(blImageView, boardDimension / 3, boardDimension / 3+2);
+        gameBoard.add(bcImageView, boardDimension / 3+1, boardDimension / 3+2);
+        gameBoard.add(brImageView, boardDimension / 3+2, boardDimension / 3+2);
 
         cardsOntheBoardScrollPane.setContent(gameBoard);
         BorderPane layout = new BorderPane();
@@ -270,7 +308,7 @@ public class GameSceneController {
         if (currentPlayerNickname.equals(clientView.getUserName())) {
             isCurrentPlayerTurn = true;
             waitUntilLastMessage();
-            setupGameActions(handCard1View, handCard2View, handCard3View);
+            setupGameActions();
             buttonContainer.setDisable(false);
         } else {
             isCurrentPlayerTurn = false;
@@ -303,55 +341,73 @@ public class GameSceneController {
         }
     }
 
-    private void setupGameActions(ImageView handCard1View, ImageView handCard2View, ImageView handCard3View) throws IOException {
+    private void setupGameActions() throws IOException {
         playCard.setOnAction(e -> {
             if (isCurrentPlayerTurn) {
                 if (haveToPlay) {
+                    if(cornerSelected==null)
+                    {
+                        showAlert("Corner Missing","Please select a corner beforing playing a card");
+                    }
                     if (!cornerSelected.equals("notSelected") && indexCardToPlace < 4) {
                         try {
                             String isTheCardFlipped=null;
-                            switch (indexCardPlayedFromHand) {
+                            String actualId=null;
+                            switch (indexCardToPlace) {
                                 case 0:
+
                                     handCard1View.setImage(null);
+                                    actualId=idHandCard1;
                                     isTheCardFlipped=handCard1View.getId();
                                     break;
                                 case 1:
+
                                     handCard2View.setImage(null);
+                                    actualId=idHandCard2;
                                     isTheCardFlipped=handCard2View.getId();
                                     break;
                                 case 2:
+
                                     handCard3View.setImage(null);
+                                    actualId=idHandCard3;
                                     isTheCardFlipped=handCard3View.getId();
                                     break;
                                 default:
+                                    System.out.println("sono nullo");
                                     break;
                             }
+                            System.out.println("Indice della carta che voglio piazzare è: " +indexCardToPlace);
                             controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected,isTheCardFlipped);
+                            indexCardPlayedFromHand = indexCardToPlace;
                             switch (cornerSelected) {
                                 case "TL":
-                                    placingTopLeftCard(getClickedImageView().getImageView(), gameBoard, indexCardToPlace);
+                                    placingTopLeftCard(getClickedImageView().getImageView(), gameBoard, indexCardPlayedFromHand);
                                     break;
                                 case "TR":
-                                    placingTopRightCard(getClickedImageView().getImageView(), gameBoard, indexCardToPlace);
+                                    placingTopRightCard(getClickedImageView().getImageView(), gameBoard, indexCardPlayedFromHand);
                                     break;
                                 case "BL":
-                                    placingBottomLeftCard(getClickedImageView().getImageView(), gameBoard, indexCardToPlace);
+                                    placingBottomLeftCard(getClickedImageView().getImageView(), gameBoard, indexCardPlayedFromHand);
                                     break;
                                 case "BR":
-                                    placingBottomRightCard(getClickedImageView().getImageView(), gameBoard, indexCardToPlace);
+                                    placingBottomRightCard(getClickedImageView().getImageView(), gameBoard, indexCardPlayedFromHand);
                                     break;
                                 default:
                                     break;
                             }
-                            indexCardPlayedFromHand = indexCardToPlace;
-                            haveToDraw = true;
 
+                            haveToDraw = true;
+                            handCard1View.setId("Front");
+                            handCard2View.setId("Front");
+                            handCard3View.setId("Front");
+                            cornerSelected=null;
+                            indexCardToPlace=100;
                         } catch (IOException exception) {
                             throw new RuntimeException(exception);
                         }
                         haveToPlay = false;
                     } else {
-                        showAlert("Action not allowed", "Choose the ricght cards.");
+                        showAlert("Action not allowed", "Choose the right cards.");
                     }
                 } else {
                     showAlert("Action not allowed", "You have already played a card.");
@@ -363,14 +419,22 @@ public class GameSceneController {
 
         endTurn.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
-                try {
-                    savePath();
-                    String nextPlayerNickname = controller.endTurn();
-                    updateTurnState(nextPlayerNickname.equals(clientView.getUserName()));
-                    haveToPlay = true;
-                    waitForTurn(handCard1View, handCard2View, handCard3View);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                if(!haveToDraw && !haveToPlay){
+                    try {
+                        savePath();
+                        String nextPlayerNickname = controller.endTurn();
+                        updateTurnState(nextPlayerNickname.equals(clientView.getUserName()));
+                        haveToPlay = true;
+                        waitForTurn(handCard1View, handCard2View, handCard3View);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                else if(haveToDraw){
+                    showAlert("HavetoDraw", "You have to draw a card first");
+                }
+                else{
+                    showAlert("HavetoPlay", "You have to place a card first");
                 }
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
@@ -502,7 +566,17 @@ public class GameSceneController {
             if (isCurrentPlayerTurn) {
                 indexCardToPlace = 0;
                 chosenCardToPlace.setText("First card of your hand");
-                pathChosen = pathHandCard1;
+
+                if(handCard1View.getId()==null|| handCard1View.getId().equals("Front"))
+                {
+                    pathChosen = pathHandCard1;
+                    System.out.println("Front");
+                }
+                else{
+                    pathChosen=pathFlipped;
+                    System.out.println(pathChosen);
+                    System.out.println("Back");
+                }
 
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
@@ -514,6 +588,16 @@ public class GameSceneController {
                 indexCardToPlace = 1;
                 chosenCardToPlace.setText("Second card of your hand");
                 pathChosen = pathHandCard2;
+                if(handCard2View.getId()==null|| handCard2View.getId().equals("Front"))
+                {
+                    pathChosen = pathHandCard1;
+                    System.out.println("Front");
+                }
+                else{
+                    pathChosen=pathFlipped;
+                    System.out.println(pathChosen);
+                    System.out.println("Back");
+                }
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -524,6 +608,16 @@ public class GameSceneController {
                 indexCardToPlace = 2;
                 chosenCardToPlace.setText("Third card of your hand");
                 pathChosen = pathHandCard3;
+                if(handCard3View.getId()==null|| handCard3View.getId().equals("Front"))
+                {
+                    pathChosen = pathHandCard1;
+                    System.out.println("Front");
+                }
+                else{
+                    pathChosen=pathFlipped;
+                    System.out.println(pathChosen);
+                    System.out.println("Back");
+                }
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -612,7 +706,7 @@ public class GameSceneController {
                         System.out.println("In Gamescenecontroller");
                         System.out.println(in.readLine()); //Fine turno
                         updateGUI();
-                        setupGameActions(handCard1View, handCard2View, handCard3View);
+                        setupGameActions();
 
 
                     } catch (IOException e) {
@@ -652,10 +746,10 @@ public class GameSceneController {
     private Image flipToBackCard(String stringId) {
         int id = Integer.parseInt(stringId);
         if (id >= 1 && id <= 40) {
-            String pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
+            pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
             return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
         } else if (id > 40 && id <= 80) {
-            String pathFlipped = "/ImmaginiCodex/CarteBack/Gold/" + id + ".png";
+            pathFlipped = "/ImmaginiCodex/CarteBack/Gold/" + id + ".png";
             return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
         }
         return null;
@@ -664,177 +758,351 @@ public class GameSceneController {
     private Image flipCardToFront(String stringId) {
         int id = Integer.parseInt(stringId);
         if (id >= 1 && id <= 40) {
-            String pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
+            pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
             return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
         } else if (id > 40 && id <= 80) {
-            String pathFlipped = "/ImmaginiCodex/CarteFront/Gold/" + id + ".png";
+             pathFlipped = "/ImmaginiCodex/CarteFront/Gold/" + id + ".png";
             return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
         }
         return null;
     }
 
     public GridPane subnettingEachImage(Image image, String cardId) {
-        double width = image.getWidth() / 2;
-        double height = image.getHeight() / 2;
+        double width = image.getWidth() / 3;
+        double height = image.getHeight() / 3;
         int heightInt = (int) height;
         int widthInt = (int) width;
-        Image image1 = new WritableImage(image.getPixelReader(), 0, 0, widthInt, heightInt);
-        Image image2 = new WritableImage(image.getPixelReader(), widthInt, 0, widthInt, heightInt);
-        Image image3 = new WritableImage(image.getPixelReader(), 0, heightInt, widthInt, heightInt);
-        Image image4 = new WritableImage(image.getPixelReader(), widthInt, heightInt, widthInt, heightInt);
-        ImageView imageView1 = new ImageView(image1);
-        ImageView imageView2 = new ImageView(image2);
-        ImageView imageView3 = new ImageView(image3);
-        ImageView imageView4 = new ImageView(image4);
-        imageView1.setFitWidth(100);
-        imageView1.setPreserveRatio(true);
-        imageView2.setFitWidth(100);
-        imageView2.setPreserveRatio(true);
-        imageView3.setFitWidth(100);
-        imageView3.setPreserveRatio(true);
-        imageView4.setFitWidth(100);
-        imageView4.setPreserveRatio(true);
+        Image imageTL = new WritableImage(image.getPixelReader(), 0, 0, widthInt, heightInt);
+        Image imageTC = new WritableImage(image.getPixelReader(), widthInt, 0, widthInt, heightInt);
+        Image imageTR = new WritableImage(image.getPixelReader(), 2 * widthInt, 0, widthInt, heightInt);
+        Image imageLC = new WritableImage(image.getPixelReader(), 0, heightInt, widthInt, heightInt);
+        Image imageCC = new WritableImage(image.getPixelReader(), widthInt, heightInt, widthInt, heightInt);
+        Image imageRC = new WritableImage(image.getPixelReader(), 2 * widthInt, heightInt, widthInt, heightInt);
+        Image imageBL = new WritableImage(image.getPixelReader(), 0, 2 * heightInt, widthInt, heightInt);
+        Image imageBC = new WritableImage(image.getPixelReader(), widthInt, 2 * heightInt, widthInt, heightInt);
+        Image imageBR = new WritableImage(image.getPixelReader(), 2 * widthInt, 2 * heightInt, widthInt, heightInt);
 
-        CardView cardView1 = new CardView(imageView1, cardId, "TL");
-        CardView cardView2 = new CardView(imageView2, cardId, "TR");
-        CardView cardView3 = new CardView(imageView3, cardId, "BL");
-        CardView cardView4 = new CardView(imageView4, cardId, "BR");
+        ImageView imageViewTL = new ImageView(imageTL);
+        ImageView imageViewTC = new ImageView(imageTC);
+        ImageView imageViewTR = new ImageView(imageTR);
+        ImageView imageViewLC = new ImageView(imageLC);
+        ImageView imageViewCC = new ImageView(imageCC);
+        ImageView imageViewRC = new ImageView(imageRC);
+        ImageView imageViewBL = new ImageView(imageBL);
+        ImageView imageViewBC = new ImageView(imageBC);
+        ImageView imageViewBR = new ImageView(imageBR);
 
-        allCardViews.add(cardView1);
-        allCardViews.add(cardView2);
-        allCardViews.add(cardView3);
-        allCardViews.add(cardView4);
+        imageViewTL.setFitWidth(100);
+        imageViewTL.setPreserveRatio(true);
+        imageViewTC.setFitWidth(100);
+        imageViewTC.setPreserveRatio(true);
+        imageViewTR.setFitWidth(100);
+        imageViewTR.setPreserveRatio(true);
+        imageViewLC.setFitWidth(100);
+        imageViewLC.setPreserveRatio(true);
+        imageViewCC.setFitWidth(100);
+        imageViewCC.setPreserveRatio(true);
+        imageViewRC.setFitWidth(100);
+        imageViewRC.setPreserveRatio(true);
+        imageViewBL.setFitWidth(100);
+        imageViewBL.setPreserveRatio(true);
+        imageViewBC.setFitWidth(100);
+        imageViewBC.setPreserveRatio(true);
+        imageViewBR.setFitWidth(100);
+        imageViewBR.setPreserveRatio(true);
 
-        imageView1.setOnMouseClicked(event -> handleCardClick(cardView1));
-        imageView2.setOnMouseClicked(event -> handleCardClick(cardView2));
-        imageView3.setOnMouseClicked(event -> handleCardClick(cardView3));
-        imageView4.setOnMouseClicked(event -> handleCardClick(cardView4));
+        CardView tlCardView = new CardView(imageViewTL, cardId, "TL");
+        CardView tcCardView = new CardView(imageViewTC, cardId, "TC");
+        CardView trCardView = new CardView(imageViewTR, cardId, "TR");
+        CardView lcCardView = new CardView(imageViewLC, cardId, "LC");
+        CardView ccCardView = new CardView(imageViewCC, cardId, "CC");
+        CardView rcCardView = new CardView(imageViewRC, cardId, "RC");
+        CardView blCardView = new CardView(imageViewBL, cardId, "BL");
+        CardView bcCardView = new CardView(imageViewBC, cardId, "BC");
+        CardView brCardView = new CardView(imageViewBR, cardId, "BR");
+
+        allCardViews.add(tlCardView);
+        allCardViews.add(tcCardView);
+        allCardViews.add(trCardView);
+        allCardViews.add(lcCardView);
+        allCardViews.add(ccCardView);
+        allCardViews.add(rcCardView);
+        allCardViews.add(blCardView);
+        allCardViews.add(bcCardView);
+        allCardViews.add(brCardView);
+
+        imageViewTL.setOnMouseClicked(event -> handleCardClick(tlCardView));
+        imageViewTR.setOnMouseClicked(event -> handleCardClick(trCardView));
+        imageViewBL.setOnMouseClicked(event -> handleCardClick(blCardView));
+        imageViewBR.setOnMouseClicked(event -> handleCardClick(brCardView));
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(0));
         gridPane.setHgap(0);
         gridPane.setVgap(0);
-        gridPane.add(imageView1, 0, 0);
-        gridPane.add(imageView2, 1, 0);
-        gridPane.add(imageView3, 0, 1);
-        gridPane.add(imageView4, 1, 1);
+        gridPane.add(imageViewTL, 0, 0);
+        gridPane.add(imageViewTC, 1, 0);
+        gridPane.add(imageViewTR, 2, 0);
+        gridPane.add(imageViewLC, 0,1);
+        gridPane.add(imageViewCC, 1,1);
+        gridPane.add(imageViewRC, 2, 1);
+        gridPane.add(imageViewBL, 0, 2);
+        gridPane.add(imageViewBC, 1, 2);
+        gridPane.add(imageViewBR, 2, 2);
 
         return gridPane;
     }
 
-    public void placingBottomRightCard(ImageView cartaSuCuiPiazzo, GridPane board, int id) {
-        nextCardIndex++;
-        Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
-        int x = getX(cartaSuCuiPiazzo);
-        int y = getY(cartaSuCuiPiazzo);
-        GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
-        ImageView im1 = (ImageView) gridPanePlacingOn.getChildren().get(0);
-        ImageView im2 = (ImageView) gridPanePlacingOn.getChildren().get(1);
-        ImageView im3 = (ImageView) gridPanePlacingOn.getChildren().get(2);
-        ImageView im4 = (ImageView) gridPanePlacingOn.getChildren().get(3);
-        im1.setPickOnBounds(true);
-        im2.setPickOnBounds(true);
-        im3.setPickOnBounds(true);
-        im4.setPickOnBounds(true);
-        board.add(im1, y, x);
-        board.add(im2, (y + 1), x);
-        board.add(im3, y, (x + 1));
-        board.add(im4, (y + 1), (x + 1));
-        allCardViews.add(new CardView(im1, String.valueOf(id), "TL"));
-        allCardViews.add(new CardView(im2, String.valueOf(id), "TR"));
-        allCardViews.add(new CardView(im3, String.valueOf(id), "BL"));
-        allCardViews.add(new CardView(im4, String.valueOf(id), "BR"));
-        cardIndices.put(new CardView(im1, String.valueOf(id), "TL"), nextCardIndex);
-        cardIndices.put(new CardView(im2, String.valueOf(id), "TR"), nextCardIndex);
-        cardIndices.put(new CardView(im3, String.valueOf(id), "BL"), nextCardIndex);
-        cardIndices.put(new CardView(im4, String.valueOf(id), "BR"), nextCardIndex);
-        im1.setDisable(true);
-
-    }
-
-    public void placingBottomLeftCard(ImageView cartaSuCuiPiazzo, GridPane board, int id) {
-        nextCardIndex++;
-        Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
-        int x = getX(cartaSuCuiPiazzo);
-        int y = getY(cartaSuCuiPiazzo);
-        GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
-        ImageView im1 = (ImageView) gridPanePlacingOn.getChildren().get(0);
-        ImageView im2 = (ImageView) gridPanePlacingOn.getChildren().get(1);
-        ImageView im3 = (ImageView) gridPanePlacingOn.getChildren().get(2);
-        ImageView im4 = (ImageView) gridPanePlacingOn.getChildren().get(3);
-        im1.setPickOnBounds(true);
-        im2.setPickOnBounds(true);
-        im3.setPickOnBounds(true);
-        im4.setPickOnBounds(true);
-        board.add(im1, (y - 1), (x));
-        board.add(im2, (y), (x));
-        board.add(im3, (y - 1), (x + 1));
-        board.add(im4, (y), (x + 1));
-        allCardViews.add(new CardView(im1, String.valueOf(id), "TL"));
-        allCardViews.add(new CardView(im2, String.valueOf(id), "TR"));
-        allCardViews.add(new CardView(im3, String.valueOf(id), "BL"));
-        allCardViews.add(new CardView(im4, String.valueOf(id), "BR"));
-        cardIndices.put(new CardView(im1, String.valueOf(id), "TL"), nextCardIndex);
-        cardIndices.put(new CardView(im2, String.valueOf(id), "TR"), nextCardIndex);
-        cardIndices.put(new CardView(im3, String.valueOf(id), "BL"), nextCardIndex);
-        cardIndices.put(new CardView(im4, String.valueOf(id), "BR"), nextCardIndex);
-    }
-
-    public void placingTopLeftCard(ImageView cartaSuCuiPiazzo, GridPane board, int id) {
-        nextCardIndex++;
-
-        Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
-        int x = getX(cartaSuCuiPiazzo);
-        int y = getY(cartaSuCuiPiazzo);
-        GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
-        ImageView im1 = (ImageView) gridPanePlacingOn.getChildren().get(0);
-        ImageView im2 = (ImageView) gridPanePlacingOn.getChildren().get(1);
-        ImageView im3 = (ImageView) gridPanePlacingOn.getChildren().get(2);
-        ImageView im4 = (ImageView) gridPanePlacingOn.getChildren().get(3);
-        im1.setPickOnBounds(true);
-        im2.setPickOnBounds(true);
-        im3.setPickOnBounds(true);
-        im4.setPickOnBounds(true);
-        board.add(im1, (y - 1), (x - 1));
-        board.add(im2, (y), (x - 1));
-        board.add(im3, (y - 1), (x));
-        board.add(im4, (y), (x));
-        allCardViews.add(new CardView(im1, String.valueOf(id), "TL"));
-        allCardViews.add(new CardView(im2, String.valueOf(id), "TR"));
-        allCardViews.add(new CardView(im3, String.valueOf(id), "BL"));
-        allCardViews.add(new CardView(im4, String.valueOf(id), "BR"));
-        cardIndices.put(new CardView(im1, String.valueOf(id), "TL"), nextCardIndex);
-        cardIndices.put(new CardView(im2, String.valueOf(id), "TR"), nextCardIndex);
-        cardIndices.put(new CardView(im3, String.valueOf(id), "BL"), nextCardIndex);
-        cardIndices.put(new CardView(im4, String.valueOf(id), "BR"), nextCardIndex);
-    }
-
-    public void placingTopRightCard(ImageView cardOnTheBoard, GridPane board, int id) {
+    public void placingBottomRightCard(ImageView cardOnTheBoard, GridPane board, int id) {
+        int lastIndex=nextCardIndex;
         nextCardIndex++;
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
         int x = getX(cardOnTheBoard);
         int y = getY(cardOnTheBoard);
         GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
-        ImageView im1 = (ImageView) gridPanePlacingOn.getChildren().get(0);
-        ImageView im2 = (ImageView) gridPanePlacingOn.getChildren().get(1);
-        ImageView im3 = (ImageView) gridPanePlacingOn.getChildren().get(2);
-        ImageView im4 = (ImageView) gridPanePlacingOn.getChildren().get(3);
-        im1.setPickOnBounds(true);
-        im2.setPickOnBounds(true);
-        im3.setPickOnBounds(true);
-        im4.setPickOnBounds(true);
-        board.add(im1, (y), (x - 1));
-        board.add(im2, (y + 1), (x - 1));
-        board.add(im3, (y), (x));
-        board.add(im4, (y + 1), (x));
-        allCardViews.add(new CardView(im1, String.valueOf(id), "TL"));
-        allCardViews.add(new CardView(im2, String.valueOf(id), "TR"));
-        allCardViews.add(new CardView(im3, String.valueOf(id), "BL"));
-        allCardViews.add(new CardView(im4, String.valueOf(id), "BR"));
-        cardIndices.put(new CardView(im1, String.valueOf(id), "TL"), nextCardIndex);
-        cardIndices.put(new CardView(im2, String.valueOf(id), "TR"), nextCardIndex);
-        cardIndices.put(new CardView(im3, String.valueOf(id), "BL"), nextCardIndex);
-        cardIndices.put(new CardView(im4, String.valueOf(id), "BR"), nextCardIndex);
+
+        ImageView TL = (ImageView) gridPanePlacingOn.getChildren().get(0);
+        ImageView TC = (ImageView) gridPanePlacingOn.getChildren().get(1);
+        ImageView TR = (ImageView) gridPanePlacingOn.getChildren().get(2);
+        ImageView LC = (ImageView) gridPanePlacingOn.getChildren().get(3);
+        ImageView CC = (ImageView) gridPanePlacingOn.getChildren().get(4);
+        ImageView RC = (ImageView) gridPanePlacingOn.getChildren().get(5);
+        ImageView BL = (ImageView) gridPanePlacingOn.getChildren().get(6);
+        ImageView BC = (ImageView) gridPanePlacingOn.getChildren().get(7);
+        ImageView BR = (ImageView) gridPanePlacingOn.getChildren().get(8);
+
+        TL.setPickOnBounds(true);
+        TR.setPickOnBounds(true);
+        BL.setPickOnBounds(true);
+        BR.setPickOnBounds(true);
+
+        board.add(TL, y, x);
+        board.add(TC, (y + 1), x);
+        board.add(TR, (y + 2), x);
+
+        board.add(LC, y, (x + 1));
+        board.add(CC, (y + 1), (x + 1));
+        board.add(RC, (y + 2), (x + 1));
+
+        board.add(BL, y, (x + 2));
+        board.add(BC, (y + 1), (x + 2));
+        board.add(BR, (y + 2), (x + 2));
+
+        allCardViews.add(new CardView(TL, String.valueOf(id), "TL"));
+        allCardViews.add(new CardView(TC, String.valueOf(id), "TC"));
+        allCardViews.add(new CardView(TR, String.valueOf(id), "TR"));
+        allCardViews.add(new CardView(LC, String.valueOf(id), "LC"));
+        allCardViews.add(new CardView(CC, String.valueOf(id), "CC"));
+        allCardViews.add(new CardView(RC, String.valueOf(id), "RC"));
+        allCardViews.add(new CardView(BL, String.valueOf(id), "BL"));
+        allCardViews.add(new CardView(BC, String.valueOf(id), "BC"));
+        allCardViews.add(new CardView(BR, String.valueOf(id), "BR"));
+
+        cardIndices.put(new CardView(TL, String.valueOf(id), "TL"), nextCardIndex);
+        cardIndices.put(new CardView(TC, String.valueOf(id), "TC"), nextCardIndex);
+        cardIndices.put(new CardView(TR, String.valueOf(id), "TR"), nextCardIndex);
+        cardIndices.put(new CardView(LC, String.valueOf(id), "LC"), nextCardIndex);
+        cardIndices.put(new CardView(CC, String.valueOf(id), "CC"), nextCardIndex);
+        cardIndices.put(new CardView(RC, String.valueOf(id), "RC"), nextCardIndex);
+        cardIndices.put(new CardView(BL, String.valueOf(id), "BL"), nextCardIndex);
+        cardIndices.put(new CardView(BC, String.valueOf(id), "BC"), nextCardIndex);
+        cardIndices.put(new CardView(BR, String.valueOf(id), "BR"), nextCardIndex);
+        TL.setDisable(true);
+        for (CardView cardView : allCardViews) {
+            if (cardIndices.get(cardView) == lastIndex && cardView.getPosition().equals("BR")) {
+                cardView.getImageView().setDisable(true);
+                break;
+            }
+        }
+
+    }
+
+    public void placingBottomLeftCard(ImageView cardOnTheBoard, GridPane board, int id) {
+        int lastIndex=nextCardIndex;
+        nextCardIndex++;
+        Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
+        int x = getX(cardOnTheBoard);
+        int y = getY(cardOnTheBoard);
+        GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
+
+        ImageView TL = (ImageView) gridPanePlacingOn.getChildren().get(0);
+        ImageView TC = (ImageView) gridPanePlacingOn.getChildren().get(1);
+        ImageView TR = (ImageView) gridPanePlacingOn.getChildren().get(2);
+        ImageView LC = (ImageView) gridPanePlacingOn.getChildren().get(3);
+        ImageView CC = (ImageView) gridPanePlacingOn.getChildren().get(4);
+        ImageView RC = (ImageView) gridPanePlacingOn.getChildren().get(5);
+        ImageView BL = (ImageView) gridPanePlacingOn.getChildren().get(6);
+        ImageView BC = (ImageView) gridPanePlacingOn.getChildren().get(7);
+        ImageView BR = (ImageView) gridPanePlacingOn.getChildren().get(8);
+
+        TL.setPickOnBounds(true);
+        TR.setPickOnBounds(true);
+        BL.setPickOnBounds(true);
+        BR.setPickOnBounds(true);
+
+        board.add(TL, (y - 2), x);
+        board.add(TC, (y - 1), x);
+        board.add(TR, y, x);
+
+        board.add(LC, (y - 2), (x + 1));
+        board.add(CC, (y - 1), (x + 1));
+        board.add(RC, y, (x + 1));
+
+        board.add(BL, (y - 2), (x + 2));
+        board.add(BC, (y - 1), (x + 2));
+        board.add(BR, y, (x + 2));
+
+        allCardViews.add(new CardView(TL, String.valueOf(id), "TL"));
+        allCardViews.add(new CardView(TC, String.valueOf(id), "TC"));
+        allCardViews.add(new CardView(TR, String.valueOf(id), "TR"));
+        allCardViews.add(new CardView(LC, String.valueOf(id), "LC"));
+        allCardViews.add(new CardView(CC, String.valueOf(id), "CC"));
+        allCardViews.add(new CardView(RC, String.valueOf(id), "RC"));
+        allCardViews.add(new CardView(BL, String.valueOf(id), "BL"));
+        allCardViews.add(new CardView(BC, String.valueOf(id), "BC"));
+        allCardViews.add(new CardView(BR, String.valueOf(id), "BR"));
+
+        cardIndices.put(new CardView(TL, String.valueOf(id), "TL"), nextCardIndex);
+        cardIndices.put(new CardView(TC, String.valueOf(id), "TC"), nextCardIndex);
+        cardIndices.put(new CardView(TR, String.valueOf(id), "TR"), nextCardIndex);
+        cardIndices.put(new CardView(LC, String.valueOf(id), "LC"), nextCardIndex);
+        cardIndices.put(new CardView(CC, String.valueOf(id), "CC"), nextCardIndex);
+        cardIndices.put(new CardView(RC, String.valueOf(id), "RC"), nextCardIndex);
+        cardIndices.put(new CardView(BL, String.valueOf(id), "BL"), nextCardIndex);
+        cardIndices.put(new CardView(BC, String.valueOf(id), "BC"), nextCardIndex);
+        cardIndices.put(new CardView(BR, String.valueOf(id), "BR"), nextCardIndex);
+        TR.setDisable(true);
+        for (CardView cardView : allCardViews) {
+            if (cardIndices.get(cardView) == lastIndex && cardView.getPosition().equals("BL")) {
+                cardView.getImageView().setDisable(true);
+                break;
+            }
+        }
+    }
+
+    public void placingTopLeftCard(ImageView cardOnTheBoard, GridPane board, int id) {
+        int lastIndex=nextCardIndex;
+        nextCardIndex++;
+        Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
+        int x = getX(cardOnTheBoard);
+        int y = getY(cardOnTheBoard);
+        GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
+
+        ImageView TL = (ImageView) gridPanePlacingOn.getChildren().get(0);
+        ImageView TC = (ImageView) gridPanePlacingOn.getChildren().get(1);
+        ImageView TR = (ImageView) gridPanePlacingOn.getChildren().get(2);
+        ImageView LC = (ImageView) gridPanePlacingOn.getChildren().get(3);
+        ImageView CC = (ImageView) gridPanePlacingOn.getChildren().get(4);
+        ImageView RC = (ImageView) gridPanePlacingOn.getChildren().get(5);
+        ImageView BL = (ImageView) gridPanePlacingOn.getChildren().get(6);
+        ImageView BC = (ImageView) gridPanePlacingOn.getChildren().get(7);
+        ImageView BR = (ImageView) gridPanePlacingOn.getChildren().get(8);
+
+        TL.setPickOnBounds(true);
+        TR.setPickOnBounds(true);
+        BL.setPickOnBounds(true);
+        BR.setPickOnBounds(true);
+
+        board.add(TL, (y - 2), (x - 2));
+        board.add(TC, (y - 1), (x - 2));
+        board.add(TR, y, (x - 2));
+
+        board.add(LC, (y - 2), (x - 1));
+        board.add(CC, (y - 1), (x - 1));
+        board.add(RC, y, (x - 1));
+
+        board.add(BL, (y - 2), x);
+        board.add(BC, (y - 1), x);
+        board.add(BR, y, x);
+
+        allCardViews.add(new CardView(TL, String.valueOf(id), "TL"));
+        allCardViews.add(new CardView(TC, String.valueOf(id), "TC"));
+        allCardViews.add(new CardView(TR, String.valueOf(id), "TR"));
+        allCardViews.add(new CardView(LC, String.valueOf(id), "LC"));
+        allCardViews.add(new CardView(CC, String.valueOf(id), "CC"));
+        allCardViews.add(new CardView(RC, String.valueOf(id), "RC"));
+        allCardViews.add(new CardView(BL, String.valueOf(id), "BL"));
+        allCardViews.add(new CardView(BC, String.valueOf(id), "BC"));
+        allCardViews.add(new CardView(BR, String.valueOf(id), "BR"));
+
+        cardIndices.put(new CardView(TL, String.valueOf(id), "TL"), nextCardIndex);
+        cardIndices.put(new CardView(TC, String.valueOf(id), "TC"), nextCardIndex);
+        cardIndices.put(new CardView(TR, String.valueOf(id), "TR"), nextCardIndex);
+        cardIndices.put(new CardView(LC, String.valueOf(id), "LC"), nextCardIndex);
+        cardIndices.put(new CardView(CC, String.valueOf(id), "CC"), nextCardIndex);
+        cardIndices.put(new CardView(RC, String.valueOf(id), "RC"), nextCardIndex);
+        cardIndices.put(new CardView(BL, String.valueOf(id), "BL"), nextCardIndex);
+        cardIndices.put(new CardView(BC, String.valueOf(id), "BC"), nextCardIndex);
+        cardIndices.put(new CardView(BR, String.valueOf(id), "BR"), nextCardIndex);
+        BR.setDisable(true);
+        for (CardView cardView : allCardViews) {
+            if (cardIndices.get(cardView) == lastIndex && cardView.getPosition().equals("TL")) {
+                cardView.getImageView().setDisable(true);
+                break;
+            }
+        }
+    }
+
+    public void placingTopRightCard(ImageView cardOnTheBoard, GridPane board, int id) {
+        int lastIndex=nextCardIndex;
+        nextCardIndex++;
+        Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
+        int x = getX(cardOnTheBoard);
+        int y = getY(cardOnTheBoard);
+        GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
+        ImageView TL = (ImageView) gridPanePlacingOn.getChildren().get(0);
+        ImageView TC = (ImageView) gridPanePlacingOn.getChildren().get(1);
+        ImageView TR = (ImageView) gridPanePlacingOn.getChildren().get(2);
+        ImageView LC = (ImageView) gridPanePlacingOn.getChildren().get(3);
+        ImageView CC = (ImageView) gridPanePlacingOn.getChildren().get(4);
+        ImageView RC = (ImageView) gridPanePlacingOn.getChildren().get(5);
+        ImageView BL = (ImageView) gridPanePlacingOn.getChildren().get(6);
+        ImageView BC = (ImageView) gridPanePlacingOn.getChildren().get(7);
+        ImageView BR = (ImageView) gridPanePlacingOn.getChildren().get(8);
+
+        TL.setPickOnBounds(true);
+        TR.setPickOnBounds(true);
+        BL.setPickOnBounds(true);
+        BR.setPickOnBounds(true);
+
+        board.add(TL, y, (x - 2));
+        board.add(TC, (y + 1), (x - 2));
+        board.add(TR, (y + 2), (x - 2));
+
+        board.add(LC, y, (x - 1));
+        board.add(CC, (y + 1), (x - 1));
+        board.add(RC, (y + 2), (x - 1));
+
+        board.add(BL, y, x);
+        board.add(BC, (y + 1), x);
+        board.add(BR, (y + 2), x);
+
+        allCardViews.add(new CardView(TL, String.valueOf(id), "TL"));
+        allCardViews.add(new CardView(TC, String.valueOf(id), "TC"));
+        allCardViews.add(new CardView(TR, String.valueOf(id), "TR"));
+        allCardViews.add(new CardView(LC, String.valueOf(id), "LC"));
+        allCardViews.add(new CardView(CC, String.valueOf(id), "CC"));
+        allCardViews.add(new CardView(RC, String.valueOf(id), "RC"));
+        allCardViews.add(new CardView(BL, String.valueOf(id), "BL"));
+        allCardViews.add(new CardView(BC, String.valueOf(id), "BC"));
+        allCardViews.add(new CardView(BR, String.valueOf(id), "BR"));
+
+        cardIndices.put(new CardView(TL, String.valueOf(id), "TL"), nextCardIndex);
+        cardIndices.put(new CardView(TC, String.valueOf(id), "TC"), nextCardIndex);
+        cardIndices.put(new CardView(TR, String.valueOf(id), "TR"), nextCardIndex);
+        cardIndices.put(new CardView(LC, String.valueOf(id), "LC"), nextCardIndex);
+        cardIndices.put(new CardView(CC, String.valueOf(id), "CC"), nextCardIndex);
+        cardIndices.put(new CardView(RC, String.valueOf(id), "RC"), nextCardIndex);
+        cardIndices.put(new CardView(BL, String.valueOf(id), "BL"), nextCardIndex);
+        cardIndices.put(new CardView(BC, String.valueOf(id), "BC"), nextCardIndex);
+        cardIndices.put(new CardView(BR, String.valueOf(id), "BR"), nextCardIndex);
+        BL.setDisable(true);
+        for (CardView cardView : allCardViews) {
+            if (cardIndices.get(cardView) == lastIndex && cardView.getPosition().equals("TR")) {
+                cardView.getImageView().setDisable(true);
+                break;
+            }
+        }
     }
 
     public CardView getClickedImageView() {
@@ -1108,9 +1376,18 @@ public class GameSceneController {
         System.out.println(SharedObjectsInGui.getIdCard2());
         System.out.println(SharedObjectsInGui.getIdCard3());
         System.out.println(SharedObjectsInGui.getIdCard4());
+        System.out.println("Carta 1 del deck" + idHandCard1);
+        System.out.println("Carta 2 del deck" + idHandCard2);
+        System.out.println("Carta 3 del deck" + idHandCard3);
         newPathAfterUpdate();
         updateResourceDeckTopCard();
         updatedGoldDeckTopCard();
+        haveToDraw = true;
+        handCard1View.setId("Front");
+        handCard2View.setId("Front");
+        handCard3View.setId("Front");
+        cornerSelected=null;
+        indexCardToPlace=100;
     }
 
     private void newPathAfterUpdate(){
@@ -1188,12 +1465,31 @@ public class GameSceneController {
         String home = ("src/main/resources/sharedElementsInGui.json");
         return Paths.get(home);
     }
+    private boolean checkGoldCardRequirements(String goldCardId) throws IOException {
+        // Retrieve the requirements for the specific gold card
+        out.println("getGoldCardRequirements");
+        //out.println(goldCardId);
+        String requirements = in.readLine(); // Assuming the server sends requirements as a JSON string
 
-    public boolean isCardOnHerBack() {
-        return cardOnHerBack;
+        JsonObject requirementsJson = JsonParser.parseString(requirements).getAsJsonObject();
+
+        // Retrieve the current attributes from the board
+        out.println("getCurrentAttributes");
+        String currentAttributes = in.readLine(); // Assuming the server sends current attributes as a JSON string
+
+        JsonObject currentAttributesJson = JsonParser.parseString(currentAttributes).getAsJsonObject();
+
+        // Check if all required attributes are met
+        for (Map.Entry<String, JsonElement> entry : requirementsJson.entrySet()) {
+            String attribute = entry.getKey();
+            int requiredValue = entry.getValue().getAsInt();
+            int currentValue = currentAttributesJson.has(attribute) ? currentAttributesJson.get(attribute).getAsInt() : 0;
+
+            if (currentValue < requiredValue) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    public void setCardOnHerBack(boolean cardOnHerBack) {
-        this.cardOnHerBack = cardOnHerBack;
-    }
 }

@@ -7,7 +7,7 @@ import java.util.Objects;
 public class CardView {
     private ImageView imageView;
     private String cardId;
-    private String position; // TL, TR, BL, BR
+    private String position; // TL, TR, BL, BR, TC, LC, CC, RC, BC
 
     public CardView(ImageView imageView, String cardId, String position) {
         this.imageView = imageView;

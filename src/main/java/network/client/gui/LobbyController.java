@@ -27,8 +27,8 @@ public class LobbyController {
     private static GameScene gameScene;
     private String currentPlayerNickname=null;
     private String initCardId=null;
-
-    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView cl, String initCardId) {
+    private int isFront;
+    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView cl, String initCardId, int isFront) {
         this.primaryStage = primaryStage;
         this.out = out;
         this.socket = socket;
@@ -36,6 +36,7 @@ public class LobbyController {
         this.executor = Executors.newSingleThreadExecutor();
         this.clientview = cl;
         this.initCardId=initCardId;
+        this.isFront=isFront;
     }
 
     public void waitAllPlayers() {
@@ -93,7 +94,7 @@ public class LobbyController {
                 synchronized (LobbyController.class) {
                     if (gameScene == null) {
                         System.out.println("Initializing GameScene for the first client.");
-                        gameScene = new GameScene(primaryStage, out, socket, in, initCardId, clientview, currentPlayerNickname, true);
+                        gameScene = new GameScene(primaryStage, out, socket, in, initCardId, clientview, currentPlayerNickname, true,isFront);
                     }
                 }
                 gameScene.game(true);
@@ -101,7 +102,7 @@ public class LobbyController {
                 synchronized (LobbyController.class) {
                     if (gameScene == null) {
                         System.out.println("Initializing GameScene for other clients.");
-                        gameScene = new GameScene(primaryStage, out, socket, in, initCardId, clientview, currentPlayerNickname, false);
+                        gameScene = new GameScene(primaryStage, out, socket, in, initCardId, clientview, currentPlayerNickname, false,isFront);
                     }
                 }
                 System.out.println("Waiting for game to start...");
@@ -119,7 +120,7 @@ public class LobbyController {
             synchronized (LobbyController.class) {
                 if (gameScene == null) {
                     System.out.println("Initializing GameScene in setup finished.");
-                    gameScene = new GameScene(primaryStage, out, socket, in, initCardId, clientview, currentPlayerNickname, false);
+                    gameScene = new GameScene(primaryStage, out, socket, in, initCardId, clientview, currentPlayerNickname, false,isFront);
                 }
             }
             System.out.println("Ready to start");

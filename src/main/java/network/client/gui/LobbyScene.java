@@ -3,7 +3,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -18,13 +17,13 @@ import java.util.Objects;
 public class LobbyScene {
     private Scene lobbyScene;
 
-    public void createLobbyScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String initCard) {
+    public void createLobbyScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String initCard, Integer isFront) {
         Platform.runLater(() -> {
             try {
                 System.out.println();
                 Parent fxmlLobby = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/model/lobby.fxml")));
                 LobbyController controller = new LobbyController();
-                controller.initData(primaryStage, out, socket,in, clientView,initCard);
+                controller.initData(primaryStage, out, socket,in, clientView,initCard,isFront);
                 Pane root = new Pane();
                 root.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
                 root.getChildren().addAll(fxmlLobby);

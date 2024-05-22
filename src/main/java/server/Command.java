@@ -78,14 +78,13 @@ public class Command { //Command Client sends to Server
                 allseeds= game.showAllSpecificSeed();
                 return allseeds;
             case "showAllPoints" :
-                String allPoints = game.showAllPoints();
-                return allPoints;
+                return game.showAllPoints();
             case "endTurn":
                 game.runEndTurn(player);
                 return "fine turno";
             case "help":{ //finito
                 System.out.println("Sono entrato in help");
-                return "hai chiesto aiuto";
+                return "You asked for help";
             }
             case"firstCardResourceGui":
                 return game.getFirstCardOfResourceDeck();

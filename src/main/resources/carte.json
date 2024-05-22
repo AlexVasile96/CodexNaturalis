@@ -12,7 +12,7 @@
     {"id": "10", "type": "MUSHROOM", "value": "1", "TL": "NOTTOBEPLACEDON", "TR": "EMPTY", "BL": "MUSHROOM", "BR": "EMPTY"},
     {"id": "11", "type": "PLANT", "value": "0", "TL": "PLANT", "TR": "EMPTY", "BL": "PLANT", "BR": "NOTTOBEPLACEDON"},
     {"id": "12", "type": "PLANT", "value": "0", "TL": "PLANT", "TR": "PLANT", "BL": "NOTTOBEPLACEDON", "BR": "EMPTY"},
-    {"id": "13", "type": "PLANT", "value": "0", "TL": "EMPTY", "TR": "PLANT", "BL": "EMPTY", "BR": "PLANT"},
+    {"id": "13", "type": "PLANT", "value": "0", "TL": "EMPTY", "TR": "NOTTOBEPLACEDON", "BL": "PLANT", "BR": "PLANT"},
     {"id": "14", "type": "PLANT", "value": "0", "TL": "NOTTOBEPLACEDON", "TR": "PLANT", "BL": "EMPTY", "BR": "PLANT"},
     {"id": "15", "type": "PLANT", "value": "0", "TL": "NOTTOBEPLACEDON", "TR": "INSECT", "BL": "FEATHER", "BR": "PLANT"},
     {"id": "16", "type": "PLANT", "value": "0", "TL": "MUSHROOM", "TR": "PLANT", "BL": "NOTTOBEPLACEDON", "BR": "INKWELL"},
