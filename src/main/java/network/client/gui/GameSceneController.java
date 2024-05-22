@@ -794,23 +794,23 @@ public class GameSceneController {
         ImageView imageViewBC = new ImageView(imageBC);
         ImageView imageViewBR = new ImageView(imageBR);
 
-        imageViewTL.setFitWidth(100);
+        imageViewTL.setFitWidth(50);
         imageViewTL.setPreserveRatio(true);
-        imageViewTC.setFitWidth(100);
+        imageViewTC.setFitWidth(50);
         imageViewTC.setPreserveRatio(true);
-        imageViewTR.setFitWidth(100);
+        imageViewTR.setFitWidth(50);
         imageViewTR.setPreserveRatio(true);
-        imageViewLC.setFitWidth(100);
+        imageViewLC.setFitWidth(50);
         imageViewLC.setPreserveRatio(true);
-        imageViewCC.setFitWidth(100);
+        imageViewCC.setFitWidth(50);
         imageViewCC.setPreserveRatio(true);
-        imageViewRC.setFitWidth(100);
+        imageViewRC.setFitWidth(50);
         imageViewRC.setPreserveRatio(true);
-        imageViewBL.setFitWidth(100);
+        imageViewBL.setFitWidth(50);
         imageViewBL.setPreserveRatio(true);
-        imageViewBC.setFitWidth(100);
+        imageViewBC.setFitWidth(50);
         imageViewBC.setPreserveRatio(true);
-        imageViewBR.setFitWidth(100);
+        imageViewBR.setFitWidth(50);
         imageViewBR.setPreserveRatio(true);
 
         CardView tlCardView = new CardView(imageViewTL, cardId, "TL");
@@ -842,6 +842,30 @@ public class GameSceneController {
         gridPane.setPadding(new Insets(0));
         gridPane.setHgap(0);
         gridPane.setVgap(0);
+
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPrefWidth(100); // Imposta la larghezza preferita della prima colonna
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setPrefWidth(150); // Imposta la larghezza preferita della seconda colonna
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setPrefWidth(200); // Imposta la larghezza preferita della terza colonna
+
+        // Aggiungere i constraints delle colonne alla GridPane
+        gridPane.getColumnConstraints().addAll(col1, col2, col3);
+
+        // Definire le dimensioni delle righe
+        RowConstraints row1 = new RowConstraints();
+        row1.setPrefHeight(100); // Imposta l'altezza preferita della prima riga
+        RowConstraints row2 = new RowConstraints();
+        row2.setPrefHeight(150); // Imposta l'altezza preferita della seconda riga
+        RowConstraints row3 = new RowConstraints();
+        row3.setPrefHeight(200); // Imposta l'altezza preferita della terza riga
+
+        // Aggiungere i constraints delle righe alla GridPane
+        gridPane.getRowConstraints().addAll(row1, row2, row3);
+
+
+
         gridPane.add(imageViewTL, 0, 0);
         gridPane.add(imageViewTC, 1, 0);
         gridPane.add(imageViewTR, 2, 0);
