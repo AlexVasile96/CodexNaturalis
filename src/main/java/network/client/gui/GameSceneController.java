@@ -455,15 +455,15 @@ public class GameSceneController {
                 switch (indexCardToPlace) {
                     case 0:
                         handCard1View.setImage(flipToBackCard(idHandCard1));
-                        handCard1View.setId("Flipped");
+                        handCard1View.setId("Back");
                         break;
                     case 1:
                         handCard2View.setImage(flipToBackCard(idHandCard2));
-                        handCard2View.setId("Flipped");
+                        handCard2View.setId("Back");
                         break;
                     case 2:
                         handCard3View.setImage(flipToBackCard(idHandCard3));
-                        handCard3View.setId("Flipped");
+                        handCard3View.setId("Back");
                         break;
                     default:
                         showAlert("Invalid action", "You chose an unflippable card.");
@@ -479,15 +479,15 @@ public class GameSceneController {
                 switch (indexCardToPlace) {
                     case 0:
                         handCard1View.setImage(flipCardToFront(idHandCard1));
-                        handCard1View.setId("Normal");
+                        handCard1View.setId("Front");
                         break;
                     case 1:
                         handCard2View.setImage(flipCardToFront(idHandCard2));
-                        handCard2View.setId("Normal");
+                        handCard2View.setId("Front");
                         break;
                     case 2:
                         handCard3View.setImage(flipCardToFront(idHandCard3));
-                        handCard3View.setId("Normal");
+                        handCard3View.setId("Front");
                         break;
                     default:
                         showAlert("Invalid action", "You chose an unflippable card.");
@@ -782,6 +782,7 @@ public class GameSceneController {
 
     public void placingTopLeftCard(ImageView cartaSuCuiPiazzo, GridPane board, int id) {
         nextCardIndex++;
+        if(cartaSuCuiPiazzo.getId().equals("Flipped"))
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
         int x = getX(cartaSuCuiPiazzo);
         int y = getY(cartaSuCuiPiazzo);
