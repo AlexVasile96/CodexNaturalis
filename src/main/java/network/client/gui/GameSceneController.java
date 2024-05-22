@@ -435,35 +435,54 @@ public class GameSceneController {
                             }
                             System.out.println("idHandCard" + (indexCardPlayedFromHand + 1) + " = " + idTopCard);
 
-                            String pathResource = "/ImmaginiCodex/CarteFront/Resource/" + idTopCardResourceDeck + ".png";
-                            System.out.println("Idtopcardresourcedeck:" + idTopCardResourceDeck);
-                            System.out.println("path: " + pathResource);
-                            Image newWellResourceCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathResource)));
+//                            String pathResource = "/ImmaginiCodex/CarteFront/Resource/" + idTopCardResourceDeck + ".png";
+//                            System.out.println("Idtopcardresourcedeck:" + idTopCardResourceDeck);
+//                            System.out.println("path: " + pathResource);
+//                            Image newWellResourceCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathResource)));
+//
+//                            String pathGold = "/ImmaginiCodex/CarteFront/Gold/" + idTopCardGoldDeck + ".png";
+//                            System.out.println(idTopCardGoldDeck);
+//                            System.out.println(pathGold);
+//                            Image newWellGoldCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathGold)));
+                            initializeWell(); //firtwellid,secondwellid,....
 
-                            String pathGold = "/ImmaginiCodex/CarteFront/Gold/" + idTopCardGoldDeck + ".png";
-                            System.out.println(idTopCardGoldDeck);
-                            System.out.println(pathGold);
-                            Image newWellGoldCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathGold)));
-
-                            if (indexCardFromWellSelected == 0) {
-                                SharedObjectsInGui.getWellCard1View().setImage(newWellResourceCardImage);
-                                System.out.println("am i here?-> first well card");
-                                updateResourceDeckTopCard();
-                            } else if (indexCardFromWellSelected == 1) {
-                                SharedObjectsInGui.getWellCard2View().setImage(newWellResourceCardImage);
-                                System.out.println("am i here?-> second well card");
-                                updateResourceDeckTopCard();
-
-                            } else if (indexCardFromWellSelected == 2) {
-                                SharedObjectsInGui.getWellCard3View().setImage(newWellGoldCardImage);
-                                System.out.println("am i here?-> third well card");
-                                updatedGoldDeckTopCard();
-                            } else if (indexCardFromWellSelected == 3) {
-                                SharedObjectsInGui.getWellCard4View().setImage(newWellGoldCardImage);
-                                System.out.println("am i here?-> fourth well card");
-                                updatedGoldDeckTopCard();
-                            }
+//                            if (indexCardFromWellSelected == 0) {
+//                                out.println("firstWellId");
+//                                SharedObjectsInGui.setIdCard1(in.readLine());
+//                                System.out.println("New id for Well card 1 :" + SharedObjectsInGui.getIdCard1());
+                                String newPath1= "/ImmaginiCodex/CarteFront/Resource/"+ SharedObjectsInGui.getIdCard1()+".png";
+                                Image newImage1= new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath1)));
+                                SharedObjectsInGui.getWellCard1View().setImage(newImage1);
+//                                updateResourceDeckTopCard();
+//                            } else if (indexCardFromWellSelected == 1) {
+//                                out.println("secondWellId");
+//                                SharedObjectsInGui.setIdCard2(in.readLine());
+//                                System.out.println("New id for Well card 2 :" + SharedObjectsInGui.getIdCard2());
+                                String newPath2= "/ImmaginiCodex/CarteFront/Resource/"+ SharedObjectsInGui.getIdCard2()+".png";
+                                Image newImage2= new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath2)));
+                                SharedObjectsInGui.getWellCard2View().setImage(newImage2);
+//                                updateResourceDeckTopCard();
+//                            } else if (indexCardFromWellSelected == 2) {
+//                                out.println("thirdWellId");
+//                                SharedObjectsInGui.setIdCard3(in.readLine());
+//                                System.out.println("New id for Well card 3 :" + SharedObjectsInGui.getIdCard3());
+                                String newPath3= "/ImmaginiCodex/CarteFront/Gold/"+ SharedObjectsInGui.getIdCard3()+".png";
+                                Image newImage3= new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath3)));
+                                SharedObjectsInGui.getWellCard3View().setImage(newImage3);
+//                                updatedGoldDeckTopCard();
+//                            } else if (indexCardFromWellSelected == 3) {
+//                                out.println("fourthWellId");
+//                                SharedObjectsInGui.setIdCard4(in.readLine());
+//                                System.out.println("New id for Well card 4 :" + SharedObjectsInGui.getIdCard4());
+                                String newPath4= "/ImmaginiCodex/CarteFront/Gold/"+ SharedObjectsInGui.getIdCard4()+".png";
+                                Image newImage4= new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath4)));
+                                SharedObjectsInGui.getWellCard4View().setImage(newImage4);
+//                                updatedGoldDeckTopCard();
+//                            }
+                            updateResourceDeckTopCard();
+                            updatedGoldDeckTopCard();
                             System.out.println("Well card updated");
+                            System.out.println("Deck risorsa e gold updated");
                             haveToDraw = false;
                         } else {
                             System.out.println("You have to choose a card to draw");
@@ -868,7 +887,6 @@ public class GameSceneController {
         System.out.println("Sent first Well Card Request");
         out.println("firstWellId");
         SharedObjectsInGui.setIdCard1(in.readLine());
-        System.out.println("ragno");
         System.out.println("First well card id: " + SharedObjectsInGui.getIdCard1());
     }
 
@@ -1084,6 +1102,7 @@ public class GameSceneController {
     private void updateResourceDeckTopCard() throws IOException {
         out.println("firstCardResourceGui");
         String newTopCardResourceDeckId = in.readLine();
+        idTopCardResourceDeck=newTopCardResourceDeckId;
         System.out.println(newTopCardResourceDeckId);
         String newPathResource = "/ImmaginiCodex/CarteBack/Resource/" + newTopCardResourceDeckId + ".png";
         System.out.println(newPathResource);
@@ -1096,6 +1115,7 @@ public class GameSceneController {
     private void updatedGoldDeckTopCard() throws IOException {
         out.println("firstCardGoldGui");
         String newTopCardGoldDeckId = in.readLine();
+        idTopCardGoldDeck=newTopCardGoldDeckId;
         System.out.println(newTopCardGoldDeckId);
         String newPathGold = "/ImmaginiCodex/CarteBack/Gold/" + newTopCardGoldDeckId + ".png";
         Image newTopCardGoldImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPathGold)));
@@ -1157,11 +1177,36 @@ public class GameSceneController {
     }
 
     private void updateGUI() throws IOException {
-//        updateResourceDeckTopCard();
-//        updatedGoldDeckTopCard();
+
 //        updateWell();
 //        updateFirst(); //con questo funziona la mano ma non i deck ed il well
         load();
+        System.out.println(SharedObjectsInGui.getIdCard1());
+        System.out.println(SharedObjectsInGui.getIdCard2());
+        System.out.println(SharedObjectsInGui.getIdCard3());
+        System.out.println(SharedObjectsInGui.getIdCard4());
+
+        String Path1= "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard1() +".png";
+        SharedObjectsInGui.setWellCard1(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Path1))));
+        SharedObjectsInGui.getWellCard1View().setImage(SharedObjectsInGui.getWellCard1());
+        System.out.println(Path1);
+
+        String Path2= "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard2() +".png";
+        SharedObjectsInGui.setWellCard2(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Path2))));
+        SharedObjectsInGui.getWellCard2View().setImage(SharedObjectsInGui.getWellCard2());
+        System.out.println(Path2);
+
+        String Path3= "/ImmaginiCodex/CarteFront/Gold/" + SharedObjectsInGui.getIdCard3() +".png";
+        SharedObjectsInGui.setWellCard3(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Path3))));
+        SharedObjectsInGui.getWellCard3View().setImage(SharedObjectsInGui.getWellCard3());
+
+        String Path4= "/ImmaginiCodex/CarteFront/Gold/" + SharedObjectsInGui.getIdCard4() +".png";
+        SharedObjectsInGui.setWellCard4(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Path4))));
+        SharedObjectsInGui.getWellCard4View().setImage(SharedObjectsInGui.getWellCard4());
+
+        updateResourceDeckTopCard();
+        updatedGoldDeckTopCard();
+
     }
 
     private void waitUntilLastMessage() throws IOException {
@@ -1177,10 +1222,6 @@ public class GameSceneController {
         JsonObject sharedElementsObject = new JsonObject();
         sharedElementsObject.add("idTopResourceCardDeck", new JsonPrimitive(idTopCardResourceDeck));
         sharedElementsObject.add("idTopGoldCardDeck", new JsonPrimitive(idTopCardGoldDeck));
-        sharedElementsObject.add("wellPathOne", new JsonPrimitive(SharedObjectsInGui.getWellPathOne()));
-        sharedElementsObject.add("wellPathSecond", new JsonPrimitive(SharedObjectsInGui.getWellPathSecond()));
-        sharedElementsObject.add("wellPathThird", new JsonPrimitive(SharedObjectsInGui.getWellPathThird()));
-        sharedElementsObject.add("wellPathForth", new JsonPrimitive(SharedObjectsInGui.getWellPathForth()));
         sharedElementsObject.add("idCard1", new JsonPrimitive(SharedObjectsInGui.getIdCard1()));
         sharedElementsObject.add("idCard2", new JsonPrimitive(SharedObjectsInGui.getIdCard2()));
         sharedElementsObject.add("idCard3", new JsonPrimitive(SharedObjectsInGui.getIdCard3()));
@@ -1199,10 +1240,6 @@ public class GameSceneController {
             JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
             idTopCardResourceDeck = jsonObject.get("idTopResourceCardDeck").getAsString();
             idTopCardGoldDeck = jsonObject.get("idTopGoldCardDeck").getAsString();
-            SharedObjectsInGui.setWellPathOne(jsonObject.get("wellPathOne").getAsString());
-            SharedObjectsInGui.setWellPathSecond(jsonObject.get("wellPathSecond").getAsString());
-            SharedObjectsInGui.setWellPathThird(jsonObject.get("wellPathThird").getAsString());
-            SharedObjectsInGui.setWellPathForth(jsonObject.get("wellPathForth").getAsString());
             SharedObjectsInGui.setIdCard1(jsonObject.get("idCard1").getAsString());
             SharedObjectsInGui.setIdCard2(jsonObject.get("idCard2").getAsString());
             SharedObjectsInGui.setIdCard3(jsonObject.get("idCard3").getAsString());
