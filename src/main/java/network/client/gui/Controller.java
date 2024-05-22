@@ -36,10 +36,10 @@ public class Controller {
             System.out.println(in.readLine()); //Server says we can continue
             if(isTheCardFlipped == null || isTheCardFlipped.equals("Front"))
             {
-                out.println(2); //My card is flipped
+                out.println(2); //My card is not flipped
             }
             else{
-                out.println(1); //My card is not flipped
+                out.println(1); //My card is flipped
             }
             out.println(indexCardToBePlacedOn-1); //Sending to the server the index of the card on the board
             String[] angoli ={"TL","TR","BR","BL"};

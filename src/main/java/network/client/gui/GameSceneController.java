@@ -91,6 +91,11 @@ public class GameSceneController {
     private boolean cardOnHerBack=false;
     private String pathFlipped;
     private Image initCardImage;
+    private ImageView handCard1View;
+    private ImageView handCard2View;
+    private ImageView handCard3View;
+
+
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
         this.primaryStage = primaryStage;
@@ -140,14 +145,14 @@ public class GameSceneController {
         Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
         Image handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
 
-        ImageView handCard1View = new ImageView(handCard1);
+        handCard1View = new ImageView(handCard1);
         setWidthAndHeight(handCard1View);
 
-        ImageView handCard2View = new ImageView(handCard2);
+        handCard2View = new ImageView(handCard2);
         handCard2View.setFitWidth(widthWellCards);
         handCard2View.setFitHeight(heightWellCards);
 
-        ImageView handCard3View = new ImageView(handCard3);
+        handCard3View = new ImageView(handCard3);
         handCard3View.setFitWidth(widthWellCards);
         handCard3View.setFitHeight(heightWellCards);
 
@@ -303,7 +308,7 @@ public class GameSceneController {
         if (currentPlayerNickname.equals(clientView.getUserName())) {
             isCurrentPlayerTurn = true;
             waitUntilLastMessage();
-            setupGameActions(handCard1View, handCard2View, handCard3View);
+            setupGameActions();
             buttonContainer.setDisable(false);
         } else {
             isCurrentPlayerTurn = false;
@@ -336,7 +341,7 @@ public class GameSceneController {
         }
     }
 
-    private void setupGameActions(ImageView handCard1View, ImageView handCard2View, ImageView handCard3View) throws IOException {
+    private void setupGameActions() throws IOException {
         playCard.setOnAction(e -> {
             if (isCurrentPlayerTurn) {
                 if (haveToPlay) {
@@ -350,19 +355,19 @@ public class GameSceneController {
                             String actualId=null;
                             switch (indexCardToPlace) {
                                 case 0:
-                                    System.out.println("gay");
+
                                     handCard1View.setImage(null);
                                     actualId=idHandCard1;
                                     isTheCardFlipped=handCard1View.getId();
                                     break;
                                 case 1:
-                                    System.out.println("gay");
+
                                     handCard2View.setImage(null);
                                     actualId=idHandCard2;
                                     isTheCardFlipped=handCard2View.getId();
                                     break;
                                 case 2:
-                                    System.out.println("gay");
+
                                     handCard3View.setImage(null);
                                     actualId=idHandCard3;
                                     isTheCardFlipped=handCard3View.getId();
@@ -371,30 +376,32 @@ public class GameSceneController {
                                     System.out.println("sono nullo");
                                     break;
                             }
-
+                            System.out.println("Indice della carta che voglio piazzare è: " +indexCardToPlace);
                             controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected,isTheCardFlipped);
+                            indexCardPlayedFromHand = indexCardToPlace;
                             switch (cornerSelected) {
                                 case "TL":
-                                    placingTopLeftCard(getClickedImageView().getImageView(), gameBoard, indexCardToPlace);
+                                    placingTopLeftCard(getClickedImageView().getImageView(), gameBoard, indexCardPlayedFromHand);
                                     break;
                                 case "TR":
-                                    placingTopRightCard(getClickedImageView().getImageView(), gameBoard, indexCardToPlace);
+                                    placingTopRightCard(getClickedImageView().getImageView(), gameBoard, indexCardPlayedFromHand);
                                     break;
                                 case "BL":
-                                    placingBottomLeftCard(getClickedImageView().getImageView(), gameBoard, indexCardToPlace);
+                                    placingBottomLeftCard(getClickedImageView().getImageView(), gameBoard, indexCardPlayedFromHand);
                                     break;
                                 case "BR":
-                                    placingBottomRightCard(getClickedImageView().getImageView(), gameBoard, indexCardToPlace);
+                                    placingBottomRightCard(getClickedImageView().getImageView(), gameBoard, indexCardPlayedFromHand);
                                     break;
                                 default:
                                     break;
                             }
-                            indexCardPlayedFromHand = indexCardToPlace;
+
                             haveToDraw = true;
                             handCard1View.setId("Front");
                             handCard2View.setId("Front");
                             handCard3View.setId("Front");
                             cornerSelected=null;
+                            indexCardToPlace=100;
                         } catch (IOException exception) {
                             throw new RuntimeException(exception);
                         }
@@ -581,7 +588,16 @@ public class GameSceneController {
                 indexCardToPlace = 1;
                 chosenCardToPlace.setText("Second card of your hand");
                 pathChosen = pathHandCard2;
-
+                if(handCard2View.getId()==null|| handCard2View.getId().equals("Front"))
+                {
+                    pathChosen = pathHandCard1;
+                    System.out.println("Front");
+                }
+                else{
+                    pathChosen=pathFlipped;
+                    System.out.println(pathChosen);
+                    System.out.println("Back");
+                }
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -592,7 +608,16 @@ public class GameSceneController {
                 indexCardToPlace = 2;
                 chosenCardToPlace.setText("Third card of your hand");
                 pathChosen = pathHandCard3;
-
+                if(handCard3View.getId()==null|| handCard3View.getId().equals("Front"))
+                {
+                    pathChosen = pathHandCard1;
+                    System.out.println("Front");
+                }
+                else{
+                    pathChosen=pathFlipped;
+                    System.out.println(pathChosen);
+                    System.out.println("Back");
+                }
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -681,7 +706,7 @@ public class GameSceneController {
                         System.out.println("In Gamescenecontroller");
                         System.out.println(in.readLine()); //Fine turno
                         updateGUI();
-                        setupGameActions(handCard1View, handCard2View, handCard3View);
+                        setupGameActions();
 
 
                     } catch (IOException e) {
@@ -1357,6 +1382,12 @@ public class GameSceneController {
         newPathAfterUpdate();
         updateResourceDeckTopCard();
         updatedGoldDeckTopCard();
+        haveToDraw = true;
+        handCard1View.setId("Front");
+        handCard2View.setId("Front");
+        handCard3View.setId("Front");
+        cornerSelected=null;
+        indexCardToPlace=100;
     }
 
     private void newPathAfterUpdate(){
