@@ -182,15 +182,14 @@ public class ServerConnection implements Runnable {
         sendMessageToServer("showYourCardDeck");
         System.out.println("Your deck:" );
         System.out.println("--------------------------------------------------------------------------------------");
-        receivingAndPrintingCards();
+        receivingPrintingUpdatingCards();
         System.out.println("--------------------------------------------------------------------------------------");
     }
 
-    private void receivingAndPrintingCards() throws IOException {
+    private void receivingPrintingUpdatingCards() throws IOException {
         String firstCard = in.readLine(); //Reading all three cards
         String secondCard = in.readLine();
         String thirdCard = in.readLine();
-        in.readLine();//the space
         updatingView(firstCard, secondCard, thirdCard);
         for (String s : player.getClientView().getPlayerStringCards()) {
             System.out.println(s);
@@ -345,11 +344,9 @@ public class ServerConnection implements Runnable {
         String cordinateTl = in.readLine();
         player.getClientView().addCardOnTheBoard((numeroCarte+1)+"->"+typeCard+": "+cordinateTl+" "+ isBack);
         player.getClientView().setNumOfCardsOnTheBoard(numeroCarte+1);
-        drawCard(); //pescaggio
-        status();   //punteggio
-        System.out.println();
-        if(clientView.getPlayerScore()>=20)
-        {
+
+        //controllo se 20 punti
+        if(clientView.getPlayerScore()>=20) {
             System.out.println(in.readLine()); //all players have on last turn and then the game will end
             player.setHasThePlayerAlreadyPLacedACard(false);
             System.out.println("You chose to end your turn.");
@@ -360,6 +357,10 @@ public class ServerConnection implements Runnable {
             System.out.println(updatingCurrentPlayer);
             cleanTheSocket();
         }
+
+        drawCard(); //pescaggio
+        status();   //punteggio
+        System.out.println();
 
     }
 
@@ -484,7 +485,7 @@ public class ServerConnection implements Runnable {
         sendMessageToServer("showYourCardDeck");
         System.out.println("Your Deck:" );
         System.out.println("--------------------------------------------------------------------------------------");
-        receivingAndPrintingCards();
+        receivingPrintingUpdatingCards();
         System.out.println("--------------------------------------------------------------------------------------");
     }
 
@@ -494,7 +495,7 @@ public class ServerConnection implements Runnable {
         sendMessageToServer("showYourCardDeck");
         System.out.println("Your Deck:" );
         System.out.println("--------------------------------------------------------------------------------------");
-        receivingAndPrintingCards();
+        receivingPrintingUpdatingCards();
         System.out.println("--------------------------------------------------------------------------------------");
     }
 
@@ -524,7 +525,7 @@ public class ServerConnection implements Runnable {
             sendMessageToServer("showYourCardDeck");
             System.out.println("Your Deck:" );
             System.out.println("--------------------------------------------------------------------------------------");
-            receivingAndPrintingCards();
+            receivingPrintingUpdatingCards();
             System.out.println("--------------------------------------------------------------------------------------");
             showWell();
         }
@@ -534,7 +535,7 @@ public class ServerConnection implements Runnable {
             System.out.println("Your Deck:" );
             System.out.println("--------------------------------------------------------------------------------------");
             sendMessageToServer("showYourCardDeck");
-            receivingAndPrintingCards();
+            receivingPrintingUpdatingCards();
             System.out.println("--------------------------------------------------------------------------------------");
             showWell();
         }
