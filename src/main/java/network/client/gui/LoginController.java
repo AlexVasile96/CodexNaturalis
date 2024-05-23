@@ -134,14 +134,24 @@ public class LoginController {
                     return;
                 }
 
-                Platform.runLater(() -> {
-                    ChooseNumOfPlayersScene chooseNumOfPlayersScene = new ChooseNumOfPlayersScene();
-                    try {
-                        chooseNumOfPlayersScene.createChooseNumOfPlayersScene(primaryStage, out, socket, in, clientView);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                String mexFromS= in.readLine();
+                System.out.println(mexFromS);
+                if(mexFromS.equals("Choose the number of players!")) {
+                    Platform.runLater(() -> {
+                        ChooseNumOfPlayersScene chooseNumOfPlayersScene = new ChooseNumOfPlayersScene();
+                        try {
+                            chooseNumOfPlayersScene.createChooseNumOfPlayersScene(primaryStage, out, socket, in, clientView);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                }
+                else {
+
+                    System.out.println(in.readLine());
+                    LobbyScene lobbySceneHandler = new LobbyScene();
+                    lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView, null, 0);
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();

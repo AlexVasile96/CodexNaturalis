@@ -56,9 +56,6 @@ public class ChooseNumOfPlayersController {
             System.out.println("Select number of players");
             return;
         }
-        String howManyPlayersAreThere = in.readLine();
-        System.out.println(howManyPlayersAreThere); //Choose the number of players!
-
         String selectedNumOfPlayersText = ((RadioButton) numOfPlayers).getText();
         switch (selectedNumOfPlayersText) {
             case "2 Players":
