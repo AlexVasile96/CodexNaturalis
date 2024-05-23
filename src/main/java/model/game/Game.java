@@ -376,6 +376,9 @@ public class Game implements WhatCanPlayerDo {
         System.out.println(well.get(2));
         System.out.println(well.getLast());
         System.out.println(player.getBoard().printBoardForServer());
+        System.out.println(player.getPlayerCards().getFirst());
+        System.out.println(player.getPlayerCards().get(1));
+        System.out.println(player.getPlayerCards().getLast());
     }
 
     public String showWell() {

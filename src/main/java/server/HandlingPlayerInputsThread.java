@@ -333,7 +333,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                         cardChosenFromHisDeck = Integer.parseInt(stdIn.readLine());
                         System.out.println("Player chose card number " + cardChosenFromHisDeck);
                         if (player.checkingTheChosenCardForGoldPurpose(cardChosenFromHisDeck)) {
-                            sendMessageToAllClients("puoi procedere");
+                            sendMessageToAllClients("You can continue!");
                         } else {
                             sendMessageToAllClients("Gold Card not placeable");
                             GoldCard cartGold = (GoldCard) player.chooseCard(cardChosenFromHisDeck);
@@ -354,7 +354,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     if (!turnedCardAlredy) {
                         messageFromClient = stdIn.readLine();
                         if (messageFromClient.equals("1")) {
-                            System.out.println("il player vuole girare la carta");
+                            System.out.println("PLayer wants to turn his card!");
                             gameController.readCommand("TurnCard", player, cardChosenFromHisDeck, 0, null);
                             forClientView.append("(back)");
                         } else forClientView.append("(front)");

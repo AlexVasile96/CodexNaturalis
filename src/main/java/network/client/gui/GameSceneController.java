@@ -94,7 +94,9 @@ public class GameSceneController {
     private ImageView handCard1View;
     private ImageView handCard2View;
     private ImageView handCard3View;
-
+    private Image handCard1;
+    private Image handCard2;
+    private Image handCard3;
 
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
@@ -141,9 +143,9 @@ public class GameSceneController {
         pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
         pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
 
-        Image handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
-        Image handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
-        Image handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
+        handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
+        handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
+        handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
 
         handCard1View = new ImageView(handCard1);
         setWidthAndHeight(handCard1View);
@@ -590,7 +592,7 @@ public class GameSceneController {
                 pathChosen = pathHandCard2;
                 if(handCard2View.getId()==null|| handCard2View.getId().equals("Front"))
                 {
-                    pathChosen = pathHandCard1;
+                    pathChosen = pathHandCard2;
                     System.out.println("Front");
                 }
                 else{
@@ -610,7 +612,7 @@ public class GameSceneController {
                 pathChosen = pathHandCard3;
                 if(handCard3View.getId()==null|| handCard3View.getId().equals("Front"))
                 {
-                    pathChosen = pathHandCard1;
+                    pathChosen = pathHandCard3;
                     System.out.println("Front");
                 }
                 else{
@@ -792,23 +794,23 @@ public class GameSceneController {
         ImageView imageViewBC = new ImageView(imageBC);
         ImageView imageViewBR = new ImageView(imageBR);
 
-        imageViewTL.setFitWidth(100);
+        imageViewTL.setFitWidth(50);
         imageViewTL.setPreserveRatio(true);
-        imageViewTC.setFitWidth(100);
+        imageViewTC.setFitWidth(50);
         imageViewTC.setPreserveRatio(true);
-        imageViewTR.setFitWidth(100);
+        imageViewTR.setFitWidth(50);
         imageViewTR.setPreserveRatio(true);
-        imageViewLC.setFitWidth(100);
+        imageViewLC.setFitWidth(50);
         imageViewLC.setPreserveRatio(true);
-        imageViewCC.setFitWidth(100);
+        imageViewCC.setFitWidth(50);
         imageViewCC.setPreserveRatio(true);
-        imageViewRC.setFitWidth(100);
+        imageViewRC.setFitWidth(50);
         imageViewRC.setPreserveRatio(true);
-        imageViewBL.setFitWidth(100);
+        imageViewBL.setFitWidth(50);
         imageViewBL.setPreserveRatio(true);
-        imageViewBC.setFitWidth(100);
+        imageViewBC.setFitWidth(50);
         imageViewBC.setPreserveRatio(true);
-        imageViewBR.setFitWidth(100);
+        imageViewBR.setFitWidth(50);
         imageViewBR.setPreserveRatio(true);
 
         CardView tlCardView = new CardView(imageViewTL, cardId, "TL");
@@ -840,6 +842,30 @@ public class GameSceneController {
         gridPane.setPadding(new Insets(0));
         gridPane.setHgap(0);
         gridPane.setVgap(0);
+
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPrefWidth(100); // Imposta la larghezza preferita della prima colonna
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setPrefWidth(150); // Imposta la larghezza preferita della seconda colonna
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setPrefWidth(200); // Imposta la larghezza preferita della terza colonna
+
+        // Aggiungere i constraints delle colonne alla GridPane
+        gridPane.getColumnConstraints().addAll(col1, col2, col3);
+
+        // Definire le dimensioni delle righe
+        RowConstraints row1 = new RowConstraints();
+        row1.setPrefHeight(100); // Imposta l'altezza preferita della prima riga
+        RowConstraints row2 = new RowConstraints();
+        row2.setPrefHeight(150); // Imposta l'altezza preferita della seconda riga
+        RowConstraints row3 = new RowConstraints();
+        row3.setPrefHeight(200); // Imposta l'altezza preferita della terza riga
+
+        // Aggiungere i constraints delle righe alla GridPane
+        gridPane.getRowConstraints().addAll(row1, row2, row3);
+
+
+
         gridPane.add(imageViewTL, 0, 0);
         gridPane.add(imageViewTC, 1, 0);
         gridPane.add(imageViewTR, 2, 0);
@@ -857,6 +883,7 @@ public class GameSceneController {
         int lastIndex=nextCardIndex;
         nextCardIndex++;
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
+        System.out.println(pathChosen);
         int x = getX(cardOnTheBoard);
         int y = getY(cardOnTheBoard);
         GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
@@ -1146,8 +1173,11 @@ public class GameSceneController {
     private synchronized void playerDeck() throws IOException {
         out.println("deckId");
         idHandCard1 = in.readLine();
+        System.out.println("first card of deck:" + idHandCard1);
         idHandCard2 = in.readLine();
+        System.out.println("Second card of deck:" + idHandCard2);
         idHandCard3 = in.readLine();
+        System.out.println("Third card of deck:" + idHandCard3);
     }
 
     private synchronized void checkTypePlayerDeck() throws IOException {
@@ -1388,6 +1418,20 @@ public class GameSceneController {
         handCard3View.setId("Front");
         cornerSelected=null;
         indexCardToPlace=100;
+        playerDeck();
+        checkTypePlayerDeck();
+        pathHandCard1 = "/ImmaginiCodex/CarteFront/" + typeHandCard1 + "/" + idHandCard1 + ".png";
+        System.out.println(pathHandCard1);
+        pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
+        System.out.println(pathHandCard2);
+        pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
+        System.out.println(pathHandCard3);
+        handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
+        handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
+        handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
+        handCard1View.setImage(handCard1);
+        handCard2View.setImage(handCard2);
+        handCard3View.setImage(handCard3);
     }
 
     private void newPathAfterUpdate(){
