@@ -210,6 +210,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println(size);
             sendMessageToClient("You have to wait until all clients are connected!");
             gameController.waitingForPLayers();
+
         } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
             System.err.println(e.getMessage());
         }
@@ -247,11 +248,9 @@ public class HandlingPlayerInputsThread implements Runnable {
     private synchronized int setGameSize() throws NoSuchElementException {
         String message;
         int size = 0;
-        if (!gameController.isSizeSet()) {
+        if (this==firstClient) {
             try {
-                sendMessageToClient("At the moment there is: ");
-                sendMessageToClient("1");
-                sendMessageToClient(" player. Choose how many players you want to play with-> players have to be from 2 to 4.");
+                sendMessageToClient("Choose the number of players!");
                 message = stdIn.readLine();
                 size = Integer.parseInt(message);
                 System.out.println("Numbers of Player will be " + size);
@@ -268,9 +267,8 @@ public class HandlingPlayerInputsThread implements Runnable {
             }
         } else {
             System.out.println("Player doesn't need to choose game number of players");
-            sendMessageToClient("There's already someone online! You will be ");
-            sendMessageToClient(String.valueOf(gameController.getSize()));
-            sendMessageToClient(" players");
+            sendMessageToClient("There's already someone online!Please wait");
+
         }
         return size;
     }

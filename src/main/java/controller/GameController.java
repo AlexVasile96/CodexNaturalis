@@ -162,15 +162,13 @@ public class GameController {
 public synchronized void waitingForPLayers() throws InterruptedException {
         if(currentNumsOfPlayers==getSize())
         {
-            //numbgames.countDown();
-            sendMessageToAllClients("All clients connected");
+            //sendMessageToAllClients("All clients connected");
             notifyAll();
 
         }
         else{
             System.out.println("current numb of players da gamecontroller " + currentNumsOfPlayers);
             System.out.println("size dal gamecontroller "+  getSize());
-            //numbgames.await();
             wait();
         }
 }

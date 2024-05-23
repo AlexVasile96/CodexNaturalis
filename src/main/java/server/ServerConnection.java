@@ -44,8 +44,8 @@ public class ServerConnection implements Runnable {
                         command = stdin.readLine();
                         sendMessageToServer(command);
                         loginPlayer(player);                                  //Actual Login
-                        String areAllConnected= in.readLine();                  //Allplayers are connected
-                        System.out.println(areAllConnected);
+                        System.out.println("Piazza ai peperoni");
+                        System.out.println("All clients connected");
                         assigningSecretCard();                                      //Choosing the secret Card
                         takingTheInitialCard();                                     //Taking the initial Card
                         String waitingAllClientsTOChooseInitialcard= in.readLine();//Allclienti scelsero
@@ -682,28 +682,23 @@ public class ServerConnection implements Runnable {
     }
 
     private synchronized void chooseNumberOfPlayers() throws IOException, InterruptedException {
-        StringBuilder numberOfPlayers= new StringBuilder();
-        String stringNumberOfPlayers;
-        numberOfPlayers.append(in.readLine());
-        stringNumberOfPlayers = in.readLine();
-        System.out.println(stringNumberOfPlayers);
-        numberOfPlayers.append(stringNumberOfPlayers);
-        numberOfPlayers.append(in.readLine());
-        System.out.println("server says: "+ numberOfPlayers);              //Choose numbers of players
-        if(Integer.parseInt(stringNumberOfPlayers)>1) {
-            String answer = in.readLine();
-            System.out.println("Server says: " + answer);
+        String servermessage=in.readLine();
+        System.out.println(servermessage);
+        if(servermessage.equals("There's already someone online!Please wait"))
+        {
+            System.out.println("There's already someone online!Please wait");
+            String waitingClients= in.readLine();
+            System.out.println("Server says: " + waitingClients);
             return;
         }
-        System.out.println(">");
         String numbersOfPlayers= stdin.readLine();
         int size = Integer.parseInt(numbersOfPlayers);
-        out.println(size);
-        System.out.println(size);
+        out.println(size); //Sending number of players
+        System.out.println("Number of players are: "+ size);
         String serverAnswer = in.readLine();
         System.out.println("Server says: " + serverAnswer); //PLayers nuumber correctly chosen
         String waitingClients= in.readLine();
-        System.out.println("Server says: " + waitingClients);
+        System.out.println("Server says: " + waitingClients); //You have to wait..
         }
 
     private synchronized void printHelp() throws IOException {
