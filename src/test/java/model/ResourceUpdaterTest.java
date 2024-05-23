@@ -18,10 +18,10 @@ class ResourceUpdaterTest {
     @Test
     void testUpdatePlayerPoints() {
         //CREAZIONE DELLA CARTA RISORSA CON ID = 40, LA QUALE DA 1 PUNTO QUANDO VIENE PIAZZATA (VALUE=1)
-        Corner TL = new Corner(SpecificSeed.MUSHROOM,24,24);
-        Corner TR = new Corner(SpecificSeed.EMPTY,24,25);
-        Corner BL = new Corner(SpecificSeed.PLANT,25,24);
-        Corner BR = new Corner(SpecificSeed.INSECT,25,25);
+        Corner TL = new Corner(SpecificSeed.MUSHROOM,24,24,SpecificSeed.MUSHROOM);
+        Corner TR = new Corner(SpecificSeed.EMPTY,24,25,SpecificSeed.MUSHROOM);
+        Corner BL = new Corner(SpecificSeed.PLANT,25,24,SpecificSeed.MUSHROOM);
+        Corner BR = new Corner(SpecificSeed.INSECT,25,25,SpecificSeed.MUSHROOM);
         List<SpecificSeed> attributi = new ArrayList<SpecificSeed>();
         attributi.add(SpecificSeed.MUSHROOM);
         attributi.add(SpecificSeed.MUSHROOM);

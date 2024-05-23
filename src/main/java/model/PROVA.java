@@ -80,7 +80,6 @@ public class PROVA {
         }
 
         board.placeInitialCard(initialCard);                        //PLACING THE INITIAL CARD ON THE BOARD, THIS IS WHERE THE GAME STARTS
-        board.printCardsOnTheBoard();
         board.printBoard();                                          //printing the board
         boardPoints.countPoints(board);                             //telling the player how many specificseeds he got
 
