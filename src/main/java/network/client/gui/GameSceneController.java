@@ -351,7 +351,7 @@ public class GameSceneController {
                     {
                         showAlert("Corner Missing","Please select a corner beforing playing a card");
                     }
-                    if (!cornerSelected.equals("notSelected") && indexCardToPlace < 4) {
+                    if (cornerSelected!=null && indexCardToPlace < 4) {
                         try {
                             String isTheCardFlipped=null;
                             String actualId=null;
