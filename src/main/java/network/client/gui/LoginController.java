@@ -101,12 +101,8 @@ public class LoginController {
                                 "-fx-border-color: #EF8156;" + // Colore del bordo
                                 "-fx-border-width: 1px;" + // Spessore del bordo
                                 "-fx-border-radius: 5px;"); // Arrotondamento del bordo
-                        //out.println(usernameField.getText());
                         usernameField.clear();
-                       //usernameField.requestFocus();
-                        //loginButton.setDisable(true);
                     });
-
                     return;
                 }
 
@@ -130,7 +126,6 @@ public class LoginController {
                     });
                     return;
                 }
-
                 String mexFromS= in.readLine();
                 System.out.println(mexFromS);
                 if(mexFromS.equals("Choose the number of players!")) {
@@ -144,12 +139,10 @@ public class LoginController {
                     });
                 }
                 else {
-
                     System.out.println(in.readLine());
                     LobbyScene lobbySceneHandler = new LobbyScene();
                     lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView, null, 0);
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

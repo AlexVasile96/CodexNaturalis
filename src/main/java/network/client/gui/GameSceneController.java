@@ -11,8 +11,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import view.ClientView;
 
@@ -98,6 +100,7 @@ public class GameSceneController {
     private Image handCard2;
     private Image handCard3;
     private String indexForGold=null;
+    private Color targetColor = Color.web("#351F16");
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
         this.primaryStage = primaryStage;
@@ -350,7 +353,7 @@ public class GameSceneController {
                 if (haveToPlay) {
                     if(cornerSelected==null)
                     {
-                        showAlert("Corner Missing","Please select a corner beforing playing a card");
+                        showAlert("Corner Missing","Please select a corner before playing a card");
                     }
 
                     if(indexForGold!=null && Integer.parseInt(indexForGold)>40  )
@@ -810,6 +813,25 @@ public class GameSceneController {
         return null;
     }
 
+    private boolean containsColor(Image cornerImage, Color targetColor){
+        PixelReader pixelReader = cornerImage.getPixelReader();
+        if(pixelReader == null){
+            return false;
+        }
+        int width = (int) cornerImage.getWidth();
+        int height = (int) cornerImage.getHeight();
+
+        for(int y = 0; y < height; y++){
+            for(int x = 0; x < width; x++){
+                Color color = pixelReader.getColor(x, y);
+                if(color.equals(targetColor)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public GridPane subnettingEachImage(Image image, String cardId) {
         double width = image.getWidth() / 3;
         double height = image.getHeight() / 3;
@@ -879,6 +901,19 @@ public class GameSceneController {
         imageViewBL.setOnMouseClicked(event -> handleCardClick(blCardView));
         imageViewBR.setOnMouseClicked(event -> handleCardClick(brCardView));
 
+        if(!containsColor(imageTL, targetColor)){
+            imageViewTL.setDisable(true);
+        }
+        if(!containsColor(imageTR, targetColor)){
+            imageViewTR.setDisable(true);
+        }
+        if(!containsColor(imageBL, targetColor)){
+            imageViewBL.setDisable(true);
+        }
+        if(!containsColor(imageBR, targetColor)){
+            imageViewBR.setDisable(true);
+        }
+
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(0));
         gridPane.setHgap(0);
@@ -921,6 +956,7 @@ public class GameSceneController {
     }
 
     public void placingBottomRightCard(ImageView cardOnTheBoard, GridPane board, int id) {
+
         int lastIndex=nextCardIndex;
         nextCardIndex++;
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
