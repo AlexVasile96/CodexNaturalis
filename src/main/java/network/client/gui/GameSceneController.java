@@ -63,7 +63,7 @@ public class GameSceneController {
     private Integer indexCardToBePlacedOn = 100;
     private Integer indexCardPlayedFromHand = 9999999;
     private Integer indexCardFromWellSelected = 89989898;
-    private String cornerSelected = "notSelected";
+    private String cornerSelected = null;
     private Image wellCardSelected = null;
     private String idWellCardSelected = null;
     private Controller controller = null;
@@ -347,7 +347,8 @@ public class GameSceneController {
     }
 
     private void setupGameActions() throws IOException {
-        playCard.setOnAction(e -> {
+       enableOrDisableGameActions();
+       playCard.setOnAction(e -> {
             if (isCurrentPlayerTurn) {
                 String canIPlaceTheGoldCard=null;
                 if (haveToPlay) {
@@ -558,6 +559,7 @@ public class GameSceneController {
                         break;
                 }
             } else {
+                flipCardToBack.setDisable(true);
                 showAlert("Not your turn", "It's not your turn yet.");
             }
         });
@@ -582,6 +584,7 @@ public class GameSceneController {
                         break;
                 }
             } else {
+                flipCardToFront.setDisable(true);
                 showAlert("Not your turn", "It's not your turn yet.");
             }
         });
@@ -691,6 +694,7 @@ public class GameSceneController {
                     throw new RuntimeException(ex);
                 }
             } else {
+                seeYourPoints.setDisable(true);
                 showAlert("Not your turn", "It's not your turn yet.");
             }
         });
@@ -715,6 +719,7 @@ public class GameSceneController {
                     throw new RuntimeException(ex);
                 }
             } else {
+                showObjective.setDisable(true);
                 showAlert("Not your turn", "It's not your turn yet.");
             }
         });
@@ -739,7 +744,6 @@ public class GameSceneController {
             }
         });
 
-        enableOrDisableGameActions();
     }
 
     private void waitForTurn(ImageView handCard1View, ImageView handCard2View, ImageView handCard3View) {
@@ -774,13 +778,22 @@ public class GameSceneController {
     }
 
     private void enableOrDisableGameActions() {
-        playCard.setDisable(!isCurrentPlayerTurn);
-        drawCard.setDisable(!isCurrentPlayerTurn);
-        seeYourSpecificSeeds.setDisable(!isCurrentPlayerTurn);
-        seeOtherPlayersBoards.setDisable(!isCurrentPlayerTurn);
-        seeYourPoints.setDisable(!isCurrentPlayerTurn);
-        endTurn.setDisable(!isCurrentPlayerTurn);
-        buttonContainer.setDisable(false);
+
+        if(!isCurrentPlayerTurn){
+//            playCard.setDisable(true);
+//            drawCard.setDisable(true);
+//            flipCardToBack.setDisable(true);
+//            flipCardToFront.setDisable(true);
+//            seeYourSpecificSeeds.setDisable(true);
+//            seeOtherPlayersBoards.setDisable(true);
+//            showObjective.setDisable(true);
+//            seeYourPoints.setDisable(true);
+//            endTurn.setDisable(true);
+            buttonContainer.setDisable(true);
+        }
+        if(isCurrentPlayerTurn){
+            buttonContainer.setDisable(false);
+        }
 
     }
 

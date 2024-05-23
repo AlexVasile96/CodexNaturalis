@@ -120,6 +120,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     System.out.println("Client changed, now " + currentPlayer + " is playing");
                     hasClientQuit = true;
                 }
+
                 clients.remove(this);
                 try {
                     clientSocket.close();
