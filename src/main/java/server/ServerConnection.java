@@ -123,14 +123,13 @@ public class ServerConnection implements Runnable {
 }
 
     private void makeYourMoves() throws IOException {
-        /*if(inizioturno) {
-            isEndGame = in.readLine();
-            //String cosace = in.readLine();
-            inizioturno = false;
-        }*/
         if(!player.isThePlayerDeckStarted()) {
             player.setThePlayerDeckStarted(true);
             showCards();
+        }
+        if(inizioturno) {
+            isEndGame = in.readLine();
+            inizioturno = false;
         }
 
         if(isEndGame.equals("true")  && !player.getNoMoreTurns()){//allora è l'ultimo turno
@@ -147,19 +146,19 @@ public class ServerConnection implements Runnable {
         System.out.println("What do you want to do?");
         System.out.println("Please type help if you want to see which moves you can make.");
         String command= stdin.readLine().toLowerCase();
-        if(command.equals("playcard") && player.isHasThePlayerAlreadyPLacedACard())
+        if((command.equals("playcard") /*|| command.equals("1")*/) && player.isHasThePlayerAlreadyPLacedACard()) //decommentare prima della consegna
         {
             System.out.println("You already placed and drew a card!");
             return;
         }
-        else if(command.equals("endturn")&& !player.isHasThePlayerAlreadyPLacedACard())
+        else if((command.equals("endturn")|| command.equals("7")) && !player.isHasThePlayerAlreadyPLacedACard())
         {
             System.out.println("You have to place a card first");
             return;
-        }else if(command.equals("endturn") && isEndGame.equals("true")){
+        }else if((command.equals("endturn")|| command.equals("7")) && isEndGame.equals("true")){
             player.noMoreTurns();
         }
-        if(command.equals("endturn")) inizioturno = true;
+        if(command.equals("endturn")|| command.equals("7")) inizioturno = true;
         actionsInput(command);
     }
 

@@ -44,6 +44,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static HandlingPlayerInputsThread fourthClient = null;
     private static CountDownLatch setupLatch;
     private static int updateOrder = 0;
+    private boolean inizioTurno = true;
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException {
         this.clientSocket = socket;
@@ -150,12 +151,17 @@ public class HandlingPlayerInputsThread implements Runnable {
     private void startGame() throws IOException, InterruptedException {
         String messageFromClient;
         boolean endturnphase = false;
-        boolean inizioTurno = true;
         while (!endturnphase) {
-            /*if (inizioTurno) {
+            if(!threadPlayer.isThePlayerDeckStarted()) {
+                threadPlayer.setThePlayerDeckStarted(true);
+                messageFromClient = stdIn.readLine();
+                runCommand(messageFromClient, threadPlayer);
+                inizioTurno = true;
+            }
+            if (inizioTurno) {
                 sendMessageToAllClients(String.valueOf(game.isEndGame()));
                 inizioTurno = false;
-            }*/
+            }
 
             //inizio endgame
             if(game.isEndGame() && !currentPlayer.isHasThePlayerGot20Points()){// allora è l'ultimo giro
@@ -194,14 +200,15 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("I'm waiting current player" + currentPlayer.getNickName() + " request");
             messageFromClient = stdIn.readLine();
             System.out.println("Client typed: " + messageFromClient);
+            if (messageFromClient.equals("endTurn")) inizioTurno=true;
             runCommand(messageFromClient, threadPlayer);
 
             if (messageFromClient.equals("quit")) {
-                gameController.setSize(gameController.getSize() - 1);
+                gameController.setSize(gameController.getSize() - 19);
                 messageFromClient = stdIn.readLine();
                 runCommand(messageFromClient, threadPlayer);
                 endturnphase = true;
-            } else if (!inizioTurno && messageFromClient.equals("endGame")) inizioTurno=true;
+            }
         }
     }
 
@@ -360,7 +367,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                         cardChosenFromHisDeck = Integer.parseInt(stdIn.readLine());
                         System.out.println("Player chose card number " + cardChosenFromHisDeck);
                         if (player.checkingTheChosenCardForGoldPurpose(cardChosenFromHisDeck)) {
-                            sendMessageToAllClients("You can continue!");
+                            sendMessageToAllClients("puoi procedere");
                         } else {
                             sendMessageToAllClients("Gold Card not placeable");
                             GoldCard cartGold = (GoldCard) player.chooseCard(cardChosenFromHisDeck);
