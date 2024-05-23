@@ -112,7 +112,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 waitForAllClientsToSetup();
                 boolean hasClientQuit = false;
                 for (Player player : playersList) {
-                    player.setPlayerScore(19);
+                    player.setPlayerScore(1);
                 }
                 while (!hasClientQuit) {
                     startGame();
