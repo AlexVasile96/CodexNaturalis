@@ -2,15 +2,15 @@
   "players": [
     {
       "nickname": "qwe",
-      "score": 2,
+      "score": 1,
       "dot": 3,
       "player_deck": [
         {
-          "id": 63,
-          "type": "ANIMAL",
-          "value": 1,
+          "id": 17,
+          "type": "PLANT",
+          "value": 0,
           "TL": {
-            "specificCornerSeed": "EMPTY",
+            "specificCornerSeed": "PARCHMENT",
             "x": 0,
             "y": 0
           },
@@ -20,12 +20,37 @@
             "y": 0
           },
           "BL": {
-            "specificCornerSeed": "FEATHER",
+            "specificCornerSeed": "PLANT",
             "x": 0,
             "y": 0
           },
           "BR": {
+            "specificCornerSeed": "ANIMAL",
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": 45,
+          "type": "MUSHROOM",
+          "value": 2,
+          "TL": {
             "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0
+          },
+          "TR": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0
+          },
+          "BL": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0
+          },
+          "BR": {
+            "specificCornerSeed": "NOTTOBEPLACEDON",
             "x": 0,
             "y": 0
           }
@@ -54,31 +79,6 @@
             "x": 0,
             "y": 0
           }
-        },
-        {
-          "id": 33,
-          "type": "INSECT",
-          "value": 0,
-          "TL": {
-            "specificCornerSeed": "INSECT",
-            "x": 0,
-            "y": 0
-          },
-          "TR": {
-            "specificCornerSeed": "NOTTOBEPLACEDON",
-            "x": 0,
-            "y": 0
-          },
-          "BL": {
-            "specificCornerSeed": "INSECT",
-            "x": 0,
-            "y": 0
-          },
-          "BR": {
-            "specificCornerSeed": "EMPTY",
-            "x": 0,
-            "y": 0
-          }
         }
       ],
       "board": {
@@ -6255,7 +6255,7 @@
             {
               "row": 24,
               "col": 24,
-              "specificSeed": "INSECT"
+              "specificSeed": "MUSHROOM"
             },
             {
               "row": 24,
@@ -6507,17 +6507,17 @@
             {
               "row": 25,
               "col": 24,
-              "specificSeed": "MUSHROOM"
+              "specificSeed": "PLANT"
             },
             {
               "row": 25,
               "col": 25,
-              "specificSeed": "MUSHROOM"
+              "specificSeed": "PLANT"
             },
             {
               "row": 25,
               "col": 26,
-              "specificSeed": "PLANT"
+              "specificSeed": "EMPTY"
             },
             {
               "row": 25,
@@ -6764,17 +6764,17 @@
             {
               "row": 26,
               "col": 25,
-              "specificSeed": "NOTTOBEPLACEDON"
+              "specificSeed": "PLANT"
             },
             {
               "row": 26,
               "col": 26,
-              "specificSeed": "INSECT"
+              "specificSeed": "NOTTOBEPLACEDON"
             },
             {
               "row": 26,
               "col": 27,
-              "specificSeed": "NOTTOBEPLACEDON"
+              "specificSeed": "EMPTY"
             },
             {
               "row": 26,
@@ -12684,53 +12684,28 @@
             }
           ]
         ],
-        "numOfEmpty": 2490,
+        "numOfEmpty": 2493,
         "initEmptyValue": "EMPTY"
       },
       "secretChosenCard": {
-        "id": 99,
-        "type": "MIX",
+        "id": 91,
+        "type": "MUSHROOM",
         "value": 3
       }
     },
     {
-      "nickname": "fds",
+      "nickname": "zxc",
       "score": 1,
       "dot": 1,
       "player_deck": [
         {
-          "id": 62,
-          "type": "ANIMAL",
-          "value": 1,
+          "id": 36,
+          "type": "INSECT",
+          "value": 0,
           "TL": {
-            "specificCornerSeed": "NOTTOBEPLACEDON",
-            "x": 0,
-            "y": 0
-          },
-          "TR": {
-            "specificCornerSeed": "EMPTY",
-            "x": 0,
-            "y": 0
-          },
-          "BL": {
-            "specificCornerSeed": "EMPTY",
-            "x": 0,
-            "y": 0
-          },
-          "BR": {
             "specificCornerSeed": "PARCHMENT",
             "x": 0,
             "y": 0
-          }
-        },
-        {
-          "id": 31,
-          "type": "INSECT",
-          "value": 0,
-          "TL": {
-            "specificCornerSeed": "INSECT",
-            "x": 0,
-            "y": 0
           },
           "TR": {
             "specificCornerSeed": "INSECT",
@@ -12738,7 +12713,32 @@
             "y": 0
           },
           "BL": {
+            "specificCornerSeed": "NOTTOBEPLACEDON",
+            "x": 0,
+            "y": 0
+          },
+          "BR": {
+            "specificCornerSeed": "MUSHROOM",
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": 60,
+          "type": "PLANT",
+          "value": 5,
+          "TL": {
             "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0
+          },
+          "TR": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0
+          },
+          "BL": {
+            "specificCornerSeed": "NOTTOBEPLACEDON",
             "x": 0,
             "y": 0
           },
@@ -12749,11 +12749,11 @@
           }
         },
         {
-          "id": 37,
-          "type": "INSECT",
+          "id": 16,
+          "type": "PLANT",
           "value": 0,
           "TL": {
-            "specificCornerSeed": "INSECT",
+            "specificCornerSeed": "MUSHROOM",
             "x": 0,
             "y": 0
           },
@@ -12763,12 +12763,12 @@
             "y": 0
           },
           "BL": {
-            "specificCornerSeed": "INKWELL",
+            "specificCornerSeed": "NOTTOBEPLACEDON",
             "x": 0,
             "y": 0
           },
           "BR": {
-            "specificCornerSeed": "NOTTOBEPLACEDON",
+            "specificCornerSeed": "INKWELL",
             "x": 0,
             "y": 0
           }
@@ -18953,7 +18953,7 @@
             {
               "row": 24,
               "col": 25,
-              "specificSeed": "ANIMAL"
+              "specificSeed": "PLANT"
             },
             {
               "row": 24,
@@ -19200,20 +19200,20 @@
             {
               "row": 25,
               "col": 24,
-              "specificSeed": "PLANT"
-            },
-            {
-              "row": 25,
-              "col": 25,
-              "specificSeed": "NOTTOBEPLACEDON"
-            },
-            {
-              "row": 25,
-              "col": 26,
               "specificSeed": "INSECT"
             },
             {
               "row": 25,
+              "col": 25,
+              "specificSeed": "NOTTOBEPLACEDON"
+            },
+            {
+              "row": 25,
+              "col": 26,
+              "specificSeed": "FEATHER"
+            },
+            {
+              "row": 25,
               "col": 27,
               "specificSeed": "EMPTY"
             },
@@ -19457,20 +19457,20 @@
             {
               "row": 26,
               "col": 25,
-              "specificSeed": "INKWELL"
+              "specificSeed": "PLANT"
             },
             {
               "row": 26,
               "col": 26,
-              "specificSeed": "INKWELL"
-            },
-            {
-              "row": 26,
-              "col": 27,
               "specificSeed": "MUSHROOM"
             },
             {
               "row": 26,
+              "col": 27,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
               "col": 28,
               "specificSeed": "EMPTY"
             },
@@ -19714,12 +19714,12 @@
             {
               "row": 27,
               "col": 26,
-              "specificSeed": "NOTTOBEPLACEDON"
+              "specificSeed": "EMPTY"
             },
             {
               "row": 27,
               "col": 27,
-              "specificSeed": "ANIMAL"
+              "specificSeed": "EMPTY"
             },
             {
               "row": 27,
@@ -25377,7 +25377,7 @@
             }
           ]
         ],
-        "numOfEmpty": 2490,
+        "numOfEmpty": 2493,
         "initEmptyValue": "EMPTY"
       },
       "secretChosenCard": {

@@ -731,5 +731,10 @@ public class Game implements WhatCanPlayerDo {
     public void setEndGame(boolean endGame) {
         this.endGame = endGame;
     }
+
+    public void checkingIfICanPlaceTheGoldCardOnGui(Player player, int indexOfTheGoldCard)
+    {
+        player.checkingTheChosenCardForGoldPurpose(indexOfTheGoldCard);
+    }
 }
 

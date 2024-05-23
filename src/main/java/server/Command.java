@@ -120,8 +120,9 @@ public class Command { //Command Client sends to Server
             case "goldDeckUpdate":
                 game.goldDeckUpdateForGUI();
                 return "Gold Deck Correctly Updated";
-//            case "SETUPFINISHED":
-//                return "SETUPFINISHED";
+            case "goldGui":
+                int index=0;
+                game.checkingIfICanPlaceTheGoldCardOnGui(player,index);
             case "totPlayers":
                 return String.valueOf(game.getTotalNumberOfPLayer());
             case "STARTGUI":

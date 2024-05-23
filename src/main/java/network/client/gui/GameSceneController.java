@@ -97,7 +97,7 @@ public class GameSceneController {
     private Image handCard1;
     private Image handCard2;
     private Image handCard3;
-
+    private String indexForGold=null;
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
         this.primaryStage = primaryStage;
@@ -351,13 +351,17 @@ public class GameSceneController {
                     {
                         showAlert("Corner Missing","Please select a corner beforing playing a card");
                     }
+                    if(Integer.parseInt(indexForGold)>41)
+                    {
+                        System.out.println("You chose to play a gold card");
+                        out.println("goldGui");
+                    }
                     if (cornerSelected!=null && indexCardToPlace < 4) {
                         try {
                             String isTheCardFlipped=null;
                             String actualId=null;
                             switch (indexCardToPlace) {
                                 case 0:
-
                                     handCard1View.setImage(null);
                                     actualId=idHandCard1;
                                     isTheCardFlipped=handCard1View.getId();
@@ -397,7 +401,6 @@ public class GameSceneController {
                                 default:
                                     break;
                             }
-
                             haveToDraw = true;
                             handCard1View.setId("Front");
                             handCard2View.setId("Front");
@@ -579,6 +582,14 @@ public class GameSceneController {
                     System.out.println(pathChosen);
                     System.out.println("Back");
                 }
+                if(Integer.parseInt(idHandCard1)<41)
+                {
+                    System.out.println("ResourceCard");
+                }
+                else {System.out.println("GoldCard");
+                    indexForGold=idHandCard1;
+                }
+
 
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
@@ -600,6 +611,13 @@ public class GameSceneController {
                     System.out.println(pathChosen);
                     System.out.println("Back");
                 }
+                if(Integer.parseInt(idHandCard2)<41)
+                {
+                    System.out.println("ResourceCard");
+                }
+                else {System.out.println("GOldCard");
+                    indexForGold=idHandCard2;
+                }
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
@@ -619,6 +637,13 @@ public class GameSceneController {
                     pathChosen=pathFlipped;
                     System.out.println(pathChosen);
                     System.out.println("Back");
+                }
+                if(Integer.parseInt(idHandCard3)<41)
+                {
+                    System.out.println("ResourceCard");
+                }
+                else {System.out.println("GoldCard");
+                indexForGold=idHandCard3;
                 }
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");

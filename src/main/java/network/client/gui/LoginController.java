@@ -53,8 +53,6 @@ public class LoginController {
         // Checking both fields
         String username = usernameField.getText();
         Toggle dot = toggleGroup.getSelectedToggle();
-
-        // Abilita il pulsante di login solo se entrambi i campi sono compilati
         loginButton.setDisable(username.isEmpty() || dot == null);
     }
 
@@ -62,8 +60,7 @@ public class LoginController {
     public void loginButtonClicked(ActionEvent event) throws IOException {
         new Thread(() -> {
             try {
-                String serverResponse = in.readLine(); //HELLO YOU HAVE TO LOG IN PLEASEY INSERT YOUR USERNAME
-                System.out.println(serverResponse);
+
                 String username = usernameField.getText();
                 Toggle dot = toggleGroup.getSelectedToggle();
 
