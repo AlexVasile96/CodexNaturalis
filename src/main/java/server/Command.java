@@ -20,12 +20,13 @@ public class Command { //Command Client sends to Server
                     String CornersAvailable= game.showAvaiableCorners(player, size, paolo);
                     checkIfTheBoardHadAlreadyBeenPrinted++;
                     return CornersAvailable;
-                }
-                else if(checkIfTheBoardHadAlreadyBeenPrinted==1)
-                {
+                }else if(cornerChosen.equals("clean")){
+                    checkIfTheBoardHadAlreadyBeenPrinted=0;
+                    return "cleaned";
+                }else if(checkIfTheBoardHadAlreadyBeenPrinted==1) {
                     game.playCard(player,size, paolo, cornerChosen);
                     String finalResult="Carta placed";
-                    checkIfTheBoardHadAlreadyBeenPrinted--;
+                    checkIfTheBoardHadAlreadyBeenPrinted=0;
                     return finalResult;
                 }
             }

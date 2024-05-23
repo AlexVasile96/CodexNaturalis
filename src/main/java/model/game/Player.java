@@ -24,6 +24,8 @@ public class Player implements Observable {
     private boolean hasThePlayerAlreadyPLacedACard= false;
     private boolean isThePlayerDeckStarted=false;
     private boolean hasThePlayerGot20Points=false;
+    private boolean noMoreTurns = false;
+
     //private boolean hasThePlayerPlacedACard=false;
     public Player(String nickName, int playerScore, Dot dot, Board board){ //PLAYER CONSTRUCTOR
         this.nickName = nickName;
@@ -908,6 +910,14 @@ public class Player implements Observable {
 
     public void setHasThePlayerGot20Points(boolean hasThePlayerGot20Points) {
         this.hasThePlayerGot20Points = hasThePlayerGot20Points;
+    }
+
+    public void noMoreTurns() {
+        this.noMoreTurns = true;
+    }
+
+    public boolean getNoMoreTurns() {
+        return noMoreTurns;
     }
 }
 
