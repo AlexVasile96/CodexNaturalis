@@ -6,7 +6,7 @@ import view.ClientView;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Objects;
+
 
 
 public class ServerConnection implements Runnable {
@@ -712,10 +712,10 @@ public class ServerConnection implements Runnable {
             }while (messageFromServer.equals("Chosen color not available!"));
     }
 
-    private synchronized void chooseNumberOfPlayers() throws IOException, InterruptedException {
-        String servermessage=in.readLine();
-        System.out.println(servermessage);
-        if(servermessage.equals("There's already someone online!Please wait"))
+    private synchronized void chooseNumberOfPlayers() throws IOException{
+        String serverMessage=in.readLine();
+        System.out.println(serverMessage);
+        if(serverMessage.equals("There's already someone online!Please wait"))
         {
             System.out.println("There's already someone online!Please wait");
             String waitingClients= in.readLine();
@@ -743,7 +743,7 @@ public class ServerConnection implements Runnable {
                         """);
     }
 
-    private void printActions() throws IOException {
+    private void printActions() {
         System.out.println(
                 """
                         Supported commands:

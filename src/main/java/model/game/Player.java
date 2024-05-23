@@ -510,37 +510,37 @@ public class Player implements Observable {
 
         board.getNode(x - 1, y - 1).setSpecificNodeSeed(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());//SETTING THE NODE
         if (board.getNode(x - 1, y - 1).getValueCounter() == 2) {
-            board.getNode(x - 1, y - 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x - 1, y - 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x - 1, y - 1).getValueCounter() == 1) {
-            board.getNode(x - 1, y - 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x - 1, y - 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x - 1, y - 1).setValueCounter(board.getNode(x - 1, y - 1).getValueCounter() - 1);
         // Decrease the value
         selectedCardFromTheDeck.setNode(board.getNode(x - 1, y - 1)); //SAVING THE POSITION
-
+        //board.getNode(x-1,y-1).setCardType(selectedCardFromTheDeck.getType());
 
         board.getNode(x - 1, y).setSpecificNodeSeed(selectedCardFromTheDeck.getTR().getSpecificCornerSeed()); //SETTING THE NODE
         if (board.getNode(x - 1, y).getValueCounter() == 2) {
-            board.getNode(x - 1, y).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x - 1, y).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x - 1, y).getValueCounter() == 1) {
-            board.getNode(x - 1, y).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x - 1, y).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x - 1, y).setValueCounter(board.getNode(x - 1, y).getValueCounter() - 1); // Decrease the value
 
 
         board.getNode(x, y - 1).setSpecificNodeSeed(selectedCardFromTheDeck.getBL().getSpecificCornerSeed()); //SETTING THE NODE
         if (board.getNode(x, y - 1).getValueCounter() == 2) {
-            board.getNode(x, y - 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x, y - 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x, y - 1).getValueCounter() == 1) {
-            board.getNode(x, y - 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x, y - 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x, y - 1).setValueCounter(board.getNode(x, y - 1).getValueCounter() - 1); // Decrease the value
 
         board.getNode(x, y).setSpecificNodeSeed(selectedCardFromTheDeck.getBR().getSpecificCornerSeed()); //SETTING THE NODE
         if (board.getNode(x, y).getValueCounter() == 2) {
-            board.getNode(x, y).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x, y).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x, y).getValueCounter() == 1) {
-            board.getNode(x, y).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x, y).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x, y).setValueCounter(board.getNode(x, y).getValueCounter() - 1); // Decrease the value
     }
@@ -550,35 +550,35 @@ public class Player implements Observable {
 
         board.getNode(x - 1, y + 1).setSpecificNodeSeed(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
         if (board.getNode(x - 1, y + 1).getValueCounter() == 2) {
-            board.getNode(x - 1, y + 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x - 1, y + 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x - 1, y + 1).getValueCounter() == 1) {
-            board.getNode(x - 1, y + 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x - 1, y + 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x - 1, y + 1).setValueCounter(board.getNode(x - 1, y + 1).getValueCounter() - 1); // Decrease the value
         selectedCardFromTheDeck.setNode(board.getNode(x - 1, y + 1)); //SAVING THE POSITION
 
         board.getNode(x - 1, y + 2).setSpecificNodeSeed(selectedCardFromTheDeck.getTR().getSpecificCornerSeed());//SETTING THE NODE
         if (board.getNode(x - 1, y + 2).getValueCounter() == 2) {
-            board.getNode(x - 1, y + 2).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x - 1, y + 2).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x - 1, y + 2).getValueCounter() == 1) {
-            board.getNode(x - 1, y + 2).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x - 1, y + 2).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
 
         board.getNode(x - 1, y + 2).setValueCounter(board.getNode(x - 1, y + 2).getValueCounter() - 1); // Decrease the value
 
         board.getNode(x, y + 1).setSpecificNodeSeed(selectedCardFromTheDeck.getBL().getSpecificCornerSeed());//SETTING THE NODE
         if (board.getNode(x, y + 1).getValueCounter() == 2) {
-            board.getNode(x, y + 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x, y + 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x, y + 1).getValueCounter() == 1) {
-            board.getNode(x, y + 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x, y + 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x, y + 1).setValueCounter(board.getNode(x, y + 1).getValueCounter() - 1); // Decrease the value
 
         board.getNode(x, y + 2).setSpecificNodeSeed(selectedCardFromTheDeck.getBR().getSpecificCornerSeed());//SETTING THE NODE
         if (board.getNode(x, y + 2).getValueCounter() == 2) {
-            board.getNode(x, y + 2).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x, y + 2).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x, y + 2).getValueCounter() == 1) {
-            board.getNode(x, y + 2).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x, y + 2).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x, y + 2).setValueCounter(board.getNode(x, y + 2).getValueCounter() - 1); // Decrease the value
     }
@@ -589,9 +589,9 @@ public class Player implements Observable {
         board.getNode(x + 1, y - 1).setSpecificNodeSeed(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());//SETTING THE NODE
 
         if (board.getNode(x + 1, y - 1).getValueCounter() == 2) {
-            board.getNode(x + 1, y - 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 1, y - 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x + 1, y - 1).getValueCounter() == 1) {
-            board.getNode(x + 1, y - 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 1, y - 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x + 1, y - 1).setValueCounter(board.getNode(x + 1, y - 1).getValueCounter() - 1); // Decrease the value
 
@@ -599,26 +599,26 @@ public class Player implements Observable {
 
         board.getNode(x + 1, y).setSpecificNodeSeed(selectedCardFromTheDeck.getTR().getSpecificCornerSeed());//SETTING THE NODE
         if (board.getNode(x + 1, y).getValueCounter() == 2) {
-            board.getNode(x + 1, y).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 1, y).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x + 1, y).getValueCounter() == 1) {
-            board.getNode(x + 1, y).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 1, y).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x + 1, y).setValueCounter(board.getNode(x + 1, y).getValueCounter() - 1); // Decrease the value
 
         board.getNode(x + 2, y - 1).setSpecificNodeSeed(selectedCardFromTheDeck.getBL().getSpecificCornerSeed());//SETTING THE NODE
 
         if (board.getNode(x + 2, y - 1).getValueCounter() == 2) {
-            board.getNode(x + 2, y - 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 2, y - 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x + 2, y - 1).getValueCounter() == 1) {
-            board.getNode(x + 2, y - 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 2, y - 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x + 2, y - 1).setValueCounter(board.getNode(x + 2, y - 1).getValueCounter() - 1); // Decrease the value
 
         board.getNode(x + 2, y).setSpecificNodeSeed(selectedCardFromTheDeck.getBR().getSpecificCornerSeed());//SETTING THE NODE
         if (board.getNode(x + 2, y).getValueCounter() == 2) {
-            board.getNode(x + 2, y).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 2, y).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x + 2, y).getValueCounter() == 1) {
-            board.getNode(x + 2, y).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 2, y).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x + 2, y).setValueCounter(board.getNode(x + 2, y).getValueCounter() - 1); // Decrease the value
     }
@@ -627,9 +627,9 @@ public class Player implements Observable {
 
         board.getNode(x + 1, y + 1).setSpecificNodeSeed(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());//SETTING THE NODE
         if (board.getNode(x + 1, y + 1).getValueCounter() == 2) {
-            board.getNode(x + 1, y + 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 1, y + 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x + 1, y + 1).getValueCounter() == 1) {
-            board.getNode(x + 1, y + 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 1, y + 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x + 1, y + 1).setValueCounter(board.getNode(x + 1, y + 1).getValueCounter() - 1); // Decrease the value
         selectedCardFromTheDeck.setNode(board.getNode(x + 1, y + 1)); //SAVING THE POSITION
@@ -637,25 +637,25 @@ public class Player implements Observable {
 
         board.getNode(x + 1, y + 2).setSpecificNodeSeed(selectedCardFromTheDeck.getTR().getSpecificCornerSeed());//SETTING THE NODE
         if (board.getNode(x + 1, y + 2).getValueCounter() == 2) {
-            board.getNode(x + 1, y + 2).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 1, y + 2).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x + 1, y + 2).getValueCounter() == 1) {
-            board.getNode(x + 1, y + 2).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 1, y + 2).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x + 1, y + 2).setValueCounter(board.getNode(x + 1, y + 2).getValueCounter() - 1); // Decrease the value
 
         board.getNode(x + 2, y + 1).setSpecificNodeSeed(selectedCardFromTheDeck.getBL().getSpecificCornerSeed());//SETTING THE NODE
         if (board.getNode(x + 2, y + 1).getValueCounter() == 2) {
-            board.getNode(x + 2, y + 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 2, y + 1).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x + 2, y + 1).getValueCounter() == 1) {
-            board.getNode(x + 2, y + 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 2, y + 1).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x + 2, y + 1).setValueCounter(board.getNode(x + 2, y + 1).getValueCounter() - 1); // Decrease the value
 
         board.getNode(x + 2, y + 2).setSpecificNodeSeed(selectedCardFromTheDeck.getBR().getSpecificCornerSeed());//SETTING THE NODE
         if (board.getNode(x + 2, y + 2).getValueCounter() == 2) {
-            board.getNode(x + 2, y + 2).setFirstPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 2, y + 2).setFirstPlacement(selectedCardFromTheDeck.getTL().getCardType());
         } else if (board.getNode(x + 2, y + 2).getValueCounter() == 1) {
-            board.getNode(x + 2, y + 2).setSecondPlacement(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());
+            board.getNode(x + 2, y + 2).setSecondPlacement(selectedCardFromTheDeck.getTL().getCardType());
         }
         board.getNode(x + 2, y + 2).setValueCounter(board.getNode(x + 2, y + 2).getValueCounter() - 1); // Decrease the value
     }

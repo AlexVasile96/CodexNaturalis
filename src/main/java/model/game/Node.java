@@ -9,6 +9,8 @@ public class Node {
     private  SpecificSeed firstPlacement;
     private  SpecificSeed secondPlacement;
     private boolean alreadyChecked;
+    private SpecificSeed cardType;
+
     public Node(SpecificSeed specificNodeSeed, int coordX, int coordY){
         this.specificNodeSeed=specificNodeSeed;
         this.coordX=coordX;
@@ -93,5 +95,13 @@ public class Node {
 
         // Crea un nuovo oggetto Node utilizzando il seme e le coordinate specificate
         return new Node(specificNodeSeed, coordX, coordY);
+    }
+
+    public SpecificSeed getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(SpecificSeed cardType) {
+        this.cardType = cardType;
     }
 }

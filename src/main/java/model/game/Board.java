@@ -159,17 +159,7 @@ public class Board {
         }
     }//method to place the first card
 
-    public void printCornerCoordinates() {
-        int[][] centralCoordinates = getCentralCoordinates();
-        int centerX = centralCoordinates[0][0];
-        int centerY = centralCoordinates[0][1];
-        // PRINTING THE COORDINATES JUST TO DEBUG
-        System.out.println("Initial card coordinates:");
-        System.out.println("TL: (" + centerX + ", " + centerY + ")");
-        System.out.println("TR: (" + centerX + ", " + (centerY + 1) + ")");
-        System.out.println("BL: (" + (centerX + 1) + ", " + centerY + ")");
-        System.out.println("BR: (" + (centerX + 1) + ", " + (centerY + 1) + ")");
-    } //METHOD TO PRINT THE COORDINATES OF THE CENTRAL COORDINATES
+
 
     //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
     public ExtendExtendExtend createSpecificSecretCard(ObjectiveCard card, Player player) {
@@ -203,17 +193,6 @@ public class Board {
         return null;
     }
 
-    private boolean seedCardEquals(String seed, ObjectiveCard card) {
-        return (Objects.equals(card.getObjectiveSpecificTypeOfCard(), seed));
-    }
-
-    public void printCardsOnTheBoard() {
-        System.out.println("Cards on the board are:"); //PLN
-        for (Card card : cardsOnTheBoardList) {
-            System.out.println(card);
-        }
-        System.out.println("Card finished"); //I PRINTED ALL THE CARDS I HAVE ON MY BOARD
-    }
 
     public boolean placeBackInitialCard(InitialCard initialCard) {
         int[][] centralCoordinates = getCentralCoordinates(); //GETTING THE CENTRAL COORDINATES OF THE BOARD

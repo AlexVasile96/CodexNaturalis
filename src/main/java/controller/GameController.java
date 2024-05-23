@@ -109,11 +109,11 @@ public class GameController {
         }
         players.put(username, userOut);
 
-        /*if(getCurrentNumsOfPlayers()==0)
+        if(getCurrentNumsOfPlayers()==0)
         {
             setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+2);
         }
-        else*/  setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+1);
+        else setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+1);
 
          }
 
@@ -179,13 +179,12 @@ public synchronized void waitingForPLayers() throws InterruptedException {
         if(playerChoseinitialcard==getSize())
         {
             sendMessageToAllClients("All clients chose the init Card");
-
             notifyAll();
 
         }
         else{
-            System.out.println("current numb of players da gamecontroller " + currentNumsOfPlayers);
-            System.out.println("size dal gamecontroller "+  getSize());
+            System.out.println("current numb of players from gamecontroller " + currentNumsOfPlayers);
+            System.out.println("size from gamecontroller "+  getSize());
             wait();
         }
     }
