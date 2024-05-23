@@ -367,6 +367,7 @@ public class GameSceneController {
                         {
                             showAlert("Gold Card NOt Placeable", "YOu can't place the gold card beacuse you don't have enough specific seeds");
                             indexForGold=null;
+                            indexCardToPlace=100;
                             return;
                         }
                     }
