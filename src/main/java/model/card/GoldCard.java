@@ -32,7 +32,7 @@ public class GoldCard extends Card{
 
     @Override
     public String toString() { //overridden ToStringMethod
-        return "GoldCard->" +
+        return "Gold Card->" +
                 " id=" + getId()+
                 ", type=" + getType() +
                 ", value=" + getValueWhenPlaced() +
@@ -41,6 +41,11 @@ public class GoldCard extends Card{
                 ", BL=" + getBL() +
                 ", BR=" + getBR() +
                 ", REQUISITI=" + requirementsForPlacing;
+    }
+
+    public String printCardRedably() {
+        return "Gold Card-> id=" + id + ", value=" + valueWhenPlaced + ", type=" + type + ", REQUISITI -->" + requirementsForPlacing + ", Corners:\n     TL=" + TL + ", TR=" + TR+
+                "\n     BL=" + BL + ", BR=" + BR ;
     }
 
     @Override

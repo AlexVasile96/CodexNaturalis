@@ -35,7 +35,7 @@ public class GameController {
     private static final String SAVE_FILE_PATH = "src/main/resources/saveplayers.json";
     private static Player winningPlayer=null;
     private boolean areAllPlayersLogged=false;
-    private int currentNumsOfPlayers=0;
+    private int currentNumsOfPlayers=1;
     private CountDownLatch numbgames = new CountDownLatch(0);
     private int playerChoseinitialcard=0;
     private static boolean isTheFirstPlayer= false;
@@ -77,6 +77,9 @@ public class GameController {
                         String cornersAvailable = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
                         sendMessageToAllClients(cornersAvailable); // Mando al client i corners disponibili
                         isCornerAlreadyChosen = true;
+                    } else if(cornerChosen.equals("clean")){
+                        isCornerAlreadyChosen = false;
+                        command.runCommand(game, commandString, player, size, paolo, cornerChosen);
                     } else {
                         String cornersChosen = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
                         sendMessageToAllClients(cornersChosen);
@@ -106,11 +109,11 @@ public class GameController {
         }
         players.put(username, userOut);
 
-        if(getCurrentNumsOfPlayers()==0)
+        /*if(getCurrentNumsOfPlayers()==0)
         {
             setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+2);
         }
-        else  setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+1);
+        else*/  setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+1);
 
          }
 

@@ -30,6 +30,24 @@ public class ResourceCard extends Card{
         this.node = node;
     }
 
+    @Override
+    public String toString() {
+        return "Resource Card->" +
+                " id=" + id +
+                ", type=" + type +
+                ", value=" + valueWhenPlaced +
+                ", TL=" + TL +
+                ", TR=" + TR +
+                ", BL=" + BL +
+                ", BR=" + BR ;
+    } //TO-STRING METHOD
+
+    @Override
+    public String printCardRedably() {
+        return "Resource Card-> id=" + id + ", value=" + valueWhenPlaced + ", type=" + type + ", Corners:\n     TL=" + TL + ", TR=" + TR+
+                "\n     BL=" + BL + ", BR=" + BR ;
+    }
+
 
 
     public JsonObject toJsonObject(){

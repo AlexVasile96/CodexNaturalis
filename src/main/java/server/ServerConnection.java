@@ -6,6 +6,7 @@ import view.ClientView;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Objects;
 
 
 public class ServerConnection implements Runnable {
@@ -20,6 +21,8 @@ public class ServerConnection implements Runnable {
     private boolean isConnectionClosed= false;
     private boolean isTheWhileActive=false;
     private boolean hasTheServerCrashed=false;
+    private boolean inizioturno = true;
+    private String isEndGame = "false";
 
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
@@ -120,25 +123,42 @@ public class ServerConnection implements Runnable {
 }
 
     private void makeYourMoves() throws IOException {
-        if(!player.isThePlayerDeckStarted())
-        {
+        if(!player.isThePlayerDeckStarted()) {
             player.setThePlayerDeckStarted(true);
             showCards();
         }
+        if(inizioturno) {
+            isEndGame = in.readLine();
+            inizioturno = false;
+        }
+
+        if(isEndGame.equals("true")  && !player.getNoMoreTurns()){//allora è l'ultimo turno
+            System.out.println("This is the last turn!!");
+            player.noMoreTurns();
+        }
+        else if (isEndGame.equals("true")) {
+            System.out.println("---------END GAME---------");
+            System.out.println(in.readLine());
+            return;
+        }
+
         System.out.println("It's your turn!");
         System.out.println("What do you want to do?");
         System.out.println("Please type help if you want to see which moves you can make.");
         String command= stdin.readLine().toLowerCase();
-        if(command.equals("playcard") && player.isHasThePlayerAlreadyPLacedACard())
+        if((command.equals("playcard") /*|| command.equals("1")*/) && player.isHasThePlayerAlreadyPLacedACard()) //decommentare prima della consegna
         {
             System.out.println("You already placed and drew a card!");
             return;
         }
-        if(command.equals("endturn")&& !player.isHasThePlayerAlreadyPLacedACard())
+        else if((command.equals("endturn")|| command.equals("7")) && !player.isHasThePlayerAlreadyPLacedACard())
         {
             System.out.println("You have to place a card first");
             return;
+        }else if((command.equals("endturn")|| command.equals("7")) && isEndGame.equals("true")){
+            player.noMoreTurns();
         }
+        if(command.equals("endturn")|| command.equals("7")) inizioturno = true;
         actionsInput(command);
     }
 
@@ -182,15 +202,15 @@ public class ServerConnection implements Runnable {
         sendMessageToServer("showYourCardDeck");
         System.out.println("Your deck:" );
         System.out.println("--------------------------------------------------------------------------------------");
-        receivingAndPrintingCards();
+        receivingPrintingUpdatingCards();
         System.out.println("--------------------------------------------------------------------------------------");
     }
 
-    private void receivingAndPrintingCards() throws IOException {
+    private void receivingPrintingUpdatingCards() throws IOException {
         String firstCard = in.readLine(); //Reading all three cards
         String secondCard = in.readLine();
         String thirdCard = in.readLine();
-        in.readLine();//the space
+        in.readLine();//spazio
         updatingView(firstCard, secondCard, thirdCard);
         for (String s : player.getClientView().getPlayerStringCards()) {
             System.out.println(s);
@@ -294,38 +314,51 @@ public class ServerConnection implements Runnable {
         }
 
         //carte sulla board
-        System.out.println("Your cards on the board: ");
-        for (String s : player.getClientView().getCardsOnTheBoard()) {
-            System.out.println(s);
-        }
-        System.out.println("\nWhich card on the board do you want to place your card on?");
-
-        //inizializzazione array input validi
-        int numeroCarte=player.getClientView().getNumOfCardsOnTheBoard();
-        String[] validInputs = new String[numeroCarte]; //se c'è solo la carta iniziale è pari ad 1
-        for (int j=0; j<numeroCarte; j++)
-            validInputs[j] = String.valueOf(j+1);
-        size= Integer.parseInt(controlInputFromUser(validInputs));
-        out.println(size-1);
-
-        //avaiableCorners
-        String[] angoli ={"TL","TR","BR","BL"};
-        validInputs = new String[4];
-        check = false;
-        size=0;
-        messageFromServer = in.readLine();
-        do{
-            for (String corner: angoli){
-                if(messageFromServer.equals(corner) && !check){
-                    validInputs[size]=messageFromServer;
-                    size++;
-                    check = true;
-                }
+        boolean rightCard;
+        String[] angoli;
+        String[] validInputs;
+        int numeroCarte;
+        do {
+            System.out.println("Your cards on the board: ");
+            for (String s : player.getClientView().getCardsOnTheBoard()) {
+                System.out.println(s);
             }
-            if(!check) System.out.println(messageFromServer);
+            System.out.println("\nWhich card on the board do you want to place your card on?");
+
+            //inizializzazione array input validi per la scelta della carta
+            numeroCarte = player.getClientView().getNumOfCardsOnTheBoard();
+            validInputs = new String[numeroCarte]; //se c'è solo la carta iniziale è pari ad 1
+            for (int j = 0; j < numeroCarte; j++) {
+                    validInputs[j] = String.valueOf(j + 1);
+            }
+            int cartaSceltaBoard = Integer.parseInt(controlInputFromUser(validInputs));//mi serve dopo questa variabile!!
+            out.println(cartaSceltaBoard - 1);
+
+            //avaiableCorners
+            angoli = new String[]{"TL", "TR", "BR", "BL"};
+            validInputs = new String[4];
             check = false;
-            messageFromServer= in.readLine();
-        } while(!messageFromServer.equals("end"));
+            size = 0;
+            messageFromServer = in.readLine();
+            do {
+                for (String corner : angoli) {
+                    if (!check && messageFromServer.equals(corner)) {
+                        validInputs[size] = messageFromServer;
+                        size++;
+                        check = true;
+                    }
+                }
+                if (!check) System.out.println(messageFromServer);
+                check = false;
+                messageFromServer = in.readLine();
+            } while (!messageFromServer.equals("end"));
+            if(size == 0) {
+                rightCard = false;
+                System.out.println("-----------------------------------------------------------\nthe choosen Card has no free corners!! Chose another card!!\n-----------------------------------------------------------");
+                out.println("clean");
+                //String guess =in.readLine();
+            }else rightCard = true;
+        }while(!rightCard);
         System.out.print("Choose the corner you want to place the card on: ");
         if(size<4){
             angoli = new String[size];
@@ -345,12 +378,25 @@ public class ServerConnection implements Runnable {
         String cordinateTl = in.readLine();
         player.getClientView().addCardOnTheBoard((numeroCarte+1)+"->"+typeCard+": "+cordinateTl+" "+ isBack);
         player.getClientView().setNumOfCardsOnTheBoard(numeroCarte+1);
-        drawCard(); //pescaggio
-        status();   //punteggio
+
+        drawCard();                 //pescaggio
+        int points = status();      //punteggio
         System.out.println();
-        if(clientView.getPlayerScore()>=20)
-        {
-            System.out.println(in.readLine()); //all players have on last turn and then the game will end
+
+        //controllo se 20 punti
+        if(points>=20) {
+            System.out.println("You smashed 20 points!! now everybody got one last turn");
+            System.out.println("Your turn is over!");
+            player.setHasThePlayerAlreadyPLacedACard(false);
+            String nextP = in.readLine();
+            System.out.println("Next player will be " + nextP);
+            setCurrentPlayer(nextP);
+
+
+
+
+
+            /*System.out.println(in.readLine()); //all players have on last turn and then the game will end
             player.setHasThePlayerAlreadyPLacedACard(false);
             System.out.println("You chose to end your turn.");
             String answer= in.readLine();
@@ -358,7 +404,7 @@ public class ServerConnection implements Runnable {
             setCurrentPlayer(answer);
             String updatingCurrentPlayer= in.readLine(); //-> aggiornamento del currentPLayer
             System.out.println(updatingCurrentPlayer);
-            cleanTheSocket();
+            cleanTheSocket();*/
         }
 
     }
@@ -381,11 +427,12 @@ public class ServerConnection implements Runnable {
         return inputClient;
     }
 
-    private void status() throws IOException {
+    private int status() throws IOException {
         sendMessageToServer("status");
         String points= in.readLine();
         System.out.println("you got: "+ points + " points!");
         clientView.setPlayerScore(Integer.parseInt(points));
+        return Integer.parseInt(points);
     }
 
     private void visualizeCommonObjective() throws IOException {
@@ -444,38 +491,38 @@ public class ServerConnection implements Runnable {
         do {
             System.out.println("""
                     Where do you want to draw the card from?
-                    ->deck
-                    ->well""");
+                    1->deck
+                    2->well""");
             drawnCard = stdin.readLine().toLowerCase();
-            if (drawnCard.equals("deck")) {
-                sendMessageToServer(drawnCard);
+            if (drawnCard.equals("deck") || drawnCard.equals("1")) {
+                sendMessageToServer("deck");
                 drawCardFromDeck();
             }
-            else if (drawnCard.equals("well")) {
-                sendMessageToServer(drawnCard);
+            else if (drawnCard.equals("well") || drawnCard.equals("2")) {
+                sendMessageToServer("well");
                 drawCardFromWell();
             }
             else System.out.println("write 'deck' or 'well'");
-        }while (!drawnCard.equals("well") && !drawnCard.equals("deck"));
+        }while (!drawnCard.equals("well") && !drawnCard.equals("deck") && !drawnCard.equals("1") && !drawnCard.equals("2"));
     }
 
     private void drawCardFromDeck() throws IOException {
         System.out.println("""
                 Where do you want to draw your card from?
-                ->Resource
-                ->Gold""");
+                1->Resource
+                2->Gold""");
         String drawnCard;
         do{
             drawnCard = stdin.readLine().toLowerCase();
-            if (drawnCard.equals("resource")) {
+            if (drawnCard.equals("resource") || drawnCard.equals("1")) {
                 drawCardFromResourceDeck();
             }
-            else if (drawnCard.equals("gold")) {
+            else if (drawnCard.equals("gold") || drawnCard.equals("2")) {
                 drawCardFromGoldDeck();
             }
             else System.out.println("Write 'resource' or 'gold'");
 
-        }while (!drawnCard.equals("resource") && !drawnCard.equals("gold"));
+        }while (!drawnCard.equals("resource") && !drawnCard.equals("gold") && !drawnCard.equals("1") && !drawnCard.equals("2"));
     }
 
     private void drawCardFromResourceDeck() throws IOException {
@@ -484,7 +531,7 @@ public class ServerConnection implements Runnable {
         sendMessageToServer("showYourCardDeck");
         System.out.println("Your Deck:" );
         System.out.println("--------------------------------------------------------------------------------------");
-        receivingAndPrintingCards();
+        receivingPrintingUpdatingCards();
         System.out.println("--------------------------------------------------------------------------------------");
     }
 
@@ -494,7 +541,7 @@ public class ServerConnection implements Runnable {
         sendMessageToServer("showYourCardDeck");
         System.out.println("Your Deck:" );
         System.out.println("--------------------------------------------------------------------------------------");
-        receivingAndPrintingCards();
+        receivingPrintingUpdatingCards();
         System.out.println("--------------------------------------------------------------------------------------");
     }
 
@@ -524,7 +571,7 @@ public class ServerConnection implements Runnable {
             sendMessageToServer("showYourCardDeck");
             System.out.println("Your Deck:" );
             System.out.println("--------------------------------------------------------------------------------------");
-            receivingAndPrintingCards();
+            receivingPrintingUpdatingCards();
             System.out.println("--------------------------------------------------------------------------------------");
             showWell();
         }
@@ -534,7 +581,7 @@ public class ServerConnection implements Runnable {
             System.out.println("Your Deck:" );
             System.out.println("--------------------------------------------------------------------------------------");
             sendMessageToServer("showYourCardDeck");
-            receivingAndPrintingCards();
+            receivingPrintingUpdatingCards();
             System.out.println("--------------------------------------------------------------------------------------");
             showWell();
         }

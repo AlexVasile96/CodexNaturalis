@@ -44,6 +44,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static HandlingPlayerInputsThread fourthClient = null;
     private static CountDownLatch setupLatch;
     private static int updateOrder = 0;
+    private boolean inizioTurno = true;
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException {
         this.clientSocket = socket;
@@ -103,7 +104,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                     game.updateSingleClientView(player);
                     System.out.println(player.getClientView());
                 }
-                System.out.println(game.getObjectiveDeck().remainingCards());
                 sendMessageToClient(currentPlayer.getNickName());
                 if (this == firstClient) {
                     sendMessageToClient("You are the first client");
@@ -152,7 +152,39 @@ public class HandlingPlayerInputsThread implements Runnable {
         String messageFromClient;
         boolean endturnphase = false;
         while (!endturnphase) {
-            if (currentPlayer.getPlayerScore() >= 20 && !currentPlayer.isHasThePlayerGot20Points()) {
+            if(!threadPlayer.isThePlayerDeckStarted()) {
+                threadPlayer.setThePlayerDeckStarted(true);
+                messageFromClient = stdIn.readLine();
+                runCommand(messageFromClient, threadPlayer);
+                inizioTurno = true;
+            }
+            if (inizioTurno) {
+                sendMessageToAllClients(String.valueOf(game.isEndGame()));
+                inizioTurno = false;
+            }
+
+            //inizio endgame
+            if(game.isEndGame() && !currentPlayer.isHasThePlayerGot20Points()){// allora è l'ultimo giro
+                currentPlayer.setHasThePlayerAlreadyPLacedACard(true);
+            }
+            else if(currentPlayer.getPlayerScore() >= 20 && !currentPlayer.isHasThePlayerGot20Points()) {// allora inizia ultimo giro per gli altri
+                currentPlayer.setHasThePlayerGot20Points(true);
+                game.setEndGame(true);
+                winningPlayer = currentPlayer;
+                GameController.setWinningPlayer(currentPlayer);
+                runCommand("endTurn", currentPlayer);
+            }
+            else if(currentPlayer.isHasThePlayerGot20Points()) {//allora tutti hanno fatto il giro e stampo punteggio
+                System.out.println("END OF GAME!");
+                sendMessageToAllClients("ok sono arrivato qui");
+                messageFromClient = stdIn.readLine();
+                runCommand(messageFromClient, currentPlayer);//quit
+            }
+
+
+
+
+            /*if (currentPlayer.getPlayerScore() >= 20 && !currentPlayer.isHasThePlayerGot20Points()) {
                 currentPlayer.setHasThePlayerGot20Points(true);
                 winningPlayer = currentPlayer;
                 GameController.setWinningPlayer(currentPlayer);
@@ -163,14 +195,16 @@ public class HandlingPlayerInputsThread implements Runnable {
             if (Objects.equals(currentPlayer.getNickName(), winningPlayer.getNickName())) {
                 System.out.println("END OF GAME!");
                 runCommand("endgame", threadPlayer);
-            }
+            }*/
+            //fine end game
             System.out.println("I'm waiting current player" + currentPlayer.getNickName() + " request");
             messageFromClient = stdIn.readLine();
             System.out.println("Client typed: " + messageFromClient);
+            if (messageFromClient.equals("endTurn")) inizioTurno=true;
             runCommand(messageFromClient, threadPlayer);
 
             if (messageFromClient.equals("quit")) {
-                gameController.setSize(gameController.getSize() - 1);
+                gameController.setSize(gameController.getSize() - 19);
                 messageFromClient = stdIn.readLine();
                 runCommand(messageFromClient, threadPlayer);
                 endturnphase = true;
@@ -331,7 +365,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                         cardChosenFromHisDeck = Integer.parseInt(stdIn.readLine());
                         System.out.println("Player chose card number " + cardChosenFromHisDeck);
                         if (player.checkingTheChosenCardForGoldPurpose(cardChosenFromHisDeck)) {
-                            sendMessageToAllClients("You can continue!");
+                            sendMessageToAllClients("puoi procedere");
                         } else {
                             sendMessageToAllClients("Gold Card not placeable");
                             GoldCard cartGold = (GoldCard) player.chooseCard(cardChosenFromHisDeck);
@@ -357,17 +391,31 @@ public class HandlingPlayerInputsThread implements Runnable {
                             forClientView.append("(back)");
                         } else forClientView.append("(front)");
                     } else forClientView.append("(back)");
-                    String CardOnTheBoardChosen = stdIn.readLine();
-                    int boardCardChosen = Integer.parseInt(CardOnTheBoardChosen);
-                    System.out.println("Il player ha deciso di giocare la propria carta sulla carta numero " + boardCardChosen);
-                    gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
-                    cornerChosen = stdIn.readLine();
-                    System.out.println(cornerChosen);
-                    gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
+
+                    //ciclo scelta carta sulla board
+                    int boardCardChosen;
+                    boolean rightCard;
+                    do {
+                        boardCardChosen = Integer.parseInt(stdIn.readLine());
+                        System.out.println("Il player ha deciso di giocare la propria carta sulla carta numero " + boardCardChosen);
+                        gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
+                        cornerChosen = stdIn.readLine();
+                        if(cornerChosen.equals("clean")) {
+                            rightCard=false;
+                            System.out.println("The card Has NO free corners");
+                        } else rightCard= true;
+                        System.out.println(cornerChosen);
+                        gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
+
+                    }while (!rightCard);
                     forClientView.append("\n(" + chosenCard.getNode().getCoordY() + " " + chosenCard.getNode().getCoordX() + ")");
                     sendMessageToAllClients(String.valueOf(forClientView));
                     messageFromClient = stdIn.readLine();
-                    runCommand(messageFromClient, player);
+                    runCommand(messageFromClient, player);//showWell
+                    messageFromClient = stdIn.readLine();
+                    runCommand(messageFromClient, player);//drawCard
+                    messageFromClient = stdIn.readLine();
+                    runCommand(messageFromClient, player);//status
                 }
                 case "drawCard" -> {
                     messageFromClient = stdIn.readLine();

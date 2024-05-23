@@ -26,12 +26,12 @@ public class Game implements WhatCanPlayerDo {
     private ObjectiveCard firstObjectiveCommonCard;
     private ObjectiveCard secondObjectiveCommonCard;
     private List<String> dots;
-    private static boolean isCornerAlreadyChosen = false;
     private Card selectedCardFromTheDeck = null;
     private Card cPchoose = null;
     private List<Player> playersFromDisk;
     private final Semaphore semaphore = new Semaphore(1);
     private int totalNumberOfPLayer=0;
+    private boolean endGame = false;
 
     public Game() {                                           //GAME CONSTRUCTOR WHICH INITIALIZED ALL THE CARDS
         this.players = new ArrayList<>();
@@ -357,7 +357,6 @@ public class Game implements WhatCanPlayerDo {
         cPchoose = player.gettingCardsFromTheBoard(player.getBoard(), cardChosenOnTheBoard);
         String result = player.isTheCardChosenTheInitialcard(cPchoose, initialCard);
         System.out.println(result);
-        isCornerAlreadyChosen = true;
         return result;
     }
 
@@ -723,6 +722,14 @@ public class Game implements WhatCanPlayerDo {
 
     public void setTotalNumberOfPLayer(int totalNumberOfPLayer) {
         this.totalNumberOfPLayer = totalNumberOfPLayer;
+    }
+
+    public boolean isEndGame() {
+        return endGame;
+    }
+
+    public void setEndGame(boolean endGame) {
+        this.endGame = endGame;
     }
 }
 
