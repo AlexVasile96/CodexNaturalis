@@ -2,15 +2,65 @@
   "players": [
     {
       "nickname": "qwe",
-      "score": 1,
+      "score": 2,
       "dot": 3,
       "player_deck": [
         {
-          "id": 17,
+          "id": 65,
+          "type": "ANIMAL",
+          "value": 2,
+          "TL": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0
+          },
+          "TR": {
+            "specificCornerSeed": "NOTTOBEPLACEDON",
+            "x": 0,
+            "y": 0
+          },
+          "BL": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0
+          },
+          "BR": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": 11,
           "type": "PLANT",
           "value": 0,
           "TL": {
-            "specificCornerSeed": "PARCHMENT",
+            "specificCornerSeed": "PLANT",
+            "x": 0,
+            "y": 0
+          },
+          "TR": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0
+          },
+          "BL": {
+            "specificCornerSeed": "PLANT",
+            "x": 0,
+            "y": 0
+          },
+          "BR": {
+            "specificCornerSeed": "NOTTOBEPLACEDON",
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": 13,
+          "type": "PLANT",
+          "value": 0,
+          "TL": {
+            "specificCornerSeed": "EMPTY",
             "x": 0,
             "y": 0
           },
@@ -25,57 +75,7 @@
             "y": 0
           },
           "BR": {
-            "specificCornerSeed": "ANIMAL",
-            "x": 0,
-            "y": 0
-          }
-        },
-        {
-          "id": 45,
-          "type": "MUSHROOM",
-          "value": 2,
-          "TL": {
-            "specificCornerSeed": "EMPTY",
-            "x": 0,
-            "y": 0
-          },
-          "TR": {
-            "specificCornerSeed": "EMPTY",
-            "x": 0,
-            "y": 0
-          },
-          "BL": {
-            "specificCornerSeed": "EMPTY",
-            "x": 0,
-            "y": 0
-          },
-          "BR": {
-            "specificCornerSeed": "NOTTOBEPLACEDON",
-            "x": 0,
-            "y": 0
-          }
-        },
-        {
-          "id": 9,
-          "type": "MUSHROOM",
-          "value": 1,
-          "TL": {
-            "specificCornerSeed": "MUSHROOM",
-            "x": 0,
-            "y": 0
-          },
-          "TR": {
-            "specificCornerSeed": "NOTTOBEPLACEDON",
-            "x": 0,
-            "y": 0
-          },
-          "BL": {
-            "specificCornerSeed": "EMPTY",
-            "x": 0,
-            "y": 0
-          },
-          "BR": {
-            "specificCornerSeed": "EMPTY",
+            "specificCornerSeed": "PLANT",
             "x": 0,
             "y": 0
           }
@@ -6255,7 +6255,7 @@
             {
               "row": 24,
               "col": 24,
-              "specificSeed": "MUSHROOM"
+              "specificSeed": "INSECT"
             },
             {
               "row": 24,
@@ -6507,271 +6507,271 @@
             {
               "row": 25,
               "col": 24,
-              "specificSeed": "PLANT"
+              "specificSeed": "MUSHROOM"
             },
             {
               "row": 25,
               "col": 25,
-              "specificSeed": "PLANT"
-            },
-            {
-              "row": 25,
-              "col": 26,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 27,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 28,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 29,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 30,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 31,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 32,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 33,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 34,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 35,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 36,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 37,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 38,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 39,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 40,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 41,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 42,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 43,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 44,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 45,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 46,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 47,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 48,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 49,
-              "specificSeed": "EMPTY"
-            }
-          ],
-          [
-            {
-              "row": 26,
-              "col": 0,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 1,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 2,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 3,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 4,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 5,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 6,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 7,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 8,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 9,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 10,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 11,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 12,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 13,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 14,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 15,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 16,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 17,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 18,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 19,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 20,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 21,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 22,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 23,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 24,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 26,
-              "col": 25,
-              "specificSeed": "PLANT"
-            },
-            {
-              "row": 26,
-              "col": 26,
               "specificSeed": "NOTTOBEPLACEDON"
             },
             {
+              "row": 25,
+              "col": 26,
+              "specificSeed": "MUSHROOM"
+            },
+            {
+              "row": 25,
+              "col": 27,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 28,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 29,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 30,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 31,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 32,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 33,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 34,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 35,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 36,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 37,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 38,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 39,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 40,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 41,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 42,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 43,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 44,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 45,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 46,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 47,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 48,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 49,
+              "specificSeed": "EMPTY"
+            }
+          ],
+          [
+            {
+              "row": 26,
+              "col": 0,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 1,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 2,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 3,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 4,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 5,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 6,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 7,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 8,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 9,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 10,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 11,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 12,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 13,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 14,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 15,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 16,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 17,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 18,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 19,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 20,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 21,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 22,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 23,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 24,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 25,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 26,
+              "col": 26,
+              "specificSeed": "EMPTY"
+            },
+            {
               "row": 26,
               "col": 27,
               "specificSeed": "EMPTY"
@@ -7021,12 +7021,12 @@
             {
               "row": 27,
               "col": 26,
-              "specificSeed": "EMPTY"
+              "specificSeed": "PLANT"
             },
             {
               "row": 27,
               "col": 27,
-              "specificSeed": "EMPTY"
+              "specificSeed": "NOTTOBEPLACEDON"
             },
             {
               "row": 27,
@@ -12684,51 +12684,26 @@
             }
           ]
         ],
-        "numOfEmpty": 2493,
+        "numOfEmpty": 2490,
         "initEmptyValue": "EMPTY"
       },
       "secretChosenCard": {
-        "id": 91,
-        "type": "MUSHROOM",
+        "id": 92,
+        "type": "PLANT",
         "value": 3
       }
     },
     {
-      "nickname": "zxc",
-      "score": 1,
+      "nickname": "fds",
+      "score": 3,
       "dot": 1,
       "player_deck": [
         {
-          "id": 36,
-          "type": "INSECT",
-          "value": 0,
+          "id": 69,
+          "type": "ANIMAL",
+          "value": 3,
           "TL": {
-            "specificCornerSeed": "PARCHMENT",
-            "x": 0,
-            "y": 0
-          },
-          "TR": {
-            "specificCornerSeed": "INSECT",
-            "x": 0,
-            "y": 0
-          },
-          "BL": {
             "specificCornerSeed": "NOTTOBEPLACEDON",
-            "x": 0,
-            "y": 0
-          },
-          "BR": {
-            "specificCornerSeed": "MUSHROOM",
-            "x": 0,
-            "y": 0
-          }
-        },
-        {
-          "id": 60,
-          "type": "PLANT",
-          "value": 5,
-          "TL": {
-            "specificCornerSeed": "EMPTY",
             "x": 0,
             "y": 0
           },
@@ -12743,32 +12718,57 @@
             "y": 0
           },
           "BR": {
-            "specificCornerSeed": "NOTTOBEPLACEDON",
+            "specificCornerSeed": "FEATHER",
             "x": 0,
             "y": 0
           }
         },
         {
-          "id": 16,
-          "type": "PLANT",
-          "value": 0,
+          "id": 68,
+          "type": "ANIMAL",
+          "value": 3,
           "TL": {
-            "specificCornerSeed": "MUSHROOM",
+            "specificCornerSeed": "EMPTY",
             "x": 0,
             "y": 0
           },
           "TR": {
-            "specificCornerSeed": "PLANT",
-            "x": 0,
-            "y": 0
-          },
-          "BL": {
-            "specificCornerSeed": "NOTTOBEPLACEDON",
-            "x": 0,
-            "y": 0
-          },
-          "BR": {
             "specificCornerSeed": "INKWELL",
+            "x": 0,
+            "y": 0
+          },
+          "BL": {
+            "specificCornerSeed": "NOTTOBEPLACEDON",
+            "x": 0,
+            "y": 0
+          },
+          "BR": {
+            "specificCornerSeed": "NOTTOBEPLACEDON",
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": 1,
+          "type": "MUSHROOM",
+          "value": 0,
+          "TL": {
+            "specificCornerSeed": "MUSHROOM",
+            "x": 0,
+            "y": 0
+          },
+          "TR": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0
+          },
+          "BL": {
+            "specificCornerSeed": "MUSHROOM",
+            "x": 0,
+            "y": 0
+          },
+          "BR": {
+            "specificCornerSeed": "NOTTOBEPLACEDON",
             "x": 0,
             "y": 0
           }
@@ -18948,269 +18948,269 @@
             {
               "row": 24,
               "col": 24,
-              "specificSeed": "MUSHROOM"
-            },
-            {
-              "row": 24,
-              "col": 25,
               "specificSeed": "PLANT"
             },
             {
               "row": 24,
-              "col": 26,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 27,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 28,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 29,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 30,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 31,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 32,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 33,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 34,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 35,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 36,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 37,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 38,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 39,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 40,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 41,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 42,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 43,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 44,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 45,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 46,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 47,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 48,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 24,
-              "col": 49,
-              "specificSeed": "EMPTY"
-            }
-          ],
-          [
-            {
-              "row": 25,
-              "col": 0,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 1,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 2,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 3,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 4,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 5,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 6,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 7,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 8,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 9,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 10,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 11,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 12,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 13,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 14,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 15,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 16,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 17,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 18,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 19,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 20,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 21,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 22,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 23,
-              "specificSeed": "EMPTY"
-            },
-            {
-              "row": 25,
-              "col": 24,
+              "col": 25,
               "specificSeed": "INSECT"
             },
             {
+              "row": 24,
+              "col": 26,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 27,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 28,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 29,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 30,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 31,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 32,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 33,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 34,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 35,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 36,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 37,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 38,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 39,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 40,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 41,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 42,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 43,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 44,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 45,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 46,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 47,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 48,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 24,
+              "col": 49,
+              "specificSeed": "EMPTY"
+            }
+          ],
+          [
+            {
+              "row": 25,
+              "col": 0,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 1,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 2,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 3,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 4,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 5,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 6,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 7,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 8,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 9,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 10,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 11,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 12,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 13,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 14,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 15,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 16,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 17,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 18,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 19,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 20,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 21,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 22,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 23,
+              "specificSeed": "EMPTY"
+            },
+            {
+              "row": 25,
+              "col": 24,
+              "specificSeed": "ANIMAL"
+            },
+            {
               "row": 25,
               "col": 25,
-              "specificSeed": "NOTTOBEPLACEDON"
+              "specificSeed": "EMPTY"
             },
             {
               "row": 25,
               "col": 26,
-              "specificSeed": "FEATHER"
+              "specificSeed": "ANIMAL"
             },
             {
               "row": 25,
@@ -19452,7 +19452,7 @@
             {
               "row": 26,
               "col": 24,
-              "specificSeed": "EMPTY"
+              "specificSeed": "NOTTOBEPLACEDON"
             },
             {
               "row": 26,
@@ -19462,7 +19462,7 @@
             {
               "row": 26,
               "col": 26,
-              "specificSeed": "MUSHROOM"
+              "specificSeed": "NOTTOBEPLACEDON"
             },
             {
               "row": 26,
@@ -25377,12 +25377,12 @@
             }
           ]
         ],
-        "numOfEmpty": 2493,
+        "numOfEmpty": 2490,
         "initEmptyValue": "EMPTY"
       },
       "secretChosenCard": {
-        "id": 96,
-        "type": "PLANT",
+        "id": 89,
+        "type": "ANIMAL",
         "value": 2
       }
     }

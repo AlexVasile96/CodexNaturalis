@@ -346,15 +346,29 @@ public class GameSceneController {
     private void setupGameActions() throws IOException {
         playCard.setOnAction(e -> {
             if (isCurrentPlayerTurn) {
+                String canIPlaceTheGoldCard=null;
                 if (haveToPlay) {
                     if(cornerSelected==null)
                     {
                         showAlert("Corner Missing","Please select a corner beforing playing a card");
                     }
-                    if(Integer.parseInt(indexForGold)>41)
+
+                    if(indexForGold!=null && Integer.parseInt(indexForGold)>40  )
                     {
                         System.out.println("You chose to play a gold card");
                         out.println("goldGui");
+                        try {
+                            canIPlaceTheGoldCard= in.readLine();
+                            System.out.println("Server response is: " + canIPlaceTheGoldCard);
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        if(canIPlaceTheGoldCard.equals("NO"))
+                        {
+                            showAlert("Gold Card NOt Placeable", "YOu can't place the gold card beacuse you don't have enough specific seeds");
+                            indexForGold=null;
+                            return;
+                        }
                     }
                     if (cornerSelected!=null && indexCardToPlace < 4) {
                         try {

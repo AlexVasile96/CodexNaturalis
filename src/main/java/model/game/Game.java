@@ -732,9 +732,18 @@ public class Game implements WhatCanPlayerDo {
         this.endGame = endGame;
     }
 
-    public void checkingIfICanPlaceTheGoldCardOnGui(Player player, int indexOfTheGoldCard)
+    public String checkingIfICanPlaceTheGoldCardOnGui(Player player, int indexOfTheGoldCard)
     {
-        player.checkingTheChosenCardForGoldPurpose(indexOfTheGoldCard);
+       boolean check= player.checkingTheChosenCardForGoldPurpose(indexOfTheGoldCard);
+        System.out.println("sono in game");
+
+       if(check)
+       {
+           System.out.println("Check is: "+ check);
+           return "OKAY";
+       }
+
+       else return "NO";
     }
 }
 
