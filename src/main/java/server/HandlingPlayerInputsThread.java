@@ -97,7 +97,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                         initializeCards();
                     }
                 }
-
+                sendMessageToClient("All clients connected");
                 assigningSecretCard();
                 assignInitialCard();
                 for (Player player : playersList) {

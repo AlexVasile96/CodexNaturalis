@@ -47,8 +47,7 @@ public class ServerConnection implements Runnable {
                         command = stdin.readLine();
                         sendMessageToServer(command);
                         loginPlayer(player);                                  //Actual Login
-                        System.out.println("Piazza ai peperoni");
-                        System.out.println("All clients connected");
+                        System.out.println(in.readLine()); //All clients connected
                         assigningSecretCard();                                      //Choosing the secret Card
                         takingTheInitialCard();                                     //Taking the initial Card
                         String waitingAllClientsTOChooseInitialcard= in.readLine();//Allclienti scelsero
@@ -123,44 +122,29 @@ public class ServerConnection implements Runnable {
 }
 
     private void makeYourMoves() throws IOException {
-        if(!player.isThePlayerDeckStarted()) {
+        if(!player.isThePlayerDeckStarted())
+        {
             player.setThePlayerDeckStarted(true);
             showCards();
         }
-        if(inizioturno) {
-            isEndGame = in.readLine();
-            inizioturno = false;
-        }
-
-        if(isEndGame.equals("true")  && !player.getNoMoreTurns()){//allora è l'ultimo turno
-            System.out.println("This is the last turn!!");
-            player.noMoreTurns();
-        }
-        else if (isEndGame.equals("true")) {
-            System.out.println("---------END GAME---------");
-            System.out.println(in.readLine());
-            return;
-        }
-
         System.out.println("It's your turn!");
         System.out.println("What do you want to do?");
         System.out.println("Please type help if you want to see which moves you can make.");
         String command= stdin.readLine().toLowerCase();
-        if((command.equals("playcard") /*|| command.equals("1")*/) && player.isHasThePlayerAlreadyPLacedACard()) //decommentare prima della consegna
+        if(command.equals("playcard") && player.isHasThePlayerAlreadyPLacedACard())
         {
             System.out.println("You already placed and drew a card!");
             return;
         }
-        else if((command.equals("endturn")|| command.equals("7")) && !player.isHasThePlayerAlreadyPLacedACard())
+        if(command.equals("endturn")&& !player.isHasThePlayerAlreadyPLacedACard())
         {
             System.out.println("You have to place a card first");
             return;
-        }else if((command.equals("endturn")|| command.equals("7")) && isEndGame.equals("true")){
-            player.noMoreTurns();
         }
-        if(command.equals("endturn")|| command.equals("7")) inizioturno = true;
         actionsInput(command);
     }
+
+
 
     private void actionsInput(String userInput) throws IOException { //GAME STARTED
         try {

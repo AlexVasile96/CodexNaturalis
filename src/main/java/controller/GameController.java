@@ -165,9 +165,7 @@ public class GameController {
 public synchronized void waitingForPLayers() throws InterruptedException {
         if(currentNumsOfPlayers==getSize())
         {
-            //sendMessageToAllClients("All clients connected");
             notifyAll();
-
         }
         else{
             System.out.println("current numb of players da gamecontroller " + currentNumsOfPlayers);

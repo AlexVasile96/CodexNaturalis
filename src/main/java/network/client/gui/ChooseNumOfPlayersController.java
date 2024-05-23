@@ -31,16 +31,14 @@ public class ChooseNumOfPlayersController {
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView cl) {
         this.primaryStage = primaryStage;
         this.out = out;
-        this.socket=socket;
+        this.socket = socket;
         this.in = in;
-        this.clientView=cl;
+        this.clientView = cl;
     }
 
     @FXML
     public void initialize() {
-        // Disabilita il pulsante di login all'avvio
         button.setDisable(true);
-
         numOfPlayersGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             checkFields();
         });
@@ -48,8 +46,6 @@ public class ChooseNumOfPlayersController {
 
     private void checkFields() {
         Toggle numOfPlayers = numOfPlayersGroup.getSelectedToggle();
-
-        // Abilita il pulsante di login solo se entrambi i campi sono compilati
         button.setDisable(numOfPlayers == null);
     }
 
@@ -61,35 +57,29 @@ public class ChooseNumOfPlayersController {
             return;
         }
         String howManyPlayersAreThere = in.readLine();
-        System.out.println(howManyPlayersAreThere); //At the moment there is
-        if (howManyPlayersAreThere.equals("There's already someone online! You will be ")) {
-            System.out.println(in.readLine()); //2
-            System.out.println(in.readLine());//players
-        } else {
-            System.out.println(in.readLine()); //1
-            System.out.println(in.readLine()); //player.ChooseHowManyPlayers
-            String selectedNumOfPlayersText = ((RadioButton) numOfPlayers).getText();
-            switch (selectedNumOfPlayersText) {
-                case "2 Players":
-                    selectedNumOfPlayers = 2;
-                    break;
-                case "3 Players":
-                    selectedNumOfPlayers = 3;
-                    break;
-                case "4 Players":
-                    selectedNumOfPlayers = 4;
-                    break;
-                default:
-                    System.out.println("Not valid number of players");
-                    return;
-            }
-            testNumbers.setText("Number of players is: " + selectedNumOfPlayers);
-            out.println(selectedNumOfPlayers);
-            System.out.println(in.readLine()); //Players number correctly chosen
-            System.out.println(selectedNumOfPlayersText);
+        System.out.println(howManyPlayersAreThere); //Choose the number of players!
+
+        String selectedNumOfPlayersText = ((RadioButton) numOfPlayers).getText();
+        switch (selectedNumOfPlayersText) {
+            case "2 Players":
+                selectedNumOfPlayers = 2;
+                break;
+            case "3 Players":
+                selectedNumOfPlayers = 3;
+                break;
+            case "4 Players":
+                selectedNumOfPlayers = 4;
+                break;
+            default:
+                System.out.println("Not valid number of players");
+                return;
         }
+        testNumbers.setText("Number of players is: " + selectedNumOfPlayers);
+        out.println(selectedNumOfPlayers);
+        System.out.println(in.readLine()); //Players number correctly chosen
         System.out.println(in.readLine()); //You have to wait until all players are connected
         LobbyScene lobbySceneHandler = new LobbyScene();
-        lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView,null,0);
+        lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView, null, 0);
     }
 }
+
