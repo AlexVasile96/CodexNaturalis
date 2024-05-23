@@ -112,10 +112,11 @@ public class HandlingPlayerInputsThread implements Runnable {
                 waitForAllClientsToSetup();
                 boolean hasClientQuit = false;
                 for (Player player : playersList) {
-                    player.setPlayerScore(1);
+                    player.setPlayerScore(19);
                 }
                 while (!hasClientQuit) {
                     startGame();
+                    inizioTurno = true;
                     System.out.println("Client changed, now " + currentPlayer + " is playing");
                     hasClientQuit = true;
                 }
@@ -152,39 +153,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         String messageFromClient;
         boolean endturnphase = false;
         while (!endturnphase) {
-            if(!threadPlayer.isThePlayerDeckStarted()) {
-                threadPlayer.setThePlayerDeckStarted(true);
-                messageFromClient = stdIn.readLine();
-                runCommand(messageFromClient, threadPlayer);
-                inizioTurno = true;
-            }
-            if (inizioTurno) {
-                sendMessageToAllClients(String.valueOf(game.isEndGame()));
-                inizioTurno = false;
-            }
-
-            //inizio endgame
-            if(game.isEndGame() && !currentPlayer.isHasThePlayerGot20Points()){// allora è l'ultimo giro
-                currentPlayer.setHasThePlayerAlreadyPLacedACard(true);
-            }
-            else if(currentPlayer.getPlayerScore() >= 20 && !currentPlayer.isHasThePlayerGot20Points()) {// allora inizia ultimo giro per gli altri
-                currentPlayer.setHasThePlayerGot20Points(true);
-                game.setEndGame(true);
-                winningPlayer = currentPlayer;
-                GameController.setWinningPlayer(currentPlayer);
-                runCommand("endTurn", currentPlayer);
-            }
-            else if(currentPlayer.isHasThePlayerGot20Points()) {//allora tutti hanno fatto il giro e stampo punteggio
-                System.out.println("END OF GAME!");
-                sendMessageToAllClients("ok sono arrivato qui");
-                messageFromClient = stdIn.readLine();
-                runCommand(messageFromClient, currentPlayer);//quit
-            }
-
-
-
-
-            /*if (currentPlayer.getPlayerScore() >= 20 && !currentPlayer.isHasThePlayerGot20Points()) {
+            if (currentPlayer.getPlayerScore() >= 20 && !currentPlayer.isHasThePlayerGot20Points()) {
                 currentPlayer.setHasThePlayerGot20Points(true);
                 winningPlayer = currentPlayer;
                 GameController.setWinningPlayer(currentPlayer);
@@ -195,16 +164,14 @@ public class HandlingPlayerInputsThread implements Runnable {
             if (Objects.equals(currentPlayer.getNickName(), winningPlayer.getNickName())) {
                 System.out.println("END OF GAME!");
                 runCommand("endgame", threadPlayer);
-            }*/
-            //fine end game
+            }
             System.out.println("I'm waiting current player" + currentPlayer.getNickName() + " request");
             messageFromClient = stdIn.readLine();
             System.out.println("Client typed: " + messageFromClient);
-            if (messageFromClient.equals("endTurn")) inizioTurno=true;
             runCommand(messageFromClient, threadPlayer);
 
             if (messageFromClient.equals("quit")) {
-                gameController.setSize(gameController.getSize() - 19);
+                gameController.setSize(gameController.getSize() - 1);
                 messageFromClient = stdIn.readLine();
                 runCommand(messageFromClient, threadPlayer);
                 endturnphase = true;
