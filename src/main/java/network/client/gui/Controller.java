@@ -218,11 +218,16 @@ public class Controller {
         in.readLine();//the space
 
     }
-    public void waitForTurn(String playerNickname) throws IOException {
+    public void waitForTurn(String playerNickname, Stage primaryStage) throws IOException {
         String message;
         System.out.println("Sono entrato nella wait, aspetto il mio nome");
         while (!(message = in.readLine()).equals(playerNickname)) {
             System.out.println("Received message while waiting for turn: " + message);
+            if(message.equals("One client decided to quit, so the game will end for every player."))
+            {
+                QuitScene quitScene = new QuitScene();
+                quitScene.quit(primaryStage);
+            }
             System.out.println("Not your turn, please wait");
         }
         System.out.println("It's now " + playerNickname + "'s turn");

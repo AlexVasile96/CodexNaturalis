@@ -750,7 +750,7 @@ public class GameSceneController {
     private void waitForTurn(ImageView handCard1View, ImageView handCard2View, ImageView handCard3View) {
         new Thread(() -> {
             try {
-                controller.waitForTurn(clientView.getUserName());
+                controller.waitForTurn(clientView.getUserName(), primaryStage);
                 Platform.runLater(() -> {
                     updateTurnState(true);
                     try {
