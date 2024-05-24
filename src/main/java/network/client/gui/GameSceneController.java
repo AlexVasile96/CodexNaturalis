@@ -1445,11 +1445,12 @@ public class GameSceneController {
         out.println("firstCardResourceGui");
         String newTopCardResourceDeckId = in.readLine();
         idTopCardResourceDeck=newTopCardResourceDeckId;
-        if(idTopCardResourceDeck.equals("One client decided to quit, so the game will end for every player.")){
-            out.println("quit");
-        }
         System.out.println(newTopCardResourceDeckId);
+        System.out.println("Sono qua e dovrei quittare");
         String newPathResource = "/ImmaginiCodex/CarteBack/Resource/" + newTopCardResourceDeckId + ".png";
+        if(newPathResource.equals("/ImmaginiCodex/CarteBack/Resource/One client decided to quit, so the game will end for every player..png")){
+            controller.quit(primaryStage);
+        }
         System.out.println(newPathResource);
         Image newTopCardResourceDeckImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPathResource)));
         SharedObjectsInGui.getTopCardResourceDeckView().setImage(newTopCardResourceDeckImage);
