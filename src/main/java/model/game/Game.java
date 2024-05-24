@@ -138,8 +138,10 @@ public class Game implements WhatCanPlayerDo {
         player.turnYourCard(cartaScelta);
     }
 
-    public void endGame() {
-        System.out.println("Updating each player points to see who is the real winner!");
+    public String endGame() {
+        StringBuilder finalText = new StringBuilder();
+        finalText.append("The Game is Over\n");
+        System.out.println("/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\nUpdating each player points to see who is the real winner!");
         for (Player player : players) {
             System.out.println(player.getNickName());
             System.out.println(player.getPlayerScore());
@@ -151,8 +153,18 @@ public class Game implements WhatCanPlayerDo {
         }
         Player winner = calculateWinner(players);
         System.out.println("And the winner is...........");
+        finalText.append("And the winner is...........\n");
         System.out.println("Suspance...");
+        finalText.append("Suspance...\n");
         System.out.println(winner.getNickName());
+        finalText.append(">>>>>>>>>>>>>>>>>>>>>>>>"+winner.getNickName()+"<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
+        finalText.append("Points:\n");
+        for (Player player : players) {
+            finalText.append(player.getPlayerScore() + "-> " + player.getPlayerScore()+"\n");
+        }
+        finalText.append("exit");
+        System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
+        return finalText.toString();
     }
 
     public Player calculateWinner(List<Player> players) {               //Calculating who has the highest score

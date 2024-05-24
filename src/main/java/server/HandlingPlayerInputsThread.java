@@ -114,7 +114,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 waitForAllClientsToSetup();
                 boolean hasClientQuit = false;
                 for (Player player : playersList) {
-                    player.setPlayerScore(1);
+                    player.setPlayerScore(19);
                 }
                 while (!hasClientQuit && !isGameQuit) {
                     startGame();
@@ -157,30 +157,20 @@ public class HandlingPlayerInputsThread implements Runnable {
         String messageFromClient;
         boolean endturnphase = false;
         while (!endturnphase) {
-            if(currentPlayer.isHasThePlayerGot20Points()){//stampa esiti
+            if(currentPlayer.isHasThePlayerGot20Points() ){//stampa esiti
                 System.out.println("------------\nEND OF GAME!\n------------");
                 sendMessageToAllClients("END OF GAME!");
                 sendMessageToAllClients("ci siamo!!");
-                game.setEndGame(true);
-                stdIn.readLine();//quit
                 //runCommand("endgame", threadPlayer);
-                messageFromClient = stdIn.readLine();
-                runCommand(messageFromClient, threadPlayer);
-                gameController.setSize(gameController.getSize() - 1);
-            }else if(game.isEndGame()){
-                System.out.println("------------\nEND OF GAME!\n------------");
-                messageFromClient= stdIn.readLine();
-                runCommand(messageFromClient, threadPlayer);//quit
-                gameController.setSize(gameController.getSize() - 1);
-                messageFromClient = stdIn.readLine();
-                runCommand(messageFromClient, threadPlayer);
-                return;
+                stdIn.readLine();//quit
+                sendMessageToAllClients("ALL_CLIENTS_QUIT");
+                isGameQuit = true;
+                break;
             }
             System.out.println("I'm waiting current player" + currentPlayer.getNickName() + " request");
             messageFromClient = stdIn.readLine();
             if(messageFromClient==null)
             {
-                endturnphase=true;
                 return;
             }
             System.out.println("Client typed: " + messageFromClient);
@@ -414,6 +404,7 @@ public class HandlingPlayerInputsThread implements Runnable {
 
                     //endgame
                     if (currentPlayer.getPlayerScore() >= 20 && !game.isEndGame()) {
+                        game.setEndGame(true);
                         currentPlayer.setHasThePlayerGot20Points(true);
                         winningPlayer = currentPlayer;
                         GameController.setWinningPlayer(currentPlayer);
