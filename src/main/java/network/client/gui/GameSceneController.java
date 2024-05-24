@@ -124,9 +124,6 @@ public class GameSceneController {
             SharedObjectsInGui.setTopCardGoldDeck(createNewPathForImages(SharedObjectsInGui.getPathGoldDeck()));
             out.println("firstCardResourceGui");
             idTopCardResourceDeck = in.readLine();
-            if(idTopCardResourceDeck.equals("One client decided to quit, so the game will end for every player.")){
-                out.println("quit");
-            }
             out.println("firstCardGoldGui");
             idTopCardGoldDeck = in.readLine();
             creatingDeckAndGoldDeckView();
@@ -1448,6 +1445,9 @@ public class GameSceneController {
         out.println("firstCardResourceGui");
         String newTopCardResourceDeckId = in.readLine();
         idTopCardResourceDeck=newTopCardResourceDeckId;
+        if(idTopCardResourceDeck.equals("One client decided to quit, so the game will end for every player.")){
+            out.println("quit");
+        }
         System.out.println(newTopCardResourceDeckId);
         String newPathResource = "/ImmaginiCodex/CarteBack/Resource/" + newTopCardResourceDeckId + ".png";
         System.out.println(newPathResource);
