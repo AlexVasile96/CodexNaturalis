@@ -24,8 +24,6 @@ public class ServerConnection implements Runnable {
     private boolean endGameForWinningPlayer = false;
     private boolean lastTurn = false;
     private String winningPlayer = null;
-    private StringBuilder printFinal =new StringBuilder();
-    private boolean gameOverNotForWinningPlayer =false;
     private boolean hasSomebodyQuit=false;
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
@@ -131,8 +129,8 @@ public class ServerConnection implements Runnable {
                 lastTurn = true;
                 winningPlayer = in.readLine();
             }else if(waitForCall.equals("END OF GAME!")){
-                printFinal.append(in.readLine());
-
+                System.out.println("------------\nEND GAME\n------------");
+                System.out.println(in.readLine());
             }
             else if(waitForCall.equals("ALL_CLIENTS_QUIT"))
             {
@@ -161,11 +159,8 @@ public class ServerConnection implements Runnable {
             System.out.println(in.readLine());
             quit();
             return;
-        }if (gameOverNotForWinningPlayer) {
-            System.out.println("------------\nEND GAME\n------------\n"+printFinal);
-            quit();
-            return;
-        }else if (lastTurn && !gameOverNotForWinningPlayer && !player.isHasThePlayerAlreadyPLacedACard()) {
+        }
+        if (lastTurn && !player.isHasThePlayerAlreadyPLacedACard()) {
             System.out.println("-----------------------------------------------------------\n" + winningPlayer + " has reached 20Pts! This is the last turn!\n-----------------------------------------------------------");
         }
         System.out.println("It's your turn!");
@@ -180,11 +175,6 @@ public class ServerConnection implements Runnable {
             System.out.println("You have to place a card first");
             return;
         }
-        else if((command.equals("endturn") || command.equals("7")) && lastTurn) {
-            gameOverNotForWinningPlayer = true;
-        }/*else if((command.equals("endgame") || command.equals("7") || command.equals("playcard") || command.equals("1")) && endGame) {
-            System.out.println("the command is no longer available. Print 'showboard' or 'quit'");
-        }*/
         actionsInput(command);
     }
 
