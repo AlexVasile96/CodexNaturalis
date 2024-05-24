@@ -15,10 +15,12 @@ public class Controller {
     PrintWriter out;
     private int gameSize;
     private String currentPlayerNickname;
+    private Socket socket;
 
-    public Controller(BufferedReader in, PrintWriter out) throws IOException {
+    public Controller(BufferedReader in, PrintWriter out, Socket socket) throws IOException {
         this.in = in;
         this.out = out;
+        this.socket = socket;
     }
 
 
@@ -173,6 +175,10 @@ public class Controller {
         System.out.println(in.readLine()); //ALL_CLIENTS_QUIT
         QuitScene quitScene = new QuitScene();
         quitScene.quit(primaryStage);
+        in.close();
+        out.close();
+        socket.close();
+        System.exit(0);
     }
 
 
@@ -229,7 +235,7 @@ public class Controller {
             {
                 quit(primaryStage);
             }
-            System.out.println("Not your turn, please wait");
+            else System.out.println("Not your turn, please wait");
         }
         System.out.println("It's now " + playerNickname + "'s turn");
         System.out.println("Time to play some Codex LESGO!");

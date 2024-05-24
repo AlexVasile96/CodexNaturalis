@@ -111,7 +111,7 @@ public class GameSceneController {
         this.currentPlayerNickname = currentPlayerNickname;
         System.out.println("Current player in initData is:" + currentPlayerNickname);
         this.clientView = clientView;
-        controller = new Controller(in, out);
+        controller = new Controller(in, out, socket);
         isCurrentPlayerTurn = clientView.getUserName().equals(currentPlayerNickname);
     }
 
@@ -732,6 +732,8 @@ public class GameSceneController {
                     in.close();
                     out.close();
                     socket.close();
+                    Platform.exit();
+                    System.exit(0);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -1547,8 +1549,7 @@ public class GameSceneController {
             if(messageFromServer.equals("One client decided to quit, so the game will end for every player.")){
                 try{
                     controller.quit(primaryStage);
-                    out.close();
-                    in.close();
+                    socket.close();
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
