@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import view.ClientView;
 
 import java.io.*;
+import java.net.SocketTimeoutException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -111,8 +112,9 @@ public class GameSceneController {
         this.currentPlayerNickname = currentPlayerNickname;
         System.out.println("Current player in initData is:" + currentPlayerNickname);
         this.clientView = clientView;
-        controller = new Controller(in, out);
+        controller = new Controller(in, out,socket);
         isCurrentPlayerTurn = clientView.getUserName().equals(currentPlayerNickname);
+        socket.setSoTimeout(30000); // timeout di 10 secondi
     }
 
     public synchronized void updateFirst() throws IOException {
@@ -729,9 +731,14 @@ public class GameSceneController {
             if (isCurrentPlayerTurn) {
                 try{
                     controller.quit(primaryStage);
-                    in.close();
-                    out.close();
-                    socket.close();
+                    // Chiusura delle risorse
+                    if (in != null) in.close();
+                    if (out != null) out.close();
+                    if (socket != null) socket.close();
+
+                    // Uscita dall'applicazione
+                    Platform.exit();
+                    System.exit(0);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -748,19 +755,36 @@ public class GameSceneController {
                     updateTurnState(true);
                     try {
                         System.out.println("In Gamescenecontroller");
-                        System.out.println(in.readLine()); //Fine turno
+                        System.out.println(in.readLine()); // Fine turno
                         updateGUI();
                         setupGameActions();
-
-
+                    } catch (SocketTimeoutException e) {
+                        handleDisconnection();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
+            } catch (SocketTimeoutException e) {
+                handleDisconnection();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }).start();
+    }
+    private void handleDisconnection() {
+        Platform.runLater(() -> {
+            showAlert("Disconnection", "A player has disconnected.");
+            try {
+                savePath();
+                if (in != null) in.close();
+                if (out != null) out.close();
+                if (socket != null) socket.close();
+                Platform.exit();
+                System.exit(0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void showAlert(String title, String message) {
@@ -1547,8 +1571,7 @@ public class GameSceneController {
             if(messageFromServer.equals("One client decided to quit, so the game will end for every player.")){
                 try{
                     controller.quit(primaryStage);
-                    out.close();
-                    in.close();
+                    socket.close();
                 }catch (Exception e) {
                     e.printStackTrace();
                 }

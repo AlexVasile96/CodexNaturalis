@@ -114,7 +114,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 waitForAllClientsToSetup();
                 boolean hasClientQuit = false;
                 for (Player player : playersList) {
-                    player.setPlayerScore(19);
+                    player.setPlayerScore(10);
                 }
                 while (!hasClientQuit && !isGameQuit) {
                     startGame();
@@ -125,6 +125,10 @@ public class HandlingPlayerInputsThread implements Runnable {
                 stdIn.close();
                 out.close();
                 clientSocket.close();
+                if(gameController.getSize()==0)
+                {
+                    System.out.println("All clients quit, thank you for playing Codex !");
+                }
                 try {
                     clientSocket.close();
                 } catch (IOException ex) {
@@ -178,6 +182,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             {
                 sendMessageToAllClients("ALL_CLIENTS_QUIT");
                 isGameQuit = true;
+                gameController.setSize(0);
                 break;
             }
             else{

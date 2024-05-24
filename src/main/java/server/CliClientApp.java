@@ -1,7 +1,4 @@
 package server;
-
-import javafx.stage.Stage;
-import network.client.gui.GUI;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
