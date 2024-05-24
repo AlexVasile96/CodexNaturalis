@@ -17,6 +17,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+//import static server.HandlingPlayerInputsThread.turnController;
+
 public class GameController {
     private final Map<String, PrintWriter> players;
     int size;
@@ -60,10 +62,6 @@ public class GameController {
         this.isGameOver = false;
         this.isSizeSet = false;
     }
-
-//gigi->pietro->alex
-    //gigi
-    //pietro-> confronto con la clientview
 
 
     public synchronized void readCommand(String commandString, Player player, int size, int paolo, String cornerChosen) {
@@ -189,7 +187,28 @@ public synchronized void waitingForPLayers() throws InterruptedException {
         }
     }
 
+    public synchronized void removePlayer(Player player) {
+        // Rimuovi il giocatore dalla mappa dei giocatori
+        players.remove(player.getNickName());
 
+        // Rimuovi il giocatore dalla lista dei client
+        clients.removeIf(client -> client.getThreadPlayer().equals(player));
+
+        // Aggiorna il numero di giocatori connessi
+        currentNumsOfPlayers--;
+
+        // Notifica tutti i client della disconnessione
+        sendMessageToAllClients(player.getNickName() + " has disconnected.");
+
+        // Controlla se ci sono ancora giocatori attivi
+        if (players.isEmpty()) {
+            setGameOver(true);
+            sendMessageToAllClients("All players have disconnected. Game over.");
+        } else {
+            // Aggiorna i turni e la logica di gioco se necessario
+
+        }
+    }
 
 
 

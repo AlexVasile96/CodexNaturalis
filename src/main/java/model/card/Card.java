@@ -160,27 +160,42 @@ public class Card {
             temp.add(type);
             return temp;
         }
-    public JsonObject toJsonObject(){
-        JsonObject jsonObject= new JsonObject();
-        jsonObject.addProperty("id", id);
-        jsonObject.addProperty("specificSeedType", type.ordinal());
-        jsonObject.addProperty("value", valueWhenPlaced);
-        jsonObject.addProperty("TopLeftCorner", String.valueOf(TL));
-        jsonObject.addProperty("TopRightCorner", String.valueOf(TR));
-        jsonObject.addProperty("BottomLeftCorner", String.valueOf(BL));
-        jsonObject.addProperty("BottomRightCorner", String.valueOf(BR));
-        return jsonObject;
+    public static Card fromJson(JsonObject jsonObject) {
+        int id = jsonObject.get("id").getAsInt();
+        SpecificSeed type = SpecificSeed.valueOf(jsonObject.get("type").getAsString());
+        int value = jsonObject.get("value").getAsInt();
+
+        Corner tl = Corner.fromJsonObject(jsonObject.get("TL").getAsJsonObject());
+        Corner tr = Corner.fromJsonObject(jsonObject.get("TR").getAsJsonObject());
+        Corner bl = Corner.fromJsonObject(jsonObject.get("BL").getAsJsonObject());
+        Corner br = Corner.fromJsonObject(jsonObject.get("BR").getAsJsonObject());
+        Corner tlBack = Corner.fromJsonObject(jsonObject.get("TLBack").getAsJsonObject());
+        Corner trBack = Corner.fromJsonObject(jsonObject.get("TRBack").getAsJsonObject());
+        Corner blBack = Corner.fromJsonObject(jsonObject.get("BLBack").getAsJsonObject());
+        Corner brBack = Corner.fromJsonObject(jsonObject.get("BRBack").getAsJsonObject());
+        Card card = new Card(id, type, value, tl, tr, bl, br);
+        card.setTLBack(tlBack);
+        card.setTRBack(trBack);
+        card.setBLBack(blBack);
+        card.setBRBack(brBack);
+
+        return card;
     }
-    public static Card fromJsonObject(JsonObject jo){
-        int id = jo.get("id").getAsInt();
-        int specificSeedIndex = jo.get("specificSeedType").getAsInt();
-        SpecificSeed specificSeed = SpecificSeed.values()[specificSeedIndex];
-        int value = jo.get("value").getAsInt();
-        Corner TL = Corner.fromJsonObject(jo.getAsJsonObject("TopLeftCorner"));
-        Corner TR = Corner.fromJsonObject(jo.getAsJsonObject("TopRightCorner"));
-        Corner BL = Corner.fromJsonObject(jo.getAsJsonObject("BottomLeftCorner"));
-        Corner BR = Corner.fromJsonObject(jo.getAsJsonObject("BottomRightCorner"));
-        return new Card(id, specificSeed, value, TL, TR, BL, BR);
+
+    public JsonObject toJsonObject() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        jsonObject.addProperty("type", type.toString());
+        jsonObject.addProperty("value", valueWhenPlaced);
+        jsonObject.add("TL", TL.toJsonObject());
+        jsonObject.add("TR", TR.toJsonObject());
+        jsonObject.add("BL", BL.toJsonObject());
+        jsonObject.add("BR", BR.toJsonObject());
+        jsonObject.add("TLBack", TLBack.toJsonObject());
+        jsonObject.add("TRBack", TRBack.toJsonObject());
+        jsonObject.add("BLBack", BLBack.toJsonObject());
+        jsonObject.add("BRBack", BRBack.toJsonObject());
+        return jsonObject;
     }
 
 }

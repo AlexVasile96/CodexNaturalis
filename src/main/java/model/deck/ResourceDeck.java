@@ -4,11 +4,12 @@ import model.game.Player;
 import model.card.Card;
 import model.card.ObjectiveCard;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class ResourceDeck implements Deck{
-    private final List<Card> resourceCards; //FINAL TO KEEP HER THREAD SAFE AND IT HAS TO BE INITIALED ONE TIME ONLY
+    private List<Card> resourceCards; //FINAL TO KEEP HER THREAD SAFE AND IT HAS TO BE INITIALED ONE TIME ONLY
     public ResourceDeck(List<Card> cards) {
         this.resourceCards = cards;
     }
@@ -105,4 +106,12 @@ public class ResourceDeck implements Deck{
         resourceCards.removeFirst();
         System.out.println(resourceCards.getFirst());
     }
+    public List<Card> getRemainingCards() {
+        return new ArrayList<>(this.resourceCards); // Supponendo che `deck` sia una lista delle carte rimanenti
+    }
+
+    public void setRemainingCards(List<Card> cards) {
+        this.resourceCards = new ArrayList<>(cards);
+    }
+
 }

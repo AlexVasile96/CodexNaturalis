@@ -113,7 +113,6 @@ public class GameSceneController {
         this.clientView = clientView;
         controller = new Controller(in, out);
         isCurrentPlayerTurn = clientView.getUserName().equals(currentPlayerNickname);
-
     }
 
     public synchronized void updateFirst() throws IOException {

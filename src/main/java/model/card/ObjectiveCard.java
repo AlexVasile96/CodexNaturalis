@@ -1,5 +1,6 @@
 package model.card;
 
+import com.google.gson.JsonObject;
 import model.game.Corner;
 import model.game.ObjectiveSpecificTypeOfCard;
 import model.game.SpecificSeed;
@@ -69,6 +70,33 @@ public class ObjectiveCard extends Card{
 
     public ObjectiveSpecificTypeOfCard getObjectiveSpecificTypeOfCard() {
         return objectiveSpecificTypeOfCard;
+    }
+
+    public static ObjectiveCard fromJsonObject(JsonObject jsonObject) {
+        int id = jsonObject.get("id").getAsInt();
+        SpecificSeed type = SpecificSeed.valueOf(jsonObject.get("type").getAsString());
+        int value = jsonObject.get("value").getAsInt();
+        Corner tl = Corner.fromJsonObject(jsonObject.get("TL").getAsJsonObject());
+        Corner tr = Corner.fromJsonObject(jsonObject.get("TR").getAsJsonObject());
+        Corner bl = Corner.fromJsonObject(jsonObject.get("BL").getAsJsonObject());
+        Corner br = Corner.fromJsonObject(jsonObject.get("BR").getAsJsonObject());
+        int numberOfWhenTheGameEnds = jsonObject.get("numberOfWhenTheGameEnds").getAsInt();
+        ObjectiveSpecificTypeOfCard objectiveSpecificTypeOfCard = ObjectiveSpecificTypeOfCard.valueOf(jsonObject.get("objectiveSpecificTypeOfCard").getAsString());
+
+        return new ObjectiveCard(id, type, value, tl, tr, bl, br, numberOfWhenTheGameEnds, objectiveSpecificTypeOfCard);
+    }
+
+    public JsonObject toJsonObject() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        jsonObject.addProperty("value", value);
+        jsonObject.add("TL", getTL().toJsonObject());
+        jsonObject.add("TR", getTR().toJsonObject());
+        jsonObject.add("BL", getBL().toJsonObject());
+        jsonObject.add("BR", getBR().toJsonObject());
+        jsonObject.addProperty("numberOfWhenTheGameEnds", numberOfWhenTheGameEnds);
+        jsonObject.addProperty("objectiveSpecificTypeOfCard", objectiveSpecificTypeOfCard.toString());
+        return jsonObject;
     }
 
 }

@@ -29,6 +29,19 @@ public class TurnController {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
     }
 
+    public synchronized void removePlayer(Player player) {
+        nextTurn();
+        int playerIndex = players.indexOf(player);
+        if (playerIndex == -1) {
+            return; // Il giocatore non è nella lista
+        }
+        players.remove(player);
+        if (currentPlayerIndex >= players.size()) {
+            currentPlayerIndex = 0; // Reset dell'indice se l'indice corrente è fuori dai limiti
+        } else if (playerIndex < currentPlayerIndex) {
+            currentPlayerIndex--; // Aggiorna l'indice del giocatore corrente se il giocatore rimosso è prima del giocatore corrente
+        }
+    }
 
     @Override
     public String toString() {

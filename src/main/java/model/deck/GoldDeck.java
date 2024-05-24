@@ -7,11 +7,12 @@ import model.game.Player;
 import model.card.Card;
 import model.card.ObjectiveCard;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class GoldDeck implements Deck {
-    private final List<Card> goldCards;
+    private List<Card> goldCards;
     public GoldDeck(List<Card> cards) {
         this.goldCards=cards;
     }
@@ -101,6 +102,13 @@ public class GoldDeck implements Deck {
     {
         goldCards.remove(0);
         System.out.println(goldCards.getFirst());
+    }
+    public List<Card> getRemainingCards() {
+        return new ArrayList<>(this.goldCards); // Supponendo che `deck` sia una lista delle carte rimanenti
+    }
+
+    public void setRemainingCards(List<Card> cards) {
+        this.goldCards = new ArrayList<>(cards);
     }
 
 }

@@ -1,5 +1,7 @@
 package model.game;
 
+import com.google.gson.JsonObject;
+
 public class Node {
     private SpecificSeed specificNodeSeed;
     private Corner corner;
@@ -103,5 +105,21 @@ public class Node {
 
     public void setCardType(SpecificSeed cardType) {
         this.cardType = cardType;
+    }
+    public static Node fromJsonObject(JsonObject jsonObject) {
+        SpecificSeed specificNodeSeed = SpecificSeed.valueOf(jsonObject.get("specificNodeSeed").getAsString());
+        int coordX = jsonObject.get("coordX").getAsInt();
+        int coordY = jsonObject.get("coordY").getAsInt();
+        int value= jsonObject.get("value").getAsInt();
+        return new Node(specificNodeSeed, coordX, coordY);
+    }
+
+    public JsonObject toJsonObject() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("specificNodeSeed", specificNodeSeed.toString());
+        jsonObject.addProperty("coordX", coordX);
+        jsonObject.addProperty("coordY", coordY);
+        jsonObject.addProperty("value", valueCounter);
+        return jsonObject;
     }
 }

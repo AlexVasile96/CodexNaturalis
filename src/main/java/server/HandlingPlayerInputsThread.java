@@ -102,7 +102,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                 assignInitialCard();
                 for (Player player : playersList) {
                     game.updateSingleClientView(player);
-                    System.out.println(player.getClientView());
                 }
                 sendMessageToClient(currentPlayer.getNickName());
                 if (this == firstClient) {
@@ -121,7 +120,8 @@ public class HandlingPlayerInputsThread implements Runnable {
                     hasClientQuit = true;
                 }
 
-                clients.remove(this);
+               // clients.remove(this);
+                handleClientDisconnection();
                 try {
                     clientSocket.close();
                 } catch (IOException ex) {
@@ -185,6 +185,17 @@ public class HandlingPlayerInputsThread implements Runnable {
         try {
             sendMessageToClient("Hello!! You have to log in, please type your username");
             String request = stdIn.readLine();
+
+            // Carica il giocatore se esiste
+            player = game.loadPlayer(request);
+            if (player != null) {
+                sendMessageToClient("Welcome back, " + request + "! Your data has been loaded.");
+                playersList.add(player);
+                // Imposta il giocatore come threadPlayer per questo thread
+                threadPlayer = player;
+                return player;
+            }
+
             while (isUsernameTaken(request)) {
                 sendMessageToClient("Username already taken. Please choose another username:");
                 System.out.println("Username already taken. Please choose another username:");
@@ -525,6 +536,24 @@ public class HandlingPlayerInputsThread implements Runnable {
             }
         }
         return false;
+    }
+    private void handleClientDisconnection() throws IOException {
+        clients.remove(this);
+        if (threadPlayer != null) {
+            playersList.remove(threadPlayer);
+            gameController.removePlayer(threadPlayer); // Chiama il metodo removePlayer del GameController
+            turnController.removePlayer(threadPlayer);
+        }
+        try {
+            clientSocket.close();
+        } catch (IOException ex) {
+            System.err.println("Error while closing client's socket " + ex.getMessage());
+        }
+        System.out.println("Connection closed with client");
+        checkIfTheGameControllerIsEmpty();
+    }
+    public Player getThreadPlayer() {
+        return threadPlayer;
     }
 
 }

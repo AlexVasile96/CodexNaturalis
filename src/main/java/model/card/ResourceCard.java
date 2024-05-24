@@ -50,16 +50,22 @@ public class ResourceCard extends Card{
 
 
 
-    public JsonObject toJsonObject(){
-        JsonObject jsonObject= new JsonObject();
-        jsonObject.addProperty("id", id);
-        jsonObject.addProperty("specificSeedType", type.ordinal());
-        jsonObject.addProperty("value", valueWhenPlaced);
-        jsonObject.addProperty("TopLeftCorner", String.valueOf(TL));
-        jsonObject.addProperty("TopRightCorner", String.valueOf(TR));
-        jsonObject.addProperty("BottomLeftCorner", String.valueOf(BL));
-        jsonObject.addProperty("BottomRightCorner", String.valueOf(BR));
+    public JsonObject toJsonObject() {
+        JsonObject jsonObject = super.toJsonObject(); // Call the parent class method to get common properties
         return jsonObject;
+    }
 
-        }
+    public static ResourceCard fromJsonObject(JsonObject jsonObject) {
+        Card card = Card.fromJson(jsonObject); // Call the parent class method to get common properties
+
+        return new ResourceCard(
+                card.getId(),
+                card.getType(),
+                card.getValueWhenPlaced(),
+                card.getTL(),
+                card.getTR(),
+                card.getBL(),
+                card.getBR()
+        );
+    }
     }

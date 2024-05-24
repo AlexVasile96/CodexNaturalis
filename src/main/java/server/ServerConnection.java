@@ -681,6 +681,11 @@ public class ServerConnection implements Runnable {
                 System.out.println("Username already taken. Please choose another username:");
                 System.out.println(">");
             }
+            else if((correctLogin).equals("Welcome back, " + loginName + "! Your data has been loaded."))
+            {
+                waitForGameStart();
+                return;
+            }
             else isTheNameAlreadyTaken=true;
         }
 
@@ -773,5 +778,16 @@ public class ServerConnection implements Runnable {
     public String readMessageFromUser() throws IOException {
         return stdin.readLine();
     }
+    private void waitForGameStart() throws IOException {
+        String message;
+        while ((message = in.readLine()) != null) {
+            System.out.println(message);
+            if (message.equals("All players are connected, starting game...")) {
+                waitUntilItsYourTurn();
+                return;
+            }
+        }
+    }
+
 }
 

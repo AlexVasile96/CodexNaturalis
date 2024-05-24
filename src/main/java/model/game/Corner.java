@@ -55,24 +55,25 @@ public class Corner extends Node{
     }
 
     public static Corner fromJsonObject(JsonObject jo) {
-        int specificSeedIndex = jo.get("specificCornerSeed").getAsInt();
-        SpecificSeed specificSeed = SpecificSeed.values()[specificSeedIndex];
+        SpecificSeed specificSeed = SpecificSeed.valueOf(jo.get("specificCornerSeed").getAsString());
         int x = jo.get("x").getAsInt();
         int y = jo.get("y").getAsInt();
-        int cardSeed= jo.get("cardSeed").getAsInt();
-        SpecificSeed type= SpecificSeed.values()[cardSeed];
+        SpecificSeed type = SpecificSeed.valueOf(jo.get("cardSeed").getAsString());
         Corner corner = new Corner(specificSeed, x, y, type);
-        //corner.setThisCornerFree(jo.get("isThisCornerFree").getAsBoolean());
-
+        corner.setThisCornerFree(jo.get("isThisCornerFree").getAsBoolean());
         return corner;
     }
+
     public JsonObject toJsonObject() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("specificCornerSeed", specificCornerSeed.toString());
         jsonObject.addProperty("x", x);
         jsonObject.addProperty("y", y);
+        jsonObject.addProperty("cardSeed", cardSeed.toString());
+        jsonObject.addProperty("isThisCornerFree", isThisCornerFree);
         return jsonObject;
     }
+
 
     public SpecificSeed getCardSeed() {
         return cardSeed;

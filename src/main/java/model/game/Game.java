@@ -582,61 +582,167 @@ public class Game implements WhatCanPlayerDo {
         }
     }
 
-    void saveEachPlayerInGame(Path path) {
-        JsonObject playersObject = new JsonObject();
-        JsonArray playersArray = new JsonArray();
+//    void saveEachPlayerInGame(Path path) {
+//        JsonObject playersObject = new JsonObject();
+//        JsonArray playersArray = new JsonArray();
+//
+//        for (Player player : players) {
+//            JsonObject playerObject = new JsonObject();
+//            playerObject.addProperty("nickname", player.getNickName());
+//            playerObject.addProperty("score", player.getPlayerScore());
+//            playerObject.addProperty("dot", player.getDot().ordinal());
+//
+//            JsonArray playerDeckArray = new JsonArray();
+//            for (Card card : player.getPlayerCards()) {
+//                JsonObject cardObject = new JsonObject();
+//                cardObject.addProperty("id", card.getId());
+//                cardObject.addProperty("type", card.getType().toString());
+//                cardObject.addProperty("value", card.getValueWhenPlaced());
+//                cardObject.add("TL", card.getTL().toJsonObject());
+//                cardObject.add("TR", card.getTR().toJsonObject());
+//                cardObject.add("BL", card.getBL().toJsonObject());
+//                cardObject.add("BR", card.getBR().toJsonObject());
+//
+//                playerDeckArray.add(cardObject);
+//            }
+//            playerObject.add("player_deck", playerDeckArray);
+//            Board playerBoard = player.getBoard();
+//            JsonObject boardObject = playerBoard.toJsonObject();
+//            playerObject.add("board", boardObject);
+//            if (player.getSecretChosenCard() != null) {
+//                JsonObject secretChosenCardObject = new JsonObject();
+//                secretChosenCardObject.addProperty("id", player.getSecretChosenCard().getId());
+//                secretChosenCardObject.addProperty("type", player.getSecretChosenCard().getType().toString());
+//                secretChosenCardObject.addProperty("value", player.getSecretChosenCard().getValue());
+//                playerObject.add("secretChosenCard", secretChosenCardObject);
+//            }
+//            playersArray.add(playerObject);
+//        }
+//        playersObject.add("players", playersArray);
+//        try (PrintWriter printWriter = new PrintWriter(new FileWriter(path.toString()))) {
+//            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//            String jsonOutput = gson.toJson(playersObject);
+//            printWriter.println(jsonOutput);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+void saveEachPlayerInGame(Path path) {
+    JsonObject gameState = new JsonObject();
+    JsonArray playersArray = new JsonArray();
 
-        for (Player player : players) {
-            JsonObject playerObject = new JsonObject();
-            playerObject.addProperty("nickname", player.getNickName());
-            playerObject.addProperty("score", player.getPlayerScore());
-            playerObject.addProperty("dot", player.getDot().ordinal());
+    // Salva i giocatori
+    for (Player player : players) {
+        JsonObject playerObject = new JsonObject();
+        playerObject.addProperty("nickname", player.getNickName());
+        playerObject.addProperty("score", player.getPlayerScore());
+        playerObject.addProperty("dot", player.getDot().ordinal());
 
-            JsonArray playerDeckArray = new JsonArray();
-            for (Card card : player.getPlayerCards()) {
-                JsonObject cardObject = new JsonObject();
-                cardObject.addProperty("id", card.getId());
-                cardObject.addProperty("type", card.getType().toString());
-                cardObject.addProperty("value", card.getValueWhenPlaced());
-                cardObject.add("TL", card.getTL().toJsonObject());
-                cardObject.add("TR", card.getTR().toJsonObject());
-                cardObject.add("BL", card.getBL().toJsonObject());
-                cardObject.add("BR", card.getBR().toJsonObject());
-
-
-                // Check if the card has requisites
-                /*if (card.getRequisites() != null) {
-                    JsonArray requisitesArray = new JsonArray();
-                    for (String requisite : card.get()) {
-                        requisitesArray.add(requisite);
-                    }
-                    cardObject.add("requisites", requisitesArray);
-                }*/
-
-                playerDeckArray.add(cardObject);
-            }
-            playerObject.add("player_deck", playerDeckArray);
-            Board playerBoard = player.getBoard();
-            JsonObject boardObject = playerBoard.toJsonObject();
-            playerObject.add("board", boardObject);
-            if (player.getSecretChosenCard() != null) {
-                JsonObject secretChosenCardObject = new JsonObject();
-                secretChosenCardObject.addProperty("id", player.getSecretChosenCard().getId());
-                secretChosenCardObject.addProperty("type", player.getSecretChosenCard().getType().toString());
-                secretChosenCardObject.addProperty("value", player.getSecretChosenCard().getValue());
-                // Aggiungi altri attributi se necessario
-                playerObject.add("secretChosenCard", secretChosenCardObject);
-            }
-            playersArray.add(playerObject);
+        JsonArray playerDeckArray = new JsonArray();
+        for (Card card : player.getPlayerCards()) {
+            JsonObject cardObject = card.toJsonObject();
+            playerDeckArray.add(cardObject);
         }
-        playersObject.add("players", playersArray);
-        try (PrintWriter printWriter = new PrintWriter(new FileWriter(path.toString()))) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String jsonOutput = gson.toJson(playersObject);
-            printWriter.println(jsonOutput);
+        playerObject.add("player_deck", playerDeckArray);
+
+        JsonObject boardObject = player.getBoard().toJsonObject();
+        playerObject.add("board", boardObject);
+
+        if (player.getSecretChosenCard() != null) {
+            JsonObject secretChosenCardObject = player.getSecretChosenCard().toJsonObject();
+            playerObject.add("secretChosenCard", secretChosenCardObject);
+        }
+
+        playersArray.add(playerObject);
+    }
+    gameState.add("players", playersArray);
+
+    // Salva il giocatore corrente
+    gameState.addProperty("currentPlayer", currentPlayer);
+
+    // Salva il mazzo delle risorse
+    JsonArray resourceDeckArray = new JsonArray();
+    for (Card card : resourceDeck.getRemainingCards()) {
+        resourceDeckArray.add(card.toJsonObject());
+    }
+    gameState.add("resourceDeck", resourceDeckArray);
+
+    // Salva il mazzo delle gold
+    JsonArray goldDeckArray = new JsonArray();
+    for (Card card : goldDeck.getRemainingCards()) {
+        goldDeckArray.add(card.toJsonObject());
+    }
+    gameState.add("goldDeck", goldDeckArray);
+
+    try (PrintWriter printWriter = new PrintWriter(new FileWriter(path.toString()))) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String jsonOutput = gson.toJson(gameState);
+        printWriter.println(jsonOutput);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+    public Player loadPlayer(String nickname) {
+        Path path = getDefaultPlayers();
+        try (Reader reader = new FileReader(path.toString())) {
+            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
+            JsonArray playersArray = jsonObject.getAsJsonArray("players");
+
+            for (JsonElement element : playersArray) {
+                JsonObject playerObject = element.getAsJsonObject();
+                if (playerObject.get("nickname").getAsString().equals(nickname)) {
+                    int score = playerObject.get("score").getAsInt();
+                    Dot dot = Dot.values()[playerObject.get("dot").getAsInt()];
+
+                    JsonArray playerDeckArray = playerObject.getAsJsonArray("player_deck");
+                    List<Card> playerDeck = new ArrayList<>();
+                    for (JsonElement cardElement : playerDeckArray) {
+                        JsonObject cardObject = cardElement.getAsJsonObject();
+                        Card card = Card.fromJson(cardObject);
+                        if (card != null) {
+                            playerDeck.add(card);
+                            System.out.println(card);
+                        } else {
+                            System.err.println("Skipping invalid card in player deck: " + cardObject);
+                        }
+                    }
+//                    List<Card> playerDeck = new ArrayList<>();
+//                    for (JsonElement cardElement : playerDeckArray) {
+//                        JsonObject cardObject = cardElement.getAsJsonObject();
+//                        int id = cardObject.get("id").getAsInt();
+//                        System.out.println(id);
+//                        SpecificSeed type = SpecificSeed.valueOf(cardObject.get("type").getAsString());
+//                        int value = cardObject.get("value").getAsInt();
+//
+//                        // Ricostruisci gli attributi della carta
+//                        Corner tl = Corner.fromJsonObject(cardObject.get("TL").getAsJsonObject());
+//                        Corner tr = Corner.fromJsonObject(cardObject.get("TR").getAsJsonObject());
+//                        Corner bl = Corner.fromJsonObject(cardObject.get("BL").getAsJsonObject());
+//                        Corner br = Corner.fromJsonObject(cardObject.get("BR").getAsJsonObject());
+//                        Card card;
+//                        card = new Card(id, type, value, tl, tr, bl, br);
+//
+//
+//                        playerDeck.add(card);
+//                    }
+
+                    Board board = Board.fromJson(playerObject.get("board").getAsJsonObject());
+                    ObjectiveCard secretChosenCard = null;
+                    if (playerObject.has("secretChosenCard")) {
+                        JsonObject secretCardObject = playerObject.get("secretChosenCard").getAsJsonObject();
+                        secretChosenCard = ObjectiveCard.fromJsonObject(secretCardObject);
+                    }
+                    Player player = new Player(nickname, score, dot, board);
+                    player.setPlayerCards((ArrayList<Card>) playerDeck);
+                    player.setSecretChosenCard(secretChosenCard);
+                    return player;
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 
@@ -650,70 +756,7 @@ public class Game implements WhatCanPlayerDo {
         return Paths.get(home);
     }
 
-    public List<Player> loadPlayersFromGame(Path path) {
-        try {
-            Gson gson = new Gson();
-            JsonObject playersObject;
-            try (Reader reader = new FileReader(path.toString())) {
-                playersObject = gson.fromJson(reader, JsonObject.class);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
 
-            JsonArray playersArray = playersObject.getAsJsonArray("players");
-            Player[] players = new Player[playersArray.size()];
-            //METODO DA FINIRE
-
-            return null;
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
-    public String serializeGameState() {
-        JsonObject gameState = new JsonObject();
-        gameState.add("well", serializeWell()); //Well serializing
-        //gameState.add("resourceDeck", serializeResourceDeck(resourceDeck));
-       // gameState.add("goldDeck", serializeGoldDeck(goldDeck));
-        return new Gson().toJson(gameState);
-    }
-
-    private JsonArray serializeWell() {
-        JsonArray wellArray = new JsonArray();
-        for (Card card : well) {
-            JsonObject cardObject = new JsonObject();
-            cardObject.addProperty("id", card.getId());
-            // Aggiungi altri attributi della carta, se necessario
-            wellArray.add(cardObject);
-        }
-        return wellArray;
-    }
-
-   /* private JsonArray serializeResourceDeck(ResourceDeck deck) {
-        JsonArray deckArray = new JsonArray();
-        for (Card card : deck.getCards()) {
-            JsonObject cardObject = new JsonObject();
-            cardObject.addProperty("id", card.getId());
-            cardObject.addProperty("type", card.getType());
-            // Aggiungi altri attributi della carta, se necessario
-            deckArray.add(cardObject);
-        }
-        return deckArray;
-
-    }*/
-   /* private JsonArray serializeGoldDeck(GoldDeck deck) {
-        JsonArray deckArray = new JsonArray();
-        for (Card card : deck.getCards()) {
-            JsonObject cardObject = new JsonObject();
-            cardObject.addProperty("id", card.getId());
-            // Aggiungi altri attributi della carta, se necessario
-            deckArray.add(cardObject);
-        }
-        return deckArray;
-    }*/
 
 
     public int getTotalNumberOfPLayer() {
@@ -744,6 +787,21 @@ public class Game implements WhatCanPlayerDo {
        }
 
        else return "NO";
+    }
+    public boolean areAllPlayersLoaded(List<String> expectedPlayerNicknames) {
+        for (String nickname : expectedPlayerNicknames) {
+            boolean playerLoaded = false;
+            for (Player player : players) {
+                if (player.getNickName().equals(nickname)) {
+                    playerLoaded = true;
+                    break;
+                }
+            }
+            if (!playerLoaded) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 

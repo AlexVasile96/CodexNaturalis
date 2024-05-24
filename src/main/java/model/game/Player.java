@@ -831,17 +831,17 @@ public class Player implements Observable {
         jsonObject.addProperty("secretCard", String.valueOf(secretChosenCard));
         return jsonObject;
     }
-
-    public void fromJsonObject(JsonObject jsonObject) {
-        this.nickName = jsonObject.get("nickName").getAsString();
-        this.playerScore = jsonObject.get("score").getAsInt();
-        this.dot = Dot.values()[jsonObject.get("dot").getAsInt()];
-        // Assuming Board and Card classes have appropriate methods for deserialization
-        this.board = Board.fromJsonObject(jsonObject.get("board").getAsJsonObject());
-        // Assuming playerCards and clientView are deserialized appropriately
-        // this.playerCards = ...
-        // this.clientView = ...
-    }
+//
+//    public void fromJsonObject(JsonObject jsonObject) {
+//        this.nickName = jsonObject.get("nickName").getAsString();
+//        this.playerScore = jsonObject.get("score").getAsInt();
+//        this.dot = Dot.values()[jsonObject.get("dot").getAsInt()];
+//        // Assuming Board and Card classes have appropriate methods for deserialization
+//        this.board = Board.fromJson(jsonObject.get("board").getAsJsonObject());
+//        // Assuming playerCards and clientView are deserialized appropriately
+//        // this.playerCards = ...
+//        // this.clientView = ...
+//    }
 
 
 

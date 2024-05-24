@@ -1,11 +1,15 @@
 package model.card;
 
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import model.game.Corner;
 import model.game.Node;
 import model.game.SpecificSeed;
 import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class GoldCard extends Card{
@@ -86,31 +90,53 @@ public class GoldCard extends Card{
 
 
     //)JSON  OBJECT TO SAVE GOLD CARDS INFORMATION
-
-    public JsonObject toJsonObject(){
-        JsonObject jsonObject= new JsonObject();
-        jsonObject.addProperty("id", id);
-        jsonObject.addProperty("specificSeedType", type.ordinal());
-        jsonObject.addProperty("value", valueWhenPlaced);
-        jsonObject.addProperty("TopLeftCorner", String.valueOf(TL));
-        jsonObject.addProperty("TopRightCorner", String.valueOf(TR));
-        jsonObject.addProperty("BottomLeftCorner", String.valueOf(BL));
-        jsonObject.addProperty("BottomRightCorner", String.valueOf(BR));
-        jsonObject.addProperty("requirements", requirementsForPlacing.toString());
-        jsonObject.addProperty("multiplier", multiplier.ordinal());
+    public JsonObject toJsonObject() {
+        JsonObject jsonObject = super.toJsonObject(); // Reuse method from Card class
+        JsonArray requirementsArray = new JsonArray();
+        for (SpecificSeed seed : requirementsForPlacing) {
+            requirementsArray.add(seed.toString());
+        }
+        jsonObject.add("requirementsForPlacing", requirementsArray);
+        jsonObject.addProperty("multiplier", multiplier.toString());
         return jsonObject;
     }
-    public static GoldCard fromJsonObject(JsonObject jo){
-        int id = jo.get("id").getAsInt();
-        int specificSeedIndex = jo.get("specificSeedType").getAsInt();
-        SpecificSeed specificSeed = SpecificSeed.values()[specificSeedIndex];
-        int value = jo.get("value").getAsInt();
-        Corner TL = Corner.fromJsonObject(jo.getAsJsonObject("TopLeftCorner"));
-        Corner TR = Corner.fromJsonObject(jo.getAsJsonObject("TopRightCorner"));
-        Corner BL = Corner.fromJsonObject(jo.getAsJsonObject("BottomLeftCorner"));
-        Corner BR = Corner.fromJsonObject(jo.getAsJsonObject("BottomRightCorner"));
-        //return new Card(id, specificSeed, value, TL, TR, BL, BR);
-        return null;
+
+    // Create GoldCard from JsonObject
+    public static GoldCard fromJson(JsonObject jsonObject) {
+        try {
+            int id = jsonObject.get("id").getAsInt();
+            SpecificSeed type = SpecificSeed.valueOf(jsonObject.get("type").getAsString());
+            int value = jsonObject.get("value").getAsInt();
+
+            Corner tl = Corner.fromJsonObject(jsonObject.get("TL").getAsJsonObject());
+            Corner tr = Corner.fromJsonObject(jsonObject.get("TR").getAsJsonObject());
+            Corner bl = Corner.fromJsonObject(jsonObject.get("BL").getAsJsonObject());
+            Corner br = Corner.fromJsonObject(jsonObject.get("BR").getAsJsonObject());
+            Corner tlBack = Corner.fromJsonObject(jsonObject.get("TLBack").getAsJsonObject());
+            Corner trBack = Corner.fromJsonObject(jsonObject.get("TRBack").getAsJsonObject());
+            Corner blBack = Corner.fromJsonObject(jsonObject.get("BLBack").getAsJsonObject());
+            Corner brBack = Corner.fromJsonObject(jsonObject.get("BRBack").getAsJsonObject());
+
+            JsonArray requirementsArray = jsonObject.get("requirementsForPlacing").getAsJsonArray();
+            List<SpecificSeed> requirements = new ArrayList<>();
+            for (JsonElement element : requirementsArray) {
+                requirements.add(SpecificSeed.valueOf(element.getAsString()));
+            }
+            SpecificSeed multiplier = SpecificSeed.valueOf(jsonObject.get("multiplier").getAsString());
+
+            GoldCard goldCard = new GoldCard(id, type, value, multiplier, tl, tr, bl, br, requirements);
+            goldCard.setTLBack(tlBack);
+            goldCard.setTRBack(trBack);
+            goldCard.setBLBack(blBack);
+            goldCard.setBRBack(brBack);
+
+            return goldCard;
+        } catch (Exception e) {
+            System.err.println("Error parsing GoldCard from JSON: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
+
 
 }
