@@ -113,7 +113,7 @@ public class Command { //Command Client sends to Server
             case "deckId":
                 return game.getDeckID(player);
             case "endgame":
-                game.endGame();
+                return game.endGame();
             case "resourceDeckUpdate":
                 game.resourceDeckUpdateForGUi();
                 return "Resource Deck Correctly updated";
