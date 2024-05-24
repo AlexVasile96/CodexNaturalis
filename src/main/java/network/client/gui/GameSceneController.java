@@ -366,6 +366,8 @@ public class GameSceneController {
                         try {
                             canIPlaceTheGoldCard= in.readLine();
                             System.out.println("Server response is: " + canIPlaceTheGoldCard);
+                        } catch (SocketTimeoutException ex) {
+                            throw new RuntimeException(ex);
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
@@ -453,6 +455,8 @@ public class GameSceneController {
                         updateTurnState(nextPlayerNickname.equals(clientView.getUserName()));
                         haveToPlay = true;
                         waitForTurn(handCard1View, handCard2View, handCard3View);
+                    } catch (SocketTimeoutException ex) {
+                        throw new RuntimeException(ex);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -530,6 +534,8 @@ public class GameSceneController {
                         } else {
                             showAlert("Action not allowed", "Yoh have to choose a card to draw");
                         }
+                    } catch (SocketTimeoutException ex) {
+                        throw new RuntimeException(ex);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -679,6 +685,8 @@ public class GameSceneController {
                 try {
                     String yourSeeds = controller.showSpecificSeed();
                     showAlert("Your seeds at the moment", yourSeeds);
+                } catch (SocketTimeoutException ex) {
+                    throw new RuntimeException(ex);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -692,6 +700,8 @@ public class GameSceneController {
                 try {
                     boardPointsScene = new BoardPointsScene(primaryStage, out, socket, in, clientView);
                     boardPointsScene.popupBoardPoints();
+                } catch (SocketTimeoutException ex) {
+                    throw new RuntimeException(ex);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -718,6 +728,8 @@ public class GameSceneController {
                     secretId = controller.secretCard();
                     objectiveScene.popupObjectiveScene(firstCommonId, secondCommonId, secretId);
 
+                } catch (SocketTimeoutException ex) {
+                    throw new RuntimeException(ex);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -739,6 +751,8 @@ public class GameSceneController {
                     // Uscita dall'applicazione
                     Platform.exit();
                     System.exit(0);
+                } catch (SocketTimeoutException ex) {
+                    throw new RuntimeException(ex);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -781,8 +795,10 @@ public class GameSceneController {
                 if (socket != null) socket.close();
                 Platform.exit();
                 System.exit(0);
-            } catch (IOException e) {
+            } catch (SocketTimeoutException e) {
                 e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
     }
@@ -1572,7 +1588,7 @@ public class GameSceneController {
                 try{
                     controller.quit(primaryStage);
                     socket.close();
-                }catch (Exception e) {
+                }catch (SocketTimeoutException e) {
                     e.printStackTrace();
                 }
             }

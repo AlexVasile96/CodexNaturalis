@@ -6,7 +6,7 @@ import server.ServerMain;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-//Prendi game controller e fai -1 dai player
+
 public class Codex {
 
     public static void main(String[] args) throws Exception {

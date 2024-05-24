@@ -33,13 +33,13 @@ public class TurnController {
         nextTurn();
         int playerIndex = players.indexOf(player);
         if (playerIndex == -1) {
-            return; // Il giocatore non è nella lista
+            return; // player not in list
         }
         players.remove(player);
         if (currentPlayerIndex >= players.size()) {
-            currentPlayerIndex = 0; // Reset dell'indice se l'indice corrente è fuori dai limiti
+            currentPlayerIndex = 0; // Reset index if out of bounds
         } else if (playerIndex < currentPlayerIndex) {
-            currentPlayerIndex--; // Aggiorna l'indice del giocatore corrente se il giocatore rimosso è prima del giocatore corrente
+            currentPlayerIndex--; // Update current player index if the removed player's turn precedes the current player
         }
     }
 

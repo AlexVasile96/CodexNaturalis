@@ -5,16 +5,16 @@ import model.game.Player;
 public class Command { //Command Client sends to Server
     private static int checkIfTheBoardHadAlreadyBeenPrinted= 0;
 
-    public String runCommand(Game game, String commandString, Player player, int size, int paolo, String cornerChosen)  { //chiama sempre il game
+    public String runCommand(Game game, String commandString, Player player, int size, int paolo, String cornerChosen)  {
         System.out.println(commandString);
         switch (commandString) {
 
-            case "showYourCardDeck":{ //finito-> funzionante
+            case "showYourCardDeck":{
                 String deckprinted;
-                deckprinted= game.showCards(player); //salva nella stringa il deck del giocatore
+                deckprinted= game.showCards(player); //saves the player's deck in the string
                 return deckprinted;
             }
-            case "playCard": //PIETRO
+            case "playCard":
             {
                 if(checkIfTheBoardHadAlreadyBeenPrinted==0){
                     String CornersAvailable= game.showAvaiableCorners(player, size, paolo);
@@ -40,7 +40,7 @@ public class Command { //Command Client sends to Server
                 return commonCards;
             case "secret":
                 String secretObjectiveCard;
-                secretObjectiveCard= game.visualizeSecretObjective(player); //salva nella stringa la carta obiettivo segreta del giocatore
+                secretObjectiveCard= game.visualizeSecretObjective(player); //save player's secrete objective in the string
                 return secretObjectiveCard;
             case "showBoard":
                 String yourBoard;

@@ -7,7 +7,6 @@ public class Corner extends Node{
     private SpecificSeed specificCornerSeed;
     private int x;
     private int y;
-    //private Card card;
     private SpecificSeed cardSeed;
 
     public Corner(SpecificSeed specificNodeSeed, int coordX, int coordY, SpecificSeed type) {

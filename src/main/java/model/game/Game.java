@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
-public class Game implements WhatCanPlayerDo {
+public class Game{
     private List<Player> players;
     private ResourceDeck resourceDeck;
     private GoldDeck goldDeck;
@@ -37,7 +37,7 @@ public class Game implements WhatCanPlayerDo {
         this.players = new ArrayList<>();
         this.well = new ArrayList<>();
         this.dots = new ArrayList<>();
-        //loadPlayers();
+
         ResourceCardConstructor constructor = new ResourceCardConstructor();
         resourceDeck = (ResourceDeck) constructor.createCards();
         resourceDeck.shuffle();
@@ -116,7 +116,7 @@ public class Game implements WhatCanPlayerDo {
 
     public String playCard(Player player, int cardindex, int cardChosenOnTheBoard, String selectedCorner) {
         if (cPchoose.getId() >= 81 && cPchoose.getId() <= 86) {
-            //DA FIXARE
+
             //Card is the initial Card
             InitialCard helpcard = new InitialCard(cPchoose.getId(), cPchoose.getType(), cPchoose.getValueWhenPlaced(), cPchoose.getTL(), cPchoose.getTR(), cPchoose.getBL(), cPchoose.getBR(), cPchoose.getTLBack(), cPchoose.getTRBack(), cPchoose.getBLBack(), cPchoose.getBRBack(), cPchoose.getAttributes());
             helpcard.setIndexOnTheBoard(cPchoose.getIndexOnTheBoard());
@@ -188,22 +188,18 @@ public class Game implements WhatCanPlayerDo {
         return yourSpecificSeeds;
     }
 
-    @Override
+
     public String showCards(Player player) {
         List<Card> cardToSendToServer = player.getPlayerCards();
         StringBuilder cardsAsString = new StringBuilder();
         for (Card card : cardToSendToServer) {
             cardsAsString.append(card.toString()).append("\n");
         }
-        return String.valueOf(cardsAsString); //ritorna stringa
+        return String.valueOf(cardsAsString); //returns String
     }
 
-    @Override
-    public void chosenHandCard() {
 
-    }
 
-    @Override
     public String visualizeCommonObjective(Player player) {
         StringBuilder cardsAsString = new StringBuilder();
         cardsAsString.append(firstObjectiveCommonCard.toString()).append("\n");
@@ -223,12 +219,12 @@ public class Game implements WhatCanPlayerDo {
     }
 
 
-    @Override
+
     public String visualizeSecretObjective(Player player) {
         return String.valueOf(player.getSecretChosenCard());
     }
 
-    @Override
+
     public String showBoard(Player player) {
         return player.getBoard().printBoardForServer();
     }
@@ -260,7 +256,7 @@ public class Game implements WhatCanPlayerDo {
             return String.valueOf(id1);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            return null; // Gestire l'eccezione in modo appropriato
+            return null; // Manage the exception in a proper way
         } finally {
             semaphore.release();
         }
@@ -273,7 +269,7 @@ public class Game implements WhatCanPlayerDo {
             return String.valueOf(id2);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            return null; // Gestire l'eccezione in modo appropriato
+            return null; // Manage the exception in a proper way
         } finally {
             semaphore.release();
         }
@@ -286,7 +282,7 @@ public class Game implements WhatCanPlayerDo {
             return String.valueOf(id3);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            return null; // Gestire l'eccezione in modo appropriato
+            return null; // Manage the exception in a proper way
         } finally {
             semaphore.release();
         }
@@ -299,13 +295,13 @@ public class Game implements WhatCanPlayerDo {
             return String.valueOf(id4);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            return null; // Gestire l'eccezione in modo appropriato
+            return null; // Manage the exception in a proper way
         } finally {
             semaphore.release();
         }
     }
 
-    @Override
+
     public String showAllPoints() {
         StringBuilder stamp = new StringBuilder();
         for (Player playerz : players) {
@@ -345,7 +341,7 @@ public class Game implements WhatCanPlayerDo {
             return String.valueOf(cardsAsString);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            return null; // Gestire l'eccezione in modo appropriato
+            return null; // Manage the exception in a proper way
         } finally {
             semaphore.release();
         }
@@ -372,12 +368,12 @@ public class Game implements WhatCanPlayerDo {
         return result;
     }
 
-    @Override
+
     public String showPoints(Player player) {
         return String.valueOf(player.getPlayerScore());
     }
 
-    @Override
+
     public void runEndTurn(Player player) {
         //saveCards();
         savePlayers();
@@ -397,15 +393,15 @@ public class Game implements WhatCanPlayerDo {
         for (Card card : well) {
             cardsAsString.append(card.toString()).append("\n");
         }
-        return String.valueOf(cardsAsString); //ritorna stringa
+        return String.valueOf(cardsAsString); //Returns String
     }
 
-    @Override
+
     public String drawResourceCard(Player player) {
         return player.drawResourceCard(resourceDeck);
     }
 
-    @Override
+
     public String drawGoldCard(Player player) {
         return player.drawGoldCard(goldDeck);
     }
@@ -417,27 +413,27 @@ public class Game implements WhatCanPlayerDo {
         return result;
     }
 
-    @Override
+
     public void chooseSecretCard(Player player, List<ObjectiveCard> secretCards) {
     }
 
-    @Override
+
     public void turnYourCard(Card card) {
 
     }
 
 
-    @Override
+
     public int getPlayerScore(Player player) {
         return player.getPlayerScore();
     }
 
-    @Override
+
     public String getNickName(Player player) {
         return player.getNickName();
     }
 
-    @Override
+
     public List<Card> getPlayerCards(Player player) {
         return player.getPlayerCards();
     }
@@ -447,7 +443,7 @@ public class Game implements WhatCanPlayerDo {
 
     }
 
-    @Override
+
     public void requestGameInfo(Player player) {
 
     }
@@ -669,17 +665,17 @@ void saveEachPlayerInGame(Path path) {
     }
     gameState.add("players", playersArray);
 
-    // Salva il giocatore corrente
+    // Saves current player
     gameState.addProperty("currentPlayer", currentPlayer);
 
-    // Salva il mazzo delle risorse
+    // Saves resources deck
     JsonArray resourceDeckArray = new JsonArray();
     for (Card card : resourceDeck.getRemainingCards()) {
         resourceDeckArray.add(card.toJsonObject());
     }
     gameState.add("resourceDeck", resourceDeckArray);
 
-    // Salva il mazzo delle gold
+    // Saves gold deck
     JsonArray goldDeckArray = new JsonArray();
     for (Card card : goldDeck.getRemainingCards()) {
         goldDeckArray.add(card.toJsonObject());
@@ -790,7 +786,7 @@ void saveEachPlayerInGame(Path path) {
     public String checkingIfICanPlaceTheGoldCardOnGui(Player player, int indexOfTheGoldCard)
     {
        boolean check= player.checkingTheChosenCardForGoldPurpose(indexOfTheGoldCard);
-        System.out.println("sono in game");
+
 
        if(check)
        {

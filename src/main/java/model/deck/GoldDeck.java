@@ -44,17 +44,17 @@ public class GoldDeck implements Deck {
             throw new FullDeckExeption("Deck is full");
         }
 
-        // Verifico che la carta appartiene al mazzo Resource
+        // Check if the card belongs to the gold deck
         if(!isAGoldCard(card.getId())){
             throw new IllegalAddException("The Card doesn't belong to ResourceDeck");
         }
 
-        // Verifica se la carta è già presente nel mazzo
+        // Check if card is already in the deck
         for (Card card2 : goldCards) {
             if (alreadyInDeck(card.getId(),card2.getId())) throw new AlredyInException("Card is already present in the deck");
         }
 
-        // provo ad aggiungere la carta
+        // try to add the card
         try {
             goldCards.add(card);
         } catch(Exception e) {

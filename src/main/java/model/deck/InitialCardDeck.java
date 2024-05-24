@@ -52,7 +52,7 @@ public class InitialCardDeck implements Deck {
         return initialCards;
     }
 
-    //per i test
+    //needed for testing
     public int carteRimaste(){
         return initialCards.size();
     }

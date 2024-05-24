@@ -51,22 +51,22 @@ public class ResourceDeck implements Deck{
     }
 
     public void addCard(Card card) {
-        // Verifica se il mazzo ha già raggiunto la capacità massima
+        //check if the deck already reached it's full capacity
         if (isDeckFull()) {
             throw new FullDeckExeption("Deck already has 40 cards");
         }
 
-        // Verifico che la carta appartiene al mazzo Resource
+        // Check if the card belongs to the resource deck
         if (!isAResourceCard(card.getId())) {
             throw new IllegalAddException("Card doesn't belong to this deck");
         }
 
-        // Verifica se la carta è già presente nel mazzo
+        // check if the card is already in the deck
         for (Card card2 : resourceCards) {
             if (alreadyInDeck(card.getId(), card2.getId())) throw new AlredyInException("Card is already in the deck");
         }
 
-        // provo ad aggiungere la carta
+        // try to add the card
         try {
             resourceCards.add(card);
         } catch(Exception e) {
@@ -107,7 +107,7 @@ public class ResourceDeck implements Deck{
         System.out.println(resourceCards.getFirst());
     }
     public List<Card> getRemainingCards() {
-        return new ArrayList<>(this.resourceCards); // Supponendo che `deck` sia una lista delle carte rimanenti
+        return new ArrayList<>(this.resourceCards); // Supposing that deck is the list of remaining cards
     }
 
     public void setRemainingCards(List<Card> cards) {

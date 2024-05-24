@@ -96,22 +96,22 @@ public class Board {
     }
 
     public int[] ScannerCordinate(){
-        int iGrande=0;
-        int iPiccolo = nodes.length;
-        int jGrande=0;
-        int jPiccolo=nodes.length;
+        int bigI=0;
+        int smallI = nodes.length;
+        int bigJ=0;
+        int smallJ=nodes.length;
 
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes[i].length; j++) {
                 if(nodeIsUsed(nodes[i][j].getValueCounter())){
-                    if(iPiccolo > i) iPiccolo=i;
-                    if(iGrande < i) iGrande=i;
-                    if(jPiccolo > j) jPiccolo=j;
-                    if(jGrande < j) jGrande=j;
+                    if(smallI > i) smallI=i;
+                    if(bigI < i) bigI=i;
+                    if(smallJ > j) smallJ=j;
+                    if(bigJ < j) bigJ=j;
                 }
             }
         }
-        return new int[]{iPiccolo, iGrande, jPiccolo, jGrande};
+        return new int[]{smallI, bigI, smallJ, bigJ};
     }
 
     public int[][] getCentralCoordinates() {
@@ -339,31 +339,6 @@ public class Board {
         nodes[x][y] = node;
     }
 
-
-
-//    public JsonObject toJsonObject() {
-//        JsonObject jsonObject = new JsonObject();
-//        JsonArray nodesArray = new JsonArray();
-//
-//        for (int row = 0; row < nodes.length; row++) {
-//            JsonArray rowArray = new JsonArray();
-//            for (int col = 0; col < nodes[row].length; col++) {
-//                JsonObject nodeObject = new JsonObject();
-//                nodeObject.addProperty("row", row);
-//                nodeObject.addProperty("col", col);
-//                nodeObject.addProperty("specificSeed", nodes[row][col].getSpecificNodeSeed().toString());
-//                // Aggiungi altre proprietà del nodo se necessario
-//                rowArray.add(nodeObject);
-//            }
-//            nodesArray.add(rowArray);
-//        }
-//
-//        jsonObject.add("board", nodesArray);
-//        jsonObject.addProperty("numOfEmpty", numOfEmpty);
-//        jsonObject.addProperty("initEmptyValue", initEmptyValue.toString());
-//
-//        return jsonObject;
-//    }
 
 
     public static Board fromJson(JsonObject jsonObject) {

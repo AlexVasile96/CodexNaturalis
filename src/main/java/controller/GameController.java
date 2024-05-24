@@ -166,8 +166,6 @@ public synchronized void waitingForPLayers() throws InterruptedException {
             notifyAll();
         }
         else{
-            System.out.println("current numb of players da gamecontroller " + currentNumsOfPlayers);
-            System.out.println("size dal gamecontroller "+  getSize());
             wait();
         }
 }
@@ -181,31 +179,29 @@ public synchronized void waitingForPLayers() throws InterruptedException {
 
         }
         else{
-            System.out.println("current numb of players from gamecontroller " + currentNumsOfPlayers);
-            System.out.println("size from gamecontroller "+  getSize());
             wait();
         }
     }
 
     public synchronized void removePlayer(Player player) {
-        // Rimuovi il giocatore dalla mappa dei giocatori
+        // Remove players from player's map
         players.remove(player.getNickName());
 
-        // Rimuovi il giocatore dalla lista dei client
+        // Remove player from client's list
         clients.removeIf(client -> client.getThreadPlayer().equals(player));
 
-        // Aggiorna il numero di giocatori connessi
+        // Updating number of connected players
         currentNumsOfPlayers--;
 
-        // Notifica tutti i client della disconnessione
+        // Notify to all players
         sendMessageToAllClients(player.getNickName() + " has disconnected.");
 
-        // Controlla se ci sono ancora giocatori attivi
+        // Check if there is any client still active
         if (players.isEmpty()) {
             setGameOver(true);
             sendMessageToAllClients("All players have disconnected. Game over.");
         } else {
-            // Aggiorna i turni e la logica di gioco se necessario
+            // Update turns and game logic if necessary
 
         }
     }

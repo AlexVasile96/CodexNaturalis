@@ -10,7 +10,9 @@ import model.game.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-//CLASSE CHE MANTIENE TUTTE LE INFORMAZIONI DEL SINGOLO CLIENT/PLAYER
+//CLASS THAT KEEPS EVERY PLAYER/CLIENT INFO
+
+
 public class ClientView {
     String userName=null;
     Game game;
@@ -44,14 +46,14 @@ public class ClientView {
         this.game = game;
     }
     public void update(Player player) {
-            // Aggiorna le informazioni del giocatore corrente
+            // update current player's info
             this.userName= player.getNickName();
             //this.game= game;
             this.playerScore = player.getPlayerScore();
             this.dot = player.getDot();
             this.board = player.getBoard();
             this.isCardBack = player.isCardBack();
-            this.playerCards = (ArrayList<Card>) player.getPlayerCards(); // Aggiorna le carte del giocatore
+            this.playerCards = (ArrayList<Card>) player.getPlayerCards(); // Update player's cards
             this.secretChosenCard = player.getSecretChosenCard();
 
     }
