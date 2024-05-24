@@ -21,10 +21,10 @@ public class QuitScene {
                 primaryStage.setTitle("Quitting");
                 primaryStage.show();
 
-//                PauseTransition delay = new PauseTransition(Duration.seconds(4));
-//                delay.setOnFinished(event -> primaryStage.close());
-//                delay.play();
-                primaryStage.close();
+                PauseTransition delay = new PauseTransition(Duration.seconds(4));
+                delay.setOnFinished(event -> primaryStage.close());
+                delay.play();
+//                primaryStage.close();
             });
         }).start();
     }
