@@ -16,7 +16,6 @@ public class GoldUpdater implements Updater {
         SpecificSeed adder= card.getMultiplier();
         System.out.println("Adder: "+adder);
         int x = player.getPlayerScore();
-        System.out.println("Current point: "+ x);
         if (adder.equals(SpecificSeed.MISSINGMULTIPLIER)) {
             int y= x + card.getValueWhenPlaced();
             player.setPlayerScore(y);
@@ -24,7 +23,6 @@ public class GoldUpdater implements Updater {
         }
         BoardPoints boardPoints= new BoardPoints();
         int y= boardPoints.additionalPointsForGoldCards(board,adder) + player.getPlayerScore();
-        System.out.println("Points omofobi: " + y);
         player.setPlayerScore(y);
     }
 }
