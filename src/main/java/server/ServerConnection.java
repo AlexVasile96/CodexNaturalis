@@ -131,10 +131,10 @@ public class ServerConnection implements Runnable {
             }else if(waitForCall.equals("END OF GAME!")){
                 System.out.println("------------\nEND GAME\n------------");
                 waitForCall = in.readLine();
-                do{
+//                do{
                     System.out.println(waitForCall);
-                    waitForCall = in.readLine();
-                }while (waitForCall.equals("exit"));
+//                    waitForCall = in.readLine();
+//                }while (waitForCall.equals("exit"));
             }
             else if(waitForCall.equals("ALL_CLIENTS_QUIT"))
             {
