@@ -45,8 +45,8 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static CountDownLatch setupLatch;
     private static int updateOrder = 0;
     private static volatile boolean isGameQuit = false;
-
-
+    boolean allPlayersLoaded = false;
+    private static CountDownLatch allPlayersConnectedLatch; // CountDownLatch per sincronizzare i client
 
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException {
@@ -197,14 +197,31 @@ public class HandlingPlayerInputsThread implements Runnable {
             sendMessageToClient("Hello!! You have to log in, please type your username");
             String request = stdIn.readLine();
 
-            // Carica il giocatore se esiste
-            player = game.loadPlayer(request);
+            player = game.loadPlayer(request); //If the player exists, i load him
             if (player != null) {
                 sendMessageToClient("Welcome back, " + request + "! Your data has been loaded.");
                 playersList.add(player);
-                // Imposta il giocatore come threadPlayer per questo thread
                 threadPlayer = player;
-                return player;
+                List<String> expectedPlayerNicknames =game.loadPlayerNicknames(); //Checking if all the players had been added correctly
+                allPlayersLoaded = game.areAllPlayersLoaded(expectedPlayerNicknames);
+                gameController.setSize(gameController.loadGameSizeFromJson());
+                GameController.setHowManyPlayersDoIHave(GameController.getHowManyPlayersDoIHave()+1);
+                if(GameController.getHowManyPlayersDoIHave()==gameController.getSize())
+                {
+                    sendMessageToClient("All players connected. Resuming the game...");
+                    synchronized (this)
+                    {
+                        notifyAll();
+                        return player;
+                    }
+                }
+                else {
+                    sendMessageToClient("You have to wait until all clients are connected!");
+                    synchronized (this) {
+                        wait();
+                    }
+                    return  player;
+                }
             }
 
             while (isUsernameTaken(request)) {

@@ -91,7 +91,8 @@ public class GoldCard extends Card{
 
     //)JSON  OBJECT TO SAVE GOLD CARDS INFORMATION
     public JsonObject toJsonObject() {
-        JsonObject jsonObject = super.toJsonObject(); // Reuse method from Card class
+        JsonObject jsonObject = super.toJsonObject();
+        jsonObject.addProperty("cardType", "GoldCard");
         JsonArray requirementsArray = new JsonArray();
         for (SpecificSeed seed : requirementsForPlacing) {
             requirementsArray.add(seed.toString());
@@ -101,7 +102,6 @@ public class GoldCard extends Card{
         return jsonObject;
     }
 
-    // Create GoldCard from JsonObject
     public static GoldCard fromJson(JsonObject jsonObject) {
         try {
             int id = jsonObject.get("id").getAsInt();
@@ -122,6 +122,7 @@ public class GoldCard extends Card{
             for (JsonElement element : requirementsArray) {
                 requirements.add(SpecificSeed.valueOf(element.getAsString()));
             }
+
             SpecificSeed multiplier = SpecificSeed.valueOf(jsonObject.get("multiplier").getAsString());
 
             GoldCard goldCard = new GoldCard(id, type, value, multiplier, tl, tr, bl, br, requirements);

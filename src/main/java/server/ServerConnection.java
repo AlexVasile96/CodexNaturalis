@@ -722,6 +722,7 @@ public class ServerConnection implements Runnable {
             }
             else if((correctLogin).equals("Welcome back, " + loginName + "! Your data has been loaded."))
             {
+                System.out.println("Welcome back, " + loginName + "! Your data has been loaded.");
                 waitForGameStart();
                 return;
             }

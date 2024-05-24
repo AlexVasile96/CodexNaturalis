@@ -707,7 +707,24 @@ void saveEachPlayerInGame(Path path) {
                     List<Card> playerDeck = new ArrayList<>();
                     for (JsonElement cardElement : playerDeckArray) {
                         JsonObject cardObject = cardElement.getAsJsonObject();
-                        Card card = Card.fromJson(cardObject);
+                        String cardType = cardObject.get("cardType").getAsString();
+                        Card card = null;
+
+                        switch (cardType) {
+                            case "GoldCard":
+                                card = GoldCard.fromJson(cardObject);
+                                break;
+                            case "ResourceCard":
+                                card = ResourceCard.fromJsonObject(cardObject);
+                                break;
+                            case "ObjectiveCard":
+                                card = ObjectiveCard.fromJsonObject(cardObject);
+                                break;
+                            default:
+                                card = Card.fromJson(cardObject);
+                                break;
+                        }
+
                         if (card != null) {
                             playerDeck.add(card);
                             System.out.println(card);
@@ -715,35 +732,18 @@ void saveEachPlayerInGame(Path path) {
                             System.err.println("Skipping invalid card in player deck: " + cardObject);
                         }
                     }
-//                    List<Card> playerDeck = new ArrayList<>();
-//                    for (JsonElement cardElement : playerDeckArray) {
-//                        JsonObject cardObject = cardElement.getAsJsonObject();
-//                        int id = cardObject.get("id").getAsInt();
-//                        System.out.println(id);
-//                        SpecificSeed type = SpecificSeed.valueOf(cardObject.get("type").getAsString());
-//                        int value = cardObject.get("value").getAsInt();
-//
-//                        // Ricostruisci gli attributi della carta
-//                        Corner tl = Corner.fromJsonObject(cardObject.get("TL").getAsJsonObject());
-//                        Corner tr = Corner.fromJsonObject(cardObject.get("TR").getAsJsonObject());
-//                        Corner bl = Corner.fromJsonObject(cardObject.get("BL").getAsJsonObject());
-//                        Corner br = Corner.fromJsonObject(cardObject.get("BR").getAsJsonObject());
-//                        Card card;
-//                        card = new Card(id, type, value, tl, tr, bl, br);
-//
-//
-//                        playerDeck.add(card);
-//                    }
 
                     Board board = Board.fromJson(playerObject.get("board").getAsJsonObject());
                     ObjectiveCard secretChosenCard = null;
                     if (playerObject.has("secretChosenCard")) {
                         JsonObject secretCardObject = playerObject.get("secretChosenCard").getAsJsonObject();
                         secretChosenCard = ObjectiveCard.fromJsonObject(secretCardObject);
+                        System.out.println(secretChosenCard);
                     }
                     Player player = new Player(nickname, score, dot, board);
                     player.setPlayerCards((ArrayList<Card>) playerDeck);
                     player.setSecretChosenCard(secretChosenCard);
+                    System.out.println(player);
                     return player;
                 }
             }
@@ -763,7 +763,23 @@ void saveEachPlayerInGame(Path path) {
         String home = ("src/main/resources/saveplayers.json");
         return Paths.get(home);
     }
+    public List<String> loadPlayerNicknames() {
+        List<String> playerNicknames = new ArrayList<>();
+        Path path = getDefaultPlayers();
+        try (Reader reader = new FileReader(path.toString())) {
+            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
+            JsonArray playersArray = jsonObject.getAsJsonArray("players");
 
+            for (JsonElement element : playersArray) {
+                JsonObject playerObject = element.getAsJsonObject();
+                String nickname = playerObject.get("nickname").getAsString();
+                playerNicknames.add(nickname);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return playerNicknames;
+    }
 
 
 

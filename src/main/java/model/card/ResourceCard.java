@@ -52,6 +52,7 @@ public class ResourceCard extends Card{
 
     public JsonObject toJsonObject() {
         JsonObject jsonObject = super.toJsonObject(); // Call the parent class method to get common properties
+        jsonObject.addProperty("cardType", "ResourceCard"); // Add cardType property
         return jsonObject;
     }
 
@@ -68,4 +69,4 @@ public class ResourceCard extends Card{
                 card.getBR()
         );
     }
-    }
+}

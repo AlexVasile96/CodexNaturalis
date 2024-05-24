@@ -83,20 +83,34 @@ public class ObjectiveCard extends Card{
         int numberOfWhenTheGameEnds = jsonObject.get("numberOfWhenTheGameEnds").getAsInt();
         ObjectiveSpecificTypeOfCard objectiveSpecificTypeOfCard = ObjectiveSpecificTypeOfCard.valueOf(jsonObject.get("objectiveSpecificTypeOfCard").getAsString());
 
-        return new ObjectiveCard(id, type, value, tl, tr, bl, br, numberOfWhenTheGameEnds, objectiveSpecificTypeOfCard);
+        ObjectiveCard objectiveCard = new ObjectiveCard(id, type, value, tl, tr, bl, br, numberOfWhenTheGameEnds, objectiveSpecificTypeOfCard);
+
+        // Aggiungi il ripristino dei corner di Back se presente
+        if (jsonObject.has("TLBack")) {
+            objectiveCard.setTLBack(Corner.fromJsonObject(jsonObject.get("TLBack").getAsJsonObject()));
+        }
+        if (jsonObject.has("TRBack")) {
+            objectiveCard.setTRBack(Corner.fromJsonObject(jsonObject.get("TRBack").getAsJsonObject()));
+        }
+        if (jsonObject.has("BLBack")) {
+            objectiveCard.setBLBack(Corner.fromJsonObject(jsonObject.get("BLBack").getAsJsonObject()));
+        }
+        if (jsonObject.has("BRBack")) {
+            objectiveCard.setBRBack(Corner.fromJsonObject(jsonObject.get("BRBack").getAsJsonObject()));
+        }
+
+        return objectiveCard;
     }
 
+    // METODO toJsonObject
+    @Override
     public JsonObject toJsonObject() {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", id);
-        jsonObject.addProperty("value", value);
-        jsonObject.add("TL", getTL().toJsonObject());
-        jsonObject.add("TR", getTR().toJsonObject());
-        jsonObject.add("BL", getBL().toJsonObject());
-        jsonObject.add("BR", getBR().toJsonObject());
+        JsonObject jsonObject = super.toJsonObject(); // Chiamata al metodo della superclasse per ottenere le proprietà comuni
+        jsonObject.addProperty("cardType", "ObjectiveCard");
         jsonObject.addProperty("numberOfWhenTheGameEnds", numberOfWhenTheGameEnds);
         jsonObject.addProperty("objectiveSpecificTypeOfCard", objectiveSpecificTypeOfCard.toString());
         return jsonObject;
     }
-
 }
+
+

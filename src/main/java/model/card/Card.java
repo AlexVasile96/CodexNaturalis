@@ -179,6 +179,7 @@ public class Card {
         card.setBLBack(blBack);
         card.setBRBack(brBack);
 
+
         return card;
     }
 
@@ -195,6 +196,7 @@ public class Card {
         jsonObject.add("TRBack", TRBack.toJsonObject());
         jsonObject.add("BLBack", BLBack.toJsonObject());
         jsonObject.add("BRBack", BRBack.toJsonObject());
+        jsonObject.addProperty("cardType", "Card");
         return jsonObject;
     }
 

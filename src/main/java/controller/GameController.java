@@ -1,5 +1,7 @@
 package controller;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import exceptions.*;
 import model.deck.Deck;
 import model.game.Game;
@@ -8,14 +10,13 @@ import server.Command;
 import server.HandlingPlayerInputsThread;
 import view.ClientView;
 
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 //import static server.HandlingPlayerInputsThread.turnController;
 
@@ -43,6 +44,7 @@ public class GameController {
     private static boolean isTheFirstPlayer= false;
     private static String currentPlayerName=null;
     private int logginPlayers=0;
+    private static int howManyPlayersDoIHave=0;
     //CONSTRUCTORS
 
     public GameController(String username, PrintWriter userOut, List<HandlingPlayerInputsThread> clients, Socket socket, Game game) throws IOException {
@@ -130,35 +132,9 @@ public class GameController {
             System.out.println("size: " + getSize());
             setSizeSet(true);
             game.setTotalNumberOfPLayer(size);
-
-    }
-    public void loadGameOrStartNewGame() {
-
-        List<String> savedPlayers = loadSavedPlayers();
-        System.out.println(savedPlayers);
-        if (allClientsMatchSavedPlayers(savedPlayers)) {
-
-            System.out.println("Loading existing game");
-        } else {
-
-            System.out.println("Creating a new game");
-        }
+            saveGameSizeToJson(); // Saving game dimension inside json
     }
 
-    private List<String> loadSavedPlayers() {
-        List<String> savedPlayers = null;
-        try {
-            Path filePath = Paths.get(SAVE_FILE_PATH);
-            savedPlayers = Files.readAllLines(filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return savedPlayers;
-    }
-
-    private boolean allClientsMatchSavedPlayers(List<String> savedPlayers) {
-        return savedPlayers != null && new HashSet<>(savedPlayers).containsAll(players.keySet());
-    }
 
 public synchronized void waitingForPLayers() throws InterruptedException {
         if(currentNumsOfPlayers==getSize())
@@ -390,5 +366,34 @@ public synchronized void waitingForPLayers() throws InterruptedException {
 
     public void setLogginPlayers(int logginPlayers) {
         this.logginPlayers = logginPlayers;
+    }
+
+    public void saveGameSizeToJson() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("size", this.size);
+        try (FileWriter file = new FileWriter("src/main/resources/gameSize.json")) {
+            file.write(jsonObject.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public int loadGameSizeFromJson() {
+        try (FileReader reader = new FileReader("src/main/resources/gameSize.json")) {
+            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
+            this.size = jsonObject.get("size").getAsInt();
+            this.isSizeSet = true;
+            sizeLatch.countDown(); // Sblocca il thread che sta aspettando la dimensione del gioco
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static int getHowManyPlayersDoIHave() {
+        return howManyPlayersDoIHave;
+    }
+
+    public static void setHowManyPlayersDoIHave(int howManyPlayersDoIHave) {
+        GameController.howManyPlayersDoIHave = howManyPlayersDoIHave;
     }
 }
