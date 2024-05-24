@@ -116,6 +116,13 @@ public class ServerConnection implements Runnable {
                 System.out.println(getCurrentPlayer());
                 in.readLine(); //"endturn"
             }
+            else if(waitForCall.equals("quit"))
+            {
+                in.close();
+                out.close();
+                socket.close();
+                System.out.println("Connection with server has been closed, thank you for playing Codex!");
+            }
             else {
                 System.out.println("Current Player is still deciding what's his next move...");}
         }

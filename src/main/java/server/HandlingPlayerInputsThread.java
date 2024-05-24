@@ -169,6 +169,10 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("I'm waiting current player" + currentPlayer.getNickName() + " request");
             messageFromClient = stdIn.readLine();
             System.out.println("Client typed: " + messageFromClient);
+            if(messageFromClient.equals("quit"))
+            {
+                sendMessageToAllClients("One client decided to quit, so the game will end for every player.");
+            }
             runCommand(messageFromClient, threadPlayer);
 
             if (messageFromClient.equals("quit")) {
