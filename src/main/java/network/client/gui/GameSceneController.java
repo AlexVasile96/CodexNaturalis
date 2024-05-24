@@ -89,6 +89,7 @@ public class GameSceneController {
     private GridPane gridPaneForWellCards;
     String firstCommonId;
     String secondCommonId;
+    String secretId;
     ShowObjectiveScene objectiveScene;
     private boolean cardOnHerBack=false;
     private String pathFlipped;
@@ -713,7 +714,8 @@ public class GameSceneController {
                     objectiveScene = new ShowObjectiveScene(primaryStage, out, socket, in);
                     firstCommonId = controller.firstCommon();
                     secondCommonId = controller.secondCommon();
-                    objectiveScene.popupObjectiveScene(firstCommonId, secondCommonId);
+                    secretId = controller.secretCard();
+                    objectiveScene.popupObjectiveScene(firstCommonId, secondCommonId, secretId);
 
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);

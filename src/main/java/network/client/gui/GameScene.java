@@ -94,7 +94,6 @@ public class GameScene {
                 System.out.println("All clients updated the data, Server says " + STARTGUI);
             }
         }
-
         System.out.println("Starting game for client: " + clientView.getUserName());
         gameSceneController.startGame(initCardId, isFront);
     }

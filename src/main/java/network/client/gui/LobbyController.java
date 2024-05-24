@@ -96,6 +96,7 @@ public class LobbyController {
                     if (gameScene == null) {
                         System.out.println("Initializing GameScene for the first client.");
                         gameScene = new GameScene(primaryStage, out, socket, in, initCardId, clientview, currentPlayerNickname, true,isFront);
+                        primaryStage.setTitle("Codex");
                     }
                 }
                 gameScene.game(true);
@@ -104,6 +105,7 @@ public class LobbyController {
                     if (gameScene == null) {
                         System.out.println("Initializing GameScene for other clients.");
                         gameScene = new GameScene(primaryStage, out, socket, in, initCardId, clientview, currentPlayerNickname, false,isFront);
+                        primaryStage.setTitle("Codex");
                     }
                 }
                 System.out.println("Waiting for game to start...");

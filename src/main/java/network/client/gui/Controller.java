@@ -149,6 +149,11 @@ public class Controller {
         String secondCommon = in.readLine();
         return secondCommon;
     }
+    public String secretCard() throws IOException {
+        out.println("secret");
+        String secretCard = in.readLine();
+        return secretCard;
+    }
 
     private void showWell() throws IOException {
         out.println("showWell");
