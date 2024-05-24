@@ -37,7 +37,7 @@ public class GameController {
     private static final String SAVE_FILE_PATH = "src/main/resources/saveplayers.json";
     private static Player winningPlayer=null;
     private boolean areAllPlayersLogged=false;
-    private int currentNumsOfPlayers=1;
+    private int currentNumsOfPlayers=0;
     private CountDownLatch numbgames = new CountDownLatch(0);
     private int playerChoseinitialcard=0;
     private static boolean isTheFirstPlayer= false;

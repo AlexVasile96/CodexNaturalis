@@ -44,7 +44,6 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static HandlingPlayerInputsThread fourthClient = null;
     private static CountDownLatch setupLatch;
     private static int updateOrder = 0;
-    private boolean inizioTurno = true;
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException {
         this.clientSocket = socket;
@@ -115,7 +114,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
                 while (!hasClientQuit) {
                     startGame();
-                    inizioTurno = true;
                     System.out.println("Client changed, now " + currentPlayer + " is playing");
                     hasClientQuit = true;
                 }
@@ -154,17 +152,24 @@ public class HandlingPlayerInputsThread implements Runnable {
         String messageFromClient;
         boolean endturnphase = false;
         while (!endturnphase) {
-            if (currentPlayer.getPlayerScore() >= 20 && !currentPlayer.isHasThePlayerGot20Points()) {
-                currentPlayer.setHasThePlayerGot20Points(true);
-                winningPlayer = currentPlayer;
-                GameController.setWinningPlayer(currentPlayer);
-                runCommand("status", threadPlayer);
-                sendMessageToAllClients("All players have one last turn and then the game will end");
-                runCommand("endTurn", threadPlayer);
-            }
-            if (Objects.equals(currentPlayer.getNickName(), winningPlayer.getNickName())) {
-                System.out.println("END OF GAME!");
-                runCommand("endgame", threadPlayer);
+            if(currentPlayer.isHasThePlayerGot20Points()){//stampa esiti
+                System.out.println("------------\nEND OF GAME!\n------------");
+                sendMessageToAllClients("END OF GAME!");
+                sendMessageToAllClients("ci siamo!!");
+                game.setEndGame(true);
+                stdIn.readLine();//quit
+                //runCommand("endgame", threadPlayer);
+                messageFromClient = stdIn.readLine();
+                runCommand(messageFromClient, threadPlayer);
+                gameController.setSize(gameController.getSize() - 1);
+            }else if(game.isEndGame()){
+                System.out.println("------------\nEND OF GAME!\n------------");
+                messageFromClient= stdIn.readLine();
+                runCommand(messageFromClient, threadPlayer);//quit
+                gameController.setSize(gameController.getSize() - 1);
+                messageFromClient = stdIn.readLine();
+                runCommand(messageFromClient, threadPlayer);
+                return;
             }
             System.out.println("I'm waiting current player" + currentPlayer.getNickName() + " request");
             messageFromClient = stdIn.readLine();
@@ -267,7 +272,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         int size = 0;
         if (this==firstClient) {
             try {
-                sendMessageToClient("Choose the number of players!");
+                sendMessageToClient("Choose the number of players(2-4): ");
                 message = stdIn.readLine();
                 size = Integer.parseInt(message);
                 System.out.println("Numbers of Player will be " + size);
@@ -399,6 +404,18 @@ public class HandlingPlayerInputsThread implements Runnable {
                     runCommand(messageFromClient, player);//drawCard
                     messageFromClient = stdIn.readLine();
                     runCommand(messageFromClient, player);//status
+
+                    //endgame
+                    if (currentPlayer.getPlayerScore() >= 20 && !game.isEndGame()) {
+                        currentPlayer.setHasThePlayerGot20Points(true);
+                        winningPlayer = currentPlayer;
+                        GameController.setWinningPlayer(currentPlayer);
+                        System.out.println(userName + "smashed 20 points!!");
+                        sendMessageToAllClients("You smashed 20 points!! now everybody got one last turn");
+                        sendMessageToAllClients(userName);
+                        messageFromClient = stdIn.readLine();
+                        runCommand(messageFromClient, threadPlayer);//endturn
+                    }
                 }
                 case "drawCard" -> {
                     messageFromClient = stdIn.readLine();

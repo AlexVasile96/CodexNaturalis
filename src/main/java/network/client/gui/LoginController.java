@@ -128,7 +128,7 @@ public class LoginController {
                 }
                 String mexFromS= in.readLine();
                 System.out.println(mexFromS);
-                if(mexFromS.equals("Choose the number of players!")) {
+                if(mexFromS.equals("Choose the number of players(2-4): ")) {
                     Platform.runLater(() -> {
                         ChooseNumOfPlayersScene chooseNumOfPlayersScene = new ChooseNumOfPlayersScene();
                         try {

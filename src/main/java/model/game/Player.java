@@ -846,6 +846,7 @@ public class Player implements Observable {
 
 
     public boolean isHasThePlayerGot20Points() {
+        boolean test = hasThePlayerGot20Points;
         return hasThePlayerGot20Points;
     }
 

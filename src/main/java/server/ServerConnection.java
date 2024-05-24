@@ -6,7 +6,7 @@ import view.ClientView;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-
+import java.util.Objects;
 
 
 public class ServerConnection implements Runnable {
@@ -21,8 +21,11 @@ public class ServerConnection implements Runnable {
     private boolean isConnectionClosed= false;
     private boolean isTheWhileActive=false;
     private boolean hasTheServerCrashed=false;
-    private boolean inizioturno = true;
-    private String isEndGame = "false";
+    private boolean endGameForWinningPlayer = false;
+    private boolean lastTurn = false;
+    private String winningPlayer = null;
+    private StringBuilder printFinal =new StringBuilder();
+    private boolean gameOverNotForWinningPlayer =false;
 
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
@@ -115,6 +118,12 @@ public class ServerConnection implements Runnable {
                 setCurrentPlayer(waitForCall);
                 System.out.println(getCurrentPlayer());
                 in.readLine(); //"endturn"
+            }else if(waitForCall.equals("You smashed 20 points!! now everybody got one last turn")){
+                lastTurn = true;
+                winningPlayer = in.readLine();
+            }else if(waitForCall.equals("END OF GAME!")){
+                printFinal.append(in.readLine());
+
             }
             else if(waitForCall.equals("quit"))
             {
@@ -134,20 +143,36 @@ public class ServerConnection implements Runnable {
             player.setThePlayerDeckStarted(true);
             showCards();
         }
+        if(endGameForWinningPlayer){
+            System.out.println("------------\nEND GAME\n------------");
+            in.readLine();
+            System.out.println(in.readLine());
+            quit();
+            return;
+        }if (gameOverNotForWinningPlayer) {
+            System.out.println("------------\nEND GAME\n------------\n"+printFinal);
+            quit();
+            return;
+        }else if (lastTurn && !gameOverNotForWinningPlayer && !player.isHasThePlayerAlreadyPLacedACard()) {
+            System.out.println("-----------------------------------------------------------\n" + winningPlayer + " has reached 20Pts! This is the last turn!\n-----------------------------------------------------------");
+        }
         System.out.println("It's your turn!");
         System.out.println("What do you want to do?");
         System.out.println("Please type help if you want to see which moves you can make.");
         String command= stdin.readLine().toLowerCase();
-        if(command.equals("playcard") && player.isHasThePlayerAlreadyPLacedACard())
-        {
+        if((command.equals("playcard") || command.equals("1")) && player.isHasThePlayerAlreadyPLacedACard()) {
             System.out.println("You already placed and drew a card!");
             return;
         }
-        if(command.equals("endturn")&& !player.isHasThePlayerAlreadyPLacedACard())
-        {
+        else if((command.equals("endturn") || command.equals("7")) && !player.isHasThePlayerAlreadyPLacedACard()) {
             System.out.println("You have to place a card first");
             return;
         }
+        else if((command.equals("endturn") || command.equals("7")) && lastTurn) {
+            gameOverNotForWinningPlayer = true;
+        }/*else if((command.equals("endgame") || command.equals("7") || command.equals("playcard") || command.equals("1")) && endGame) {
+            System.out.println("the command is no longer available. Print 'showboard' or 'quit'");
+        }*/
         actionsInput(command);
     }
 
@@ -376,12 +401,11 @@ public class ServerConnection implements Runnable {
 
         //controllo se 20 punti
         if(points>=20) {
-            System.out.println("You smashed 20 points!! now everybody got one last turn");
+            System.out.println(in.readLine());
+            in.readLine();//winningPlayer
             System.out.println("Your turn is over!");
-            player.setHasThePlayerAlreadyPLacedACard(false);
-            String nextP = in.readLine();
-            System.out.println("Next player will be " + nextP);
-            setCurrentPlayer(nextP);
+            endGameForWinningPlayer = true;
+            runEndTurn();
 
 
 
@@ -593,10 +617,12 @@ public class ServerConnection implements Runnable {
     private void runEndTurn() throws IOException {
         sendMessageToServer("endTurn");
 
-        player.setHasThePlayerAlreadyPLacedACard(false);
-        System.out.println("You chose to end your turn.");
+        if(!endGameForWinningPlayer){
+            player.setHasThePlayerAlreadyPLacedACard(false);
+            System.out.println("You chose to end your turn.");
+        }
         String answer= in.readLine();
-        System.out.println(answer);
+        System.out.println("Next player will be " +answer);
         setCurrentPlayer(answer);
         String updatingCurrentPlayer= in.readLine(); //-> updating currentPLayer
         System.out.println(updatingCurrentPlayer);
@@ -658,8 +684,8 @@ public class ServerConnection implements Runnable {
         System.out.println("Server says: your first objective card is" + stringSecretCard);
         System.out.println("Server says: your second objective card is" + stringSecondCard);
         while(!isNumberCorrect){
-        System.out.println("Choose the card you want to draw:\nType 1 if you want to select the first card\nType 2 if you want to select the second card");
-        String numberChosen= stdin.readLine();
+        System.out.println("Choose the card you want to draw:\n1-> First card\n2-> Second card");
+        String numberChosen= controlInputFromUser(new String[]{"1", "2"});
         int size = Integer.parseInt(numberChosen);
         if(size!=1 && size!=2){
             System.out.println("Please choose your card correctly!");
@@ -686,7 +712,7 @@ public class ServerConnection implements Runnable {
             if((correctLogin).equals("Username already taken. Please choose another username:"))
             {
                 System.out.println("Username already taken. Please choose another username:");
-                System.out.println(">");
+                System.out.print(">");
             }
             else if((correctLogin).equals("Welcome back, " + loginName + "! Your data has been loaded."))
             {
@@ -734,7 +760,7 @@ public class ServerConnection implements Runnable {
             System.out.println("Server says: " + waitingClients);
             return;
         }
-        String numbersOfPlayers= stdin.readLine();
+        String numbersOfPlayers= controlInputFromUser(new String[]{"2", "3", "4"});
         int size = Integer.parseInt(numbersOfPlayers);
         out.println(size); //Sending number of players
         System.out.println("Number of players are: "+ size);
