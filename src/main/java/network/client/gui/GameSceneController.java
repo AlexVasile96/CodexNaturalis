@@ -358,8 +358,9 @@ public class GameSceneController {
                     {
                         showAlert("Corner Missing","Please select a corner before playing a card");
                     }
-
-                    if(indexForGold!=null && Integer.parseInt(indexForGold)>40  )
+                    System.out.println("Path chosen is: + " + pathChosen);
+                    System.out.println("Path flipped" + pathFlipped);
+                    if(indexForGold!=null && Integer.parseInt(indexForGold)>40)
                     {
                         System.out.println("You chose to play a gold card");
                         out.println("goldGui");
@@ -814,15 +815,6 @@ public class GameSceneController {
     private void enableOrDisableGameActions() {
 
         if(!isCurrentPlayerTurn){
-//            playCard.setDisable(true);
-//            drawCard.setDisable(true);
-//            flipCardToBack.setDisable(true);
-//            flipCardToFront.setDisable(true);
-//            seeYourSpecificSeeds.setDisable(true);
-//            seeOtherPlayersBoards.setDisable(true);
-//            showObjective.setDisable(true);
-//            seeYourPoints.setDisable(true);
-//            endTurn.setDisable(true);
             buttonContainer.setDisable(true);
         }
         if(isCurrentPlayerTurn){

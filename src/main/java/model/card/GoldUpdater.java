@@ -9,10 +9,12 @@ public class GoldUpdater implements Updater {
 
     @Override
     public void updatePlayerPoints(Card card, Player player, Board board) {
+
     }
     @Override
     public void updatePlayerPoints(GoldCard card, Player player, Board board) {
         SpecificSeed adder= card.getMultiplier();
+        System.out.println("Adder: "+adder);
         int x = player.getPlayerScore();
         if (adder.equals(SpecificSeed.MISSINGMULTIPLIER)) {
             int y= x + card.getValueWhenPlaced();
