@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 public class Controller {
 
@@ -20,6 +21,7 @@ public class Controller {
         this.in = in;
         this.out = out;
         this.socket=socket;
+        this.socket.setSoTimeout(10000); // Imposta il timeout a 10 secondi
     }
 
 
@@ -142,42 +144,72 @@ public class Controller {
 
     public String firstCommon() throws IOException {
         out.println("firstCommon");
-        String firstCommon = in.readLine();
-        return firstCommon;
+        try {
+            return in.readLine();
+        } catch (SocketTimeoutException e) {
+            handleDisconnection();
+            return null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
     public String secondCommon() throws IOException {
         out.println("secondCommon");
-        String secondCommon = in.readLine();
-        return secondCommon;
+        try {
+            return in.readLine();
+        } catch (SocketTimeoutException e) {
+            handleDisconnection();
+            return null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
     public String secretCard() throws IOException {
         out.println("secret");
-        String secretCard = in.readLine();
-        return secretCard;
+        try {
+            return in.readLine();
+        } catch (SocketTimeoutException e) {
+            handleDisconnection();
+            return null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void showWell() throws IOException {
         out.println("showWell");
-        System.out.println("Common Well:\n------------------------------------------------------------------------------------------");
-        System.out.println(in.readLine());//prima carta nel pozzo
-        System.out.println(in.readLine());//seconda carta nel pozzo
-        System.out.println(in.readLine());//terza carta nel pozzo
-        System.out.println(in.readLine());//quarta carta nel pozzo
-        in.readLine();//spazio
-        System.out.println("------------------------------------------------------------------------------------------");
+        try {
+            System.out.println("Common Well:\n------------------------------------------------------------------------------------------");
+            System.out.println(in.readLine()); // prima carta nel pozzo
+            System.out.println(in.readLine()); // seconda carta nel pozzo
+            System.out.println(in.readLine()); // terza carta nel pozzo
+            System.out.println(in.readLine()); // quarta carta nel pozzo
+            in.readLine(); // spazio
+            System.out.println("------------------------------------------------------------------------------------------");
+        } catch (SocketTimeoutException e) {
+            handleDisconnection();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-
-    //prima di mandare un messaggio al server faccio un test, se non mi risponde significa che è crashato quindi termina tutto
 
     public void quit(Stage primaryStage) throws IOException {
         out.println("quit");
-        System.out.println(in.readLine()); //ALL_CLIENTS_QUIT
-        QuitScene quitScene = new QuitScene();
-        quitScene.quit(primaryStage);
-        in.close();
-        out.close();
-        socket.close();
-        System.exit(0);
+        try {
+            System.out.println(in.readLine()); // ALL_CLIENTS_QUIT
+            QuitScene quitScene = new QuitScene();
+            quitScene.quit(primaryStage);
+            in.close();
+            out.close();
+            socket.close();
+            System.exit(0);
+        } catch (SocketTimeoutException e) {
+            handleDisconnection();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -191,33 +223,46 @@ public class Controller {
 
     public String showSpecificSeed() throws IOException {
         out.println("showYourSpecificSeed");
-        return in.readLine();
+        try {
+            return in.readLine();
+        } catch (SocketTimeoutException e) {
+            handleDisconnection();
+            return null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String showPoints() throws IOException {
         out.println("showPoints");
-        return in.readLine();
+        try {
+            return in.readLine();
+        } catch (SocketTimeoutException e) {
+            handleDisconnection();
+            return null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String endTurn() throws IOException {
         out.println("endTurn");
-        System.out.println("Your turn ended");
-        String currentPlayerNickname = in.readLine();
-        System.out.println(currentPlayerNickname);
-        String update = in.readLine();
-        System.out.println(update);
-        out.flush();
-        return currentPlayerNickname;
+        try {
+            System.out.println("Your turn ended");
+            String currentPlayerNickname = in.readLine();
+            System.out.println(currentPlayerNickname);
+            String update = in.readLine();
+            System.out.println(update);
+            out.flush();
+            return currentPlayerNickname;
+        } catch (SocketTimeoutException e) {
+            handleDisconnection();
+            return null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void showBoards() throws IOException {
-        //è da implementare diversamente da gui, però non so come
-    }
-
-    private boolean wrongChoice(String selectedCard) {
-        int num = Integer.parseInt(selectedCard);
-        return num < 0 || num > 3;
-    }
     private void receivingAndPrintingCards() throws IOException {
         String firstCard = in.readLine(); //Reading all three cards
         String secondCard = in.readLine();
@@ -239,5 +284,17 @@ public class Controller {
         }
         System.out.println("It's now " + playerNickname + "'s turn");
         System.out.println("Time to play some Codex LESGO!");
+    }
+    private void handleDisconnection() {
+        System.out.println("Client disconnected or crashed.");
+        try {
+
+            if (in != null) in.close();
+            if (out != null) out.close();
+            if (socket != null) socket.close();
+            System.exit(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
