@@ -29,7 +29,7 @@ public class GUI extends Application {
     public ImageView initCard;
 
     public static void main(String[] args) throws IOException {
-        ConnectionWithServer connectionWithServer = new ConnectionWithServer(); //creazione classe
+        ConnectionWithServer connectionWithServer = new ConnectionWithServer();
         socket = connectionWithServer.connectToServer();
         out = new PrintWriter(socket.getOutputStream(), true); //to write
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

@@ -120,7 +120,6 @@ public class ServerConnection implements Runnable {
         {
             if(hasSomebodyQuit)
             {
-                System.out.println("Stop");
                 return;
             }
             String waitForCall= in.readLine();

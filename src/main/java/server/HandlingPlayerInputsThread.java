@@ -11,14 +11,12 @@ import model.card.GoldCard;
 import model.card.InitialCard;
 import model.card.ObjectiveCard;
 import model.game.*;
-import java.net.SocketException;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 public class HandlingPlayerInputsThread implements Runnable {
@@ -46,8 +44,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static int updateOrder = 0;
     private static volatile boolean isGameQuit = false;
     boolean allPlayersLoaded = false;
-    private static CountDownLatch allPlayersConnectedLatch; // CountDownLatch per sincronizzare i client
-
+    private boolean clientPersisted=false;
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException {
         this.clientSocket = socket;
@@ -67,16 +64,12 @@ public class HandlingPlayerInputsThread implements Runnable {
         checkGameInizialization = false;
         if (firstClient == null) {
             firstClient = this;
-            System.out.println("ciao sono il primo thread");
         } else if (secondClient==null) {
             secondClient=this;
-            System.out.println("ciao sono il secondo thread");
         } else if (thirdClient==null) {
             thirdClient=this;
-            System.out.println("Hi i'm the third thread");
         } else if (fourthClient==null) {
             fourthClient=this;
-            System.out.println("HI i'm the fourth thread");
         }
         synchronized (HandlingPlayerInputsThread.class) {
             if (setupLatch == null) {
@@ -84,6 +77,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             }
         }
     }
+
 
     @Override
     public void run() {
@@ -93,29 +87,15 @@ public class HandlingPlayerInputsThread implements Runnable {
                 String clientSaysHello = stdIn.readLine();
                 System.out.println("Client says " + clientSaysHello);
                 threadPlayer = loginEachClient();
-                handlingTurns(playersList);
-                addingPlayersToTheGame();
-                synchronized (this) {
-                    if (!checkGameInizialization) {
-                        initializeCards();
+                if(!clientPersisted)
+                {
+                    noPersistenceLogin();
+                    for (Player player : playersList) {
+                        player.setPlayerScore(10);
                     }
                 }
-                sendMessageToClient("All clients connected");
-                assigningSecretCard();
-                assignInitialCard();
-                for (Player player : playersList) {
-                    game.updateSingleClientView(player);
-                }
-                sendMessageToClient(currentPlayer.getNickName());
-                if (this == firstClient) {
-                    sendMessageToClient("You are the first client");
-                }
-                notifyClientSetupComplete();
-                waitForAllClientsToSetup();
+
                 boolean hasClientQuit = false;
-                for (Player player : playersList) {
-                    player.setPlayerScore(10);
-                }
                 while (!hasClientQuit && !isGameQuit) {
                     startGame();
                     hasClientQuit = true;
@@ -191,6 +171,7 @@ public class HandlingPlayerInputsThread implements Runnable {
 
             player = game.loadPlayer(request); //If the player exists, i load him
             if (player != null) {
+                clientPersisted=true;
                 sendMessageToClient("Welcome back, " + request + "! Your data has been loaded.");
                 playersList.add(player);
                 threadPlayer = player;
@@ -605,5 +586,27 @@ public class HandlingPlayerInputsThread implements Runnable {
         } catch (IOException e) {
             System.err.println("Error while closing resources: " + e.getMessage());
         }
+    }
+
+    private void noPersistenceLogin() throws IOException, InterruptedException {
+        handlingTurns(playersList);
+        addingPlayersToTheGame();
+        synchronized (this) {
+            if (!checkGameInizialization) {
+                initializeCards();
+            }
+        }
+        sendMessageToClient("All clients connected");
+        assigningSecretCard();
+        assignInitialCard();
+        for (Player player : playersList) {
+            game.updateSingleClientView(player);
+        }
+        sendMessageToClient(currentPlayer.getNickName());
+        if (this == firstClient) {
+            sendMessageToClient("You are the first client");
+        }
+        notifyClientSetupComplete();
+        waitForAllClientsToSetup();
     }
 }
