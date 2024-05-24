@@ -164,11 +164,13 @@ public class Controller {
         System.out.println(in.readLine());//quarta carta nel pozzo
         in.readLine();//spazio
         System.out.println("------------------------------------------------------------------------------------------");
-
     }
 
-    public void quit(Stage primaryStage){
+    //prima di mandare un messaggio al server faccio un test, se non mi risponde significa che è crashato quindi termina tutto
+
+    public void quit(Stage primaryStage) throws IOException {
         out.println("quit");
+        System.out.println(in.readLine());
         QuitScene quitScene = new QuitScene();
         quitScene.quit(primaryStage);
     }

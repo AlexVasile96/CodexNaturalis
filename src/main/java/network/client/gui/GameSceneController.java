@@ -124,6 +124,9 @@ public class GameSceneController {
             SharedObjectsInGui.setTopCardGoldDeck(createNewPathForImages(SharedObjectsInGui.getPathGoldDeck()));
             out.println("firstCardResourceGui");
             idTopCardResourceDeck = in.readLine();
+            if(idTopCardResourceDeck.equals("One client decided to quit, so the game will end for every player.")){
+                out.println("quit");
+            }
             out.println("firstCardGoldGui");
             idTopCardGoldDeck = in.readLine();
             creatingDeckAndGoldDeckView();
@@ -738,10 +741,18 @@ public class GameSceneController {
                     }
                     updateTurnState(nextPlayerNickname.equals(clientView.getUserName()));
                     haveToPlay = true;
-                    controller.quit(primaryStage);
+                    try {
+                        controller.quit(primaryStage);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             } else {
-                controller.quit(primaryStage);
+                try {
+                    controller.quit(primaryStage);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
