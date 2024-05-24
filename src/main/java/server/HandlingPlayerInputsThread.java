@@ -118,46 +118,39 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
                 while (!hasClientQuit && !isGameQuit) {
                     startGame();
-                    System.out.println("Client changed, now " + currentPlayer + " is playing");
                     hasClientQuit = true;
                 }
                 handleClientDisconnection();
-                stdIn.close();
-                out.close();
-                clientSocket.close();
-                if(gameController.getSize()==0)
-                {
-                    System.out.println("All clients quit, thank you for playing Codex !");
-                }
-                try {
-                    clientSocket.close();
-                } catch (IOException ex) {
-                    System.err.println("Error while closing client's socket " + ex.getMessage());
-                }
-                System.out.println("Connection closed with client");
-                checkIfTheGameControllerIsEmpty();
-            } catch (SocketTimeoutException e) {
+
+            } catch (SocketTimeoutException e ) {
                 System.out.println("Timeout: client crashed.");
                 try {
-                    clientSocket.close();
+                    handleClientDisconnection();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                clients.remove(this);
             } catch (IOException e) {
                 System.out.println("Connection lost with client");
                 try {
-                    checkIfTheGameControllerIsEmpty();
+                    handleClientDisconnection();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
+            } finally {
+                closeResources();
+                try {
+                    checkIfTheGameControllerIsEmpty();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
-    private void startGame() throws IOException, InterruptedException {
+
+        private void startGame() throws IOException, InterruptedException {
         String messageFromClient;
         boolean endturnphase = false;
         while (!endturnphase) {
@@ -165,7 +158,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println("------------\nEND OF GAME!\n------------");
                 sendMessageToAllClients("END OF GAME!");
                 sendMessageToAllClients("ci siamo!!");
-                //runCommand("endgame", threadPlayer);
                 stdIn.readLine();//quit
                 sendMessageToAllClients("ALL_CLIENTS_QUIT");
                 isGameQuit = true;
@@ -538,7 +530,7 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     public void checkIfTheGameControllerIsEmpty() throws IOException {
         if (gameController.getSize() == 0) {
-            System.out.println("All players disconnected, thank you for playing Codex!");
+            //System.out.println("All players disconnected, thank you for playing Codex!");
             stdIn.close();
             out.close();
             clientSocket.close();
@@ -579,18 +571,15 @@ public class HandlingPlayerInputsThread implements Runnable {
         return false;
     }
     private void handleClientDisconnection() throws IOException {
+        System.out.println("Connection closed with client " + threadPlayer.getNickName());
+        System.out.println("Thank you " + threadPlayer.getNickName() + " for playing Codex!");
         clients.remove(this);
         if (threadPlayer != null) {
             playersList.remove(threadPlayer);
             gameController.removePlayer(threadPlayer); // Chiama il metodo removePlayer del GameController
+        }
+        closeResources();
 
-        }
-        try {
-            clientSocket.close();
-        } catch (IOException ex) {
-            System.err.println("Error while closing client's socket " + ex.getMessage());
-        }
-        System.out.println("Connection closed with client");
         checkIfTheGameControllerIsEmpty();
     }
     public Player getThreadPlayer() {
@@ -602,5 +591,19 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
         isGameQuit = true;
     }
-
+    private void closeResources() {
+        try {
+            if (stdIn != null) {
+                stdIn.close();
+            }
+            if (out != null) {
+                out.close();
+            }
+            if (clientSocket != null && !clientSocket.isClosed()) {
+                clientSocket.close();
+            }
+        } catch (IOException e) {
+            System.err.println("Error while closing resources: " + e.getMessage());
+        }
+    }
 }
