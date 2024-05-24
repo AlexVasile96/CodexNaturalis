@@ -26,7 +26,7 @@ public class ServerConnection implements Runnable {
     private String winningPlayer = null;
     private StringBuilder printFinal =new StringBuilder();
     private boolean gameOverNotForWinningPlayer =false;
-
+    private boolean hasSomebodyQuit=false;
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
             this.clientView=clientView;
@@ -67,6 +67,10 @@ public class ServerConnection implements Runnable {
                                 }
                             else{
                                 waitUntilItsYourTurn();
+                                if(hasSomebodyQuit)
+                                {
+                                    return;
+                                }
                                 makeYourMoves();
                             }
                         }
@@ -86,7 +90,7 @@ public class ServerConnection implements Runnable {
             }
             else{
                 try {
-                        exitFromGame();
+                       // exitFromGame();
                         in.close();
                         out.close();
                         socket.close();
@@ -113,6 +117,11 @@ public class ServerConnection implements Runnable {
     private void waitUntilItsYourTurn() throws IOException {
         while(!clientView.getUserName().equals(getCurrentPlayer()))
         {
+            if(hasSomebodyQuit)
+            {
+                System.out.println("Stop");
+                return;
+            }
             String waitForCall= in.readLine();
             if(waitForCall.equals(clientView.getUserName())){
                 setCurrentPlayer(waitForCall);
@@ -125,12 +134,15 @@ public class ServerConnection implements Runnable {
                 printFinal.append(in.readLine());
 
             }
-            else if(waitForCall.equals("quit"))
+            else if(waitForCall.equals("ALL_CLIENTS_QUIT"))
             {
+                in.readLine();
+                System.out.println("One client decided to quit, so the game will end for everyone!");
                 in.close();
                 out.close();
                 socket.close();
                 System.out.println("Connection with server has been closed, thank you for playing Codex!");
+                hasSomebodyQuit=true;
             }
             else {
                 System.out.println("Current Player is still deciding what's his next move...");}

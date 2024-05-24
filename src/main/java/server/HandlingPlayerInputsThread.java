@@ -44,6 +44,10 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static HandlingPlayerInputsThread fourthClient = null;
     private static CountDownLatch setupLatch;
     private static int updateOrder = 0;
+    private static volatile boolean isGameQuit = false;
+
+
+
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException {
         this.clientSocket = socket;
@@ -112,14 +116,15 @@ public class HandlingPlayerInputsThread implements Runnable {
                 for (Player player : playersList) {
                     player.setPlayerScore(1);
                 }
-                while (!hasClientQuit) {
+                while (!hasClientQuit && !isGameQuit) {
                     startGame();
                     System.out.println("Client changed, now " + currentPlayer + " is playing");
                     hasClientQuit = true;
                 }
-
-               // clients.remove(this);
                 handleClientDisconnection();
+                stdIn.close();
+                out.close();
+                clientSocket.close();
                 try {
                     clientSocket.close();
                 } catch (IOException ex) {
@@ -173,19 +178,21 @@ public class HandlingPlayerInputsThread implements Runnable {
             }
             System.out.println("I'm waiting current player" + currentPlayer.getNickName() + " request");
             messageFromClient = stdIn.readLine();
+            if(messageFromClient==null)
+            {
+                endturnphase=true;
+                return;
+            }
             System.out.println("Client typed: " + messageFromClient);
             if(messageFromClient.equals("quit"))
             {
-                sendMessageToAllClients("One client decided to quit, so the game will end for every player.");
+                sendMessageToAllClients("ALL_CLIENTS_QUIT");
+                isGameQuit = true;
+                break;
             }
-            runCommand(messageFromClient, threadPlayer);
+            else{
+            runCommand(messageFromClient, threadPlayer);}
 
-            if (messageFromClient.equals("quit")) {
-                gameController.setSize(gameController.getSize() - 1);
-                messageFromClient = stdIn.readLine();
-                runCommand(messageFromClient, threadPlayer);
-                endturnphase = true;
-            }
         }
     }
 
@@ -563,7 +570,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         if (threadPlayer != null) {
             playersList.remove(threadPlayer);
             gameController.removePlayer(threadPlayer); // Chiama il metodo removePlayer del GameController
-            turnController.removePlayer(threadPlayer);
+
         }
         try {
             clientSocket.close();
@@ -575,6 +582,12 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     public Player getThreadPlayer() {
         return threadPlayer;
+    }
+    public synchronized void sendQuitMessageToAllClients() {
+        for (HandlingPlayerInputsThread client : clients) {
+            client.sendMessageToClient("ALL_CLIENTS_QUIT");
+        }
+        isGameQuit = true;
     }
 
 }
