@@ -790,8 +790,6 @@ void saveEachPlayerInGame(Path path) {
     public String checkingIfICanPlaceTheGoldCardOnGui(Player player, int indexOfTheGoldCard)
     {
        boolean check= player.checkingTheChosenCardForGoldPurpose(indexOfTheGoldCard);
-        System.out.println("sono in game");
-
        if(check)
        {
            System.out.println("Check is: "+ check);

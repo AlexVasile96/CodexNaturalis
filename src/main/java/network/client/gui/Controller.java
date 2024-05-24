@@ -1,11 +1,9 @@
 package network.client.gui;
 
 import javafx.stage.Stage;
-import model.game.Player;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
@@ -14,14 +12,12 @@ public class Controller {
 
     BufferedReader in;
     PrintWriter out;
-    private int gameSize;
-    private String currentPlayerNickname;
     private Socket socket;
     public Controller(BufferedReader in, PrintWriter out, Socket socket) throws IOException {
         this.in = in;
         this.out = out;
         this.socket=socket;
-        this.socket.setSoTimeout(10000); // Imposta il timeout a 10 secondi
+        this.socket.setSoTimeout(60000);
     }
 
 
@@ -82,12 +78,12 @@ public class Controller {
             }
 
             System.out.println(in.readLine()); //card correctly placed
-            String typeCard = in.readLine();
-            String isBack = in.readLine();
-            String coordinate = in.readLine();
-            System.out.println(typeCard);
-            System.out.println(isBack);
-            System.out.println(coordinate);
+            String typeCard = in.readLine(); //For server purposes
+            String isBack = in.readLine(); //For server purposes
+            String coordinate = in.readLine();//For server purposes
+            System.out.println(typeCard);//For server purposes
+            System.out.println(isBack);//For server purposes
+            System.out.println(coordinate);//For server purposes
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -106,10 +102,10 @@ public class Controller {
                 in.readLine();
             } else if (selectedDeck.equals("gold")) {
                 out.println("firstCardGoldGui");
-                String cartaPescata = in.readLine();
+                in.readLine(); //Drawn card
 
                 out.println("drawCardFromGoldDeck");
-                in.readLine();
+                in.readLine(); //Drawn card
             }
         } else if (wellOrDeck.equals("well")) {
             out.println("well");
@@ -120,14 +116,13 @@ public class Controller {
             System.out.println("Select '1' for"+in.readLine());
             System.out.println("Select '2' for"+in.readLine());
             System.out.println("Select '3' for"+in.readLine());
-            in.readLine();//spazio
+            in.readLine();//space for network purpose
             System.out.println("------------------------------------------------------------------------------------------");
             out.println(indexSelectedCard);
 
-            //ora gestisco le risposte del server
+            //handling server responses
             String result = in.readLine();
             if(result.equals("operation performed correctly")) {
-
                 System.out.println("Operation 'Draw card from Well' performed correctly");
                 out.println("showYourCardDeck");
                 System.out.println("Your Deck:" );
@@ -182,11 +177,11 @@ public class Controller {
         out.println("showWell");
         try {
             System.out.println("Common Well:\n------------------------------------------------------------------------------------------");
-            System.out.println(in.readLine()); // prima carta nel pozzo
-            System.out.println(in.readLine()); // seconda carta nel pozzo
-            System.out.println(in.readLine()); // terza carta nel pozzo
-            System.out.println(in.readLine()); // quarta carta nel pozzo
-            in.readLine(); // spazio
+            System.out.println(in.readLine()); // first well card
+            System.out.println(in.readLine()); // second well card
+            System.out.println(in.readLine()); // third well card
+            System.out.println(in.readLine()); // fourth well card
+            in.readLine(); // space
             System.out.println("------------------------------------------------------------------------------------------");
         } catch (SocketTimeoutException e) {
             handleDisconnection();
@@ -213,14 +208,6 @@ public class Controller {
     }
 
 
-    public int getGameSize() {
-        return gameSize;
-    }
-
-    public void setGameSize(int gameSize) {
-        this.gameSize = gameSize;
-    }
-
     public String showSpecificSeed() throws IOException {
         out.println("showYourSpecificSeed");
         try {
@@ -233,17 +220,6 @@ public class Controller {
         }
     }
 
-    public String showPoints() throws IOException {
-        out.println("showPoints");
-        try {
-            return in.readLine();
-        } catch (SocketTimeoutException e) {
-            handleDisconnection();
-            return null;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public String endTurn() throws IOException {
         out.println("endTurn");
@@ -272,7 +248,7 @@ public class Controller {
     }
     public void waitForTurn(String playerNickname, Stage primaryStage) throws IOException {
         String message;
-        System.out.println("Sono entrato nella wait, aspetto il mio nome");
+        System.out.println("Waiting for server to say my name");
         while (!(message = in.readLine()).equals(playerNickname)) {
             System.out.println("Received message while waiting for turn: " + message);
             if(message.equals("ALL_CLIENTS_QUIT"))

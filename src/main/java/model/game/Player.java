@@ -674,7 +674,7 @@ public class Player implements Observable {
 
         } else if (selectedCardFromTheDeck.getId() < 81 && selectedCardFromTheDeck.getId() > 40) {
             GoldUpdater updater = new GoldUpdater();
-            updater.updatePlayerPoints(selectedCardFromTheDeck, this, board);
+            updater.updatePlayerPoints((GoldCard) selectedCardFromTheDeck, this, board);
         }
         System.out.println("Your new score is " + playerScore + " points");
     }
