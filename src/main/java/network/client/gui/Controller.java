@@ -170,7 +170,7 @@ public class Controller {
 
     public void quit(Stage primaryStage) throws IOException {
         out.println("quit");
-        System.out.println(in.readLine());
+        System.out.println(in.readLine()); //ALL_CLIENTS_QUIT
         QuitScene quitScene = new QuitScene();
         quitScene.quit(primaryStage);
     }
@@ -225,10 +225,9 @@ public class Controller {
         System.out.println("Sono entrato nella wait, aspetto il mio nome");
         while (!(message = in.readLine()).equals(playerNickname)) {
             System.out.println("Received message while waiting for turn: " + message);
-            if(message.equals("One client decided to quit, so the game will end for every player."))
+            if(message.equals("ALL_CLIENTS_QUIT"))
             {
-                QuitScene quitScene = new QuitScene();
-                quitScene.quit(primaryStage);
+                quit(primaryStage);
             }
             System.out.println("Not your turn, please wait");
         }

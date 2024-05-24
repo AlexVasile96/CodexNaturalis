@@ -727,26 +727,11 @@ public class GameSceneController {
 
         quit.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
-                if (haveToDraw) {
-                    showAlert("Quit", "You can't quit right now, draw any card.");
-                } else {
-                    String nextPlayerNickname;
-                    try {
-                        nextPlayerNickname = controller.endTurn();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    updateTurnState(nextPlayerNickname.equals(clientView.getUserName()));
-                    haveToPlay = true;
-                    try {
-                        controller.quit(primaryStage);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-            } else {
-                try {
+                try{
                     controller.quit(primaryStage);
+                    in.close();
+                    out.close();
+                    socket.close();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
