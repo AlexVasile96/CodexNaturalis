@@ -164,7 +164,7 @@ public class Game implements WhatCanPlayerDo {
         }
         finalText.append("exit");
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
-        return finalText.toString();
+        return String.valueOf(finalText);
     }
 
     public Player calculateWinner(List<Player> players) {               //Calculating who has the highest score

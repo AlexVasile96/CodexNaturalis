@@ -130,7 +130,8 @@ public class ServerConnection implements Runnable {
                 winningPlayer = in.readLine();
             }else if(waitForCall.equals("END OF GAME!")){
                 System.out.println("------------\nEND GAME\n------------");
-                System.out.println(in.readLine());
+                waitForCall
+                do{}while (waitForCall.equals("exit"));
             }
             else if(waitForCall.equals("ALL_CLIENTS_QUIT"))
             {
@@ -402,7 +403,7 @@ public class ServerConnection implements Runnable {
         System.out.println();
 
         //controllo se 20 punti
-        if(points>=20) {
+        if(points>=20 && !lastTurn) {
             System.out.println(in.readLine());
             in.readLine();//winningPlayer
             System.out.println("Your turn is over!");

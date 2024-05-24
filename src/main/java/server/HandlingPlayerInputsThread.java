@@ -161,7 +161,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println("------------\nEND OF GAME!\n------------");
                 sendMessageToAllClients("END OF GAME!");
                 sendMessageToAllClients("ci siamo!!");
-                //runCommand("endgame", threadPlayer);
+                runCommand("endgame", threadPlayer);
                 stdIn.readLine();//quit
                 sendMessageToAllClients("ALL_CLIENTS_QUIT");
                 isGameQuit = true;
