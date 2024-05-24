@@ -377,7 +377,9 @@ public class Game{
     public void runEndTurn(Player player) {
         //saveCards();
         savePlayers();
-        System.out.println("Carte salvate correttamente");
+        saveGameStatusToJson();
+        System.out.println("Player correctly saved");
+        System.out.println("Shared information correctly saved!");
         System.out.println(well.getFirst());
         System.out.println(well.get(1));
         System.out.println(well.get(2));
@@ -826,6 +828,72 @@ void saveEachPlayerInGame(Path path) {
             }
         }
         return true;
+    }
+
+
+    private Path getDefaultGameStatusPath() {
+        String home = "src/main/resources/gamestatus.json";
+        return Paths.get(home);
+    }
+
+    public void saveGameStatusToJson() {
+        Path path = getDefaultGameStatusPath();
+        JsonObject gameStatus = new JsonObject();
+        gameStatus.addProperty("currentPlayer", currentPlayer);
+        gameStatus.add("resourceDeck", resourceDeck.toJson());
+        gameStatus.add("goldDeck", goldDeck.toJson());
+        JsonArray wellArray = new JsonArray();
+        for (Card card : well) {
+            wellArray.add(card.toJsonObject());
+        }
+        gameStatus.add("well", wellArray);
+        try (FileWriter fileWriter = new FileWriter(path.toString())) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String jsonOutput = gson.toJson(gameStatus);
+            fileWriter.write(jsonOutput);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void loadGameStatusFromJson() {
+        Path path = getDefaultGameStatusPath();
+
+        try (FileReader reader = new FileReader(path.toString())) {
+            JsonObject gameStatus = JsonParser.parseReader(reader).getAsJsonObject();
+
+            // Carica il nome del current player
+            currentPlayer = gameStatus.get("currentPlayer").getAsString();
+
+            // Carica le carte rimaste nel resource deck
+            JsonArray resourceDeckArray = gameStatus.getAsJsonArray("resourceDeck");
+            resourceDeck = ResourceDeck.fromJson(resourceDeckArray);
+
+            // Carica le carte rimaste nel gold deck
+            JsonArray goldDeckArray = gameStatus.getAsJsonArray("goldDeck");
+            goldDeck = GoldDeck.fromJson(goldDeckArray);
+
+            // Carica le carte presenti nel pozzo (well)
+            JsonArray wellArray = gameStatus.getAsJsonArray("well");
+            well = new ArrayList<>();
+            for (JsonElement element : wellArray) {
+                JsonObject cardObject = element.getAsJsonObject();
+                Card card = Card.fromJson(cardObject);
+                well.add(card);
+            }
+
+            // Aggiorna il currentPlayingPlayer
+            for (Player player : players) {
+                if (player.getNickName().equals(currentPlayer)) {
+                    currentPlayingPLayer = player;
+                    break;
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

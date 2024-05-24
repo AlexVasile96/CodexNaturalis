@@ -1,5 +1,9 @@
 package model.deck;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import exceptions.*;
+import model.card.ResourceCard;
 import model.game.Player;
 import model.card.Card;
 import model.card.ObjectiveCard;
@@ -106,12 +110,28 @@ public class ResourceDeck implements Deck{
         resourceCards.removeFirst();
         System.out.println(resourceCards.getFirst());
     }
-    public List<Card> getRemainingCards() {
-        return new ArrayList<>(this.resourceCards); // Supposing that deck is the list of remaining cards
+
+    public JsonArray toJson() {
+        JsonArray jsonArray = new JsonArray();
+        for (Card card : resourceCards) {
+            jsonArray.add(card.toJsonObject());
+        }
+        return jsonArray;
     }
 
+    public static ResourceDeck fromJson(JsonArray jsonArray) {
+        List<Card> cards = new ArrayList<>();
+        for (JsonElement jsonElement : jsonArray) {
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            cards.add(ResourceCard.fromJsonObject(jsonObject));
+        }
+        return new ResourceDeck(cards);
+    }
     public void setRemainingCards(List<Card> cards) {
         this.resourceCards = new ArrayList<>(cards);
+    }
+    public List<Card> getRemainingCards() {
+        return new ArrayList<>(this.resourceCards); // Supponendo che `deck` sia una lista delle carte rimanenti
     }
 
 }

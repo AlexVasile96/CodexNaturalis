@@ -1,8 +1,12 @@
 package model.deck;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import exceptions.AlredyInException;
 import exceptions.FullDeckExeption;
 import exceptions.IllegalAddException;
 import exceptions.UknownWhyException;
+import model.card.GoldCard;
 import model.game.Player;
 import model.card.Card;
 import model.card.ObjectiveCard;
@@ -109,6 +113,22 @@ public class GoldDeck implements Deck {
 
     public void setRemainingCards(List<Card> cards) {
         this.goldCards = new ArrayList<>(cards);
+    }
+    public JsonArray toJson() {
+        JsonArray jsonArray = new JsonArray();
+        for (Card card : goldCards) {
+            jsonArray.add(card.toJsonObject());
+        }
+        return jsonArray;
+    }
+
+    public static GoldDeck fromJson(JsonArray jsonArray) {
+        List<Card> cards = new ArrayList<>();
+        for (JsonElement jsonElement : jsonArray) {
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            cards.add(GoldCard.fromJson(jsonObject));
+        }
+        return new GoldDeck(cards);
     }
 
 }

@@ -24,7 +24,9 @@ public class ServerConnection implements Runnable {
     private boolean endGameForWinningPlayer = false;
     private boolean lastTurn = false;
     private String winningPlayer = null;
+    private boolean clientPersisted=false;
     private boolean hasSomebodyQuit=false;
+
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
             this.clientView=clientView;
@@ -48,16 +50,17 @@ public class ServerConnection implements Runnable {
                         command = stdin.readLine();
                         sendMessageToServer(command);
                         loginPlayer(player);                                  //Actual Login
-                        System.out.println(in.readLine()); //All clients connected
-                        assigningSecretCard();                                      //Choosing the secret Card
-                        takingTheInitialCard();                                     //Taking the initial Card
-                        String waitingAllClientsTOChooseInitialcard= in.readLine();//Allclienti scelsero
-                        System.out.println(waitingAllClientsTOChooseInitialcard);
-                        System.out.println("Login phase ended!");
-                        currentPlayer = in.readLine();                      //who is the current player?
-                        if ("You are the first client".equals(in.readLine())) {
-                            System.out.println("You are the first client! Initializing game...");
+                        if(clientPersisted){
+                            System.out.println("You don't need to log in again!");
+                            System.out.println("Your data are been processing...");
                         }
+                        else{
+                            noPersistenceLogin();
+                            if ("You are the first client".equals(in.readLine())) {
+                                System.out.println("You are the first client! Initializing game...");
+                            }
+                        }
+
                     } else {
                         while (!isTheWhileActive){
                             if(isConnectionClosed){
@@ -822,11 +825,20 @@ public class ServerConnection implements Runnable {
         String message;
         while ((message = in.readLine()) != null) {
             System.out.println(message);
-            if (message.equals("All players are connected, starting game...")) {
+            if (message.equals("All players connected. Resuming the game...")) {
                 waitUntilItsYourTurn();
                 return;
             }
         }
+    }
+    private void noPersistenceLogin() throws IOException {
+        System.out.println(in.readLine()); //All clients connected
+        assigningSecretCard();                                      //Choosing the secret Card
+        takingTheInitialCard();                                     //Taking the initial Card
+        String waitingAllClientsTOChooseInitialcard= in.readLine();//Allclienti scelsero
+        System.out.println(waitingAllClientsTOChooseInitialcard);
+        System.out.println("Login phase ended!");
+        currentPlayer = in.readLine();                      //who is the current player?
     }
 
 }
