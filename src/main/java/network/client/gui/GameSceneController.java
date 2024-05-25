@@ -104,8 +104,22 @@ public class GameSceneController {
     private String indexForGold=null;
     private Color targetColor = Color.web("#DDD7A0");
     private boolean isInit = true;
+    private String isTheCardFlipped = null;
+    private boolean isFlipped = false;
 
+    /**
+     * Initializes the game data and sets up the initial stage, socket connections, and view components.
+     *
+     * @param primaryStage The primary stage of the application.
+     * @param out The PrintWriter for sending data to the server.
+     * @param socket The client socket for communication.
+     * @param in The BufferedReader for receiving data from the server.
+     * @param clientView The client's view component.
+     * @param currentPlayerNickname The nickname of the current player.
+     * @throws IOException If an I/O error occurs.
+     */
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
+        // Initialize the main stage, output stream, socket, input stream, and client view
         this.primaryStage = primaryStage;
         this.out = new PrintWriter(socket.getOutputStream(), true);
         this.socket = socket;
@@ -113,46 +127,80 @@ public class GameSceneController {
         this.currentPlayerNickname = currentPlayerNickname;
         System.out.println("Current player in initData is:" + currentPlayerNickname);
         this.clientView = clientView;
-        controller = new Controller(in, out,socket);
+
+        // Initialize the controller with the input stream, output stream, and socket
+        controller = new Controller(in, out, socket);
+
+        // Determine if it's the current player's turn based on the nickname
         isCurrentPlayerTurn = clientView.getUserName().equals(currentPlayerNickname);
-        socket.setSoTimeout(120000); // timeout di 2 minuti
+
+        // Set a socket timeout of 2 minutes
+        socket.setSoTimeout(120000);
     }
 
+    /**
+     * Updates the game state for the first time, initializing resources and UI elements.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     public synchronized void updateFirst() throws IOException {
         synchronized (syncObject) {
+            // Initialize resources and UI elements for the game
             initializeWell();
             updatingResourceAndGoldDeck();
             creatingPathForGameMethod();
+
+            // Set the top card images for resource and gold decks
             SharedObjectsInGui.setTopCardResourceDeck(createNewPathForImages(SharedObjectsInGui.getPathResourceDeck()));
             SharedObjectsInGui.setTopCardGoldDeck(createNewPathForImages(SharedObjectsInGui.getPathGoldDeck()));
+
+            // Send requests to the server to get the top card IDs
             out.println("firstCardResourceGui");
             idTopCardResourceDeck = in.readLine();
             out.println("firstCardGoldGui");
             idTopCardGoldDeck = in.readLine();
+
+            // Create views for decks and well
             creatingDeckAndGoldDeckView();
             creatingWell();
             creatingImagesForTheWell();
             creatingImagesViewForTheWell();
+
+            // Set event handlers for clicking on the well and decks
             settingWellOnMouseClickedEvent();
             settingDecksOnMouseClickedEvent();
+
+            // Initialize player deck and check its type
             playerDeck();
             checkTypePlayerDeck();
         }
     }
 
+    /**
+     * Starts the game by setting up the game board and displaying the initial card.
+     *
+     * @param initCardId The ID of the initial card.
+     * @param isFront Indicates whether the card is front (1) or back (0).
+     * @throws IOException If an I/O error occurs.
+     */
+
     public void startGame(String initCardId, int isFront) throws IOException {
+        // Load and set the background image for the game board
         Image backGroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
         BackgroundImage backgroundImage = new BackgroundImage(backGroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
 
+        // Set the paths for the player's hand cards
         pathHandCard1 = "/ImmaginiCodex/CarteFront/" + typeHandCard1 + "/" + idHandCard1 + ".png";
         pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
         pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
 
+        // Load the hand card images
         handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
         handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
         handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
 
+        // Create image views for the hand cards and set their dimensions
         handCard1View = new ImageView(handCard1);
         setWidthAndHeight(handCard1View);
 
@@ -164,10 +212,12 @@ public class GameSceneController {
         handCard3View.setFitWidth(widthWellCards);
         handCard3View.setFitHeight(heightWellCards);
 
+        // Initialize the scroll pane for the game board
         cardsOntheBoardScrollPane = new ScrollPane();
         cardsOntheBoardScrollPane.setPrefSize(400.00, 400.00);
         int boardDimension = 500;
 
+        // Create and configure the game board
         gameBoard = new GridPane(boardDimension, boardDimension);
         gameBoard.setBackground(background);
         gameBoard.setHgap(0);
@@ -178,17 +228,18 @@ public class GameSceneController {
         double windowHeight = root.getHeight();
 
         gameBoard.setPrefSize(windowedLength * 0.8, windowHeight * 0.8);
-        if(isFront==1)
-        {
-          initCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Init/" + initCardId + ".png")));
-        }
-        else {
+
+        // Load the initial card image based on whether it is front or back
+        if (isFront == 1) {
+            initCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Init/" + initCardId + ".png")));
+        } else {
             initCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteBack/Init/" + initCardId + ".png")));
         }
 
+        // Divide the initial card image into a 3x3 grid
         GridPane initCardDividedInNineRegions = subnettingEachImage(initCardImage, initCardId);
 
-
+        // Create CardView objects for each region of the initial card
         ImageView tlImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(0);
         ImageView tcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(1);
         ImageView trImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(2);
@@ -209,8 +260,8 @@ public class GameSceneController {
         CardView bcCardView = new CardView(bcImageView, initCardId, "BC");
         CardView brCardView = new CardView(brImageView, initCardId, "BR");
 
-        nextCardIndex++; //1 for initial card
-        //All the index of the same card has the same value
+        // Increment the card index for the initial card and add it to the card indices map
+        nextCardIndex++; // 1 for initial card
         cardIndices.put(tlCardView, nextCardIndex);
         System.out.println("Added TL CardView with index: " + nextCardIndex);
         cardIndices.put(tcCardView, nextCardIndex);
@@ -230,46 +281,51 @@ public class GameSceneController {
         cardIndices.put(brCardView, nextCardIndex);
         System.out.println("Added BR CardView with index: " + nextCardIndex);
 
-
+        // Enable interaction with some card regions
         tlImageView.setPickOnBounds(true);
         trImageView.setPickOnBounds(true);
         blImageView.setPickOnBounds(true);
         brImageView.setPickOnBounds(true);
 
+        // Add the initial card regions to the game board
         gameBoard.add(tlImageView, boardDimension / 3, boardDimension / 3);
-        gameBoard.add(tcImageView, boardDimension / 3+1, boardDimension / 3);
-        gameBoard.add(trImageView, boardDimension / 3+2, boardDimension / 3);
-        gameBoard.add(lcImageView, boardDimension / 3, boardDimension / 3+1);
-        gameBoard.add(ccImageView, boardDimension / 3+1, boardDimension / 3+1);
-        gameBoard.add(rcImageView, boardDimension / 3+2, boardDimension / 3+1);
-        gameBoard.add(blImageView, boardDimension / 3, boardDimension / 3+2);
-        gameBoard.add(bcImageView, boardDimension / 3+1, boardDimension / 3+2);
-        gameBoard.add(brImageView, boardDimension / 3+2, boardDimension / 3+2);
+        gameBoard.add(tcImageView, boardDimension / 3 + 1, boardDimension / 3);
+        gameBoard.add(trImageView, boardDimension / 3 + 2, boardDimension / 3);
+        gameBoard.add(lcImageView, boardDimension / 3, boardDimension / 3 + 1);
+        gameBoard.add(ccImageView, boardDimension / 3 + 1, boardDimension / 3 + 1);
+        gameBoard.add(rcImageView, boardDimension / 3 + 2, boardDimension / 3 + 1);
+        gameBoard.add(blImageView, boardDimension / 3, boardDimension / 3 + 2);
+        gameBoard.add(bcImageView, boardDimension / 3 + 1, boardDimension / 3 + 2);
+        gameBoard.add(brImageView, boardDimension / 3 + 2, boardDimension / 3 + 2);
 
+        // Set the scroll pane content to the game board
         cardsOntheBoardScrollPane.setContent(gameBoard);
+
+        // Create the main layout and set its background color
         BorderPane layout = new BorderPane();
         layout.setCenter(cardsOntheBoardScrollPane);
         layout.setStyle("-fx-background-color: #212121;");
 
-
+        // Create a VBox for the game UI elements
         VBox vboxGame = new VBox();
         vboxGame.setFillWidth(true);
 
         Insets padding = new Insets(10, 10, 10, 10);
         Insets paddingDecks = new Insets(100, 10, 10, 10);
 
+        // Create the second row HBox and the first column HBox
         HBox secondRow = new HBox();
         HBox firstColumnOfSecondRow = new HBox();
         firstColumnOfSecondRow.setPadding(padding);
         firstColumnOfSecondRow.setSpacing(4);
 
+        // Add labels for the well cards
         Label wellText = new Label("                    WELL");
         Label wellText2 = new Label("CARDS");
         wellText.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14");
         wellText2.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14");
 
-        //Initializing well cards
-
+        // Initialize the grid pane for well cards
         gridPaneForWellCards = new GridPane();
         gridPaneForWellCards.setVgap(4.0);
         gridPaneForWellCards.setHgap(4.0);
@@ -281,6 +337,7 @@ public class GameSceneController {
         gridPaneForWellCards.add(wellText, 0, 2);
         gridPaneForWellCards.add(wellText2, 1, 2);
 
+        // Create an HBox for the decks
         HBox decks = new HBox();
         Label decksText = new Label("      Resource Deck               Gold Deck");
         decksText.setStyle("-fx-font-weight: bold; -fx-text-fill: white");
@@ -289,31 +346,38 @@ public class GameSceneController {
         decks.setPadding(paddingDecks);
         decks.getChildren().addAll(SharedObjectsInGui.getTopCardResourceDeckView(), SharedObjectsInGui.getTopCardGoldDeckView());
 
+        // Initialize and disable the button container
         buttonContainer.setHgap(2);
         buttonContainer.setVgap(2);
         creatingButtons();
         vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, buttonContainer);
         buttonContainer.setDisable(true);
 
+        // Create the second column VBox
         VBox secondColumnOfSecondRow = new VBox();
 
+        // Set styles for chosen card labels
         chosenCardToPlace.setStyle("-fx-text-fill: white;");
         chosenCardToBePlacedOn.setStyle("-fx-text-fill: white;");
         chosenCorner.setStyle("-fx-text-fill: white;");
         chosenDeckOrWell.setStyle("-fx-text-fill: white;");
 
+        // Add labels to the second column
         secondColumnOfSecondRow.getChildren().addAll(chosenCardToPlace, chosenCardToBePlacedOn, chosenCorner, chosenDeckOrWell);
         chosenDeckOrWell.setText("Drawing from: " + wellOrDeck);
 
+        // Add UI elements to the layout
         layout.setRight(vboxGame);
         firstColumnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
         secondRow.getChildren().addAll(firstColumnOfSecondRow, secondColumnOfSecondRow);
         layout.setBottom(secondRow);
         root.getChildren().add(layout);
-        Scene gameScene = new Scene(root, 430, 625);
 
+        // Set up the game scene
+        Scene gameScene = new Scene(root, 430, 625);
         Platform.runLater(() -> primaryStage.setScene(gameScene));
 
+        // Determine if it's the current player's turn and set up actions accordingly
         if (currentPlayerNickname.equals(clientView.getUserName())) {
             isCurrentPlayerTurn = true;
             waitUntilLastMessage();
@@ -323,96 +387,121 @@ public class GameSceneController {
             isCurrentPlayerTurn = false;
             waitForTurn(handCard1View, handCard2View, handCard3View);
         }
-
     }
 
+    /**
+     * Handles the click event on a card view.
+     *
+     * @param cardView The card view that was clicked.
+     */
     private void handleCardClick(CardView cardView) {
+        // Check if it's the current player's turn
         if (isCurrentPlayerTurn) {
+            // Set the clicked card view and selected corner
             setClickedCardView(cardView);
             cornerSelected = cardView.getPosition();
+
+            // Get the index of the clicked card from the card indices map
             Integer cardIndex = cardIndices.get(cardView);
+
+            // Print debug information
             System.out.println("Clicked CardView: " + cardView);
             System.out.println("Current cardIndices map:");
             for (Map.Entry<CardView, Integer> entry : cardIndices.entrySet()) {
                 System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
             }
 
+            // If the card index is found, set indexCardToBePlacedOn
             if (cardIndex != null) {
                 indexCardToBePlacedOn = cardIndex;
                 System.out.println("Card Clicked: indexCardToBePlacedOn = " + indexCardToBePlacedOn + ", cornerSelected = " + cornerSelected);
             } else {
+                // If card index is not found, log a message
                 System.out.println("Card Clicked: cardIndex not found, cornerSelected = " + cornerSelected);
             }
+
+            // Update UI labels with selected corner and index
             chosenCorner.setText("Corner: " + cornerSelected);
             chosenCardToBePlacedOn.setText("Place your card on: " + indexCardToBePlacedOn);
         } else {
+            // If it's not the current player's turn, show a message
             showAlert("Not your turn", "It's not your turn yet.");
         }
     }
 
+    /**
+     * Sets up the actions for various game events.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     private void setupGameActions() throws IOException {
-       enableOrDisableGameActions();
-       playCard.setOnAction(e -> {
+        // Action for playing a card
+        playCard.setOnAction(e -> {
             if (isCurrentPlayerTurn) {
-                String canIPlaceTheGoldCard=null;
+                String canIPlaceTheGoldCard = null;
                 if (haveToPlay) {
-                    if(cornerSelected==null)
-                    {
-                        showAlert("Corner Missing","Please select a corner before playing a card");
+                    // Check if a corner is selected before playing a card
+                    if (cornerSelected == null) {
+                        showAlert("Corner Missing", "Please select a corner before playing a card");
+                        return;
                     }
-                    System.out.println("Path chosen is: + " + pathChosen);
-                    System.out.println("Path flipped" + pathFlipped);
-                    if(indexForGold!=null && Integer.parseInt(indexForGold)>40)
-                    {
-                        System.out.println("You chose to play a gold card");
-                        out.println("goldGui" + indexCardToPlace.toString());
-                        System.out.println("goldGui" + indexCardToPlace.toString());
-                        try {
-                            canIPlaceTheGoldCard= in.readLine();
-                            System.out.println("Server response is: " + canIPlaceTheGoldCard);
-                        } catch (SocketTimeoutException ex) {
-                            throw new RuntimeException(ex);
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                        if(canIPlaceTheGoldCard.equals("NO"))
-                        {
-                            showAlert("Gold Card Not Placeable", "YOu can't place the gold card beacuse you don't have enough specific seeds");
-                            indexForGold=null;
-                            indexCardToPlace=100;
-                            haveToDraw=false;
-                            return;
+
+                    // Verifies if the selected card is a gold card
+                    if (indexForGold != null && Integer.parseInt(indexForGold) > 40) {
+                        // Check if the card is flipped to "front"
+                        if (!isFlipped) {
+                            out.println("goldGui" + indexCardToPlace.toString());
+                            System.out.println("goldGui" + indexCardToPlace.toString());
+                            try {
+                                canIPlaceTheGoldCard = in.readLine();
+                                System.out.println("Server response is: " + canIPlaceTheGoldCard);
+                            } catch (SocketTimeoutException ex) {
+                                throw new RuntimeException(ex);
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                            if (canIPlaceTheGoldCard.equals("NO")) {
+                                showAlert("Gold Card Not Placeable", "You can't place the gold card because you don't have enough specific seeds");
+                                indexForGold = null;
+                                indexCardToPlace = 100;
+                                haveToDraw = false;
+                                return;
+                            }
                         }
                     }
-                    if (cornerSelected!=null && indexCardToPlace < 4) {
+
+                    // Check if a corner is selected and indexCardToPlace is valid
+                    if (cornerSelected != null && indexCardToPlace < 4) {
                         try {
-                            String isTheCardFlipped=null;
-                            String actualId=null;
+                            // Play the selected card
+                            String actualId = null;
                             switch (indexCardToPlace) {
                                 case 0:
                                     handCard1View.setImage(null);
-                                    actualId=idHandCard1;
-                                    isTheCardFlipped=handCard1View.getId();
+                                    actualId = idHandCard1;
+                                    isTheCardFlipped = handCard1View.getId();
                                     break;
                                 case 1:
-
                                     handCard2View.setImage(null);
-                                    actualId=idHandCard2;
-                                    isTheCardFlipped=handCard2View.getId();
+                                    actualId = idHandCard2;
+                                    isTheCardFlipped = handCard2View.getId();
                                     break;
                                 case 2:
-
                                     handCard3View.setImage(null);
-                                    actualId=idHandCard3;
-                                    isTheCardFlipped=handCard3View.getId();
+                                    actualId = idHandCard3;
+                                    isTheCardFlipped = handCard3View.getId();
                                     break;
                                 default:
                                     System.out.println("sono nullo");
                                     break;
                             }
-                            System.out.println("Indice della carta che voglio piazzare è: " +indexCardToPlace);
-                            controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected,isTheCardFlipped);
+
+                            // Print debug information
+                            System.out.println("Indice della carta che voglio piazzare è: " + indexCardToPlace);
+                            controller.playCardClick(indexCardToBePlacedOn, indexCardToPlace, cornerSelected, isTheCardFlipped);
                             indexCardPlayedFromHand = indexCardToPlace;
+
+                            // Place the played card on the game board
                             switch (cornerSelected) {
                                 case "TL":
                                     placingTopLeftCard(getClickedImageView().getImageView(), gameBoard, indexCardPlayedFromHand);
@@ -429,12 +518,14 @@ public class GameSceneController {
                                 default:
                                     break;
                             }
+
+                            // Update flags and UI elements
                             haveToDraw = true;
                             handCard1View.setId("Front");
                             handCard2View.setId("Front");
                             handCard3View.setId("Front");
-                            cornerSelected=null;
-                            indexCardToPlace=100;
+                            cornerSelected = null;
+                            indexCardToPlace = 100;
                         } catch (IOException exception) {
                             throw new RuntimeException(exception);
                         }
@@ -450,9 +541,10 @@ public class GameSceneController {
             }
         });
 
+        // Action for ending the turn
         endTurn.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
-                if(!haveToDraw && !haveToPlay){
+                if (!haveToDraw && !haveToPlay) {
                     try {
                         savePath();
                         String nextPlayerNickname = controller.endTurn();
@@ -464,11 +556,9 @@ public class GameSceneController {
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
-                }
-                else if(haveToDraw){
+                } else if (haveToDraw) {
                     showAlert("HavetoDraw", "You have to draw a card first");
-                }
-                else{
+                } else {
                     showAlert("HavetoPlay", "You have to place a card first");
                 }
             } else {
@@ -478,14 +568,16 @@ public class GameSceneController {
 
         drawCard.setOnAction(e -> {
             if (isCurrentPlayerTurn) {
+                // Check if the player can draw a card
                 if (haveToDraw) {
                     try {
+                        // Draw a card from the specified deck
                         controller.drawCard(wellOrDeck, chosenDeckForDrawingNewCard, indexCardFromWellSelected);
                         Image drawnCardImage = null;
                         String idTopCard = null;
 
+                        // Determine the image and ID of the drawn card based on the deck
                         if (wellOrDeck.equals("deck")) {
-                            System.out.println(wellOrDeck);
                             if (chosenDeckForDrawingNewCard.equals("resource")) {
                                 drawnCardImage = createNewPathForImages(pathForResourceCardFront(idTopCardResourceDeck));
                                 idTopCard = idTopCardResourceDeck;
@@ -494,11 +586,11 @@ public class GameSceneController {
                                 idTopCard = idTopCardGoldDeck;
                             }
                         } else if (wellOrDeck.equals("well")) {
-                            System.out.println(wellOrDeck);
                             drawnCardImage = wellCardSelected;
                             idTopCard = idWellCardSelected;
                         }
-                        System.out.println(idTopCard);
+
+                        // Set the image of the drawn card to the appropriate hand card view
                         if (drawnCardImage != null && idTopCard != null) {
                             switch (indexCardPlayedFromHand) {
                                 case 0:
@@ -517,26 +609,28 @@ public class GameSceneController {
                                     idHandCard3 = idTopCard;
                                     break;
                             }
-                            System.out.println("idHandCard" + (indexCardPlayedFromHand + 1) + " = " + idTopCard);
 
-                            initializeWell(); //firtwellid,secondwellid,....
-                            String newPath1= "/ImmaginiCodex/CarteFront/Resource/"+ SharedObjectsInGui.getIdCard1()+".png";
-                            Image newImage1= new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath1)));
+                            // Update the images of the well cards and decks
+                            initializeWell();
+                            String newPath1 = "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard1() + ".png";
+                            Image newImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath1)));
                             SharedObjectsInGui.getWellCard1View().setImage(newImage1);
-                            String newPath2= "/ImmaginiCodex/CarteFront/Resource/"+ SharedObjectsInGui.getIdCard2()+".png";
-                            Image newImage2= new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath2)));
+                            String newPath2 = "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard2() + ".png";
+                            Image newImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath2)));
                             SharedObjectsInGui.getWellCard2View().setImage(newImage2);
-                            String newPath3= "/ImmaginiCodex/CarteFront/Gold/"+ SharedObjectsInGui.getIdCard3()+".png";
-                            Image newImage3= new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath3)));
+                            String newPath3 = "/ImmaginiCodex/CarteFront/Gold/" + SharedObjectsInGui.getIdCard3() + ".png";
+                            Image newImage3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath3)));
                             SharedObjectsInGui.getWellCard3View().setImage(newImage3);
-                            String newPath4= "/ImmaginiCodex/CarteFront/Gold/"+ SharedObjectsInGui.getIdCard4()+".png";
-                            Image newImage4= new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath4)));
+                            String newPath4 = "/ImmaginiCodex/CarteFront/Gold/" + SharedObjectsInGui.getIdCard4() + ".png";
+                            Image newImage4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath4)));
                             SharedObjectsInGui.getWellCard4View().setImage(newImage4);
+
+                            // Update the top cards of the resource and gold decks
                             updateResourceDeckTopCard();
                             updatedGoldDeckTopCard();
                             haveToDraw = false;
                         } else {
-                            showAlert("Action not allowed", "Yoh have to choose a card to draw");
+                            showAlert("Action not allowed", "You have to choose a card to draw");
                         }
                     } catch (SocketTimeoutException ex) {
                         throw new RuntimeException(ex);
@@ -551,8 +645,15 @@ public class GameSceneController {
             }
         });
 
+        /**
+         * Sets the action for flipping the selected card to the back.
+         */
         flipCardToBack.setOnAction(e -> {
             if (isCurrentPlayerTurn) {
+                // Set the card to be flipped to the back
+                isFlipped = true;
+                System.out.println("The card has been flipped to the back");
+                // Switch statement to handle flipping each card
                 switch (indexCardToPlace) {
                     case 0:
                         handCard1View.setImage(flipToBackCard(idHandCard1));
@@ -576,8 +677,15 @@ public class GameSceneController {
             }
         });
 
+        /**
+         * Sets the action for flipping the selected card to the front.
+         */
         flipCardToFront.setOnAction(e -> {
             if (isCurrentPlayerTurn) {
+                // Set the card to be flipped to the front
+                isFlipped = false;
+                System.out.println("The card has been flipped to the front");
+                // Switch statement to handle flipping each card
                 switch (indexCardToPlace) {
                     case 0:
                         handCard1View.setImage(flipCardToFront(idHandCard1));
@@ -601,92 +709,108 @@ public class GameSceneController {
             }
         });
 
+        /**
+         * Sets the action for selecting and handling the first card of the player's hand.
+         */
         handCard1View.setOnMouseClicked(event -> {
             if (isCurrentPlayerTurn) {
+                // Set the index of the card to be placed
                 indexCardToPlace = 0;
                 chosenCardToPlace.setText("First card of your hand");
 
-                if(handCard1View.getId()==null|| handCard1View.getId().equals("Front"))
-                {
+                // Check if the card is flipped or not and set the path accordingly
+                if (handCard1View.getId() == null || handCard1View.getId().equals("Front")) {
                     pathChosen = pathHandCard1;
                     System.out.println("Front");
-                }
-                else{
-                    pathChosen=pathFlipped;
+                } else {
+                    pathChosen = pathFlipped;
                     System.out.println(pathChosen);
                     System.out.println("Back");
                 }
-                if(Integer.parseInt(idHandCard1)<41)
-                {
+
+                // Determine if the selected card is a ResourceCard or a GoldCard
+                if (Integer.parseInt(idHandCard1) < 41) {
                     System.out.println("ResourceCard");
+                } else {
+                    System.out.println("GoldCard");
+                    indexForGold = idHandCard1;
                 }
-                else {System.out.println("GoldCard");
-                    indexForGold=idHandCard1;
-                }
-
-
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
         });
 
+        /**
+         * Sets the action for selecting and handling the second card of the player's hand.
+         */
         handCard2View.setOnMouseClicked(event -> {
             if (isCurrentPlayerTurn) {
+                // Set the index of the card to be placed
                 indexCardToPlace = 1;
                 chosenCardToPlace.setText("Second card of your hand");
                 pathChosen = pathHandCard2;
-                if(handCard2View.getId()==null|| handCard2View.getId().equals("Front"))
-                {
+
+                // Check if the card is flipped or not and set the path accordingly
+                if (handCard2View.getId() == null || handCard2View.getId().equals("Front")) {
                     pathChosen = pathHandCard2;
                     System.out.println("Front");
-                }
-                else{
-                    pathChosen=pathFlipped;
+                } else {
+                    pathChosen = pathFlipped;
                     System.out.println(pathChosen);
                     System.out.println("Back");
                 }
-                if(Integer.parseInt(idHandCard2)<41)
-                {
+
+                // Determine if the selected card is a ResourceCard or a GoldCard
+                if (Integer.parseInt(idHandCard2) < 41) {
                     System.out.println("ResourceCard");
-                }
-                else {System.out.println("GOldCard");
-                    indexForGold=idHandCard2;
+                } else {
+                    System.out.println("GoldCard");
+                    indexForGold = idHandCard2;
                 }
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
         });
 
+        /**
+         * Sets the action for selecting and handling the third card of the player's hand.
+         */
         handCard3View.setOnMouseClicked(event -> {
             if (isCurrentPlayerTurn) {
+                // Set the index of the card to be placed
                 indexCardToPlace = 2;
                 chosenCardToPlace.setText("Third card of your hand");
                 pathChosen = pathHandCard3;
-                if(handCard3View.getId()==null|| handCard3View.getId().equals("Front"))
-                {
+
+                // Check if the card is flipped or not and set the path accordingly
+                if (handCard3View.getId() == null || handCard3View.getId().equals("Front")) {
                     pathChosen = pathHandCard3;
                     System.out.println("Front");
-                }
-                else{
-                    pathChosen=pathFlipped;
+                } else {
+                    pathChosen = pathFlipped;
                     System.out.println(pathChosen);
                     System.out.println("Back");
                 }
-                if(Integer.parseInt(idHandCard3)<41)
-                {
+
+                // Determine if the selected card is a ResourceCard or a GoldCard
+                if (Integer.parseInt(idHandCard3) < 41) {
                     System.out.println("ResourceCard");
-                }
-                else {System.out.println("GoldCard");
-                indexForGold=idHandCard3;
+                } else {
+                    System.out.println("GoldCard");
+                    indexForGold = idHandCard3;
                 }
             } else {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
         });
 
+        /**
+         * Sets the action for displaying the specific seeds of the current player when clicked.
+         */
         seeYourSpecificSeeds.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
                 try {
+                    // Retrieve and display the specific seeds of the current player
                     String yourSeeds = controller.showSpecificSeed();
                     showAlert("Your seeds at the moment", yourSeeds);
                 } catch (SocketTimeoutException ex) {
@@ -695,13 +819,18 @@ public class GameSceneController {
                     throw new RuntimeException(ex);
                 }
             } else {
+                // Alert if it's not the current player's turn
                 showAlert("Not your turn", "It's not your turn yet.");
             }
         });
 
+        /**
+         * Sets the action for displaying the points of the current player when clicked.
+         */
         seeYourPoints.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
                 try {
+                    // Display the points of the current player
                     boardPointsScene = new BoardPointsScene(primaryStage, out, socket, in, clientView);
                     boardPointsScene.popupBoardPoints();
                 } catch (SocketTimeoutException ex) {
@@ -710,22 +839,32 @@ public class GameSceneController {
                     throw new RuntimeException(ex);
                 }
             } else {
+                // Disable the button and alert if it's not the current player's turn
                 seeYourPoints.setDisable(true);
                 showAlert("Not your turn", "It's not your turn yet.");
             }
         });
 
+        /**
+         * Sets the action for displaying a message indicating that the action is unavailable when clicked.
+         */
         seeOtherPlayersBoards.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
+                // Display an alert indicating that the action is currently not implemented
                 showAlert("Action unavailable", "This action is currently not implemented.");
             } else {
+                // Alert if it's not the current player's turn
                 showAlert("Not your turn", "It's not your turn yet.");
             }
         });
 
+        /**
+         * Sets the action for displaying the objectives of the current player when clicked.
+         */
         showObjective.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
                 try {
+                    // Display the objectives of the current player
                     objectiveScene = new ShowObjectiveScene(primaryStage, out, socket, in);
                     firstCommonId = controller.firstCommon();
                     secondCommonId = controller.secondCommon();
@@ -738,21 +877,28 @@ public class GameSceneController {
                     throw new RuntimeException(ex);
                 }
             } else {
+                // Disable the button and alert if it's not the current player's turn
                 showObjective.setDisable(true);
                 showAlert("Not your turn", "It's not your turn yet.");
             }
         });
 
+
+        /**
+         * Sets the action for quitting the game when clicked.
+         */
         quit.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
                 try{
+                    // Call the quit method from the controller to handle the quitting process
                     controller.quit(primaryStage);
-                    // Chiusura delle risorse
+
+                    // Close resources
                     if (in != null) in.close();
                     if (out != null) out.close();
                     if (socket != null) socket.close();
 
-                    // Uscita dall'applicazione
+                    // Exit the application
                     Platform.exit();
                     System.exit(0);
                 } catch (SocketTimeoutException ex) {
@@ -762,19 +908,33 @@ public class GameSceneController {
                 }
             }
         });
-
     }
 
+    /**
+     * Waits for the player's turn to begin and updates the GUI accordingly.
+     *
+     * @param handCard1View The ImageView for the first card in the player's hand.
+     * @param handCard2View The ImageView for the second card in the player's hand.
+     * @param handCard3View The ImageView for the third card in the player's hand.
+     */
     private void waitForTurn(ImageView handCard1View, ImageView handCard2View, ImageView handCard3View) {
         new Thread(() -> {
             try {
+                // Wait for the player's turn to begin
                 controller.waitForTurn(clientView.getUserName(), primaryStage);
+
+                // Update GUI on the JavaFX Application Thread
                 Platform.runLater(() -> {
+                    // Update the turn state
                     updateTurnState(true);
                     try {
+                        // Output a message indicating that the turn has ended
                         System.out.println("In Gamescenecontroller");
                         System.out.println(in.readLine()); // Fine turno
+
+                        // Update the GUI
                         updateGUI();
+                        // Setup game actions
                         setupGameActions();
                     } catch (SocketTimeoutException e) {
                         handleDisconnection();
@@ -789,24 +949,39 @@ public class GameSceneController {
             }
         }).start();
     }
+
+    /**
+     * Handles the disconnection of a player.
+     */
     private void handleDisconnection() {
         Platform.runLater(() -> {
+            // Show an alert indicating the disconnection
             showAlert("Disconnection", "A player has disconnected.");
             try {
+                // Save game progress
                 savePath();
+                // Close resources
                 if (in != null) in.close();
                 if (out != null) out.close();
                 if (socket != null) socket.close();
+                // Exit the application
                 Platform.exit();
                 System.exit(0);
             } catch (SocketTimeoutException e) {
                 e.printStackTrace();
             } catch (IOException e) {
+                // Throw a runtime exception if an IOException occurs
                 throw new RuntimeException(e);
             }
         });
     }
 
+    /**
+     * Shows an alert with the given title and message.
+     *
+     * @param title   The title of the alert.
+     * @param message The message to be displayed in the alert.
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -815,58 +990,78 @@ public class GameSceneController {
         alert.showAndWait();
     }
 
+    /**
+     * Enables or disables game actions based on whether it's the current player's turn.
+     */
     private void enableOrDisableGameActions() {
-
-        if(!isCurrentPlayerTurn){
+        if (!isCurrentPlayerTurn) {
             buttonContainer.setDisable(true);
-        }
-        if(isCurrentPlayerTurn){
+        } else {
             buttonContainer.setDisable(false);
         }
-
     }
 
+    /**
+     * Updates the turn state of the game and enables or disables game actions accordingly.
+     *
+     * @param isCurrentPlayerTurn true if it's the current player's turn, false otherwise
+     */
     private void updateTurnState(boolean isCurrentPlayerTurn) {
         this.isCurrentPlayerTurn = isCurrentPlayerTurn;
         enableOrDisableGameActions();
     }
 
+    /**
+     * Flips the given card to its back side based on its ID.
+     *
+     * @param stringId The ID of the card to flip
+     * @return The image of the card's back side
+     */
     private Image flipToBackCard(String stringId) {
         int id = Integer.parseInt(stringId);
         if (id >= 1 && id <= 40) {
             pathFlipped = "/ImmaginiCodex/CarteBack/Resource/" + id + ".png";
-            return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
         } else if (id > 40 && id <= 80) {
             pathFlipped = "/ImmaginiCodex/CarteBack/Gold/" + id + ".png";
-            return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
         }
-        return null;
+        return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
     }
 
+    /**
+     * Flips the given card to its front side based on its ID.
+     *
+     * @param stringId The ID of the card to flip
+     * @return The image of the card's front side
+     */
     private Image flipCardToFront(String stringId) {
         int id = Integer.parseInt(stringId);
         if (id >= 1 && id <= 40) {
             pathFlipped = "/ImmaginiCodex/CarteFront/Resource/" + id + ".png";
-            return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
         } else if (id > 40 && id <= 80) {
-             pathFlipped = "/ImmaginiCodex/CarteFront/Gold/" + id + ".png";
-            return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
+            pathFlipped = "/ImmaginiCodex/CarteFront/Gold/" + id + ".png";
         }
-        return null;
+        return new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathFlipped)));
     }
 
-    private boolean containsColor(Image cornerImage, Color targetColor){
+    /**
+     * Checks if the given image contains the specified color.
+     *
+     * @param cornerImage The image to check
+     * @param targetColor The color to search for
+     * @return true if the color is found in the image, false otherwise
+     */
+    private boolean containsColor(Image cornerImage, Color targetColor) {
         PixelReader pixelReader = cornerImage.getPixelReader();
-        if(pixelReader == null){
+        if (pixelReader == null) {
             return false;
         }
         int width = (int) cornerImage.getWidth();
         int height = (int) cornerImage.getHeight();
 
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 Color color = pixelReader.getColor(x, y);
-                if(color.equals(targetColor)){
+                if (color.equals(targetColor)) {
                     return true;
                 }
             }
@@ -874,6 +1069,14 @@ public class GameSceneController {
         return false;
     }
 
+
+    /**
+     * Splits the given image into a grid of nine equal parts and creates a GridPane with ImageView for each part.
+     *
+     * @param image The image to be split
+     * @param cardId The ID of the card associated with the image
+     * @return The GridPane containing ImageView for each part of the image
+     */
     public GridPane subnettingEachImage(Image image, String cardId) {
         double width = image.getWidth() / 3;
         double height = image.getHeight() / 3;
@@ -945,36 +1148,35 @@ public class GameSceneController {
 
         Color targetInit = Color.web("#351F16");
 
-        if (isInit){
-            if(!containsColor(imageTL, targetInit)){
+        if (isInit) {
+            if (!containsColor(imageTL, targetInit)) {
                 imageViewTL.setDisable(true);
             }
-            if(!containsColor(imageTR, targetInit)){
+            if (!containsColor(imageTR, targetInit)) {
                 imageViewTR.setDisable(true);
             }
-            if(!containsColor(imageBL, targetInit)){
+            if (!containsColor(imageBL, targetInit)) {
                 imageViewBL.setDisable(true);
             }
-            if(!containsColor(imageBR, targetInit)){
+            if (!containsColor(imageBR, targetInit)) {
                 imageViewBR.setDisable(true);
             }
-        }else{
-            if(!containsColor(imageTL, targetColor)){
+        } else {
+            if (!containsColor(imageTL, targetColor)) {
                 imageViewTL.setDisable(true);
             }
-            if(!containsColor(imageTR, targetColor)){
+            if (!containsColor(imageTR, targetColor)) {
                 imageViewTR.setDisable(true);
             }
-            if(!containsColor(imageBL, targetColor)){
+            if (!containsColor(imageBL, targetColor)) {
                 imageViewBL.setDisable(true);
             }
-            if(!containsColor(imageBR, targetColor)){
+            if (!containsColor(imageBR, targetColor)) {
                 imageViewBR.setDisable(true);
             }
         }
 
         isInit = false;
-
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(0));
@@ -982,33 +1184,31 @@ public class GameSceneController {
         gridPane.setVgap(0);
 
         ColumnConstraints col1 = new ColumnConstraints();
-        col1.setPrefWidth(100); // Imposta la larghezza preferita della prima colonna
+        col1.setPrefWidth(100); // Sets the preferred width of the first column
         ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPrefWidth(150); // Imposta la larghezza preferita della seconda colonna
+        col2.setPrefWidth(150); // Sets the preferred width of the second column
         ColumnConstraints col3 = new ColumnConstraints();
-        col3.setPrefWidth(200); // Imposta la larghezza preferita della terza colonna
+        col3.setPrefWidth(200); // Sets the preferred width of the third column
 
-        // Aggiungere i constraints delle colonne alla GridPane
+        // Add column constraints to the GridPane
         gridPane.getColumnConstraints().addAll(col1, col2, col3);
 
-        // Definire le dimensioni delle righe
+        // Define row dimensions
         RowConstraints row1 = new RowConstraints();
-        row1.setPrefHeight(100); // Imposta l'altezza preferita della prima riga
+        row1.setPrefHeight(100); // Sets the preferred height of the first row
         RowConstraints row2 = new RowConstraints();
-        row2.setPrefHeight(150); // Imposta l'altezza preferita della seconda riga
+        row2.setPrefHeight(150); // Sets the preferred height of the second row
         RowConstraints row3 = new RowConstraints();
-        row3.setPrefHeight(200); // Imposta l'altezza preferita della terza riga
+        row3.setPrefHeight(200); // Sets the preferred height of the third row
 
-        // Aggiungere i constraints delle righe alla GridPane
+        // Add row constraints to the GridPane
         gridPane.getRowConstraints().addAll(row1, row2, row3);
-
-
 
         gridPane.add(imageViewTL, 0, 0);
         gridPane.add(imageViewTC, 1, 0);
         gridPane.add(imageViewTR, 2, 0);
-        gridPane.add(imageViewLC, 0,1);
-        gridPane.add(imageViewCC, 1,1);
+        gridPane.add(imageViewLC, 0, 1);
+        gridPane.add(imageViewCC, 1, 1);
         gridPane.add(imageViewRC, 2, 1);
         gridPane.add(imageViewBL, 0, 2);
         gridPane.add(imageViewBC, 1, 2);
@@ -1017,16 +1217,31 @@ public class GameSceneController {
         return gridPane;
     }
 
+    /**
+     * This method places the card represented by the ImageView cardOnTheBoard in the bottom-right corner of the board.
+     *
+     * @param cardOnTheBoard The ImageView of the card to be placed on the board.
+     * @param board The GridPane representing the board where the card will be placed.
+     * @param id The identifier of the card.
+     */
     public void placingBottomRightCard(ImageView cardOnTheBoard, GridPane board, int id) {
 
-        int lastIndex=nextCardIndex;
+        // Incrementing the index for the next card
+        int lastIndex = nextCardIndex;
         nextCardIndex++;
+
+        // Loading the image for the card
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
         System.out.println(pathChosen);
+
+        // Getting the coordinates for placing the card on the board
         int x = getX(cardOnTheBoard);
         int y = getY(cardOnTheBoard);
+
+        // Creating a grid pane for the new card and its surrounding images
         GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
 
+        // Extracting ImageView objects for each position on the grid pane
         ImageView TL = (ImageView) gridPanePlacingOn.getChildren().get(0);
         ImageView TC = (ImageView) gridPanePlacingOn.getChildren().get(1);
         ImageView TR = (ImageView) gridPanePlacingOn.getChildren().get(2);
@@ -1037,23 +1252,24 @@ public class GameSceneController {
         ImageView BC = (ImageView) gridPanePlacingOn.getChildren().get(7);
         ImageView BR = (ImageView) gridPanePlacingOn.getChildren().get(8);
 
+        // Allowing picking on the corners for user interaction
         TL.setPickOnBounds(true);
         TR.setPickOnBounds(true);
         BL.setPickOnBounds(true);
         BR.setPickOnBounds(true);
 
+        // Adding the card and surrounding images to the board grid pane
         board.add(TL, y, x);
         board.add(TC, (y + 1), x);
         board.add(TR, (y + 2), x);
-
         board.add(LC, y, (x + 1));
         board.add(CC, (y + 1), (x + 1));
         board.add(RC, (y + 2), (x + 1));
-
         board.add(BL, y, (x + 2));
         board.add(BC, (y + 1), (x + 2));
         board.add(BR, (y + 2), (x + 2));
 
+        // Creating CardView objects for each image and adding them to a list
         allCardViews.add(new CardView(TL, String.valueOf(id), "TL"));
         allCardViews.add(new CardView(TC, String.valueOf(id), "TC"));
         allCardViews.add(new CardView(TR, String.valueOf(id), "TR"));
@@ -1064,6 +1280,7 @@ public class GameSceneController {
         allCardViews.add(new CardView(BC, String.valueOf(id), "BC"));
         allCardViews.add(new CardView(BR, String.valueOf(id), "BR"));
 
+        // Setting the index for each card in the cardIndices map
         cardIndices.put(new CardView(TL, String.valueOf(id), "TL"), nextCardIndex);
         cardIndices.put(new CardView(TC, String.valueOf(id), "TC"), nextCardIndex);
         cardIndices.put(new CardView(TR, String.valueOf(id), "TR"), nextCardIndex);
@@ -1073,6 +1290,8 @@ public class GameSceneController {
         cardIndices.put(new CardView(BL, String.valueOf(id), "BL"), nextCardIndex);
         cardIndices.put(new CardView(BC, String.valueOf(id), "BC"), nextCardIndex);
         cardIndices.put(new CardView(BR, String.valueOf(id), "BR"), nextCardIndex);
+
+        // Disabling the bottom-right corner for the previously placed card
         TL.setDisable(true);
         for (CardView cardView : allCardViews) {
             if (cardIndices.get(cardView) == lastIndex && cardView.getPosition().equals("BR")) {
@@ -1080,17 +1299,30 @@ public class GameSceneController {
                 break;
             }
         }
-
     }
 
+
+    /**
+     * This method places the card represented by the ImageView cardOnTheBoard in the bottom-left corner of the board.
+     *
+     * @param cardOnTheBoard The ImageView of the card to be placed on the board.
+     * @param board The GridPane representing the board where the card will be placed.
+     * @param id The identifier of the card.
+     */
     public void placingBottomLeftCard(ImageView cardOnTheBoard, GridPane board, int id) {
-        int lastIndex=nextCardIndex;
+        // Incrementing the index for the next card
+        int lastIndex = nextCardIndex;
         nextCardIndex++;
+
+        // Loading the image for the card
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
         int x = getX(cardOnTheBoard);
         int y = getY(cardOnTheBoard);
+
+        // Creating a grid pane for the new card and its surrounding images
         GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
 
+        // Extracting ImageView objects for each position on the grid pane
         ImageView TL = (ImageView) gridPanePlacingOn.getChildren().get(0);
         ImageView TC = (ImageView) gridPanePlacingOn.getChildren().get(1);
         ImageView TR = (ImageView) gridPanePlacingOn.getChildren().get(2);
@@ -1101,23 +1333,24 @@ public class GameSceneController {
         ImageView BC = (ImageView) gridPanePlacingOn.getChildren().get(7);
         ImageView BR = (ImageView) gridPanePlacingOn.getChildren().get(8);
 
+        // Allowing picking on the corners for user interaction
         TL.setPickOnBounds(true);
         TR.setPickOnBounds(true);
         BL.setPickOnBounds(true);
         BR.setPickOnBounds(true);
 
+        // Adding the card and surrounding images to the board grid pane
         board.add(TL, (y - 2), x);
         board.add(TC, (y - 1), x);
         board.add(TR, y, x);
-
         board.add(LC, (y - 2), (x + 1));
         board.add(CC, (y - 1), (x + 1));
         board.add(RC, y, (x + 1));
-
         board.add(BL, (y - 2), (x + 2));
         board.add(BC, (y - 1), (x + 2));
         board.add(BR, y, (x + 2));
 
+        // Creating CardView objects for each image and adding them to a list
         allCardViews.add(new CardView(TL, String.valueOf(id), "TL"));
         allCardViews.add(new CardView(TC, String.valueOf(id), "TC"));
         allCardViews.add(new CardView(TR, String.valueOf(id), "TR"));
@@ -1128,6 +1361,7 @@ public class GameSceneController {
         allCardViews.add(new CardView(BC, String.valueOf(id), "BC"));
         allCardViews.add(new CardView(BR, String.valueOf(id), "BR"));
 
+        // Setting the index for each card in the cardIndices map
         cardIndices.put(new CardView(TL, String.valueOf(id), "TL"), nextCardIndex);
         cardIndices.put(new CardView(TC, String.valueOf(id), "TC"), nextCardIndex);
         cardIndices.put(new CardView(TR, String.valueOf(id), "TR"), nextCardIndex);
@@ -1137,6 +1371,8 @@ public class GameSceneController {
         cardIndices.put(new CardView(BL, String.valueOf(id), "BL"), nextCardIndex);
         cardIndices.put(new CardView(BC, String.valueOf(id), "BC"), nextCardIndex);
         cardIndices.put(new CardView(BR, String.valueOf(id), "BR"), nextCardIndex);
+
+        // Disabling the bottom-right corner for the previously placed card
         TR.setDisable(true);
         for (CardView cardView : allCardViews) {
             if (cardIndices.get(cardView) == lastIndex && cardView.getPosition().equals("BL")) {
@@ -1146,14 +1382,27 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * This method places the card represented by the ImageView cardOnTheBoard in the top-left corner of the board.
+     *
+     * @param cardOnTheBoard The ImageView of the card to be placed on the board.
+     * @param board The GridPane representing the board where the card will be placed.
+     * @param id The identifier of the card.
+     */
     public void placingTopLeftCard(ImageView cardOnTheBoard, GridPane board, int id) {
-        int lastIndex=nextCardIndex;
+        // Incrementing the index for the next card
+        int lastIndex = nextCardIndex;
         nextCardIndex++;
+
+        // Loading the image for the card
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
         int x = getX(cardOnTheBoard);
         int y = getY(cardOnTheBoard);
+
+        // Creating a grid pane for the new card and its surrounding images
         GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
 
+        // Extracting ImageView objects for each position on the grid pane
         ImageView TL = (ImageView) gridPanePlacingOn.getChildren().get(0);
         ImageView TC = (ImageView) gridPanePlacingOn.getChildren().get(1);
         ImageView TR = (ImageView) gridPanePlacingOn.getChildren().get(2);
@@ -1164,23 +1413,25 @@ public class GameSceneController {
         ImageView BC = (ImageView) gridPanePlacingOn.getChildren().get(7);
         ImageView BR = (ImageView) gridPanePlacingOn.getChildren().get(8);
 
+        // Allowing picking on the corners for user interaction
         TL.setPickOnBounds(true);
         TR.setPickOnBounds(true);
         BL.setPickOnBounds(true);
         BR.setPickOnBounds(true);
 
+        // Adding the card and surrounding images to the board grid pane
+
         board.add(TL, (y - 2), (x - 2));
         board.add(TC, (y - 1), (x - 2));
         board.add(TR, y, (x - 2));
-
         board.add(LC, (y - 2), (x - 1));
         board.add(CC, (y - 1), (x - 1));
         board.add(RC, y, (x - 1));
-
         board.add(BL, (y - 2), x);
         board.add(BC, (y - 1), x);
         board.add(BR, y, x);
 
+        // Creating CardView objects for each image and adding them to a list
         allCardViews.add(new CardView(TL, String.valueOf(id), "TL"));
         allCardViews.add(new CardView(TC, String.valueOf(id), "TC"));
         allCardViews.add(new CardView(TR, String.valueOf(id), "TR"));
@@ -1191,6 +1442,7 @@ public class GameSceneController {
         allCardViews.add(new CardView(BC, String.valueOf(id), "BC"));
         allCardViews.add(new CardView(BR, String.valueOf(id), "BR"));
 
+        // Setting the index for each card in the cardIndices map
         cardIndices.put(new CardView(TL, String.valueOf(id), "TL"), nextCardIndex);
         cardIndices.put(new CardView(TC, String.valueOf(id), "TC"), nextCardIndex);
         cardIndices.put(new CardView(TR, String.valueOf(id), "TR"), nextCardIndex);
@@ -1200,6 +1452,8 @@ public class GameSceneController {
         cardIndices.put(new CardView(BL, String.valueOf(id), "BL"), nextCardIndex);
         cardIndices.put(new CardView(BC, String.valueOf(id), "BC"), nextCardIndex);
         cardIndices.put(new CardView(BR, String.valueOf(id), "BR"), nextCardIndex);
+
+        // Disabling the bottom-right corner for the previously placed card
         BR.setDisable(true);
         for (CardView cardView : allCardViews) {
             if (cardIndices.get(cardView) == lastIndex && cardView.getPosition().equals("TL")) {
@@ -1209,13 +1463,27 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * This method places the card represented by the ImageView cardOnTheBoard in the top-right corner of the board.
+     *
+     * @param cardOnTheBoard The ImageView of the card to be placed on the board.
+     * @param board The GridPane representing the board where the card will be placed.
+     * @param id The identifier of the card.
+     */
     public void placingTopRightCard(ImageView cardOnTheBoard, GridPane board, int id) {
-        int lastIndex=nextCardIndex;
+        // Incrementing the index for the next card
+        int lastIndex = nextCardIndex;
         nextCardIndex++;
+
+        // Loading the image for the card
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
         int x = getX(cardOnTheBoard);
         int y = getY(cardOnTheBoard);
+
+        // Creating a grid pane for the new card and its surrounding images
         GridPane gridPanePlacingOn = subnettingEachImage(newImage, String.valueOf(id));
+
+        // Extracting ImageView objects for each position on the grid pane
         ImageView TL = (ImageView) gridPanePlacingOn.getChildren().get(0);
         ImageView TC = (ImageView) gridPanePlacingOn.getChildren().get(1);
         ImageView TR = (ImageView) gridPanePlacingOn.getChildren().get(2);
@@ -1226,23 +1494,24 @@ public class GameSceneController {
         ImageView BC = (ImageView) gridPanePlacingOn.getChildren().get(7);
         ImageView BR = (ImageView) gridPanePlacingOn.getChildren().get(8);
 
+        // Allowing picking on the corners for user interaction
         TL.setPickOnBounds(true);
         TR.setPickOnBounds(true);
         BL.setPickOnBounds(true);
         BR.setPickOnBounds(true);
 
+        // Adding the card and surrounding images to the board grid pane
         board.add(TL, y, (x - 2));
         board.add(TC, (y + 1), (x - 2));
         board.add(TR, (y + 2), (x - 2));
-
         board.add(LC, y, (x - 1));
         board.add(CC, (y + 1), (x - 1));
         board.add(RC, (y + 2), (x - 1));
-
         board.add(BL, y, x);
         board.add(BC, (y + 1), x);
         board.add(BR, (y + 2), x);
 
+        // Creating CardView objects for each image and adding them to a list
         allCardViews.add(new CardView(TL, String.valueOf(id), "TL"));
         allCardViews.add(new CardView(TC, String.valueOf(id), "TC"));
         allCardViews.add(new CardView(TR, String.valueOf(id), "TR"));
@@ -1253,6 +1522,7 @@ public class GameSceneController {
         allCardViews.add(new CardView(BC, String.valueOf(id), "BC"));
         allCardViews.add(new CardView(BR, String.valueOf(id), "BR"));
 
+        // Setting the index for each card in the cardIndices map
         cardIndices.put(new CardView(TL, String.valueOf(id), "TL"), nextCardIndex);
         cardIndices.put(new CardView(TC, String.valueOf(id), "TC"), nextCardIndex);
         cardIndices.put(new CardView(TR, String.valueOf(id), "TR"), nextCardIndex);
@@ -1262,6 +1532,8 @@ public class GameSceneController {
         cardIndices.put(new CardView(BL, String.valueOf(id), "BL"), nextCardIndex);
         cardIndices.put(new CardView(BC, String.valueOf(id), "BC"), nextCardIndex);
         cardIndices.put(new CardView(BR, String.valueOf(id), "BR"), nextCardIndex);
+
+        // Disabling the bottom-left corner for the previously placed card
         BL.setDisable(true);
         for (CardView cardView : allCardViews) {
             if (cardIndices.get(cardView) == lastIndex && cardView.getPosition().equals("TR")) {
@@ -1271,30 +1543,61 @@ public class GameSceneController {
         }
     }
 
+
     public CardView getClickedImageView() {
         return clickedCardView;
     }
 
+    /**
+     * Retrieves the identifier of the first well card from the server and updates it in the GUI.
+     * Synchronized to ensure thread safety.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     private synchronized void firstWellCard() throws IOException {
         out.println("firstWellId");
         SharedObjectsInGui.setIdCard1(in.readLine());
     }
 
+    /**
+     * Retrieves the identifier of the second well card from the server and updates it in the GUI.
+     * Synchronized to ensure thread safety.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     private synchronized void secondWellCard() throws IOException {
         out.println("secondWellId");
         SharedObjectsInGui.setIdCard2(in.readLine());
     }
 
+    /**
+     * Retrieves the identifier of the third well card from the server and updates it in the GUI.
+     * Synchronized to ensure thread safety.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     private synchronized void thirdWellCard() throws IOException {
         out.println("thirdWellId");
         SharedObjectsInGui.setIdCard3(in.readLine());
     }
 
+    /**
+     * Retrieves the identifier of the fourth well card from the server and updates it in the GUI.
+     * Synchronized to ensure thread safety.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     private synchronized void fourthWellCard() throws IOException {
         out.println("fourthWellId");
         SharedObjectsInGui.setIdCard4(in.readLine());
     }
 
+    /**
+     * Retrieves the paths for the first resource and gold cards from the server and updates them in the GUI.
+     * Synchronized to ensure thread safety.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     private synchronized void updatingResourceAndGoldDeck() throws IOException {
         out.println("firstCardResourceGui");
         SharedObjectsInGui.setPathResourceDeck(in.readLine());
@@ -1302,6 +1605,9 @@ public class GameSceneController {
         SharedObjectsInGui.setPathGoldDeck(in.readLine());
     }
 
+    /**
+     * Sets the paths for each well card in the GUI.
+     */
     private void checkTypeWellCards() {
         SharedObjectsInGui.setWellPathOne(createPathForFrontCards(SharedObjectsInGui.getIdCard1()));
         SharedObjectsInGui.setWellPathSecond(createPathForFrontCards(SharedObjectsInGui.getIdCard2()));
@@ -1309,6 +1615,12 @@ public class GameSceneController {
         SharedObjectsInGui.setWellPathForth(createPathForFrontCards(SharedObjectsInGui.getIdCard4()));
     }
 
+    /**
+     * Retrieves the identifiers of the player's deck cards from the server and updates them in the GUI.
+     * Synchronized to ensure thread safety.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     private synchronized void playerDeck() throws IOException {
         out.println("deckId");
         idHandCard1 = in.readLine();
@@ -1319,6 +1631,12 @@ public class GameSceneController {
         System.out.println("Third card of deck:" + idHandCard3);
     }
 
+    /**
+     * Retrieves the type (Resource or Gold) of each player's deck card from the server and updates them in the GUI.
+     * Synchronized to ensure thread safety.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     private synchronized void checkTypePlayerDeck() throws IOException {
         typeHandCard1 = checkType(idHandCard1);
         typeHandCard2 = checkType(idHandCard2);
@@ -1326,16 +1644,31 @@ public class GameSceneController {
         in.readLine();
     }
 
+    /**
+     * Determines the type (Resource or Gold) of a card based on its identifier.
+     *
+     * @param id The identifier of the card.
+     * @return The type of the card.
+     */
     private String checkType(String id) {
         int intId = Integer.parseInt(id);
         return intId > 0 && intId <= 40 ? "Resource" : "Gold";
     }
 
+    /**
+     * Updates the paths for the resource and gold deck cards in the GUI to display the card backs.
+     */
     private void creatingPathForGameMethod() {
         SharedObjectsInGui.setPathResourceDeck(createPathForBackCards(SharedObjectsInGui.getPathResourceDeck()));
         SharedObjectsInGui.setPathGoldDeck(createPathForBackCards(SharedObjectsInGui.getPathGoldDeck()));
     }
 
+    /**
+     * Creates a new Image object from the provided path.
+     *
+     * @param path The path of the image.
+     * @return The Image object.
+     */
     private Image createNewPathForImages(String path) {
         try {
             return new Image(Objects.requireNonNull(getClass().getResourceAsStream(path)));
@@ -1344,11 +1677,19 @@ public class GameSceneController {
         }
     }
 
+    /**
+     * Sets the fit width and height for the provided ImageView.
+     *
+     * @param imageView The ImageView to set width and height.
+     */
     private void setWidthAndHeight(ImageView imageView) {
         imageView.setFitWidth(widthWellCards);
         imageView.setFitHeight(heightWellCards);
     }
 
+    /**
+     * Creates ImageView objects for the top resource and gold cards in the deck, sets their dimensions, and updates them in the GUI.
+     */
     private void creatingDeckAndGoldDeckView() {
         SharedObjectsInGui.setTopCardResourceDeckView(new ImageView(SharedObjectsInGui.getTopCardResourceDeck()));
         SharedObjectsInGui.setTopCardGoldDeckView(new ImageView(SharedObjectsInGui.getTopCardGoldDeck()));
@@ -1356,6 +1697,10 @@ public class GameSceneController {
         setWidthAndHeight(SharedObjectsInGui.getTopCardGoldDeckView());
     }
 
+    /**
+     * Sets the onMouseClicked event handlers for the top resource and gold deck cards.
+     * Displays an alert if it's not the current player's turn.
+     */
     private void settingDecksOnMouseClickedEvent() {
         SharedObjectsInGui.getTopCardResourceDeckView().setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
@@ -1375,6 +1720,9 @@ public class GameSceneController {
         });
     }
 
+    /**
+     * Creates Image objects for the well cards and updates them in the GUI.
+     */
     private void creatingImagesForTheWell() {
         SharedObjectsInGui.setWellCard1(createNewPathForImages(SharedObjectsInGui.getWellPathOne()));
         SharedObjectsInGui.setWellCard2(createNewPathForImages(SharedObjectsInGui.getWellPathSecond()));
@@ -1382,6 +1730,9 @@ public class GameSceneController {
         SharedObjectsInGui.setWellCard4(createNewPathForImages(SharedObjectsInGui.getWellPathForth()));
     }
 
+    /**
+     * Creates ImageView objects for the well cards, sets their dimensions, and updates them in the GUI.
+     */
     private void creatingImagesViewForTheWell() {
         ImageView wellCard1View = new ImageView(SharedObjectsInGui.getWellCard1());
         ImageView wellCard2View = new ImageView(SharedObjectsInGui.getWellCard2());
@@ -1397,7 +1748,10 @@ public class GameSceneController {
         SharedObjectsInGui.setWellCard4View(wellCard4View);
     }
 
-
+    /**
+     * Sets the onMouseClicked event handlers for the well cards.
+     * Displays an alert if it's not the current player's turn.
+     */
     private void settingWellOnMouseClickedEvent() {
         SharedObjectsInGui.getWellCard1View().setOnMouseClicked(event -> {
             if (isCurrentPlayerTurn) {
@@ -1473,6 +1827,11 @@ public class GameSceneController {
 
     }
 
+    /**
+     * Initializes the well by obtaining cards for each well position and checking their types.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     private synchronized void initializeWell() throws IOException {
         firstWellCard();
         secondWellCard();
@@ -1481,10 +1840,15 @@ public class GameSceneController {
         checkTypeWellCards();
     }
 
+    /**
+     * Updates the top card of the resource deck with a new card obtained from the server.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     private void updateResourceDeckTopCard() throws IOException {
         out.println("firstCardResourceGui");
         String newTopCardResourceDeckId = in.readLine();
-        idTopCardResourceDeck=newTopCardResourceDeckId;
+        idTopCardResourceDeck = newTopCardResourceDeckId;
         System.out.println(newTopCardResourceDeckId);
         System.out.println("Sono qua e dovrei quittare");
         String newPathResource = "/ImmaginiCodex/CarteBack/Resource/" + newTopCardResourceDeckId + ".png";
@@ -1495,10 +1859,15 @@ public class GameSceneController {
         SharedObjectsInGui.setTopCardResourceDeck(newTopCardResourceDeckImage);
     }
 
+    /**
+     * Updates the top card of the gold deck with a new card obtained from the server.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     private void updatedGoldDeckTopCard() throws IOException {
         out.println("firstCardGoldGui");
         String newTopCardGoldDeckId = in.readLine();
-        idTopCardGoldDeck=newTopCardGoldDeckId;
+        idTopCardGoldDeck = newTopCardGoldDeckId;
         System.out.println(newTopCardGoldDeckId);
         String newPathGold = "/ImmaginiCodex/CarteBack/Gold/" + newTopCardGoldDeckId + ".png";
         Image newTopCardGoldImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPathGold)));
@@ -1516,6 +1885,10 @@ public class GameSceneController {
         return GridPane.getColumnIndex(img);
     }
 
+    /**
+     * Creates buttons and adds them to the button container.
+     * Sets styles and preferred width for each button.
+     */
     private void creatingButtons() {
         buttonContainer.add(playCard, 0, 0);
         buttonContainer.add(drawCard, 1, 0);
@@ -1540,6 +1913,11 @@ public class GameSceneController {
     }
 
 
+    /**
+     * Updates the GUI by loading data, updating card IDs and paths, and refreshing the views.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     private void updateGUI() throws IOException {
         load();
         System.out.println(SharedObjectsInGui.getIdCard1());
@@ -1556,8 +1934,8 @@ public class GameSceneController {
         handCard1View.setId("Front");
         handCard2View.setId("Front");
         handCard3View.setId("Front");
-        cornerSelected=null;
-        indexCardToPlace=100;
+        cornerSelected = null;
+        indexCardToPlace = 100;
         playerDeck();
         checkTypePlayerDeck();
         pathHandCard1 = "/ImmaginiCodex/CarteFront/" + typeHandCard1 + "/" + idHandCard1 + ".png";
@@ -1574,36 +1952,45 @@ public class GameSceneController {
         handCard3View.setImage(handCard3);
     }
 
-    private void newPathAfterUpdate(){
-        String Path1= "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard1() +".png";
+    /**
+     * Updates the paths and images for the well cards after data update.
+     */
+    private void newPathAfterUpdate() {
+        String Path1 = "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard1() + ".png";
         SharedObjectsInGui.setWellCard1(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Path1))));
         SharedObjectsInGui.getWellCard1View().setImage(SharedObjectsInGui.getWellCard1());
         System.out.println(Path1);
 
-        String Path2= "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard2() +".png";
+        String Path2 = "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard2() + ".png";
         SharedObjectsInGui.setWellCard2(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Path2))));
         SharedObjectsInGui.getWellCard2View().setImage(SharedObjectsInGui.getWellCard2());
         System.out.println(Path2);
 
-        String Path3= "/ImmaginiCodex/CarteFront/Gold/" + SharedObjectsInGui.getIdCard3() +".png";
+        String Path3 = "/ImmaginiCodex/CarteFront/Gold/" + SharedObjectsInGui.getIdCard3() + ".png";
         SharedObjectsInGui.setWellCard3(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Path3))));
         SharedObjectsInGui.getWellCard3View().setImage(SharedObjectsInGui.getWellCard3());
 
-        String Path4= "/ImmaginiCodex/CarteFront/Gold/" + SharedObjectsInGui.getIdCard4() +".png";
+        String Path4 = "/ImmaginiCodex/CarteFront/Gold/" + SharedObjectsInGui.getIdCard4() + ".png";
         SharedObjectsInGui.setWellCard4(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Path4))));
         SharedObjectsInGui.getWellCard4View().setImage(SharedObjectsInGui.getWellCard4());
     }
 
+    /**
+     * Waits until the last message from the server before starting the GUI.
+     * If a quit message is received, it initiates the quit process.
+     *
+     * @throws IOException If an I/O error occurs while reading from the input stream.
+     */
     private void waitUntilLastMessage() throws IOException {
         String messageFromServer = in.readLine();
         while (!messageFromServer.equals("STARTGUI")) {
             System.out.println("Server says " + messageFromServer);
             messageFromServer = in.readLine();
-            if(messageFromServer.equals("One client decided to quit, so the game will end for every player.")){
-                try{
+            if (messageFromServer.equals("One client decided to quit, so the game will end for every player.")) {
+                try {
                     controller.quit(primaryStage);
                     socket.close();
-                }catch (SocketTimeoutException e) {
+                } catch (SocketTimeoutException e) {
                     e.printStackTrace();
                 }
             }
@@ -1611,6 +1998,11 @@ public class GameSceneController {
         System.out.println("Game finally starting!");
     }
 
+    /**
+     * Saves the elements in the GUI to a JSON file.
+     *
+     * @param path The path where the JSON file will be saved.
+     */
     public void saveElementsInGui(Path path) {
         JsonObject sharedElementsObject = new JsonObject();
         sharedElementsObject.add("idTopResourceCardDeck", new JsonPrimitive(idTopCardResourceDeck));
@@ -1628,10 +2020,11 @@ public class GameSceneController {
         }
     }
 
-    /*
-    * Method to load SharedObjectVariables from json file in order to correctly update attributes
-    * */
-
+    /**
+     * Loads the elements from the GUI from a JSON file.
+     *
+     * @param path The path of the JSON file to load from.
+     */
     public void loadElementsFromGui(Path path) {
         try (FileReader reader = new FileReader(path.toFile())) {
             JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
