@@ -39,7 +39,7 @@ public class GoldDeck implements Deck {
                 return drownCard;
             }
         } catch(Exception e) {
-            throw new IllegalStateException("problema nel blocco try di drawCard nella classe GoldDeck"); // Eccezione specifica
+            throw new IllegalStateException("Something went wrong in the try-catch statement in GoldDeck class"); //Specific exception
         }
         return null;
     }
@@ -108,7 +108,7 @@ public class GoldDeck implements Deck {
         System.out.println(goldCards.getFirst());
     }
     public List<Card> getRemainingCards() {
-        return new ArrayList<>(this.goldCards); // Supponendo che `deck` sia una lista delle carte rimanenti
+        return new ArrayList<>(this.goldCards); // Assuming that 'deck' is the list of the remaining cards
     }
 
     public void setRemainingCards(List<Card> cards) {

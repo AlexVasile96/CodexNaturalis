@@ -15,7 +15,7 @@ import java.util.Objects;
 
 
 public class ChooseNumOfPlayersScene {
-
+    //Initializing scene
     public void createChooseNumOfPlayersScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/model/ChooseNumberOfPlayers.fxml"));
         Pane root = loader.load(); // Carica il file FXML e ottiene il suo root (un Pane)

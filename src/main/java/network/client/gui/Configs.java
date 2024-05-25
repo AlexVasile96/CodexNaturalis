@@ -11,7 +11,7 @@ public class Configs {
     private String hostName;
     private int portNumber;
 
-
+//takes address and port of the server from a json file
     public Configs() throws FileNotFoundException {
         try {
             FileReader reader = new FileReader("src/main/resources/HostAndPort.json");

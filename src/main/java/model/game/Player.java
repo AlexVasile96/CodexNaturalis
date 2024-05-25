@@ -98,7 +98,7 @@ public class Player implements Observable {
                 fillingTheWellWithTheCorrectCard(drownCard,rc,gd, cardwell);           //Filling The Well
                 playerCards.add(drownCard);                                             //Adding the card to the player hand
             } catch (Exception e) {
-                throw new IllegalStateException("problema nel blocco try di chooseCardFromWellForServer"); // Eccezione specifica
+                throw new IllegalStateException("Error in the try-catch statement of ChooseCardFromWellServer"); //Specific exception
             }
         }
         else {
@@ -156,7 +156,7 @@ public class Player implements Observable {
     public Card checkingTheChosencard( int cardIndex)
     {
         Card selectedCardFromTheDeck = chooseCard(cardIndex);                   //OKAY
-        System.out.println("esistenza carta:"+ checkIfTheCardExist(cardIndex)+ " (se zero-> non esiste)");                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
+        System.out.println("card existence:"+ checkIfTheCardExist(cardIndex)+ " (if zero-> doesn't exists)");                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
         boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
         if(selectedCardFromTheDeck.isCardBack()) return selectedCardFromTheDeck;
         if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return null;
@@ -164,7 +164,7 @@ public class Player implements Observable {
     }
     public boolean checkingTheChosenCardForGoldPurpose(int cardIndex) {
         Card selectedCardFromTheDeck = chooseCard(cardIndex);                   //OKAY
-        System.out.println("esistenza carta:"+ checkIfTheCardExist(cardIndex)+ "  (se zero-> non esiste)");                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
+        System.out.println("card existence:"+ checkIfTheCardExist(cardIndex)+ "  (if zero-> doesn't exists)");                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
         boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
         if(selectedCardFromTheDeck.isCardBack()) return true;
         if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return false;

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Almost finished the english translation" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AlexVasile96&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/PietroCallandrone/IS24-LB05.git&quot;,
+    &quot;accountId&quot;: &quot;79d27218-8d9f-4caf-92da-4612ca7f2ac9&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2gsA9yU8yI6PZLxJtICGFCOTTt7" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.CliClientApp.executor": "Run",
+    "Application.Codex.executor": "Run",
+    "Application.GUI.executor": "Run",
+    "Application.ServerMain.executor": "Run",
+    "JAR Application.json-20240303.jar.executor": "Run",
+    "JUnit.All in proj (1).executor": "Coverage",
+    "JUnit.All in proj (2).executor": "Coverage",
+    "JUnit.All in proj.executor": "Coverage",
+    "JUnit.BisObjectiveCardTest.executor": "Run",
+    "JUnit.BoardPointsTest.executor": "Run",
+    "JUnit.BoardTest.executor": "Run",
+    "JUnit.GoldDeckTest.executor": "Run",
+    "JUnit.InitialCardDeckTest.executor": "Run",
+    "JUnit.ObjectiveDeckTest.executor": "Run",
+    "JUnit.PlayerTest.executor": "Run",
+    "JUnit.ResourceDeckTest.executor": "Run",
+    "JUnit.ResourceUpdaterTest.executor": "Run",
+    "JUnit.StairsObjectiveCardTest.executor": "Run",
+    "JUnit.TrisObjectiveCardTest.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.Codex">
+    <configuration name="Codex" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="codex.Codex" />
+      <module name="proj" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="codex.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="network.client.gui.GUI" />
+      <module name="proj" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="network.client.gui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="network.server.ServerMain" />
+      <module name="proj" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="network.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StairsObjectiveCardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proj" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="model" />
+      <option name="MAIN_CLASS_NAME" value="model.StairsObjectiveCardTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Codex" />
+        <item itemvalue="Application.GUI" />
+        <item itemvalue="Application.ServerMain" />
+        <item itemvalue="JUnit.StairsObjectiveCardTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="" />
+      <created>1716475763311</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716475763311</updated>
+      <workItem from="1716475764461" duration="1147000" />
+      <workItem from="1716476924856" duration="3682000" />
+      <workItem from="1716553205369" duration="7674000" />
+      <workItem from="1716561970325" duration="6910000" />
+      <workItem from="1716580600586" duration="1283000" />
+      <workItem from="1716622295689" duration="11045000" />
+      <workItem from="1716634199752" duration="4071000" />
+      <workItem from="1716644350848" duration="202000" />
+      <workItem from="1716644567190" duration="31000" />
+      <workItem from="1716644611825" duration="10000" />
+      <workItem from="1716644633682" duration="5794000" />
+    </task>
+    <task id="LOCAL-00001" summary="English translation">
+      <option name="closed" value="true" />
+      <created>1716568822413</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716568822413</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Test update">
+      <option name="closed" value="true" />
+      <created>1716633098476</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1716633098476</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Exception managed in SecretCardScene">
+      <option name="closed" value="true" />
+      <created>1716647936349</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1716647936349</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Almost finished the english translation">
+      <option name="closed" value="true" />
+      <created>1716649893329</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1716649893329</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="English translation" />
+    <MESSAGE value="Test update" />
+    <MESSAGE value="Exception managed in SecretCardScene" />
+    <MESSAGE value="Almost finished the english translation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Almost finished the english translation" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj__1_.ic" NAME="All in proj (1) Coverage Results" MODIFIED="1716630710868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj.ic" NAME="All in proj Coverage Results" MODIFIED="1716641301667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj__2_.ic" NAME="All in proj (2) Coverage Results" MODIFIED="1716630886224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+  </component>
+</project>

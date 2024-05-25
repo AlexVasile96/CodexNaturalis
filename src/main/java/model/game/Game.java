@@ -61,14 +61,14 @@ public class Game{
     }
 
     public void addPlayer(Player player) {
-        boolean esiste = false;
+        boolean exists = false;
         for (Player p : players) {
             if (p.getNickName().equals(player.getNickName())) {
-                esiste = true;
+                exists = true;
                 break;
             }
         }
-        if (!esiste) players.add(player);
+        if (!exists) players.add(player);
     }
 
     public Player getCurrentPlayingPLayer() {

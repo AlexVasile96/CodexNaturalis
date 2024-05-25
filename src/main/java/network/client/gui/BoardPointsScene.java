@@ -31,6 +31,7 @@ public class BoardPointsScene {
     List<Circle> checkpoints = new ArrayList<>();
     Color dotColor;
 
+    //Initializing scene
     public BoardPointsScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) throws IOException {
         this.primaryStage = primaryStage;
         this.out = out;
@@ -39,6 +40,7 @@ public class BoardPointsScene {
         this.clientView = clientView;
     }
 
+    //managing player's selection
     private void getDotColor(){
         dot = clientView.getDot().toString();
         System.out.println("Il dot è: "+dot);
@@ -67,6 +69,7 @@ public class BoardPointsScene {
         return Integer.parseInt(stringa);
     }
 
+    //creating the popup that shows the player's points
     public void popupBoardPoints() throws IOException {
         Stage popupStage = new Stage();
 

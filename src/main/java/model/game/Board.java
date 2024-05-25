@@ -137,7 +137,7 @@ public class Board {
             SpecificSeed requiredSeed = entry.getKey(); //GET KEY TAKES THE SPECIFIC SEED IN THE REQUIREMENTS
             int requiredCount = entry.getValue();       //GET VALUE TAKES THE NUMBER OF THE ATTRIBUTES
             int actualCount = seedCountMap.getOrDefault(requiredSeed, 0); //HOW MANY SPECIFIED DO WE HAVE ACTUALLY ON THE BOARD
-            if (actualCount < requiredCount) { //IN CASO CORREGGERE IL SEGNO
+            if (actualCount < requiredCount) { //ADJUST SIGN IF NEEDED
                 return false;
             }
         }
