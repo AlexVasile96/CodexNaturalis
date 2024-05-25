@@ -171,6 +171,13 @@ public class Player implements Observable {
         return true;
     }
 
+    public boolean checkTheGoldCardForGui(int cardIndex)
+    {
+        Card selectedCardFromTheDeck = chooseCard(cardIndex);
+        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
+        return canIPLaceTheGoldCard;
+    }
+
     public Card gettingCardsFromTheBoard(Board board, int cardChosenONTheBoard)
     {
         Card initialCard = board.getCardsOnTheBoardList().getFirst();               //putting inside initialCard the firstPlacedCard on the board

@@ -1,4 +1,4 @@
-package network.client.cli;
+package network.client;
 import exceptions.OperationCancelledException;
 import model.game.*;
 import view.ClientView;

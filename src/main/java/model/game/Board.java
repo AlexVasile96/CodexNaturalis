@@ -132,7 +132,7 @@ public class Board {
         for (SpecificSeed seed : requirementsForPlacing) {
             requiredCountMap.put(seed, requiredCountMap.getOrDefault(seed, 0) + 1); //COUNTING
         }
-        System.out.println(requiredCountMap);
+        System.out.println("Required points are: " + requiredCountMap);
         for (Map.Entry<SpecificSeed, Integer> entry : requiredCountMap.entrySet()) {
             SpecificSeed requiredSeed = entry.getKey(); //GET KEY TAKES THE SPECIFIC SEED IN THE REQUIREMENTS
             int requiredCount = entry.getValue();       //GET VALUE TAKES THE NUMBER OF THE ATTRIBUTES
