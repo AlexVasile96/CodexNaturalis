@@ -6,8 +6,7 @@ import exceptions.*;
 import model.deck.Deck;
 import model.game.Game;
 import model.game.Player;
-import server.Command;
-import server.HandlingPlayerInputsThread;
+import network.server.HandlingPlayerInputsThread;
 import view.ClientView;
 
 import java.io.FileReader;
@@ -45,6 +44,10 @@ public class GameController {
     private static String currentPlayerName=null;
     private int logginPlayers=0;
     private static int howManyPlayersDoIHave=0;
+    private boolean goldcard=false;
+
+
+
     //CONSTRUCTORS
 
     public GameController(String username, PrintWriter userOut, List<HandlingPlayerInputsThread> clients, Socket socket, Game game) throws IOException {
@@ -100,13 +103,6 @@ public class GameController {
         if (!isSizeSet){
             sizeLatch.await();
         }
-//        if (!players.containsKey(username)) {
-//            if (players.size() >= size || isGameOver) {
-//                throw new GameFullException();
-//            }
-//        } else {
-//            throw new UsernameAlreadyExistsException();
-//        }
         players.put(username, userOut);
 
          }

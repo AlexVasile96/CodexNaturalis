@@ -11,5 +11,8 @@ module com.example.proj {
     opens model to javafx.fxml;
     exports model;
     exports network.client.gui;
-    opens server to com.google.gson;
+    opens network.server to com.google.gson;
+    opens network.client to com.google.gson;
+    opens controller to com.google.gson;
+    opens network.client.cli to com.google.gson;
 }

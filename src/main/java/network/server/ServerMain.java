@@ -1,4 +1,4 @@
-package server;
+package network.server;
 
 
 import model.game.Game;

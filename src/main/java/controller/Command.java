@@ -1,4 +1,4 @@
-package server;
+package controller;
 import model.game.Game;
 import model.game.Player;
 
@@ -91,8 +91,6 @@ public class Command { //Command Client sends to Server
                 return game.getFirstCardOfResourceDeck();
             case "firstCardGoldGui":
                 return game.getFirstCardOfGoldDeck();
-            case "persistenceGame":
-                //game.alreadyExistsAnotherGame();
             case "status":
                 return String.valueOf(game.getCurrentPlayingPLayer().getPlayerScore());
             case "quit":
@@ -120,10 +118,15 @@ public class Command { //Command Client sends to Server
             case "goldDeckUpdate":
                 game.goldDeckUpdateForGUI();
                 return "Gold Deck Correctly Updated";
-            case "goldGui":
-                int index=0;
-               String value= game.checkingIfICanPlaceTheGoldCardOnGui(player,index);
-               return  value;
+            case "goldGui1":
+                int index=1;
+                return game.checkingIfICanPlaceTheGoldCardOnGui(player,index);
+            case "goldGui2":
+                int secondIndex=2;
+                return game.checkingIfICanPlaceTheGoldCardOnGui(player,secondIndex);
+            case "goldGui3":
+                int thirdIndex=3;
+                return game.checkingIfICanPlaceTheGoldCardOnGui(player,thirdIndex);
             case "totPlayers":
                 return String.valueOf(game.getTotalNumberOfPLayer());
             case "STARTGUI":

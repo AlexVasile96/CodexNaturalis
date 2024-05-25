@@ -171,6 +171,13 @@ public class Player implements Observable {
         return true;
     }
 
+    public boolean checkTheGoldCardForGui(int cardIndex)
+    {
+        Card selectedCardFromTheDeck = chooseCard(cardIndex);
+        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
+        return canIPLaceTheGoldCard;
+    }
+
     public Card gettingCardsFromTheBoard(Board board, int cardChosenONTheBoard)
     {
         Card initialCard = board.getCardsOnTheBoardList().getFirst();               //putting inside initialCard the firstPlacedCard on the board
@@ -308,31 +315,16 @@ public class Player implements Observable {
         if (selectedCardFromTheDeck == null) {                         //CHECKING IF THE CARD EXISTS, IN CASE RETURN
             return 0;
         }
-        return selectedCardFromTheDeck.getId();//momo: se lo cambiate avvisatemi!!
+        return selectedCardFromTheDeck.getId();
     }
     private boolean isTheCardGold(Card selectedCard)
     {
+        System.out.println(selectedCard);
         if (selectedCard instanceof GoldCard )
-            return board.placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing());
-        else return true;// non è goldCard quindi ok
+            return board.placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing()); //Checking gold card requirments
+        else return true; //If the card is not a gold card, i can proceed
     }
 
-    private Card selectTheCardFromTheBoard(List<Card> cardsPlayerCanChooseFrom, Scanner scanner){
-        System.out.print("Select a card on your board you want to place the card from your deck on: ");
-        int selectedCardIndex = scanner.nextInt();
-        try{
-            if (selectedCardIndex < 1 || selectedCardIndex > cardsPlayerCanChooseFrom.size()) {
-                throw new IndexOutOfBoundsException("Not a valid index");}
-        }
-        catch (IndexOutOfBoundsException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        catch (InputMismatchException e){
-            System.out.println(e.getMessage());
-        }
-        return cardsPlayerCanChooseFrom.get(selectedCardIndex - 1);
-    }
 
     private List<Corner> creatingCorners(InitialCard cardPlayerChoose){
         List<Corner> availableCorners = new ArrayList<>();                          //CREATING CORNERS THAT WILL BE DISPLAYED TO THE PLAYER

@@ -1,8 +1,8 @@
 package codex;
 
 import network.client.gui.GUI;
-import server.CliClientApp;
-import server.ServerMain;
+import network.client.cli.CliClientApp;
+import network.server.ServerMain;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

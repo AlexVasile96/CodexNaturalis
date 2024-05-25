@@ -2,11 +2,9 @@ package network.client.gui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import view.ClientView;
-import view.cli.Cli;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;

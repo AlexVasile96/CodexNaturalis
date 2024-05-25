@@ -31,7 +31,6 @@ public class ClientView {
         return userName;
     }
     private List<String> PlayerStringCards= new ArrayList<>();
-    private List<String> printCards= new ArrayList<>();
 
     public void setUserName(String userName) {
         this.userName = userName;
@@ -48,14 +47,12 @@ public class ClientView {
     public void update(Player player) {
             // update current player's info
             this.userName= player.getNickName();
-            //this.game= game;
             this.playerScore = player.getPlayerScore();
             this.dot = player.getDot();
             this.board = player.getBoard();
             this.isCardBack = player.isCardBack();
             this.playerCards = (ArrayList<Card>) player.getPlayerCards(); // Update player's cards
             this.secretChosenCard = player.getSecretChosenCard();
-
     }
 
     public int getIndex() {
@@ -78,10 +75,6 @@ public class ClientView {
         return PlayerStringCards;
     }
 
-    public List<String> getPrintCards() {
-        return printCards;
-    }
-
     public Dot getDot() {
         return dot;
     }
@@ -96,22 +89,6 @@ public class ClientView {
 
     public void setBoard(Board board) {
         this.board = board;
-    }
-
-    public boolean isCardBack() {
-        return isCardBack;
-    }
-
-    public void setCardBack(boolean cardBack) {
-        isCardBack = cardBack;
-    }
-
-    public ArrayList<Card> getPlayerCards() {
-        return playerCards;
-    }
-
-    public void setPlayerCards(ArrayList<Card> playerCards) {
-        this.playerCards = playerCards;
     }
 
     public ObjectiveCard getSecretChosenCard() {
@@ -150,10 +127,6 @@ public class ClientView {
 
     public void addCardOnTheBoard(String card) {
         this.cardsOnTheBoard.add(card);
-    }
-
-    public String getObjectiveCard() {
-        return objectiveCard;
     }
 
     public void setObjectiveCard(String objectiveCard) {

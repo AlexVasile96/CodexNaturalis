@@ -102,7 +102,8 @@ public class GameSceneController {
     private Image handCard2;
     private Image handCard3;
     private String indexForGold=null;
-    private Color targetColor = Color.web("#351F16");
+    private Color targetColor = Color.web("#DDD7A0");
+    private boolean isInit = true;
 
     public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, String currentPlayerNickname) throws IOException {
         this.primaryStage = primaryStage;
@@ -114,7 +115,7 @@ public class GameSceneController {
         this.clientView = clientView;
         controller = new Controller(in, out,socket);
         isCurrentPlayerTurn = clientView.getUserName().equals(currentPlayerNickname);
-        socket.setSoTimeout(30000); // timeout di 10 secondi
+        socket.setSoTimeout(120000); // timeout di 2 minuti
     }
 
     public synchronized void updateFirst() throws IOException {
@@ -186,6 +187,7 @@ public class GameSceneController {
         }
 
         GridPane initCardDividedInNineRegions = subnettingEachImage(initCardImage, initCardId);
+
 
         ImageView tlImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(0);
         ImageView tcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(1);
@@ -363,7 +365,8 @@ public class GameSceneController {
                     if(indexForGold!=null && Integer.parseInt(indexForGold)>40)
                     {
                         System.out.println("You chose to play a gold card");
-                        out.println("goldGui");
+                        out.println("goldGui" + indexCardToPlace.toString());
+                        System.out.println("goldGui" + indexCardToPlace.toString());
                         try {
                             canIPlaceTheGoldCard= in.readLine();
                             System.out.println("Server response is: " + canIPlaceTheGoldCard);
@@ -374,7 +377,7 @@ public class GameSceneController {
                         }
                         if(canIPlaceTheGoldCard.equals("NO"))
                         {
-                            showAlert("Gold Card NOt Placeable", "YOu can't place the gold card beacuse you don't have enough specific seeds");
+                            showAlert("Gold Card Not Placeable", "YOu can't place the gold card beacuse you don't have enough specific seeds");
                             indexForGold=null;
                             indexCardToPlace=100;
                             haveToDraw=false;
@@ -940,18 +943,38 @@ public class GameSceneController {
         imageViewBL.setOnMouseClicked(event -> handleCardClick(blCardView));
         imageViewBR.setOnMouseClicked(event -> handleCardClick(brCardView));
 
-        if(!containsColor(imageTL, targetColor)){
-            imageViewTL.setDisable(true);
+        Color targetInit = Color.web("#351F16");
+
+        if (isInit){
+            if(!containsColor(imageTL, targetInit)){
+                imageViewTL.setDisable(true);
+            }
+            if(!containsColor(imageTR, targetInit)){
+                imageViewTR.setDisable(true);
+            }
+            if(!containsColor(imageBL, targetInit)){
+                imageViewBL.setDisable(true);
+            }
+            if(!containsColor(imageBR, targetInit)){
+                imageViewBR.setDisable(true);
+            }
+        }else{
+            if(!containsColor(imageTL, targetColor)){
+                imageViewTL.setDisable(true);
+            }
+            if(!containsColor(imageTR, targetColor)){
+                imageViewTR.setDisable(true);
+            }
+            if(!containsColor(imageBL, targetColor)){
+                imageViewBL.setDisable(true);
+            }
+            if(!containsColor(imageBR, targetColor)){
+                imageViewBR.setDisable(true);
+            }
         }
-        if(!containsColor(imageTR, targetColor)){
-            imageViewTR.setDisable(true);
-        }
-        if(!containsColor(imageBL, targetColor)){
-            imageViewBL.setDisable(true);
-        }
-        if(!containsColor(imageBR, targetColor)){
-            imageViewBR.setDisable(true);
-        }
+
+        isInit = false;
+
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(0));
