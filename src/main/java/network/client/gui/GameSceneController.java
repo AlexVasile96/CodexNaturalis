@@ -368,8 +368,6 @@ public class GameSceneController {
                         out.println("goldGui" + indexCardToPlace.toString());
                         System.out.println("goldGui" + indexCardToPlace.toString());
                         try {
-                            System.out.println(in.readLine());
-                            out.println(indexCardToPlace);
                             canIPlaceTheGoldCard= in.readLine();
                             System.out.println("Server response is: " + canIPlaceTheGoldCard);
                         } catch (SocketTimeoutException ex) {

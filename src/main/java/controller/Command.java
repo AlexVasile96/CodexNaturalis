@@ -119,13 +119,13 @@ public class Command { //Command Client sends to Server
                 game.goldDeckUpdateForGUI();
                 return "Gold Deck Correctly Updated";
             case "goldGui1":
-                int index=0;
+                int index=1;
                 return game.checkingIfICanPlaceTheGoldCardOnGui(player,index);
             case "goldGui2":
-                int secondIndex=1;
+                int secondIndex=2;
                 return game.checkingIfICanPlaceTheGoldCardOnGui(player,secondIndex);
             case "goldGui3":
-                int thirdIndex=2;
+                int thirdIndex=3;
                 return game.checkingIfICanPlaceTheGoldCardOnGui(player,thirdIndex);
             case "totPlayers":
                 return String.valueOf(game.getTotalNumberOfPLayer());

@@ -806,14 +806,15 @@ void saveEachPlayerInGame(Path path) {
 
     public String checkingIfICanPlaceTheGoldCardOnGui(Player player, int indexOfTheGoldCard)
     {
-       boolean check= player.checkTheGoldCardForGui(indexOfTheGoldCard);
+        System.out.println(indexOfTheGoldCard);
+        boolean check= player.checkTheGoldCardForGui(indexOfTheGoldCard);
         System.out.println("Check is " + check);
-       if(check)
-       {
-           System.out.println("Check is: "+ check);
-           return "OKAY";
-       }
-       else return "NO";
+           if(check)
+           {
+               System.out.println("Check is: "+ check);
+               return "OKAY";
+           }
+           else return "NO";
     }
 
     public boolean areAllPlayersLoaded(List<String> expectedPlayerNicknames) {
