@@ -53,7 +53,7 @@ public class InitialCardDeck implements Deck {
     }
 
     //needed for testing
-    public int carteRimaste(){
+    public int remainingCards(){
         return initialCards.size();
     }
 }

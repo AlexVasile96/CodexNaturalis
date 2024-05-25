@@ -1,8 +1,15 @@
 package model;
 
+import model.card.Card;
+import model.card.InitialCard;
+import model.card.ResourceCard;
+import model.deck.InitialCardDeck;
 import model.game.*;
 import model.objectiveCardTypes.StairsObjectiveCard;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,12 +29,18 @@ class StairsObjectiveCardTest {
 
     private StairsObjectiveCard stairsObjectiveCard = new StairsObjectiveCard();
 
+    private List<Card> cards = new ArrayList<>();
+    private InitialCardDeck initialCardDeck = new InitialCardDeck(cards);
+
+
     @Test
     void checkPattern() {
 
         /*
         I PLACE A TRIPLET OF MUSHROOM DIAGONALLY, FROM THE LEFT GOING DOWN TO THE RIGHT
          */
+
+        System.out.println(initialCardDeck.remainingCards());
 
         board.setNode(0, 0, node);
         board.setNode(1, 1, node);

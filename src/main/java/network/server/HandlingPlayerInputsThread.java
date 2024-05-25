@@ -30,7 +30,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private final List<HandlingPlayerInputsThread> clients;
     private static boolean checkGameInizialization;
     private final ServerLobby lobby;
-    private List<Player> playersList;
+    private static List<Player> playersList;
     private Socket clientSocket;
     private String userName;
     private static int index = 0;
@@ -65,6 +65,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         this.game = game;
         checkGameInizialization = false;
         if (firstClient == null) {
+            System.out.println("Sono il primo thread");
             firstClient = this;
         } else if (secondClient==null) {
             secondClient=this;
@@ -217,15 +218,11 @@ public class HandlingPlayerInputsThread implements Runnable {
                 player.setIndex(index);
                 index++;
             }
-            playersList.add(player);
-            System.out.println("Players in game " + playersList);
-            System.out.println(player);
             gameController = lobby.login(request, out);
             System.out.println("Current numb of players: " + gameController.getCurrentNumsOfPlayers());
-            int size = setGameSize();
+            int size = setGameSize(player);
             System.out.println(size);
-            //sendMessageToClient("You have to wait until all clients are connected!");
-            //gameController.waitingForPLayers();
+
 
         } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
             System.err.println(e.getMessage());
@@ -261,7 +258,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
 
-    private synchronized int setGameSize() throws NoSuchElementException, InterruptedException {
+    private synchronized int setGameSize(Player player) throws NoSuchElementException, InterruptedException {
         synchronized (lock) {
             if (numPlayers == -1 && this == firstClient) {
                 try {
@@ -273,6 +270,8 @@ public class HandlingPlayerInputsThread implements Runnable {
                     gameController.choosePlayerNumber(numPlayers);
                     gameController.setSizeSet(true);
                     setupLatch = new CountDownLatch(numPlayers); // Inizializza il CountDownLatch con il numero di giocatori scelto
+                    currentPlayer=this.getThreadPlayer();
+                    playersList.add(player);
                     lock.notifyAll(); // Notifica tutti i client in attesa
                 } catch (NumberFormatException ex) {
                     sendMessageToClient("Game's number of players must be an integer.");
@@ -287,6 +286,8 @@ public class HandlingPlayerInputsThread implements Runnable {
                 while (numPlayers == -1) {
                     try {
                         lock.wait(); // Attende finché il numero di giocatori non è impostato
+                        System.out.println("Ajjj sbloccat");
+
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
@@ -460,12 +461,13 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
 
-    private void handlingTurns(List<Player> playerList) {
+    private synchronized void handlingTurns(List<Player> playerList) {
         if (threadPlayer == null) {
             return;
         }
         turnController = new TurnController(playerList);
-        System.out.println(turnController.getPlayers());
+        System.out.println("Questo è l'ordine dei giocatori:");
+        //System.out.println(turnController.getPlayers());
         currentPlayer = turnController.getCurrentPlayer();
         System.out.println("First player is " + currentPlayer);
         game.setCurrentPlayingPLayer(currentPlayer);
@@ -510,6 +512,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             game.setCurrentPlayingPLayer(currentPlayer);
         }
     }
+
 
     public void sendMessageToAllClients(String message) {
         for (HandlingPlayerInputsThread client : clients) {
@@ -601,19 +604,30 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
 
     private void noPersistenceLogin() throws IOException, InterruptedException {
+        if(this!=firstClient)
+        {
+            playersList.add(threadPlayer);
+        }
         handlingTurns(playersList);
         addingPlayersToTheGame();
+
+
         synchronized (this) {
             if (!checkGameInizialization) {
                 initializeCards();
             }
         }
+
         sendMessageToClient("All clients connected");
         assigningSecretCard();
         assignInitialCard();
         for (Player player : playersList) {
             game.updateSingleClientView(player);
         }
+
+
+        System.out.println("player list is :" + playersList);
+        System.out.println("Current player in game is " + game.getCurrentPlayingPLayer());
         sendMessageToClient(currentPlayer.getNickName());
         if (this == firstClient) {
             sendMessageToClient("You are the first client");
