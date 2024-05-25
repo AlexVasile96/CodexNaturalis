@@ -145,7 +145,7 @@ public class Player implements Observable {
             card.getBL().setSpecificCornerSeed(SpecificSeed.EMPTY,card.getBL().getCardSeed());
             card.getBR().setSpecificCornerSeed(SpecificSeed.EMPTY,card.getBR().getCardSeed());
         } else {
-            card.setCardBack(false);                                                       //CARD IS ON HER ORIGINAL CONFIGURATION
+            card.setCardBack(false);                                                       //CARD IS ON ITS ORIGINAL CONFIGURATION
             card.getTL().setSpecificCornerSeed(card.getTLBack().getSpecificCornerSeed(),card.getTL().getCardSeed()); //BACKUPPING ALL CORNERS
             card.getTR().setSpecificCornerSeed(card.getTRBack().getSpecificCornerSeed(),card.getTR().getCardSeed());
             card.getBL().setSpecificCornerSeed(card.getBLBack().getSpecificCornerSeed(),card.getBL().getCardSeed());

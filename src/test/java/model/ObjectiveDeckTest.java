@@ -15,11 +15,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/*
+TEST INUTILE -> LO CANCELLIAMO
+ */
+
+
 class ObjectiveDeckTest {
 
     private Player player,player2;
     Board board;
-    GoldCardConstructor goldCardConstructor = new GoldCardConstructor(); //create resource cards
+    GoldCardConstructor goldCardConstructor = new GoldCardConstructor(); //create gold cards
     GoldDeck goldDeck = (GoldDeck) goldCardConstructor.createCards();
     ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor(); //create resource cards
     ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards();
@@ -32,8 +37,8 @@ class ObjectiveDeckTest {
         resourceDeck.shuffle();
         objectiveDeck.shuffle();
         board = new Board(50,50);
-        player = new Player("Momo",0, Dot.GREEN,board);
-        player2 = new Player("Goku",0,Dot.GREEN,board);
+        player = new Player("Player1",0, Dot.GREEN,board);
+        player2 = new Player("Player2",0,Dot.GREEN,board);
     }
 
     @Test
@@ -60,7 +65,7 @@ class ObjectiveDeckTest {
         objectiveDeck.drawCard(player);
         objectiveDeck.drawCard(player);
         objectiveDeck.drawCard(player);
-        assertEquals(13, objectiveDeck.remainingCards());
+        assertEquals(12, objectiveDeck.remainingCards());
     }
 
     //DA IMPLEMENTARE

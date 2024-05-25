@@ -35,8 +35,9 @@ class ResourceDeckTest {
         player = new Player("Momo",0, Dot.GREEN,board);
     }
 
-    @Test //Test del metodo che fa pescare una carta al player dal deck risorse
-    void drawCardPlayer() {//verifico che il player non possa avere più di tre carte in mano
+    @Test //Checking that player can have max 3 cards in hand and that if he chooses to draw from the resource deck
+    //the number of resources cards left in the resource deck is decremented
+    void drawCardPlayer() {
         for(int i = 0; i <5; i++){
             resourceDeck.drawCard(player);
         }
@@ -45,27 +46,27 @@ class ResourceDeckTest {
     }
 
     @Test //Test del metodo che aggiunge una carta risorse dal deck carte risorse alle carte del pozzo
-    void drawCardNelPozzo() {
-        List<Card> pozzo= new ArrayList<>();
-        resourceDeck.drawCard(pozzo);
-        assertEquals(1, pozzo.size());
+    void fromResourceDeckToWellCards() {
+        List<Card> well= new ArrayList<>();
+        resourceDeck.drawCard(well);
+        assertEquals(1, well.size());
         assertEquals(39, resourceDeck.leftCardINDeck());
 
     }
 
     @Test
     void addCard() {
-        Player player2 = new Player("Goku",0,Dot.GREEN,board);
-        Card cartaBomba = resourceDeck.drawCard(player2);
+        Player player2 = new Player("Player1",0,Dot.GREEN,board);
+        Card duplicateCard = resourceDeck.drawCard(player2);
 
-        //provo ad inserire una carta di un'altro deck
-        Card cartaBomba2 = goldDeck.drawCard(player);
-        assertThrows(exceptions.IllegalAddException.class, () -> resourceDeck.addCard(cartaBomba2), "La carta non appartiene al mazzo Resource");
+        //trying to insert a gold card in the resource deck
+        Card illegalCard = goldDeck.drawCard(player);
+        assertThrows(exceptions.IllegalAddException.class, () -> resourceDeck.addCard(illegalCard));
 
-        //provo ad inserire un duplicato
+        //trying to insert a duplicate
         Card cartaBomba3 = resourceDeck.drawCard(player2);
-        resourceDeck.addCard(cartaBomba);
-        assertThrows(exceptions.AlredyInException.class, () -> resourceDeck.addCard(cartaBomba));
+        resourceDeck.addCard(duplicateCard);
+        assertThrows(exceptions.AlredyInException.class, () -> resourceDeck.addCard(duplicateCard));
 
     }
 }

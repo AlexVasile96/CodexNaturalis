@@ -28,13 +28,14 @@ class GoldDeckTest {
     @BeforeEach
     void setUp() {
         board = new Board(50,50);
-        player = new Player("Momo",0, Dot.GREEN,board);
-        player2 = new Player("Goku",0,Dot.GREEN,board);
+        player = new Player("Player1",0, Dot.GREEN,board);
+        player2 = new Player("Player2",0,Dot.GREEN,board);
 
     }
 
-    @Test //Test del metodo che fa pescare una carta al player dal deck risorse
-    void drawCardPlayerNonDeveAverePiuDiTre() {//verifico che il player non possa avere più di tre carte in mano
+    @Test //Testing the method that allows the player to draw from the well
+
+    void cannotDrawMoreThanThree() {//Testing max num of cards that the player can have in his hand
         for(int i = 0; i <5; i++){
             goldDeck.drawCard(player);
         }
@@ -42,8 +43,9 @@ class GoldDeckTest {
         assertEquals(37, goldDeck.cardLefInDeck());
     }
 
-    @Test //Test del metodo che aggiunge una carta risorse dal deck carte risorse alle carte del pozzo
-    void drawCardNelPozzo() {
+    @Test
+        // Testing that when a player draws a gold card from well another one takes its place
+    void drawFromWell() {
         List<Card> pozzo= new ArrayList<>();
         goldDeck.drawCard(pozzo);
         assertEquals(1, pozzo.size());
@@ -52,17 +54,17 @@ class GoldDeckTest {
 
     @Test
     void addCard() {
-        Player player2 = new Player("Goku",0,Dot.GREEN,board);
-        Card cartaBomba = goldDeck.drawCard(player2);
+        Player player2 = new Player("Player2",0,Dot.GREEN,board);
+        Card card1 = goldDeck.drawCard(player2);
 
-        //provo ad inserire una carta di un'altro deck
-        Card cartaBomba2 = resourceDeck.drawCard(player);
-        assertThrows(exceptions.IllegalAddException.class, () -> goldDeck.addCard(cartaBomba2), "La carta non appartiene al mazzo gold");
+        //trying to insert a card from another deck
+        Card card2 = resourceDeck.drawCard(player);
+        assertThrows(exceptions.IllegalAddException.class, () -> goldDeck.addCard(card2), "La carta non appartiene al mazzo gold");
 
-        //provo ad inserire un duplicato
+        //try to insert a duplicate
         Card cartaBomba3 = goldDeck.drawCard(player2);
-        goldDeck.addCard(cartaBomba);
-        assertThrows(exceptions.AlredyInException.class, () -> goldDeck.addCard(cartaBomba));
+        goldDeck.addCard(card1);
+        assertThrows(exceptions.AlredyInException.class, () -> goldDeck.addCard(card1));
 
     }
 }

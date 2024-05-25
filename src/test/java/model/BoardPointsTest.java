@@ -1,5 +1,9 @@
 package model;
-
+/*
+Description: the method countPoints count the number of occurrences of a given specific seed and returns
+that value. In the test we'll set the board to 4 MUSHROOMS and 3 INKWELL. We'll count how many MUSHROOM
+the player has on the board.
+ */
 import model.game.Board;
 import model.game.BoardPoints;
 import model.game.Node;
@@ -11,7 +15,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardPointsTest {
-    private int pointss;
+
     private Board board = new Board(50,50);
     private ArrayList<SpecificSeed> pointOnTheBoard;
     private Node node = new Node(SpecificSeed.MUSHROOM,0,0);
@@ -20,12 +24,13 @@ class BoardPointsTest {
     @Test
     void countPoints() {
         /*
-        Setting 4 nodes to the SpecificSeed MUSHROOM
+        Setting 4 nodes to the SpecificSeed MUSHROOM and 3 INKWELL
          */
         board.setNode(25,25,node);
         board.setNode(27,27,node);
         board.setNode(29,29,node);
         board.setNode(31,31,node);
+
         /*
         The Function should return 4
          */
