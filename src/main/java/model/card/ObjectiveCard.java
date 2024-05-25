@@ -85,7 +85,7 @@ public class ObjectiveCard extends Card{
 
         ObjectiveCard objectiveCard = new ObjectiveCard(id, type, value, tl, tr, bl, br, numberOfWhenTheGameEnds, objectiveSpecificTypeOfCard);
 
-        // Aggiungi il ripristino dei corner di Back se presente
+        // add backup of corner back if it exists
         if (jsonObject.has("TLBack")) {
             objectiveCard.setTLBack(Corner.fromJsonObject(jsonObject.get("TLBack").getAsJsonObject()));
         }
@@ -105,7 +105,7 @@ public class ObjectiveCard extends Card{
     // METODO toJsonObject
     @Override
     public JsonObject toJsonObject() {
-        JsonObject jsonObject = super.toJsonObject(); // Chiamata al metodo della superclasse per ottenere le proprietà comuni
+        JsonObject jsonObject = super.toJsonObject(); // calls the superclass' method
         jsonObject.addProperty("cardType", "ObjectiveCard");
         jsonObject.addProperty("numberOfWhenTheGameEnds", numberOfWhenTheGameEnds);
         jsonObject.addProperty("objectiveSpecificTypeOfCard", objectiveSpecificTypeOfCard.toString());

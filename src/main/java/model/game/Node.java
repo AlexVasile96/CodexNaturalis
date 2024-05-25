@@ -93,9 +93,9 @@ public class Node {
         return coordY;
     }
     public static Node createNodeFromSeed(String seed, int coordX, int coordY) {
-        SpecificSeed specificNodeSeed = SpecificSeed.valueOf(seed); // Converte la stringa del seme in un'istanza di SpecificSeed
+        SpecificSeed specificNodeSeed = SpecificSeed.valueOf(seed); // Converts the string of the seed to an instance of SpecificSeed
 
-        // Crea un nuovo oggetto Node utilizzando il seme e le coordinate specificate
+        //Creates a new object Node using the seed and it's coordinates
         return new Node(specificNodeSeed, coordX, coordY);
     }
 

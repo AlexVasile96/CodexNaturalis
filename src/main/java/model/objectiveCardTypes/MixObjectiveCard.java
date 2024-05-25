@@ -9,13 +9,13 @@ public class MixObjectiveCard implements ExtendExtendExtend {
     private final int pointsForEachMicObjectiveCard = 3;
     // Method to check the pattern on the board
     @Override
-    public boolean checkPattern(Board board, SpecificSeed seed, Player player) {//CONTI I 3 SIMBOLI PARTICOLARI, TIENI IL NUMERO MINOR DEI 3 SIMBOLI (ES SE HO 2 3 3) TENGO 2, FACCIO 2* 3. Le regole non sono chiare perché dicono 3 punti per ogni set di 3 attributi diversi ma non avrebbe senso
+    public boolean checkPattern(Board board, SpecificSeed seed, Player player) {
         BoardPoints boardPoints = new BoardPoints(); // Create an instance of BoardPoints to calculate points
         int[] counterOfMinimumPoints = boardPoints.countPointsForObjectiveCards(board); // Count the number of minimum points for the objective cards
         return addMixObjectiveCardPointsToPlayer(counterOfMinimumPoints, player); // Add points to the player based on the minimum count of each seed type;
     }
 
-    //CONTI I 3 SIMBOLI PARTICOLARI, TIENI IL NUMERO MINOR DEI 3 SIMBOLI (ES SE HO 2 3 3) TENGO 2, FACCIO 2* 3.
+    //Count the 3 particular seed, keep the lowest number of the seeds (ex if I got 2 3 3, keep 2), do 2x3
 
     // Method to add points to the player based on the counts of seed types
     private boolean addMixObjectiveCardPointsToPlayer(int[] counterOfMinimumPoints, Player player) {

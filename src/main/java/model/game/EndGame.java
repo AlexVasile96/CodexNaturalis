@@ -6,7 +6,7 @@ public class EndGame {
 
         ObjectiveCard secretPlayerObjective = player.getSecretChosenCard();
         board.createSpecificSecretCard(secretPlayerObjective, player);
-        System.out.println("Punteggio player: " + player.getPlayerScore());
+        System.out.println("PLAYER'S SCORE: " + player.getPlayerScore());
         System.out.println("GAME ENDED");
     }
 }

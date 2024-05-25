@@ -89,7 +89,7 @@ public class GoldCard extends Card{
     }
 
 
-    //)JSON  OBJECT TO SAVE GOLD CARDS INFORMATION
+    //JSON  OBJECT TO SAVE GOLD CARDS INFORMATION
     public JsonObject toJsonObject() {
         JsonObject jsonObject = super.toJsonObject();
         jsonObject.addProperty("cardType", "GoldCard");

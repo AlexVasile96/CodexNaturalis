@@ -98,7 +98,7 @@ public class Player implements Observable {
                 fillingTheWellWithTheCorrectCard(drownCard,rc,gd, cardwell);           //Filling The Well
                 playerCards.add(drownCard);                                             //Adding the card to the player hand
             } catch (Exception e) {
-                throw new IllegalStateException("problema nel blocco try di chooseCardFromWellForServer"); // Eccezione specifica
+                throw new IllegalStateException("Error in the try-catch statement of ChooseCardFromWellServer"); //Specific exception
             }
         }
         else {
@@ -156,7 +156,7 @@ public class Player implements Observable {
     public Card checkingTheChosencard( int cardIndex)
     {
         Card selectedCardFromTheDeck = chooseCard(cardIndex);                   //OKAY
-        System.out.println("esistenza carta:"+ checkIfTheCardExist(cardIndex)+ " (se zero-> non esiste)");                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
+        System.out.println("card existence:"+ checkIfTheCardExist(cardIndex)+ " (if zero-> doesn't exists)");                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
         boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
         if(selectedCardFromTheDeck.isCardBack()) return selectedCardFromTheDeck;
         if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return null;
@@ -164,7 +164,7 @@ public class Player implements Observable {
     }
     public boolean checkingTheChosenCardForGoldPurpose(int cardIndex) {
         Card selectedCardFromTheDeck = chooseCard(cardIndex);                   //OKAY
-        System.out.println("esistenza carta:"+ checkIfTheCardExist(cardIndex)+ "  (se zero-> non esiste)");                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
+        System.out.println("card existence:"+ checkIfTheCardExist(cardIndex)+ "  (if zero-> doesn't exists)");                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
         boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
         if(selectedCardFromTheDeck.isCardBack()) return true;
         if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return false;
@@ -286,7 +286,11 @@ public class Player implements Observable {
         board.getCardsOnTheBoardList().add(selectedCardFromTheDeck); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
         this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
         board.setNumOfEmpty(board.getNumOfEmpty() - 3);
-        updatingPoints(selectedCardFromTheDeck); //Updating player Points
+        if(!selectedCardFromTheDeck.isCardBack())
+        {
+            updatingPoints(selectedCardFromTheDeck); //Updating player Points
+        }
+
         if (playerScore >= 20) {                                            //EndGame if the playerpoints=>20 points
             System.out.println("Player " + getNickName() + "has reached 20 points!\n");
             EndGame endGame = new EndGame();
@@ -823,17 +827,6 @@ public class Player implements Observable {
         jsonObject.addProperty("secretCard", String.valueOf(secretChosenCard));
         return jsonObject;
     }
-//
-//    public void fromJsonObject(JsonObject jsonObject) {
-//        this.nickName = jsonObject.get("nickName").getAsString();
-//        this.playerScore = jsonObject.get("score").getAsInt();
-//        this.dot = Dot.values()[jsonObject.get("dot").getAsInt()];
-//        // Assuming Board and Card classes have appropriate methods for deserialization
-//        this.board = Board.fromJson(jsonObject.get("board").getAsJsonObject());
-//        // Assuming playerCards and clientView are deserialized appropriately
-//        // this.playerCards = ...
-//        // this.clientView = ...
-//    }
 
 
 
