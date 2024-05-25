@@ -104,7 +104,7 @@ public class LobbyController {
                 synchronized (LobbyController.class) {
                     if (gameScene == null) {
                         System.out.println("Initializing GameScene for other clients.");
-                        gameScene = new GameScene(primaryStage, out, socket, in, initCardId, clientview, currentPlayerNickname, false,isFront);
+                        //gameScene = new GameScene(primaryStage, out, socket, in, initCardId, clientview, currentPlayerNickname, false,isFront);
                         primaryStage.setTitle("Codex");
                     }
                 }

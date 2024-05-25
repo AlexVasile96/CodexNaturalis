@@ -147,7 +147,6 @@ public synchronized void waitingForPLayers() throws InterruptedException {
         {
             sendMessageToAllClients("All clients chose the init Card");
             notifyAll();
-
         }
         else{
             wait();
@@ -280,9 +279,7 @@ public synchronized void waitingForPLayers() throws InterruptedException {
             client.out.println(message);
         }
     }
-    public Set<String> getConnectedPlayerUsername() {
-        return players.keySet();
-    }
+
     public void setSize(int size) {
         this.size = size;
         sizeLatch.countDown(); // Sblocca il thread che sta aspettando la dimensione del gioco
