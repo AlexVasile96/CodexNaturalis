@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -22,9 +23,16 @@ import java.net.Socket;
 import java.util.Objects;
 public class SecretCardScene {
     private Scene chooseSecretObjectiveScene;
-
     @FXML
     public ImageView chosenObj;
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     public void chooseSecretCard(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) {
         Platform.runLater(() -> {
@@ -79,9 +87,9 @@ public class SecretCardScene {
                         InitCardScene initCardSceneHandler = new InitCardScene();
                         clientView.setObjectiveCard(firstObjectiveCard);
                         primaryStage.setScene(initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in, clientView));
-
                     } catch (Exception action) {
-                        action.printStackTrace();
+                        showAlert("Game full", "Lobby full, try again later");
+                        System.exit(0);
                     }
                 });
                 obiettivo2.setOnMouseClicked(e -> {
@@ -93,7 +101,8 @@ public class SecretCardScene {
                         clientView.setObjectiveCard(secondObjectoveCard);
                         primaryStage.setScene(initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in, clientView));
                     } catch (Exception action) {
-                        action.printStackTrace();
+                        showAlert("Game full", "Lobby full, try again later");
+                        System.exit(0);
                     }
                 });
             } catch (IOException e) {
