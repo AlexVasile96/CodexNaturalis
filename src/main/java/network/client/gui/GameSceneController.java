@@ -183,7 +183,6 @@ public class GameSceneController {
      * @param isFront Indicates whether the card is front (1) or back (0).
      * @throws IOException If an I/O error occurs.
      */
-
     public void startGame(String initCardId, int isFront) throws IOException {
         // Load and set the background image for the game board
         Image backGroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
