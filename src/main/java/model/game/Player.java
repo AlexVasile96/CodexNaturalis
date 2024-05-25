@@ -319,6 +319,7 @@ public class Player implements Observable {
     }
     private boolean isTheCardGold(Card selectedCard)
     {
+        System.out.println(selectedCard);
         if (selectedCard instanceof GoldCard )
             return board.placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing()); //Checking gold card requirments
         else return true; //If the card is not a gold card, i can proceed

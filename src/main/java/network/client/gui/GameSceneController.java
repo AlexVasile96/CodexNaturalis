@@ -365,8 +365,11 @@ public class GameSceneController {
                     if(indexForGold!=null && Integer.parseInt(indexForGold)>40)
                     {
                         System.out.println("You chose to play a gold card");
-                        out.println("goldGui");
+                        out.println("goldGui" + indexCardToPlace.toString());
+                        System.out.println("goldGui" + indexCardToPlace.toString());
                         try {
+                            System.out.println(in.readLine());
+                            out.println(indexCardToPlace);
                             canIPlaceTheGoldCard= in.readLine();
                             System.out.println("Server response is: " + canIPlaceTheGoldCard);
                         } catch (SocketTimeoutException ex) {
