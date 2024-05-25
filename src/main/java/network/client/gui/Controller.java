@@ -137,6 +137,19 @@ public class Controller {
         }
     }
 
+    public int getPoints() throws IOException {
+        out.println("status");
+        int points = Integer.parseInt(in.readLine());
+        return points;
+    }
+
+    public void check20Points() throws IOException {
+        String message = in.readLine();
+        if(message.equals("You smashed 20 points!! now everybody got one last turn")) {
+            System.out.println("You reached 20 points and now you have to wait other players to finish their games.");
+        }
+    }
+
     public String firstCommon() throws IOException {
         out.println("firstCommon");
         try {
@@ -251,6 +264,7 @@ public class Controller {
         System.out.println("Waiting for server to say my name");
         while (!(message = in.readLine()).equals(playerNickname)) {
             System.out.println("Received message while waiting for turn: " + message);
+            check20Points();
             if(message.equals("ALL_CLIENTS_QUIT"))
             {
                 quit(primaryStage);

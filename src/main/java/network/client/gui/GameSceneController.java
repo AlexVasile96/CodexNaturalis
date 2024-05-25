@@ -525,6 +525,7 @@ public class GameSceneController {
                             handCard3View.setId("Front");
                             cornerSelected = null;
                             indexCardToPlace = 100;
+                            check20Points();
                         } catch (IOException exception) {
                             throw new RuntimeException(exception);
                         }
@@ -608,9 +609,8 @@ public class GameSceneController {
                                     idHandCard3 = idTopCard;
                                     break;
                             }
-
                             // Update the images of the well cards and decks
-                            initializeWell();
+                            initializeWell20Points();
                             String newPath1 = "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard1() + ".png";
                             Image newImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath1)));
                             SharedObjectsInGui.getWellCard1View().setImage(newImage1);
@@ -624,10 +624,13 @@ public class GameSceneController {
                             Image newImage4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath4)));
                             SharedObjectsInGui.getWellCard4View().setImage(newImage4);
 
+                            System.out.println("Arrivo qua prima di crashare");
                             // Update the top cards of the resource and gold decks
                             updateResourceDeckTopCard();
                             updatedGoldDeckTopCard();
                             haveToDraw = false;
+                            System.out.println("clientView score before: " + clientView.getPlayerScore());
+                            System.out.println("clientView score after: " + clientView.getPlayerScore());
                         } else {
                             showAlert("Action not allowed", "You have to choose a card to draw");
                         }
@@ -1610,8 +1613,30 @@ public class GameSceneController {
     private void checkTypeWellCards() {
         SharedObjectsInGui.setWellPathOne(createPathForFrontCards(SharedObjectsInGui.getIdCard1()));
         SharedObjectsInGui.setWellPathSecond(createPathForFrontCards(SharedObjectsInGui.getIdCard2()));
+        System.out.println(SharedObjectsInGui.getWellPathOne());
+        System.out.println(SharedObjectsInGui.getWellPathSecond());
         SharedObjectsInGui.setWellPathThird(createPathForFrontCards(SharedObjectsInGui.getIdCard3()));
         SharedObjectsInGui.setWellPathForth(createPathForFrontCards(SharedObjectsInGui.getIdCard4()));
+    }
+
+    private void initializeWell20Points() throws IOException {
+        firstWellCard();
+        secondWellCard();
+        thirdWellCard();
+        fourthWellCard();
+        SharedObjectsInGui.setWellPathOne(createPathForFrontCards(SharedObjectsInGui.getIdCard1()));
+//        SharedObjectsInGui.setWellPathSecond(createPathForFrontCards(SharedObjectsInGui.getIdCard2()));
+        System.out.println("sto per crashare");
+        if(clientView.getPlayerScore()>=20) {
+            String endGame = in.readLine();
+            System.out.println(endGame);
+            String result = in.readLine();
+            System.out.println(result);
+        }
+        else{
+            SharedObjectsInGui.setWellPathThird(createPathForFrontCards(SharedObjectsInGui.getIdCard3()));
+            SharedObjectsInGui.setWellPathForth(createPathForFrontCards(SharedObjectsInGui.getIdCard4()));
+        }
     }
 
     /**
@@ -1836,6 +1861,7 @@ public class GameSceneController {
         secondWellCard();
         thirdWellCard();
         fourthWellCard();
+        System.out.println("Arrivo qua prima di crashare");
         checkTypeWellCards();
     }
 
@@ -1873,6 +1899,18 @@ public class GameSceneController {
         SharedObjectsInGui.getTopCardGoldDeckView().setImage(newTopCardGoldImage);
         SharedObjectsInGui.setPathGoldDeck(newPathGold);
         SharedObjectsInGui.setTopCardGoldDeck(newTopCardGoldImage);
+    }
+
+    private void check20Points() throws IOException {
+        clientView.setPlayerScore(controller.getPoints());
+        int playerScore = clientView.getPlayerScore();
+        System.out.println("player score: " + playerScore);
+//        if(playerScore>=20){
+//            controller.check20Points();
+//        }
+//        else {
+//            System.out.println("You have not reached yet 20 points.");
+//        }
     }
 
 

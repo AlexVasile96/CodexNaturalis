@@ -64,6 +64,7 @@ public class BoardPointsScene {
             return 25;
         }
         System.out.println(stringa);
+
         return Integer.parseInt(stringa);
     }
 
