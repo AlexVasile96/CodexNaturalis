@@ -1,4 +1,4 @@
-package server;
+package network.server;
 
 import exceptions.GameFullException;
 import exceptions.UnknownPlayerNumberException;
@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 public class ServerLobby {
     private final static List<GameController> currentGames= new ArrayList<>();

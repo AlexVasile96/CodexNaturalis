@@ -1,4 +1,4 @@
-package server;
+package network.client.cli;
 import exceptions.OperationCancelledException;
 import model.game.*;
 import view.ClientView;
@@ -6,7 +6,6 @@ import view.ClientView;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Objects;
 
 
 public class ServerConnection implements Runnable {

@@ -6,8 +6,7 @@ import exceptions.*;
 import model.deck.Deck;
 import model.game.Game;
 import model.game.Player;
-import server.Command;
-import server.HandlingPlayerInputsThread;
+import network.server.HandlingPlayerInputsThread;
 import view.ClientView;
 
 import java.io.FileReader;

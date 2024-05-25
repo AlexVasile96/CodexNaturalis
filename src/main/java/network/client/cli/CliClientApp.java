@@ -1,4 +1,4 @@
-package server;
+package network.client.cli;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
