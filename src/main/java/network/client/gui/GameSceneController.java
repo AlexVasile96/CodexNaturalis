@@ -114,7 +114,7 @@ public class GameSceneController {
         this.clientView = clientView;
         controller = new Controller(in, out,socket);
         isCurrentPlayerTurn = clientView.getUserName().equals(currentPlayerNickname);
-        socket.setSoTimeout(30000); // timeout di 10 secondi
+        socket.setSoTimeout(120000); // timeout di 2 minuti
     }
 
     public synchronized void updateFirst() throws IOException {
@@ -374,7 +374,7 @@ public class GameSceneController {
                         }
                         if(canIPlaceTheGoldCard.equals("NO"))
                         {
-                            showAlert("Gold Card NOt Placeable", "YOu can't place the gold card beacuse you don't have enough specific seeds");
+                            showAlert("Gold Card Not Placeable", "YOu can't place the gold card beacuse you don't have enough specific seeds");
                             indexForGold=null;
                             indexCardToPlace=100;
                             haveToDraw=false;
