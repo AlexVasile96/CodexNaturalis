@@ -22,7 +22,19 @@ public class GoldUpdater implements Updater {
             return;
         }
         BoardPoints boardPoints= new BoardPoints();
-        int y= boardPoints.additionalPointsForGoldCards(board,adder) + player.getPlayerScore();
-        player.setPlayerScore(y);
+        if(adder.equals(SpecificSeed.NUMOFCOVEREDCORNERS))
+        {
+            numOfCoveredCornersByTheCard();
+        }
+        else {
+            int additionalPoints = boardPoints.additionalPointsForGoldCards(board, adder);
+            System.out.println("Additional point for player are: " + additionalPoints);
+            int y = additionalPoints + player.getPlayerScore();
+            System.out.println("New current player score is: " + y);
+            player.setPlayerScore(y);
+        }
+    }
+    private void numOfCoveredCornersByTheCard(){
+
     }
 }
