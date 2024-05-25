@@ -32,13 +32,14 @@ public class ServerLobby {
         } else {
             GameController game = currentGames.getFirst();
             try {
-                game.addPlayer(username, userOut);
+                //game.addPlayer(username, userOut);
                 return game;
             } catch (GameFullException ignored) {
                 // Il gioco è pieno, quindi non aggiungere il giocatore
                 return null;
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
             }
         }
     }
@@ -46,4 +47,5 @@ public class ServerLobby {
         // This method will implement game abortion logic when needed.
     }
 }
+
 

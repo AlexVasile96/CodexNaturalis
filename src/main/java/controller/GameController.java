@@ -51,7 +51,7 @@ public class GameController {
         this.players = new HashMap<>();
         this.size = 0;
         this.isGameOver = false;
-        players.put(username, userOut);
+        //players.put(username, userOut);
         this.game=game;
         this.clients=clients;
         this.out= new PrintWriter(socket.getOutputStream(), true);
@@ -100,20 +100,14 @@ public class GameController {
         if (!isSizeSet){
             sizeLatch.await();
         }
-        if (!players.containsKey(username)) {
-            if (players.size() >= size || isGameOver) {
-                throw new GameFullException();
-            }
-        } else {
-            throw new UsernameAlreadyExistsException();
-        }
+//        if (!players.containsKey(username)) {
+//            if (players.size() >= size || isGameOver) {
+//                throw new GameFullException();
+//            }
+//        } else {
+//            throw new UsernameAlreadyExistsException();
+//        }
         players.put(username, userOut);
-
-        if(getCurrentNumsOfPlayers()==0)
-        {
-            setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+2);
-        }
-        else setCurrentNumsOfPlayers(getCurrentNumsOfPlayers()+1);
 
          }
 
@@ -142,6 +136,11 @@ public synchronized void waitingForPLayers() throws InterruptedException {
             notifyAll();
         }
         else{
+            if(currentNumsOfPlayers==0){
+                System.out.println("Current numb of players is " + currentNumsOfPlayers);
+                currentNumsOfPlayers=currentNumsOfPlayers+2;
+            }
+            else currentNumsOfPlayers++;
             wait();
         }
 }

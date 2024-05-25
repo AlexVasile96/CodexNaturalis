@@ -45,6 +45,8 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static volatile boolean isGameQuit = false;
     boolean allPlayersLoaded = false;
     private boolean clientPersisted=false;
+    private static int numPlayers = -1; // Numero di giocatori scelto dal primo client
+    private static final Object lock = new Object(); // Oggetto di sincronizzazione
 
     public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException {
         this.clientSocket = socket;
@@ -222,8 +224,8 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("Current numb of players: " + gameController.getCurrentNumsOfPlayers());
             int size = setGameSize();
             System.out.println(size);
-            sendMessageToClient("You have to wait until all clients are connected!");
-            gameController.waitingForPLayers();
+            //sendMessageToClient("You have to wait until all clients are connected!");
+            //gameController.waitingForPLayers();
 
         } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
             System.err.println(e.getMessage());
@@ -259,34 +261,43 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
 
-    private synchronized int setGameSize() throws NoSuchElementException {
-        String message;
-        int size = 0;
-        if (this==firstClient) {
-            try {
-                sendMessageToClient("Choose the number of players(2-4): ");
-                message = stdIn.readLine();
-                size = Integer.parseInt(message);
-                System.out.println("Numbers of Player will be " + size);
-                sendMessageToClient("Players number correctly chosen ");
-                gameController.choosePlayerNumber(size);
-                gameController.setSizeSet(true);
-                setupLatch = new CountDownLatch(size); // Inizializza il CountDownLatch con il numero di giocatori scelto
-            } catch (NumberFormatException ex) {
-                sendMessageToClient("Game's number of players must be an integer.");
-            } catch (Exception ex) {
-                sendMessageToClient("Error");
-            } catch (ParametersNotValidException e) {
-                throw new RuntimeException(e);
+    private synchronized int setGameSize() throws NoSuchElementException, InterruptedException {
+        synchronized (lock) {
+            if (numPlayers == -1 && this == firstClient) {
+                try {
+                    sendMessageToClient("Choose the number of players(2-4): ");
+                    String message = stdIn.readLine();
+                    numPlayers = Integer.parseInt(message);
+                    System.out.println("Number of players will be " + numPlayers);
+                    sendMessageToClient("Players number correctly chosen.");
+                    gameController.choosePlayerNumber(numPlayers);
+                    gameController.setSizeSet(true);
+                    setupLatch = new CountDownLatch(numPlayers); // Inizializza il CountDownLatch con il numero di giocatori scelto
+                    lock.notifyAll(); // Notifica tutti i client in attesa
+                } catch (NumberFormatException ex) {
+                    sendMessageToClient("Game's number of players must be an integer.");
+                } catch (Exception ex) {
+                    sendMessageToClient("Error");
+                } catch (ParametersNotValidException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                System.out.println("Player doesn't need to choose game number of players.");
+                sendMessageToClient("There's already someone online! Please wait");
+                while (numPlayers == -1) {
+                    try {
+                        lock.wait(); // Attende finché il numero di giocatori non è impostato
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
             }
-        } else {
-            System.out.println("Player doesn't need to choose game number of players");
-            sendMessageToClient("There's already someone online!Please wait");
-
         }
-        return size;
+        sendMessageToClient("Number of players is: " + numPlayers);
+        sendMessageToClient("You have to wait until all clients are connected!");
+        gameController.waitingForPLayers();
+        return numPlayers;
     }
-
     private synchronized Dot chooseClientDotColor() throws IOException {
         String message;
         Dot dot;
@@ -442,9 +453,10 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println(game.GoldsIndeck());
     }
 
-    private void addingPlayersToTheGame() {
+    private void addingPlayersToTheGame() throws InterruptedException {
         for (Player playerInGame : playersList) {
             game.addPlayer(playerInGame);
+            gameController.addPlayer(threadPlayer.getNickName(),out);
         }
     }
 

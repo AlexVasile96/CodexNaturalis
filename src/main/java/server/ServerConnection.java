@@ -759,25 +759,22 @@ public class ServerConnection implements Runnable {
             }while (messageFromServer.equals("Chosen color not available!"));
     }
 
-    private synchronized void chooseNumberOfPlayers() throws IOException{
-        String serverMessage=in.readLine();
-        System.out.println(serverMessage);
-        if(serverMessage.equals("There's already someone online!Please wait"))
-        {
-            System.out.println("There's already someone online!Please wait");
-            String waitingClients= in.readLine();
-            System.out.println("Server says: " + waitingClients);
+    private synchronized void chooseNumberOfPlayers() throws IOException {
+        String serverMessage = in.readLine(); //choose The number of players
+        System.out.println(serverMessage); /////There is already someone online
+        if (serverMessage.equals("There's already someone online! Please wait")) {
+            System.out.println(in.readLine()); //Th
+            System.out.println(in.readLine()); //You have to wait until all clients are connected
             return;
         }
-        String numbersOfPlayers= controlInputFromUser(new String[]{"2", "3", "4"});
-        int size = Integer.parseInt(numbersOfPlayers);
-        out.println(size); //Sending number of players
-        System.out.println("Number of players are: "+ size);
+        int size = Integer.parseInt(stdin.readLine());
+        out.println(size);
+        System.out.println("Number of players are: " + size);
         String serverAnswer = in.readLine();
-        System.out.println("Server says: " + serverAnswer); //PLayers nuumber correctly chosen
-        String waitingClients= in.readLine();
-        System.out.println("Server says: " + waitingClients); //You have to wait..
-        }
+        System.out.println("Server says: " + serverAnswer); //Players number correctly chosen
+        System.out.println(in.readLine()); //Number of player is
+        System.out.println(in.readLine()); //You have to wait until all clients are connected
+    }
 
     private synchronized void printHelp() throws IOException {
         sendMessageToServer("help");

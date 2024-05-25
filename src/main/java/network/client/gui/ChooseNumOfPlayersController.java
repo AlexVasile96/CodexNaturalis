@@ -74,6 +74,7 @@ public class ChooseNumOfPlayersController {
         testNumbers.setText("Number of players is: " + selectedNumOfPlayers);
         out.println(selectedNumOfPlayers);
         System.out.println(in.readLine()); //Players number correctly chosen
+        System.out.println(in.readLine());
         System.out.println(in.readLine()); //You have to wait until all players are connected
         LobbyScene lobbySceneHandler = new LobbyScene();
         lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView, null, 0);

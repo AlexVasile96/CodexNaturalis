@@ -141,6 +141,7 @@ public class LoginController {
                 else {
                     System.out.println(in.readLine());
                     LobbyScene lobbySceneHandler = new LobbyScene();
+                    System.out.println(in.readLine());
                     lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView, null, 0);
                 }
             } catch (Exception e) {
