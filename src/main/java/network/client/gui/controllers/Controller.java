@@ -3,7 +3,9 @@ package network.client.gui.controllers;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import network.client.gui.scene.EndGameScene;
 import network.client.gui.scene.QuitScene;
+import view.ClientView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,11 +18,13 @@ public class Controller {
     BufferedReader in;
     PrintWriter out;
     private Socket socket;
-    public Controller(BufferedReader in, PrintWriter out, Socket socket) throws IOException {
+    private ClientView clientView;
+    public Controller(BufferedReader in, PrintWriter out, Socket socket, ClientView clientView) throws IOException {
         this.in = in;
         this.out = out;
         this.socket=socket;
         this.socket.setSoTimeout(60000);
+        this.clientView=clientView;
     }
 
 
@@ -181,16 +185,15 @@ public class Controller {
         }
     }
 
-    private void showWell() throws IOException {
+    private void showWell() {
         out.println("showWell");
         try {
-            System.out.println("Common Well:\n------------------------------------------------------------------------------------------");
             System.out.println(in.readLine()); // first well card
             System.out.println(in.readLine()); // second well card
             System.out.println(in.readLine()); // third well card
             System.out.println(in.readLine()); // fourth well card
             in.readLine(); // space
-            System.out.println("------------------------------------------------------------------------------------------");
+
         } catch (SocketTimeoutException e) {
             handleDisconnection();
         } catch (IOException e) {
@@ -234,6 +237,7 @@ public class Controller {
             System.out.println("Your turn ended");
             String nextPlayerNickname = in.readLine();
             System.out.println(nextPlayerNickname);
+            Platform.runLater(()-> showAlert("Your turn ended!", "Your turn ended! Now it's "+ nextPlayerNickname + " turn!"));
             out.flush();
             return nextPlayerNickname;
         } catch (IOException e) {
@@ -245,9 +249,9 @@ public class Controller {
         public String endTurn() throws IOException {
         out.println("endTurn");
         try {
-            System.out.println("Your turn ended");
             String nextPlayerNickname = in.readLine();
             System.out.println(nextPlayerNickname);
+            Platform.runLater(()-> showAlert("Your turn ended!", "Your turn ended! Now it's "+ nextPlayerNickname + " turn!"));
             String update = in.readLine();
             System.out.println(update);
             out.flush();
@@ -261,9 +265,9 @@ public class Controller {
     }
 
     private void receivingAndPrintingCards() throws IOException {
-        String firstCard = in.readLine(); //Reading all three cards
-        String secondCard = in.readLine();
-        String thirdCard = in.readLine();
+        in.readLine(); //Reading all three cards
+        in.readLine();
+        in.readLine();
         in.readLine();//the space
     }
 
@@ -272,20 +276,38 @@ public class Controller {
         System.out.println("Waiting for server to say my name");
         while (!(message = in.readLine()).equals(playerNickname)) {
             System.out.println("Received message while waiting for turn: " + message);
-            if(message.equals("You smashed 20 points!! now everybody got one last turn"))
-            {
-                    String whoGot20Points=in.readLine();
-                    Platform.runLater(() ->  showAlert("Someone Got 20 Points!", "WOW!!! "+ whoGot20Points + " HAS FINALLY REACHED 20 POINTS!!"));
+
+            switch (message) {
+                case "You smashed 20 points!! now everybody got one last turn":
+                    String whoGot20Points = in.readLine();
+                    Platform.runLater(() -> showAlert("Someone Got 20 Points!", "WOW!!! " + whoGot20Points + " HAS FINALLY REACHED 20 POINTS!!"));
+                    break;
+
+                case "ALL_CLIENTS_QUIT":
+                    quit(primaryStage);
+                    break;
+
+                case "END OF GAME!":
+                    EndGameScene endGameScene = new EndGameScene(primaryStage, out, socket, in, clientView);
+                    Platform.runLater(() -> {
+                        try {
+                            endGameScene.endGame();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                    break;
+
+                default:
+                    System.out.println("Not your turn, please wait");
+                    break;
             }
-            if(message.equals("ALL_CLIENTS_QUIT"))
-            {
-                quit(primaryStage);
-            }
-            else System.out.println("Not your turn, please wait");
         }
         System.out.println("It's now " + playerNickname + "'s turn");
-        System.out.println("Time to play some Codex LESGO!");
+        Platform.runLater(()-> showAlert("It's your turn!", "Time to play some codex!"));
     }
+
+
     private void handleDisconnection() {
         System.out.println("Client disconnected or crashed.");
         try {
