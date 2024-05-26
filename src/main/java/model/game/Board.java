@@ -36,24 +36,8 @@ public class Board {
     }
 
     public void printBoard() { //printBoard method
-        for (int i = 0; i < nodes.length; i++) {
-            for (int j = 0; j < nodes[i].length; j++) {
-                if(nodeIsUsed(nodes[i][j].getValueCounter()))
-                {
-                    System.out.print(nodes[i][j].getSpecificNodeSeed() + "\t" + j + "\t" + i + ", value:" + nodes[i][j].getValueCounter() + " |");
-                }
-                else {
-                    System.out.print("[VUOTO]\t" + j + "\t" + i + ", value:0 |");
-                }
-            }
-            System.out.println();
-        }
-    } //PRINTING THE BOARD
-
-
-    public String printBoardForServer() { //printBoard method
         StringBuilder stringBoard = new StringBuilder();
-        Boolean booleanNewLine=false;
+        boolean booleanNewLine=false;
 
         //scanner
         int[] res = ScannerCordinate();
@@ -72,13 +56,43 @@ public class Board {
                     for (int k = 0; k < spazi; k++) {
                         stringBoard.append(" ");
                     }
-                    stringBoard.append("\t" + j + "\t" + i + ", value:" + nodes[i][j].getValueCounter() + " |");
+                    stringBoard.append("\t").append(j).append("\t").append(i).append(", value:").append(nodes[i][j].getValueCounter()).append(" |");
                 }
                 else {
-                    //stringBoard.append("                                 |");
-                    //stringBoard.append("NOTTOBEPLACEDON\t23\t24, value:1 |");
                     stringBoard.append("/              \t  \t            |");
-                    //stringBoard.append("/////////////////////////////////|");
+                }
+            }
+            booleanNewLine=false;
+        }
+        System.out.println(stringBoard);
+    } //PRINTING THE BOARD
+
+
+    public String printBoardForServer() { //printBoard method
+        StringBuilder stringBoard = new StringBuilder();
+        boolean booleanNewLine=false;
+
+        //scanner
+        int[] res = ScannerCordinate();
+
+        for (int i = res[0]; i < res[1] +1; i++) {
+            for (int j = res[2] ; j < res[3] +1; j++) {
+                if (!booleanNewLine) {
+                    stringBoard.append("\n");
+                    booleanNewLine = true;
+                }
+                if (nodeIsUsed(nodes[i][j].getValueCounter())) {
+                    String seed = String.valueOf(nodes[i][j].getSpecificNodeSeed());
+                    int spazi = 15 - seed.length();
+
+                    stringBoard.append(nodes[i][j].getSpecificNodeSeed());
+                    for (int k = 0; k < spazi; k++) {
+                        stringBoard.append(" ");
+                    }
+                    stringBoard.append("\t").append(j).append("\t").append(i).append(", value:").append(nodes[i][j].getValueCounter()).append(" |");
+                }
+                else {
+                    stringBoard.append("/              \t  \t            |");
                 }
             }
             booleanNewLine=false;

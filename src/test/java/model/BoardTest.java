@@ -1,14 +1,11 @@
 package model;
 
-import model.card.InitCardConstructor;
-import model.card.InitialCard;
-import model.deck.InitialCardDeck;
-import model.game.Board;
-import model.game.Dot;
-import model.game.Player;
-import model.game.SpecificSeed;
+import model.card.*;
+import model.deck.*;
+import model.game.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,6 +14,9 @@ class BoardTest {
     private Board board;
     private Player player;
     private InitCardConstructor initCardConstructor= new InitCardConstructor();
+    private ObjectiveCardConstructor objectiveCardConstructor = new ObjectiveCardConstructor();
+    private ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor();
+    private GoldCardConstructor goldCardConstructor = new GoldCardConstructor();
 
     @BeforeEach
     void setUp() {
@@ -64,7 +64,89 @@ class BoardTest {
     }
 
     @Test
-    void createSpecificSecretCardTest(){
+    void testCreateSpecificSecretCardWithStairsObjective() {
+        Deck objectiveDeck = objectiveCardConstructor.createCards();//non mischiato
 
+        InitialCardDeck initialCardDeck= (InitialCardDeck) initCardConstructor.createCards();
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
+        board.placeInitialCard(initialCard);
+
+        ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards();//not shuffled
+        GoldDeck goldDeck = (GoldDeck) goldCardConstructor.createCards();//not shuffled
+
+        //stairs card are id: 87,88,89,90
+        ObjectiveCard stairsCard87 =objectiveDeck.firstCardForEachPlayer();
+
+
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+
+        //assertEquals(1,player.getPlayerCards().getFirst().getId());
+        Card cardPlayerChoose = player.getPlayerCards().getFirst();
+        player.playCard(board,0,0, player.getPlayerCards().getFirst(), initialCard, "TL");
+        //assertEquals(2,player.getPlayerCards().getFirst().getId());
+        player.playCard(board,0,1, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
+        //assertEquals(3,player.getPlayerCards().getFirst().getId());
+        player.playCard(board,0,1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BL");
+
+        board.printBoard();
+
+        int initialScore = player.getPlayerScore();
+
+        board.createSpecificSecretCard(stairsCard87, player);
+
+        // Assuming checkPattern method correctly updates player's score based on the card
+        assertTrue(player.getPlayerScore() > initialScore);
     }
+
+    @Test
+    void testCreateSpecificSecretCardWithLObjective() {
+        Deck objectiveDeck = objectiveCardConstructor.createCards();//non mischiato
+
+        InitialCardDeck initialCardDeck= (InitialCardDeck) initCardConstructor.createCards();
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
+        board.placeInitialCard(initialCard);
+
+        ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards();//not shuffled
+        GoldDeck goldDeck = (GoldDeck) goldCardConstructor.createCards();//not shuffled
+
+        //stairs card are id: 87,88,89,90
+        objectiveDeck.firstCardForEachPlayer();
+        objectiveDeck.firstCardForEachPlayer();
+        objectiveDeck.firstCardForEachPlayer();
+        objectiveDeck.firstCardForEachPlayer();
+        ObjectiveCard ElleCard91 =objectiveDeck.firstCardForEachPlayer(); //carta REQUISITO L (MUSSHROOM, MUSHROOM, PLANT)
+
+
+
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(11);
+        player.drawResourceCard(resourceDeck);
+
+        //assertEquals(1,player.getPlayerCards().getFirst().getId());//CARTA ID 1
+        player.playCard(board,0,0, player.getPlayerCards().getFirst(), initialCard, "TR");
+        //assertEquals(2,player.getPlayerCards().getFirst().getId());
+        Card cardPlayerChoose = player.getPlayerCards().getFirst();
+        player.playCard(board,0,0, player.getPlayerCards().getFirst(), initialCard, "BR");
+        assertEquals(11,player.getPlayerCards().getFirst().getId());
+        player.playCard(board,0,1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
+
+        board.printBoard();
+
+        int initialScore = player.getPlayerScore();
+
+        board.createSpecificSecretCard(ElleCard91, player);
+
+        // Assuming checkPattern method correctly updates player's score based on the card
+        assertTrue(player.getPlayerScore() > initialScore);
+    }
+
+    /*@Test
+    void testCreateSpecificSecretCardWithMixObjective() {
+        //ObjectiveCard mixCard = new ObjectiveCard("MIX", "type3");
+        int initialScore = player.getPlayerScore();
+
+    }*/
 }

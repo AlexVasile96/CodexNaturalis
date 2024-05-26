@@ -134,4 +134,13 @@ public class ResourceDeck implements Deck{
         return new ArrayList<>(this.resourceCards); // Supponendo che `deck` sia una lista delle carte rimanenti
     }
 
+    public synchronized void putCardOnTopOfDeck(int i) {
+        for (Card r : resourceCards) {
+            if (r.getId() == i) {
+                resourceCards.remove(r);
+                resourceCards.addFirst(r);
+                break;
+            }
+        }
+    }
 }
