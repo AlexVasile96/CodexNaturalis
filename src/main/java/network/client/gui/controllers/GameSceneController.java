@@ -1330,6 +1330,24 @@ public class GameSceneController {
         BL.setPickOnBounds(true);
         BR.setPickOnBounds(true);
 
+        Node targetNode;
+
+        targetNode = searchForNode(x, y+2); //check TR
+        if (targetNode != null) {
+            targetNode.setDisable(true);
+            TR.setDisable(true);
+        }
+        targetNode = searchForNode(x+2, y);//check BL
+        if (targetNode != null) {
+            targetNode.setDisable(true);
+            BL.setDisable(true);
+        }
+        targetNode = searchForNode(x+2, y+2);//check BR
+        if (targetNode != null) {
+            targetNode.setDisable(true);
+            BR.setDisable(true);
+        }
+
         // Adding the card and surrounding images to the board grid pane
         board.add(TL, y, x);
         board.add(TC, (y + 1), x);
@@ -1409,6 +1427,24 @@ public class GameSceneController {
         TR.setPickOnBounds(true);
         BL.setPickOnBounds(true);
         BR.setPickOnBounds(true);
+
+        Node targetNode;
+
+        targetNode = searchForNode(x, y-2); //check TL
+        if (targetNode != null) {
+            targetNode.setDisable(true);
+            TL.setDisable(true);
+        }
+        targetNode = searchForNode(x+2, y-2);//check BL
+        if (targetNode != null) {
+            targetNode.setDisable(true);
+            BL.setDisable(true);
+        }
+        targetNode = searchForNode(x+2, y);//check BR
+        if (targetNode != null) {
+            targetNode.setDisable(true);
+            BR.setDisable(true);
+        }
 
         // Adding the card and surrounding images to the board grid pane
         board.add(TL, (y - 2), x);
@@ -1491,6 +1527,24 @@ public class GameSceneController {
 
         // Adding the card and surrounding images to the board grid pane
 
+        Node targetNode;
+
+        targetNode = searchForNode(x-2, y); //check TR
+        if (targetNode != null) {
+            targetNode.setDisable(true);
+            TR.setDisable(true);
+        }
+        targetNode = searchForNode(x-2, y-2);//check TL
+        if (targetNode != null) {
+            targetNode.setDisable(true);
+            TL.setDisable(true);
+        }
+        targetNode = searchForNode(x, y-2);//check BL
+        if (targetNode != null) {
+            targetNode.setDisable(true);
+            BL.setDisable(true);
+        }
+
         board.add(TL, (y - 2), (x - 2));
         board.add(TC, (y - 1), (x - 2));
         board.add(TR, y, (x - 2));
@@ -1568,6 +1622,24 @@ public class GameSceneController {
         TR.setPickOnBounds(true);
         BL.setPickOnBounds(true);
         BR.setPickOnBounds(true);
+
+        Node targetNode;
+
+        targetNode = searchForNode(x-2, y); //check TL
+        if (targetNode != null) {
+            targetNode.setDisable(true);
+            TL.setDisable(true);
+        }
+        targetNode = searchForNode(x-2, y+2);//check TR
+        if (targetNode != null) {
+            targetNode.setDisable(true);
+            TR.setDisable(true);
+        }
+        targetNode = searchForNode(x, y+2);//check BR
+        if (targetNode != null) {
+            targetNode.setDisable(true);
+            BR.setDisable(true);
+        }
 
         // Adding the card and surrounding images to the board grid pane
         board.add(TL, y, (x - 2));
@@ -2155,8 +2227,8 @@ public class GameSceneController {
         int y = getY(cardOnTheBoard);
 
         if (cornerSelected.equals("BR")) {
-            int newX = x + 2; //TR
-            int newY = y;
+            int newX = x; //TR
+            int newY = y+2;
             Node targetNode = searchForNode(newX, newY);
             checkIfTheNodeIsPlaceable(targetNode);
             if(isNOtToBePlacedon) return;
@@ -2172,7 +2244,7 @@ public class GameSceneController {
             if(isNOtToBePlacedon) return;
         }
         if(cornerSelected.equals("TR")){
-            int newX = x -2; //TL
+            int newX = x - 2; //TL
             int newY = y;
             Node targetNode = searchForNode(newX, newY);
             checkIfTheNodeIsPlaceable(targetNode);
@@ -2189,7 +2261,7 @@ public class GameSceneController {
             if(isNOtToBePlacedon) return;
         }
         if(cornerSelected.equals("TL")){
-            int newX = x -2; //TR
+            int newX = x - 2; //TR
             int newY = y;
             Node targetNode = searchForNode(newX, newY);
             checkIfTheNodeIsPlaceable(targetNode);
