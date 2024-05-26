@@ -629,7 +629,7 @@ public class ServerConnection implements Runnable {
         do {
             System.out.println(result);
             result = in.readLine();
-        } while (!result.equals("end board"));
+        } while (!result.equals("fine board"));
         // Prints the footer of the game board
         System.out.println();
         System.out.println("////////////////////////////////////////////////////// END BOARD ///////////////////////////////////////////////////////////////");
