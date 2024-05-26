@@ -675,7 +675,6 @@ public class GameSceneController {
                 System.out.println("The card has been flipped to the back");
                 // Switch statement to handle flipping each card
                 switch (indexCardToPlace) {
-
                     case 0:
                         handCard1View.setImage(flipToBackCard(idHandCard1));
                         handCard1View.setId("Back");
