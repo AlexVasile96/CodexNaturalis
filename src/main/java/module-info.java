@@ -15,4 +15,8 @@ module com.example.proj {
     opens network.client to com.google.gson;
     opens controller to com.google.gson;
     opens network.client.cli to com.google.gson;
+    exports network.client.gui.controllers;
+    opens network.client.gui.controllers to javafx.fxml;
+    exports network.client.gui.scene;
+    opens network.client.gui.scene to javafx.fxml;
 }

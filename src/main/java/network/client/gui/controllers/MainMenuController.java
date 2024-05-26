@@ -1,4 +1,4 @@
-package network.client.gui;
+package network.client.gui.controllers;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import network.client.gui.scene.LoginScene;
 import view.ClientView;
 
 import java.io.BufferedReader;

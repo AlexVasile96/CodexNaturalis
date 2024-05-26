@@ -1,8 +1,9 @@
-package network.client.gui;
+package network.client.gui.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import network.client.gui.scene.LobbyScene;
 import view.ClientView;
 
 

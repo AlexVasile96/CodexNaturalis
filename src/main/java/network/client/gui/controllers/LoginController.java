@@ -1,12 +1,12 @@
-package network.client.gui;
+package network.client.gui.controllers;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.game.Dot;
+import network.client.gui.scene.ChooseNumOfPlayersScene;
+import network.client.gui.scene.LobbyScene;
 import view.ClientView;
 
 import java.io.BufferedReader;

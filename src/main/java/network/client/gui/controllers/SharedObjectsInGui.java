@@ -1,4 +1,4 @@
-package network.client.gui;
+package network.client.gui.controllers;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

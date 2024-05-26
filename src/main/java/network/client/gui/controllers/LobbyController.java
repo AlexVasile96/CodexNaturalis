@@ -1,13 +1,9 @@
-package network.client.gui;
+package network.client.gui.controllers;
 
 import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import model.game.Game;
+import network.client.gui.scene.SecretCardScene;
+import network.client.gui.scene.GameScene;
 import view.ClientView;
 
 import java.io.BufferedReader;

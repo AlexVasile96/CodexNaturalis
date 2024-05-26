@@ -1,4 +1,4 @@
-package network.client.gui;
+package network.client.gui.controllers;
 
 import com.google.gson.*;
 import javafx.application.Platform;
@@ -16,6 +16,9 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import network.client.gui.scene.BoardPointsScene;
+import network.client.gui.scene.ShowObjectiveScene;
+import network.client.gui.scene.EndGameScene;
 import view.ClientView;
 
 import java.io.*;
@@ -404,11 +407,11 @@ public class GameSceneController {
             Integer cardIndex = cardIndices.get(cardView);
 
             // Print debug information
-            System.out.println("Clicked CardView: " + cardView);
-            System.out.println("Current cardIndices map:");
-            for (Map.Entry<CardView, Integer> entry : cardIndices.entrySet()) {
-                System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-            }
+//            System.out.println("Clicked CardView: " + cardView);
+//            System.out.println("Current cardIndices map:");
+//            for (Map.Entry<CardView, Integer> entry : cardIndices.entrySet()) {
+//                System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+//            }
 
             // If the card index is found, set indexCardToBePlacedOn
             if (cardIndex != null) {
@@ -611,8 +614,7 @@ public class GameSceneController {
                             }
                             // Update the images of the well cards and decks
 
-                            if(clientView.getPlayerScore()>=20){
-                                    System.out.println("Sto aspettando dal server");
+                            if(clientView.getPlayerScore()>=20){ //One player reached 20 points, so all clients have one last turn and then the game will end
                                     firstWellCard();
                                     String youSmashed20Points= in.readLine();
                                     System.out.println(youSmashed20Points);
@@ -623,7 +625,7 @@ public class GameSceneController {
                                     haveToPlay = true;
                                     waitForTurn(handCard1View, handCard2View, handCard3View);
                                     haveToDraw = false;
-                                    return;
+
                             }
                             else {
                                 initializeWell();

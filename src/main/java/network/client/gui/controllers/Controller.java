@@ -1,6 +1,9 @@
-package network.client.gui;
+package network.client.gui.controllers;
 
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import network.client.gui.scene.QuitScene;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -139,12 +142,7 @@ public class Controller {
 
     public int getPoints() throws IOException {
         out.println("status");
-        int points = Integer.parseInt(in.readLine());
-        return points;
-    }
-
-    public void check20Points(String message) throws IOException {
-            System.out.println("WOW!");
+        return Integer.parseInt(in.readLine());
     }
 
     public String firstCommon() throws IOException {
@@ -276,9 +274,8 @@ public class Controller {
             System.out.println("Received message while waiting for turn: " + message);
             if(message.equals("You smashed 20 points!! now everybody got one last turn"))
             {
-                check20Points(message);
-                System.out.println(in.readLine()+" has made 20 points!");
-
+                    String whoGot20Points=in.readLine();
+                    Platform.runLater(() ->  showAlert("Someone Got 20 Points!", "WOW!!! "+ whoGot20Points + " HAS FINALLY REACHED 20 POINTS!!"));
             }
             if(message.equals("ALL_CLIENTS_QUIT"))
             {
@@ -292,7 +289,6 @@ public class Controller {
     private void handleDisconnection() {
         System.out.println("Client disconnected or crashed.");
         try {
-
             if (in != null) in.close();
             if (out != null) out.close();
             if (socket != null) socket.close();
@@ -301,4 +297,18 @@ public class Controller {
             e.printStackTrace();
         }
     }
+    /**
+     * Shows an alert with the given title and message.
+     *
+     * @param title   The title of the alert.
+     * @param message The message to be displayed in the alert.
+     */
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 }

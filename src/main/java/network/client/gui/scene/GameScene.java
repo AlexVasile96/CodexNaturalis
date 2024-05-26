@@ -1,6 +1,7 @@
-package network.client.gui;
+package network.client.gui.scene;
 
 import javafx.stage.Stage;
+import network.client.gui.controllers.GameSceneController;
 import view.ClientView;
 
 import java.io.BufferedReader;

@@ -1,4 +1,4 @@
-package network.client.gui;
+package network.client.gui.scene;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import network.client.gui.controllers.LobbyController;
 import view.ClientView;
 
 import java.io.BufferedReader;

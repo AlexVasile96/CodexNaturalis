@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import network.client.gui.controllers.MainMenuController;
 import view.ClientView;
 
 import java.io.*;
