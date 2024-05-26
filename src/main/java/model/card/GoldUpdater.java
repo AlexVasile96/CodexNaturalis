@@ -24,7 +24,7 @@ public class GoldUpdater implements Updater {
         BoardPoints boardPoints= new BoardPoints();
         if(adder.equals(SpecificSeed.NUMOFCOVEREDCORNERS))
         {
-            numOfCoveredCornersByTheCard();
+            numOfCoveredCornersByTheCard(card,player);
         }
         else {
             int additionalPoints = boardPoints.additionalPointsForGoldCards(board, adder);
@@ -34,7 +34,27 @@ public class GoldUpdater implements Updater {
             player.setPlayerScore(y);
         }
     }
-    private void numOfCoveredCornersByTheCard(){
+    private void numOfCoveredCornersByTheCard(GoldCard card,Player player){
+       int tlValue= card.getTL().getValueCounter();
+       int trValue= card.getTR().getValueCounter();
+       int blValue= card.getBL().getValueCounter();
+       int brValue= card.getBR().getValueCounter();
+       if(tlValue==0)
+       {
+           player.setPlayerScore(player.getPlayerScore()+2);
+       }
+        if(trValue==0)
+        {
+            player.setPlayerScore(player.getPlayerScore()+2);
+        }
+        if(blValue==0)
+        {
+            player.setPlayerScore(player.getPlayerScore()+2);
+        }
+        if(brValue==0)
+        {
+            player.setPlayerScore(player.getPlayerScore()+2);
+        }
 
     }
 }
