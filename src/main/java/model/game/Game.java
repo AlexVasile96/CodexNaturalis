@@ -165,7 +165,7 @@ public class Game{
         finalText.append(">>>>>>>>>>>>>>>>>>>>>>>>"+winner.getNickName()+"<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
         finalText.append("Points:\n");
         for (Player player : players) {
-            finalText.append(player.getPlayerScore() + "-> " + player.getPlayerScore()+"\n");
+            finalText.append(player.getNickName() + "-> " + player.getPlayerScore()+"\n");
         }
         finalText.append("exit");
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
