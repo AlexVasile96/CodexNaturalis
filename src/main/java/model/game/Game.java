@@ -737,8 +737,7 @@ void saveEachPlayerInGame(Path path) {
 
 
     private Path getDefaultPlayers() {
-        String home = ("src/main/resources/saveplayers.json");
-        return Paths.get(home);
+        return Paths.get("src/main/resources/saveplayers.json");
     }
     public List<String> loadPlayerNicknames() {
         List<String> playerNicknames = new ArrayList<>();
