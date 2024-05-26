@@ -37,15 +37,26 @@ public class Controller {
         System.out.println("Client decided to place a card");
         out.println("playCard"); //sends to server the message to start the playCard method
         try {
-
             out.println(indexCardToPlace); //Sending to server the index of the card we want to place
-            System.out.println(in.readLine()); //Server says we can continue
-            if(isTheCardFlipped == null || isTheCardFlipped.equals("Front"))
+            String canIContinueOrGoldCArdNotPLaceable=in.readLine(); //Server says we can continue
+            if(canIContinueOrGoldCArdNotPLaceable.equals("Gold Card not placeable"))
             {
-                out.println(2); //My card is not flipped
+                String  messageFromServer = in.readLine();
+                System.out.println("gold card requires: " + messageFromServer);
+                messageFromServer = in.readLine();
+                System.out.println("you got: " + messageFromServer);
+                System.out.println("You can:\n1-> choose another card\n2-> turn the card");
+                out.println(2);
+                System.out.println(in.readLine());
             }
             else{
-                out.println(1); //My card is flipped
+                if(isTheCardFlipped == null || isTheCardFlipped.equals("Front"))
+                    {
+                        out.println(2); //My card is not flipped
+        }
+                else{
+                    out.println(1); //My card is flipped
+                }
             }
             out.println(indexCardToBePlacedOn-1); //Sending to the server the index of the card on the board
             String[] angoli ={"TL","TR","BR","BL"};

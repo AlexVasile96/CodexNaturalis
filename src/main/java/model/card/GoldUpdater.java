@@ -35,10 +35,15 @@ public class GoldUpdater implements Updater {
         }
     }
     private void numOfCoveredCornersByTheCard(GoldCard card,Player player){
+        System.out.println("Debug stampa di tutti i valori");
        int tlValue= card.getTL().getValueCounter();
-       int trValue= card.getTR().getValueCounter();
-       int blValue= card.getBL().getValueCounter();
-       int brValue= card.getBR().getValueCounter();
+        System.out.println(tlValue);
+       int trValue=  card.getTR().getValueCounter();
+        System.out.println(trValue);
+       int blValue=  card.getBL().getValueCounter();
+       System.out.println(blValue);
+       int brValue=  card.getBR().getValueCounter();
+       System.out.println(brValue);
        if(tlValue==0)
        {
            player.setPlayerScore(player.getPlayerScore()+2);
