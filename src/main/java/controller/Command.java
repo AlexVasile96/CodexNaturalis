@@ -17,7 +17,7 @@ public class Command { //Command Client sends to Server
             case "playCard":
             {
                 if(checkIfTheBoardHadAlreadyBeenPrinted==0){
-                    String CornersAvailable= game.showAvaiableCorners(player, size, paolo);
+                    String CornersAvailable= game.showAvailableCorners(player, size, paolo);
                     checkIfTheBoardHadAlreadyBeenPrinted++;
                     return CornersAvailable;
                 }else if(cornerChosen.equals("clean")){
@@ -36,7 +36,7 @@ public class Command { //Command Client sends to Server
                 return "carta girata";
             case "visualizeCommonObjectiveCards":
                 String commonCards;
-                commonCards= game.visualizeCommonObjective(player);
+                commonCards= game.visualizeCommonObjective();
                 return commonCards;
             case "secret":
                 String secretObjectiveCard;

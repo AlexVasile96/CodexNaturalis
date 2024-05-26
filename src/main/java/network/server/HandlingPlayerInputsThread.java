@@ -458,8 +458,8 @@ public class HandlingPlayerInputsThread implements Runnable {
     private void initializeCards() {
         game.assignResourcesAndGoldCardsToPlayers();
         checkGameInizialization = true;
-        System.out.println(game.CardsIndeck());
-        System.out.println(game.GoldsIndeck());
+        System.out.println(game.cardsInDeck());
+        System.out.println(game.goldsInDeck());
     }
 
     private void addingPlayersToTheGame() throws InterruptedException {
