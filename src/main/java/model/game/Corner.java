@@ -10,10 +10,10 @@ public class Corner extends Node{
     private SpecificSeed cardSeed;
 
     public Corner(SpecificSeed specificNodeSeed, int coordX, int coordY, SpecificSeed type) {
-        super(specificNodeSeed, coordX, coordY);
+        super(specificNodeSeed, coordX, coordY, null);
         this.isThisCornerFree=true;
         this.specificCornerSeed=specificNodeSeed;
-        this.cardSeed=type;
+       this.cardSeed=type;
     }
 
     public void setThisCornerFree(boolean thisCornerFree) {

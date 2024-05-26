@@ -90,14 +90,22 @@ public class HandlingPlayerInputsThread implements Runnable {
                 String clientSaysHello = stdIn.readLine();
                 System.out.println("Client says " + clientSaysHello);
                 threadPlayer = loginEachClient();
+
                 if(!clientPersisted)
                 {
                     noPersistenceLogin();
                     for (Player player : playersList) {
-                        player.setPlayerScore(19);
+                        player.setPlayerScore(10);
                     }
                 }
-
+                else{
+                currentPlayer= game.loadCurrentPlayingPlayerFromJson();
+                System.out.println("Current player after loading data is " + currentPlayer.getNickName());
+                game.loadGameStatusFromJson();
+                game.addPersistedPlayer(threadPlayer);
+                sendMessageToAllClients(currentPlayer.getNickName());
+                sendMessageToAllClients("endturn");
+                }
                 boolean hasClientQuit = false;
                 while (!hasClientQuit && !isGameQuit) {
                     startGame();
@@ -147,7 +155,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 isGameQuit = true;
                 break;
             }
-            System.out.println("I'm waiting current player" + currentPlayer.getNickName() + " request");
+            System.out.println("I'm waiting current player " + currentPlayer.getNickName() + " request");
             messageFromClient = stdIn.readLine();
             if(messageFromClient==null)
             {
@@ -181,20 +189,25 @@ public class HandlingPlayerInputsThread implements Runnable {
                 threadPlayer = player;
                 List<String> expectedPlayerNicknames =game.loadPlayerNicknames(); //Checking if all the players had been added correctly
                 allPlayersLoaded = game.areAllPlayersLoaded(expectedPlayerNicknames);
+                int giacomo= gameController.loadGameSizeFromJson();
+                System.out.println("Giacomo is: " + giacomo);
                 gameController.setSize(gameController.loadGameSizeFromJson());
+                System.out.println("Size risettata: "+ gameController.getSize());
                 GameController.setHowManyPlayersDoIHave(GameController.getHowManyPlayersDoIHave()+1);
+                gameController = lobby.login(request, out);
                 if(GameController.getHowManyPlayersDoIHave()==gameController.getSize())
                 {
-                    sendMessageToClient("All players connected. Resuming the game...");
                     synchronized (this)
                     {
                         notifyAll();
+                        sendMessageToAllClients("All players connected. Resuming the game...");
                         return player;
                     }
                 }
                 else {
                     sendMessageToClient("You have to wait until all clients are connected!");
                     synchronized (this) {
+                        System.out.println("Manca un player");
                         wait();
                     }
                     return  player;
@@ -287,7 +300,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                 while (numPlayers == -1) {
                     try {
                         lock.wait(); // Attende finché il numero di giocatori non è impostato
-                        System.out.println("Ajjj sbloccat");
 
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();

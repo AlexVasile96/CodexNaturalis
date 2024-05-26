@@ -44,7 +44,7 @@ public class ServerConnection implements Runnable {
     public void run() {
     String command;
     try {
-        socket.setSoTimeout(60000); // Sets the socket timeout to 60 seconds
+        //socket.setSoTimeout(60000); // Sets the socket timeout to 60 seconds
         System.out.println("Welcome! I'm the server, please type anything to start the conversation!\n");
         while (!isTheWhileActive) {
             try {
@@ -122,6 +122,7 @@ public class ServerConnection implements Runnable {
      * @throws IOException if an I/O error occurs while reading from the input stream.
      */
     private void waitUntilItsYourTurn() throws IOException {
+        System.out.println("I'm waiting for the server to pronounce my name!");
         while (!clientView.getUserName().equals(getCurrentPlayer())) {
             if (hasSomebodyQuit) {
                 return; // Exit if someone has quit
@@ -957,7 +958,10 @@ public class ServerConnection implements Runnable {
                 System.out.println("Username already taken. Please choose another username:");
                 System.out.print(">");
             } else if ((correctLogin).equals("Welcome back, " + loginName + "! Your data has been loaded.")) {
+                clientPersisted=true;
                 System.out.println("Welcome back, " + loginName + "! Your data has been loaded.");
+                clientView.setUserName(loginName); // Set the username in client view
+                player.getClientView().setUserName(loginName); // Set the username in player model
                 waitForGameStart();
                 return;
             } else isTheNameAlreadyTaken = true; // Sets the flag to true if the username is available
@@ -1068,7 +1072,7 @@ public class ServerConnection implements Runnable {
         while ((message = in.readLine()) != null) {
             System.out.println(message);
             if (message.equals("All players connected. Resuming the game...")) {
-                waitUntilItsYourTurn();
+                //waitUntilItsYourTurn();
                 return;
             }
         }

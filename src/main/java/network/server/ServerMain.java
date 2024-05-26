@@ -71,16 +71,6 @@ public class ServerMain {
 
         }
 
-    public static int getIntClients() {
-        return clients.size();
-    }
 
-    public static List<HandlingPlayerInputsThread> getClients() {
-        return clients;
-    }
-
-    public static List<Player> getPlayersInCurrentGame() {
-        return playersInCurrentGame;
-    }
 }
 

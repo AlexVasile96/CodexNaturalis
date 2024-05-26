@@ -6,7 +6,7 @@ public class Command { //Command Client sends to Server
     private static int checkIfTheBoardHadAlreadyBeenPrinted= 0;
 
     public String runCommand(Game game, String commandString, Player player, int size, int paolo, String cornerChosen)  {
-        System.out.println(commandString);
+
         switch (commandString) {
 
             case "showYourCardDeck":{

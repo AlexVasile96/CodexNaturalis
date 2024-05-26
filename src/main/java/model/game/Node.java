@@ -13,7 +13,7 @@ public class Node {
     private boolean alreadyChecked;
     private SpecificSeed cardType;
 
-    public Node(SpecificSeed specificNodeSeed, int coordX, int coordY){
+    public Node(SpecificSeed specificNodeSeed, int coordX, int coordY, SpecificSeed cardType){
         this.specificNodeSeed=specificNodeSeed;
         this.coordX=coordX;
         this.coordY=coordY;
@@ -21,14 +21,11 @@ public class Node {
         this.firstPlacement= SpecificSeed.EMPTY;
         this.secondPlacement= SpecificSeed.EMPTY;
         this.alreadyChecked=false;
+        this.cardType=cardType;
     }
 
     public SpecificSeed getSpecificNodeSeed() {
         return specificNodeSeed;
-    }
-
-    public String getStringSpecificNodeSeed() {
-        return String.valueOf(specificNodeSeed);
     }
 
     public int getCoordX() {
@@ -92,12 +89,8 @@ public class Node {
     public int getRow() {
         return coordY;
     }
-    public static Node createNodeFromSeed(String seed, int coordX, int coordY) {
-        SpecificSeed specificNodeSeed = SpecificSeed.valueOf(seed); // Converts the string of the seed to an instance of SpecificSeed
 
-        //Creates a new object Node using the seed and it's coordinates
-        return new Node(specificNodeSeed, coordX, coordY);
-    }
+
 
     public SpecificSeed getCardType() {
         return cardType;
@@ -110,8 +103,19 @@ public class Node {
         SpecificSeed specificNodeSeed = SpecificSeed.valueOf(jsonObject.get("specificNodeSeed").getAsString());
         int coordX = jsonObject.get("coordX").getAsInt();
         int coordY = jsonObject.get("coordY").getAsInt();
-        int value= jsonObject.get("value").getAsInt();
-        return new Node(specificNodeSeed, coordX, coordY);
+        int valueCounter = jsonObject.get("valueCounter").getAsInt();
+        SpecificSeed firstPlacement = SpecificSeed.valueOf(jsonObject.get("firstPlacement").getAsString());
+        SpecificSeed secondPlacement = SpecificSeed.valueOf(jsonObject.get("secondPlacement").getAsString());
+        boolean alreadyChecked = jsonObject.get("alreadyChecked").getAsBoolean();
+        SpecificSeed cardType = SpecificSeed.valueOf(jsonObject.get("cardType").getAsString());
+
+        Node node = new Node(specificNodeSeed, coordX, coordY,cardType);
+        node.setValueCounter(valueCounter);
+        node.setFirstPlacement(firstPlacement);
+        node.setSecondPlacement(secondPlacement);
+        node.setAlreadyChecked(alreadyChecked);
+        node.setCardType(cardType);
+        return node;
     }
 
     public JsonObject toJsonObject() {
@@ -119,7 +123,28 @@ public class Node {
         jsonObject.addProperty("specificNodeSeed", specificNodeSeed.toString());
         jsonObject.addProperty("coordX", coordX);
         jsonObject.addProperty("coordY", coordY);
-        jsonObject.addProperty("value", valueCounter);
+        jsonObject.addProperty("valueCounter", valueCounter);
+        if (firstPlacement != null) {
+            jsonObject.addProperty("firstPlacement", firstPlacement.toString());
+        } else {
+            jsonObject.addProperty("firstPlacement", SpecificSeed.EMPTY.toString());
+        }
+
+        if (secondPlacement != null) {
+            jsonObject.addProperty("secondPlacement", secondPlacement.toString());
+        } else {
+            jsonObject.addProperty("secondPlacement", SpecificSeed.EMPTY.toString());
+        }
+
+        jsonObject.addProperty("alreadyChecked", alreadyChecked);
+
+        if (cardType != null) {
+            jsonObject.addProperty("cardType", cardType.toString());
+        } else {
+            jsonObject.addProperty("cardType", SpecificSeed.EMPTY.toString());
+        }
+
         return jsonObject;
     }
-}
+    }
+

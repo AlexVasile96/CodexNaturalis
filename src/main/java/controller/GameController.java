@@ -374,7 +374,8 @@ public synchronized void waitingForPLayers() throws InterruptedException {
             JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
             this.size = jsonObject.get("size").getAsInt();
             this.isSizeSet = true;
-            sizeLatch.countDown(); // Sblocca il thread che sta aspettando la dimensione del gioco
+           // sizeLatch.countDown(); // Sblocca il thread che sta aspettando la dimensione del gioco
+            return size;
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -6,7 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Revert commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Corner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Corner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Node.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/client/ServerConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/ServerConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/server/ServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/server/ServerMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,39 +55,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.CliClientApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Codex.executor&quot;: &quot;Run&quot;,
-    &quot;Application.GUI.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ServerMain.executor&quot;: &quot;Run&quot;,
-    &quot;JAR Application.json-20240303.jar.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.All in proj (1).executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.All in proj (2).executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.All in proj.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.BisObjectiveCardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardPointsTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GoldDeckTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.InitialCardDeckTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ObjectiveDeckTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PlayerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ResourceDeckTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ResourceUpdaterTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StairsObjectiveCardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrisObjectiveCardTest.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.CliClientApp.executor": "Run",
+    "Application.Codex.executor": "Run",
+    "Application.GUI.executor": "Run",
+    "Application.ServerMain.executor": "Run",
+    "JAR Application.json-20240303.jar.executor": "Run",
+    "JUnit.All in proj (1).executor": "Coverage",
+    "JUnit.All in proj (2).executor": "Coverage",
+    "JUnit.All in proj.executor": "Coverage",
+    "JUnit.BisObjectiveCardTest.executor": "Run",
+    "JUnit.BoardPointsTest.executor": "Run",
+    "JUnit.BoardTest.executor": "Run",
+    "JUnit.GoldDeckTest.executor": "Run",
+    "JUnit.InitialCardDeckTest.executor": "Run",
+    "JUnit.ObjectiveDeckTest.executor": "Run",
+    "JUnit.PlayerTest.executor": "Run",
+    "JUnit.ResourceDeckTest.executor": "Run",
+    "JUnit.ResourceUpdaterTest.executor": "Run",
+    "JUnit.StairsObjectiveCardTest.executor": "Run",
+    "JUnit.TrisObjectiveCardTest.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.CliClientApp">
     <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="network.client.cli.CliClientApp" />
@@ -258,6 +269,8 @@
       <workItem from="1716644633682" duration="5794000" />
       <workItem from="1716707832607" duration="9366000" />
       <workItem from="1716728555303" duration="10498000" />
+      <workItem from="1716745152108" duration="469000" />
+      <workItem from="1716750020925" duration="7769000" />
     </task>
     <task id="LOCAL-00001" summary="English translation">
       <option name="closed" value="true" />
@@ -363,7 +376,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716744247661</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Revert commit">
+      <option name="closed" value="true" />
+      <created>1716744860928</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1716744860928</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -406,6 +427,49 @@
           <url>file://$PROJECT_DIR$/src/main/java/model/game/BoardPoints.java</url>
           <line>11</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/game/Game.java</url>
+          <line>199</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/game/Game.java</url>
+          <line>200</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java</url>
+          <line>163</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java</url>
+          <line>157</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java</url>
+          <line>172</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/model/game/Game.java</url>
+          <line>198</line>
+          <properties class="model.game.Game" method="showCards">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/controller/Command.java</url>
+          <line>7</line>
+          <properties class="controller.Command" method="runCommand">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

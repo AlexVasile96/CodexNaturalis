@@ -60,7 +60,7 @@ public class Game{
 
     }
 
-    public void addPlayer(Player player) {
+    public synchronized void addPlayer(Player player) {
         boolean exists = false;
         for (Player p : players) {
             if (p.getNickName().equals(player.getNickName())) {
@@ -417,8 +417,10 @@ public class Game{
         //saveCards();
         savePlayers();
         saveGameStatusToJson();
+        saveCurrentPlayingPlayerToJson();
         System.out.println("Player correctly saved");
         System.out.println("Shared information correctly saved!");
+        System.out.println("Current player correctly saved in json");
         System.out.println(well.getFirst());
         System.out.println(well.get(1));
         System.out.println(well.get(2));
@@ -604,69 +606,6 @@ public class Game{
         dots.add("YELLOW");
     }
 
-    private Path getDefaultCardPath() {
-        String home = ("src/main/resources/savecard.json");
-        return Paths.get(home);
-    }
-
-    void savePath(Path path) {                                                   //METHOD TO SAVE CARDS
-        JsonArray jo = new JsonArray();
-        for (Card card : currentPlayingPLayer.getPlayerCards()) {
-            jo.add(card.toJsonObject());
-        }
-        String jsonText = jo.toString();
-        try (FileWriter fileWriter = new FileWriter(path.toString())) {
-            fileWriter.write(jsonText);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-//    void saveEachPlayerInGame(Path path) {
-//        JsonObject playersObject = new JsonObject();
-//        JsonArray playersArray = new JsonArray();
-//
-//        for (Player player : players) {
-//            JsonObject playerObject = new JsonObject();
-//            playerObject.addProperty("nickname", player.getNickName());
-//            playerObject.addProperty("score", player.getPlayerScore());
-//            playerObject.addProperty("dot", player.getDot().ordinal());
-//
-//            JsonArray playerDeckArray = new JsonArray();
-//            for (Card card : player.getPlayerCards()) {
-//                JsonObject cardObject = new JsonObject();
-//                cardObject.addProperty("id", card.getId());
-//                cardObject.addProperty("type", card.getType().toString());
-//                cardObject.addProperty("value", card.getValueWhenPlaced());
-//                cardObject.add("TL", card.getTL().toJsonObject());
-//                cardObject.add("TR", card.getTR().toJsonObject());
-//                cardObject.add("BL", card.getBL().toJsonObject());
-//                cardObject.add("BR", card.getBR().toJsonObject());
-//
-//                playerDeckArray.add(cardObject);
-//            }
-//            playerObject.add("player_deck", playerDeckArray);
-//            Board playerBoard = player.getBoard();
-//            JsonObject boardObject = playerBoard.toJsonObject();
-//            playerObject.add("board", boardObject);
-//            if (player.getSecretChosenCard() != null) {
-//                JsonObject secretChosenCardObject = new JsonObject();
-//                secretChosenCardObject.addProperty("id", player.getSecretChosenCard().getId());
-//                secretChosenCardObject.addProperty("type", player.getSecretChosenCard().getType().toString());
-//                secretChosenCardObject.addProperty("value", player.getSecretChosenCard().getValue());
-//                playerObject.add("secretChosenCard", secretChosenCardObject);
-//            }
-//            playersArray.add(playerObject);
-//        }
-//        playersObject.add("players", playersArray);
-//        try (PrintWriter printWriter = new PrintWriter(new FileWriter(path.toString()))) {
-//            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//            String jsonOutput = gson.toJson(playersObject);
-//            printWriter.println(jsonOutput);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 void saveEachPlayerInGame(Path path) {
     JsonObject gameState = new JsonObject();
     JsonArray playersArray = new JsonArray();
@@ -862,6 +801,12 @@ void saveEachPlayerInGame(Path path) {
         Path path = getDefaultGameStatusPath();
         JsonObject gameStatus = new JsonObject();
         gameStatus.addProperty("currentPlayer", currentPlayer);
+        if (firstObjectiveCommonCard != null) {
+            gameStatus.add("firstObjectiveCommonCard", firstObjectiveCommonCard.toJsonObject());
+        }
+        if (secondObjectiveCommonCard != null) {
+            gameStatus.add("secondObjectiveCommonCard", secondObjectiveCommonCard.toJsonObject());
+        }
         gameStatus.add("resourceDeck", resourceDeck.toJson());
         gameStatus.add("goldDeck", goldDeck.toJson());
         JsonArray wellArray = new JsonArray();
@@ -884,9 +829,6 @@ void saveEachPlayerInGame(Path path) {
 
         try (FileReader reader = new FileReader(path.toString())) {
             JsonObject gameStatus = JsonParser.parseReader(reader).getAsJsonObject();
-
-            currentPlayer = gameStatus.get("currentPlayer").getAsString();
-
             JsonArray resourceDeckArray = gameStatus.getAsJsonArray("resourceDeck");
             resourceDeck = ResourceDeck.fromJson(resourceDeckArray);
 
@@ -900,12 +842,14 @@ void saveEachPlayerInGame(Path path) {
                 Card card = Card.fromJson(cardObject);
                 well.add(card);
             }
-
-            for (Player player : players) {
-                if (player.getNickName().equals(currentPlayer)) {
-                    currentPlayingPLayer = player;
-                    break;
-                }
+            System.out.println(well);
+            if (gameStatus.has("firstObjectiveCommonCard")) {
+                JsonObject firstObjectiveCommonCardObject = gameStatus.getAsJsonObject("firstObjectiveCommonCard");
+                firstObjectiveCommonCard = ObjectiveCard.fromJsonObject(firstObjectiveCommonCardObject);
+            }
+            if (gameStatus.has("secondObjectiveCommonCard")) {
+                JsonObject secondObjectiveCommonCardObject = gameStatus.getAsJsonObject("secondObjectiveCommonCard");
+                secondObjectiveCommonCard = ObjectiveCard.fromJsonObject(secondObjectiveCommonCardObject);
             }
 
         } catch (IOException e) {
@@ -913,7 +857,146 @@ void saveEachPlayerInGame(Path path) {
         }
     }
 
+    private Path getCurrentPlayerPath() {
+        String home = "src/main/resources/currentplayer.json";
+        return Paths.get(home);
+    }
+
+    public void saveCurrentPlayerToJson() {
+        Path path = getCurrentPlayerPath();
+        JsonObject currentPlayerObject = new JsonObject();
+
+        // Aggiungi un controllo per assicurarti che currentPlayer non sia nullo o vuoto
+        if (currentPlayer == null || currentPlayer.isEmpty()) {
+            System.out.println("currentPlayer is null or empty");
+            return;
+        }
+
+        currentPlayerObject.addProperty("currentPlayer", currentPlayingPLayer.getNickName());
+
+        try (FileWriter fileWriter = new FileWriter(path.toString())) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String jsonOutput = gson.toJson(currentPlayerObject);
+            fileWriter.write(jsonOutput);
+            System.out.println("Current player saved: " + jsonOutput); // Aggiungi un messaggio di debug
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String loadCurrentPlayerFromJson() {
+        Path path = getCurrentPlayerPath();
+
+        try (FileReader reader = new FileReader(path.toString())) {
+            JsonObject currentPlayerObject = JsonParser.parseReader(reader).getAsJsonObject();
+            currentPlayer = currentPlayerObject.get("currentPlayer").getAsString();
+            System.out.println("Current player loaded: " + currentPlayer); // Aggiungi un messaggio di debug
+            return currentPlayer;
 
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public void saveCurrentPlayingPlayerToJson() {
+        Path path = getCurrentPlayerPath();
+        JsonObject currentPlayerObject = new JsonObject();
+
+        // Controlla se currentPlayingPLayer non è nullo
+        if (currentPlayingPLayer == null) {
+            System.out.println("currentPlayingPLayer is null");
+            return;
+        }
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonObject playerJsonObject = new JsonObject();
+
+        playerJsonObject.addProperty("nickname", currentPlayingPLayer.getNickName());
+        playerJsonObject.addProperty("score", currentPlayingPLayer.getPlayerScore());
+        playerJsonObject.addProperty("dot", currentPlayingPLayer.getDot().ordinal());
+
+        JsonArray playerDeckArray = new JsonArray();
+        for (Card card : currentPlayingPLayer.getPlayerCards()) {
+            JsonObject cardObject = card.toJsonObject();
+            playerDeckArray.add(cardObject);
+        }
+        playerJsonObject.add("player_deck", playerDeckArray);
+
+        JsonObject boardObject = currentPlayingPLayer.getBoard().toJsonObject();
+        playerJsonObject.add("board", boardObject);
+
+        if (currentPlayingPLayer.getSecretChosenCard() != null) {
+            JsonObject secretChosenCardObject = currentPlayingPLayer.getSecretChosenCard().toJsonObject();
+            playerJsonObject.add("secretChosenCard", secretChosenCardObject);
+        }
+
+        currentPlayerObject.add("currentPlayer", playerJsonObject);
+
+        try (FileWriter fileWriter = new FileWriter(path.toString())) {
+            String jsonOutput = gson.toJson(currentPlayerObject);
+            fileWriter.write(jsonOutput);
+            System.out.println("Current player saved: " + jsonOutput); // Aggiungi un messaggio di debug
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public Player loadCurrentPlayingPlayerFromJson() {
+        Path path = getCurrentPlayerPath();
+
+        try (FileReader reader = new FileReader(path.toString())) {
+            JsonObject currentPlayerObject = JsonParser.parseReader(reader).getAsJsonObject();
+            JsonObject playerJsonObject = currentPlayerObject.getAsJsonObject("currentPlayer");
+
+            String nickname = playerJsonObject.get("nickname").getAsString();
+            int score = playerJsonObject.get("score").getAsInt();
+            Dot dot = Dot.values()[playerJsonObject.get("dot").getAsInt()];
+
+            JsonArray playerDeckArray = playerJsonObject.getAsJsonArray("player_deck");
+            List<Card> playerDeck = new ArrayList<>();
+            for (JsonElement cardElement : playerDeckArray) {
+                JsonObject cardObject = cardElement.getAsJsonObject();
+                String cardType = cardObject.get("cardType").getAsString();
+                Card card = switch (cardType) {
+                    case "GoldCard" -> GoldCard.fromJson(cardObject);
+                    case "ResourceCard" -> ResourceCard.fromJsonObject(cardObject);
+                    case "ObjectiveCard" -> ObjectiveCard.fromJsonObject(cardObject);
+                    default -> Card.fromJson(cardObject);
+                };
+
+                if (card != null) {
+                    playerDeck.add(card);
+                } else {
+                    System.err.println("Skipping invalid card in player deck: " + cardObject);
+                }
+            }
+
+            Board board = Board.fromJson(playerJsonObject.get("board").getAsJsonObject());
+            ObjectiveCard secretChosenCard = null;
+            if (playerJsonObject.has("secretChosenCard")) {
+                JsonObject secretCardObject = playerJsonObject.get("secretChosenCard").getAsJsonObject();
+                secretChosenCard = ObjectiveCard.fromJsonObject(secretCardObject);
+            }
+
+            currentPlayingPLayer = new Player(nickname, score, dot, board);
+            currentPlayingPLayer.setPlayerCards((ArrayList<Card>) playerDeck);
+            currentPlayingPLayer.setSecretChosenCard(secretChosenCard);
+
+            System.out.println("Current player loaded: " + currentPlayingPLayer); // Aggiungi un messaggio di debug
+            return currentPlayingPLayer;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return currentPlayingPLayer;
+    }
+    public synchronized void addPersistedPlayer(Player player) {
+        // Aggiungi il player alla lista dei giocatori se non è già presente
+        if (players.stream().noneMatch(p -> p.getNickName().equals(player.getNickName()))) {
+            players.add(player);
+            System.out.println("Player " + player.getNickName() + " added to the game.");
+        } else {
+            System.out.println("Player " + player.getNickName() + " already exists in the game.");
+        }
+    }
 }
 

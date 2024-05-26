@@ -25,7 +25,7 @@ public class Board {
         this.initEmptyValue =SpecificSeed.EMPTY;
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < cols; column++) {
-                nodes[row][column] = new Node(SpecificSeed.EMPTY, row, column);
+                nodes[row][column] = new Node(SpecificSeed.EMPTY, row, column,SpecificSeed.EMPTY);
                 this.numOfEmpty++;                                                           //NumOfEmpty is an int that checks if we're doing things correctly
             }
         }
