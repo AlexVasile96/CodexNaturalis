@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import view.ClientView;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -29,7 +30,7 @@ public class EndGameScene {
         this.clientView = clientView;
     }
 
-    public void endGame(){
+    public void endGame() throws IOException {
         StackPane root = new StackPane();
         VBox vbox = new VBox();
         Text winner = new Text("The winner is: " );
@@ -38,7 +39,7 @@ public class EndGameScene {
         root.getChildren().add(vbox);
 
         primaryStage.setScene(new Scene(root, 800, 600));
-        primaryStage.setTitle("Winner winner chicken dinner");
+        primaryStage.setTitle("The winner is...");
         primaryStage.show();
 
         String drumRollSound = getClass().getResource("/Sounds/DrumRollSound.mp3").toString();
@@ -46,7 +47,7 @@ public class EndGameScene {
         MediaPlayer drumRollPlayer = new MediaPlayer(drumSoundMedia);
 
         drumRollPlayer.play();
-        System.out.println("La durata del file mp3: "+ drumSoundMedia.getDuration());
+        System.out.println(in.readLine());
 
         PauseTransition delay = new PauseTransition(drumSoundMedia.getDuration());
 

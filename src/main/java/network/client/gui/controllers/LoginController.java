@@ -139,6 +139,9 @@ public class LoginController {
                     });
                 }
                 else {
+                    Platform.runLater(()->{
+                        showAlert("Someone is online!","Please wait until the first client chooses the number of players!");
+                    });
                     System.out.println(in.readLine());
                     LobbyScene lobbySceneHandler = new LobbyScene();
                     System.out.println(in.readLine());

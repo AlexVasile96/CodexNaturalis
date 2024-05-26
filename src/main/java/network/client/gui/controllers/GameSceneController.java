@@ -95,7 +95,6 @@ public class GameSceneController {
     String secondCommonId;
     String secretId;
     ShowObjectiveScene objectiveScene;
-    private boolean cardOnHerBack=false;
     private String pathFlipped;
     private Image initCardImage;
     private ImageView handCard1View;
@@ -109,6 +108,8 @@ public class GameSceneController {
     private boolean isInit = true;
     private String isTheCardFlipped = null;
     private boolean isFlipped = false;
+    private boolean areYouTheWinner=false;
+
 
     /**
      * Initializes the game data and sets up the initial stage, socket connections, and view components.
@@ -132,7 +133,7 @@ public class GameSceneController {
         this.clientView = clientView;
 
         // Initialize the controller with the input stream, output stream, and socket
-        controller = new Controller(in, out, socket);
+        controller = new Controller(in, out, socket,clientView);
 
         // Determine if it's the current player's turn based on the nickname
         isCurrentPlayerTurn = clientView.getUserName().equals(currentPlayerNickname);
@@ -387,7 +388,7 @@ public class GameSceneController {
             buttonContainer.setDisable(false);
         } else {
             isCurrentPlayerTurn = false;
-            waitForTurn(handCard1View, handCard2View, handCard3View);
+            waitForTurn();
         }
     }
 
@@ -553,7 +554,7 @@ public class GameSceneController {
                         String nextPlayerNickname = controller.endTurn();
                         updateTurnState(nextPlayerNickname.equals(clientView.getUserName()));
                         haveToPlay = true;
-                        waitForTurn(handCard1View, handCard2View, handCard3View);
+                        waitForTurn();
                     } catch (SocketTimeoutException ex) {
                         throw new RuntimeException(ex);
                     } catch (IOException ex) {
@@ -623,9 +624,9 @@ public class GameSceneController {
                                     currentPlayerNickname=controller.finalEnd();
                                     updateTurnState(currentPlayerNickname.equals(clientView.getUserName()));
                                     haveToPlay = true;
-                                    waitForTurn(handCard1View, handCard2View, handCard3View);
+                                    waitForTurn();
                                     haveToDraw = false;
-
+                                    areYouTheWinner=true;
                             }
                             else {
                                 initializeWell();
@@ -642,7 +643,6 @@ public class GameSceneController {
                                 Image newImage4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath4)));
                                 SharedObjectsInGui.getWellCard4View().setImage(newImage4);
 
-                                System.out.println("Arrivo qua prima di crashare");
                                 // Update the top cards of the resource and gold decks
                                 updateResourceDeckTopCard();
                                 updatedGoldDeckTopCard();
@@ -675,17 +675,43 @@ public class GameSceneController {
                 System.out.println("The card has been flipped to the back");
                 // Switch statement to handle flipping each card
                 switch (indexCardToPlace) {
+
                     case 0:
                         handCard1View.setImage(flipToBackCard(idHandCard1));
                         handCard1View.setId("Back");
+                        if (handCard1View.getId() == null || handCard1View.getId().equals("Front")) {
+                            pathChosen = pathHandCard1;
+                            System.out.println("Front");
+                        } else {
+                            pathChosen = pathFlipped;
+                            System.out.println(pathChosen);
+                            System.out.println("Back");
+                        }
                         break;
                     case 1:
                         handCard2View.setImage(flipToBackCard(idHandCard2));
                         handCard2View.setId("Back");
+                        if (handCard2View.getId() == null || handCard2View.getId().equals("Front")) {
+                            pathChosen = pathHandCard1;
+                            System.out.println("Front");
+                        } else {
+                            pathChosen = pathFlipped;
+                            System.out.println(pathChosen);
+                            System.out.println("Back");
+                        }
                         break;
                     case 2:
                         handCard3View.setImage(flipToBackCard(idHandCard3));
                         handCard3View.setId("Back");
+                        handCard2View.setId("Back");
+                        if (handCard3View.getId() == null || handCard3View.getId().equals("Front")) {
+                            pathChosen = pathHandCard1;
+                            System.out.println("Front");
+                        } else {
+                            pathChosen = pathFlipped;
+                            System.out.println(pathChosen);
+                            System.out.println("Back");
+                        }
                         break;
                     default:
                         showAlert("Invalid action", "You chose an unflippable card.");
@@ -933,11 +959,8 @@ public class GameSceneController {
     /**
      * Waits for the player's turn to begin and updates the GUI accordingly.
      *
-     * @param handCard1View The ImageView for the first card in the player's hand.
-     * @param handCard2View The ImageView for the second card in the player's hand.
-     * @param handCard3View The ImageView for the third card in the player's hand.
      */
-    private void waitForTurn(ImageView handCard1View, ImageView handCard2View, ImageView handCard3View) {
+    private void waitForTurn() {
         new Thread(() -> {
             try {
                 // Wait for the player's turn to begin
@@ -947,7 +970,7 @@ public class GameSceneController {
                 Platform.runLater(() -> {
                     if(clientView.getPlayerScore()>=20)
                     {
-                        showAlert("GAME FINISHED", "Sono un assassino di meridionali");
+                        showAlert("GAME FINISHED", "NOW THE WINNER WILL BE ANNOUNCED!");
                         try {
                             System.out.println(in.readLine()); //Fine turno
                         } catch (IOException e) {
@@ -959,14 +982,15 @@ public class GameSceneController {
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                        //
-                        try {
-                            System.out.println(in.readLine()); //ci siamo
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
                         EndGameScene endGameScene= new EndGameScene(primaryStage,out,socket,in,clientView);
-                        endGameScene.endGame();
+                        Platform.runLater(()->{
+                            try {
+                                endGameScene.endGame();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+
                     }
 
                     // Update the turn state
@@ -1038,11 +1062,7 @@ public class GameSceneController {
      * Enables or disables game actions based on whether it's the current player's turn.
      */
     private void enableOrDisableGameActions() {
-        if (!isCurrentPlayerTurn) {
-            buttonContainer.setDisable(true);
-        } else {
-            buttonContainer.setDisable(false);
-        }
+        buttonContainer.setDisable(!isCurrentPlayerTurn);
     }
 
     /**
@@ -2123,32 +2143,6 @@ public class GameSceneController {
     private Path getDefaultGuiPath() {
         String home = ("src/main/resources/sharedElementsInGui.json");
         return Paths.get(home);
-    }
-    private boolean checkGoldCardRequirements(String goldCardId) throws IOException {
-        // Retrieve the requirements for the specific gold card
-        out.println("getGoldCardRequirements");
-        //out.println(goldCardId);
-        String requirements = in.readLine(); // Assuming the server sends requirements as a JSON string
-
-        JsonObject requirementsJson = JsonParser.parseString(requirements).getAsJsonObject();
-
-        // Retrieve the current attributes from the board
-        out.println("getCurrentAttributes");
-        String currentAttributes = in.readLine(); // Assuming the server sends current attributes as a JSON string
-
-        JsonObject currentAttributesJson = JsonParser.parseString(currentAttributes).getAsJsonObject();
-
-        // Check if all required attributes are met
-        for (Map.Entry<String, JsonElement> entry : requirementsJson.entrySet()) {
-            String attribute = entry.getKey();
-            int requiredValue = entry.getValue().getAsInt();
-            int currentValue = currentAttributesJson.has(attribute) ? currentAttributesJson.get(attribute).getAsInt() : 0;
-
-            if (currentValue < requiredValue) {
-                return false;
-            }
-        }
-        return true;
     }
 
 }
