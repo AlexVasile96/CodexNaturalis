@@ -1,6 +1,7 @@
 package model.game;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import exceptions.CantPlaceYourCardHere;
 import exceptions.IllegalPlacementException;
@@ -359,6 +360,20 @@ public class Board {
             }
         }
         board.setNodes(nodes);
+
+        JsonArray cardsOnTheBoardArray = jsonObject.getAsJsonArray("cardsOnTheBoard");
+        List<Card> cardsOnTheBoardList = new ArrayList<>();
+        for (int i = 0; i < cardsOnTheBoardArray.size(); i++) {
+            JsonObject cardObject = cardsOnTheBoardArray.get(i).getAsJsonObject();
+            Card card;
+            if (cardObject.has("isCardBack")) {  // Assuming this property is unique to InitialCard
+                card = InitialCard.fromJsonObject(cardObject);
+            } else {
+                card = Card.fromJson(cardObject);
+            }
+            cardsOnTheBoardList.add(card);
+        }
+        board.setCardsOnTheBoardList((ArrayList<Card>) cardsOnTheBoardList);
         return board;
     }
 
@@ -375,6 +390,12 @@ public class Board {
             nodesArray.add(rowArray);
         }
         jsonObject.add("nodes", nodesArray);
+
+        JsonArray cardsArray = new JsonArray();
+        for (Card card : getCardsOnTheBoardList()) {
+            cardsArray.add(card.toJsonObject());
+        }
+        jsonObject.add("cardsOnTheBoard", cardsArray);
         return jsonObject;
     }
 

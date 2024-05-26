@@ -1,6 +1,10 @@
 package view;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import model.card.Card;
+import model.card.InitialCard;
 import model.card.ObjectiveCard;
 import model.game.Board;
 import model.game.Dot;
@@ -53,6 +57,16 @@ public class ClientView {
             this.isCardBack = player.isCardBack();
             this.playerCards = (ArrayList<Card>) player.getPlayerCards(); // Update player's cards
             this.secretChosenCard = player.getSecretChosenCard();
+            this.cardsOnTheBoard.clear();
+            int cardNumber = 1;
+        for (Card card : player.getBoard().getCardsOnTheBoardList()) {
+            String cardType = (card instanceof InitialCard) ? "Initial Card" : card.getType().toString();
+            String cardString = cardNumber + "->" + cardType + ": (" + card.getNode().getCoordY() + " " + card.getNode().getCoordX() + ") " + (card.isCardBack() ? "(back)" : "(front)");
+            this.cardsOnTheBoard.add(cardString);
+            cardNumber++;
+        }
+
+
     }
 
     public int getIndex() {
@@ -132,4 +146,63 @@ public class ClientView {
     public void setObjectiveCard(String objectiveCard) {
         this.objectiveCard = objectiveCard;
     }
+
+    public JsonObject toJsonObject() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("userName", userName);
+        jsonObject.addProperty("playerScore", playerScore);
+        jsonObject.addProperty("dot", dot.toString());
+        jsonObject.add("board", board.toJsonObject());
+        jsonObject.addProperty("isCardBack", isCardBack);
+        jsonObject.addProperty("numOfCardsOnTheBoard", numOfCardsOnTheBoard);
+
+
+        JsonArray cardsOnTheBoardArray = new JsonArray();
+        for (String card : cardsOnTheBoard) {
+            cardsOnTheBoardArray.add(card);
+            System.out.println("AGGIUNTA CARTA DELLA CLIENT VIEW: " + card);
+        }
+        jsonObject.add("cardsOnTheBoard", cardsOnTheBoardArray);
+
+        JsonArray playerStringCardsArray = new JsonArray();
+        for (String card : PlayerStringCards) {
+            playerStringCardsArray.add(card);
+        }
+        jsonObject.add("playerStringCards", playerStringCardsArray);
+
+        if (secretChosenCard != null) {
+            jsonObject.add("objectiveCard", secretChosenCard.toJsonObject());
+        }
+
+        return jsonObject;
+    }
+
+    public static ClientView fromJsonObject(JsonObject jsonObject) {
+        ClientView clientView = new ClientView();
+        clientView.userName = jsonObject.get("userName").getAsString();
+        clientView.playerScore = jsonObject.get("playerScore").getAsInt();
+        clientView.dot = Dot.valueOf(jsonObject.get("dot").getAsString()); // Assuming Dot has a method valueOf
+        clientView.board = Board.fromJson(jsonObject.getAsJsonObject("board")); // Deserialize Board from JsonObject
+        clientView.isCardBack = jsonObject.get("isCardBack").getAsBoolean();
+
+        clientView.numOfCardsOnTheBoard = jsonObject.get("numOfCardsOnTheBoard").getAsInt();
+
+        JsonArray cardsOnTheBoardJsonArray = jsonObject.getAsJsonArray("cardsOnTheBoard");
+        for (int i = 0; i < cardsOnTheBoardJsonArray.size(); i++) {
+            clientView.cardsOnTheBoard.add(cardsOnTheBoardJsonArray.get(i).getAsString());
+        }
+
+        JsonArray playerStringCardsJsonArray = jsonObject.getAsJsonArray("playerStringCards");
+        if (playerStringCardsJsonArray != null) {
+            for (int i = 0; i < playerStringCardsJsonArray.size(); i++) {
+                String card = playerStringCardsJsonArray.get(i).getAsString();
+                if (card != null && !card.isEmpty()) { // Check if the card is not null or empty
+                    clientView.PlayerStringCards.add(card);
+                }
+            }
+        }
+
+        return clientView;
+    }
+
 }

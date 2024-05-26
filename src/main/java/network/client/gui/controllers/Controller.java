@@ -102,6 +102,7 @@ public class Controller {
             System.out.println(typeCard);//For server purposes
             System.out.println(isBack);//For server purposes
             System.out.println(coordinate);//For server purposes
+            out.println("typeCard");
         }
         catch (IOException e) {
             throw new RuntimeException(e);

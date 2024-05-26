@@ -6,6 +6,7 @@ import model.deck.GoldDeck;
 import model.deck.InitialCardDeck;
 import model.deck.ObjectiveDeck;
 import model.deck.ResourceDeck;
+import view.ClientView;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -124,11 +125,12 @@ public class Game{
             helpcard.setCardBack(cPchoose.isCardBack());
             player.playInitCardOnBoard(player.getBoard(), cardindex, selectedCardFromTheDeck, helpcard, selectedCorner);
             player.getClientView().update(player);
+
             return "Carta piazzata correttamente";
         } else {
             //Card chosen is not the initial card
             player.playCard(player.getBoard(), cardindex, cardChosenOnTheBoard, selectedCardFromTheDeck, cPchoose, selectedCorner);
-            player.getClientView().update(player);
+            //player.getClientView().update(player);
             return "Carta piazzata correttamente";
         }
     }
@@ -399,6 +401,7 @@ public class Game{
 
 
     public String showAvailableCorners(Player player, int cardIndex, int cardChosenOnTheBoard) {
+        System.out.println("The initial card is: " + player.getBoard().getCardsOnTheBoardList().getFirst());
         InitialCard initialCard = (InitialCard) player.getBoard().getCardsOnTheBoardList().getFirst();
         selectedCardFromTheDeck = player.checkingTheChosencard(cardIndex);
         cPchoose = player.gettingCardsFromTheBoard(player.getBoard(), cardChosenOnTheBoard);
@@ -619,6 +622,8 @@ void saveEachPlayerInGame(Path path) {
         JsonArray playerDeckArray = new JsonArray();
         for (Card card : player.getPlayerCards()) {
             JsonObject cardObject = card.toJsonObject();
+            if (card instanceof InitialCard) {
+                cardObject.addProperty("cardType", "InitialCard");}
             playerDeckArray.add(cardObject);
         }
         playerObject.add("player_deck", playerDeckArray);
@@ -629,6 +634,10 @@ void saveEachPlayerInGame(Path path) {
         if (player.getSecretChosenCard() != null) {
             JsonObject secretChosenCardObject = player.getSecretChosenCard().toJsonObject();
             playerObject.add("secretChosenCard", secretChosenCardObject);
+        }
+        if (player.getClientView() != null) {
+            JsonObject clientViewObject = player.getClientView().toJsonObject();
+            playerObject.add("clientView", clientViewObject);
         }
 
         playersArray.add(playerObject);
@@ -682,6 +691,7 @@ void saveEachPlayerInGame(Path path) {
                             case "GoldCard" -> GoldCard.fromJson(cardObject);
                             case "ResourceCard" -> ResourceCard.fromJsonObject(cardObject);
                             case "ObjectiveCard" -> ObjectiveCard.fromJsonObject(cardObject);
+                            case "InitialCard" -> InitialCard.fromJsonObject(cardObject);
                             default -> Card.fromJson(cardObject);
                         };
 
@@ -700,10 +710,17 @@ void saveEachPlayerInGame(Path path) {
                         secretChosenCard = ObjectiveCard.fromJsonObject(secretCardObject);
                         System.out.println(secretChosenCard);
                     }
+
                     Player player = new Player(nickname, score, dot, board);
                     player.setPlayerCards((ArrayList<Card>) playerDeck);
                     player.setSecretChosenCard(secretChosenCard);
+                    if (playerObject.has("clientView")) {
+                        JsonObject clientViewObject = playerObject.get("clientView").getAsJsonObject();
+                        ClientView clientView = ClientView.fromJsonObject(clientViewObject);
+                        player.setClientView(clientView);
+                    }
                     System.out.println(player);
+                    System.out.println(player.getClientView());
                     return player;
                 }
             }

@@ -1,5 +1,6 @@
 package model.card;
 
+import com.google.gson.JsonObject;
 import model.game.Corner;
 import model.game.Node;
 import model.game.SpecificSeed;
@@ -192,8 +193,47 @@ public class InitialCard extends Card{
         this.BRBack = BRBack;
     }
 
-    public void setTLIBack(Corner TLIBack) {
-        this.TLIBack = TLIBack;
+    public JsonObject toJsonObject() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        jsonObject.addProperty("type", type.toString());
+        jsonObject.add("TL", TL.toJsonObject());
+        jsonObject.add("TR", TR.toJsonObject());
+        jsonObject.add("BL", BL.toJsonObject());
+        jsonObject.add("BR", BR.toJsonObject());
+        jsonObject.add("TLIBack", TLIBack.toJsonObject());
+        jsonObject.add("TRIBack", TRIBack.toJsonObject());
+        jsonObject.add("BLIBack", BLIBack.toJsonObject());
+        jsonObject.add("BRIBack", BRIBack.toJsonObject());
+        jsonObject.addProperty("isCardBack", isCardBack);
+        jsonObject.addProperty("indexOnTheBoard", indexOnTheBoard);
+        if (node != null) {
+            jsonObject.add("node", node.toJsonObject());
+        }
+        return jsonObject;
+    }
+
+    public static InitialCard fromJsonObject(JsonObject jsonObject) {
+        int id = jsonObject.get("id").getAsInt();
+        SpecificSeed type = SpecificSeed.valueOf(jsonObject.get("type").getAsString());
+        Corner TL = Corner.fromJsonObject(jsonObject.getAsJsonObject("TL"));
+        Corner TR = Corner.fromJsonObject(jsonObject.getAsJsonObject("TR"));
+        Corner BL = Corner.fromJsonObject(jsonObject.getAsJsonObject("BL"));
+        Corner BR = Corner.fromJsonObject(jsonObject.getAsJsonObject("BR"));
+        Corner TLIBack = Corner.fromJsonObject(jsonObject.getAsJsonObject("TLIBack"));
+        Corner TRIBack = Corner.fromJsonObject(jsonObject.getAsJsonObject("TRIBack"));
+        Corner BLIBack = Corner.fromJsonObject(jsonObject.getAsJsonObject("BLIBack"));
+        Corner BRIBack = Corner.fromJsonObject(jsonObject.getAsJsonObject("BRIBack"));
+        boolean isCardBack = jsonObject.get("isCardBack").getAsBoolean();
+        InitialCard initialCard = new InitialCard(id, type, 0, TL, TR, BL, BR, TLIBack, TRIBack, BLIBack, BRIBack, null);
+        initialCard.setCardBack(isCardBack);
+        if (jsonObject.has("node")) {
+            initialCard.setNode(Node.fromJsonObject(jsonObject.getAsJsonObject("node")));
+        }
+        if (jsonObject.has("indexOnTheBoard")) {
+            initialCard.setIndexOnTheBoard(jsonObject.get("indexOnTheBoard").getAsInt());
+        }
+        return initialCard;
     }
 }
 

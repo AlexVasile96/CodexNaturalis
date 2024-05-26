@@ -4,20 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Revert commit">
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Persistence for cli">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/InitialCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/card/InitialCard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Corner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Corner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Node.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/client/ServerConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/ServerConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/server/ServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/server/ServerMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/ClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ClientView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +86,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.CliClientApp">
+  <component name="RunManager" selected="Application.GUI">
     <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="network.client.cli.CliClientApp" />
       <module name="proj" />
@@ -232,8 +230,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.CliClientApp" />
         <item itemvalue="Application.GUI" />
+        <item itemvalue="Application.CliClientApp" />
         <item itemvalue="Application.Codex" />
         <item itemvalue="Application.ServerMain" />
         <item itemvalue="JUnit.StairsObjectiveCardTest" />
@@ -270,7 +268,7 @@
       <workItem from="1716707832607" duration="9366000" />
       <workItem from="1716728555303" duration="10498000" />
       <workItem from="1716745152108" duration="469000" />
-      <workItem from="1716750020925" duration="7769000" />
+      <workItem from="1716750020925" duration="15360000" />
     </task>
     <task id="LOCAL-00001" summary="English translation">
       <option name="closed" value="true" />
@@ -384,7 +382,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716744860928</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Persistence for cli">
+      <option name="closed" value="true" />
+      <created>1716757904650</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1716757904650</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -413,7 +419,8 @@
     <MESSAGE value="commit to pietro" />
     <MESSAGE value="NumOfCoveredCornersUpdate" />
     <MESSAGE value="Revert commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revert commit" />
+    <MESSAGE value="Persistence for cli" />
+    <option name="LAST_COMMIT_MESSAGE" value="Persistence for cli" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -430,32 +437,32 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/game/Game.java</url>
-          <line>199</line>
+          <line>201</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/game/Game.java</url>
-          <line>200</line>
+          <line>202</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java</url>
-          <line>163</line>
+          <line>164</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java</url>
-          <line>157</line>
+          <line>158</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java</url>
-          <line>172</line>
+          <line>173</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/model/game/Game.java</url>
-          <line>198</line>
+          <line>200</line>
           <properties class="model.game.Game" method="showCards">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

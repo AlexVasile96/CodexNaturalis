@@ -1,5 +1,6 @@
 package network.server;
 
+import com.google.gson.JsonObject;
 import controller.GameController;
 import controller.TurnController;
 import exceptions.ParametersNotValidException;
@@ -99,10 +100,10 @@ public class HandlingPlayerInputsThread implements Runnable {
                     }
                 }
                 else{
+
                 currentPlayer= game.loadCurrentPlayingPlayerFromJson();
                 System.out.println("Current player after loading data is " + currentPlayer.getNickName());
                 game.loadGameStatusFromJson();
-                game.addPersistedPlayer(threadPlayer);
                 sendMessageToAllClients(currentPlayer.getNickName());
                 sendMessageToAllClients("endturn");
                 }
@@ -192,9 +193,12 @@ public class HandlingPlayerInputsThread implements Runnable {
                 int giacomo= gameController.loadGameSizeFromJson();
                 System.out.println("Giacomo is: " + giacomo);
                 gameController.setSize(gameController.loadGameSizeFromJson());
-                System.out.println("Size risettata: "+ gameController.getSize());
                 GameController.setHowManyPlayersDoIHave(GameController.getHowManyPlayersDoIHave()+1);
                 gameController = lobby.login(request, out);
+                JsonObject clientViewJson = player.getClientView().toJsonObject();
+                out.println(clientViewJson.toString());
+                game.addPlayer(player); // Aggiungi il giocatore alla lista dei giocatori del gioco
+                handlingTurns(playersList);
                 if(GameController.getHowManyPlayersDoIHave()==gameController.getSize())
                 {
                     synchronized (this)
@@ -411,11 +415,12 @@ public class HandlingPlayerInputsThread implements Runnable {
                         } else rightCard= true;
                         System.out.println(cornerChosen);
                         gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
-                        System.out.println("DEBUG-> SECOND GAME CONTROLLER");
                     }while (!rightCard);
                     forClientView.append("\n(" + chosenCard.getNode().getCoordY() + " " + chosenCard.getNode().getCoordX() + ")");
                     sendMessageToAllClients(String.valueOf(forClientView));
-                    System.out.println("sONO QUA");
+                    String resultForClientViewInGame= stdIn.readLine();
+                    player.getClientView().addCardOnTheBoard(resultForClientViewInGame); // Aggiornamento della ClientView
+                    player.getClientView().update(player);
                     messageFromClient = stdIn.readLine();
                     System.out.println("message from client->" + messageFromClient);//showWell
                     runCommand(messageFromClient, player);

@@ -1,4 +1,6 @@
 package network.client;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import exceptions.OperationCancelledException;
 import model.game.*;
 import view.ClientView;
@@ -296,6 +298,7 @@ public class ServerConnection implements Runnable {
         in.readLine(); // Read the space line
         updatingView(firstCard, secondCard, thirdCard); // Update the view with the new cards
 
+
         // Print the player's cards
         for (String s : player.getClientView().getPlayerStringCards()) {
             System.out.println(s);
@@ -525,6 +528,8 @@ public class ServerConnection implements Runnable {
         String coordinateTL = in.readLine(); // Receive the coordinates of the top-left corner
         // Add the newly placed card to the player's view of the board
         player.getClientView().addCardOnTheBoard((numCardsOnBoard + 1) + "->" + typeCard + ": " + coordinateTL + " " + isBack);
+        String newCard=(numCardsOnBoard + 1) + "->" + typeCard + ": " + coordinateTL + " " + isBack;
+        out.println(newCard);
         player.getClientView().setNumOfCardsOnTheBoard(numCardsOnBoard + 1); // Increment the number of cards on the board
 
         // Draw a new card and calculate the player's current points
@@ -962,6 +967,13 @@ public class ServerConnection implements Runnable {
                 System.out.println("Welcome back, " + loginName + "! Your data has been loaded.");
                 clientView.setUserName(loginName); // Set the username in client view
                 player.getClientView().setUserName(loginName); // Set the username in player model
+                String clientViewJsonString = in.readLine();
+                JsonObject clientViewJson = JsonParser.parseString(clientViewJsonString).getAsJsonObject();
+                ClientView clientView = ClientView.fromJsonObject(clientViewJson);
+                player.setClientView(clientView);
+                System.out.println(player.getClientView());
+                System.out.println("Cards on the board: " + clientView.getCardsOnTheBoard());
+                System.out.println(clientView.getNumOfCardsOnTheBoard());
                 waitForGameStart();
                 return;
             } else isTheNameAlreadyTaken = true; // Sets the flag to true if the username is available

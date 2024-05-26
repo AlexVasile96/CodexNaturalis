@@ -92,7 +92,6 @@ public class Command { //Command Client sends to Server
             case "firstCardGoldGui":
                 return game.getFirstCardOfGoldDeck();
             case "status":
-                System.out.println(game.getCurrentPlayer());
                 return String.valueOf(game.getCurrentPlayingPLayer().getPlayerScore());
             case "quit":
                 game.runEndTurn(player);
