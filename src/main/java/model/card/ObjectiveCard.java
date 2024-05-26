@@ -7,6 +7,7 @@ import model.game.SpecificSeed;
 
 public class ObjectiveCard extends Card{
     private int value;
+    private SpecificSeed type;
     private int id;
     private SpecificSeed specificSeedType;
     private int numberOfWhenTheGameEnds;
@@ -15,6 +16,7 @@ public class ObjectiveCard extends Card{
     public ObjectiveCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, int numberOfWhenTheGameEnds, ObjectiveSpecificTypeOfCard objectiveSpecificTypeOfCard) {
         super(id, type, value, TL, TR, BL, BR);
         this.value = value;
+        this.specificSeedType = type;
         this.id = id;
         this.numberOfWhenTheGameEnds = numberOfWhenTheGameEnds;
         this.objectiveSpecificTypeOfCard = objectiveSpecificTypeOfCard;

@@ -142,13 +142,18 @@ public class Game{
         StringBuilder finalText = new StringBuilder();
         finalText.append("The Game is Over\n");
         System.out.println("/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\nUpdating each player points to see who is the real winner!");
+        System.out.println(players);
         for (Player player : players) {
+            System.out.println("Calcolando punti per " + player);
             System.out.println(player.getNickName());
             System.out.println(player.getPlayerScore());
             ObjectiveCard secretCard = player.getSecretChosenCard();
-            player.getBoard().createSpecificSecretCard(secretCard, player);
+            System.out.println("secret");
+            player.getBoard().createSpecificSecretCard(secretCard, player); //secret player card
             player.getBoard().createSpecificSecretCard(firstObjectiveCommonCard, player);
+            System.out.println("common1");
             player.getBoard().createSpecificSecretCard(secondObjectiveCommonCard, player);
+            System.out.println("common2");
             System.out.println(player.getPlayerScore());
         }
         Player winner = calculateWinner(players);
@@ -164,11 +169,13 @@ public class Game{
         }
         finalText.append("exit");
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
+        System.out.println(finalText);
         return String.valueOf(finalText);
     }
 
     public Player calculateWinner(List<Player> players) {               //Calculating who has the highest score
-        Player winner = null;
+        Player winner = currentPlayingPLayer;
+        System.out.println(winner);
         int highestScore = currentPlayingPLayer.getPlayerScore();
         for (Player player : players) {
             int playerScore = player.getPlayerScore();

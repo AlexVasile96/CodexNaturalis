@@ -163,35 +163,37 @@ public class Board {
 
 
     //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
-    public ExtendExtendExtend createSpecificSecretCard(ObjectiveCard card, Player player) {
-        String specificSeedObjective= String.valueOf(card.getObjectiveSpecificTypeOfCard());
-        if(specificSeedObjective.equals("STAIRS")){
-            StairsObjectiveCard stairsObjectiveCard=new StairsObjectiveCard();
-            stairsObjectiveCard.checkPattern(this, card.getType(), player);
-        }
-        if(specificSeedObjective.equals("L"))
-        {
-            LObjectiveCard lObjectiveCard=new LObjectiveCard();
-            lObjectiveCard.checkPattern(this, card.getType(), player);
-        }
-        if(specificSeedObjective.equals("MIX")) {
+    public boolean createSpecificSecretCard(ObjectiveCard card, Player player) {
+        String specificSeedObjective = String.valueOf(card.getObjectiveSpecificTypeOfCard());
+        boolean finalResult;
 
-            MixObjectiveCard mixObjectiveCard=new MixObjectiveCard();
-            mixObjectiveCard.checkPattern(this, card.getType(), player);
+        switch (specificSeedObjective) {
+            case "STAIRS":
+                StairsObjectiveCard stairsObjectiveCard = new StairsObjectiveCard();
+                finalResult = stairsObjectiveCard.checkPattern(this, card.getType(), player);
+                break;
+            case "L":
+                LObjectiveCard lObjectiveCard = new LObjectiveCard();
+                finalResult = lObjectiveCard.checkPattern(this, card.getType(), player);
+                break;
+            case "MIX":
+                MixObjectiveCard mixObjectiveCard = new MixObjectiveCard();
+                finalResult = mixObjectiveCard.checkPattern(this, card.getType(), player);
+                break;
+            case "TRIS":
+                TrisObjectiveCard trisObjectiveCard = new TrisObjectiveCard();
+                finalResult = trisObjectiveCard.checkPattern(this, card.getType(), player);
+                break;
+            case "BIS":
+                BisObjectiveCard bisObjectiveCard = new BisObjectiveCard();
+                finalResult = bisObjectiveCard.checkPattern(this, card.getType(), player);
+                break;
+            default:
+                finalResult = false;
+                break;
         }
-        if(specificSeedObjective.equals("TRIS"))
-        {
 
-            TrisObjectiveCard trisObjectiveCard=new TrisObjectiveCard();
-            trisObjectiveCard.checkPattern(this, card.getType(), player);
-        }
-        if(specificSeedObjective.equals("BIS"))
-        {
-            BisObjectiveCard bisObjectiveCard=new BisObjectiveCard();
-            bisObjectiveCard.checkPattern(this, card.getType(), player);
-        }
-
-        return null;
+        return finalResult;
     }
 
 

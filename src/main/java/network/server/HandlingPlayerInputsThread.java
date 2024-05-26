@@ -94,7 +94,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 {
                     noPersistenceLogin();
                     for (Player player : playersList) {
-                        player.setPlayerScore(0);
+                        player.setPlayerScore(19);
                     }
                 }
 
@@ -140,7 +140,8 @@ public class HandlingPlayerInputsThread implements Runnable {
             if(currentPlayer.isHasThePlayerGot20Points() ){//stampa esiti
                 System.out.println("------------\nEND OF GAME!\n------------");
                 sendMessageToAllClients("END OF GAME!");
-                sendMessageToAllClients("ci siamo!!");
+                runCommand("endgame",currentPlayer);
+                //sendMessageToAllClients("ci siamo!!");
                 stdIn.readLine();//quit
                 sendMessageToAllClients("ALL_CLIENTS_QUIT");
                 isGameQuit = true;

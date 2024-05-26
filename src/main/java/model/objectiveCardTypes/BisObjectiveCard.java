@@ -14,7 +14,7 @@ public class BisObjectiveCard implements ExtendExtendExtend {
      */
     @Override
     public boolean checkPattern(Board board, SpecificSeed seed, Player player) {
-
+        System.out.println("Specific seed is "+ seed);
         //Getting number of the SpecificSeed
         if (countNumbersOfSpecificSeed(board, seed) >= 2) {
             //update player's score
@@ -23,6 +23,7 @@ public class BisObjectiveCard implements ExtendExtendExtend {
             System.out.println("Player score: " + player.getPlayerScore());
             return true;
         }else{
+            System.out.println("You don't have enough points!");
             return false;
         }
     }
@@ -33,7 +34,7 @@ public class BisObjectiveCard implements ExtendExtendExtend {
     private int countNumbersOfSpecificSeed(Board board, SpecificSeed seed){
         BoardPoints boardPoints = new BoardPoints();
         Map<SpecificSeed, Integer> seedCountMap = boardPoints.countPoints(board);
-        return seedCountMap.get(seed);
+        return seedCountMap.getOrDefault(seed, 0);
     }
 
     /*
