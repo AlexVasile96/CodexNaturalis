@@ -34,6 +34,7 @@ public class ResourceCardConstructor implements CardConstructor{
                 Corner BL= new Corner(bottomLeft,0,0,type);
                 Corner BR= new Corner(bottomRight,0,0,type);
                 Card cards = new Card(id, type, value, TL, TR, BL, BR);                 //creating all the resource cards
+
                 resourceCardsList.add(cards);                                           //adding card to the arraylist previously created
             }
             reader.close();

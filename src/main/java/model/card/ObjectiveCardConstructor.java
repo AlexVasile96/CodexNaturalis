@@ -25,6 +25,7 @@ public class ObjectiveCardConstructor {
                 JSONObject card = mazzoObjective.getJSONObject(i);
                 int id = card.getInt("id"); //card id
                 SpecificSeed type = SpecificSeed.valueOf(card.getString("type")); //card specific seed (plant,animal...)
+                System.out.println(type);
                 int value = card.getInt("value"); //these are the points that the card will have when placed
                 SpecificSeed topLeft = SpecificSeed.valueOf(card.getString("TL")); //get the top left corner attribute
                 SpecificSeed topRight = SpecificSeed.valueOf(card.getString("TR")); //get the top right corner attribute
@@ -37,6 +38,7 @@ public class ObjectiveCardConstructor {
                 int numberOfWhenTheGameEnds = card.getInt("numberOfWhenTheGameEnds"); //card id
                 ObjectiveSpecificTypeOfCard objectiveSpecificTypeOfCard = ObjectiveSpecificTypeOfCard.valueOf(card.getString("objectiveSpecificTypeOfCard")); //card specific seed (plant,animal...)
                 ObjectiveCard cards = new ObjectiveCard(id,type,value,TL,TR, BL, BR, numberOfWhenTheGameEnds,objectiveSpecificTypeOfCard); //creating all the resource cards
+                System.out.println(cards);
                 objectiveCardList.add(cards); //adding card to th arraylist previously created
             }
 

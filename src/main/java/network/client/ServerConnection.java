@@ -143,11 +143,13 @@ public class ServerConnection implements Runnable {
             } else if (waitForCall.equals("END OF GAME!")) {
                 System.out.println("------------\nEND GAME\n------------");
                 waitForCall = in.readLine();
-                // Print the final messages from the server
-                System.out.println(waitForCall);
-
-                // If all clients have quit
-            } else if (waitForCall.equals("ALL_CLIENTS_QUIT")) {
+                do{
+                    System.out.println(waitForCall);
+                    waitForCall = in.readLine();
+               }while (!waitForCall.equals("exit"));
+            }
+            else if(waitForCall.equals("ALL_CLIENTS_QUIT"))
+            {
                 in.readLine();
                 System.out.println("One client decided to quit, so the game will end for everyone!");
                 in.close(); // Close the input stream
@@ -180,6 +182,12 @@ public class ServerConnection implements Runnable {
         // Check if the game should end for the winning player
         if (endGameForWinningPlayer) {
             System.out.println("------------\nEND GAME\n------------");
+            String waitForCall = in.readLine();
+            do{
+                System.out.println(waitForCall);
+                waitForCall = in.readLine();
+            }while (!waitForCall.equals("exit"));
+            quit();
             in.readLine();
             System.out.println(in.readLine());
             quit(); // Quit the game

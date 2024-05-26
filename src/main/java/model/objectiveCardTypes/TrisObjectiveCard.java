@@ -22,11 +22,11 @@ public class TrisObjectiveCard implements ExtendExtendExtend {
 /*
 Get the number of given SpecificSeed on the board
  */
-    public int countNumbersOfSpecificSeed(Board board, SpecificSeed seed){
-        BoardPoints boardPoints = new BoardPoints();
-        Map<SpecificSeed, Integer> seedCountMap = boardPoints.countPoints(board);
-        return seedCountMap.get(seed);
-    }
+private int countNumbersOfSpecificSeed(Board board, SpecificSeed seed){
+    BoardPoints boardPoints = new BoardPoints();
+    Map<SpecificSeed, Integer> seedCountMap = boardPoints.countPoints(board);
+    return seedCountMap.getOrDefault(seed, 0);
+}
 
 /*
 Add 2 points for every triplet of the given SpecificSeed to player's score
