@@ -42,7 +42,6 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static HandlingPlayerInputsThread thirdClient = null;
     private static HandlingPlayerInputsThread fourthClient = null;
     private static CountDownLatch setupLatch;
-    private static int updateOrder = 0;
     private static volatile boolean isGameQuit = false;
     boolean allPlayersLoaded = false;
     private boolean clientPersisted=false;
@@ -53,7 +52,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         this.clientSocket = socket;
         stdIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new PrintWriter(clientSocket.getOutputStream(), true);
-        this.playersList = playersinTheGame;
+        playersList = playersinTheGame;
         this.clients = clients;
         synchronized (HandlingPlayerInputsThread.class) {
             if (gameController == null) {
@@ -141,6 +140,9 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
 
+    /**
+     * Method that handles all clients input and ste the endgame when one player gets 20 points
+     */
 
         private void startGame() throws IOException, InterruptedException {
         String messageFromClient;
@@ -150,7 +152,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                 System.out.println("------------\nEND OF GAME!\n------------");
                 sendMessageToAllClients("END OF GAME!");
                 runCommand("endgame",currentPlayer);
-                //sendMessageToAllClients("ci siamo!!");
                 stdIn.readLine();//quit
                 sendMessageToAllClients("ALL_CLIENTS_QUIT");
                 isGameQuit = true;
@@ -176,13 +177,18 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
 
+    /**
+     * Method that handles the clients login in persisted and not persisted mode
+     * @return the player correctly logged
+     */
+
     private synchronized Player loginEachClient() throws IOException, InterruptedException {
         Player player = null;
         try {
             sendMessageToClient("Hello!! You have to log in, please type your username");
             String request = stdIn.readLine();
 
-            player = game.loadPlayer(request); //If the player exists, i load him
+            player = game.loadPlayer(request); //If the player exists, I load him
             if (player != null) {
                 clientPersisted=true;
                 sendMessageToClient("Welcome back, " + request + "! Your data has been loaded.");
@@ -190,15 +196,13 @@ public class HandlingPlayerInputsThread implements Runnable {
                 threadPlayer = player;
                 List<String> expectedPlayerNicknames =game.loadPlayerNicknames(); //Checking if all the players had been added correctly
                 allPlayersLoaded = game.areAllPlayersLoaded(expectedPlayerNicknames);
-                int giacomo= gameController.loadGameSizeFromJson();
-                System.out.println("Giacomo is: " + giacomo);
                 gameController.setSize(gameController.loadGameSizeFromJson());
                 GameController.setHowManyPlayersDoIHave(GameController.getHowManyPlayersDoIHave()+1);
                 gameController = lobby.login(request, out);
                 JsonObject clientViewJson = player.getClientView().toJsonObject();
-                out.println(clientViewJson.toString());
-                game.addPlayer(player); // Aggiungi il giocatore alla lista dei giocatori del gioco
-                handlingTurns(playersList);
+                out.println(clientViewJson.toString()); //Sending the clientview to the specific client
+                game.addPlayer(player); // Adding the player to playerlist
+                handlingTurns(playersList); //Handling new turns
                 if(GameController.getHowManyPlayersDoIHave()==gameController.getSize())
                 {
                     synchronized (this)
@@ -214,9 +218,11 @@ public class HandlingPlayerInputsThread implements Runnable {
                         System.out.println("Manca un player");
                         wait();
                     }
-                    return  player;
+                    return player;
                 }
             }
+
+            //Correct handling if one player tries to set a name that had already been chosen
 
             while (isUsernameTaken(request)) {
                 sendMessageToClient("Username already taken. Please choose another username:");
@@ -240,14 +246,16 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("Current numb of players: " + gameController.getCurrentNumsOfPlayers());
             int size = setGameSize(player);
             System.out.println(size);
-
-
         } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
             System.err.println(e.getMessage());
         }
         System.out.println(gameController);
         return player;
     }
+
+    /**
+     * Method to assign the initial card to each player
+     */
 
     private synchronized void assigningSecretCard() throws IOException {
         List<ObjectiveCard> secretCards = new ArrayList<>();
@@ -276,6 +284,11 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
 
+    /**
+     * method to set the correct game size. Only the first client can set the number of players, other clients will wait until he has finished
+     * @param player-> i'll add him to the playerlist if the login goes well
+     */
+
     private synchronized int setGameSize(Player player) throws NoSuchElementException, InterruptedException {
         synchronized (lock) {
             if (numPlayers == -1 && this == firstClient) {
@@ -290,7 +303,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     setupLatch = new CountDownLatch(numPlayers); // Inizializza il CountDownLatch con il numero di giocatori scelto
                     currentPlayer=this.getThreadPlayer();
                     playersList.add(player);
-                    lock.notifyAll(); // Notifica tutti i client in attesa
+                    lock.notifyAll(); // unlocking all the clients waiting
                 } catch (NumberFormatException ex) {
                     sendMessageToClient("Game's number of players must be an integer.");
                 } catch (Exception ex) {
@@ -303,7 +316,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 sendMessageToClient("There's already someone online! Please wait");
                 while (numPlayers == -1) {
                     try {
-                        lock.wait(); // Attende finché il numero di giocatori non è impostato
+                        lock.wait(); // Waiting until gamesiz is set
 
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
@@ -340,12 +353,10 @@ public class HandlingPlayerInputsThread implements Runnable {
                 case"updateLoggedPlayers"->{
                     gameController.setLogginPlayers(gameController.getLogginPlayers()+1);
                     sendMessageToAllClients("Login Players updated correctly");
-                    break;
                 }
                 case"howManyPlayers"->{
                     int size= gameController.getLogginPlayers();
                     sendMessageToAllClients(String.valueOf(size));
-                    break;
                 }
                 case"SETUPFINISHED"->{
                     sendMessageToAllClients("SETUPFINISHED");
@@ -356,11 +367,10 @@ public class HandlingPlayerInputsThread implements Runnable {
                     String currentPlayerName = game.getCurrentPlayer();
                     System.out.println("Current Player Name set to: " + currentPlayerName);
                     sendMessageToAllClients(currentPlayerName);
-                    game.nextTurn(); // Avanza al turno successivo
+                    game.nextTurn(); // Setting the next turn
                     String nextPlayer = game.getCurrentPlayer();
                     System.out.println("Next Player is: " + nextPlayer);
                     sendMessageToAllClients(nextPlayer);
-                    break;
                 }
                 case "endTurn" -> {
                     endTurn(player, turnController);
@@ -368,7 +378,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 }
                 case "playCard" -> {
                     int cardChosenFromHisDeck;
-                    boolean turnedCardAlredy = false;
+                    boolean turnedCardAlready = false;
                     StringBuilder forClientView = new StringBuilder();
                     do {
                         cardChosenFromHisDeck = Integer.parseInt(stdIn.readLine());
@@ -382,17 +392,17 @@ public class HandlingPlayerInputsThread implements Runnable {
                             gameController.readCommand("showYourSpecificSeed", player, 0, 0, null);
                             messageFromClient = stdIn.readLine();
                             if (messageFromClient.equals("2")) {
-                                System.out.println("il player vuole girare la carta");
+                                System.out.println("Player wants to turn his card");
                                 gameController.readCommand("TurnCard", player, cardChosenFromHisDeck, 0, null);
-                                turnedCardAlredy = true;
+                                turnedCardAlready = true;
                             }
                         }
-                    } while (!player.checkingTheChosenCardForGoldPurpose(cardChosenFromHisDeck) && !turnedCardAlredy);
+                    } while (!player.checkingTheChosenCardForGoldPurpose(cardChosenFromHisDeck) && !turnedCardAlready);
                     Card chosenCard = player.chooseCard(cardChosenFromHisDeck);
                     if (chosenCard instanceof GoldCard) {
                         forClientView.append("Gold Card\n");
                     } else forClientView.append("Resource Card\n");
-                    if (!turnedCardAlredy) {
+                    if (!turnedCardAlready) {
                         messageFromClient = stdIn.readLine();
                         if (messageFromClient.equals("1")) {
                             System.out.println("PLayer wants to turn his card!");
@@ -401,7 +411,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                         } else forClientView.append("(front)");
                     } else forClientView.append("(back)");
 
-                    //ciclo scelta carta sulla board
+                    //For cicle to chose the correct card
                     int boardCardChosen;
                     boolean rightCard;
                     do {
@@ -428,12 +438,9 @@ public class HandlingPlayerInputsThread implements Runnable {
                     messageFromClient = stdIn.readLine();
                     System.out.println("message from client->" + messageFromClient);//drawCard;
                     runCommand(messageFromClient, player);
-
-                    System.out.println("due richieste prima dell'endgame");
                     messageFromClient = stdIn.readLine();
                     System.out.println("message from client->" + messageFromClient);//stTUS
                     runCommand(messageFromClient, player);
-                    System.out.println("Giusto prima dell'endgame");
                     //endgame
                     if (currentPlayer.getPlayerScore() >= 20 && !game.isEndGame()) {
                         game.setEndGame(true);
@@ -491,8 +498,6 @@ public class HandlingPlayerInputsThread implements Runnable {
             return;
         }
         turnController = new TurnController(playerList);
-        System.out.println("Questo è l'ordine dei giocatori:");
-        //System.out.println(turnController.getPlayers());
         currentPlayer = turnController.getCurrentPlayer();
         System.out.println("First player is " + currentPlayer);
         game.setCurrentPlayingPLayer(currentPlayer);
@@ -569,20 +574,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private void notifyClientSetupComplete() {
         setupLatch.countDown();
     }
-    public synchronized void incrementUpdateOrder() {
-        updateOrder++;
-        notifyAll();
-    }
 
-    public synchronized int getUpdateOrder() {
-        return updateOrder;
-    }
-
-    public synchronized void waitForTurn(int clientOrder) throws InterruptedException {
-        while (updateOrder < clientOrder) {
-            wait();
-        }
-    }
     private boolean isUsernameTaken(String username) {
         for (Player player : playersList) {
             if (player.getNickName().equals(username)) {
@@ -597,7 +589,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         clients.remove(this);
         if (threadPlayer != null) {
             playersList.remove(threadPlayer);
-            gameController.removePlayer(threadPlayer); // Chiama il metodo removePlayer del GameController
+            gameController.removePlayer(threadPlayer);
         }
         closeResources();
 
@@ -606,12 +598,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     public Player getThreadPlayer() {
         return threadPlayer;
     }
-    public synchronized void sendQuitMessageToAllClients() {
-        for (HandlingPlayerInputsThread client : clients) {
-            client.sendMessageToClient("ALL_CLIENTS_QUIT");
-        }
-        isGameQuit = true;
-    }
+
     private void closeResources() {
         try {
             if (stdIn != null) {
