@@ -4,20 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="NumOfCoveredCornersUpdate">
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Endgaame For cli + debugged objectivecardstype">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/ObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/card/ObjectiveCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/ObjectiveCardConstructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/card/ObjectiveCardConstructor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/ResourceCardConstructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/card/ResourceCardConstructor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/BoardPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/BoardPoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/BisObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/BisObjectiveCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/TrisObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/TrisObjectiveCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/ServerConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/ServerConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +80,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.CliClientApp">
     <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="network.client.cli.CliClientApp" />
       <module name="proj" />
@@ -233,8 +225,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.CliClientApp" />
-        <item itemvalue="Application.GUI" />
         <item itemvalue="Application.Codex" />
+        <item itemvalue="Application.GUI" />
         <item itemvalue="Application.ServerMain" />
         <item itemvalue="JUnit.StairsObjectiveCardTest" />
       </list>
@@ -268,7 +260,7 @@
       <workItem from="1716644611825" duration="10000" />
       <workItem from="1716644633682" duration="5794000" />
       <workItem from="1716707832607" duration="9366000" />
-      <workItem from="1716728555303" duration="10498000" />
+      <workItem from="1716728555303" duration="13983000" />
     </task>
     <task id="LOCAL-00001" summary="English translation">
       <option name="closed" value="true" />
@@ -366,7 +358,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716733505863</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Endgaame For cli + debugged objectivecardstype">
+      <option name="closed" value="true" />
+      <created>1716739664599</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1716739664599</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -394,7 +394,8 @@
     <MESSAGE value="Not to be placed on" />
     <MESSAGE value="commit to pietro" />
     <MESSAGE value="NumOfCoveredCornersUpdate" />
-    <option name="LAST_COMMIT_MESSAGE" value="NumOfCoveredCornersUpdate" />
+    <MESSAGE value="Endgaame For cli + debugged objectivecardstype" />
+    <option name="LAST_COMMIT_MESSAGE" value="Endgaame For cli + debugged objectivecardstype" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -55,7 +55,7 @@ public class Game{
         objectiveDeck.shuffle();
 
         initializeDots();
-        initializewell();
+        initializeWell();
         commonObjectiveCards();
 
     }
@@ -134,8 +134,8 @@ public class Game{
     }
 
     public void turnCard(Player player, int cardIndex){
-        Card cartaScelta =player.getPlayerCards().get(cardIndex);
-        player.turnYourCard(cartaScelta);
+        Card chosenCard =player.getPlayerCards().get(cardIndex);
+        player.turnYourCard(chosenCard);
     }
 
     public String endGame() {
@@ -206,48 +206,68 @@ public class Game{
     }
 
 
+    /**
+     *Method to visualize the common objective cards in the Game.
+     */
 
-    public String visualizeCommonObjective(Player player) {
+    public String visualizeCommonObjective() {
         StringBuilder cardsAsString = new StringBuilder();
         cardsAsString.append(firstObjectiveCommonCard.toString()).append("\n");
         cardsAsString.append(secondObjectiveCommonCard.toString());
-        return String.valueOf(cardsAsString); //ritorna stringa
+        return String.valueOf(cardsAsString);
     }
 
+    /**
+     *Method to visualize the first common objective card in the Game.
+     */
     public synchronized String firstCommonObjectiveCardId() {
         int id = firstObjectiveCommonCard.getId();
         System.out.println(id);
         return String.valueOf(id);
     }
 
+    /**
+     *Method to visualize the second common objective card in the Game.
+     */
+
     public synchronized String secondCommonObjectiveCardId() {
         int id = secondObjectiveCommonCard.getId();
         return String.valueOf(id);
     }
 
-
+    /**
+     *Method to visualize the player's secret objective card.
+     */
 
     public String visualizeSecretObjective(Player player) {
         return String.valueOf(player.getSecretChosenCard());
     }
+
+    /**
+     *Method to visualize the player's board.
+     */
 
 
     public String showBoard(Player player) {
         return player.getBoard().printBoardForServer();
     }
 
+    /**
+     *Method to visualize the players' boards.
+     */
+
     public String showAllPlayersBoard() {
         StringBuilder stamp = new StringBuilder();
-        for (Player playerz : players) {
+        for (Player playersInTheGame : players) {
             stamp.append("////////////////////////////////// INIZIO BOARD: ");
-            stamp.append(playerz.getNickName());
+            stamp.append(playersInTheGame.getNickName());
             stamp.append(" //////////////////////////////////////////");
             stamp.append("\n");
-            String point = showPoints(playerz);
+            String point = showPoints(playersInTheGame);
             stamp.append("Current points: ");
             stamp.append(point);
             stamp.append("\n");
-            String bord = playerz.getBoard().printBoardForServer();
+            String bord = playersInTheGame.getBoard().printBoardForServer();
             stamp.append(bord.replace("fine board", "\n"));
             stamp.append("////////////////////////////////// FINE BOARD ////////////////////////////////////////////");
             stamp.append("\n");
@@ -255,6 +275,10 @@ public class Game{
         stamp.append("exit");
         return String.valueOf(stamp);
     }
+
+    /**
+     * Method to send the first id of the well to the gui
+     */
 
     public synchronized String sendWellIdFirstToGui() {
         try {
@@ -269,6 +293,10 @@ public class Game{
         }
     }
 
+    /**
+     * Method to send the second id of the well to the gui
+     */
+
     public synchronized String sendWellIdSecondToGui() {
         try {
             semaphore.acquire();
@@ -282,6 +310,10 @@ public class Game{
         }
     }
 
+    /**
+     * Method to send the third id of the well to the gui
+     */
+
     public synchronized String sendWellIdThirdToGui() {
         try {
             semaphore.acquire();
@@ -294,6 +326,10 @@ public class Game{
             semaphore.release();
         }
     }
+
+    /**
+     * Method to send the fourth id of the well to the gui
+     */
 
     public synchronized String sendWellIdFourthToGui() {
         try {
@@ -358,17 +394,13 @@ public class Game{
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
         currentPlayingPLayer = players.get(currentPlayerIndex);
         currentPlayer=currentPlayingPLayer.getNickName();
-        System.out.println("Turno del giocatore: " + currentPlayingPLayer.getNickName());
+        System.out.println("Now it's time for " + currentPlayingPLayer.getNickName() + " to play!");
     }
 
 
-    public String showBoardForPlacingCards(Player player) {
-        return player.getBoard().printBoardForServer();
-    }
-
-    public String showAvaiableCorners(Player player, int cardindex, int cardChosenOnTheBoard) {
+    public String showAvailableCorners(Player player, int cardIndex, int cardChosenOnTheBoard) {
         InitialCard initialCard = (InitialCard) player.getBoard().getCardsOnTheBoardList().getFirst();
-        selectedCardFromTheDeck = player.checkingTheChosencard(cardindex);
+        selectedCardFromTheDeck = player.checkingTheChosencard(cardIndex);
         cPchoose = player.gettingCardsFromTheBoard(player.getBoard(), cardChosenOnTheBoard);
         String result = player.isTheCardChosenTheInitialcard(cPchoose, initialCard);
         System.out.println(result);
@@ -453,11 +485,6 @@ public class Game{
     }
 
 
-    public void requestGameInfo(Player player) {
-
-    }
-
-
     public List<Player> getPlayers() {
         return players;
     }
@@ -514,11 +541,11 @@ public class Game{
         this.currentPlayer = currentPlayer;
     }
 
-    public int CardsIndeck() {
+    public int cardsInDeck() {
         return resourceDeck.leftCardINDeck();
     }
 
-    public int GoldsIndeck() {
+    public int goldsInDeck() {
         return goldDeck.cardLefInDeck();
     }
 
@@ -526,8 +553,8 @@ public class Game{
         return dots;
     }
 
-    public synchronized void removeDot(String stringa) {
-        dots.remove(stringa);
+    public synchronized void removeDot(String string) {
+        dots.remove(string);
     }
 
     public synchronized boolean isInDots(String stringa) {
@@ -540,7 +567,7 @@ public class Game{
 
     //PRIVATE METHODS INSIDE GAME
 
-    private void initializewell() {
+    private void initializeWell() {
         resourceDeck.drawCard(well);
         resourceDeck.drawCard(well);
         goldDeck.drawCard(well);
@@ -580,10 +607,6 @@ public class Game{
     private Path getDefaultCardPath() {
         String home = ("src/main/resources/savecard.json");
         return Paths.get(home);
-    }
-
-    void saveCards() {
-        savePath(getDefaultCardPath());
     }
 
     void savePath(Path path) {                                                   //METHOD TO SAVE CARDS
@@ -648,7 +671,6 @@ void saveEachPlayerInGame(Path path) {
     JsonObject gameState = new JsonObject();
     JsonArray playersArray = new JsonArray();
 
-    // Salva i giocatori
     for (Player player : players) {
         JsonObject playerObject = new JsonObject();
         playerObject.addProperty("nickname", player.getNickName());
@@ -717,22 +739,12 @@ void saveEachPlayerInGame(Path path) {
                     for (JsonElement cardElement : playerDeckArray) {
                         JsonObject cardObject = cardElement.getAsJsonObject();
                         String cardType = cardObject.get("cardType").getAsString();
-                        Card card = null;
-
-                        switch (cardType) {
-                            case "GoldCard":
-                                card = GoldCard.fromJson(cardObject);
-                                break;
-                            case "ResourceCard":
-                                card = ResourceCard.fromJsonObject(cardObject);
-                                break;
-                            case "ObjectiveCard":
-                                card = ObjectiveCard.fromJsonObject(cardObject);
-                                break;
-                            default:
-                                card = Card.fromJson(cardObject);
-                                break;
-                        }
+                        Card card = switch (cardType) {
+                            case "GoldCard" -> GoldCard.fromJson(cardObject);
+                            case "ResourceCard" -> ResourceCard.fromJsonObject(cardObject);
+                            case "ObjectiveCard" -> ObjectiveCard.fromJsonObject(cardObject);
+                            default -> Card.fromJson(cardObject);
+                        };
 
                         if (card != null) {
                             playerDeck.add(card);
@@ -873,18 +885,14 @@ void saveEachPlayerInGame(Path path) {
         try (FileReader reader = new FileReader(path.toString())) {
             JsonObject gameStatus = JsonParser.parseReader(reader).getAsJsonObject();
 
-            // Carica il nome del current player
             currentPlayer = gameStatus.get("currentPlayer").getAsString();
 
-            // Carica le carte rimaste nel resource deck
             JsonArray resourceDeckArray = gameStatus.getAsJsonArray("resourceDeck");
             resourceDeck = ResourceDeck.fromJson(resourceDeckArray);
 
-            // Carica le carte rimaste nel gold deck
             JsonArray goldDeckArray = gameStatus.getAsJsonArray("goldDeck");
             goldDeck = GoldDeck.fromJson(goldDeckArray);
 
-            // Carica le carte presenti nel pozzo (well)
             JsonArray wellArray = gameStatus.getAsJsonArray("well");
             well = new ArrayList<>();
             for (JsonElement element : wellArray) {
@@ -893,7 +901,6 @@ void saveEachPlayerInGame(Path path) {
                 well.add(card);
             }
 
-            // Aggiorna il currentPlayingPlayer
             for (Player player : players) {
                 if (player.getNickName().equals(currentPlayer)) {
                     currentPlayingPLayer = player;
