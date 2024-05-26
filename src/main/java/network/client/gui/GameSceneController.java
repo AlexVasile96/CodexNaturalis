@@ -610,27 +610,42 @@ public class GameSceneController {
                                     break;
                             }
                             // Update the images of the well cards and decks
-                            initializeWell20Points();
-                            String newPath1 = "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard1() + ".png";
-                            Image newImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath1)));
-                            SharedObjectsInGui.getWellCard1View().setImage(newImage1);
-                            String newPath2 = "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard2() + ".png";
-                            Image newImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath2)));
-                            SharedObjectsInGui.getWellCard2View().setImage(newImage2);
-                            String newPath3 = "/ImmaginiCodex/CarteFront/Gold/" + SharedObjectsInGui.getIdCard3() + ".png";
-                            Image newImage3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath3)));
-                            SharedObjectsInGui.getWellCard3View().setImage(newImage3);
-                            String newPath4 = "/ImmaginiCodex/CarteFront/Gold/" + SharedObjectsInGui.getIdCard4() + ".png";
-                            Image newImage4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath4)));
-                            SharedObjectsInGui.getWellCard4View().setImage(newImage4);
 
-                            System.out.println("Arrivo qua prima di crashare");
-                            // Update the top cards of the resource and gold decks
-                            updateResourceDeckTopCard();
-                            updatedGoldDeckTopCard();
-                            haveToDraw = false;
-                            System.out.println("clientView score before: " + clientView.getPlayerScore());
-                            System.out.println("clientView score after: " + clientView.getPlayerScore());
+                            if(clientView.getPlayerScore()>=20){
+                                    System.out.println("Sto aspettando dal server");
+                                    firstWellCard();
+                                    String youSmashed20Points= in.readLine();
+                                    System.out.println(youSmashed20Points);
+                                    String nextPlayer= in.readLine();
+                                    System.out.println(nextPlayer);
+                                    currentPlayerNickname=controller.finalEnd();
+                                    updateTurnState(currentPlayerNickname.equals(clientView.getUserName()));
+                                    haveToPlay = true;
+                                    waitForTurn(handCard1View, handCard2View, handCard3View);
+                                    haveToDraw = false;
+                                    return;
+                            }
+                            else {
+                                initializeWell();
+                                String newPath1 = "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard1() + ".png";
+                                Image newImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath1)));
+                                SharedObjectsInGui.getWellCard1View().setImage(newImage1);
+                                String newPath2 = "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard2() + ".png";
+                                Image newImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath2)));
+                                SharedObjectsInGui.getWellCard2View().setImage(newImage2);
+                                String newPath3 = "/ImmaginiCodex/CarteFront/Gold/" + SharedObjectsInGui.getIdCard3() + ".png";
+                                Image newImage3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath3)));
+                                SharedObjectsInGui.getWellCard3View().setImage(newImage3);
+                                String newPath4 = "/ImmaginiCodex/CarteFront/Gold/" + SharedObjectsInGui.getIdCard4() + ".png";
+                                Image newImage4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPath4)));
+                                SharedObjectsInGui.getWellCard4View().setImage(newImage4);
+
+                                System.out.println("Arrivo qua prima di crashare");
+                                // Update the top cards of the resource and gold decks
+                                updateResourceDeckTopCard();
+                                updatedGoldDeckTopCard();
+                                haveToDraw = false;
+                            }
                         } else {
                             showAlert("Action not allowed", "You have to choose a card to draw");
                         }
@@ -650,6 +665,7 @@ public class GameSceneController {
         /**
          * Sets the action for flipping the selected card to the back.
          */
+
         flipCardToBack.setOnAction(e -> {
             if (isCurrentPlayerTurn) {
                 // Set the card to be flipped to the back
@@ -927,6 +943,30 @@ public class GameSceneController {
 
                 // Update GUI on the JavaFX Application Thread
                 Platform.runLater(() -> {
+                    if(clientView.getPlayerScore()>=20)
+                    {
+                        showAlert("GAME FINISHED", "Sono un assassino di meridionali");
+                        try {
+                            System.out.println(in.readLine()); //Fine turno
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        System.out.println("Game finally end for everybody!");
+                        try {
+                            System.out.println(in.readLine()); //ENDGAME?;
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        //
+                        try {
+                            System.out.println(in.readLine()); //ci siamo
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        EndGameScene endGameScene= new EndGameScene(primaryStage,out,socket,in,clientView);
+                        endGameScene.endGame();
+                    }
+
                     // Update the turn state
                     updateTurnState(true);
                     try {
@@ -1559,6 +1599,7 @@ public class GameSceneController {
     private synchronized void firstWellCard() throws IOException {
         out.println("firstWellId");
         SharedObjectsInGui.setIdCard1(in.readLine());
+        System.out.println(SharedObjectsInGui.getIdCard1());
     }
 
     /**
@@ -1620,23 +1661,17 @@ public class GameSceneController {
     }
 
     private void initializeWell20Points() throws IOException {
+
         firstWellCard();
         secondWellCard();
         thirdWellCard();
         fourthWellCard();
         SharedObjectsInGui.setWellPathOne(createPathForFrontCards(SharedObjectsInGui.getIdCard1()));
-//        SharedObjectsInGui.setWellPathSecond(createPathForFrontCards(SharedObjectsInGui.getIdCard2()));
-        System.out.println("sto per crashare");
-        if(clientView.getPlayerScore()>=20) {
-            String endGame = in.readLine();
-            System.out.println(endGame);
-            String result = in.readLine();
-            System.out.println(result);
-        }
-        else{
-            SharedObjectsInGui.setWellPathThird(createPathForFrontCards(SharedObjectsInGui.getIdCard3()));
-            SharedObjectsInGui.setWellPathForth(createPathForFrontCards(SharedObjectsInGui.getIdCard4()));
-        }
+        System.out.println(SharedObjectsInGui.getWellPathOne());
+        SharedObjectsInGui.setWellPathSecond(createPathForFrontCards(SharedObjectsInGui.getIdCard2()));
+        SharedObjectsInGui.setWellPathThird(createPathForFrontCards(SharedObjectsInGui.getIdCard3()));
+        SharedObjectsInGui.setWellPathForth(createPathForFrontCards(SharedObjectsInGui.getIdCard4()));
+
     }
 
     /**

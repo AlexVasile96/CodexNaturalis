@@ -143,11 +143,8 @@ public class Controller {
         return points;
     }
 
-    public void check20Points() throws IOException {
-        String message = in.readLine();
-        if(message.equals("You smashed 20 points!! now everybody got one last turn")) {
-            System.out.println("You reached 20 points and now you have to wait other players to finish their games.");
-        }
+    public void check20Points(String message) throws IOException {
+            System.out.println("WOW!");
     }
 
     public String firstCommon() throws IOException {
@@ -233,17 +230,30 @@ public class Controller {
         }
     }
 
-
-    public String endTurn() throws IOException {
+    public String finalEnd() {
         out.println("endTurn");
         try {
             System.out.println("Your turn ended");
-            String currentPlayerNickname = in.readLine();
-            System.out.println(currentPlayerNickname);
+            String nextPlayerNickname = in.readLine();
+            System.out.println(nextPlayerNickname);
+            out.flush();
+            return nextPlayerNickname;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+        public String endTurn() throws IOException {
+        out.println("endTurn");
+        try {
+            System.out.println("Your turn ended");
+            String nextPlayerNickname = in.readLine();
+            System.out.println(nextPlayerNickname);
             String update = in.readLine();
             System.out.println(update);
             out.flush();
-            return currentPlayerNickname;
+            return nextPlayerNickname;
         } catch (SocketTimeoutException e) {
             handleDisconnection();
             return null;
@@ -257,20 +267,24 @@ public class Controller {
         String secondCard = in.readLine();
         String thirdCard = in.readLine();
         in.readLine();//the space
-
     }
+
     public void waitForTurn(String playerNickname, Stage primaryStage) throws IOException {
         String message;
         System.out.println("Waiting for server to say my name");
         while (!(message = in.readLine()).equals(playerNickname)) {
             System.out.println("Received message while waiting for turn: " + message);
-            check20Points();
+            if(message.equals("You smashed 20 points!! now everybody got one last turn"))
+            {
+                check20Points(message);
+                System.out.println(in.readLine()+" has made 20 points!");
+
+            }
             if(message.equals("ALL_CLIENTS_QUIT"))
             {
                 quit(primaryStage);
             }
             else System.out.println("Not your turn, please wait");
-
         }
         System.out.println("It's now " + playerNickname + "'s turn");
         System.out.println("Time to play some Codex LESGO!");

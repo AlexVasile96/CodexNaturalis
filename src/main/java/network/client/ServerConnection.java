@@ -409,7 +409,7 @@ public class ServerConnection implements Runnable {
         //controllo se 20 punti
         if(points>=20 && !lastTurn) {
             System.out.println(in.readLine());
-            in.readLine();//winningPlayer
+            System.out.println("----> " + in.readLine()  +" got 20 points");
             System.out.println("Your turn is over!");
             endGameForWinningPlayer = true;
             runEndTurn();
