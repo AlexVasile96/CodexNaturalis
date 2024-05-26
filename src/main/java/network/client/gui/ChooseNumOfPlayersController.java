@@ -48,7 +48,7 @@ public class ChooseNumOfPlayersController {
     }
 
     @FXML
-    private void goToLobbyClicked(ActionEvent event) throws IOException, InterruptedException {
+    private void goToLobbyClicked(ActionEvent event) throws IOException{
         Toggle numOfPlayers = numOfPlayersGroup.getSelectedToggle();
         if (numOfPlayers == null) {
             System.out.println("Select number of players");

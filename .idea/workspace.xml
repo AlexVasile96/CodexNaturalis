@@ -4,12 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e70d5975-ecb8-48a9-b8f0-80452c29098e" name="Changes" comment="updated comments">
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/BoardPointsScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/BoardPointsScene.java" afterDir="false" />
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Almost finished the english translation">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_17_50__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_17_50__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_18_57__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_18_57__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_23_24__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_23_24__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_14_21__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_14_21__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_14_46__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_14_46__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_02__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_02__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_08__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_08__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_15__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_15__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_20__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_20__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_28__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_28__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_40__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_40__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_45__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_45__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_16_10__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_16_10__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_16_47__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_16_47__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_17_32__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_17_32__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_17_33__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_17_33__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_09_31__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_09_31__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_11_01__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_11_01__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_12_04__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_12_04__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_14_33__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_14_33__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/ServerConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/ServerConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/ChooseNumOfPlayersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/ChooseNumOfPlayersController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/GameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/GameSceneController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/gameSize.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gameSize.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
@@ -19,67 +42,77 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="UML Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="PREVIOUS_COMMIT_AUTHORS">
-      <list>
-        <option value="CallanDragon &lt;10774521@polimi.it&gt;" />
-      </list>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;DragonPalowski&quot;
+    &quot;assignee&quot;: &quot;AlexVasile96&quot;
   }
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/PietroCallandrone/IS24-LB05.git&quot;,
-    &quot;accountId&quot;: &quot;646843f7-a0e3-4fe3-891a-2207c46896b5&quot;
+    &quot;accountId&quot;: &quot;79d27218-8d9f-4caf-92da-4612ca7f2ac9&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 0
+  &quot;associatedIndex&quot;: 2
 }</component>
-  <component name="ProjectId" id="2gs9RvG4KZkBd620km3glva6RG1" />
+  <component name="ProjectId" id="2gsA9yU8yI6PZLxJtICGFCOTTt7" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Codex.executor": "Debug",
+    "Application.CliClientApp.executor": "Run",
+    "Application.Codex.executor": "Run",
     "Application.GUI.executor": "Run",
     "Application.ServerMain.executor": "Run",
-    "Application.network.server.ServerMain.executor": "Run",
-    "DefaultPlantUmlFileTemplate": "UML Class",
+    "JAR Application.json-20240303.jar.executor": "Run",
+    "JUnit.All in proj (1).executor": "Coverage",
+    "JUnit.All in proj (2).executor": "Coverage",
     "JUnit.All in proj.executor": "Coverage",
-    "JUnit.pietro callandrone.executor": "Coverage",
+    "JUnit.BisObjectiveCardTest.executor": "Run",
+    "JUnit.BoardPointsTest.executor": "Run",
+    "JUnit.BoardTest.executor": "Run",
+    "JUnit.GoldDeckTest.executor": "Run",
+    "JUnit.InitialCardDeckTest.executor": "Run",
+    "JUnit.ObjectiveDeckTest.executor": "Run",
+    "JUnit.PlayerTest.executor": "Run",
+    "JUnit.ResourceDeckTest.executor": "Run",
+    "JUnit.ResourceUpdaterTest.executor": "Run",
+    "JUnit.StairsObjectiveCardTest.executor": "Run",
+    "JUnit.TrisObjectiveCardTest.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Universita/Ing sw/Prova finale/prova/IS24-LB05/src/test/java/model",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager" selected="Application.GUI">
+    <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="network.client.cli.CliClientApp" />
+      <module name="proj" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="network.client.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Codex" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="codex.Codex" />
       <module name="proj" />
@@ -119,147 +152,122 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="pietro callandrone" type="JUnit" factoryName="JUnit" temporary="true">
+    <configuration name="StairsObjectiveCardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="proj" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/src/test/java/model" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="model" />
+      <option name="MAIN_CLASS_NAME" value="model.StairsObjectiveCardTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <list>
-      <item itemvalue="Application.Codex" />
-      <item itemvalue="Application.GUI" />
-      <item itemvalue="Application.ServerMain" />
-      <item itemvalue="JUnit.pietro callandrone" />
-    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.GUI" />
-        <item itemvalue="Application.ServerMain" />
+        <item itemvalue="Application.CliClientApp" />
         <item itemvalue="Application.Codex" />
-        <item itemvalue="JUnit.pietro callandrone" />
+        <item itemvalue="Application.ServerMain" />
+        <item itemvalue="JUnit.StairsObjectiveCardTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
-        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e70d5975-ecb8-48a9-b8f0-80452c29098e" name="Changes" comment="" />
-      <created>1716475413147</created>
+      <changelist id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="" />
+      <created>1716475763311</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1716475413147</updated>
-      <workItem from="1716475414214" duration="5537000" />
-      <workItem from="1716481338277" duration="3306000" />
-      <workItem from="1716490625881" duration="9093000" />
-      <workItem from="1716543654534" duration="4348000" />
-      <workItem from="1716623836582" duration="13963000" />
-      <workItem from="1716641904706" duration="1843000" />
-      <workItem from="1716643764615" duration="814000" />
-      <workItem from="1716644613475" duration="7342000" />
+      <updated>1716475763311</updated>
+      <workItem from="1716475764461" duration="1147000" />
+      <workItem from="1716476924856" duration="3682000" />
+      <workItem from="1716553205369" duration="7674000" />
+      <workItem from="1716561970325" duration="6910000" />
+      <workItem from="1716580600586" duration="1283000" />
+      <workItem from="1716622295689" duration="11045000" />
+      <workItem from="1716634199752" duration="4071000" />
+      <workItem from="1716644350848" duration="202000" />
+      <workItem from="1716644567190" duration="31000" />
+      <workItem from="1716644611825" duration="10000" />
+      <workItem from="1716644633682" duration="5794000" />
     </task>
-    <task id="LOCAL-00001" summary="can't place card on NOTTOBEPLACEDON corner">
+    <task id="LOCAL-00001" summary="English translation">
       <option name="closed" value="true" />
-      <created>1716484609372</created>
+      <created>1716568822413</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1716484609372</updated>
+      <updated>1716568822413</updated>
     </task>
-    <task id="LOCAL-00002" summary="minor fixes">
+    <task id="LOCAL-00002" summary="Test update">
       <option name="closed" value="true" />
-      <created>1716500438707</created>
+      <created>1716633098476</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1716500438707</updated>
+      <updated>1716633098476</updated>
     </task>
-    <task id="LOCAL-00003" summary="secretObjCard is now Shown in ShowObjectiveScene">
+    <task id="LOCAL-00003" summary="Exception managed in SecretCardScene">
       <option name="closed" value="true" />
-      <created>1716547385822</created>
+      <created>1716647936349</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1716547385822</updated>
+      <updated>1716647936349</updated>
     </task>
-    <task id="LOCAL-00004" summary="fixed placing cards on corners">
+    <task id="LOCAL-00004" summary="Almost finished the english translation">
       <option name="closed" value="true" />
-      <created>1716626178620</created>
+      <created>1716649893329</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1716626178621</updated>
+      <updated>1716649893329</updated>
     </task>
-    <task id="LOCAL-00005" summary="added comments to GameSceneController">
-      <option name="closed" value="true" />
-      <created>1716640942011</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1716640942011</updated>
-    </task>
-    <task id="LOCAL-00006" summary="updated gitignore">
-      <option name="closed" value="true" />
-      <created>1716643120089</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1716643120089</updated>
-    </task>
-    <task id="LOCAL-00007" summary="updated comments">
-      <option name="closed" value="true" />
-      <created>1716643465521</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1716643465521</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="can't place card on NOTTOBEPLACEDON corner" />
-    <MESSAGE value="Modified check Stairs Objective cards" />
-    <MESSAGE value="minor fixes" />
-    <MESSAGE value="secretObjCard is now Shown in ShowObjectiveScene" />
-    <MESSAGE value="fixed placing cards on corners" />
-    <MESSAGE value="added comments to GameSceneController" />
-    <MESSAGE value="updated gitignore" />
-    <MESSAGE value="updated comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated comments" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/network/client/gui/GameSceneController.java</url>
-          <line>1900</line>
-          <properties class="network.client.gui.GameSceneController" method="check20Points">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="English translation" />
+    <MESSAGE value="Test update" />
+    <MESSAGE value="Exception managed in SecretCardScene" />
+    <MESSAGE value="Almost finished the english translation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Almost finished the english translation" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/IS24_LB05$pietro_callandrone.ic" NAME="pietro callandrone Coverage Results" MODIFIED="1716499796704" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
-    <SUITE FILE_PATH="coverage/IS24_LB05$All_in_proj.ic" NAME="All in proj Coverage Results" MODIFIED="1716499144120" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj__1_.ic" NAME="All in proj (1) Coverage Results" MODIFIED="1716630710868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj.ic" NAME="All in proj Coverage Results" MODIFIED="1716641301667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj__2_.ic" NAME="All in proj (2) Coverage Results" MODIFIED="1716630886224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

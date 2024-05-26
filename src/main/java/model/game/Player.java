@@ -291,9 +291,8 @@ public class Player implements Observable {
             updatingPoints(selectedCardFromTheDeck); //Updating player Points
         }
 
-        if (playerScore >= 20) {                                            //EndGame if the playerpoints=>20 points
+        if (playerScore >= 20) {
             System.out.println("Player " + getNickName() + "has reached 20 points!\n");
-            EndGame endGame = new EndGame();
         }
     }
 

@@ -398,24 +398,31 @@ public class HandlingPlayerInputsThread implements Runnable {
                         } else rightCard= true;
                         System.out.println(cornerChosen);
                         gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
-
+                        System.out.println("DEBUG-> SECOND GAME CONTROLLER");
                     }while (!rightCard);
                     forClientView.append("\n(" + chosenCard.getNode().getCoordY() + " " + chosenCard.getNode().getCoordX() + ")");
                     sendMessageToAllClients(String.valueOf(forClientView));
+                    System.out.println("sONO QUA");
                     messageFromClient = stdIn.readLine();
-                    runCommand(messageFromClient, player);//showWell
-                    messageFromClient = stdIn.readLine();
-                    runCommand(messageFromClient, player);//drawCard
-                    messageFromClient = stdIn.readLine();
-                    runCommand(messageFromClient, player);//status
+                    System.out.println("message from client->" + messageFromClient);//showWell
+                    runCommand(messageFromClient, player);
 
+                    messageFromClient = stdIn.readLine();
+                    System.out.println("message from client->" + messageFromClient);//drawCard;
+                    runCommand(messageFromClient, player);
+
+                    System.out.println("due richieste prima dell'endgame");
+                    messageFromClient = stdIn.readLine();
+                    System.out.println("message from client->" + messageFromClient);//stTUS
+                    runCommand(messageFromClient, player);
+                    System.out.println("Giusto prima dell'endgame");
                     //endgame
                     if (currentPlayer.getPlayerScore() >= 20 && !game.isEndGame()) {
                         game.setEndGame(true);
                         currentPlayer.setHasThePlayerGot20Points(true);
                         winningPlayer = currentPlayer;
                         GameController.setWinningPlayer(currentPlayer);
-                        System.out.println(userName + "smashed 20 points!!");
+                        System.out.println(userName + " smashed 20 points!!");
                         sendMessageToAllClients("You smashed 20 points!! now everybody got one last turn");
                         sendMessageToAllClients(userName);
                         messageFromClient = stdIn.readLine();
