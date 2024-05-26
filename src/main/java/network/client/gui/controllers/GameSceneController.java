@@ -4,6 +4,7 @@ import com.google.gson.*;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -109,7 +110,7 @@ public class GameSceneController {
     private String isTheCardFlipped = null;
     private boolean isFlipped = false;
     private boolean areYouTheWinner=false;
-
+    private boolean isNOtToBePlacedon=false;
 
     /**
      * Initializes the game data and sets up the initial stage, socket connections, and view components.
@@ -403,18 +404,8 @@ public class GameSceneController {
             // Set the clicked card view and selected corner
             setClickedCardView(cardView);
             cornerSelected = cardView.getPosition();
-
-            // Get the index of the clicked card from the card indices map
             Integer cardIndex = cardIndices.get(cardView);
 
-            // Print debug information
-//            System.out.println("Clicked CardView: " + cardView);
-//            System.out.println("Current cardIndices map:");
-//            for (Map.Entry<CardView, Integer> entry : cardIndices.entrySet()) {
-//                System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-//            }
-
-            // If the card index is found, set indexCardToBePlacedOn
             if (cardIndex != null) {
                 indexCardToBePlacedOn = cardIndex;
                 System.out.println("Card Clicked: indexCardToBePlacedOn = " + indexCardToBePlacedOn + ", cornerSelected = " + cornerSelected);
@@ -450,6 +441,12 @@ public class GameSceneController {
                     }
 
                     // Verifies if the selected card is a gold card
+                    if(isNOtToBePlacedon)
+                    {
+                        Platform.runLater(()->showAlert("Can't place the card here","NEgro"));
+                        isNOtToBePlacedon = false;
+                        return;
+                    }
                     if (indexForGold != null && Integer.parseInt(indexForGold) > 40) {
                         // Check if the card is flipped to "front"
                         if (!isFlipped) {
@@ -1204,10 +1201,22 @@ public class GameSceneController {
         allCardViews.add(bcCardView);
         allCardViews.add(brCardView);
 
-        imageViewTL.setOnMouseClicked(event -> handleCardClick(tlCardView));
-        imageViewTR.setOnMouseClicked(event -> handleCardClick(trCardView));
-        imageViewBL.setOnMouseClicked(event -> handleCardClick(blCardView));
-        imageViewBR.setOnMouseClicked(event -> handleCardClick(brCardView));
+        imageViewTL.setOnMouseClicked(event ->{
+            handleCardClick(tlCardView);
+            canIplaceTheCardOrISThereANotToBEPLacedOn(imageViewTL);
+                });
+        imageViewTR.setOnMouseClicked(event -> {
+            handleCardClick(trCardView);
+            canIplaceTheCardOrISThereANotToBEPLacedOn(imageViewTR);
+        });
+        imageViewBL.setOnMouseClicked(event -> {
+            handleCardClick(blCardView);
+            canIplaceTheCardOrISThereANotToBEPLacedOn(imageViewBL);
+        });
+        imageViewBR.setOnMouseClicked(event -> {
+            handleCardClick(brCardView);
+            canIplaceTheCardOrISThereANotToBEPLacedOn(imageViewBR);
+        });
 
         Color targetInit = Color.web("#351F16");
 
@@ -1290,6 +1299,7 @@ public class GameSceneController {
     public void placingBottomRightCard(ImageView cardOnTheBoard, GridPane board, int id) {
 
         // Incrementing the index for the next card
+
         nextCardIndex++;
 
         // Loading the image for the card
@@ -1522,7 +1532,6 @@ public class GameSceneController {
             }
         }
     }
-//    qunado piazzi carta, fai for
 
     /**
      * This method places the card represented by the ImageView cardOnTheBoard in the top-right corner of the board.
@@ -1560,8 +1569,6 @@ public class GameSceneController {
         BL.setPickOnBounds(true);
         BR.setPickOnBounds(true);
 
-
-
         // Adding the card and surrounding images to the board grid pane
         board.add(TL, y, (x - 2));
         board.add(TC, (y + 1), (x - 2));
@@ -1572,6 +1579,7 @@ public class GameSceneController {
         board.add(BL, y, x);
         board.add(BC, (y + 1), x);
         board.add(BR, (y + 2), x);
+
 
         // Creating CardView objects for each image and adding them to a list
         allCardViews.add(new CardView(TL, String.valueOf(id), "TL"));
@@ -2141,6 +2149,102 @@ public class GameSceneController {
     private Path getDefaultGuiPath() {
         String home = ("src/main/resources/sharedElementsInGui.json");
         return Paths.get(home);
+    }
+    private void canIplaceTheCardOrISThereANotToBEPLacedOn(ImageView cardOnTheBoard) {
+        int x = getX(cardOnTheBoard);
+        int y = getY(cardOnTheBoard);
+
+        if (cornerSelected.equals("BR")) {
+            int newX = x + 2; //TR
+            int newY = y;
+            Node targetNode = searchForNode(newX, newY);
+            checkIfTheNodeIsPlaceable(targetNode);
+            if(isNOtToBePlacedon) return;
+            newX=x+2; //BR
+            newY=y+2;
+            targetNode = searchForNode(newX, newY);
+            checkIfTheNodeIsPlaceable(targetNode);
+            if(isNOtToBePlacedon) return;
+            newX=x+2; //BL
+            newY=y;
+            targetNode = searchForNode(newX, newY);
+            checkIfTheNodeIsPlaceable(targetNode);
+            if(isNOtToBePlacedon) return;
+        }
+        if(cornerSelected.equals("TR")){
+            int newX = x -2; //TL
+            int newY = y;
+            Node targetNode = searchForNode(newX, newY);
+            checkIfTheNodeIsPlaceable(targetNode);
+            if(isNOtToBePlacedon) return;
+            newX=x-2; //TR
+            newY=y+2;
+            targetNode = searchForNode(newX, newY);
+            checkIfTheNodeIsPlaceable(targetNode);
+            if(isNOtToBePlacedon) return;
+            newX=x; //BR
+            newY=y+2;
+            targetNode = searchForNode(newX, newY);
+            checkIfTheNodeIsPlaceable(targetNode);
+            if(isNOtToBePlacedon) return;
+        }
+        if(cornerSelected.equals("TL")){
+            int newX = x -2; //TR
+            int newY = y;
+            Node targetNode = searchForNode(newX, newY);
+            checkIfTheNodeIsPlaceable(targetNode);
+            if(isNOtToBePlacedon) return;
+            newX=x-2; //TL
+            newY=y-2;
+            targetNode = searchForNode(newX, newY);
+            checkIfTheNodeIsPlaceable(targetNode);
+            if(isNOtToBePlacedon) return;
+            newX=x; //BL
+            newY=y-2;
+            targetNode = searchForNode(newX, newY);
+            checkIfTheNodeIsPlaceable(targetNode);
+            if(isNOtToBePlacedon) return;
+        }
+        if(cornerSelected.equals("BL")){
+            int newX = x; //TL
+            int newY = y-2;
+            Node targetNode = searchForNode(newX, newY);
+            checkIfTheNodeIsPlaceable(targetNode);
+            newX=x+2; //BL
+            newY=y-2;
+            targetNode = searchForNode(newX, newY);
+            checkIfTheNodeIsPlaceable(targetNode);
+            newX=x+2; //BR
+            newY=y;
+            targetNode = searchForNode(newX, newY);
+            checkIfTheNodeIsPlaceable(targetNode);
+        }
+    }
+
+    private Node searchForNode(int x,int y)
+    {
+        Node targetNode = null;
+        for (Node node : gameBoard.getChildren()) {
+            if (GridPane.getRowIndex(node) == x && GridPane.getColumnIndex(node) == y) {
+                targetNode = node;
+                break;
+            }
+        }
+        return  targetNode;
+    }
+    private void  checkIfTheNodeIsPlaceable(Node targetNode){
+        if (targetNode == null) {
+            isNOtToBePlacedon=false;
+        } else {
+            if (targetNode instanceof ImageView) {
+                ImageView targetImageView = (ImageView) targetNode;
+                Image targetImage = targetImageView.getImage();
+                if (targetImage != null && !containsColor(targetImage, targetColor)) {
+                    isNOtToBePlacedon=true;
+                }
+                else isNOtToBePlacedon=false;
+            }
+        }
     }
 
 }
