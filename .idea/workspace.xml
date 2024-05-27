@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="gesttia endturn cli persistence">
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="chat adavnced function implemented w/thomas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/codex/Codex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/codex/Codex.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/GameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/GameSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/ChatScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/ChatScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/server/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/server/ChatServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
@@ -31,17 +27,17 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-    &quot;lastFilter&quot;: {
+  &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
     &quot;assignee&quot;: &quot;AlexVasile96&quot;
-    }
-    }</component>
+  }
+}</component>
   <component name="GithubPullRequestsUISettings">{
-    &quot;selectedUrlAndAccountId&quot;: {
+  &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/PietroCallandrone/IS24-LB05.git&quot;,
     &quot;accountId&quot;: &quot;66b03c10-d4a3-43d0-a6c5-1104829d0c1d&quot;
-    }
-    }</component>
+  }
+}</component>
   <component name="ProjectColorInfo">{
     &quot;associatedIndex&quot;: 2
     }</component>
@@ -85,7 +81,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.GUI">
     <configuration name="ChatServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="network.server.ChatServer" />
       <module name="proj" />
@@ -229,10 +225,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.GUI" />
+        <item itemvalue="Application.Codex" />
         <item itemvalue="Application.ChatServer" />
         <item itemvalue="Application.ServerMain" />
         <item itemvalue="Application.CliClientApp" />
-        <item itemvalue="Application.Codex" />
       </list>
     </recent_temporary>
   </component>
@@ -268,6 +264,8 @@
       <workItem from="1716745152108" duration="469000" />
       <workItem from="1716750020925" duration="16405000" />
       <workItem from="1716794873091" duration="3275000" />
+      <workItem from="1716810439544" duration="169000" />
+      <workItem from="1716813546178" duration="1221000" />
     </task>
     <task id="LOCAL-00001" summary="English translation">
       <option name="closed" value="true" />
@@ -405,7 +403,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716766549290</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="chat adavnced function implemented w/thomas">
+      <option name="closed" value="true" />
+      <created>1716810536535</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1716810536535</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -437,7 +443,8 @@
     <MESSAGE value="Persistence for cli" />
     <MESSAGE value="Persistenza della cli quasi finita (da gestire la endturn)" />
     <MESSAGE value="ServerConnection commented" />
-    <option name="LAST_COMMIT_MESSAGE" value="ServerConnection commented" />
+    <MESSAGE value="chat adavnced function implemented w/thomas" />
+    <option name="LAST_COMMIT_MESSAGE" value="chat adavnced function implemented w/thomas" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -46,7 +46,9 @@ public class ChatScene {
     }
 
     public void appendMessage(String message) {
-        chatArea.appendText(message + "\n");
+        if (!chatArea.getText().contains(message)) {
+            chatArea.appendText(message + "\n");
+        }
     }
 
     public void show() {

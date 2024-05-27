@@ -13,7 +13,7 @@ public class ChatController {
     private BufferedReader in;
     private String clientName;
     private String lastSentMessage; // Variabile per tenere traccia dell'ultimo messaggio inviato
-
+    private String lastReceivedMessage;
     public ChatController(ChatScene chatWindow, String clientName) {
         this.chatWindow = chatWindow;
         this.clientName = clientName;
@@ -34,8 +34,8 @@ public class ChatController {
                     while ((messageFromServer = in.readLine()) != null) {
                         String finalMessageFromServer = messageFromServer;
                         Platform.runLater(() -> {
-
-                            if (!finalMessageFromServer.equals(lastSentMessage)) {
+                            if (!finalMessageFromServer.equals(lastSentMessage) && !finalMessageFromServer.equals(lastReceivedMessage)) {
+                                lastReceivedMessage = finalMessageFromServer;
                                 chatWindow.appendMessage(finalMessageFromServer);
                             }
                         });
@@ -56,7 +56,7 @@ public class ChatController {
             String formattedMessage = clientName + "-> " + message;
             lastSentMessage = formattedMessage; // Memorizza l'ultimo messaggio inviato
             out.println(formattedMessage);
-            // Non aggiungere il messaggio alla finestra di chat direttamente qui
+
         }
     }
 }
