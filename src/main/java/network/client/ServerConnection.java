@@ -14,6 +14,9 @@ import java.net.SocketTimeoutException;
 public class ServerConnection implements Runnable {
     private static int index=0;
     private Socket socket;
+    private Socket chatSocket;  // Socket used to send messages to other clients
+    private BufferedReader chatIn; // BufferedReader per i messaggi di chat
+    private PrintWriter chatOut; // PrintWriter per i messaggi di chat
     private ClientView clientView;
     private final BufferedReader in;
     private final BufferedReader stdin;
@@ -39,6 +42,9 @@ public class ServerConnection implements Runnable {
         this.out= new PrintWriter(socket.getOutputStream(), true);
         this.stdin= new BufferedReader(new InputStreamReader(System.in));
         this.player=new Player(null,0,null,null );
+        this.chatSocket = new Socket("localhost", 12346);
+        this.chatOut = new PrintWriter(chatSocket.getOutputStream(), true);
+        this.chatIn = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
     }
 
     /**

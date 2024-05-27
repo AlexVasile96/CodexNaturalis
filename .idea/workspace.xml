@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="EndGame for Gui">
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Sincronizzazione corretta fra cli e gui, ora i client possono startare tranquillamente e senza doversi attendere l'un l'altro">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/ServerConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/ServerConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/GameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/GameSceneController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/currentplayer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/currentplayer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/gameSize.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gameSize.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +40,9 @@
     &quot;accountId&quot;: &quot;66b03c10-d4a3-43d0-a6c5-1104829d0c1d&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
     &quot;associatedIndex&quot;: 2
     }</component>
@@ -91,7 +96,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.CliClientApp">
     <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="network.client.cli.CliClientApp" />
       <module name="proj" />
@@ -175,8 +180,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GUI" />
         <item itemvalue="Application.CliClientApp" />
+        <item itemvalue="Application.GUI" />
         <item itemvalue="JUnit.BoardTest.testTWODifferentstairs" />
         <item itemvalue="JUnit.BoardTest.testMushroomMushroomInsect" />
         <item itemvalue="JUnit.BoardTest.test4MushroomsInStairs" />
@@ -218,7 +223,7 @@
       <workItem from="1716810439544" duration="169000" />
       <workItem from="1716813546178" duration="7974000" />
       <workItem from="1716824719769" duration="2201000" />
-      <workItem from="1716835583286" duration="3987000" />
+      <workItem from="1716835583286" duration="6033000" />
     </task>
     <task id="LOCAL-00001" summary="English translation">
       <option name="closed" value="true" />
@@ -396,7 +401,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716837261740</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Sincronizzazione corretta fra cli e gui, ora i client possono startare tranquillamente e senza doversi attendere l'un l'altro">
+      <option name="closed" value="true" />
+      <created>1716839972012</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1716839972012</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -434,7 +447,8 @@
     <MESSAGE value="Fixed stairsobjectivetest" />
     <MESSAGE value="Stairs objective cards correctly fixed w/momo" />
     <MESSAGE value="EndGame for Gui" />
-    <option name="LAST_COMMIT_MESSAGE" value="EndGame for Gui" />
+    <MESSAGE value="Sincronizzazione corretta fra cli e gui, ora i client possono startare tranquillamente e senza doversi attendere l'un l'altro" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sincronizzazione corretta fra cli e gui, ora i client possono startare tranquillamente e senza doversi attendere l'un l'altro" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
