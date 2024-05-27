@@ -77,4 +77,14 @@ public class ObjectiveDeck implements Deck {
     public int remainingCards(){
         return objectiveCards.size();
     }
+
+    public synchronized void putCardOnTopOfDeck(int i) {
+        for (Card r : objectiveCards) {
+            if (r.getId() == i) {
+                objectiveCards.remove(r);
+                objectiveCards.addFirst(r);
+                break;
+            }
+        }
+    }
 }
