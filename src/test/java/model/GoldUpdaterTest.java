@@ -14,7 +14,7 @@ class GoldUpdaterTest {
     //INITIALIZATIONS
     private Board board = new Board(50,50);
     private Player player = new Player("Calla",0,Dot.GREEN,board);
-    private Node node3 = new Node(SpecificSeed.FEATHER,2,2);
+    private Node node3 = new Node(SpecificSeed.FEATHER,2,2,SpecificSeed.FEATHER);
     private GoldUpdater goldUpdater = new GoldUpdater();
 
     @Test

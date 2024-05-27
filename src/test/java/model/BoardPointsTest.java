@@ -18,8 +18,8 @@ class BoardPointsTest {
 
     private Board board = new Board(50,50);
     private ArrayList<SpecificSeed> pointOnTheBoard;
-    private Node node = new Node(SpecificSeed.MUSHROOM,0,0);
-    private Node node2 = new Node(SpecificSeed.INKWELL,0,0);
+    private Node node = new Node(SpecificSeed.MUSHROOM,0,0,SpecificSeed.MUSHROOM);
+    private Node node2 = new Node(SpecificSeed.INKWELL,0,0,SpecificSeed.INKWELL);
     BoardPoints boardPoints = new BoardPoints();
     @Test
     void countPoints() {

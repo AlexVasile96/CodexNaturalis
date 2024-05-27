@@ -66,38 +66,40 @@ class BoardTest {
     @Test
     void testCreateSpecificSecretCardWithStairsObjective() {
         Deck objectiveDeck = objectiveCardConstructor.createCards();//non mischiato
+        System.out.println("Objective Deck created: " + objectiveDeck);
 
         InitialCardDeck initialCardDeck= (InitialCardDeck) initCardConstructor.createCards();
         InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
         board.placeInitialCard(initialCard);
+        System.out.println("Initial card placed: " + initialCard);
 
         ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards();//not shuffled
-        //GoldDeck goldDeck = (GoldDeck) goldCardConstructor.createCards();//not shuffled
+        System.out.println("Resource Deck created: " + resourceDeck);
 
-        //stairs card are id: 87,88,89,90
-        ObjectiveCard stairsCard87 =objectiveDeck.firstCardForEachPlayer();
-
+        ObjectiveCard stairsCard87 = objectiveDeck.firstCardForEachPlayer();
+        System.out.println("Stairs card selected: " + stairsCard87);
 
         player.drawResourceCard(resourceDeck);
         player.drawResourceCard(resourceDeck);
         player.drawResourceCard(resourceDeck);
 
-        //assertEquals(1,player.getPlayerCards().getFirst().getId());
         Card cardPlayerChoose = player.getPlayerCards().getFirst();
+        System.out.println("Player chose card: " + cardPlayerChoose);
         player.playCard(board,0,0, player.getPlayerCards().getFirst(), initialCard, "TL");
-        //assertEquals(2,player.getPlayerCards().getFirst().getId());
+
         player.playCard(board,0,1, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
-        //assertEquals(3,player.getPlayerCards().getFirst().getId());
         player.playCard(board,0,1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BL");
 
         board.printBoard();
 
         int initialScore = player.getPlayerScore();
+        System.out.println("Initial player score: " + initialScore);
 
         board.createSpecificSecretCard(stairsCard87, player);
+        int newScore = player.getPlayerScore();
+        System.out.println("New player score after secret card: " + newScore);
 
-        // Assuming checkPattern method correctly updates player's score based on the card
-        assertTrue(player.getPlayerScore() > initialScore);
+        assertTrue(newScore > initialScore);
     }
 
     @Test

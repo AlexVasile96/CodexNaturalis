@@ -11,7 +11,7 @@ class TrisObjectiveCardTest {
     private Player player = new Player("Calla",0, Dot.GREEN,board);
 
     private SpecificSeed specificSeed = SpecificSeed.MUSHROOM;
-    private Node node = new Node(specificSeed,0,0);
+    private Node node = new Node(specificSeed,0,0,specificSeed);
 
     private TrisObjectiveCard trisObjectiveCard = new TrisObjectiveCard();
     @Test

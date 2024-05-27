@@ -21,13 +21,13 @@ class BisObjectiveCardTest {
     private Board board = new Board(50,50);
     private Player player = new Player("Calla",0, Dot.GREEN,board);
 
-    private SpecificSeed specificSeed = SpecificSeed.MUSHROOM;
-    private SpecificSeed specificSeed2 = SpecificSeed.ANIMAL;
-    private SpecificSeed specificSeed3 = SpecificSeed.PLANT;
-    private Node node = new Node(specificSeed,0,0);
-    private Node node2 = new Node(specificSeed2,0,0);
-    private BisObjectiveCard bisObjectiveCard = new BisObjectiveCard();
-    private Node node3 = new Node(specificSeed3,0,0);
+    private final SpecificSeed specificSeed = SpecificSeed.MUSHROOM;
+    private final SpecificSeed specificSeed2 = SpecificSeed.ANIMAL;
+    private final SpecificSeed specificSeed3 = SpecificSeed.PLANT;
+    private Node node = new Node(specificSeed,0,0,specificSeed);
+    private Node node2 = new Node(specificSeed2,0,0,specificSeed);
+    private final BisObjectiveCard bisObjectiveCard = new BisObjectiveCard();
+    private Node node3 = new Node(specificSeed3,0,0,specificSeed);
 
     @Test
     void checkPattern() {
