@@ -16,7 +16,7 @@ class BoardTest {
     private InitCardConstructor initCardConstructor= new InitCardConstructor();
     private ObjectiveCardConstructor objectiveCardConstructor = new ObjectiveCardConstructor();
     private ResourceCardConstructor resourceCardConstructor = new ResourceCardConstructor();
-    private GoldCardConstructor goldCardConstructor = new GoldCardConstructor();
+    //private GoldCardConstructor goldCardConstructor = new GoldCardConstructor();
 
     @BeforeEach
     void setUp() {
@@ -72,7 +72,7 @@ class BoardTest {
         board.placeInitialCard(initialCard);
 
         ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards();//not shuffled
-        GoldDeck goldDeck = (GoldDeck) goldCardConstructor.createCards();//not shuffled
+        //GoldDeck goldDeck = (GoldDeck) goldCardConstructor.createCards();//not shuffled
 
         //stairs card are id: 87,88,89,90
         ObjectiveCard stairsCard87 =objectiveDeck.firstCardForEachPlayer();
@@ -102,21 +102,19 @@ class BoardTest {
 
     @Test
     void testCreateSpecificSecretCardWithLObjective() {
-        Deck objectiveDeck = objectiveCardConstructor.createCards();//non mischiato
+        ObjectiveDeck objectiveDeck = (ObjectiveDeck) objectiveCardConstructor.createCards();//non mischiato
 
         InitialCardDeck initialCardDeck= (InitialCardDeck) initCardConstructor.createCards();
         InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
         board.placeInitialCard(initialCard);
 
         ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards();//not shuffled
-        GoldDeck goldDeck = (GoldDeck) goldCardConstructor.createCards();//not shuffled
+        //GoldDeck goldDeck = (GoldDeck) goldCardConstructor.createCards();//not shuffled
 
-        //stairs card are id: 87,88,89,90
-        objectiveDeck.firstCardForEachPlayer();
-        objectiveDeck.firstCardForEachPlayer();
-        objectiveDeck.firstCardForEachPlayer();
-        objectiveDeck.firstCardForEachPlayer();
+        //L cards from 91
+        objectiveDeck.putCardOnTopOfDeck(91);
         ObjectiveCard ElleCard91 =objectiveDeck.firstCardForEachPlayer(); //carta REQUISITO L (MUSSHROOM, MUSHROOM, PLANT)
+        assertEquals(91, ElleCard91.getId(), "carta id 91");
 
 
 
@@ -133,6 +131,7 @@ class BoardTest {
         assertEquals(11,player.getPlayerCards().getFirst().getId());
         player.playCard(board,0,1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
 
+        //HO MESSO LE CARTE NELLA BORD RISPETTANDO IL REQUISITO MINIMO
         board.printBoard();
 
         int initialScore = player.getPlayerScore();
@@ -143,10 +142,125 @@ class BoardTest {
         assertTrue(player.getPlayerScore() > initialScore);
     }
 
-    /*@Test
-    void testCreateSpecificSecretCardWithMixObjective() {
-        //ObjectiveCard mixCard = new ObjectiveCard("MIX", "type3");
+    @Test
+    void testCreateSpecificSecretCardWithTRISObjective() {
+        ObjectiveDeck objectiveDeck = (ObjectiveDeck) objectiveCardConstructor.createCards();//non mischiato
+
+        InitialCardDeck initialCardDeck= (InitialCardDeck) initCardConstructor.createCards();
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
+        board.placeInitialCard(initialCard);
+
+        ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards();//not shuffled
+        //GoldDeck goldDeck = (GoldDeck) goldCardConstructor.createCards();//not shuffled
+
+        //TRIS CARD START AT 95
+        objectiveDeck.putCardOnTopOfDeck(95);
+        ObjectiveCard objectiveCard95 =objectiveDeck.firstCardForEachPlayer();
+
+        //la 95 vuole un tris di mushrooms
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+
+        assertEquals(1,player.getPlayerCards().getFirst().getId());
+        Card cardPlayerChoose = player.getPlayerCards().getFirst();
+        player.playCard(board,0,0, player.getPlayerCards().getFirst(), initialCard, "TL");
+        assertEquals(2,player.getPlayerCards().getFirst().getId());
+        player.playCard(board,0,1, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
+        assertEquals(3,player.getPlayerCards().getFirst().getId());
+        player.playCard(board,0,1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BL");
+
+        board.printBoard();
+
         int initialScore = player.getPlayerScore();
 
-    }*/
+        board.createSpecificSecretCard(objectiveCard95, player);
+
+        // Assuming checkPattern method correctly updates player's score based on the card
+        assertTrue(player.getPlayerScore() > initialScore);
+
+    }
+
+    @Test
+    void testCreateSpecificSecretCardWithMixObjective() {
+        ObjectiveDeck objectiveDeck = (ObjectiveDeck) objectiveCardConstructor.createCards();//non mischiato
+
+        InitialCardDeck initialCardDeck= (InitialCardDeck) initCardConstructor.createCards();
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
+        board.placeInitialCard(initialCard);
+
+        ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards();//not shuffled
+        //GoldDeck goldDeck = (GoldDeck) goldCardConstructor.createCards();//not shuffled
+
+        //MIX CARD IS ONLY 99
+        objectiveDeck.putCardOnTopOfDeck(99);
+        ObjectiveCard mixCard99 =objectiveDeck.firstCardForEachPlayer();
+        assertEquals(99,mixCard99.getId());
+
+        //la 95 vuole un tris di mushrooms
+        resourceDeck.putCardOnTopOfDeck(5);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(6);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(7);
+        player.drawResourceCard(resourceDeck);
+
+        assertEquals(5,player.getPlayerCards().getFirst().getId());
+        Card cardPlayerChoose = player.getPlayerCards().getFirst();
+        player.playCard(board,0,0, player.getPlayerCards().getFirst(), initialCard, "TR");
+        assertEquals(6,player.getPlayerCards().getFirst().getId());
+        player.playCard(board,0,1, player.getPlayerCards().getFirst(), cardPlayerChoose, "TL");
+        assertEquals(7,player.getPlayerCards().getFirst().getId());
+        player.playCard(board,0,1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
+
+        board.printBoard();
+
+        int initialScore = player.getPlayerScore();
+
+        board.createSpecificSecretCard(mixCard99, player);
+
+        // Assuming checkPattern method correctly updates player's score based on the card
+        assertTrue(player.getPlayerScore() > initialScore);
+
+    }
+
+    @Test
+    void testCreateSpecificSecretCardWithBisObjective() {
+        ObjectiveDeck objectiveDeck = (ObjectiveDeck) objectiveCardConstructor.createCards();//non mischiato
+
+        InitialCardDeck initialCardDeck= (InitialCardDeck) initCardConstructor.createCards();
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
+        board.placeInitialCard(initialCard);
+
+        ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards();//not shuffled
+        //GoldDeck goldDeck = (GoldDeck) goldCardConstructor.createCards();//not shuffled
+
+        //MIX CARD IS ONLY 99
+        objectiveDeck.putCardOnTopOfDeck(100);
+        ObjectiveCard mixCard99 =objectiveDeck.firstCardForEachPlayer();
+        assertEquals(100,mixCard99.getId());
+
+        //la 95 vuole un tris di mushrooms
+        resourceDeck.putCardOnTopOfDeck(7);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(17);
+        player.drawResourceCard(resourceDeck);
+
+
+        assertEquals(7,player.getPlayerCards().getFirst().getId());
+        Card cardPlayerChoose = player.getPlayerCards().getFirst();
+        player.playCard(board,0,0, player.getPlayerCards().getFirst(), initialCard, "BL");
+        assertEquals(17,player.getPlayerCards().getFirst().getId());
+        player.playCard(board,0,1, player.getPlayerCards().getFirst(), cardPlayerChoose, "TL");
+
+        board.printBoard();
+
+        int initialScore = player.getPlayerScore();
+
+        board.createSpecificSecretCard(mixCard99, player);
+
+        // Assuming checkPattern method correctly updates player's score based on the card
+        assertTrue(player.getPlayerScore() > initialScore);
+
+    }
 }
