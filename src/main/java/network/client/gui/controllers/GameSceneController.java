@@ -992,14 +992,12 @@ public class GameSceneController {
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                        EndGameScene endGameScene= new EndGameScene(primaryStage,out,socket,in,clientView);
-                        Platform.runLater(()->{
-                            try {
-                                endGameScene.endGame();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
+                        EndGameScene endGameScene= new EndGameScene(primaryStage,out,socket,in,clientView, controller);
+                        try {
+                            endGameScene.endGame();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
 
                     }
 
@@ -2025,7 +2023,6 @@ public class GameSceneController {
         String newTopCardResourceDeckId = in.readLine();
         idTopCardResourceDeck = newTopCardResourceDeckId;
         System.out.println(newTopCardResourceDeckId);
-        System.out.println("Sono qua e dovrei quittare");
         String newPathResource = "/ImmaginiCodex/CarteBack/Resource/" + newTopCardResourceDeckId + ".png";
         System.out.println(newPathResource);
         Image newTopCardResourceDeckImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPathResource)));

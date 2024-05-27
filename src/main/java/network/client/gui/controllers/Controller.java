@@ -300,7 +300,7 @@ public class Controller {
                     break;
 
                 case "END OF GAME!":
-                    EndGameScene endGameScene = new EndGameScene(primaryStage, out, socket, in, clientView);
+                    EndGameScene endGameScene = new EndGameScene(primaryStage, out, socket, in, clientView,this );
                     Platform.runLater(() -> {
                         try {
                             endGameScene.endGame();

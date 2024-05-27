@@ -152,7 +152,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         String messageFromClient;
         boolean endturnphase = false;
         while (!endturnphase) {
-            if(currentPlayer.isHasThePlayerGot20Points() ){//stampa esiti
+            if(currentPlayer.isHasThePlayerGot20Points() ){ //Printing results after having chosen the winning player
                 System.out.println("------------\nEND OF GAME!\n------------");
                 sendMessageToAllClients("END OF GAME!");
                 runCommand("endgame",currentPlayer);
