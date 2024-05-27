@@ -28,8 +28,22 @@ public class Codex {
             System.exit(-1);
         }
         switch (input) {
-            case 0 -> {ServerMain.main(null);
-                    ChatServer.main(null);
+            case 0 -> {
+                System.out.println("Starting both Server and ChatServer...");
+                new Thread(() -> {
+                    try {
+                        ServerMain.main(null);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+                new Thread(() -> {
+                    try {
+                        ChatServer.main(null);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
             }
             case 1 -> {
                 System.out.println("You selected the CLI interface, have fun!\nStarting...");

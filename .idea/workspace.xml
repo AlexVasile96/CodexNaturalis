@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="chat adavnced function implemented w/thomas">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
-    </list>
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="fIXED ADVANCED FUNCTION (CHAT-&gt; THE CLIENT USED TO VISUALIZE THE SAME MESSAGE TWICE)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -265,7 +259,7 @@
       <workItem from="1716750020925" duration="16405000" />
       <workItem from="1716794873091" duration="3275000" />
       <workItem from="1716810439544" duration="169000" />
-      <workItem from="1716813546178" duration="1221000" />
+      <workItem from="1716813546178" duration="1612000" />
     </task>
     <task id="LOCAL-00001" summary="English translation">
       <option name="closed" value="true" />
@@ -411,7 +405,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716810536535</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="fIXED ADVANCED FUNCTION (CHAT-&gt; THE CLIENT USED TO VISUALIZE THE SAME MESSAGE TWICE)">
+      <option name="closed" value="true" />
+      <created>1716815082116</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1716815082117</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -444,7 +446,8 @@
     <MESSAGE value="Persistenza della cli quasi finita (da gestire la endturn)" />
     <MESSAGE value="ServerConnection commented" />
     <MESSAGE value="chat adavnced function implemented w/thomas" />
-    <option name="LAST_COMMIT_MESSAGE" value="chat adavnced function implemented w/thomas" />
+    <MESSAGE value="fIXED ADVANCED FUNCTION (CHAT-&gt; THE CLIENT USED TO VISUALIZE THE SAME MESSAGE TWICE)" />
+    <option name="LAST_COMMIT_MESSAGE" value="fIXED ADVANCED FUNCTION (CHAT-&gt; THE CLIENT USED TO VISUALIZE THE SAME MESSAGE TWICE)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
