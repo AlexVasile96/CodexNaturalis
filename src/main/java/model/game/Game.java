@@ -894,7 +894,6 @@ void saveEachPlayerInGame(Path path) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String jsonOutput = gson.toJson(currentPlayerObject);
             fileWriter.write(jsonOutput);
-            System.out.println("Current player saved: " + jsonOutput); // Aggiungi un messaggio di debug
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -952,7 +951,6 @@ void saveEachPlayerInGame(Path path) {
         try (FileWriter fileWriter = new FileWriter(path.toString())) {
             String jsonOutput = gson.toJson(currentPlayerObject);
             fileWriter.write(jsonOutput);
-            System.out.println("Current player saved: " + jsonOutput); // Aggiungi un messaggio di debug
         } catch (IOException e) {
             e.printStackTrace();
         }

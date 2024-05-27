@@ -29,17 +29,13 @@ public class TurnController {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
     }
 
-    public synchronized void removePlayer(Player player) {
-        nextTurn();
-        int playerIndex = players.indexOf(player);
-        if (playerIndex == -1) {
-            return; // player not in list
-        }
-        players.remove(player);
-        if (currentPlayerIndex >= players.size()) {
-            currentPlayerIndex = 0; // Reset index if out of bounds
-        } else if (playerIndex < currentPlayerIndex) {
-            currentPlayerIndex--; // Update current player index if the removed player's turn precedes the current player
+    public void setCurrentPlayer(Player player) {
+        if (players.contains(player)) {
+            this.currentPlayerIndex = players.indexOf(player);
+        } else {
+            System.out.println("Giocatore non trovato: " + player);
+            System.out.println("Lista dei giocatori: " + players);
+            throw new IllegalArgumentException("Player not found in the list");
         }
     }
 

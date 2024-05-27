@@ -1095,6 +1095,7 @@ public class ServerConnection implements Runnable {
      *
      * @throws IOException If an input/output error occurs while communicating with the server.
      */
+
     private void noPersistenceLogin() throws IOException {
         System.out.println(in.readLine()); // All clients connected
         assigningSecretCard(); // Choosing the secret Card
@@ -1104,7 +1105,5 @@ public class ServerConnection implements Runnable {
         System.out.println("Login phase ended!");
         currentPlayer = in.readLine(); // Who is the current player?
     }
-
-
 }
 

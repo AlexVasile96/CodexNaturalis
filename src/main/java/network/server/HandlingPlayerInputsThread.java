@@ -99,12 +99,16 @@ public class HandlingPlayerInputsThread implements Runnable {
                     }
                 }
                 else{
-
-                currentPlayer= game.loadCurrentPlayingPlayerFromJson();
-                System.out.println("Current player after loading data is " + currentPlayer.getNickName());
-                game.loadGameStatusFromJson();
-                sendMessageToAllClients(currentPlayer.getNickName());
-                sendMessageToAllClients("endturn");
+                    game.setCurrentPlayingPLayer(game.loadCurrentPlayingPlayerFromJson());
+                    handlingTurns(playersList); //Handling new turns
+                    currentPlayer= game.loadCurrentPlayingPlayerFromJson();
+                    System.out.println("PAOLONE CURRENT PLAYER " +  currentPlayer);
+                    turnController.setCurrentPlayer(currentPlayer);
+                    System.out.println("GIACOMONE TURNCONTROLLER " + currentPlayer);
+                    System.out.println("Current player after loading data is " + currentPlayer.getNickName());
+                    game.loadGameStatusFromJson();
+                    sendMessageToAllClients(currentPlayer.getNickName());
+                    sendMessageToAllClients("endturn");
                 }
                 boolean hasClientQuit = false;
                 while (!hasClientQuit && !isGameQuit) {
@@ -202,13 +206,15 @@ public class HandlingPlayerInputsThread implements Runnable {
                 JsonObject clientViewJson = player.getClientView().toJsonObject();
                 out.println(clientViewJson.toString()); //Sending the clientview to the specific client
                 game.addPlayer(player); // Adding the player to playerlist
-                handlingTurns(playersList); //Handling new turns
+
                 if(GameController.getHowManyPlayersDoIHave()==gameController.getSize())
                 {
                     synchronized (this)
                     {
                         notifyAll();
                         sendMessageToAllClients("All players connected. Resuming the game...");
+                        System.out.println(playersList);
+
                         return player;
                     }
                 }
@@ -501,8 +507,8 @@ public class HandlingPlayerInputsThread implements Runnable {
         currentPlayer = turnController.getCurrentPlayer();
         System.out.println("First player is " + currentPlayer);
         game.setCurrentPlayingPLayer(currentPlayer);
-    }
 
+    }
     private void assignInitialCard() throws IOException, InterruptedException {
         InitialCard initialCard = game.getInitialCardDeck().firstCardInitialGame();
         int initCardId = initialCard.getId();
@@ -524,6 +530,8 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     private void endTurn(Player currentPlayer, TurnController turnController) {
         if (currentPlayer != turnController.getCurrentPlayer()) {
+            System.out.println("Current players is "+ currentPlayer);
+            System.out.println("Current player in turncontroller is " + turnController.getCurrentPlayer());
             throw new turnPlayerErrorException("Current player not correct");
         }
         turnController.nextTurn();

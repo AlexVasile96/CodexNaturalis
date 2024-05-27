@@ -869,5 +869,17 @@ public class Player implements Observable {
     public boolean getNoMoreTurns() {
         return noMoreTurns;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(nickName, player.nickName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nickName);
+    }
 }
 
