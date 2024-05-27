@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="gesttia endturn cli persistence">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/codex/Codex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/codex/Codex.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/ChatController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/GameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/GameSceneController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/ChatScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/ChatScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/server/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/server/ChatServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
@@ -85,7 +83,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.GUI">
     <configuration name="ChatServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="network.server.ChatServer" />
       <module name="proj" />
@@ -231,8 +229,8 @@
         <item itemvalue="Application.GUI" />
         <item itemvalue="Application.ChatServer" />
         <item itemvalue="Application.ServerMain" />
-        <item itemvalue="Application.CliClientApp" />
         <item itemvalue="Application.Codex" />
+        <item itemvalue="Application.CliClientApp" />
       </list>
     </recent_temporary>
   </component>
@@ -475,7 +473,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/model/game/Game.java</url>
           <line>200</line>
-          <properties class="model.game.Game" method="showCards">
+          <properties class="model.game.Game">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -484,7 +482,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/controller/Command.java</url>
           <line>7</line>
-          <properties class="controller.Command" method="runCommand">
+          <properties class="controller.Command">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

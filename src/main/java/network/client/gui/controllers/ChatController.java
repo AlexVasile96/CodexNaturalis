@@ -34,7 +34,7 @@ public class ChatController {
                     while ((messageFromServer = in.readLine()) != null) {
                         String finalMessageFromServer = messageFromServer;
                         Platform.runLater(() -> {
-
+                            // Controlla se il messaggio ricevuto dal server è diverso dall'ultimo messaggio inviato dal client
                             if (!finalMessageFromServer.equals(lastSentMessage)) {
                                 chatWindow.appendMessage(finalMessageFromServer);
                             }
@@ -53,6 +53,7 @@ public class ChatController {
 
     public void sendMessageToServer(String message) {
         if (out != null) {
+            System.out.println("Sto scrivendo un messaggio vediamo cosa esce");
             String formattedMessage = clientName + "-> " + message;
             lastSentMessage = formattedMessage; // Memorizza l'ultimo messaggio inviato
             out.println(formattedMessage);

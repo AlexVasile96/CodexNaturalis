@@ -360,6 +360,7 @@ public class GameSceneController {
         creatingButtons();
         vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, buttonContainer);
         buttonContainer.setDisable(true);
+        chat.setDisable(false);
 
         // Create the second column VBox
         VBox secondColumnOfSecondRow = new VBox();
@@ -1072,6 +1073,7 @@ public class GameSceneController {
      */
     private void enableOrDisableGameActions() {
         buttonContainer.setDisable(!isCurrentPlayerTurn);
+        chat.setDisable(false);
     }
 
     /**
