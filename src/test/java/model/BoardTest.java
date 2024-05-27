@@ -138,6 +138,7 @@ class BoardTest {
         System.out.println("Initial player score: " + initialScore);
 
         ObjectiveCard stairsCard87 = objectiveDeck.firstCardForEachPlayer();
+        System.out.println("Stairs card selected: " + stairsCard87);
         board.createSpecificSecretCard(stairsCard87, player);
         int newScore = player.getPlayerScore();
         System.out.println("New player score after secret card: " + newScore);
@@ -152,8 +153,6 @@ class BoardTest {
         System.out.println("Objective Deck created: " + objectiveDeck);
 
         InitialCardDeck initialCardDeck = (InitialCardDeck) initCardConstructor.createCards();
-        Board board = new Board(50, 50);
-        Player player = new Player("Player", 0, Dot.YELLOW, board);
 
         InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
         board.placeInitialCard(initialCard);
@@ -163,17 +162,21 @@ class BoardTest {
         System.out.println("Resource Deck created: " + resourceDeck);
 
         player.drawResourceCard(resourceDeck); // ID 1
+        assertEquals(1,player.getPlayerCards().getFirst().getId());
         player.drawResourceCard(resourceDeck); // ID 2
         player.drawResourceCard(resourceDeck); // ID 3
-        player.drawResourceCard(resourceDeck); // ID 4
 
         Card cardPlayerChoose = player.getPlayerCards().getFirst();
         System.out.println("Player chose card: " + cardPlayerChoose);
         player.playCard(board, 0, 0, player.getPlayerCards().getFirst(), initialCard, "BR");
 
-        player.playCard(board, 1, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
-        player.playCard(board, 2, 2, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
-        player.playCard(board, 3, 3, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
+        player.playCard(board, 0, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
+        Card cardPlayerChooseTwo = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 2, player.getPlayerCards().getFirst(), cardPlayerChoose, "BL");
+
+
+        player.drawResourceCard(resourceDeck); // ID 4
+        player.playCard(board, 0, 3, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "BL");
 
         board.printBoard();
 
@@ -181,6 +184,7 @@ class BoardTest {
         System.out.println("Initial player score: " + initialScore);
 
         ObjectiveCard stairsCard87 = objectiveDeck.firstCardForEachPlayer();
+        System.out.println("Stairs card selected: " +  stairsCard87);
         board.createSpecificSecretCard(stairsCard87, player);
         int newScore = player.getPlayerScore();
         System.out.println("New player score after secret card: " + newScore);
