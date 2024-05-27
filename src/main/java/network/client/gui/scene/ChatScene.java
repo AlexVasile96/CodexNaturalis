@@ -7,13 +7,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import network.client.gui.controllers.ChatController;
 
 public class ChatScene {
     private Stage stage;
     private TextArea chatArea;
     private TextField inputField;
+    private ChatController controller;
 
-    public ChatScene() {
+    public ChatScene(String clientName) {
+        controller = new ChatController(this, clientName);
         stage = new Stage();
         stage.setTitle("Chat");
 
@@ -27,10 +30,8 @@ public class ChatScene {
         sendButton.setOnAction(event -> {
             String message = inputField.getText();
             if (!message.isEmpty()) {
-                chatArea.appendText("You: " + message + "\n");
+                controller.sendMessageToServer(message);
                 inputField.clear();
-                // Invia il messaggio al server qui
-                sendMessageToServer(message);
             }
         });
 
@@ -40,10 +41,12 @@ public class ChatScene {
         stage.setScene(scene);
         stage.initStyle(StageStyle.UTILITY); // Popup style
         stage.setOnCloseRequest(event -> stage.hide()); // Hide window on close
+
+        controller.start();
     }
 
-    private void sendMessageToServer(String message) {
-        // Logica per inviare il messaggio al server
+    public void appendMessage(String message) {
+        chatArea.appendText(message + "\n");
     }
 
     public void show() {
@@ -57,9 +60,4 @@ public class ChatScene {
     public boolean isShowing() {
         return stage.isShowing();
     }
-
-    public void appendMessage(String message) {
-        chatArea.appendText(message + "\n");
-    }
 }
-

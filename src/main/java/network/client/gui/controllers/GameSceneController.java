@@ -931,8 +931,8 @@ public class GameSceneController {
 
         chat.setOnMouseClicked(e->{
             if(chatScene == null){
-                chatScene = new ChatScene();
-                chatController = new ChatController(chatScene);
+                chatScene = new ChatScene(clientView.getUserName());
+                chatController = new ChatController(chatScene, clientView.getUserName());
                 chatController.start();
             }
             chatScene.show();

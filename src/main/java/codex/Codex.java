@@ -2,6 +2,7 @@ package codex;
 
 import network.client.gui.GUI;
 import network.client.cli.CliClientApp;
+import network.server.ChatServer;
 import network.server.ServerMain;
 
 import java.util.InputMismatchException;
@@ -27,7 +28,9 @@ public class Codex {
             System.exit(-1);
         }
         switch (input) {
-            case 0 -> ServerMain.main(null);
+            case 0 -> {ServerMain.main(null);
+                    ChatServer.main(null);
+            }
             case 1 -> {
                 System.out.println("You selected the CLI interface, have fun!\nStarting...");
                 CliClientApp.main(null); }

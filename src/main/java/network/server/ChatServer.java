@@ -5,7 +5,7 @@ import java.net.*;
 import java.util.*;
 
 public class ChatServer {
-    private static Set<PrintWriter> clientWriters = new HashSet<>();
+    private static Set<ClientHandler> clientHandlers = Collections.synchronizedSet(new HashSet<>());
 
     public static void main(String[] args) throws IOException {
         System.out.println("Chat server started...");
@@ -23,6 +23,7 @@ public class ChatServer {
         private Socket socket;
         private PrintWriter out;
         private BufferedReader in;
+        private String clientName;
 
         public ClientHandler(Socket socket) {
             this.socket = socket;
@@ -33,16 +34,20 @@ public class ChatServer {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
 
-                synchronized (clientWriters) {
-                    clientWriters.add(out);
+                // Riceve il nome del client
+                clientName = in.readLine();
+                synchronized (clientHandlers) {
+                    clientHandlers.add(this);
                 }
 
                 String message;
                 while ((message = in.readLine()) != null) {
-                    System.out.println("Chat received: " + message);
-                    synchronized (clientWriters) {
-                        for (PrintWriter writer : clientWriters) {
-                            writer.println(message);
+                    System.out.println(clientName + ": " + message);
+                    synchronized (clientHandlers) {
+                        for (ClientHandler handler : clientHandlers) {
+                            if (handler != this) { // Evita di inviare il messaggio al mittente
+                                handler.out.println(message);
+                            }
                         }
                     }
                 }
@@ -54,8 +59,8 @@ public class ChatServer {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                synchronized (clientWriters) {
-                    clientWriters.remove(out);
+                synchronized (clientHandlers) {
+                    clientHandlers.remove(this);
                 }
             }
         }

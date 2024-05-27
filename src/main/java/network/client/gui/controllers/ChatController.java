@@ -3,33 +3,60 @@ package network.client.gui.controllers;
 import javafx.application.Platform;
 import network.client.gui.scene.ChatScene;
 
+import java.io.*;
+import java.net.Socket;
+
 public class ChatController {
     private ChatScene chatWindow;
+    private Socket socket;
+    private PrintWriter out;
+    private BufferedReader in;
+    private String clientName;
+    private String lastSentMessage; // Variabile per tenere traccia dell'ultimo messaggio inviato
 
-    public ChatController(ChatScene chatWindow) {
+    public ChatController(ChatScene chatWindow, String clientName) {
         this.chatWindow = chatWindow;
+        this.clientName = clientName;
     }
 
     public void start() {
-        Thread clientThread = new Thread(() -> {
-            try {
-                // Simula la connessione al server
-//                while (true) {
-                    // Simula ricezione messaggi
-                    String messageFromServer = receiveMessageFromServer();
-                    Platform.runLater(() -> chatWindow.appendMessage("Server: " + messageFromServer));
-                    Thread.sleep(1000); // Simula il tempo di attesa per i messaggi
-//                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        clientThread.setDaemon(true); // Permette di terminare il thread quando l'applicazione chiude
-        clientThread.start();
+        try {
+            socket = new Socket("localhost", 12346); // Connettersi al server
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            // Invia il nome del client al server
+            out.println(clientName);
+
+            Thread clientThread = new Thread(() -> {
+                try {
+                    String messageFromServer;
+                    while ((messageFromServer = in.readLine()) != null) {
+                        String finalMessageFromServer = messageFromServer;
+                        Platform.runLater(() -> {
+
+                            if (!finalMessageFromServer.equals(lastSentMessage)) {
+                                chatWindow.appendMessage(finalMessageFromServer);
+                            }
+                        });
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            clientThread.setDaemon(true); // Permette di terminare il thread quando l'applicazione chiude
+            clientThread.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private String receiveMessageFromServer() {
-        // Simula la ricezione di un messaggio dal server
-        return "Hello from server";
+    public void sendMessageToServer(String message) {
+        if (out != null) {
+            String formattedMessage = clientName + "-> " + message;
+            lastSentMessage = formattedMessage; // Memorizza l'ultimo messaggio inviato
+            out.println(formattedMessage);
+            // Non aggiungere il messaggio alla finestra di chat direttamente qui
+        }
     }
 }
