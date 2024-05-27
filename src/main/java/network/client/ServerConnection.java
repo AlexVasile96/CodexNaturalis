@@ -8,6 +8,7 @@ import view.ClientView;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 
 public class ServerConnection implements Runnable {
@@ -27,6 +28,8 @@ public class ServerConnection implements Runnable {
     private String winningPlayer = null;
     private boolean clientPersisted=false;
     private boolean hasSomebodyQuit=false;
+    private static int totalPlayers=0;
+    private static int loggedInPlayers = 0;  // Static field to keep track of logged-in players
 
 
     public ServerConnection(Socket server,ClientView clientView ) throws IOException {
@@ -61,9 +64,9 @@ public class ServerConnection implements Runnable {
                         System.out.println("Your data are being processed...");
                     } else {
                         noPersistenceLogin();
-                        if ("You are the first client".equals(in.readLine())) {
-                            System.out.println("You are the first client! Initializing game...");
-                        }
+//                        if ("You are the first client".equals(in.readLine())) {
+//                            System.out.println("You are the first client! Initializing game...");
+//                        }
                     }
                 } else {
                     // If the client has already logged in, handle the game loop
@@ -1100,10 +1103,110 @@ public class ServerConnection implements Runnable {
         System.out.println(in.readLine()); // All clients connected
         assigningSecretCard(); // Choosing the secret Card
         takingTheInitialCard(); // Taking the initial Card
-        String waitingAllClientsTOChooseInitialcard = in.readLine(); // All clients chose
-        System.out.println(waitingAllClientsTOChooseInitialcard);
+        //String waitingAllClientsTOChooseInitialcard = in.readLine(); // All clients chose
+       // System.out.println(waitingAllClientsTOChooseInitialcard);
         System.out.println("Login phase ended!");
+        waitAllPlayers();
+
+    }
+
+
+
+
+    private void waitUntilLastMessage() throws IOException {
+        String messageFromServer = in.readLine();
+        while (!messageFromServer.equals("STARTGUI")) {
+            System.out.println("Server says " + messageFromServer);
+            messageFromServer = in.readLine();
+            if (messageFromServer.equals("One client decided to quit, so the game will end for every player.")) {
+                try {
+
+                    socket.close();
+                } catch (SocketTimeoutException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println("Game finally starting!");
+        makeYourMoves();
+
+    }
+    private void waitAllPlayers() throws IOException {
+        String message=in.readLine();
+            if (message.equals("All clients chose the init Card")) {
+                System.out.println(message);
+                handleInitiCardChoice();
+            }
+            else if (message.equals("SETUPFINISHED")) {
+                System.out.println(message);
+                currentPlayer = in.readLine();
+                System.out.println("Current Player:" +currentPlayer);
+                String nextPlayer = in.readLine();
+                System.out.println("Next PLayer is:" + nextPlayer);
+
+                if (nextPlayer.equals(clientView.getUserName())) {
+                    System.out.println("Setup finished, starting game...");
+                    gameDataElaboration();
+                } else {
+                    System.out.println("Not your turn, waiting for setup...");
+                    waitAllPlayers();
+                }
+            }
+            else if(message.equals("STARTGUI"))
+            {
+                System.out.println("All clients logged!");
+            }
+            else{
+                System.out.println("Not your turn yet, please wait...");
+                waitAllPlayers();
+            }
+
+    }
+
+    private void gameDataElaboration() throws IOException {
+        System.out.println("Initializing game data for client: " + clientView.getUserName());
+        out.println("updateLoggedPlayers");                                         //+1 dei logged players
+        System.out.println("Server says: " + in.readLine());                                         //Update loggedPlayers
+        out.println("howManyPlayers");
+        loggedInPlayers= Integer.parseInt(in.readLine());
+        System.out.println("Logged in players: " + loggedInPlayers);
+        out.println("totPlayers");
+        totalPlayers= Integer.parseInt(in.readLine());
+        System.out.println("Total PLayers in the game: " + totalPlayers);
+        if (loggedInPlayers<totalPlayers) {
+            out.println("SETUPFINISHED");
+            System.out.println(in.readLine()); //stampo la setupfinished
+            System.out.println("First Player in game is "+ in.readLine());
+            System.out.println("Next player to setup is " + in.readLine());
+        }
+        if(loggedInPlayers==totalPlayers)
+        {
+            System.out.println("LAST PLAYER!");
+            out.println("STARTGUI");
+            String STARTGUI=in.readLine();
+            System.out.println("All clients updated the data, Server says " + STARTGUI);
+        }
+        if (currentPlayer.equals(clientView.getUserName())) {
+            System.out.println("You have to wait until all clients have correctly finished the setup!");
+            waitUntilLastMessage();
+        } else {
+            waitUntilItsYourTurn();
+        }
+    }
+
+    private void handleInitiCardChoice() throws IOException {
         currentPlayer = in.readLine(); // Who is the current player?
+        System.out.println("CurrentPlayerNickname is: " + currentPlayer);
+        if (in.readLine().equals("You are the first client")) {
+            System.out.println("You are the first client");
+            System.out.println("Initializing game data for the first client!");
+            gameDataElaboration();
+        }
+        else{
+            System.out.println("Initializing GameData for others clients");
+            System.out.println("Waiting for fame to start...");
+            waitAllPlayers();
+        }
     }
 }
 
