@@ -53,11 +53,9 @@ public class ChatController {
 
     public void sendMessageToServer(String message) {
         if (out != null) {
-            System.out.println("Sto scrivendo un messaggio vediamo cosa esce");
-            String formattedMessage = clientName + "-> " + message;
+            String formattedMessage = clientName + ": " + message;
             lastSentMessage = formattedMessage; // Memorizza l'ultimo messaggio inviato
             out.println(formattedMessage);
-            // Non aggiungere il messaggio alla finestra di chat direttamente qui
         }
     }
 }

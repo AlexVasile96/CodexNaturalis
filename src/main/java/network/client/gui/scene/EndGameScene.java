@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Objects;
 
 public class EndGameScene {
 
@@ -37,7 +38,7 @@ public class EndGameScene {
         StackPane root = new StackPane();
         Text winner = new Text("The winner is: " );
         System.out.println("Sono entrato in ENDGAME");
-        Image background = new Image("/ImmaginiCodex/SfondoWinner.jpg");
+        Image background = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/SfondoWinner.jpg")));
         String waitForCall = in.readLine();
         do{
             System.out.println(waitForCall);
