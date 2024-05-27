@@ -20,7 +20,6 @@ public class ObjectiveCardConstructor {
             JSONObject jsonObject = new JSONObject(new JSONTokener(reader));
             JSONArray mazzoObjective = jsonObject.getJSONArray("objective");
             objectiveCardList = new ArrayList<>(); //create arrayList made up of gold cards
-
             for (int i = 0; i < mazzoObjective.length(); i++) {
                 JSONObject card = mazzoObjective.getJSONObject(i);
                 int id = card.getInt("id"); //card id

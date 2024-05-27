@@ -18,6 +18,7 @@ public class ObjectiveCard extends Card{
         this.value = value;
         this.specificSeedType = type;
         this.id = id;
+        this.specificSeedType = type;
         this.numberOfWhenTheGameEnds = numberOfWhenTheGameEnds;
         this.objectiveSpecificTypeOfCard = objectiveSpecificTypeOfCard;
     }

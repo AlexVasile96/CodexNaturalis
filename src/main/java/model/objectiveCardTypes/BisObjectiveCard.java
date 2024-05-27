@@ -4,7 +4,10 @@ import model.game.BoardPoints;
 import model.game.Player;
 import model.game.SpecificSeed;
 
+import java.io.IOException;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BisObjectiveCard implements ExtendExtendExtend {
 
@@ -26,6 +29,22 @@ public class BisObjectiveCard implements ExtendExtendExtend {
             System.out.println("You don't have enough points!");
             return false;
         }
+    }
+
+    public String getNumOfSpecificSeedString(SpecificSeed seed) throws IOException {
+        String seedToString = seed.toString();
+        String regex = seedToString + "=(\\d{1,2})"; // Modifica la regex per catturare una o due cifre
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(seedToString);
+
+        if (matcher.find()) {
+            String matchedGroup = matcher.group(1); // Ottieni il gruppo catturato
+            if (matchedGroup.length() == 1 || matchedGroup.length() == 2) {
+                return matchedGroup;
+            }
+        }
+
+        return null;
     }
 
     /*

@@ -18,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import network.client.gui.scene.BoardPointsScene;
+import network.client.gui.scene.ChatScene;
 import network.client.gui.scene.ShowObjectiveScene;
 import network.client.gui.scene.EndGameScene;
 import view.ClientView;
@@ -55,6 +56,7 @@ public class GameSceneController {
     private Button seeYourSpecificSeeds = new Button("See your seeds");
     private Button seeOtherPlayersBoards = new Button("See other players boards");
     private Button seeYourPoints = new Button("See your points");
+    private Button chat = new Button("Chat");
     Button showObjective = new Button("Show Objective");
     private Button endTurn = new Button("End turn");
     private Button quit = new Button("Quit");
@@ -111,6 +113,8 @@ public class GameSceneController {
     private boolean isFlipped = false;
     private boolean areYouTheWinner=false;
     private boolean isNOtToBePlacedon=false;
+    private ChatScene chatScene;
+    private ChatController chatController;
 
     /**
      * Initializes the game data and sets up the initial stage, socket connections, and view components.
@@ -923,6 +927,15 @@ public class GameSceneController {
                 showObjective.setDisable(true);
                 showAlert("Not your turn", "It's not your turn yet.");
             }
+        });
+
+        chat.setOnMouseClicked(e->{
+            if(chatScene == null){
+                chatScene = new ChatScene();
+                chatController = new ChatController(chatScene);
+                chatController.start();
+            }
+            chatScene.show();
         });
 
 
@@ -2071,6 +2084,7 @@ public class GameSceneController {
         buttonContainer.add(showObjective, 0, 3);
         buttonContainer.add(endTurn, 1, 3);
         buttonContainer.add(quit, 0, 4);
+        buttonContainer.add(chat, 1, 4);
         double buttonsWidth = 120.00;
         for (var node : buttonContainer.getChildren()) {
             if (node instanceof Button) {
