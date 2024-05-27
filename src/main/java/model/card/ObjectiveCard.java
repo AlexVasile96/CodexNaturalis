@@ -43,9 +43,6 @@ public class ObjectiveCard extends Card{
         this.id = id;
     }
 
-    public void setSpecificSeedType(SpecificSeed specificSeedType) {
-        this.specificSeedType = specificSeedType;
-    }
 
     public void setNumberOfWhenTheGameEnds(int numberOfWhenTheGameEnds) {
         this.numberOfWhenTheGameEnds = numberOfWhenTheGameEnds;
@@ -63,9 +60,6 @@ public class ObjectiveCard extends Card{
         return id;
     }
 
-    public SpecificSeed getSpecificSeedType() {
-        return specificSeedType;
-    }
 
     public int getNumberOfWhenTheGameEnds() {
         return numberOfWhenTheGameEnds;

@@ -63,6 +63,10 @@ class BoardTest {
         assertFalse(board.placeInitialCard(initialCard2));
     }
 
+    /**
+     * Test in order to understand if 3 mushroom cards put on the same diagonal respect the requirements
+     * TEST CHECKED-> OKAY
+     */
     @Test
     void testTWODifferentstairs() {
         // Setup iniziale
@@ -127,6 +131,11 @@ class BoardTest {
         assertEquals(newScore, initialScore + 2);
     }
 
+    /**
+     * Test in order to understand if 2 mushroom cards and one insect card put on the same diagonal respect the requirements
+     * TEST CHECKED-> OKAY
+     */
+
     @Test
     void testMushroomMushroomInsect() {
         // Setup iniziale
@@ -151,7 +160,6 @@ class BoardTest {
         Card cardPlayerChoose = player.getPlayerCards().getFirst();
         System.out.println("Player chose card: " + cardPlayerChoose);
         player.playCard(board, 0, 0, player.getPlayerCards().getFirst(), initialCard, "BR");
-
         player.playCard(board, 0, 4, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
         player.playCard(board, 0, 4, player.getPlayerCards().getFirst(), cardPlayerChoose, "BL");
 
@@ -168,6 +176,11 @@ class BoardTest {
 
         assertEquals(newScore, initialScore);
     }
+
+    /**
+     * Test in order to understand if 4 mushroom cards put on the same diagonal respect the requirements
+     * TEST CHECKED-> OKAY
+     */
 
     @Test
     void test4MushroomsInStairs() {

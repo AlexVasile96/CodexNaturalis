@@ -36,8 +36,14 @@ public class EndGameScene {
     public void endGame() throws IOException {
         StackPane root = new StackPane();
         Text winner = new Text("The winner is: " );
+        System.out.println("Sono entrato in ENDGAME");
+        Image background = new Image("/ImmaginiCodex/SfondoWinner.jpg");
+        String waitForCall = in.readLine();
+        do{
+            System.out.println(waitForCall);
+            waitForCall = in.readLine();
+        }while (!waitForCall.equals("exit"));
 
-        Image background = new Image("/SfondoWinner.jpg");
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage backgroundImage = new BackgroundImage(background, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         root.setBackground(new Background(backgroundImage));

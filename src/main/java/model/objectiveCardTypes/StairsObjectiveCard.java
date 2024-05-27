@@ -64,8 +64,8 @@ public class StairsObjectiveCard implements ExtendExtendExtend {
                     if ((columns + 2) < cols) {
                         if ((nodes[row][columns].getFirstPlacement() == seed && !nodes[row][columns].isAlreadyChecked()) &&
                                 (nodes[row][columns+1].getFirstPlacement() == seed && !nodes[row][columns+1].isAlreadyChecked())&&
-                                (nodes[row + 1][columns].getFirstPlacement() == seed && !nodes[row + 1][columns ].isAlreadyChecked()) &&
-                                (nodes[row + 2][columns-1].getFirstPlacement() == seed && !nodes[row + 2][columns-1].isAlreadyChecked())) {
+                                (nodes[row + 1][columns].getFirstPlacement() == seed && !nodes[row + 1][columns ].isAlreadyChecked() && nodes[row + 1][columns].getSecondPlacement() == seed) &&
+                                (nodes[row + 2][columns-1].getFirstPlacement() == seed && !nodes[row + 2][columns-1].isAlreadyChecked()) && nodes[row + 2][columns-1].getSecondPlacement() == seed ) {
                             // Mark the cells in the pattern as already checked
                             //first correct card
                             nodes[row][columns].setAlreadyChecked(true); //22-24

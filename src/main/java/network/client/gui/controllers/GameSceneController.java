@@ -986,7 +986,7 @@ public class GameSceneController {
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                        System.out.println("Game finally end for everybody!");
+                        System.out.println("Game finally ended for everybody!");
                         try {
                             System.out.println(in.readLine()); //ENDGAME?;
                         } catch (IOException e) {

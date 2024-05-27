@@ -95,7 +95,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 {
                     noPersistenceLogin();
                     for (Player player : playersList) {
-                        player.setPlayerScore(10);
+                        player.setPlayerScore(19);
                     }
                 }
                 else{
