@@ -64,16 +64,18 @@ class BoardTest {
     }
 
     @Test
-    void testCreateSpecificSecretCardWithStairsObjective() {
-        Deck objectiveDeck = objectiveCardConstructor.createCards();//non mischiato
+    void generalStairsTest() {
+        // Setup iniziale
+        Deck objectiveDeck = objectiveCardConstructor.createCards(); // non mischiato
         System.out.println("Objective Deck created: " + objectiveDeck);
 
-        InitialCardDeck initialCardDeck= (InitialCardDeck) initCardConstructor.createCards();
+        InitialCardDeck initialCardDeck = (InitialCardDeck) initCardConstructor.createCards();
+
         InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
         board.placeInitialCard(initialCard);
         System.out.println("Initial card placed: " + initialCard);
 
-        ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards();//not shuffled
+        ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards(); // non mischiato
         System.out.println("Resource Deck created: " + resourceDeck);
 
         ObjectiveCard stairsCard87 = objectiveDeck.firstCardForEachPlayer();
@@ -85,10 +87,10 @@ class BoardTest {
 
         Card cardPlayerChoose = player.getPlayerCards().getFirst();
         System.out.println("Player chose card: " + cardPlayerChoose);
-        player.playCard(board,0,0, player.getPlayerCards().getFirst(), initialCard, "TL");
+        player.playCard(board, 0, 0, player.getPlayerCards().getFirst(), initialCard, "TL");
 
-        player.playCard(board,0,1, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
-        player.playCard(board,0,1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BL");
+        player.playCard(board, 0, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
+        player.playCard(board, 0, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BL");
 
         board.printBoard();
 
@@ -99,7 +101,91 @@ class BoardTest {
         int newScore = player.getPlayerScore();
         System.out.println("New player score after secret card: " + newScore);
 
-        assertTrue(newScore > initialScore);
+        assertEquals(newScore, initialScore + 2);
+    }
+
+    @Test
+    void testMushroomMushroomInsect() {
+        // Setup iniziale
+        Deck objectiveDeck = objectiveCardConstructor.createCards(); // non mischiato
+        System.out.println("Objective Deck created: " + objectiveDeck);
+
+        InitialCardDeck initialCardDeck = (InitialCardDeck) initCardConstructor.createCards();
+
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
+        board.placeInitialCard(initialCard);
+        System.out.println("Initial card placed: " + initialCard);
+
+        ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards(); // non mischiato
+        System.out.println("Resource Deck created: " + resourceDeck);
+
+        player.drawResourceCard(resourceDeck); // ID 1
+        assertEquals(1,player.getPlayerCards().getFirst().getId());
+        player.drawResourceCard(resourceDeck); // ID 2
+        resourceDeck.putCardOnTopOfDeck(31); // insetto
+        player.drawResourceCard(resourceDeck); // ID 31
+
+        Card cardPlayerChoose = player.getPlayerCards().getFirst();
+        System.out.println("Player chose card: " + cardPlayerChoose);
+        player.playCard(board, 0, 0, player.getPlayerCards().getFirst(), initialCard, "BR");
+
+        player.playCard(board, 0, 4, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
+        player.playCard(board, 0, 4, player.getPlayerCards().getFirst(), cardPlayerChoose, "BL");
+
+        board.printBoard();
+
+        int initialScore = player.getPlayerScore();
+        System.out.println("Initial player score: " + initialScore);
+
+        ObjectiveCard stairsCard87 = objectiveDeck.firstCardForEachPlayer();
+        board.createSpecificSecretCard(stairsCard87, player);
+        int newScore = player.getPlayerScore();
+        System.out.println("New player score after secret card: " + newScore);
+
+        assertEquals(newScore, initialScore);
+    }
+
+    @Test
+    void test4MushroomsInStairs() {
+        // Setup iniziale
+        Deck objectiveDeck = objectiveCardConstructor.createCards(); // non mischiato
+        System.out.println("Objective Deck created: " + objectiveDeck);
+
+        InitialCardDeck initialCardDeck = (InitialCardDeck) initCardConstructor.createCards();
+        Board board = new Board(50, 50);
+        Player player = new Player("Player", 0, Dot.YELLOW, board);
+
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
+        board.placeInitialCard(initialCard);
+        System.out.println("Initial card placed: " + initialCard);
+
+        ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards(); // non mischiato
+        System.out.println("Resource Deck created: " + resourceDeck);
+
+        player.drawResourceCard(resourceDeck); // ID 1
+        player.drawResourceCard(resourceDeck); // ID 2
+        player.drawResourceCard(resourceDeck); // ID 3
+        player.drawResourceCard(resourceDeck); // ID 4
+
+        Card cardPlayerChoose = player.getPlayerCards().getFirst();
+        System.out.println("Player chose card: " + cardPlayerChoose);
+        player.playCard(board, 0, 0, player.getPlayerCards().getFirst(), initialCard, "BR");
+
+        player.playCard(board, 1, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
+        player.playCard(board, 2, 2, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
+        player.playCard(board, 3, 3, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
+
+        board.printBoard();
+
+        int initialScore = player.getPlayerScore();
+        System.out.println("Initial player score: " + initialScore);
+
+        ObjectiveCard stairsCard87 = objectiveDeck.firstCardForEachPlayer();
+        board.createSpecificSecretCard(stairsCard87, player);
+        int newScore = player.getPlayerScore();
+        System.out.println("New player score after secret card: " + newScore);
+
+        assertEquals(newScore, initialScore + 2);
     }
 
     @Test
