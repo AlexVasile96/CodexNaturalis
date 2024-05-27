@@ -64,7 +64,7 @@ class BoardTest {
     }
 
     @Test
-    void generalStairsTest() {
+    void testTWODifferentstairs() {
         // Setup iniziale
         Deck objectiveDeck = objectiveCardConstructor.createCards(); // non mischiato
         System.out.println("Objective Deck created: " + objectiveDeck);
@@ -89,6 +89,7 @@ class BoardTest {
         System.out.println("Player chose card: " + cardPlayerChoose);
         player.playCard(board, 0, 0, player.getPlayerCards().getFirst(), initialCard, "TL");
 
+        Card cardPlayerChooseTwo = player.getPlayerCards().getFirst();
         player.playCard(board, 0, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
         player.playCard(board, 0, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BL");
 
@@ -99,6 +100,28 @@ class BoardTest {
 
         board.createSpecificSecretCard(stairsCard87, player);
         int newScore = player.getPlayerScore();
+        System.out.println("New player score after secret card: " + newScore);
+
+        assertEquals(newScore, initialScore + 2);
+
+        //metto altre 3 carte in diagonale
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+
+        cardPlayerChoose = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 2, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "TR");
+        cardPlayerChooseTwo = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 3, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
+        player.playCard(board, 0, 4, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "TR");
+
+        board.printBoard();
+
+        initialScore = player.getPlayerScore();
+        System.out.println("Initial player score: " + initialScore);
+
+        board.createSpecificSecretCard(stairsCard87, player);
+        newScore = player.getPlayerScore();
         System.out.println("New player score after secret card: " + newScore);
 
         assertEquals(newScore, initialScore + 2);
