@@ -56,7 +56,7 @@ public class ChatServer {
                         synchronized (clientHandlers) {
                             for (ClientHandler handler : clientHandlers.values()) {
                                 if (handler != this) { // Evita di inviare il messaggio al mittente
-                                    handler.out.println(clientName + ": " + message);
+                                    handler.out.println("(public) " + message);
                                 }
                             }
                         }
