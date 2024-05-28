@@ -1,5 +1,8 @@
 package network.server;
 
+import javafx.application.Platform;
+import network.client.gui.controllers.GameSceneController;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -65,7 +68,7 @@ public class ChatServer {
                         }
                     }
                 } catch (SocketException e) {
-                    message = "Client disconnected";
+                    handleDisconnection();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -92,5 +95,29 @@ public class ChatServer {
                 out.println("Client " + targetClientName + " not found.");
             }
         }
-    }
-}
+
+
+        private void handleDisconnection() {
+            Platform.runLater(() -> {
+                // Show an alert indicating the disconnection
+                showAlert("Disconnection", "A player has disconnected.");
+                try {
+                    // Save game progress
+                    savePath();
+                    // Close resources
+                    if (in != null) in.close();
+                    if (out != null) out.close();
+                    if (socket != null) socket.close();
+                    // Exit the application
+                    Platform.exit();
+                    System.exit(0);
+                } catch (SocketTimeoutException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // Throw a runtime exception if an IOException occurs
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+
+    }}
