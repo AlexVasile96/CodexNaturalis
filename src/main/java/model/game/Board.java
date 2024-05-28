@@ -180,7 +180,7 @@ public class Board {
     //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
     public boolean createSpecificSecretCard(ObjectiveCard card, Player player) {
         String specificSeedObjective = String.valueOf(card.getObjectiveSpecificTypeOfCard());
-        boolean finalResult;
+        boolean finalResult=true;
 
         switch (specificSeedObjective) {
             case "STAIRS":
@@ -188,8 +188,12 @@ public class Board {
                 finalResult = stairsObjectiveCard.checkPattern(this, card.getType(), player);
                 break;
             case "L":
-                LObjectiveCard lObjectiveCard = new LObjectiveCard();
-                finalResult = lObjectiveCard.checkPattern(this, card.getType(), player);
+                if(card.getId()==91)
+                {
+                    LObjectiveCard lObjectiveCard = new LObjectiveCard();
+                    finalResult = lObjectiveCard.onePlantAndTwoMushrooms(this,player,SpecificSeed.PLANT,SpecificSeed.MUSHROOM);
+                }
+
                 break;
             case "MIX":
                 MixObjectiveCard mixObjectiveCard = new MixObjectiveCard();
@@ -221,7 +225,7 @@ public class Board {
                 Corner TOPLEFT = initialCard.getTLIBack();                            //TOP LEFT BACK
                 SpecificSeed TOPLEFTING = TOPLEFT.getSpecificCornerSeed();
                 getNode(centerX, centerY).setSpecificNodeSeed(TOPLEFTING);       //Setting the node of the initial Card
-                getNode(centerX, centerY).setFirstPlacement(TOPLEFTING);             //Keeping trace of the history on the board
+                getNode(centerX, centerY).setFirstPlacement(initialCard.getType());             //Keeping trace of the history on the board
                 getNode(centerX, centerY).setValueCounter(getNode(centerX, centerY).getValueCounter() - 1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
                 initialCard.setNode(getNode(centerX, centerY));                     //SETTING THE COORDINATE OF THE INITIAL CARD
                 TOPLEFT.setValueCounter(TOPLEFT.getValueCounter() - 1);               //DECREASING ALSO THE CORNER VALUE
@@ -229,21 +233,21 @@ public class Board {
                 Corner TOPRIGHT = initialCard.getTRIBack();                           //UPRIGHT
                 SpecificSeed TOPRIGHTING = TOPRIGHT.getSpecificCornerSeed();
                 getNode(centerX, centerY + 1).setSpecificNodeSeed(TOPRIGHTING); //Setting the node of the initial Card
-                getNode(centerX, centerY + 1).setFirstPlacement(TOPRIGHTING);      //Keeping trace of the history on the board
+                getNode(centerX, centerY + 1).setFirstPlacement(initialCard.getType());      //Keeping trace of the history on the board
                 getNode(centerX, centerY + 1).setValueCounter(getNode(centerX, centerY + 1).getValueCounter() - 1); //VALUE-COUNTER OF THE SPECIFIC NODE -1
                 TOPRIGHT.setValueCounter(TOPRIGHT.getValueCounter() - 1);               //DECREASING ALSO THE CORNER VALUE
 
                 Corner BOTTOMLEFT = initialCard.getBLIBack();                             //BOTTOMLEFT
                 SpecificSeed BOTTOMLEFTING = BOTTOMLEFT.getSpecificCornerSeed();
                 getNode(centerX + 1, centerY).setSpecificNodeSeed(BOTTOMLEFTING);  //Setting the node of the initial Card
-                getNode(centerX + 1, centerY).setFirstPlacement(BOTTOMLEFTING);    //Keeping trace of the history on the board
+                getNode(centerX + 1, centerY).setFirstPlacement(initialCard.getType());    //Keeping trace of the history on the board
                 getNode(centerX + 1, centerY).setValueCounter(getNode(centerX + 1, centerY).getValueCounter() - 1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
                 BOTTOMLEFT.setValueCounter(BOTTOMLEFT.getValueCounter() - 1);               //DECREASING ALSO THE CORNER VALUE
 
                 Corner BOTTOMRIGHT = initialCard.getBRIBack();                                    //BOTTOM-RIGHT
                 SpecificSeed BOTTOMRIGHITING = BOTTOMRIGHT.getSpecificCornerSeed();
                 getNode(centerX + 1, centerY + 1).setSpecificNodeSeed(BOTTOMRIGHITING);      //Setting the node of the initial Card
-                getNode(centerX + 1, centerY + 1).setFirstPlacement(BOTTOMRIGHITING);        //Keeping trace of the history on the board
+                getNode(centerX + 1, centerY + 1).setFirstPlacement(initialCard.getType());        //Keeping trace of the history on the board
                 getNode(centerX + 1, centerY + 1).setValueCounter(getNode(centerX + 1, centerY + 1).getValueCounter() - 1);//VALUE-COUNTER OF THE SPECIFIC NODE -1
                 BOTTOMRIGHT.setValueCounter(BOTTOMRIGHT.getValueCounter() - 1);               //DECREASING ALSO THE CORNER VALUE
 

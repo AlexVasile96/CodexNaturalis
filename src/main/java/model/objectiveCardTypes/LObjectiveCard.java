@@ -29,7 +29,7 @@ public class LObjectiveCard implements ExtendExtendExtend {
 
     @Override
     public boolean checkPattern(Board board, SpecificSeed seed, Player player) {
-        return false;
+return false;
     }
 
     @Override
@@ -37,9 +37,10 @@ public class LObjectiveCard implements ExtendExtendExtend {
         return false;
     }
 
-    private void onePlantAndTwoMushrooms(Board board, Player player,SpecificSeed seed1, SpecificSeed seed2){
+    public boolean onePlantAndTwoMushrooms(Board board, Player player,SpecificSeed seed1, SpecificSeed seed2){
        OnePlantAndTwoMushrooms onePlantAndTwoMushrooms= new OnePlantAndTwoMushrooms();
        onePlantAndTwoMushrooms.realCheck(board,player,seed1,seed2);
+       return true;
     }
     private void oneMushAndTwoPlants(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){
         OneMushAndTwoPlants oneMushAndTwoPlants= new OneMushAndTwoPlants();

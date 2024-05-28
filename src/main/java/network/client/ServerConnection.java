@@ -42,9 +42,9 @@ public class ServerConnection implements Runnable {
         this.out= new PrintWriter(socket.getOutputStream(), true);
         this.stdin= new BufferedReader(new InputStreamReader(System.in));
         this.player=new Player(null,0,null,null );
-        this.chatSocket = new Socket("localhost", 1234);
-        this.chatOut = new PrintWriter(chatSocket.getOutputStream(), true);
-        this.chatIn = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
+        // this.chatSocket = new Socket("localhost", 12346);
+    //        this.chatOut = new PrintWriter(chatSocket.getOutputStream(), true);
+//        this.chatIn = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
     }
 
     /**
@@ -70,9 +70,6 @@ public class ServerConnection implements Runnable {
                         System.out.println("Your data are being processed...");
                     } else {
                         noPersistenceLogin();
-//                        if ("You are the first client".equals(in.readLine())) {
-//                            System.out.println("You are the first client! Initializing game...");
-//                        }
                     }
                 } else {
                     // If the client has already logged in, handle the game loop
@@ -1034,7 +1031,7 @@ public class ServerConnection implements Runnable {
             System.out.println(in.readLine()); // Gets the message from the server
             return;
         }
-        int size = Integer.parseInt(controlInputFromUser(new String[]{"2", "3", "4"})); // Reads the number of players entered by the user
+        int size = Integer.parseInt(stdin.readLine()); // Reads the number of players entered by the user
         out.println(size); // Sends the number of players to the server
         System.out.println("The number of players is: " + size); // Prints the number of players
         String serverAnswer = in.readLine(); // Gets the response from the server
@@ -1107,13 +1104,25 @@ public class ServerConnection implements Runnable {
 
     private void noPersistenceLogin() throws IOException {
         System.out.println(in.readLine()); // All clients connected
-        assigningSecretCard(); // Choosing the secret Card
-        takingTheInitialCard(); // Taking the initial Card
-        //String waitingAllClientsTOChooseInitialcard = in.readLine(); // All clients chose
-       // System.out.println(waitingAllClientsTOChooseInitialcard);
-        System.out.println("Login phase ended!");
-        waitAllPlayers();
-
+        String whatIsYourIndex=null;
+        int gameSize=0;
+        gameSize= Integer.parseInt(in.readLine());
+        whatIsYourIndex=in.readLine();
+        if(Integer.parseInt(whatIsYourIndex)<=gameSize) {
+            assigningSecretCard(); // Choosing the secret Card
+            takingTheInitialCard(); // Taking the initial Card
+            //String waitingAllClientsTOChooseInitialcard = in.readLine(); // All clients chose
+            // System.out.println(waitingAllClientsTOChooseInitialcard);
+            System.out.println("Login phase ended!");
+            waitAllPlayers();
+        }
+        else{
+            System.out.println("Lobby is already full, try later!");
+            in.close(); // Close the input stream
+            out.close(); // Close the output stream
+            socket.close(); // Close the socket
+            System.exit(0);
+        }
     }
 
 
