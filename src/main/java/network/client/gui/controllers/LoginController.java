@@ -7,12 +7,14 @@ import javafx.stage.Stage;
 import model.game.Dot;
 import network.client.gui.scene.ChooseNumOfPlayersScene;
 import network.client.gui.scene.LobbyScene;
+import network.server.HandlingPlayerInputsThread;
 import view.ClientView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 public class LoginController {
 
@@ -89,7 +91,12 @@ public class LoginController {
                 String chosenName= usernameField.getText();
 
                 out.println(chosenName); // Sending username to the server
-                String whatServerSays= in.readLine();
+                String whatServerSays= null;
+                try {
+                    whatServerSays = in.readLine();
+                } catch (IOException e) {
+                    handleDisconnection();
+                }
                 System.out.println(whatServerSays);
                 if (whatServerSays.equals("Username already taken. Please choose another username:")) {
                     Platform.runLater(() -> {
@@ -159,4 +166,25 @@ public class LoginController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    private void handleDisconnection() {
+        Platform.runLater(() -> {
+            // Show an alert indicating the disconnection
+            showAlert("Disconnection", "Lobby is full.");
+            try {
+                // Close resources
+                if (in != null) in.close();
+                if (out != null) out.close();
+                if (socket != null) socket.close();
+                // Exit the application
+                Platform.exit();
+                System.exit(0);
+            } catch (SocketTimeoutException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                // Throw a runtime exception if an IOException occurs
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
 }

@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,10 +27,11 @@ public class LobbyController {
     private String currentPlayerNickname=null;
     private String initCardId=null;
     private int isFront;
-    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView cl, String initCardId, int isFront) {
+    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView cl, String initCardId, int isFront) throws SocketException {
         this.primaryStage = primaryStage;
         this.out = out;
         this.socket = socket;
+        this.socket.setSoTimeout(60000);
         this.in = in;
         this.executor = Executors.newSingleThreadExecutor();
         this.clientview = cl;
@@ -100,7 +102,7 @@ public class LobbyController {
 
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                handleDisconnection();
             }
         });
     }
@@ -130,7 +132,7 @@ public class LobbyController {
                 waitAllPlayers();
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            handleDisconnection();
         }
     }
 
@@ -149,7 +151,7 @@ public class LobbyController {
             //executor.shutdownNow();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            handleDisconnection();
         }
     }
     private void handleDisconnection() {

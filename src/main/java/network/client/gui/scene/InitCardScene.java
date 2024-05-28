@@ -1,6 +1,8 @@
 package network.client.gui.scene;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.Objects;
 public class InitCardScene {
 
@@ -105,13 +108,40 @@ public class InitCardScene {
         });
 
         placeCard.setOnMouseClicked(e -> {
-            out.println(isFront);
-            LobbyScene lobbySceneHandler = new LobbyScene();
-            lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView,id,isFront);
+            try {
+                out.println(isFront);
+                LobbyScene lobbySceneHandler = new LobbyScene();
+                lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView,id,isFront);
+            } catch (Exception ex) {
+                Platform.runLater(() -> {
+                    // Show an alert indicating the disconnection
+                    showAlert("Disconnection", "Lobby is full.");
+                    try {
+                        // Close resources
+                        if (in != null) in.close();
+                        if (out != null) out.close();
+                        if (socket != null) socket.close();
+                        // Exit the application
+                        Platform.exit();
+                        System.exit(0);
+                    } catch (SocketTimeoutException es) {
+                        es.printStackTrace();
+                    } catch (IOException exe) {
+                        // Throw a runtime exception if an IOException occurs
+                        throw new RuntimeException(exe);
+                    }
+                });
+            }
 
         });
         return initCardScene;
     }
-
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
 }

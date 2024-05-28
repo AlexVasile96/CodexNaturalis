@@ -3,10 +3,7 @@ package network.server;
 import com.google.gson.JsonObject;
 import controller.GameController;
 import controller.TurnController;
-import exceptions.ParametersNotValidException;
-import exceptions.UnknownPlayerNumberException;
-import exceptions.UsernameAlreadyExistsException;
-import exceptions.turnPlayerErrorException;
+import exceptions.*;
 import model.card.Card;
 import model.card.GoldCard;
 import model.card.InitialCard;
@@ -86,7 +83,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     public void run() {
         synchronized (this) {
             try {
-                clientSocket.setSoTimeout(120000);
+                clientSocket.setSoTimeout(30000); //REMEMBER TO SET THI TO 120000
                 whichplayerAreYou++;
                 String clientSaysHello = stdIn.readLine();
                 System.out.println("Client says " + clientSaysHello);
@@ -94,9 +91,13 @@ public class HandlingPlayerInputsThread implements Runnable {
 
                 if(!clientPersisted)
                 {
-                    noPersistenceLogin();
-                    for (Player player : playersList) {
-                        player.setPlayerScore(0);
+                    try {
+                        noPersistenceLogin();
+                        for (Player player : playersList) {
+                            player.setPlayerScore(0);
+                        }
+                    } catch (InterruptedException e) {
+                        handleClientDisconnection();
                     }
                 }
                 else{
@@ -255,6 +256,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println(size);
         } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
             System.err.println(e.getMessage());
+            handleClientDisconnection();
         }
         System.out.println(gameController);
         return player;
@@ -296,7 +298,7 @@ public class HandlingPlayerInputsThread implements Runnable {
      * @param player-> i'll add him to the playerlist if the login goes well
      */
 
-    private synchronized int setGameSize(Player player) throws NoSuchElementException, InterruptedException {
+    private synchronized int setGameSize(Player player) throws NoSuchElementException, InterruptedException, IOException {
         synchronized (lock) {
             if (numPlayers == -1 && this == firstClient) {
                 try {
@@ -327,6 +329,7 @@ public class HandlingPlayerInputsThread implements Runnable {
 
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
+                        handleClientDisconnection();
                     }
                 }
             }
@@ -493,51 +496,69 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println(game.goldsInDeck());
     }
 
-    private void addingPlayersToTheGame() throws InterruptedException {
-        for (Player playerInGame : playersList) {
-            game.addPlayer(playerInGame);
-            gameController.addPlayer(threadPlayer.getNickName(),out);
+    private void addingPlayersToTheGame() throws InterruptedException, IOException {
+        try {
+            for (Player playerInGame : playersList) {
+                game.addPlayer(playerInGame);
+                gameController.addPlayer(threadPlayer.getNickName(),out);
+            }
+        } catch (GameFullException | InterruptedException e) {
+            handleClientDisconnection();
+        } catch (UnknownPlayerNumberException | UsernameAlreadyExistsException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private synchronized void handlingTurns(List<Player> playerList) {
-        if (threadPlayer == null) {
-            return;
+    private synchronized void handlingTurns(List<Player> playerList) throws IOException {
+        try {
+            if (threadPlayer == null) {
+                return;
+            }
+            turnController = new TurnController(playerList);
+            currentPlayer = turnController.getCurrentPlayer();
+            System.out.println("First player is " + currentPlayer);
+            game.setCurrentPlayingPLayer(currentPlayer);
+        } catch (Exception e) {
+            handleClientDisconnection();
         }
-        turnController = new TurnController(playerList);
-        currentPlayer = turnController.getCurrentPlayer();
-        System.out.println("First player is " + currentPlayer);
-        game.setCurrentPlayingPLayer(currentPlayer);
 
     }
     private void assignInitialCard() throws IOException, InterruptedException {
-        InitialCard initialCard = game.getInitialCardDeck().firstCardInitialGame();
-        int initCardId = initialCard.getId();
-        sendMessageToClient("This is your first card " + initialCard);
-        sendMessageToClient(String.valueOf(initCardId));
-        String integerString = stdIn.readLine();
-        int size = Integer.parseInt(integerString);
-        System.out.println(size);
-        if (size == 0) {
-            game.placeInitialCardBack(threadPlayer.getBoard(), initialCard);
-            System.out.println("Initial Card correctly placed");
-        } else if (size == 1) {
-            game.placeInitialCard(threadPlayer.getBoard(), initialCard);
-            System.out.println("Initial Card correctly placed");
+        try {
+            InitialCard initialCard = game.getInitialCardDeck().firstCardInitialGame();
+            int initCardId = initialCard.getId();
+            sendMessageToClient("This is your first card " + initialCard);
+            sendMessageToClient(String.valueOf(initCardId));
+            String integerString = stdIn.readLine();
+            int size = Integer.parseInt(integerString);
+            System.out.println(size);
+            if (size == 0) {
+                game.placeInitialCardBack(threadPlayer.getBoard(), initialCard);
+                System.out.println("Initial Card correctly placed");
+            } else if (size == 1) {
+                game.placeInitialCard(threadPlayer.getBoard(), initialCard);
+                System.out.println("Initial Card correctly placed");
+            }
+            gameController.setPlayerChoseinitialcard(gameController.getPlayerChoseinitialcard() + 1);
+            gameController.waitingForPLayersAfterInitialcard();
+        } catch (IOException | NumberFormatException e) {
+            handleClientDisconnection();
         }
-        gameController.setPlayerChoseinitialcard(gameController.getPlayerChoseinitialcard() + 1);
-        gameController.waitingForPLayersAfterInitialcard();
     }
 
-    private void endTurn(Player currentPlayer, TurnController turnController) {
-        if (currentPlayer != turnController.getCurrentPlayer()) {
-            System.out.println("Current players is "+ currentPlayer);
-            System.out.println("Current player in turncontroller is " + turnController.getCurrentPlayer());
-            throw new turnPlayerErrorException("Current player not correct");
+    private void endTurn(Player currentPlayer, TurnController turnController) throws IOException {
+        try {
+            if (currentPlayer != turnController.getCurrentPlayer()) {
+                System.out.println("Current players is "+ currentPlayer);
+                System.out.println("Current player in turncontroller is " + turnController.getCurrentPlayer());
+                throw new turnPlayerErrorException("Current player not correct");
+            }
+            turnController.nextTurn();
+            Player nextPlayer = turnController.getCurrentPlayer();
+            setCurrentPlayer(nextPlayer);
+        } catch (turnPlayerErrorException e) {
+            handleClientDisconnection();
         }
-        turnController.nextTurn();
-        Player nextPlayer = turnController.getCurrentPlayer();
-        setCurrentPlayer(nextPlayer);
     }
 
     private void setCurrentPlayer(Player currentPlayerName) {
@@ -572,11 +593,12 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
     }
 
-    private void waitForAllClientsToSetup() {
+    private void waitForAllClientsToSetup() throws IOException {
         try {
             setupLatch.await();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+            handleClientDisconnection();
         }
     }
 
@@ -592,7 +614,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
         return false;
     }
-    private void handleClientDisconnection() throws IOException {
+    public void handleClientDisconnection() throws IOException {
         System.out.println("Connection closed with client " + threadPlayer.getNickName());
         System.out.println("Thank you " + threadPlayer.getNickName() + " for playing Codex!");
         out.println("ALL_CLIENTS_QUIT");
@@ -641,8 +663,16 @@ public class HandlingPlayerInputsThread implements Runnable {
         sendMessageToClient("All clients connected");
         sendMessageToClient(String.valueOf(gameController.getSize()));
         sendMessageToClient(String.valueOf(threadPlayer.getIndex()));
-        assigningSecretCard();
-        assignInitialCard();
+        try {
+            assigningSecretCard();
+        } catch (IOException e) {
+            handleClientDisconnection();
+        }
+        try {
+            assignInitialCard();
+        } catch (IOException e) {
+            handleClientDisconnection();
+        }
         for (Player player : playersList) {
             game.updateSingleClientView(player);
         }
