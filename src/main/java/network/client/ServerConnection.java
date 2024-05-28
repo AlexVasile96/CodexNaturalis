@@ -42,8 +42,8 @@ public class ServerConnection implements Runnable {
         this.out= new PrintWriter(socket.getOutputStream(), true);
         this.stdin= new BufferedReader(new InputStreamReader(System.in));
         this.player=new Player(null,0,null,null );
-       // this.chatSocket = new Socket("localhost", 12346);
-//        this.chatOut = new PrintWriter(chatSocket.getOutputStream(), true);
+        // this.chatSocket = new Socket("localhost", 12346);
+    //        this.chatOut = new PrintWriter(chatSocket.getOutputStream(), true);
 //        this.chatIn = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
     }
 

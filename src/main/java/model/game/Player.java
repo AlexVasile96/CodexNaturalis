@@ -503,6 +503,7 @@ public class Player implements Observable {
     {
         selectedCardFromTheDeck.getBR().setValueCounter(selectedCardFromTheDeck.getBR().getValueCounter()-1); //PLACED CORNER, I CANNOT PUT ANY OTHER THING ON THIS CORNER
 
+
         board.getNode(x - 1, y - 1).setSpecificNodeSeed(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());//SETTING THE NODE
         if (board.getNode(x - 1, y - 1).getValueCounter() == 2) {
             board.getNode(x - 1, y - 1).setFirstPlacement(selectedCardFromTheDeck.getType());
