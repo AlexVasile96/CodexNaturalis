@@ -36,17 +36,19 @@ public class StairsObjectiveCard implements ExtendExtendExtend {
         for (int row = 0; row < rows ; row++) {
             for (int columns = 0; columns < cols ; columns++) {
                 // Check if the cell contains INSECT or PLANT seed
-                if (nodes[row][columns].getFirstPlacement() == SpecificSeed.INSECT || nodes[row][columns].getFirstPlacement() == SpecificSeed.PLANT) {
+                if ((nodes[row][columns].getFirstPlacement() == SpecificSeed.INSECT ||(nodes[row][columns].getSecondPlacement() == SpecificSeed.INSECT)) || ((nodes[row][columns].getFirstPlacement() == SpecificSeed.PLANT) || nodes[row][columns].getSecondPlacement() == SpecificSeed.PLANT)) {
                     // Check if the diagonal pattern starting from this cell matches the seed
-                    if ((nodes[row][columns].getFirstPlacement() == seed && !nodes[row][columns].isAlreadyChecked()) &&
-                            (nodes[row + 1][columns + 1].getFirstPlacement() == seed && !nodes[row + 1][columns + 1].isAlreadyChecked()) &&
-                            (nodes[row + 2][columns + 2].getFirstPlacement() == seed && !nodes[row + 2][columns + 2].isAlreadyChecked())) {
-                        // Mark the cells in the pattern as already checked
-                        nodes[row][columns].setAlreadyChecked(true);
-                        nodes[row + 1][columns + 1].setAlreadyChecked(true);
-                        nodes[row + 2][columns + 2].setAlreadyChecked(true);
-                        checkVariable = true; // Set check variable to true indicating the pattern is found
-                        addStairObjectivePointsToPlayer(player); // Add points to the player for completing the pattern
+                    if ((columns + 2) < cols) {
+                        if ((nodes[row][columns].getFirstPlacement() == seed && !nodes[row][columns].isAlreadyChecked()) &&
+                                (nodes[row + 1][columns + 1].getFirstPlacement() == seed && !nodes[row + 1][columns + 1].isAlreadyChecked() && nodes[row + 1][columns + 1].getSecondPlacement() == seed) &&
+                                (nodes[row + 2][columns + 2].getFirstPlacement() == seed && !nodes[row + 2][columns + 2].isAlreadyChecked() && nodes[row + 2][columns + 2].getSecondPlacement() == seed)) {
+                            // Mark the cells in the pattern as already checked
+                            nodes[row][columns].setAlreadyChecked(true);
+                            nodes[row + 1][columns + 1].setAlreadyChecked(true);
+                            nodes[row + 2][columns + 2].setAlreadyChecked(true);
+                            checkVariable = true; // Set check variable to true indicating the pattern is found
+                            addStairObjectivePointsToPlayer(player); // Add points to the player for completing the pattern
+                        }
                     }
                 }
             }
@@ -59,7 +61,7 @@ public class StairsObjectiveCard implements ExtendExtendExtend {
         for (int row = 0; row < rows; row++) {
             for (int columns = 0; columns < cols; columns++) {
                 // Check if the cell contains ANIMAL or MUSHROOM seed
-                if (nodes[row][columns].getFirstPlacement() == SpecificSeed.ANIMAL || nodes[row][columns].getFirstPlacement() == SpecificSeed.MUSHROOM) {
+                if ((nodes[row][columns].getFirstPlacement() == SpecificSeed.ANIMAL ||(nodes[row][columns].getSecondPlacement() == SpecificSeed.ANIMAL)) || ((nodes[row][columns].getFirstPlacement() == SpecificSeed.MUSHROOM) || nodes[row][columns].getSecondPlacement() == SpecificSeed.MUSHROOM)) {
                     // Check if the diagonal pattern starting from this cell matches the seed
                     if ((columns + 2) < cols) {
                         if ((nodes[row][columns].getFirstPlacement() == seed && !nodes[row][columns].isAlreadyChecked()) &&

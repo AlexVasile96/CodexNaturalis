@@ -878,7 +878,7 @@ public class GameSceneController {
                     secretId = controller.secretCard();
                     objectiveScene.popupObjectiveScene(firstCommonId, secondCommonId, secretId);
 
-                } catch (IOException ex) {
+                } catch (IOException ex ) {
                     throw new RuntimeException(ex);
                 }
             } else {
