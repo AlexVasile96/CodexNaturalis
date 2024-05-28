@@ -82,6 +82,7 @@ public class ChatController {
                 if (in != null) in.close();
                 if (out != null) out.close();
                 if (socket != null) socket.close();
+                System.exit(0);
             } catch (IOException e) {
                 e.printStackTrace();
             }
