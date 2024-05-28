@@ -1,10 +1,10 @@
 {
   "init_cards": [
-    {"id": "81", "type": "MUSHROOM","value": "0", "TL": "EMPTY", "TR": "PLANT", "BL": "INSECT", "BR": "EMPTY", "attributes": ["INSECT"]},
-    {"id": "82","type": "MUSHROOM", "value": "0", "TL": "ANIMAL", "TR": "EMPTY", "BL": "EMPTY", "BR": "MUSHROOM","attributes": ["MUSHROOM"]},
-    {"id": "83", "type": "MUSHROOM","value": "0", "TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY","attributes": ["PLANT", "MUSHROOM"]},
-    {"id": "84","type": "MUSHROOM", "value": "0", "TL": "EMPTY", "TR": "EMPTY", "BL": "EMPTY", "BR": "EMPTY", "attributes": ["ANIMAL", "INSECT"]},
-    {"id": "85", "type": "MUSHROOM","value": "0", "TL": "EMPTY", "TR": "EMPTY", "BL": "NOTTOBEPLACEDON", "BR": "NOTTOBEPLACEDON", "attributes": ["ANIMAL", "INSECT", "PLANT"]},
-    {"id": "86", "type": "MUSHROOM","value": "0", "TL": "EMPTY", "TR": "EMPTY", "BL": "NOTTOBEPLACEDON", "BR": "NOTTOBEPLACEDON", "attributes": ["PLANT", "ANIMAL", "MUSHROOM"]}
+    {"id": "81", "type": "NULL","value": "0", "TL":"MUSHROOM", "TR":"PLANT", "BL":"INSECT", "BR":"ANIMAL", "TL_INIT_BACK":"EMPTY", "TR_INIT_BACK":"PLANT", "BL_INIT_BACK":"INSECT", "BR_INIT_BACK":"EMPTY", "attributes": ["INSECT"]},
+    {"id": "82","type": "NULL", "value": "0", "TL":"PLANT", "TR":"ANIMAL", "BL":"MUSHROOM", "BR":"INSECT", "TL_INIT_BACK":"ANIMAL", "TR_INIT_BACK":"EMPTY", "BL_INIT_BACK":"EMPTY", "BR_INIT_BACK":"MUSHROOM", "attributes": ["MUSHROOM"]},
+    {"id": "83", "type": "NULL","value": "0", "TL":"INSECT", "TR":"ANIMAL", "BL":"MUSHROOM", "BR":"PLANT", "TL_INIT_BACK":"EMPTY", "TR_INIT_BACK":"EMPTY", "BL_INIT_BACK":"EMPTY", "BR_INIT_BACK":"EMPTY", "attributes": ["PLANT","MUSHROOM"]},
+    {"id": "84","type": "NULL", "value": "0", "TL":"PLANT", "TR":"INSECT", "BL":"ANIMAL", "BR":"MUSHROOM", "TL_INIT_BACK":"EMPTY", "TR_INIT_BACK":"EMPTY", "BL_INIT_BACK":"EMPTY", "BR_INIT_BACK":"EMPTY", "attributes": [ "INSECT","ANIMAL"]},
+    {"id": "85", "type": "NULL","value": "0", "TL":"INSECT", "TR":"MUSHROOM", "BL":"PLANT", "BR":"ANIMAL", "TL_INIT_BACK":"EMPTY", "TR_INIT_BACK":"EMPTY", "BL_INIT_BACK":"NOTTOBEPLACEDON", "BR_INIT_BACK":"NOTTOBEPLACEDON", "attributes": ["INSECT","PLANT","ANIMAL"]},
+    {"id": "86", "type": "NULL","value": "0", "TL":"MUSHROOM", "TR":"ANIMAL", "BL":"PLANT", "BR":"INSECT", "TL_INIT_BACK":"EMPTY", "TR_INIT_BACK":"EMPTY", "BL_INIT_BACK":"NOTTOBEPLACEDON", "BR_INIT_BACK":"NOTTOBEPLACEDON", "attributes": ["MUSHROOM", "ANIMAL", "PLANT"]}
   ]
 }
