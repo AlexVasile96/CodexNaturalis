@@ -91,6 +91,7 @@ public class ChatScene {
             }
             appendMessage(clientName + ": " + message, true);
             inputField.clear();
+            recipientField.clear();
         }
     }
 
