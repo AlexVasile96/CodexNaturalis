@@ -246,8 +246,8 @@ public class HandlingPlayerInputsThread implements Runnable {
             player = new Player(request, 0, dot, board);
             this.userName = request;
             synchronized (this) {
-                player.setIndex(index);
                 index++;
+                player.setIndex(index);
             }
             gameController = lobby.login(request, out);
             System.out.println("Current numb of players: " + gameController.getCurrentNumsOfPlayers());
@@ -639,6 +639,8 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
 
         sendMessageToClient("All clients connected");
+        sendMessageToClient(String.valueOf(gameController.getSize()));
+        sendMessageToClient(String.valueOf(threadPlayer.getIndex()));
         assigningSecretCard();
         assignInitialCard();
         for (Player player : playersList) {

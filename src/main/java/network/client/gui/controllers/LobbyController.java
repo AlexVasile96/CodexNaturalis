@@ -1,6 +1,7 @@
 package network.client.gui.controllers;
 
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import network.client.gui.scene.SecretCardScene;
 import network.client.gui.scene.GameScene;
@@ -10,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -43,8 +45,28 @@ public class LobbyController {
                     if (message.equals("All clients connected")) {
                         Platform.runLater(() -> {
                             System.out.println("All clients are connected, choosing secret cards...");
-                            SecretCardScene secretCardSceneHandler = new SecretCardScene();
-                            secretCardSceneHandler.chooseSecretCard(primaryStage, out, socket, in, clientview);
+                            //Da fare qua il controllo sul numero di giocarori
+                            String whatIsYourIndex=null;
+                            int gameSize=0;
+                            try {
+                                gameSize= Integer.parseInt(in.readLine());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            try {
+                                whatIsYourIndex=in.readLine();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            if(Integer.parseInt(whatIsYourIndex)<=gameSize) {
+                                SecretCardScene secretCardSceneHandler = new SecretCardScene();
+                                secretCardSceneHandler.chooseSecretCard(primaryStage, out, socket, in, clientview);
+                            }
+                            else{
+                                System.out.println("Number of player is already full");
+                                handleDisconnection();
+                            }
+
                         });
                         break;
                     } else if (message.equals("All clients chose the init Card")) {
@@ -129,6 +151,39 @@ public class LobbyController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    private void handleDisconnection() {
+        Platform.runLater(() -> {
+            // Show an alert indicating the disconnection
+            showAlert("Disconnection", "Lobby is full.");
+            try {
+                // Close resources
+                if (in != null) in.close();
+                if (out != null) out.close();
+                if (socket != null) socket.close();
+                // Exit the application
+                Platform.exit();
+                System.exit(0);
+            } catch (SocketTimeoutException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                // Throw a runtime exception if an IOException occurs
+                throw new RuntimeException(e);
+            }
+        });
+    }
+    /**
+     * Shows an alert with the given title and message.
+     *
+     * @param title   The title of the alert.
+     * @param message The message to be displayed in the alert.
+     */
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 
