@@ -21,7 +21,7 @@ public class ChatController {
 
     public void start() {
         try {
-            socket = new Socket("192.168.1.2", 12346); // Connettersi al server
+            socket = new Socket("localhost", 12346); // Connettersi al server
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
