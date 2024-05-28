@@ -9,16 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Crash management">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/MainMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/currentplayer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/currentplayer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/StairsObjectiveCardTest.java" beforeDir="false" />
-    </list>
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Jar fixed latest versinoe w/Alex" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -133,7 +124,20 @@
       <command value="mvn clean package" />
     </option>
   </component>
-  <component name="RunManager" selected="JAR Application.proj.jar">
+  <component name="RunManager">
+    <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.network.client.cli.CliClientApp" />
+      <module name="proj" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.polimi.ingsw.network.client.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="GoldDeckTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="proj" />
       <extension name="coverage">
@@ -183,50 +187,20 @@
       <option name="JAR_PATH" value="$PROJECT_DIR$/proj.jar" />
       <method v="2" />
     </configuration>
-    <configuration name="proj [test]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
-      <MavenSettings>
-        <option name="myGeneralSettings" />
-        <option name="myRunnerSettings" />
-        <option name="myRunnerParameters">
-          <MavenRunnerParameters>
-            <option name="cmdOptions" />
-            <option name="profiles">
-              <set />
-            </option>
-            <option name="goals">
-              <list>
-                <option value="test" />
-              </list>
-            </option>
-            <option name="multimoduleDir" />
-            <option name="pomFileName" value="pom.xml" />
-            <option name="profilesMap">
-              <map />
-            </option>
-            <option name="projectsCmdOptionValues">
-              <list />
-            </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="$PROJECT_DIR$" />
-          </MavenRunnerParameters>
-        </option>
-      </MavenSettings>
-      <method v="2" />
-    </configuration>
     <list>
+      <item itemvalue="Application.CliClientApp" />
       <item itemvalue="JAR Application.proj.jar" />
       <item itemvalue="JUnit.model in proj" />
       <item itemvalue="JUnit.GoldDeckTest" />
       <item itemvalue="JUnit.GoldDeckTest.cannotDrawMoreThanThree" />
-      <item itemvalue="Maven.proj [test]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.CliClientApp" />
         <item itemvalue="JAR Application.proj.jar" />
         <item itemvalue="JUnit.model in proj" />
         <item itemvalue="JUnit.GoldDeckTest.cannotDrawMoreThanThree" />
         <item itemvalue="JUnit.GoldDeckTest" />
-        <item itemvalue="Maven.proj [test]" />
       </list>
     </recent_temporary>
   </component>
@@ -604,7 +578,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716922340030</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Jar fixed latest versinoe w/Alex">
+      <option name="closed" value="true" />
+      <created>1716929811647</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1716929811647</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -622,7 +604,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Almost finished the english translation" />
     <MESSAGE value="EndGame for GUI" />
     <MESSAGE value="Resource card now can be placed on their back without clicking on them a second time" />
     <MESSAGE value="Last gold card update" />
@@ -647,7 +628,8 @@
     <MESSAGE value="New method for objective cards" />
     <MESSAGE value="OnePlantAndTwoMushrooms" />
     <MESSAGE value="Marco palese mi ha aiutato a fare il pom (not working rn)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Marco palese mi ha aiutato a fare il pom (not working rn)" />
+    <MESSAGE value="Jar fixed latest versinoe w/Alex" />
+    <option name="LAST_COMMIT_MESSAGE" value="Jar fixed latest versinoe w/Alex" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

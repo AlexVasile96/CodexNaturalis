@@ -197,42 +197,6 @@ public class HandlingPlayerInputsThread implements Runnable {
             sendMessageToClient("Hello!! You have to log in, please type your username");
             String request = stdIn.readLine();
 
-            player = game.loadPlayer(request); //If the player exists, I load him
-            if (player != null) {
-                clientPersisted=true;
-                sendMessageToClient("Welcome back, " + request + "! Your data has been loaded.");
-                playersList.add(player);
-                threadPlayer = player;
-                List<String> expectedPlayerNicknames =game.loadPlayerNicknames(); //Checking if all the players had been added correctly
-                allPlayersLoaded = game.areAllPlayersLoaded(expectedPlayerNicknames);
-                gameController.setSize(gameController.loadGameSizeFromJson());
-                GameController.setHowManyPlayersDoIHave(GameController.getHowManyPlayersDoIHave()+1);
-                gameController = lobby.login(request, out);
-                JsonObject clientViewJson = player.getClientView().toJsonObject();
-                out.println(clientViewJson.toString()); //Sending the clientview to the specific client
-                game.addPlayer(player); // Adding the player to playerlist
-
-                if(GameController.getHowManyPlayersDoIHave()==gameController.getSize())
-                {
-                    synchronized (this)
-                    {
-                        notifyAll();
-                        sendMessageToAllClients("All players connected. Resuming the game...");
-                        System.out.println(playersList);
-
-                        return player;
-                    }
-                }
-                else {
-                    sendMessageToClient("You have to wait until all clients are connected!");
-                    synchronized (this) {
-                        System.out.println("Manca un player");
-                        wait();
-                    }
-                    return player;
-                }
-            }
-
             //Correct handling if one player tries to set a name that had already been chosen
 
             while (isUsernameTaken(request)) {
