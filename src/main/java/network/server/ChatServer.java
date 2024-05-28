@@ -100,10 +100,8 @@ public class ChatServer {
         private void handleDisconnection() {
             Platform.runLater(() -> {
                 // Show an alert indicating the disconnection
-                showAlert("Disconnection", "A player has disconnected.");
                 try {
                     // Save game progress
-                    savePath();
                     // Close resources
                     if (in != null) in.close();
                     if (out != null) out.close();
@@ -120,4 +118,5 @@ public class ChatServer {
             });
         }
 
-    }}
+    }
+}
