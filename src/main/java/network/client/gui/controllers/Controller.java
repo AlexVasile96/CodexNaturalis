@@ -291,37 +291,41 @@ public class Controller {
     public void waitForTurn(String playerNickname, Stage primaryStage) throws IOException {
         String message;
         System.out.println("Waiting for server to say my name");
-        while (!(message = in.readLine()).equals(playerNickname)) {
-            System.out.println("Received message while waiting for turn: " + message);
+        try {
+            while (!(message = in.readLine()).equals(playerNickname)) {
+                System.out.println("Received message while waiting for turn: " + message);
 
-            switch (message) {
-                case "You smashed 20 points!! now everybody got one last turn":
-                    String whoGot20Points = in.readLine();
-                    Platform.runLater(() -> showAlert("Someone Got 20 Points!", "WOW!!! " + whoGot20Points + " HAS FINALLY REACHED 20 POINTS!!"));
-                    break;
+                switch (message) {
+                    case "You smashed 20 points!! now everybody got one last turn":
+                        String whoGot20Points = in.readLine();
+                        Platform.runLater(() -> showAlert("Someone Got 20 Points!", "WOW!!! " + whoGot20Points + " HAS FINALLY REACHED 20 POINTS!!"));
+                        break;
 
-                case "ALL_CLIENTS_QUIT":
-                    quit(primaryStage);
-                    break;
+                    case "ALL_CLIENTS_QUIT":
+                        quit(primaryStage);
+                        break;
 
-                case "END OF GAME!":
-                    EndGameScene endGameScene = new EndGameScene(primaryStage, out, socket, in, clientView,this );
-                    Platform.runLater(() -> {
-                        try {
-                            endGameScene.endGame();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-                    break;
+                    case "END OF GAME!":
+                        EndGameScene endGameScene = new EndGameScene(primaryStage, out, socket, in, clientView, this);
+                        Platform.runLater(() -> {
+                            try {
+                                endGameScene.endGame();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                        break;
 
-                default:
-                    System.out.println("Not your turn, please wait");
-                    break;
+                    default:
+                        System.out.println("Not your turn, please wait");
+                        break;
+                }
             }
+            System.out.println("It's now " + playerNickname + "'s turn");
+            Platform.runLater(() -> showAlert("It's your turn!", "Time to play some codex!"));
+        } catch (SocketTimeoutException e) {
+            handleDisconnection();
         }
-        System.out.println("It's now " + playerNickname + "'s turn");
-        Platform.runLater(()-> showAlert("It's your turn!", "Time to play some codex!"));
     }
 
 
