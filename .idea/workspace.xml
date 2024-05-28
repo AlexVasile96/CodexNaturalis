@@ -9,25 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Now both cli and gui cannot have more than the decided number of players by the first client">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/proj_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/GoldCardConstructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/card/GoldCardConstructor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/InitCardConstructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/card/InitCardConstructor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/ObjectiveCardConstructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/card/ObjectiveCardConstructor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/ResourceCardConstructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/card/ResourceCardConstructor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/StairsObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/StairsObjectiveCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/ServerConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/ServerConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/cli/CliClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/cli/CliClientApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/ConnectionWithServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/client/gui/ConnectionWithServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/network/server/ServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/network/server/ServerMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/currentplayer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/currentplayer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="jar" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -255,7 +237,7 @@
       <workItem from="1716881255967" duration="8822000" />
       <workItem from="1716894646087" duration="1532000" />
       <workItem from="1716899612792" duration="8885000" />
-      <workItem from="1716909257740" duration="373000" />
+      <workItem from="1716909257740" duration="680000" />
     </task>
     <task id="LOCAL-00001" summary="English translation">
       <option name="closed" value="true" />
@@ -537,7 +519,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716896105951</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="jar">
+      <option name="closed" value="true" />
+      <created>1716909935723</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1716909935724</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -579,7 +569,8 @@
     <MESSAGE value="Handling client cli chat options" />
     <MESSAGE value="Socket exception" />
     <MESSAGE value="Now both cli and gui cannot have more than the decided number of players by the first client" />
-    <option name="LAST_COMMIT_MESSAGE" value="Now both cli and gui cannot have more than the decided number of players by the first client" />
+    <MESSAGE value="jar" />
+    <option name="LAST_COMMIT_MESSAGE" value="jar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
