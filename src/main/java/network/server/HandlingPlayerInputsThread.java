@@ -595,6 +595,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     private void handleClientDisconnection() throws IOException {
         System.out.println("Connection closed with client " + threadPlayer.getNickName());
         System.out.println("Thank you " + threadPlayer.getNickName() + " for playing Codex!");
+        out.println("ALL_CLIENTS_QUIT");
         clients.remove(this);
         if (threadPlayer != null) {
             playersList.remove(threadPlayer);
@@ -631,8 +632,6 @@ public class HandlingPlayerInputsThread implements Runnable {
         }
         handlingTurns(playersList);
         addingPlayersToTheGame();
-
-
         synchronized (this) {
             if (!checkGameInizialization) {
                 initializeCards();
