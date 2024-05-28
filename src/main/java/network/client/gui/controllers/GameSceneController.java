@@ -24,6 +24,7 @@ import network.client.gui.scene.EndGameScene;
 import view.ClientView;
 
 import java.io.*;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -197,208 +198,213 @@ public class GameSceneController {
 
     public void startGame(String initCardId, int isFront) throws IOException {
         // Load and set the background image for the game board
-        Image backGroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
-        BackgroundImage backgroundImage = new BackgroundImage(backGroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-        Background background = new Background(backgroundImage);
+        try {
+            Image backGroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoGame.jpg")));
+            BackgroundImage backgroundImage = new BackgroundImage(backGroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+            Background background = new Background(backgroundImage);
 
-        // Set the paths for the player's hand cards
-        pathHandCard1 = "/ImmaginiCodex/CarteFront/" + typeHandCard1 + "/" + idHandCard1 + ".png";
-        pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
-        pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
+            // Set the paths for the player's hand cards
+            pathHandCard1 = "/ImmaginiCodex/CarteFront/" + typeHandCard1 + "/" + idHandCard1 + ".png";
+            pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
+            pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
 
-        // Load the hand card images
-        handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
-        handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
-        handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
+            // Load the hand card images
+            handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
+            handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
+            handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
 
-        // Create image views for the hand cards and set their dimensions
-        handCard1View = new ImageView(handCard1);
-        setWidthAndHeight(handCard1View);
+            // Create image views for the hand cards and set their dimensions
+            handCard1View = new ImageView(handCard1);
+            setWidthAndHeight(handCard1View);
 
-        handCard2View = new ImageView(handCard2);
-        handCard2View.setFitWidth(widthWellCards);
-        handCard2View.setFitHeight(heightWellCards);
+            handCard2View = new ImageView(handCard2);
+            handCard2View.setFitWidth(widthWellCards);
+            handCard2View.setFitHeight(heightWellCards);
 
-        handCard3View = new ImageView(handCard3);
-        handCard3View.setFitWidth(widthWellCards);
-        handCard3View.setFitHeight(heightWellCards);
+            handCard3View = new ImageView(handCard3);
+            handCard3View.setFitWidth(widthWellCards);
+            handCard3View.setFitHeight(heightWellCards);
 
-        // Initialize the scroll pane for the game board
-        cardsOntheBoardScrollPane = new ScrollPane();
-        cardsOntheBoardScrollPane.setPrefSize(400.00, 400.00);
-        int boardDimension = 500;
+            // Initialize the scroll pane for the game board
+            cardsOntheBoardScrollPane = new ScrollPane();
+            cardsOntheBoardScrollPane.setPrefSize(400.00, 400.00);
+            int boardDimension = 500;
 
-        // Create and configure the game board
-        gameBoard = new GridPane(boardDimension, boardDimension);
-        gameBoard.setBackground(background);
-        gameBoard.setHgap(0);
-        gameBoard.setVgap(0);
-        gameBoard.setAlignment(Pos.CENTER);
+            // Create and configure the game board
+            gameBoard = new GridPane(boardDimension, boardDimension);
+            gameBoard.setBackground(background);
+            gameBoard.setHgap(0);
+            gameBoard.setVgap(0);
+            gameBoard.setAlignment(Pos.CENTER);
 
-        double windowedLength = root.getWidth();
-        double windowHeight = root.getHeight();
+            double windowedLength = root.getWidth();
+            double windowHeight = root.getHeight();
 
-        gameBoard.setPrefSize(windowedLength * 0.8, windowHeight * 0.8);
+            gameBoard.setPrefSize(windowedLength * 0.8, windowHeight * 0.8);
 
-        // Load the initial card image based on whether it is front or back
-        if (isFront == 1) {
-            initCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Init/" + initCardId + ".png")));
-        } else {
-            initCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteBack/Init/" + initCardId + ".png")));
-        }
+            // Load the initial card image based on whether it is front or back
+            if (isFront == 1) {
+                initCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteFront/Init/" + initCardId + ".png")));
+            } else {
+                initCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/CarteBack/Init/" + initCardId + ".png")));
+            }
 
 
-        // Divide the initial card image into a 3x3 grid
-        GridPane initCardDividedInNineRegions = submittingEachImage(initCardImage, initCardId);
+            // Divide the initial card image into a 3x3 grid
+            GridPane initCardDividedInNineRegions = submittingEachImage(initCardImage, initCardId);
 
-        // Create CardView objects for each region of the initial card
-        ImageView tlImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(0);
-        ImageView tcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(1);
-        ImageView trImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(2);
-        ImageView lcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(3);
-        ImageView ccImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(4);
-        ImageView rcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(5);
-        ImageView blImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(6);
-        ImageView bcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(7);
-        ImageView brImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(8);
+            // Create CardView objects for each region of the initial card
+            ImageView tlImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(0);
+            ImageView tcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(1);
+            ImageView trImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(2);
+            ImageView lcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(3);
+            ImageView ccImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(4);
+            ImageView rcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(5);
+            ImageView blImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(6);
+            ImageView bcImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(7);
+            ImageView brImageView = (ImageView) initCardDividedInNineRegions.getChildren().get(8);
 
-        CardView tlCardView = new CardView(tlImageView, initCardId, "TL");
-        CardView tcCardView = new CardView(tcImageView, initCardId, "TC");
-        CardView trCardView = new CardView(trImageView, initCardId, "TR");
-        CardView lcCardView = new CardView(lcImageView, initCardId, "LC");
-        CardView ccCardView = new CardView(ccImageView, initCardId, "CC");
-        CardView rcCardView = new CardView(rcImageView, initCardId, "RC");
-        CardView blCardView = new CardView(blImageView, initCardId, "BL");
-        CardView bcCardView = new CardView(bcImageView, initCardId, "BC");
-        CardView brCardView = new CardView(brImageView, initCardId, "BR");
+            CardView tlCardView = new CardView(tlImageView, initCardId, "TL");
+            CardView tcCardView = new CardView(tcImageView, initCardId, "TC");
+            CardView trCardView = new CardView(trImageView, initCardId, "TR");
+            CardView lcCardView = new CardView(lcImageView, initCardId, "LC");
+            CardView ccCardView = new CardView(ccImageView, initCardId, "CC");
+            CardView rcCardView = new CardView(rcImageView, initCardId, "RC");
+            CardView blCardView = new CardView(blImageView, initCardId, "BL");
+            CardView bcCardView = new CardView(bcImageView, initCardId, "BC");
+            CardView brCardView = new CardView(brImageView, initCardId, "BR");
 
-        // Increment the card index for the initial card and add it to the card indices map
-        nextCardIndex++; // 1 for initial card
-        cardIndices.put(tlCardView, nextCardIndex);
-        System.out.println("Added TL CardView with index: " + nextCardIndex);
-        cardIndices.put(tcCardView, nextCardIndex);
-        System.out.println("Added TC CardView with index: " + nextCardIndex);
-        cardIndices.put(trCardView, nextCardIndex);
-        System.out.println("Added TR CardView with index: " + nextCardIndex);
-        cardIndices.put(lcCardView, nextCardIndex);
-        System.out.println("Added LC CardView with index: " + nextCardIndex);
-        cardIndices.put(ccCardView, nextCardIndex);
-        System.out.println("Added CC CardView with index: " + nextCardIndex);
-        cardIndices.put(rcCardView, nextCardIndex);
-        System.out.println("Added RC CardView with index: " + nextCardIndex);
-        cardIndices.put(blCardView, nextCardIndex);
-        System.out.println("Added BL CardView with index: " + nextCardIndex);
-        cardIndices.put(bcCardView, nextCardIndex);
-        System.out.println("Added BC CardView with index: " + nextCardIndex);
-        cardIndices.put(brCardView, nextCardIndex);
-        System.out.println("Added BR CardView with index: " + nextCardIndex);
+            // Increment the card index for the initial card and add it to the card indices map
+            nextCardIndex++; // 1 for initial card
+            cardIndices.put(tlCardView, nextCardIndex);
+            System.out.println("Added TL CardView with index: " + nextCardIndex);
+            cardIndices.put(tcCardView, nextCardIndex);
+            System.out.println("Added TC CardView with index: " + nextCardIndex);
+            cardIndices.put(trCardView, nextCardIndex);
+            System.out.println("Added TR CardView with index: " + nextCardIndex);
+            cardIndices.put(lcCardView, nextCardIndex);
+            System.out.println("Added LC CardView with index: " + nextCardIndex);
+            cardIndices.put(ccCardView, nextCardIndex);
+            System.out.println("Added CC CardView with index: " + nextCardIndex);
+            cardIndices.put(rcCardView, nextCardIndex);
+            System.out.println("Added RC CardView with index: " + nextCardIndex);
+            cardIndices.put(blCardView, nextCardIndex);
+            System.out.println("Added BL CardView with index: " + nextCardIndex);
+            cardIndices.put(bcCardView, nextCardIndex);
+            System.out.println("Added BC CardView with index: " + nextCardIndex);
+            cardIndices.put(brCardView, nextCardIndex);
+            System.out.println("Added BR CardView with index: " + nextCardIndex);
 
-        // Enable interaction with some card regions
-        tlImageView.setPickOnBounds(true);
-        trImageView.setPickOnBounds(true);
-        blImageView.setPickOnBounds(true);
-        brImageView.setPickOnBounds(true);
+            // Enable interaction with some card regions
+            tlImageView.setPickOnBounds(true);
+            trImageView.setPickOnBounds(true);
+            blImageView.setPickOnBounds(true);
+            brImageView.setPickOnBounds(true);
 
-        // Add the initial card regions to the game board
-        gameBoard.add(tlImageView, boardDimension / 3, boardDimension / 3);
-        gameBoard.add(tcImageView, boardDimension / 3 + 1, boardDimension / 3);
-        gameBoard.add(trImageView, boardDimension / 3 + 2, boardDimension / 3);
-        gameBoard.add(lcImageView, boardDimension / 3, boardDimension / 3 + 1);
-        gameBoard.add(ccImageView, boardDimension / 3 + 1, boardDimension / 3 + 1);
-        gameBoard.add(rcImageView, boardDimension / 3 + 2, boardDimension / 3 + 1);
-        gameBoard.add(blImageView, boardDimension / 3, boardDimension / 3 + 2);
-        gameBoard.add(bcImageView, boardDimension / 3 + 1, boardDimension / 3 + 2);
-        gameBoard.add(brImageView, boardDimension / 3 + 2, boardDimension / 3 + 2);
+            // Add the initial card regions to the game board
+            gameBoard.add(tlImageView, boardDimension / 3, boardDimension / 3);
+            gameBoard.add(tcImageView, boardDimension / 3 + 1, boardDimension / 3);
+            gameBoard.add(trImageView, boardDimension / 3 + 2, boardDimension / 3);
+            gameBoard.add(lcImageView, boardDimension / 3, boardDimension / 3 + 1);
+            gameBoard.add(ccImageView, boardDimension / 3 + 1, boardDimension / 3 + 1);
+            gameBoard.add(rcImageView, boardDimension / 3 + 2, boardDimension / 3 + 1);
+            gameBoard.add(blImageView, boardDimension / 3, boardDimension / 3 + 2);
+            gameBoard.add(bcImageView, boardDimension / 3 + 1, boardDimension / 3 + 2);
+            gameBoard.add(brImageView, boardDimension / 3 + 2, boardDimension / 3 + 2);
 
-        // Set the scroll pane content to the game board
-        cardsOntheBoardScrollPane.setContent(gameBoard);
+            // Set the scroll pane content to the game board
+            cardsOntheBoardScrollPane.setContent(gameBoard);
 
-        // Create the main layout and set its background color
-        BorderPane layout = new BorderPane();
-        layout.setCenter(cardsOntheBoardScrollPane);
-        layout.setStyle("-fx-background-color: #212121;");
+            // Create the main layout and set its background color
+            BorderPane layout = new BorderPane();
+            layout.setCenter(cardsOntheBoardScrollPane);
+            layout.setStyle("-fx-background-color: #212121;");
 
-        // Create a VBox for the game UI elements
-        VBox vboxGame = new VBox();
-        vboxGame.setFillWidth(true);
+            // Create a VBox for the game UI elements
+            VBox vboxGame = new VBox();
+            vboxGame.setFillWidth(true);
 
-        Insets padding = new Insets(10, 10, 10, 10);
-        Insets paddingDecks = new Insets(100, 10, 10, 10);
+            Insets padding = new Insets(10, 10, 10, 10);
+            Insets paddingDecks = new Insets(100, 10, 10, 10);
 
-        // Create the second row HBox and the first column HBox
-        HBox secondRow = new HBox();
-        HBox firstColumnOfSecondRow = new HBox();
-        firstColumnOfSecondRow.setPadding(padding);
-        firstColumnOfSecondRow.setSpacing(4);
+            // Create the second row HBox and the first column HBox
+            HBox secondRow = new HBox();
+            HBox firstColumnOfSecondRow = new HBox();
+            firstColumnOfSecondRow.setPadding(padding);
+            firstColumnOfSecondRow.setSpacing(4);
 
-        // Add labels for the well cards
-        Label wellText = new Label("                    WELL");
-        Label wellText2 = new Label("CARDS");
-        wellText.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14");
-        wellText2.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14");
+            // Add labels for the well cards
+            Label wellText = new Label("                    WELL");
+            Label wellText2 = new Label("CARDS");
+            wellText.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14");
+            wellText2.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14");
 
-        // Initialize the grid pane for well cards
-        gridPaneForWellCards = new GridPane();
-        gridPaneForWellCards.setVgap(4.0);
-        gridPaneForWellCards.setHgap(4.0);
-        gridPaneForWellCards.setPadding(padding);
-        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard1View(), 0, 0);
-        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard2View(), 0, 1);
-        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard3View(), 1, 0);
-        gridPaneForWellCards.add(SharedObjectsInGui.getWellCard4View(), 1, 1);
-        gridPaneForWellCards.add(wellText, 0, 2);
-        gridPaneForWellCards.add(wellText2, 1, 2);
+            // Initialize the grid pane for well cards
+            gridPaneForWellCards = new GridPane();
+            gridPaneForWellCards.setVgap(4.0);
+            gridPaneForWellCards.setHgap(4.0);
+            gridPaneForWellCards.setPadding(padding);
+            gridPaneForWellCards.add(SharedObjectsInGui.getWellCard1View(), 0, 0);
+            gridPaneForWellCards.add(SharedObjectsInGui.getWellCard2View(), 0, 1);
+            gridPaneForWellCards.add(SharedObjectsInGui.getWellCard3View(), 1, 0);
+            gridPaneForWellCards.add(SharedObjectsInGui.getWellCard4View(), 1, 1);
+            gridPaneForWellCards.add(wellText, 0, 2);
+            gridPaneForWellCards.add(wellText2, 1, 2);
 
-        // Create an HBox for the decks
-        HBox decks = new HBox();
-        Label decksText = new Label("      Resource Deck               Gold Deck");
-        decksText.setStyle("-fx-font-weight: bold; -fx-text-fill: white");
+            // Create an HBox for the decks
+            HBox decks = new HBox();
+            Label decksText = new Label("      Resource Deck               Gold Deck");
+            decksText.setStyle("-fx-font-weight: bold; -fx-text-fill: white");
 
-        decks.setSpacing(4.0);
-        decks.setPadding(paddingDecks);
-        decks.getChildren().addAll(SharedObjectsInGui.getTopCardResourceDeckView(), SharedObjectsInGui.getTopCardGoldDeckView());
+            decks.setSpacing(4.0);
+            decks.setPadding(paddingDecks);
+            decks.getChildren().addAll(SharedObjectsInGui.getTopCardResourceDeckView(), SharedObjectsInGui.getTopCardGoldDeckView());
 
-        // Initialize and disable the button container
-        buttonContainer.setHgap(2);
-        buttonContainer.setVgap(2);
-        creatingButtons();
-        vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, buttonContainer);
-        buttonContainer.setDisable(true);
-        chat.setDisable(false);
+            // Initialize and disable the button container
+            buttonContainer.setHgap(2);
+            buttonContainer.setVgap(2);
+            creatingButtons();
+            vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, buttonContainer);
+            buttonContainer.setDisable(true);
+            chat.setDisable(false);
 
-        // Create the second column VBox
-        VBox secondColumnOfSecondRow = new VBox();
+            // Create the second column VBox
+            VBox secondColumnOfSecondRow = new VBox();
 
-        // Set styles for chosen card labels
-        chosenCardToPlace.setStyle("-fx-text-fill: white;");
-        chosenCardToBePlacedOn.setStyle("-fx-text-fill: white;");
-        chosenCorner.setStyle("-fx-text-fill: white;");
-        chosenDeckOrWell.setStyle("-fx-text-fill: white;");
+            // Set styles for chosen card labels
+            chosenCardToPlace.setStyle("-fx-text-fill: white;");
+            chosenCardToBePlacedOn.setStyle("-fx-text-fill: white;");
+            chosenCorner.setStyle("-fx-text-fill: white;");
+            chosenDeckOrWell.setStyle("-fx-text-fill: white;");
 
-        // Add labels to the second column
-        secondColumnOfSecondRow.getChildren().addAll(chosenCardToPlace, chosenCardToBePlacedOn, chosenCorner, chosenDeckOrWell);
-        chosenDeckOrWell.setText("Drawing from: " + wellOrDeck);
+            // Add labels to the second column
+            secondColumnOfSecondRow.getChildren().addAll(chosenCardToPlace, chosenCardToBePlacedOn, chosenCorner, chosenDeckOrWell);
+            chosenDeckOrWell.setText("Drawing from: " + wellOrDeck);
 
-        // Add UI elements to the layout
-        layout.setRight(vboxGame);
-        firstColumnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
-        secondRow.getChildren().addAll(firstColumnOfSecondRow, secondColumnOfSecondRow);
-        layout.setBottom(secondRow);
-        root.getChildren().add(layout);
+            // Add UI elements to the layout
+            layout.setRight(vboxGame);
+            firstColumnOfSecondRow.getChildren().addAll(handCard1View, handCard2View, handCard3View);
+            secondRow.getChildren().addAll(firstColumnOfSecondRow, secondColumnOfSecondRow);
+            layout.setBottom(secondRow);
+            root.getChildren().add(layout);
 
-        // Set up the game scene
-        Scene gameScene = new Scene(root, 430, 625);
-        Platform.runLater(() -> primaryStage.setScene(gameScene));
+            // Set up the game scene
+            Scene gameScene = new Scene(root, 430, 625);
+            Platform.runLater(() -> primaryStage.setScene(gameScene));
 
-        // Determine if it's the current player's turn and set up actions accordingly
-        if (currentPlayerNickname.equals(clientView.getUserName())) {
-            isCurrentPlayerTurn = true;
-            waitUntilLastMessage();
-            setupGameActions();
-            buttonContainer.setDisable(false);
-        } else {
-            isCurrentPlayerTurn = false;
-            waitForTurn();
+            // Determine if it's the current player's turn and set up actions accordingly
+            if (currentPlayerNickname.equals(clientView.getUserName())) {
+                isCurrentPlayerTurn = true;
+                waitUntilLastMessage();
+                setupGameActions();
+                buttonContainer.setDisable(false);
+            } else {
+                isCurrentPlayerTurn = false;
+                waitForTurn();
+            }
+        } catch(SocketTimeoutException | SocketException e)
+        {
+            handleDisconnection();
         }
     }
 
