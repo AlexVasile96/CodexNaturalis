@@ -1,15 +1,16 @@
 package model;
 
-import model.card.GoldCardConstructor;
-import model.card.ObjectiveCard;
-import model.card.ObjectiveCardConstructor;
-import model.card.ResourceCardConstructor;
-import model.deck.GoldDeck;
-import model.deck.ObjectiveDeck;
-import model.deck.ResourceDeck;
-import model.game.Board;
-import model.game.Dot;
-import model.game.Player;
+import it.polimi.ingsw.exceptions.EmptyDeckException;
+import it.polimi.ingsw.model.card.GoldCardConstructor;
+import it.polimi.ingsw.model.card.ObjectiveCard;
+import it.polimi.ingsw.model.card.ObjectiveCardConstructor;
+import it.polimi.ingsw.model.card.ResourceCardConstructor;
+import it.polimi.ingsw.model.deck.GoldDeck;
+import it.polimi.ingsw.model.deck.ObjectiveDeck;
+import it.polimi.ingsw.model.deck.ResourceDeck;
+import it.polimi.ingsw.model.game.Board;
+import it.polimi.ingsw.model.game.Dot;
+import it.polimi.ingsw.model.game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +50,7 @@ class ObjectiveDeckTest {
         for(int i =0; i<15; i++){
             firstCommonObjective= objectiveDeck.firstCardForEachPlayer();
         }
-        assertThrows(exceptions.EmptyDeckException.class, ()->objectiveDeck.firstCardForEachPlayer(), "già estratto tutte le carte");
+        assertThrows(EmptyDeckException.class, ()->objectiveDeck.firstCardForEachPlayer(), "già estratto tutte le carte");
     }
 
     @Test

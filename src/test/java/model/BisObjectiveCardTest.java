@@ -8,8 +8,8 @@ will be an unreal objective card that will give 2 point for each couple of anima
 
 
 
-import model.game.*;
-import model.objectiveCardTypes.BisObjectiveCard;
+import it.polimi.ingsw.model.game.*;
+import it.polimi.ingsw.model.objectiveCardTypes.BisObjectiveCard;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

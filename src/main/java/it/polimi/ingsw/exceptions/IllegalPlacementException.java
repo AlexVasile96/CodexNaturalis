@@ -1,0 +1,7 @@
+package it.polimi.ingsw.exceptions;
+
+public class IllegalPlacementException extends RuntimeException {
+    public IllegalPlacementException(String s) {
+        super(s);
+    }
+}

@@ -1,8 +1,14 @@
 package model;
 
-import model.card.*;
-import model.deck.*;
-import model.game.*;
+import it.polimi.ingsw.model.card.*;
+import it.polimi.ingsw.model.deck.Deck;
+import it.polimi.ingsw.model.deck.InitialCardDeck;
+import it.polimi.ingsw.model.deck.ObjectiveDeck;
+import it.polimi.ingsw.model.deck.ResourceDeck;
+import it.polimi.ingsw.model.game.Board;
+import it.polimi.ingsw.model.game.Dot;
+import it.polimi.ingsw.model.game.Player;
+import it.polimi.ingsw.model.game.SpecificSeed;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,11 +1,9 @@
 package model;
 
-import model.card.Card;
-import model.card.InitialCard;
-import model.card.ResourceCard;
-import model.deck.InitialCardDeck;
-import model.game.*;
-import model.objectiveCardTypes.StairsObjectiveCard;
+import it.polimi.ingsw.model.card.Card;
+import it.polimi.ingsw.model.deck.InitialCardDeck;
+import it.polimi.ingsw.model.game.*;
+import it.polimi.ingsw.model.objectiveCardTypes.StairsObjectiveCard;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

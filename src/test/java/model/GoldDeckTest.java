@@ -1,13 +1,15 @@
 package model;
 
-import model.card.Card;
-import model.card.GoldCardConstructor;
-import model.card.ResourceCardConstructor;
-import model.deck.GoldDeck;
-import model.deck.ResourceDeck;
-import model.game.Board;
-import model.game.Dot;
-import model.game.Player;
+import it.polimi.ingsw.exceptions.AlredyInException;
+import it.polimi.ingsw.exceptions.IllegalAddException;
+import it.polimi.ingsw.model.card.Card;
+import it.polimi.ingsw.model.card.GoldCardConstructor;
+import it.polimi.ingsw.model.card.ResourceCardConstructor;
+import it.polimi.ingsw.model.deck.GoldDeck;
+import it.polimi.ingsw.model.deck.ResourceDeck;
+import it.polimi.ingsw.model.game.Board;
+import it.polimi.ingsw.model.game.Dot;
+import it.polimi.ingsw.model.game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -59,12 +61,12 @@ class GoldDeckTest {
 
         //trying to insert a card from another deck
         Card card2 = resourceDeck.drawCard(player);
-        assertThrows(exceptions.IllegalAddException.class, () -> goldDeck.addCard(card2), "La carta non appartiene al mazzo gold");
+        assertThrows(IllegalAddException.class, () -> goldDeck.addCard(card2), "La carta non appartiene al mazzo gold");
 
         //try to insert a duplicate
         Card cartaBomba3 = goldDeck.drawCard(player2);
         goldDeck.addCard(card1);
-        assertThrows(exceptions.AlredyInException.class, () -> goldDeck.addCard(card1));
+        assertThrows(AlredyInException.class, () -> goldDeck.addCard(card1));
 
     }
 }

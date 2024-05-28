@@ -9,12 +9,127 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="New method for objective cards">
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="OnePlantAndTwoMushrooms">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/OnePlantAndTwoMushrooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/OnePlantAndTwoMushrooms.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/StairsObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/StairsObjectiveCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/codex/Codex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/codex/Codex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/TurnController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/TurnController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/AlreadyThreeCardsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/AlreadyThreeCardsException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/AlredyInException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/AlredyInException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/CantCreateCardsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/CantCreateCardsException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/CantPlaceYourCardHere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/CantPlaceYourCardHere.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/EmptyDeckException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/EmptyDeckException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/FullDeckExeption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/FullDeckExeption.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/GameFullException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/GameFullException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/IllegalAddException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/IllegalAddException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/IllegalPlacementException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/IllegalPlacementException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/InitialCardAlreadyPlacedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/InitialCardAlreadyPlacedException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/InvalidCornerException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/InvalidCornerException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/OperationCancelledException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/OperationCancelledException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/ParametersNotValidException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/ParametersNotValidException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/PlayerNumberAlreadySetException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/PlayerNumberAlreadySetException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/PozzoUnrechableExeption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/PozzoUnrechableExeption.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/UknownWhyException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/UknownWhyException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/UnknownPlayerNumberException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/UnknownPlayerNumberException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/UsernameAlreadyExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/UsernameAlreadyExistsException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exceptions/turnPlayerErrorException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/exceptions/turnPlayerErrorException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/CardConstructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/CardConstructor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/GoldCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/GoldCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/GoldCardConstructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/GoldCardConstructor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/GoldUpdater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/GoldUpdater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/InitCardConstructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/InitCardConstructor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/InitialCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/InitialCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/ObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/ObjectiveCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/ObjectiveCardConstructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/ObjectiveCardConstructor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/ResourceCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/ResourceCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/ResourceCardConstructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/ResourceCardConstructor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/ResourceUpdater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/ResourceUpdater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/Updater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/Updater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/deck/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/deck/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/deck/GoldDeck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/deck/GoldDeck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/deck/InitialCardDeck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/deck/InitialCardDeck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/deck/ObjectiveDeck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/deck/ObjectiveDeck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/deck/ResourceDeck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/deck/ResourceDeck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/BoardPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/BoardPoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Corner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Corner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Dot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Dot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/EndGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/EndGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/FirstThreeCards.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/FirstThreeCards.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/ObjectiveSpecificTypeOfCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/ObjectiveSpecificTypeOfCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/SpecificSeed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/SpecificSeed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/BisObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/BisObjectiveCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/ExtendExtendExtend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/ExtendExtendExtend.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/LObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/LObjectiveCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/MixObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/MixObjectiveCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/OneAnimalAndTwoInsects.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OneAnimalAndTwoInsects.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/OneInsectAndTwoPlants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OneInsectAndTwoPlants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/OneMushAndTwoPlants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OneMushAndTwoPlants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/OnePlantAndTwoMushrooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OnePlantAndTwoMushrooms.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/StairsObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/StairsObjectiveCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/TrisObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/TrisObjectiveCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/ClientReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/ClientReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/ServerConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/ServerConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/cli/CliClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/cli/CliClientApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/ConnectionWithServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/ConnectionWithServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/CardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/CardView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/ChooseNumOfPlayersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/ChooseNumOfPlayersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/GameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/GameSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/LobbyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/LobbyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/MainMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/controllers/SharedObjectsInGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/SharedObjectsInGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/BoardPointsScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/BoardPointsScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/ChatScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/ChatScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/ChooseNumOfPlayersScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/ChooseNumOfPlayersScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/EndGameScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/EndGameScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/GameScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/GameScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/InitCardScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/InitCardScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/LobbyScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/LobbyScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/LoginScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/LoginScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/QuitScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/QuitScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/SecretCardScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/SecretCardScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/client/gui/scene/ShowObjectiveScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/ShowObjectiveScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/server/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/ChatServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/HandlingPlayerInputsThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/server/ServerLobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/ServerLobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/server/ServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/ServerMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/ClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/view/ClientView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/currentplayer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/currentplayer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/model/ChooseNumberOfPlayers.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/model/ChooseNumberOfPlayers.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/model/FlipInitCard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/model/FlipInitCard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/model/GameLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/model/GameLayout.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/model/SceltaObiettivoSegreto.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/model/SceltaObiettivoSegreto.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/model/ShowObjCardsScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/model/ShowObjCardsScene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/model/lobby.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/model/lobby.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/model/loginScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/model/loginScene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/model/mainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/model/mainMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/BisObjectiveCardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BisObjectiveCardTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/BoardPointsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BoardPointsTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/GoldDeckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/GoldDeckTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/GoldUpdaterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/GoldUpdaterTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/InitialCardDeckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/InitialCardDeckTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/ObjectiveDeckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/ObjectiveDeckTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/PlayerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/ResourceDeckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/ResourceDeckTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/ResourceUpdaterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/ResourceUpdaterTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/StairsObjectiveCardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/StairsObjectiveCardTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/TrisObjectiveCardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/TrisObjectiveCardTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,73 +170,87 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ChatServer.executor": "Run",
-    "Application.CliClientApp.executor": "Run",
-    "Application.Codex.executor": "Run",
-    "Application.GUI.executor": "Run",
-    "Application.ServerMain.executor": "Run",
-    "JAR Application.json-20240303.jar.executor": "Run",
-    "JUnit.All in proj (1).executor": "Coverage",
-    "JUnit.All in proj (2).executor": "Coverage",
-    "JUnit.All in proj.executor": "Coverage",
-    "JUnit.BisObjectiveCardTest.executor": "Run",
-    "JUnit.BoardPointsTest.executor": "Run",
-    "JUnit.BoardTest.executor": "Run",
-    "JUnit.BoardTest.generalStairsTest.executor": "Run",
-    "JUnit.BoardTest.placeInitialCard.executor": "Run",
-    "JUnit.BoardTest.test4MushroomsInStairs.executor": "Run",
-    "JUnit.BoardTest.test4PLANTInStairs.executor": "Run",
-    "JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective.executor": "Run",
-    "JUnit.BoardTest.testCreateSpecificSecretCardWithMixObjective.executor": "Run",
-    "JUnit.BoardTest.testCreateSpecificSecretCardWithStairsObjective.executor": "Run",
-    "JUnit.BoardTest.testCreateSpecificSecretCardWithTRISObjective.executor": "Debug",
-    "JUnit.BoardTest.testMushroomMushroomInsect.executor": "Run",
-    "JUnit.BoardTest.testTWODifferentstairs.executor": "Run",
-    "JUnit.BoardTest.testTWODifferentstairsMUSHROOM.executor": "Run",
-    "JUnit.BoardTest.testTWODifferentstairsPLANT.executor": "Debug",
-    "JUnit.GoldDeckTest.executor": "Run",
-    "JUnit.InitialCardDeckTest.executor": "Run",
-    "JUnit.ObjectiveDeckTest.executor": "Run",
-    "JUnit.PlayerTest.executor": "Run",
-    "JUnit.ResourceDeckTest.executor": "Run",
-    "JUnit.ResourceUpdaterTest.executor": "Run",
-    "JUnit.StairsObjectiveCardTest.checkPattern.executor": "Run",
-    "JUnit.StairsObjectiveCardTest.checkPattern2.executor": "Debug",
-    "JUnit.StairsObjectiveCardTest.executor": "Run",
-    "JUnit.TrisObjectiveCardTest.executor": "Run",
-    "Maven.proj [clean,package].executor": "Run",
-    "Maven.proj [clean].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "vcs.Git",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ChatServer.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CliClientApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Codex.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ServerMain.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.json-20240303.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in proj (1).executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.All in proj (2).executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.All in proj.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.BisObjectiveCardTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardPointsTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.generalStairsTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.placeInitialCard.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.test4MushroomsInStairs.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.test4PLANTInStairs.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithMixObjective.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithStairsObjective.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithTRISObjective.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.BoardTest.testMushroomMushroomInsect.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testTWODifferentstairs.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testTWODifferentstairsANIMAL.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testTWODifferentstairsMUSHROOM.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testTWODifferentstairsPLANT.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GoldDeckTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.InitialCardDeckTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ObjectiveDeckTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PlayerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ResourceDeckTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ResourceUpdaterTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StairsObjectiveCardTest.checkPattern.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StairsObjectiveCardTest.checkPattern2.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.StairsObjectiveCardTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrisObjectiveCardTest.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.proj [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.proj [clean].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean" />
       <command value="mvn clean package" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.BoardTest">
+  <component name="RunManager">
     <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="network.client.cli.CliClientApp" />
       <module name="proj" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="network.client.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="network.client.gui.GUI" />
+      <module name="proj" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="network.client.gui.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -140,22 +269,6 @@
       <option name="PACKAGE_NAME" value="model" />
       <option name="MAIN_CLASS_NAME" value="model.BoardTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BoardTest.testCreateSpecificSecretCardWithLObjective" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="proj" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="model" />
-      <option name="MAIN_CLASS_NAME" value="model.BoardTest" />
-      <option name="METHOD_NAME" value="testCreateSpecificSecretCardWithLObjective" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -194,18 +307,18 @@
     </configuration>
     <list>
       <item itemvalue="Application.CliClientApp" />
-      <item itemvalue="JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective" />
+      <item itemvalue="Application.GUI" />
       <item itemvalue="JUnit.BoardTest.testTWODifferentstairsANIMAL" />
       <item itemvalue="JUnit.BoardTest" />
       <item itemvalue="JUnit.BoardTest.testTWODifferentstairsPLANT" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.CliClientApp" />
+        <item itemvalue="Application.GUI" />
         <item itemvalue="JUnit.BoardTest" />
         <item itemvalue="JUnit.BoardTest.testTWODifferentstairsPLANT" />
         <item itemvalue="JUnit.BoardTest.testTWODifferentstairsANIMAL" />
-        <item itemvalue="JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective" />
-        <item itemvalue="Application.CliClientApp" />
       </list>
     </recent_temporary>
   </component>
@@ -248,7 +361,10 @@
       <workItem from="1716881255967" duration="8822000" />
       <workItem from="1716894646087" duration="1532000" />
       <workItem from="1716899612792" duration="8885000" />
-      <workItem from="1716909257740" duration="5552000" />
+      <workItem from="1716909257740" duration="6881000" />
+      <workItem from="1716917731980" duration="2138000" />
+      <workItem from="1716919897065" duration="373000" />
+      <workItem from="1716920282215" duration="651000" />
     </task>
     <task id="LOCAL-00001" summary="English translation">
       <option name="closed" value="true" />
@@ -562,7 +678,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716913109960</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="OnePlantAndTwoMushrooms">
+      <option name="closed" value="true" />
+      <created>1716916738944</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1716916738944</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -580,7 +704,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Test update" />
     <MESSAGE value="Exception managed in SecretCardScene" />
     <MESSAGE value="Almost finished the english translation" />
     <MESSAGE value="EndGame for GUI" />
@@ -605,79 +728,80 @@
     <MESSAGE value="Now both cli and gui cannot have more than the decided number of players by the first client" />
     <MESSAGE value="jar" />
     <MESSAGE value="New method for objective cards" />
-    <option name="LAST_COMMIT_MESSAGE" value="New method for objective cards" />
+    <MESSAGE value="OnePlantAndTwoMushrooms" />
+    <option name="LAST_COMMIT_MESSAGE" value="OnePlantAndTwoMushrooms" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/model/card/GoldUpdater.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/GoldUpdater.java</url>
           <line>29</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/model/game/Game.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Game.java</url>
           <line>201</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/model/game/Game.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Game.java</url>
           <line>202</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java</url>
-          <line>179</line>
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/HandlingPlayerInputsThread.java</url>
+          <line>180</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/network/server/HandlingPlayerInputsThread.java</url>
-          <line>483</line>
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/HandlingPlayerInputsThread.java</url>
+          <line>486</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/model/StairsObjectiveCardTest.java</url>
-          <line>73</line>
+          <line>71</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/model/BoardTest.java</url>
-          <line>193</line>
+          <line>199</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/model/BoardTest.java</url>
-          <line>599</line>
+          <line>605</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/OnePlantAndTwoMushrooms.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OnePlantAndTwoMushrooms.java</url>
           <line>22</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/StairsObjectiveCard.java</url>
-          <line>82</line>
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/StairsObjectiveCard.java</url>
+          <line>80</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/StairsObjectiveCard.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/StairsObjectiveCard.java</url>
           <line>44</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/model/game/Game.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Game.java</url>
           <line>200</line>
-          <properties class="model.game.Game" method="showCards">
+          <properties class="it.polimi.ingsw.model.game.Game">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/controller/Command.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/Command.java</url>
           <line>7</line>
-          <properties class="controller.Command" method="runCommand">
+          <properties class="controller.Command">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -685,7 +809,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/test/java/model/BoardTest.java</url>
-          <line>139</line>
+          <line>145</line>
           <properties class="model.BoardTest" method="testTWODifferentstairsPLANT">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -693,9 +817,9 @@
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/StairsObjectiveCard.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/StairsObjectiveCard.java</url>
           <line>36</line>
-          <properties class="model.objectiveCardTypes.StairsObjectiveCard" method="checkIfDiagonalMadeByINSECTOrPLANT">
+          <properties class="it.polimi.ingsw.model.objectiveCardTypes.StairsObjectiveCard" method="checkIfDiagonalMadeByINSECTOrPLANT">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

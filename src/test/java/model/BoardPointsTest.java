@@ -4,10 +4,10 @@ Description: the method countPoints count the number of occurrences of a given s
 that value. In the test we'll set the board to 4 MUSHROOMS and 3 INKWELL. We'll count how many MUSHROOM
 the player has on the board.
  */
-import model.game.Board;
-import model.game.BoardPoints;
-import model.game.Node;
-import model.game.SpecificSeed;
+import it.polimi.ingsw.model.game.Board;
+import it.polimi.ingsw.model.game.BoardPoints;
+import it.polimi.ingsw.model.game.Node;
+import it.polimi.ingsw.model.game.SpecificSeed;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

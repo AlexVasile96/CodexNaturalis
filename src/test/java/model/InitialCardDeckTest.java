@@ -1,10 +1,10 @@
 package model;
 
-import model.card.InitCardConstructor;
-import model.deck.InitialCardDeck;
-import model.game.Board;
-import model.game.Dot;
-import model.game.Player;
+import it.polimi.ingsw.model.card.InitCardConstructor;
+import it.polimi.ingsw.model.deck.InitialCardDeck;
+import it.polimi.ingsw.model.game.Board;
+import it.polimi.ingsw.model.game.Dot;
+import it.polimi.ingsw.model.game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

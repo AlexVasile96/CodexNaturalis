@@ -1,8 +1,8 @@
 package model;
 
-import model.card.GoldCard;
-import model.card.GoldUpdater;
-import model.game.*;
+import it.polimi.ingsw.model.card.GoldCard;
+import it.polimi.ingsw.model.card.GoldUpdater;
+import it.polimi.ingsw.model.game.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ import java.util.List;
 class GoldUpdaterTest {
     //INITIALIZATIONS
     private Board board = new Board(50,50);
-    private Player player = new Player("Calla",0,Dot.GREEN,board);
+    private Player player = new Player("Calla",0, Dot.GREEN,board);
     private Node node3 = new Node(SpecificSeed.FEATHER,2,2,SpecificSeed.FEATHER);
     private GoldUpdater goldUpdater = new GoldUpdater();
 
