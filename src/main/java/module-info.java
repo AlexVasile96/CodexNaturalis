@@ -1,4 +1,4 @@
-module com.example.proj {
+module com.example.proj{
     requires javafx.controls;
     requires javafx.fxml;
     requires org.json;
@@ -18,4 +18,5 @@ module com.example.proj {
     opens it.polimi.ingsw.network.client.gui.controllers to javafx.fxml;
     exports it.polimi.ingsw.network.client.gui.scene;
     opens it.polimi.ingsw.network.client.gui.scene to javafx.fxml;
+
 }

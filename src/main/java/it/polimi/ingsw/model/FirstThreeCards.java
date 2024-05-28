@@ -1,7 +1,8 @@
-package it.polimi.ingsw.model.game;
+package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.deck.GoldDeck;
 import it.polimi.ingsw.model.deck.ResourceDeck;
+import it.polimi.ingsw.model.game.Player;
 
 public class FirstThreeCards {
     private Player player;

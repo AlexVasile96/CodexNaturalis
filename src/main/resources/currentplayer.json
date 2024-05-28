@@ -1,22 +1,84 @@
 {
   "currentPlayer": {
-    "nickname": "lkjhgfds",
-    "score": 0,
-    "dot": 1,
+    "nickname": "ciao",
+    "score": 1,
+    "dot": 3,
     "player_deck": [
       {
-        "id": 38,
+        "id": 12,
+        "type": "PLANT",
+        "value": 0,
+        "TL": {
+          "specificCornerSeed": "PLANT",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "TR": {
+          "specificCornerSeed": "PLANT",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "BL": {
+          "specificCornerSeed": "NOTTOBEPLACEDON",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "BR": {
+          "specificCornerSeed": "EMPTY",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "TLBack": {
+          "specificCornerSeed": "PLANT",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "TRBack": {
+          "specificCornerSeed": "PLANT",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "BLBack": {
+          "specificCornerSeed": "NOTTOBEPLACEDON",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "BRBack": {
+          "specificCornerSeed": "EMPTY",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "cardType": "Card"
+      },
+      {
+        "id": 73,
         "type": "INSECT",
         "value": 1,
         "TL": {
-          "specificCornerSeed": "INSECT",
+          "specificCornerSeed": "NOTTOBEPLACEDON",
           "x": 0,
           "y": 0,
           "cardSeed": "INSECT",
           "isThisCornerFree": true
         },
         "TR": {
-          "specificCornerSeed": "NOTTOBEPLACEDON",
+          "specificCornerSeed": "EMPTY",
           "x": 0,
           "y": 0,
           "cardSeed": "INSECT",
@@ -30,21 +92,21 @@
           "isThisCornerFree": true
         },
         "BR": {
-          "specificCornerSeed": "EMPTY",
+          "specificCornerSeed": "INKWELL",
           "x": 0,
           "y": 0,
           "cardSeed": "INSECT",
           "isThisCornerFree": true
         },
         "TLBack": {
-          "specificCornerSeed": "INSECT",
+          "specificCornerSeed": "NOTTOBEPLACEDON",
           "x": 0,
           "y": 0,
           "cardSeed": "INSECT",
           "isThisCornerFree": true
         },
         "TRBack": {
-          "specificCornerSeed": "NOTTOBEPLACEDON",
+          "specificCornerSeed": "EMPTY",
           "x": 0,
           "y": 0,
           "cardSeed": "INSECT",
@@ -58,144 +120,81 @@
           "isThisCornerFree": true
         },
         "BRBack": {
-          "specificCornerSeed": "EMPTY",
+          "specificCornerSeed": "INKWELL",
           "x": 0,
           "y": 0,
           "cardSeed": "INSECT",
-          "isThisCornerFree": true
-        },
-        "cardType": "Card"
-      },
-      {
-        "id": 9,
-        "type": "MUSHROOM",
-        "value": 1,
-        "TL": {
-          "specificCornerSeed": "MUSHROOM",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "TR": {
-          "specificCornerSeed": "NOTTOBEPLACEDON",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "BL": {
-          "specificCornerSeed": "EMPTY",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "BR": {
-          "specificCornerSeed": "EMPTY",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "TLBack": {
-          "specificCornerSeed": "MUSHROOM",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "TRBack": {
-          "specificCornerSeed": "NOTTOBEPLACEDON",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "BLBack": {
-          "specificCornerSeed": "EMPTY",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "BRBack": {
-          "specificCornerSeed": "EMPTY",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "cardType": "Card"
-      },
-      {
-        "id": 46,
-        "type": "MUSHROOM",
-        "value": 2,
-        "TL": {
-          "specificCornerSeed": "EMPTY",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "TR": {
-          "specificCornerSeed": "NOTTOBEPLACEDON",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "BL": {
-          "specificCornerSeed": "EMPTY",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "BR": {
-          "specificCornerSeed": "EMPTY",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "TLBack": {
-          "specificCornerSeed": "EMPTY",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "TRBack": {
-          "specificCornerSeed": "NOTTOBEPLACEDON",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "BLBack": {
-          "specificCornerSeed": "EMPTY",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
-          "isThisCornerFree": true
-        },
-        "BRBack": {
-          "specificCornerSeed": "EMPTY",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "MUSHROOM",
           "isThisCornerFree": true
         },
         "cardType": "GoldCard",
         "requirementsForPlacing": [
-          "MUSHROOM",
-          "MUSHROOM",
-          "MUSHROOM",
-          "INSECT"
+          "INSECT",
+          "INSECT",
+          "MUSHROOM"
         ],
-        "multiplier": "NUMOFCOVEREDCORNERS"
+        "multiplier": "INKWELL"
+      },
+      {
+        "id": 16,
+        "type": "PLANT",
+        "value": 0,
+        "TL": {
+          "specificCornerSeed": "MUSHROOM",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "TR": {
+          "specificCornerSeed": "PLANT",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "BL": {
+          "specificCornerSeed": "NOTTOBEPLACEDON",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "BR": {
+          "specificCornerSeed": "INKWELL",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "TLBack": {
+          "specificCornerSeed": "MUSHROOM",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "TRBack": {
+          "specificCornerSeed": "PLANT",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "BLBack": {
+          "specificCornerSeed": "NOTTOBEPLACEDON",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "BRBack": {
+          "specificCornerSeed": "INKWELL",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "PLANT",
+          "isThisCornerFree": true
+        },
+        "cardType": "Card"
       }
     ],
     "board": {
@@ -11983,8 +11982,8 @@
             "specificNodeSeed": "EMPTY",
             "coordX": 23,
             "coordY": 23,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
+            "valueCounter": 1,
+            "firstPlacement": "INSECT",
             "secondPlacement": "EMPTY",
             "alreadyChecked": false,
             "cardType": "EMPTY"
@@ -11993,8 +11992,8 @@
             "specificNodeSeed": "EMPTY",
             "coordX": 23,
             "coordY": 24,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
+            "valueCounter": 1,
+            "firstPlacement": "INSECT",
             "secondPlacement": "EMPTY",
             "alreadyChecked": false,
             "cardType": "EMPTY"
@@ -12485,6 +12484,36 @@
             "specificNodeSeed": "EMPTY",
             "coordX": 24,
             "coordY": 23,
+            "valueCounter": 1,
+            "firstPlacement": "INSECT",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 24,
+            "valueCounter": 0,
+            "firstPlacement": "NULL",
+            "secondPlacement": "INSECT",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "ANIMAL",
+            "coordX": 24,
+            "coordY": 25,
+            "valueCounter": 1,
+            "firstPlacement": "NULL",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 26,
             "valueCounter": 2,
             "firstPlacement": "EMPTY",
             "secondPlacement": "EMPTY",
@@ -12492,509 +12521,479 @@
             "cardType": "EMPTY"
           },
           {
-            "specificNodeSeed": "INSECT",
+            "specificNodeSeed": "EMPTY",
             "coordX": 24,
-            "coordY": 24,
-            "valueCounter": 1,
-            "firstPlacement": "NULL",
+            "coordY": 27,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 28,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 29,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 30,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 31,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 32,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 33,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 34,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 35,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 36,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 37,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 38,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 39,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 40,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 41,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 42,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 43,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 44,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 45,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 46,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 47,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 48,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 24,
+            "coordY": 49,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          }
+        ],
+        [
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 0,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 1,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 2,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 3,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 4,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 5,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 6,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 7,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 8,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 9,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 10,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 11,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 12,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 13,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 14,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 15,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 16,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 17,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 18,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 19,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 20,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 21,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 22,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 23,
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
             "secondPlacement": "EMPTY",
             "alreadyChecked": false,
             "cardType": "EMPTY"
           },
           {
             "specificNodeSeed": "MUSHROOM",
-            "coordX": 24,
-            "coordY": 25,
-            "valueCounter": 1,
-            "firstPlacement": "NULL",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 26,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 27,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 28,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 29,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 30,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 31,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 32,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 33,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 34,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 35,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 36,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 37,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 38,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 39,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 40,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 41,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 42,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 43,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 44,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 45,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 46,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 47,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 48,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 24,
-            "coordY": 49,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          }
-        ],
-        [
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 0,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 1,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 2,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 3,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 4,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 5,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 6,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 7,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 8,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 9,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 10,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 11,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 12,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 13,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 14,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 15,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 16,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 17,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 18,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 19,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 20,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 21,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 22,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 23,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "PLANT",
             "coordX": 25,
             "coordY": 24,
             "valueCounter": 1,
@@ -13004,7 +13003,7 @@
             "cardType": "EMPTY"
           },
           {
-            "specificNodeSeed": "ANIMAL",
+            "specificNodeSeed": "PLANT",
             "coordX": 25,
             "coordY": 25,
             "valueCounter": 1,
@@ -25305,7 +25304,7 @@
       ],
       "cardsOnTheBoard": [
         {
-          "id": 85,
+          "id": 83,
           "type": "NULL",
           "TL": {
             "specificCornerSeed": "INSECT",
@@ -25315,21 +25314,21 @@
             "isThisCornerFree": true
           },
           "TR": {
-            "specificCornerSeed": "MUSHROOM",
+            "specificCornerSeed": "ANIMAL",
             "x": 0,
             "y": 0,
             "cardSeed": "NULL",
             "isThisCornerFree": true
           },
           "BL": {
-            "specificCornerSeed": "PLANT",
+            "specificCornerSeed": "MUSHROOM",
             "x": 0,
             "y": 0,
             "cardSeed": "NULL",
             "isThisCornerFree": true
           },
           "BR": {
-            "specificCornerSeed": "ANIMAL",
+            "specificCornerSeed": "PLANT",
             "x": 0,
             "y": 0,
             "cardSeed": "NULL",
@@ -25350,14 +25349,14 @@
             "isThisCornerFree": true
           },
           "BLIBack": {
-            "specificCornerSeed": "NOTTOBEPLACEDON",
+            "specificCornerSeed": "EMPTY",
             "x": 0,
             "y": 0,
             "cardSeed": "NULL",
             "isThisCornerFree": true
           },
           "BRIBack": {
-            "specificCornerSeed": "NOTTOBEPLACEDON",
+            "specificCornerSeed": "EMPTY",
             "x": 0,
             "y": 0,
             "cardSeed": "NULL",
@@ -25366,81 +25365,143 @@
           "isCardBack": false,
           "indexOnTheBoard": 1,
           "node": {
-            "specificNodeSeed": "INSECT",
+            "specificNodeSeed": "EMPTY",
             "coordX": 24,
             "coordY": 24,
-            "valueCounter": 1,
+            "valueCounter": 0,
             "firstPlacement": "NULL",
-            "secondPlacement": "EMPTY",
+            "secondPlacement": "INSECT",
             "alreadyChecked": false,
             "cardType": "EMPTY"
           }
+        },
+        {
+          "id": 39,
+          "type": "INSECT",
+          "value": 1,
+          "TL": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0,
+            "cardSeed": "INSECT",
+            "isThisCornerFree": true
+          },
+          "TR": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0,
+            "cardSeed": "INSECT",
+            "isThisCornerFree": true
+          },
+          "BL": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0,
+            "cardSeed": "INSECT",
+            "isThisCornerFree": true
+          },
+          "BR": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0,
+            "cardSeed": "INSECT",
+            "isThisCornerFree": true
+          },
+          "TLBack": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0,
+            "cardSeed": "INSECT",
+            "isThisCornerFree": true
+          },
+          "TRBack": {
+            "specificCornerSeed": "EMPTY",
+            "x": 0,
+            "y": 0,
+            "cardSeed": "INSECT",
+            "isThisCornerFree": true
+          },
+          "BLBack": {
+            "specificCornerSeed": "NOTTOBEPLACEDON",
+            "x": 0,
+            "y": 0,
+            "cardSeed": "INSECT",
+            "isThisCornerFree": true
+          },
+          "BRBack": {
+            "specificCornerSeed": "INSECT",
+            "x": 0,
+            "y": 0,
+            "cardSeed": "INSECT",
+            "isThisCornerFree": true
+          },
+          "cardType": "Card"
         }
       ]
     },
     "secretChosenCard": {
-      "id": 97,
-      "type": "ANIMAL",
+      "id": 102,
+      "type": "FEATHER",
       "value": 2,
       "TL": {
         "specificCornerSeed": "EMPTY",
         "x": 0,
         "y": 0,
-        "cardSeed": "ANIMAL",
+        "cardSeed": "FEATHER",
         "isThisCornerFree": true
       },
       "TR": {
         "specificCornerSeed": "EMPTY",
         "x": 0,
         "y": 0,
-        "cardSeed": "ANIMAL",
+        "cardSeed": "FEATHER",
         "isThisCornerFree": true
       },
       "BL": {
         "specificCornerSeed": "EMPTY",
         "x": 0,
         "y": 0,
-        "cardSeed": "ANIMAL",
+        "cardSeed": "FEATHER",
         "isThisCornerFree": true
       },
       "BR": {
         "specificCornerSeed": "EMPTY",
         "x": 0,
         "y": 0,
-        "cardSeed": "ANIMAL",
+        "cardSeed": "FEATHER",
         "isThisCornerFree": true
       },
       "TLBack": {
         "specificCornerSeed": "EMPTY",
         "x": 0,
         "y": 0,
-        "cardSeed": "ANIMAL",
+        "cardSeed": "FEATHER",
         "isThisCornerFree": true
       },
       "TRBack": {
         "specificCornerSeed": "EMPTY",
         "x": 0,
         "y": 0,
-        "cardSeed": "ANIMAL",
+        "cardSeed": "FEATHER",
         "isThisCornerFree": true
       },
       "BLBack": {
         "specificCornerSeed": "EMPTY",
         "x": 0,
         "y": 0,
-        "cardSeed": "ANIMAL",
+        "cardSeed": "FEATHER",
         "isThisCornerFree": true
       },
       "BRBack": {
         "specificCornerSeed": "EMPTY",
         "x": 0,
         "y": 0,
-        "cardSeed": "ANIMAL",
+        "cardSeed": "FEATHER",
         "isThisCornerFree": true
       },
       "cardType": "ObjectiveCard",
-      "numberOfWhenTheGameEnds": 3,
-      "objectiveSpecificTypeOfCard": "TRIS"
+      "numberOfWhenTheGameEnds": 2,
+      "objectiveSpecificTypeOfCard": "BIS"
     }
   }
 }

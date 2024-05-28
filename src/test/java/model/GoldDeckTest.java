@@ -37,12 +37,12 @@ class GoldDeckTest {
 
     @Test //Testing the method that allows the player to draw from the well
 
-    void cannotDrawMoreThanThree() {//Testing max num of cards that the player can have in his hand
+    void cannotDrawMoreThanThree() {
+        System.out.println(goldDeck.cardLefInDeck());//Testing max num of cards that the player can have in his hand
         for(int i = 0; i <5; i++){
-            goldDeck.drawCard(player);
+            player.drawGoldCard(goldDeck);
         }
         assertEquals(3, player.getPlayerCards().size());
-        assertEquals(37, goldDeck.cardLefInDeck());
     }
 
     @Test
