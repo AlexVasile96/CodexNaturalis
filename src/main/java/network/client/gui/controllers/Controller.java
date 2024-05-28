@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 public class Controller {
@@ -98,6 +99,8 @@ public class Controller {
                 System.out.println(coordinate);//For server purposes
                 out.println("typeCard");
 
+            } catch (SocketTimeoutException | SocketException e) {
+                handleDisconnection();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -150,7 +153,7 @@ public class Controller {
             }
          }
 
-        }catch (SocketTimeoutException e) {
+        }catch (SocketTimeoutException | SocketException e) {
             handleDisconnection();
         }
     }
@@ -159,7 +162,7 @@ public class Controller {
         out.println("status");
         try{
         return Integer.parseInt(in.readLine());}
-        catch (SocketTimeoutException e)
+        catch (SocketTimeoutException | SocketException e)
         {
             handleDisconnection();
         }
@@ -170,7 +173,7 @@ public class Controller {
         out.println("firstCommon");
         try {
             return in.readLine();
-        } catch (SocketTimeoutException e) {
+        } catch (SocketTimeoutException | SocketException e) {
             handleDisconnection();
             return null;
         } catch (IOException e) {
@@ -182,7 +185,7 @@ public class Controller {
         out.println("secondCommon");
         try {
             return in.readLine();
-        } catch (SocketTimeoutException e) {
+        } catch (SocketTimeoutException | SocketException e) {
             handleDisconnection();
             return null;
         } catch (IOException e) {
@@ -194,7 +197,7 @@ public class Controller {
         out.println("secret");
         try {
             return in.readLine();
-        } catch (SocketTimeoutException e) {
+        } catch (SocketTimeoutException | SocketException e) {
             handleDisconnection();
             return null;
         } catch (IOException e) {
@@ -211,7 +214,7 @@ public class Controller {
             System.out.println(in.readLine()); // fourth well card
             in.readLine(); // space
 
-        } catch (SocketTimeoutException e) {
+        } catch (SocketTimeoutException | SocketException e) {
             handleDisconnection();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -228,7 +231,7 @@ public class Controller {
             out.close();
             socket.close();
             System.exit(0);
-        } catch (SocketTimeoutException e) {
+        } catch (SocketTimeoutException | SocketException e) {
             handleDisconnection();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -240,7 +243,7 @@ public class Controller {
         out.println("showYourSpecificSeed");
         try {
             return in.readLine();
-        } catch (SocketTimeoutException e) {
+        } catch (SocketTimeoutException | SocketException e) {
             handleDisconnection();
             return null;
         } catch (IOException e) {
@@ -273,7 +276,7 @@ public class Controller {
             System.out.println(update);
             out.flush();
             return nextPlayerNickname;
-        } catch (SocketTimeoutException e) {
+        } catch (SocketTimeoutException | SocketException e) {
             handleDisconnection();
             return null;
         } catch (IOException e) {
@@ -323,7 +326,7 @@ public class Controller {
             }
             System.out.println("It's now " + playerNickname + "'s turn");
             Platform.runLater(() -> showAlert("It's your turn!", "Time to play some codex!"));
-        } catch (SocketTimeoutException e) {
+        } catch (SocketTimeoutException | SocketException e) {
             handleDisconnection();
         }
     }
