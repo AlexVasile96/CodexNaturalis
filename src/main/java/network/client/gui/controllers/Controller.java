@@ -29,88 +29,83 @@ public class Controller {
 
 
     public void playCardClick(int indexCardToBePlacedOn, int indexCardToPlace, String cornerSelected, String isTheCardFlipped) throws IOException {
-        System.out.println("indexToBePlacedOn "+indexCardToBePlacedOn + " indexToPlace " + indexCardToPlace + " corner " + cornerSelected);
-        if(indexCardToBePlacedOn == 100 || indexCardToPlace == 100 || cornerSelected == null){ //This if prevents player to place card without choosing any card or corner
+        if (indexCardToBePlacedOn == 100 || indexCardToPlace == 100 || cornerSelected == null) { //This if prevents player to place card without choosing any card or corner
             System.out.println("You have not selected any card to place or to be placed on or the corner");
-        }
-        else{
-        System.out.println("Client decided to place a card");
-        out.println("playCard"); //sends to server the message to start the playCard method
-        try {
-            out.println(indexCardToPlace); //Sending to server the index of the card we want to place
-            String canIContinueOrGoldCArdNotPLaceable=in.readLine(); //Server says we can continue
-            if(canIContinueOrGoldCArdNotPLaceable.equals("Gold Card not placeable"))
-            {
-                String  messageFromServer = in.readLine();
-                System.out.println("gold card requires: " + messageFromServer);
-                messageFromServer = in.readLine();
-                System.out.println("you got: " + messageFromServer);
-                System.out.println("You can:\n1-> choose another card\n2-> turn the card");
-                out.println(2);
-                System.out.println(in.readLine());
-            }
-            else{
-                if(isTheCardFlipped == null || isTheCardFlipped.equals("Front"))
-                    {
+        } else {
+            System.out.println("Client decided to place a card");
+            out.println("playCard"); //sends to server the message to start the playCard method
+            try {
+                out.println(indexCardToPlace); //Sending to server the index of the card we want to place
+                String canIContinueOrGoldCArdNotPLaceable = in.readLine(); //Server says we can continue
+                if (canIContinueOrGoldCArdNotPLaceable.equals("Gold Card not placeable")) {
+                    String messageFromServer = in.readLine();
+                    System.out.println("gold card requires: " + messageFromServer);
+                    messageFromServer = in.readLine();
+                    System.out.println("you got: " + messageFromServer);
+                    System.out.println("You can:\n1-> choose another card\n2-> turn the card");
+                    out.println(2);
+                    System.out.println(in.readLine());
+                } else {
+                    if (isTheCardFlipped == null || isTheCardFlipped.equals("Front")) {
                         out.println(2); //My card is not flipped
-        }
-                else{
-                    out.println(1); //My card is flipped
-                }
-            }
-            out.println(indexCardToBePlacedOn-1); //Sending to the server the index of the card on the board
-            String[] angoli ={"TL","TR","BR","BL"};
-            String [] validInputs = new String[4];
-            boolean check = false;
-            int size=0;
-            String  messageFromServer = in.readLine();
-            do{
-                for (String corner: angoli){
-                    if(messageFromServer.equals(corner) && !check){
-                        validInputs[size]=messageFromServer;
-                        size++;
-                        check = true;
+                    } else {
+                        out.println(1); //My card is flipped
                     }
                 }
-                if(!check) System.out.println(messageFromServer);
-                check = false;
-                messageFromServer= in.readLine();
-            } while(!messageFromServer.equals("end"));
-            System.out.print("Choose the corner you want to place the card on: ");
-            switch(cornerSelected) {
-                case "TL":
-                    out.println("TL");
-                    break;
-                case "TR":
-                    out.println("TR");
-                    break;
-                case "BL":
-                    out.println("BL");
-                    break;
-                case "BR":
-                    out.println("BR");
-                    break;
-                default:
-                    out.println("Invalid corner selected");
-                    break;
-            }
+                out.println(indexCardToBePlacedOn - 1); //Sending to the server the index of the card on the board
+                String[] angoli = {"TL", "TR", "BR", "BL"};
+                String[] validInputs = new String[4];
+                boolean check = false;
+                int size = 0;
+                String messageFromServer = in.readLine();
+                do {
+                    for (String corner : angoli) {
+                        if (messageFromServer.equals(corner) && !check) {
+                            validInputs[size] = messageFromServer;
+                            size++;
+                            check = true;
+                        }
+                    }
+                    if (!check) System.out.println(messageFromServer);
+                    check = false;
+                    messageFromServer = in.readLine();
+                } while (!messageFromServer.equals("end"));
+                System.out.print("Choose the corner you want to place the card on: ");
+                switch (cornerSelected) {
+                    case "TL":
+                        out.println("TL");
+                        break;
+                    case "TR":
+                        out.println("TR");
+                        break;
+                    case "BL":
+                        out.println("BL");
+                        break;
+                    case "BR":
+                        out.println("BR");
+                        break;
+                    default:
+                        out.println("Invalid corner selected");
+                        break;
+                }
 
-            System.out.println(in.readLine()); //card correctly placed
-            String typeCard = in.readLine(); //For server purposes
-            String isBack = in.readLine(); //For server purposes
-            String coordinate = in.readLine();//For server purposes
-            System.out.println(typeCard);//For server purposes
-            System.out.println(isBack);//For server purposes
-            System.out.println(coordinate);//For server purposes
-            out.println("typeCard");
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
+                System.out.println(in.readLine()); //card correctly placed
+                String typeCard = in.readLine(); //For server purposes
+                String isBack = in.readLine(); //For server purposes
+                String coordinate = in.readLine();//For server purposes
+                System.out.println(typeCard);//For server purposes
+                System.out.println(isBack);//For server purposes
+                System.out.println(coordinate);//For server purposes
+                out.println("typeCard");
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }
 
     public void drawCard(String wellOrDeck, String selectedDeck, Integer indexSelectedCard) throws IOException {
+        try{
         out.println("drawCard");
         System.out.println("You chose to draw a card!");
         if (wellOrDeck.equals("deck")) {
@@ -153,12 +148,22 @@ public class Controller {
             else{
                 System.out.println("Operation failed");
             }
+         }
+
+        }catch (SocketTimeoutException e) {
+            handleDisconnection();
         }
     }
 
     public int getPoints() throws IOException {
         out.println("status");
-        return Integer.parseInt(in.readLine());
+        try{
+        return Integer.parseInt(in.readLine());}
+        catch (SocketTimeoutException e)
+        {
+            handleDisconnection();
+        }
+        return 0;
     }
 
     public String firstCommon() throws IOException {
