@@ -1,5 +1,8 @@
 package network.server;
 
+import javafx.application.Platform;
+import network.client.gui.controllers.GameSceneController;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -41,26 +44,31 @@ public class ChatServer {
                 }
 
                 String message;
-                while ((message = in.readLine()) != null) {
-                    System.out.println(clientName + ": " + message);
-                    if (message.startsWith("@")) {
-                        // Messaggio privato
-                        int spaceIndex = message.indexOf(' ');
-                        if (spaceIndex != -1) {
-                            String targetClientName = message.substring(1, spaceIndex);
-                            String privateMessage = message.substring(spaceIndex + 1);
-                            sendPrivateMessage(targetClientName, privateMessage);
-                        }
-                    } else {
-                        // Messaggio pubblico
-                        synchronized (clientHandlers) {
-                            for (ClientHandler handler : clientHandlers.values()) {
-                                if (handler != this) { // Evita di inviare il messaggio al mittente
-                                    handler.out.println(clientName + ": " + message);
+
+                try {
+                    while ((message = in.readLine()) != null) {
+                        System.out.println(clientName + ": " + message);
+                        if (message.startsWith("@")) {
+                            // Messaggio privato
+                            int spaceIndex = message.indexOf(' ');
+                            if (spaceIndex != -1) {
+                                String targetClientName = message.substring(1, spaceIndex);
+                                String privateMessage = message.substring(spaceIndex + 1);
+                                sendPrivateMessage(targetClientName, privateMessage);
+                            }
+                        } else {
+                            // Messaggio pubblico
+                            synchronized (clientHandlers) {
+                                for (ClientHandler handler : clientHandlers.values()) {
+                                    if (handler != this) { // Evita di inviare il messaggio al mittente
+                                        handler.out.println(clientName + ": " + message);
+                                    }
                                 }
                             }
                         }
                     }
+                } catch (SocketException e) {
+                    handleDisconnection();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -87,5 +95,28 @@ public class ChatServer {
                 out.println("Client " + targetClientName + " not found.");
             }
         }
+
+
+        private void handleDisconnection() {
+            Platform.runLater(() -> {
+                // Show an alert indicating the disconnection
+                try {
+                    // Save game progress
+                    // Close resources
+                    if (in != null) in.close();
+                    if (out != null) out.close();
+                    if (socket != null) socket.close();
+                    // Exit the application
+                    Platform.exit();
+                    System.exit(0);
+                } catch (SocketTimeoutException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // Throw a runtime exception if an IOException occurs
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+
     }
 }
