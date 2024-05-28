@@ -68,7 +68,7 @@ class BoardTest {
      * TEST CHECKED-> OKAY
      */
     @Test
-    void testTWODifferentstairs() {
+    void testTWODifferentstairsMUSHROOM() {
         // Setup iniziale
         Deck objectiveDeck = objectiveCardConstructor.createCards(); // non mischiato
         System.out.println("Objective Deck created: " + objectiveDeck);
@@ -106,7 +106,7 @@ class BoardTest {
         int newScore = player.getPlayerScore();
         System.out.println("New player score after secret card: " + newScore);
 
-        assertEquals(newScore, initialScore + 2);
+        assertEquals(initialScore + 2, newScore);
 
         //metto altre 3 carte in diagonale
         player.drawResourceCard(resourceDeck);
@@ -128,8 +128,299 @@ class BoardTest {
         newScore = player.getPlayerScore();
         System.out.println("New player score after secret card: " + newScore);
 
+        assertEquals(initialScore+2, newScore);
+    }
+
+    /**
+     * Test in order to understand if 3 PLANT cards put on the same diagonal respect the requirements
+     * TEST CHECKED-> OKAY
+     */
+    @Test
+    void testTWODifferentstairsPLANT() {
+        // Setup iniziale
+        ObjectiveDeck objectiveDeck = (ObjectiveDeck) objectiveCardConstructor.createCards(); // non mischiato
+        System.out.println("Objective Deck created: " + objectiveDeck);
+
+        InitialCardDeck initialCardDeck = (InitialCardDeck) initCardConstructor.createCards();
+
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
+        board.placeInitialCard(initialCard);
+        System.out.println("Initial card placed: " + initialCard);
+
+        ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards(); // non mischiato
+        System.out.println("Resource Deck created: " + resourceDeck);
+
+        objectiveDeck.putCardOnTopOfDeck(88);
+        ObjectiveCard stairsCard88 = objectiveDeck.firstCardForEachPlayer();
+        System.out.println("Stairs card selected: " + stairsCard88);
+
+        resourceDeck.putCardOnTopOfDeck(12);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(11);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(13);
+        player.drawResourceCard(resourceDeck);
+
+        Card cardPlayerChoose = player.getPlayerCards().getFirst();
+        System.out.println("Player chose card: " + cardPlayerChoose);
+        player.playCard(board, 0, 0, player.getPlayerCards().getFirst(), initialCard, "TR");
+
+        player.playCard(board, 0, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "TL");
+        Card cardPlayerChooseTwo = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
+
+        board.printBoard();
+
+        /*int initialScore = player.getPlayerScore();
+        System.out.println("Initial player score: " + initialScore);
+
+        board.createSpecificSecretCard(stairsCard88, player);
+        int newScore = player.getPlayerScore();
+        System.out.println("New player score after secret card: " + newScore);
+
+        assertEquals(initialScore + 2, newScore);*/
+
+        //metto altre 3 carte in diagonale
+        resourceDeck.putCardOnTopOfDeck(14);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(15);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(16);
+        player.drawResourceCard(resourceDeck);
+
+        cardPlayerChoose = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 2, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "BR");
+        cardPlayerChooseTwo = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 3, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
+        player.playCard(board, 0, 4, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "BR");
+
+        board.printBoard();
+
+        int initialScore = player.getPlayerScore();
+        System.out.println("Initial player score: " + initialScore);
+
+        board.createSpecificSecretCard(stairsCard88, player);
+        int newScore = player.getPlayerScore();
+        System.out.println("New player score after secret card: " + newScore);
+
+        assertEquals(initialScore+4, newScore);
+    }
+
+    /**
+     * Test in order to understand if 3 animal cards put on the same diagonal respect the requirements
+     * TEST CHECKED-> OKAY
+     */
+    @Test
+    void testTWODifferentstairsANIMAL() {
+        // Setup iniziale
+        ObjectiveDeck objectiveDeck = (ObjectiveDeck) objectiveCardConstructor.createCards(); // non mischiato
+        System.out.println("Objective Deck created: " + objectiveDeck);
+
+        InitialCardDeck initialCardDeck = (InitialCardDeck) initCardConstructor.createCards();
+
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
+        board.placeInitialCard(initialCard);
+        System.out.println("Initial card placed: " + initialCard);
+
+        ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards(); // non mischiato
+        System.out.println("Resource Deck created: " + resourceDeck);
+
+        objectiveDeck.putCardOnTopOfDeck(89);
+        ObjectiveCard stairsCard89 = objectiveDeck.firstCardForEachPlayer();
+        System.out.println("Stairs card selected: " + stairsCard89);
+
+        resourceDeck.putCardOnTopOfDeck(21);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(22);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(23);
+        player.drawResourceCard(resourceDeck);
+
+        Card cardPlayerChoose = player.getPlayerCards().getFirst();
+        System.out.println("Player chose card: " + cardPlayerChoose);
+        player.playCard(board, 0, 0, player.getPlayerCards().getFirst(), initialCard, "TL");
+
+        Card cardPlayerChooseTwo = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
+        player.playCard(board, 0, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BL");
+
+        board.printBoard();
+
+        int initialScore = player.getPlayerScore();
+        System.out.println("Initial player score: " + initialScore);
+
+        board.createSpecificSecretCard(stairsCard89, player);
+        int newScore = player.getPlayerScore();
+        System.out.println("New player score after secret card: " + newScore);
+
+        assertEquals(initialScore + 2, newScore);
+
+        //metto altre 3 carte in diagonale
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+
+        cardPlayerChoose = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 2, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "TR");
+        cardPlayerChooseTwo = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 3, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
+        player.playCard(board, 0, 4, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "TR");
+
+        board.printBoard();
+
+        initialScore = player.getPlayerScore();
+        System.out.println("Initial player score: " + initialScore);
+
+        board.createSpecificSecretCard(stairsCard89, player);
+        newScore = player.getPlayerScore();
+        System.out.println("New player score after secret card: " + newScore);
+
+        assertEquals(initialScore+2, newScore);
+    }
+
+    /**
+     * Test in order to understand if 3 insect cards put on the same diagonal respect the requirements
+     * TEST CHECKED-> OKAY
+     */
+    @Test
+    void testTWODifferentstairsINSECT() {
+        // Setup iniziale
+        ObjectiveDeck objectiveDeck = (ObjectiveDeck) objectiveCardConstructor.createCards(); // non mischiato
+        System.out.println("Objective Deck created: " + objectiveDeck);
+
+        InitialCardDeck initialCardDeck = (InitialCardDeck) initCardConstructor.createCards();
+
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
+        board.placeInitialCard(initialCard);
+        System.out.println("Initial card placed: " + initialCard);
+
+        ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards(); // non mischiato
+        System.out.println("Resource Deck created: " + resourceDeck);
+
+        objectiveDeck.putCardOnTopOfDeck(90);
+        ObjectiveCard stairsCard90 = objectiveDeck.firstCardForEachPlayer();
+        System.out.println("Stairs card selected: " + stairsCard90);
+
+        resourceDeck.putCardOnTopOfDeck(33);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(31);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(32);
+        player.drawResourceCard(resourceDeck);
+
+        Card cardPlayerChoose = player.getPlayerCards().getFirst();
+        System.out.println("Player chose card: " + cardPlayerChoose);
+        player.playCard(board, 0, 0, player.getPlayerCards().getFirst(), initialCard, "TR");
+
+        player.playCard(board, 0, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "TL");
+        Card cardPlayerChooseTwo = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
+
+        board.printBoard();
+
+        /*int initialScore = player.getPlayerScore();
+        System.out.println("Initial player score: " + initialScore);
+
+        board.createSpecificSecretCard(stairsCard88, player);
+        int newScore = player.getPlayerScore();
+        System.out.println("New player score after secret card: " + newScore);
+
+        assertEquals(initialScore + 2, newScore);*/
+
+        //metto altre 3 carte in diagonale
+        resourceDeck.putCardOnTopOfDeck(34);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(35);
+        player.drawResourceCard(resourceDeck);
+        resourceDeck.putCardOnTopOfDeck(36);
+        player.drawResourceCard(resourceDeck);
+
+        cardPlayerChoose = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 2, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "BR");
+        cardPlayerChooseTwo = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 3, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
+        player.playCard(board, 0, 4, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "BR");
+
+        board.printBoard();
+
+        int initialScore = player.getPlayerScore();
+        System.out.println("Initial player score: " + initialScore);
+
+        board.createSpecificSecretCard(stairsCard90, player);
+        int newScore = player.getPlayerScore();
+        System.out.println("New player score after secret card: " + newScore);
+
+        assertEquals(initialScore+4, newScore);
+    }
+
+    /**
+     * Test in order to understand if 3 ANIMAL cards put on the same diagonal respect the requirements
+     * TEST CHECKED-> OKAY
+     */
+    @Test
+    void testTWODifferentstairs() {
+        // Setup iniziale
+        Deck objectiveDeck = objectiveCardConstructor.createCards(); // non mischiato
+        System.out.println("Objective Deck created: " + objectiveDeck);
+
+        InitialCardDeck initialCardDeck = (InitialCardDeck) initCardConstructor.createCards();
+
+        InitialCard initialCard = initialCardDeck.firstCardForPlayer(player);
+        board.placeInitialCard(initialCard);
+        System.out.println("Initial card placed: " + initialCard);
+
+        ResourceDeck resourceDeck = (ResourceDeck) resourceCardConstructor.createCards(); // non mischiato
+        System.out.println("Resource Deck created: " + resourceDeck);
+
+        ObjectiveCard stairsCard89 = objectiveDeck.firstCardForEachPlayer();
+        System.out.println("Stairs card selected: " + stairsCard89);
+
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+
+        Card cardPlayerChoose = player.getPlayerCards().getFirst();
+        System.out.println("Player chose card: " + cardPlayerChoose);
+        player.playCard(board, 0, 0, player.getPlayerCards().getFirst(), initialCard, "TL");
+
+        Card cardPlayerChooseTwo = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
+        player.playCard(board, 0, 1, player.getPlayerCards().getFirst(), cardPlayerChoose, "BL");
+
+        board.printBoard();
+
+        /*int initialScore = player.getPlayerScore();
+        System.out.println("Initial player score: " + initialScore);
+
+        board.createSpecificSecretCard(stairsCard89, player);
+        int newScore = player.getPlayerScore();
+        System.out.println("New player score after secret card: " + newScore);
+
+        assertEquals(newScore, initialScore + 2);*/
+
+        //metto altre 3 carte in diagonale
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+        player.drawResourceCard(resourceDeck);
+
+        cardPlayerChoose = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 2, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "TR");
+        cardPlayerChooseTwo = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 3, player.getPlayerCards().getFirst(), cardPlayerChoose, "TR");
+        player.playCard(board, 0, 4, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "TR");
+
+        board.printBoard();
+
+        int initialScore = player.getPlayerScore();
+        System.out.println("Initial player score: " + initialScore);
+
+        board.createSpecificSecretCard(stairsCard89, player);
+        int newScore = player.getPlayerScore();
+        System.out.println("New player score after secret card: " + newScore);
+
         assertEquals(newScore, initialScore + 2);
     }
+
 
     /**
      * Test in order to understand if 2 mushroom cards and one insect card put on the same diagonal respect the requirements
