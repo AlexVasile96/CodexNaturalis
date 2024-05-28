@@ -5,6 +5,7 @@ import network.client.gui.scene.ChatScene;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 public class ChatController {
     private ChatScene chatWindow;
@@ -21,7 +22,7 @@ public class ChatController {
 
     public void start() {
         try {
-            socket = new Socket("localhost", 12346); // Connettersi al server
+            socket = new Socket("192.168.1.2", 12346); // Connettersi al server
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -40,9 +41,13 @@ public class ChatController {
                             }
                         });
                     }
-                } catch (IOException e) {
+                }catch (SocketTimeoutException e) {
+                        handleDisconnection();
+                    }
+                 catch (IOException e) {
                     e.printStackTrace();
                 }
+
             });
             clientThread.setDaemon(true); // Permette di terminare il thread quando l'applicazione chiude
             clientThread.start();
@@ -65,5 +70,25 @@ public class ChatController {
             lastSentMessage = formattedMessage; // Memorizza l'ultimo messaggio inviato
             out.println(formattedMessage);
         }
+    }
+    private void handleDisconnection() {
+        Platform.runLater(() -> {
+            // Show an alert indicating the disconnection
+            try {
+                // Save game progress
+                // Close resources
+                if (in != null) in.close();
+                if (out != null) out.close();
+                if (socket != null) socket.close();
+                // Exit the application
+                Platform.exit();
+                System.exit(0);
+            } catch (SocketTimeoutException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                // Throw a runtime exception if an IOException occurs
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

@@ -125,11 +125,4 @@ public class ChatScene {
         stage.show();
     }
 
-    public void hide() {
-        stage.hide();
-    }
-
-    public boolean isShowing() {
-        return stage.isShowing();
-    }
 }
