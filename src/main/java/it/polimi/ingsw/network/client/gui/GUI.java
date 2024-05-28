@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.client.gui;
 
 import it.polimi.ingsw.network.client.gui.controllers.MainMenuController;
 import it.polimi.ingsw.view.ClientView;
+
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
