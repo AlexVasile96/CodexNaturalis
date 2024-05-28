@@ -231,7 +231,7 @@ public class GameSceneController {
             int boardDimension = 500;
 
             // Create and configure the game board
-            gameBoard = new GridPane(boardDimension, boardDimension);
+            gameBoard = new GridPane();
             gameBoard.setBackground(background);
             gameBoard.setHgap(0);
             gameBoard.setVgap(0);

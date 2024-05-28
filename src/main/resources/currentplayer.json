@@ -1,200 +1,138 @@
 {
   "currentPlayer": {
-    "nickname": "ciao",
-    "score": 1,
-    "dot": 3,
+    "nickname": "sdbfv vvvv",
+    "score": 0,
+    "dot": 0,
     "player_deck": [
       {
-        "id": 12,
-        "type": "PLANT",
+        "id": 33,
+        "type": "INSECT",
         "value": 0,
         "TL": {
-          "specificCornerSeed": "PLANT",
+          "specificCornerSeed": "INSECT",
           "x": 0,
           "y": 0,
-          "cardSeed": "PLANT",
+          "cardSeed": "INSECT",
           "isThisCornerFree": true
         },
         "TR": {
-          "specificCornerSeed": "PLANT",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "PLANT",
-          "isThisCornerFree": true
-        },
-        "BL": {
           "specificCornerSeed": "NOTTOBEPLACEDON",
           "x": 0,
           "y": 0,
-          "cardSeed": "PLANT",
+          "cardSeed": "INSECT",
+          "isThisCornerFree": true
+        },
+        "BL": {
+          "specificCornerSeed": "INSECT",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "INSECT",
           "isThisCornerFree": true
         },
         "BR": {
           "specificCornerSeed": "EMPTY",
           "x": 0,
           "y": 0,
-          "cardSeed": "PLANT",
+          "cardSeed": "INSECT",
           "isThisCornerFree": true
         },
         "TLBack": {
-          "specificCornerSeed": "PLANT",
+          "specificCornerSeed": "INSECT",
           "x": 0,
           "y": 0,
-          "cardSeed": "PLANT",
+          "cardSeed": "INSECT",
           "isThisCornerFree": true
         },
         "TRBack": {
-          "specificCornerSeed": "PLANT",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "PLANT",
-          "isThisCornerFree": true
-        },
-        "BLBack": {
           "specificCornerSeed": "NOTTOBEPLACEDON",
           "x": 0,
           "y": 0,
-          "cardSeed": "PLANT",
+          "cardSeed": "INSECT",
+          "isThisCornerFree": true
+        },
+        "BLBack": {
+          "specificCornerSeed": "INSECT",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "INSECT",
           "isThisCornerFree": true
         },
         "BRBack": {
           "specificCornerSeed": "EMPTY",
           "x": 0,
           "y": 0,
-          "cardSeed": "PLANT",
+          "cardSeed": "INSECT",
           "isThisCornerFree": true
         },
         "cardType": "Card"
       },
       {
-        "id": 73,
-        "type": "INSECT",
+        "id": 42,
+        "type": "MUSHROOM",
         "value": 1,
         "TL": {
-          "specificCornerSeed": "NOTTOBEPLACEDON",
+          "specificCornerSeed": "EMPTY",
           "x": 0,
           "y": 0,
-          "cardSeed": "INSECT",
+          "cardSeed": "MUSHROOM",
           "isThisCornerFree": true
         },
         "TR": {
-          "specificCornerSeed": "EMPTY",
+          "specificCornerSeed": "INKWELL",
           "x": 0,
           "y": 0,
-          "cardSeed": "INSECT",
+          "cardSeed": "MUSHROOM",
           "isThisCornerFree": true
         },
         "BL": {
-          "specificCornerSeed": "EMPTY",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "INSECT",
-          "isThisCornerFree": true
-        },
-        "BR": {
-          "specificCornerSeed": "INKWELL",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "INSECT",
-          "isThisCornerFree": true
-        },
-        "TLBack": {
           "specificCornerSeed": "NOTTOBEPLACEDON",
           "x": 0,
           "y": 0,
-          "cardSeed": "INSECT",
+          "cardSeed": "MUSHROOM",
+          "isThisCornerFree": true
+        },
+        "BR": {
+          "specificCornerSeed": "EMPTY",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "MUSHROOM",
+          "isThisCornerFree": true
+        },
+        "TLBack": {
+          "specificCornerSeed": "EMPTY",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "MUSHROOM",
           "isThisCornerFree": true
         },
         "TRBack": {
-          "specificCornerSeed": "EMPTY",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "INSECT",
-          "isThisCornerFree": true
-        },
-        "BLBack": {
-          "specificCornerSeed": "EMPTY",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "INSECT",
-          "isThisCornerFree": true
-        },
-        "BRBack": {
           "specificCornerSeed": "INKWELL",
           "x": 0,
           "y": 0,
-          "cardSeed": "INSECT",
+          "cardSeed": "MUSHROOM",
+          "isThisCornerFree": true
+        },
+        "BLBack": {
+          "specificCornerSeed": "NOTTOBEPLACEDON",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "MUSHROOM",
+          "isThisCornerFree": true
+        },
+        "BRBack": {
+          "specificCornerSeed": "EMPTY",
+          "x": 0,
+          "y": 0,
+          "cardSeed": "MUSHROOM",
           "isThisCornerFree": true
         },
         "cardType": "GoldCard",
         "requirementsForPlacing": [
-          "INSECT",
-          "INSECT",
-          "MUSHROOM"
+          "MUSHROOM",
+          "MUSHROOM",
+          "PLANT"
         ],
         "multiplier": "INKWELL"
-      },
-      {
-        "id": 16,
-        "type": "PLANT",
-        "value": 0,
-        "TL": {
-          "specificCornerSeed": "MUSHROOM",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "PLANT",
-          "isThisCornerFree": true
-        },
-        "TR": {
-          "specificCornerSeed": "PLANT",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "PLANT",
-          "isThisCornerFree": true
-        },
-        "BL": {
-          "specificCornerSeed": "NOTTOBEPLACEDON",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "PLANT",
-          "isThisCornerFree": true
-        },
-        "BR": {
-          "specificCornerSeed": "INKWELL",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "PLANT",
-          "isThisCornerFree": true
-        },
-        "TLBack": {
-          "specificCornerSeed": "MUSHROOM",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "PLANT",
-          "isThisCornerFree": true
-        },
-        "TRBack": {
-          "specificCornerSeed": "PLANT",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "PLANT",
-          "isThisCornerFree": true
-        },
-        "BLBack": {
-          "specificCornerSeed": "NOTTOBEPLACEDON",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "PLANT",
-          "isThisCornerFree": true
-        },
-        "BRBack": {
-          "specificCornerSeed": "INKWELL",
-          "x": 0,
-          "y": 0,
-          "cardSeed": "PLANT",
-          "isThisCornerFree": true
-        },
-        "cardType": "Card"
       }
     ],
     "board": {
@@ -11982,8 +11920,8 @@
             "specificNodeSeed": "EMPTY",
             "coordX": 23,
             "coordY": 23,
-            "valueCounter": 1,
-            "firstPlacement": "INSECT",
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
             "secondPlacement": "EMPTY",
             "alreadyChecked": false,
             "cardType": "EMPTY"
@@ -11992,8 +11930,8 @@
             "specificNodeSeed": "EMPTY",
             "coordX": 23,
             "coordY": 24,
-            "valueCounter": 1,
-            "firstPlacement": "INSECT",
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
             "secondPlacement": "EMPTY",
             "alreadyChecked": false,
             "cardType": "EMPTY"
@@ -12484,24 +12422,24 @@
             "specificNodeSeed": "EMPTY",
             "coordX": 24,
             "coordY": 23,
-            "valueCounter": 1,
-            "firstPlacement": "INSECT",
+            "valueCounter": 2,
+            "firstPlacement": "EMPTY",
             "secondPlacement": "EMPTY",
             "alreadyChecked": false,
             "cardType": "EMPTY"
           },
           {
-            "specificNodeSeed": "EMPTY",
+            "specificNodeSeed": "PLANT",
             "coordX": 24,
             "coordY": 24,
-            "valueCounter": 0,
+            "valueCounter": 1,
             "firstPlacement": "NULL",
-            "secondPlacement": "INSECT",
+            "secondPlacement": "EMPTY",
             "alreadyChecked": false,
             "cardType": "EMPTY"
           },
           {
-            "specificNodeSeed": "ANIMAL",
+            "specificNodeSeed": "INSECT",
             "coordX": 24,
             "coordY": 25,
             "valueCounter": 1,
@@ -12978,26 +12916,6 @@
             "coordY": 22,
             "valueCounter": 2,
             "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "EMPTY",
-            "coordX": 25,
-            "coordY": 23,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
-            "secondPlacement": "EMPTY",
-            "alreadyChecked": false,
-            "cardType": "EMPTY"
-          },
-          {
-            "specificNodeSeed": "MUSHROOM",
-            "coordX": 25,
-            "coordY": 24,
-            "valueCounter": 1,
-            "firstPlacement": "NULL",
             "secondPlacement": "EMPTY",
             "alreadyChecked": false,
             "cardType": "EMPTY"
@@ -13005,6 +12923,26 @@
           {
             "specificNodeSeed": "PLANT",
             "coordX": 25,
+            "coordY": 23,
+            "valueCounter": 1,
+            "firstPlacement": "PLANT",
+            "secondPlacement": "EMPTY",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "EMPTY",
+            "coordX": 25,
+            "coordY": 24,
+            "valueCounter": 0,
+            "firstPlacement": "NULL",
+            "secondPlacement": "PLANT",
+            "alreadyChecked": false,
+            "cardType": "EMPTY"
+          },
+          {
+            "specificNodeSeed": "MUSHROOM",
+            "coordX": 25,
             "coordY": 25,
             "valueCounter": 1,
             "firstPlacement": "NULL",
@@ -13485,21 +13423,21 @@
             "cardType": "EMPTY"
           },
           {
-            "specificNodeSeed": "EMPTY",
+            "specificNodeSeed": "PLANT",
             "coordX": 26,
             "coordY": 23,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
+            "valueCounter": 1,
+            "firstPlacement": "PLANT",
             "secondPlacement": "EMPTY",
             "alreadyChecked": false,
             "cardType": "EMPTY"
           },
           {
-            "specificNodeSeed": "EMPTY",
+            "specificNodeSeed": "NOTTOBEPLACEDON",
             "coordX": 26,
             "coordY": 24,
-            "valueCounter": 2,
-            "firstPlacement": "EMPTY",
+            "valueCounter": 1,
+            "firstPlacement": "PLANT",
             "secondPlacement": "EMPTY",
             "alreadyChecked": false,
             "cardType": "EMPTY"
@@ -25304,31 +25242,31 @@
       ],
       "cardsOnTheBoard": [
         {
-          "id": 83,
+          "id": 84,
           "type": "NULL",
           "TL": {
-            "specificCornerSeed": "INSECT",
+            "specificCornerSeed": "PLANT",
             "x": 0,
             "y": 0,
             "cardSeed": "NULL",
             "isThisCornerFree": true
           },
           "TR": {
-            "specificCornerSeed": "ANIMAL",
+            "specificCornerSeed": "INSECT",
             "x": 0,
             "y": 0,
             "cardSeed": "NULL",
             "isThisCornerFree": true
           },
           "BL": {
-            "specificCornerSeed": "MUSHROOM",
+            "specificCornerSeed": "ANIMAL",
             "x": 0,
             "y": 0,
             "cardSeed": "NULL",
             "isThisCornerFree": true
           },
           "BR": {
-            "specificCornerSeed": "PLANT",
+            "specificCornerSeed": "MUSHROOM",
             "x": 0,
             "y": 0,
             "cardSeed": "NULL",
@@ -25365,74 +25303,74 @@
           "isCardBack": false,
           "indexOnTheBoard": 1,
           "node": {
-            "specificNodeSeed": "EMPTY",
+            "specificNodeSeed": "PLANT",
             "coordX": 24,
             "coordY": 24,
-            "valueCounter": 0,
+            "valueCounter": 1,
             "firstPlacement": "NULL",
-            "secondPlacement": "INSECT",
+            "secondPlacement": "EMPTY",
             "alreadyChecked": false,
             "cardType": "EMPTY"
           }
         },
         {
-          "id": 39,
-          "type": "INSECT",
-          "value": 1,
+          "id": 11,
+          "type": "PLANT",
+          "value": 0,
           "TL": {
-            "specificCornerSeed": "EMPTY",
+            "specificCornerSeed": "PLANT",
             "x": 0,
             "y": 0,
-            "cardSeed": "INSECT",
+            "cardSeed": "PLANT",
             "isThisCornerFree": true
           },
           "TR": {
             "specificCornerSeed": "EMPTY",
             "x": 0,
             "y": 0,
-            "cardSeed": "INSECT",
+            "cardSeed": "PLANT",
             "isThisCornerFree": true
           },
           "BL": {
-            "specificCornerSeed": "EMPTY",
+            "specificCornerSeed": "PLANT",
             "x": 0,
             "y": 0,
-            "cardSeed": "INSECT",
+            "cardSeed": "PLANT",
             "isThisCornerFree": true
           },
           "BR": {
-            "specificCornerSeed": "EMPTY",
+            "specificCornerSeed": "NOTTOBEPLACEDON",
             "x": 0,
             "y": 0,
-            "cardSeed": "INSECT",
+            "cardSeed": "PLANT",
             "isThisCornerFree": true
           },
           "TLBack": {
-            "specificCornerSeed": "EMPTY",
+            "specificCornerSeed": "PLANT",
             "x": 0,
             "y": 0,
-            "cardSeed": "INSECT",
+            "cardSeed": "PLANT",
             "isThisCornerFree": true
           },
           "TRBack": {
             "specificCornerSeed": "EMPTY",
             "x": 0,
             "y": 0,
-            "cardSeed": "INSECT",
+            "cardSeed": "PLANT",
             "isThisCornerFree": true
           },
           "BLBack": {
-            "specificCornerSeed": "NOTTOBEPLACEDON",
+            "specificCornerSeed": "PLANT",
             "x": 0,
             "y": 0,
-            "cardSeed": "INSECT",
+            "cardSeed": "PLANT",
             "isThisCornerFree": true
           },
           "BRBack": {
-            "specificCornerSeed": "INSECT",
+            "specificCornerSeed": "NOTTOBEPLACEDON",
             "x": 0,
             "y": 0,
-            "cardSeed": "INSECT",
+            "cardSeed": "PLANT",
             "isThisCornerFree": true
           },
           "cardType": "Card"

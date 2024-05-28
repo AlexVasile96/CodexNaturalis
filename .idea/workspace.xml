@@ -9,15 +9,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Marco palese mi ha aiutato a fare il pom (not working rn)">
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Crash management">
+      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_18_57__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_18_57__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_23_24__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_23_24__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_11_01__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_11_01__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_12_04__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_12_04__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/FirstThreeCards.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/FirstThreeCards.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/currentplayer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/currentplayer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/GameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/GameSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/MainMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/model/GoldDeckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/GoldDeckTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/StairsObjectiveCardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/StairsObjectiveCardTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,12 +43,12 @@
     &quot;assignee&quot;: &quot;AlexVasile96&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/PietroCallandrone/IS24-LB05.git&quot;,
-    &quot;accountId&quot;: &quot;66b03c10-d4a3-43d0-a6c5-1104829d0c1d&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/PietroCallandrone/IS24-LB05.git",
+    "accountId": "79d27218-8d9f-4caf-92da-4612ca7f2ac9"
   }
-}</component>
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -68,6 +71,7 @@
     "Application.it.polimi.ingsw.network.client.cli.CliClientApp.executor": "Run",
     "Application.it.polimi.ingsw.network.client.gui.GUI.executor": "Debug",
     "JAR Application.json-20240303.jar.executor": "Run",
+    "JAR Application.proj.jar.executor": "Run",
     "JUnit.All in proj (1).executor": "Coverage",
     "JUnit.All in proj (2).executor": "Coverage",
     "JUnit.All in proj.executor": "Coverage",
@@ -98,6 +102,7 @@
     "JUnit.StairsObjectiveCardTest.checkPattern2.executor": "Debug",
     "JUnit.StairsObjectiveCardTest.executor": "Run",
     "JUnit.TrisObjectiveCardTest.executor": "Run",
+    "JUnit.model in proj.executor": "Run",
     "Maven.proj [clean,package].executor": "Run",
     "Maven.proj [clean].executor": "Run",
     "Maven.proj [compile].executor": "Run",
@@ -131,33 +136,7 @@
       <command value="mvn clean package" />
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="network.client.cli.CliClientApp" />
-      <module name="proj" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="network.client.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="network.client.gui.GUI" />
-      <module name="proj" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="network.client.gui.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JAR Application.proj.jar">
     <configuration name="GoldDeckTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="proj" />
       <extension name="coverage">
@@ -188,6 +167,24 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="model in proj" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proj" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="model" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="proj.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/proj.jar" />
+      <method v="2" />
     </configuration>
     <configuration name="proj [test]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
       <MavenSettings>
@@ -220,27 +217,27 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Application.CliClientApp" />
-      <item itemvalue="Application.GUI" />
+      <item itemvalue="JAR Application.proj.jar" />
+      <item itemvalue="JUnit.model in proj" />
       <item itemvalue="JUnit.GoldDeckTest" />
       <item itemvalue="JUnit.GoldDeckTest.cannotDrawMoreThanThree" />
       <item itemvalue="Maven.proj [test]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JAR Application.proj.jar" />
+        <item itemvalue="JUnit.model in proj" />
         <item itemvalue="JUnit.GoldDeckTest.cannotDrawMoreThanThree" />
         <item itemvalue="JUnit.GoldDeckTest" />
         <item itemvalue="Maven.proj [test]" />
-        <item itemvalue="Application.CliClientApp" />
-        <item itemvalue="Application.GUI" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -280,6 +277,7 @@
       <workItem from="1716919897065" duration="373000" />
       <workItem from="1716920282215" duration="2296000" />
       <workItem from="1716923775615" duration="1458000" />
+      <workItem from="1716926491278" duration="1989000" />
     </task>
     <task id="LOCAL-00001" summary="English translation">
       <option name="closed" value="true" />
@@ -729,7 +727,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/Command.java</url>
           <line>7</line>
-          <properties class="it.polimi.ingsw.controller.Command" method="runCommand">
+          <properties class="it.polimi.ingsw.controller.Command">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -747,7 +745,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/StairsObjectiveCard.java</url>
           <line>36</line>
-          <properties class="it.polimi.ingsw.model.objectiveCardTypes.StairsObjectiveCard" method="checkIfDiagonalMadeByINSECTOrPLANT">
+          <properties class="it.polimi.ingsw.model.objectiveCardTypes.StairsObjectiveCard">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

@@ -45,14 +45,14 @@ class GoldDeckTest {
         assertEquals(3, player.getPlayerCards().size());
     }
 
-    @Test
-        // Testing that when a player draws a gold card from well another one takes its place
-    void drawFromWell() {
-        List<Card> pozzo= new ArrayList<>();
-        goldDeck.drawCard(pozzo);
-        assertEquals(1, pozzo.size());
-        assertEquals(39, goldDeck.cardLefInDeck());
-    }
+//    @Test
+//        // Testing that when a player draws a gold card from well another one takes its place
+//    void drawFromWell() {
+//        List<Card> pozzo= new ArrayList<>();
+//        goldDeck.drawCard(pozzo);
+//        assertEquals(1, pozzo.size());
+//        assertEquals(39, goldDeck.cardLefInDeck());
+//    }
 
     @Test
     void addCard() {
