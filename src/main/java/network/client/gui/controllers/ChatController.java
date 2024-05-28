@@ -1,10 +1,12 @@
 package network.client.gui.controllers;
 
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import network.client.gui.scene.ChatScene;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 public class ChatController {
@@ -41,18 +43,18 @@ public class ChatController {
                             }
                         });
                     }
-                }catch (SocketTimeoutException e) {
-                        handleDisconnection();
-                    }
-                 catch (IOException e) {
-                    e.printStackTrace();
+                } catch (SocketTimeoutException e) {
+                    handleDisconnection("Connection timed out.");
+                } catch (SocketException e) {
+                    handleDisconnection("Connection was reset or interrupted.");
+                } catch (IOException e) {
+                    handleDisconnection("An I/O error occurred: " + e.getMessage());
                 }
-
             });
             clientThread.setDaemon(true); // Permette di terminare il thread quando l'applicazione chiude
             clientThread.start();
         } catch (IOException e) {
-            e.printStackTrace();
+            handleDisconnection("Failed to connect: " + e.getMessage());
         }
     }
 
@@ -71,24 +73,26 @@ public class ChatController {
             out.println(formattedMessage);
         }
     }
-    private void handleDisconnection() {
+
+    private void handleDisconnection(String message) {
         Platform.runLater(() -> {
-            // Show an alert indicating the disconnection
+            showAlert("Disconnection", message);
             try {
-                // Save game progress
                 // Close resources
                 if (in != null) in.close();
                 if (out != null) out.close();
                 if (socket != null) socket.close();
-                // Exit the application
-                Platform.exit();
-                System.exit(0);
-            } catch (SocketTimeoutException e) {
-                e.printStackTrace();
             } catch (IOException e) {
-                // Throw a runtime exception if an IOException occurs
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         });
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
