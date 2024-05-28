@@ -178,11 +178,11 @@ class BoardTest {
         resourceDeck.putCardOnTopOfDeck(16);
         player.drawResourceCard(resourceDeck);
 
-//        cardPlayerChoose = player.getPlayerCards().getFirst();
-//        player.playCard(board, 0, 2, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "BR");
-//        cardPlayerChooseTwo = player.getPlayerCards().getFirst();
-//        player.playCard(board, 0, 3, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
-//        player.playCard(board, 0, 4, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "BR");
+        cardPlayerChoose = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 2, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "BR");
+        cardPlayerChooseTwo = player.getPlayerCards().getFirst();
+        player.playCard(board, 0, 3, player.getPlayerCards().getFirst(), cardPlayerChoose, "BR");
+        player.playCard(board, 0, 4, player.getPlayerCards().getFirst(), cardPlayerChooseTwo, "BR");
 
      board.printBoard();
 //
@@ -195,7 +195,7 @@ class BoardTest {
         int newScore = player.getPlayerScore();
         System.out.println("New player score after secret card: " + newScore);
 
-        assertEquals(initialScore+2, newScore);
+        assertEquals(initialScore+4, newScore);
     }
 
     /**
@@ -579,8 +579,6 @@ class BoardTest {
         objectiveDeck.putCardOnTopOfDeck(91);
         ObjectiveCard ElleCard91 =objectiveDeck.firstCardForEachPlayer(); //carta REQUISITO L (MUSSHROOM, MUSHROOM, PLANT)
         assertEquals(91, ElleCard91.getId(), "carta id 91");
-
-
 
         player.drawResourceCard(resourceDeck);
         player.drawResourceCard(resourceDeck);

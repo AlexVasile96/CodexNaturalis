@@ -9,17 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="jar">
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="New method for objective cards">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/LObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/LObjectiveCard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/OnePlantAndTwoMushrooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/OnePlantAndTwoMushrooms.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/currentplayer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/currentplayer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/StairsObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/StairsObjectiveCard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/initcard.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/initcard.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +73,7 @@
     "JUnit.BoardTest.placeInitialCard.executor": "Run",
     "JUnit.BoardTest.test4MushroomsInStairs.executor": "Run",
     "JUnit.BoardTest.test4PLANTInStairs.executor": "Run",
-    "JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective.executor": "Debug",
+    "JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective.executor": "Run",
     "JUnit.BoardTest.testCreateSpecificSecretCardWithMixObjective.executor": "Run",
     "JUnit.BoardTest.testCreateSpecificSecretCardWithStairsObjective.executor": "Run",
     "JUnit.BoardTest.testCreateSpecificSecretCardWithTRISObjective.executor": "Debug",
@@ -120,7 +115,7 @@
       <command value="mvn clean package" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.CliClientApp">
+  <component name="RunManager" selected="JUnit.BoardTest">
     <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="network.client.cli.CliClientApp" />
       <module name="proj" />
@@ -134,20 +129,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="network.client.gui.GUI" />
-      <module name="proj" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="network.client.gui.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BoardTest.test4MushroomsInStairs" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BoardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="proj" />
       <extension name="coverage">
         <pattern>
@@ -157,8 +139,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="model" />
       <option name="MAIN_CLASS_NAME" value="model.BoardTest" />
-      <option name="METHOD_NAME" value="test4MushroomsInStairs" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -179,7 +160,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BoardTest.testCreateSpecificSecretCardWithTRISObjective" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BoardTest.testTWODifferentstairsANIMAL" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="proj" />
       <extension name="coverage">
         <pattern>
@@ -189,26 +170,42 @@
       </extension>
       <option name="PACKAGE_NAME" value="model" />
       <option name="MAIN_CLASS_NAME" value="model.BoardTest" />
-      <option name="METHOD_NAME" value="testCreateSpecificSecretCardWithTRISObjective" />
+      <option name="METHOD_NAME" value="testTWODifferentstairsANIMAL" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BoardTest.testTWODifferentstairsPLANT" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proj" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="model" />
+      <option name="MAIN_CLASS_NAME" value="model.BoardTest" />
+      <option name="METHOD_NAME" value="testTWODifferentstairsPLANT" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.GUI" />
       <item itemvalue="Application.CliClientApp" />
-      <item itemvalue="JUnit.BoardTest.test4MushroomsInStairs" />
       <item itemvalue="JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective" />
-      <item itemvalue="JUnit.BoardTest.testCreateSpecificSecretCardWithTRISObjective" />
+      <item itemvalue="JUnit.BoardTest.testTWODifferentstairsANIMAL" />
+      <item itemvalue="JUnit.BoardTest" />
+      <item itemvalue="JUnit.BoardTest.testTWODifferentstairsPLANT" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.CliClientApp" />
-        <item itemvalue="Application.GUI" />
+        <item itemvalue="JUnit.BoardTest" />
+        <item itemvalue="JUnit.BoardTest.testTWODifferentstairsPLANT" />
+        <item itemvalue="JUnit.BoardTest.testTWODifferentstairsANIMAL" />
         <item itemvalue="JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective" />
-        <item itemvalue="JUnit.BoardTest.test4MushroomsInStairs" />
-        <item itemvalue="JUnit.BoardTest.testCreateSpecificSecretCardWithTRISObjective" />
+        <item itemvalue="Application.CliClientApp" />
       </list>
     </recent_temporary>
   </component>
@@ -251,7 +248,7 @@
       <workItem from="1716881255967" duration="8822000" />
       <workItem from="1716894646087" duration="1532000" />
       <workItem from="1716899612792" duration="8885000" />
-      <workItem from="1716909257740" duration="3736000" />
+      <workItem from="1716909257740" duration="5552000" />
     </task>
     <task id="LOCAL-00001" summary="English translation">
       <option name="closed" value="true" />
@@ -557,7 +554,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716910620881</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="New method for objective cards">
+      <option name="closed" value="true" />
+      <created>1716913109960</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1716913109960</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -575,7 +580,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="English translation" />
     <MESSAGE value="Test update" />
     <MESSAGE value="Exception managed in SecretCardScene" />
     <MESSAGE value="Almost finished the english translation" />
@@ -600,7 +604,8 @@
     <MESSAGE value="Socket exception" />
     <MESSAGE value="Now both cli and gui cannot have more than the decided number of players by the first client" />
     <MESSAGE value="jar" />
-    <option name="LAST_COMMIT_MESSAGE" value="jar" />
+    <MESSAGE value="New method for objective cards" />
+    <option name="LAST_COMMIT_MESSAGE" value="New method for objective cards" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -641,19 +646,24 @@
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/StairsObjectiveCard.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="38" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/model/BoardTest.java</url>
-          <line>601</line>
+          <line>599</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/OnePlantAndTwoMushrooms.java</url>
           <line>22</line>
           <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/StairsObjectiveCard.java</url>
+          <line>82</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/objectiveCardTypes/StairsObjectiveCard.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/model/game/Game.java</url>

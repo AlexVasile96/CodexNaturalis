@@ -39,27 +39,25 @@ public class StairsObjectiveCard implements ExtendExtendExtend {
         for (int row = 0; row < rows ; row++) {
             for (int columns = 0; columns < cols ; columns++) {
                 // Check if the cell contains INSECT or PLANT seed
-                if ((nodes[columns][row].getFirstPlacement() == SpecificSeed.INSECT ||(nodes[columns][row].getSecondPlacement() == SpecificSeed.INSECT)) || ((nodes[columns][row].getFirstPlacement() == SpecificSeed.PLANT) || nodes[columns][row].getSecondPlacement() == SpecificSeed.PLANT)) {
+                if ((nodes[row][columns].getFirstPlacement() == SpecificSeed.INSECT ||(nodes[row][columns].getSecondPlacement() == SpecificSeed.INSECT)) || ((nodes[row][columns].getFirstPlacement() == SpecificSeed.PLANT) || nodes[row][columns].getSecondPlacement() == SpecificSeed.PLANT)) {
                     // Check if the diagonal pattern starting from this cell matches the seed
                     if ((columns + 2) < cols) {
-                        if ((nodes[columns][row].getFirstPlacement() == seed  && !nodes[columns][row].isAlreadyChecked()) &&
-                                ((nodes[columns+1][row+1].getFirstPlacement() == seed && nodes[columns+1][row+1].getSecondPlacement() == seed ) &&!nodes[columns+1][row+1].isAlreadyChecked() ) &&
-                                (nodes[columns + 2][row + 2].getFirstPlacement() == seed && nodes[columns + 2][row + 2].getSecondPlacement() == seed ) &&!nodes[columns + 2][row + 2].isAlreadyChecked()) {
+                        if ((nodes[row][columns].getFirstPlacement() == seed  && !nodes[row][columns].isAlreadyChecked()) &&
+                                ((nodes[row+1][columns+1].getFirstPlacement() == seed && nodes[row+1][columns+1].getSecondPlacement() == seed ) &&!nodes[row+1][columns+1].isAlreadyChecked() ) &&
+                                (nodes[row + 2][columns + 2].getFirstPlacement() == seed && nodes[row + 2][columns + 2].getSecondPlacement() == seed ) &&!nodes[row + 2][columns + 2].isAlreadyChecked()) {
                             // Mark the cells in the pattern as already checked
                             //First card
                             nodes[row][columns].setAlreadyChecked(true); //22-22
                             nodes[row+1][columns].setAlreadyChecked(true); //23-22
                             nodes[row][columns+1].setAlreadyChecked(true); //22-23
                             nodes[row+1][columns+1].setAlreadyChecked(true); //23-23
-
                             //Second card
                             nodes[row+2][columns+1].setAlreadyChecked(true); //24-23
                             nodes[row+2][columns+2].setAlreadyChecked(true); //24-24
                             nodes[row+1][columns+2].setAlreadyChecked(true); //23-24
-
                             //Third card
                             nodes[row+3][columns+2].setAlreadyChecked(true); //25-24
-                            nodes[row+3][columns+3].setAlreadyChecked(true); //25-25
+                            //nodes[row+3][columns+3].setAlreadyChecked(true); //25-25
                             nodes[row+2][columns+3].setAlreadyChecked(true); //24-25
                             checkVariable = true; // Set check variable to true indicating the pattern is found
                             addStairObjectivePointsToPlayer(player); // Add points to the player for completing the pattern
