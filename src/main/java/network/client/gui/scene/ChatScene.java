@@ -22,6 +22,7 @@ public class ChatScene {
     private Stage stage;
     private VBox chatArea;
     private TextField inputField;
+    private TextField recipientField;
     private ChatController controller;
     private Set<String> messageHistory;
     private String clientName;
@@ -40,6 +41,10 @@ public class ChatScene {
         scrollPane.setFitToWidth(true);
         scrollPane.setStyle("-fx-background: #f0f0f0;");
 
+        recipientField = new TextField();
+        recipientField.setPromptText("Recipient (leave empty for public message)");
+        recipientField.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 14px;");
+
         inputField = new TextField();
         inputField.setPromptText("Enter your message...");
         inputField.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 14px;");
@@ -49,7 +54,7 @@ public class ChatScene {
         sendButton.setOnAction(event -> sendMessage());
         sendButton.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 14px; -fx-background-color: #007bff; -fx-text-fill: white;");
 
-        HBox inputBox = new HBox(10, inputField, sendButton);
+        HBox inputBox = new HBox(10, recipientField, inputField, sendButton);
         inputBox.setAlignment(Pos.CENTER);
         HBox.setHgrow(inputField, Priority.ALWAYS);
         inputBox.setPadding(new Insets(10));
@@ -76,10 +81,15 @@ public class ChatScene {
     }
 
     private void sendMessage() {
-        String message = inputField.getText();
+        String recipient = recipientField.getText().trim();
+        String message = inputField.getText().trim();
         if (!message.isEmpty() && !messageHistory.contains(message)) {
-            appendMessage(message, true);
-            controller.sendMessageToServer(message);
+            if (!recipient.isEmpty()) {
+                controller.sendPrivateMessage(recipient, message);
+            } else {
+                controller.sendMessageToServer(message);
+            }
+            appendMessage(clientName + ": " + message, true);
             inputField.clear();
         }
     }

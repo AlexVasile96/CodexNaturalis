@@ -58,4 +58,12 @@ public class ChatController {
             out.println(formattedMessage);
         }
     }
+
+    public void sendPrivateMessage(String targetClientName, String message) {
+        if (out != null) {
+            String formattedMessage = "@" + targetClientName + " " + message;
+            lastSentMessage = formattedMessage; // Memorizza l'ultimo messaggio inviato
+            out.println(formattedMessage);
+        }
+    }
 }

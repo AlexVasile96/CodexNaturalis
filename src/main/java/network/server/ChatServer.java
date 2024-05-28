@@ -5,7 +5,7 @@ import java.net.*;
 import java.util.*;
 
 public class ChatServer {
-    private static Set<ClientHandler> clientHandlers = Collections.synchronizedSet(new HashSet<>());
+    private static Map<String, ClientHandler> clientHandlers = Collections.synchronizedMap(new HashMap<>());
 
     public static void main(String[] args) throws IOException {
         System.out.println("Chat server started...");
@@ -37,16 +37,27 @@ public class ChatServer {
                 // Riceve il nome del client
                 clientName = in.readLine();
                 synchronized (clientHandlers) {
-                    clientHandlers.add(this);
+                    clientHandlers.put(clientName, this);
                 }
 
                 String message;
                 while ((message = in.readLine()) != null) {
                     System.out.println(clientName + ": " + message);
-                    synchronized (clientHandlers) {
-                        for (ClientHandler handler : clientHandlers) {
-                            if (handler != this) { // Evita di inviare il messaggio al mittente
-                                handler.out.println(message);
+                    if (message.startsWith("@")) {
+                        // Messaggio privato
+                        int spaceIndex = message.indexOf(' ');
+                        if (spaceIndex != -1) {
+                            String targetClientName = message.substring(1, spaceIndex);
+                            String privateMessage = message.substring(spaceIndex + 1);
+                            sendPrivateMessage(targetClientName, privateMessage);
+                        }
+                    } else {
+                        // Messaggio pubblico
+                        synchronized (clientHandlers) {
+                            for (ClientHandler handler : clientHandlers.values()) {
+                                if (handler != this) { // Evita di inviare il messaggio al mittente
+                                    handler.out.println(clientName + ": " + message);
+                                }
                             }
                         }
                     }
@@ -60,8 +71,20 @@ public class ChatServer {
                     e.printStackTrace();
                 }
                 synchronized (clientHandlers) {
-                    clientHandlers.remove(this);
+                    clientHandlers.remove(clientName);
                 }
+            }
+        }
+
+        private void sendPrivateMessage(String targetClientName, String message) {
+            ClientHandler targetHandler;
+            synchronized (clientHandlers) {
+                targetHandler = clientHandlers.get(targetClientName);
+            }
+            if (targetHandler != null) {
+                targetHandler.out.println("(Private) " + clientName + ": " + message);
+            } else {
+                out.println("Client " + targetClientName + " not found.");
             }
         }
     }
