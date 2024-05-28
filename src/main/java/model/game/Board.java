@@ -180,7 +180,7 @@ public class Board {
     //CREATING SPECIFIC OBJECTIVE REQUIREMENTS
     public boolean createSpecificSecretCard(ObjectiveCard card, Player player) {
         String specificSeedObjective = String.valueOf(card.getObjectiveSpecificTypeOfCard());
-        boolean finalResult;
+        boolean finalResult=true;
 
         switch (specificSeedObjective) {
             case "STAIRS":
@@ -188,8 +188,12 @@ public class Board {
                 finalResult = stairsObjectiveCard.checkPattern(this, card.getType(), player);
                 break;
             case "L":
-                LObjectiveCard lObjectiveCard = new LObjectiveCard();
-                finalResult = lObjectiveCard.checkPattern(this, card.getType(), player);
+                if(card.getId()==91)
+                {
+                    LObjectiveCard lObjectiveCard = new LObjectiveCard();
+                    finalResult = lObjectiveCard.onePlantAndTwoMushrooms(this,player,SpecificSeed.PLANT,SpecificSeed.MUSHROOM);
+                }
+
                 break;
             case "MIX":
                 MixObjectiveCard mixObjectiveCard = new MixObjectiveCard();

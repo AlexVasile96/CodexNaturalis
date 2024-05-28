@@ -587,9 +587,8 @@ class BoardTest {
         resourceDeck.putCardOnTopOfDeck(11);
         player.drawResourceCard(resourceDeck);
 
-        //assertEquals(1,player.getPlayerCards().getFirst().getId());//CARTA ID 1
+
         player.playCard(board,0,0, player.getPlayerCards().getFirst(), initialCard, "TR");
-        //assertEquals(2,player.getPlayerCards().getFirst().getId());
         Card cardPlayerChoose = player.getPlayerCards().getFirst();
         player.playCard(board,0,0, player.getPlayerCards().getFirst(), initialCard, "BR");
         assertEquals(11,player.getPlayerCards().getFirst().getId());
@@ -599,9 +598,9 @@ class BoardTest {
         board.printBoard();
 
         int initialScore = player.getPlayerScore();
-
+        System.out.println("Player score is: " + initialScore);
         board.createSpecificSecretCard(ElleCard91, player);
-
+        System.out.println("New player score is: " + player.getPlayerScore());
         // Assuming checkPattern method correctly updates player's score based on the card
         assertTrue(player.getPlayerScore() > initialScore);
     }
