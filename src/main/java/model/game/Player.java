@@ -191,9 +191,12 @@ public class Player implements Observable {
             cardChosenIsTheInitialcard(initialCard,availableCorners);
             return freeScornerosi(availableCorners, cardPlayerChoose);
         } else {                                                        //CARD CHOSEN ISN'T THE INITIAL CARD
-            List<Corner> availableCorners= creatingCornersForNotInitialcard(cardPlayerChoose);
+            /*List<Corner> availableCorners= creatingCornersForNotInitialcard(cardPlayerChoose);
             List<Corner> corner= creatingCornersForNotInitialcard(cardPlayerChoose);
             cardChosenIsNotTheInitialcard(availableCorners,corner);
+            return freeScornerosi(availableCorners, cardPlayerChoose);*/
+
+            List<Corner> availableCorners= creatingCornersForNotInitialcardMomoVersion(cardPlayerChoose);
             return freeScornerosi(availableCorners, cardPlayerChoose);
         }
 
@@ -373,6 +376,64 @@ public class Player implements Observable {
         return availableCorners;
     }
 
+    private List<Corner> creatingCornersForNotInitialcardMomoVersion(Card cardPlayerChoose){
+        List<Corner> availableCorners = new ArrayList<>();                          //CREATING CORNERS THAT WILL BE DISPLAYED TO THE PLAYER
+
+        if(IsTheTLCornerUsable(cardPlayerChoose.getTL().getSpecificCornerSeed(), cardPlayerChoose.getTL().getValueCounter(), cardPlayerChoose.getNode().getCoordX(), cardPlayerChoose.getNode().getCoordY())) {
+            availableCorners.add(cardPlayerChoose.getTL());
+        }
+        if(IsTheTRCornerUsable(cardPlayerChoose.getTR().getSpecificCornerSeed(), cardPlayerChoose.getTR().getValueCounter(), cardPlayerChoose.getNode().getCoordX(), cardPlayerChoose.getNode().getCoordY()+1)) {
+            availableCorners.add(cardPlayerChoose.getTR());
+        }
+        if(IsTheBLCornerUsable(cardPlayerChoose.getBL().getSpecificCornerSeed(), cardPlayerChoose.getBL().getValueCounter(), cardPlayerChoose.getNode().getCoordX()+1, cardPlayerChoose.getNode().getCoordY())) {
+            availableCorners.add(cardPlayerChoose.getBL());
+        }
+        if(IsTheBRCornerUsable(cardPlayerChoose.getBR().getSpecificCornerSeed(), cardPlayerChoose.getBR().getValueCounter(), cardPlayerChoose.getNode().getCoordX()+1, cardPlayerChoose.getNode().getCoordY()+1)) {
+            availableCorners.add(cardPlayerChoose.getBR());
+        }
+        return availableCorners;
+    }
+
+    private boolean IsTheTLCornerUsable(SpecificSeed seed, int valueCounter, int x, int y) {//A POSTO
+        SpecificSeed nord = board.getNode(x-1, y).getSpecificNodeSeed();
+        SpecificSeed est = board.getNode(x, y-1).getSpecificNodeSeed();
+        SpecificSeed nordEst = board.getNode(x-1, y-1).getSpecificNodeSeed();
+        if(seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter >0 && nord != SpecificSeed.NOTTOBEPLACEDON && est != SpecificSeed.NOTTOBEPLACEDON && nordEst != SpecificSeed.NOTTOBEPLACEDON){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean IsTheTRCornerUsable(SpecificSeed seed, int valueCounter, int x, int y) {
+        SpecificSeed ovest= board.getNode(x, y+1).getSpecificNodeSeed();
+        SpecificSeed nord = board.getNode(x-1, y).getSpecificNodeSeed();
+        SpecificSeed nordOvest = board.getNode(x-1, y+1).getSpecificNodeSeed();
+        if(seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && ovest != SpecificSeed.NOTTOBEPLACEDON && nord != SpecificSeed.NOTTOBEPLACEDON && nordOvest != SpecificSeed.NOTTOBEPLACEDON) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean IsTheBLCornerUsable(SpecificSeed seed, int valueCounter, int x, int y) {
+        SpecificSeed est = board.getNode(x, y-1).getSpecificNodeSeed();
+        SpecificSeed sud = board.getNode(x+1, y).getSpecificNodeSeed();
+        SpecificSeed sudEst = board.getNode(x+1, y-1).getSpecificNodeSeed();
+        if(seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && est != SpecificSeed.NOTTOBEPLACEDON && sud != SpecificSeed.NOTTOBEPLACEDON && sudEst != SpecificSeed.NOTTOBEPLACEDON) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean IsTheBRCornerUsable(SpecificSeed seed, int valueCounter, int x, int y) {//a posto
+        SpecificSeed sud = board.getNode(x+1, y).getSpecificNodeSeed();
+        SpecificSeed ovest = board.getNode(x, y+1).getSpecificNodeSeed();
+        SpecificSeed sudOvest = board.getNode(x-1, y-1).getSpecificNodeSeed();
+        if(seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && sud != SpecificSeed.NOTTOBEPLACEDON && ovest != SpecificSeed.NOTTOBEPLACEDON && sudOvest != SpecificSeed.NOTTOBEPLACEDON) {
+            return true;
+        }
+        return false;
+    }
+
 
     private void cardChosenIsTheInitialcard(InitialCard initialCard,List<Corner> availableCorners )
     {
@@ -401,8 +462,7 @@ public class Player implements Observable {
             }
         }
     }
-    private void cardChosenIsNotTheInitialcard(List<Corner> availableCorners, List<Corner> corner)
-    {
+    private void cardChosenIsNotTheInitialcard(List<Corner> availableCorners, List<Corner> corner) {
         for (int i = corner.size() - 1; i >= 0; i--) {
             if (corner.get(i).getSpecificCornerSeed() == SpecificSeed.NOTTOBEPLACEDON || corner.get(i).getValueCounter() == 0) { //SAMECHECK
                 availableCorners.remove(i);

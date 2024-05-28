@@ -420,7 +420,7 @@ class BoardTest {
      */
 
     @Test
-    void testMushroomMushroomInsect() {
+    void test2Mushroom1Insect() {
         // Setup iniziale
         Deck objectiveDeck = objectiveCardConstructor.createCards(); // non mischiato
         System.out.println("Objective Deck created: " + objectiveDeck);
