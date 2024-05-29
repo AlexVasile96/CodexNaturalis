@@ -1,6 +1,9 @@
 package it.polimi.ingsw.network.client.gui.controllers;
 
 import com.google.gson.*;
+import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.model.game.Game;
+import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.network.client.gui.scene.BoardPointsScene;
 import it.polimi.ingsw.network.client.gui.scene.ChatScene;
 import it.polimi.ingsw.network.client.gui.scene.EndGameScene;
@@ -60,6 +63,8 @@ public class GameSceneController {
     private Button chat = new Button("Chat");
     Button showObjective = new Button("Show Objective");
     private Button endTurn = new Button("End turn");
+    private Button showAllPoints = new Button("See all point");
+    private Button showAllSeeds = new Button("See all seeds");
     private Button quit = new Button("Quit");
     private Boolean haveToDraw = false;
     private Boolean haveToPlay = true;
@@ -116,6 +121,7 @@ public class GameSceneController {
     private boolean isNotToBePlacedon =false;
     private ChatScene chatScene;
     private ChatController chatController;
+    private GameController gameController = new GameController();
 
 
     /**
@@ -657,7 +663,6 @@ public class GameSceneController {
         });
 
 
-
         flipCardToBack.setOnAction(e -> {
             if (isCurrentPlayerTurn) {
                 // Set the card to be flipped to the back
@@ -712,7 +717,7 @@ public class GameSceneController {
             }
         });
 
-        /**
+        /*
          * Sets the action for flipping the selected card to the front.
          */
         flipCardToFront.setOnAction(e -> {
@@ -873,6 +878,45 @@ public class GameSceneController {
                 // Alert if it's not the current player's turn
                 showAlert("Not your turn", "It's not your turn yet.");
             }
+        });
+
+        showAllPoints.setOnMouseClicked(e -> {
+            if(isCurrentPlayerTurn) {
+                out.println("showAllPoints");
+                try {
+                    String string = in.readLine();
+                    System.out.println(string);
+                    while (!string.equals("exit")) {
+                        System.out.println(in.readLine());
+                    }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }else {
+                // Alert if it's not the current player's turn
+                showAlert("Not your turn", "It's not your turn yet.");
+            }
+        });
+
+        showAllSeeds.setOnMouseClicked(e ->{
+            if(isCurrentPlayerTurn) {
+                out.println("showAllSpecificSeed");
+                try {
+                    String string = in.readLine();
+                    System.out.println(string);
+                    showAlert("Specific seeds", string);
+                    while (!string.equals("exit")) {
+                        System.out.println(in.readLine());
+                    }
+                }catch (IOException ex){
+                    throw new RuntimeException(ex);
+                }
+            }else {
+                // Alert if it's not the current player's turn
+                showAlert("Not your turn", "It's not your turn yet.");
+            }
+
+
         });
 
         showObjective.setOnMouseClicked(e -> {
@@ -2027,6 +2071,8 @@ public class GameSceneController {
         buttonContainer.add(endTurn, 1, 3);
         buttonContainer.add(quit, 0, 4);
         buttonContainer.add(chat, 1, 4);
+        buttonContainer.add(showAllPoints, 0, 5);
+        buttonContainer.add(showAllSeeds, 1,5);
         double buttonsWidth = 120.00;
         for (var node : buttonContainer.getChildren()) {
             if (node instanceof Button) {
