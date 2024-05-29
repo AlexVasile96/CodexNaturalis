@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.client.gui.scene;
 
 import it.polimi.ingsw.network.client.gui.controllers.Controller;
 import it.polimi.ingsw.view.ClientView;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -73,12 +74,20 @@ public class EndGameScene {
 //            winner.setText("The winner is: Eli");
 //        });
 //        delay.play();
+
         String waitForCall = in.readLine();
         do{
-            System.out.println(waitForCall);
+            showAlert("The Winner is...",waitForCall);
             waitForCall = in.readLine();
         }while (!waitForCall.equals("exit"));
-        //stampaggio deipunteggi del broder
-        controller.quit(primaryStage);
+
+
+    }
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
