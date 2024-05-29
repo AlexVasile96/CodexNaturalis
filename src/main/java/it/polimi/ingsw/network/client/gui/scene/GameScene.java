@@ -41,8 +41,8 @@ public class GameScene {
     public void game(boolean isFirstClient) throws IOException {
         System.out.println("Initializing game data for client: " + clientView.getUserName());
         gameSceneController.initData(primaryStage, out, socket, in, clientView, currentPlayerNickname);
-        out.println("updateLoggedPlayers");                                         //+1 dei logged players
-        System.out.println("Server says: " + in.readLine());                                         //Update loggedPlayers
+        out.println("updateLoggedPlayers");
+        System.out.println("Server says: " + in.readLine());
         out.println("howManyPlayers");
         loggedInPlayers= Integer.parseInt(in.readLine());
         System.out.println("Logged in players: " + loggedInPlayers);

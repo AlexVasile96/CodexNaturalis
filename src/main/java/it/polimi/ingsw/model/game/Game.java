@@ -31,7 +31,7 @@ public class Game{
     private final Semaphore semaphore = new Semaphore(1);
     private int totalNumberOfPLayer=0;
     private boolean endGame = false;
-
+    private String winnerString=null;
     public Game() {                                           //GAME CONSTRUCTOR WHICH INITIALIZED ALL THE CARDS
         this.players = new ArrayList<>();
         this.well = new ArrayList<>();
@@ -162,7 +162,7 @@ public class Game{
         finalText.append("Suspance...\n");
         System.out.println(winner.getNickName());
         finalText.append(winner.getNickName());
-        finalText.append("Points:\n");
+        finalText.append("\nPoints:\n");
         for (Player player : players) {
             finalText.append(player.getNickName() + "-> " + player.getPlayerScore()+"\n");
         }
@@ -244,7 +244,14 @@ public class Game{
      *Method to visualize the player's board.
      */
 
-
+    public String areYouTheFirstWinner(){
+        if(winnerString==null)
+        {
+            winnerString="set";
+            return "OK";
+        }
+        else return "NO";
+    }
     public String showBoard(Player player) {
         return player.getBoard().printBoardForServer();
     }

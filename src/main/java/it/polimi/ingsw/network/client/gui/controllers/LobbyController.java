@@ -47,7 +47,6 @@ public class LobbyController {
                     if (message.equals("All clients connected")) {
                         Platform.runLater(() -> {
                             System.out.println("All clients are connected, choosing secret cards...");
-                            //Da fare qua il controllo sul numero di giocarori
                             String whatIsYourIndex=null;
                             int gameSize=0;
                             try {

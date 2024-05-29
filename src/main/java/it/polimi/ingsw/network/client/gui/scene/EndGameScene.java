@@ -54,7 +54,6 @@ public class EndGameScene {
             try {
                 StackPane root = new StackPane();
                 Text winner = new Text("The winner is: ");
-                System.out.println("Sono entrato in ENDGAME");
                 Image background = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/SfondoWinner.jpg")));
 
                 BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);

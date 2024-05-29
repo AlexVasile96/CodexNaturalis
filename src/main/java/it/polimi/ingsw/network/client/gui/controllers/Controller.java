@@ -19,6 +19,7 @@ public class Controller {
     BufferedReader in;
     PrintWriter out;
     private Socket socket;
+    private static boolean endgame=false;
     private ClientView clientView;
     public Controller(BufferedReader in, PrintWriter out, Socket socket, ClientView clientView) throws IOException {
         this.in = in;
@@ -300,6 +301,7 @@ public class Controller {
 
                 switch (message) {
                     case "You smashed 20 points!! now everybody got one last turn":
+                        setEndgame(true);
                         String whoGot20Points = in.readLine();
                         Platform.runLater(() -> showAlert("Someone Got 20 Points!", "WOW!!! " + whoGot20Points + " HAS FINALLY REACHED 20 POINTS!!"));
                         break;
@@ -351,4 +353,11 @@ public class Controller {
         alert.showAndWait();
     }
 
+    public static boolean isEndgame() {
+        return endgame;
+    }
+
+    public static void setEndgame(boolean endgame) {
+        Controller.endgame = endgame;
+    }
 }

@@ -2,8 +2,6 @@ package it.polimi.ingsw.network.client.gui.controllers;
 
 import com.google.gson.*;
 import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.model.game.Game;
-import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.network.client.gui.scene.*;
 import it.polimi.ingsw.view.ClientView;
 import javafx.application.Platform;
@@ -76,7 +74,7 @@ public class GameSceneController {
     private String cornerSelected = null;
     private Image wellCardSelected = null;
     private String idWellCardSelected = null;
-    private Controller controller = null;
+    private static Controller controller;
     private String currentPlayerNickname;
     private ClientView clientView;
     private BoardPointsScene boardPointsScene;
@@ -118,7 +116,6 @@ public class GameSceneController {
     private boolean isNotToBePlacedon =false;
     private ChatScene chatScene;
     private ChatController chatController;
-    private GameController gameController = new GameController();
 
 
     /**
@@ -144,7 +141,8 @@ public class GameSceneController {
         this.clientView = clientView;
 
         // Initialize the controller with the input stream, output stream, and socket
-        controller = new Controller(in, out, socket,clientView);
+        if(controller==null){
+        controller = new Controller(in, out, socket,clientView);}
 
         // Determine if it's the current player's turn based on the nickname
         isCurrentPlayerTurn = clientView.getUserName().equals(currentPlayerNickname);
@@ -625,7 +623,7 @@ public class GameSceneController {
                             }
                             // Update the images of the well cards and decks
 
-                            if(clientView.getPlayerScore()>=20){ //One player reached 20 points, so all clients have one last turn and then the game will end
+                            if(clientView.getPlayerScore()>=20&& !Controller.isEndgame()){ //One player reached 20 points, so all clients have one last turn and then the game will end
                                     firstWellCard();
                                     String youSmashed20Points= in.readLine();
                                     System.out.println(youSmashed20Points);
@@ -637,6 +635,8 @@ public class GameSceneController {
                                     waitForTurn();
                                     haveToDraw = false;
                                     areYouTheWinner=true;
+                                    clientView.setAreYouTheWinner(true);
+                                    Controller.setEndgame(true);
                             }
                             else {
                                 initializeWell();
@@ -973,22 +973,12 @@ public class GameSceneController {
             try {
                 // Wait for the player's turn to begin
                 controller.waitForTurn(clientView.getUserName(), primaryStage);
-
-                // Update GUI on the JavaFX Application Thread
-                Platform.runLater(() -> {
-                    if(clientView.getPlayerScore()>=20)
-                    {
-                        showAlert("GAME FINISHED", "NOW THE WINNER WILL BE ANNOUNCED!");
-
-                    }
-                });
-
                 if(clientView.getPlayerScore()>=20)
                 {
                     EndGameScene endGameScene= new EndGameScene(primaryStage,out,socket,in,clientView, controller);
                     try {
-                        System.out.println(in.readLine()); //Fine turno
-                        System.out.println(in.readLine()); //ENDGAME?;
+                        System.out.println(in.readLine()); //end of turn
+                        System.out.println(in.readLine()); //ENDGAME?
                         System.out.println("Game finally ended for everybody!");
                         endGameScene.endGame();
                     } catch (IOException e) {
@@ -1000,7 +990,6 @@ public class GameSceneController {
                     updateTurnState(true);
                     try {
                         // Output a message indicating that the turn has ended
-                        System.out.println("In Gamescenecontroller");
                         System.out.println(in.readLine()); // Fine turno
 
                         // Update the GUI

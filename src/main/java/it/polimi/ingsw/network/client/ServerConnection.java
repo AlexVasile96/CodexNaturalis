@@ -1161,7 +1161,6 @@ public class ServerConnection implements Runnable {
                 waitAllPlayers();
             }
         }
-
     }
 
     private void gameDataElaboration() throws IOException {

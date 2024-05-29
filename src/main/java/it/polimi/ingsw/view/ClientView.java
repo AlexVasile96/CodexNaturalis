@@ -29,6 +29,7 @@ public class ClientView {
     private String objectiveCard;
     private int numOfCardsOnTheBoard=1;
     private List<String> cardsOnTheBoard= new ArrayList<>();
+    private boolean areYouTheWinner=false;
 
     public String getUserName() {
         return userName;
@@ -199,4 +200,11 @@ public class ClientView {
         return clientView;
     }
 
+    public boolean isAreYouTheWinner() {
+        return areYouTheWinner;
+    }
+
+    public void setAreYouTheWinner(boolean areYouTheWinner) {
+        this.areYouTheWinner = areYouTheWinner;
+    }
 }
