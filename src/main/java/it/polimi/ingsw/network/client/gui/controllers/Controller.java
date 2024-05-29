@@ -309,14 +309,12 @@ public class Controller {
                         break;
 
                     case "END OF GAME!":
-                        EndGameScene endGameScene = new EndGameScene(primaryStage, out, socket, in, clientView, this);
-                        Platform.runLater(() -> {
-                            try {
-                                endGameScene.endGame();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
+                        String waitForCall = in.readLine();
+                        do{
+                            System.out.println(waitForCall);
+                            waitForCall = in.readLine();
+                        }while (!waitForCall.equals("exit"));
+                        Platform.runLater(() -> showAlert("Thanks for playing codex!", "Thanks for playing codex!"));
                         break;
 
                     default:

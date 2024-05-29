@@ -107,10 +107,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     game.setCurrentPlayingPLayer(game.loadCurrentPlayingPlayerFromJson());
                     handlingTurns(playersList); //Handling new turns
                     currentPlayer= game.loadCurrentPlayingPlayerFromJson();
-                    System.out.println("PAOLONE CURRENT PLAYER " +  currentPlayer);
                     turnController.setCurrentPlayer(currentPlayer);
-                    System.out.println("GIACOMONE TURNCONTROLLER " + currentPlayer);
-                    System.out.println("Current player after loading data is " + currentPlayer.getNickName());
                     game.loadGameStatusFromJson();
                     sendMessageToAllClients(currentPlayer.getNickName());
                     sendMessageToAllClients("endturn");
@@ -239,13 +236,13 @@ public class HandlingPlayerInputsThread implements Runnable {
         ObjectiveCard secondCard = game.getObjectiveDeck().drawObjectiveCard();
         secretCards.add(firstCard);
         secretCards.add(secondCard);
-        int firstid = firstCard.getId();
+        int firstId = firstCard.getId();
         int secondID = secondCard.getId();
-        System.out.println(firstid);
+        System.out.println(firstId);
         System.out.println(secondID);
         sendMessageToClient(String.valueOf(firstCard));
         sendMessageToClient(String.valueOf(secondCard));
-        sendMessageToClient(String.valueOf(firstid));
+        sendMessageToClient(String.valueOf(firstId));
         sendMessageToClient(String.valueOf(secondID));
         String integerString = stdIn.readLine();
         int size = Integer.parseInt(integerString);
@@ -382,7 +379,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     if (!turnedCardAlready) {
                         messageFromClient = stdIn.readLine();
                         if (messageFromClient.equals("1")) {
-                            System.out.println("PLayer wants to turn his card!");
+                            System.out.println("Player wants to turn his card!");
                             gameController.readCommand("TurnCard", player, cardChosenFromHisDeck, 0, null);
                             forClientView.append("(back)");
                         } else forClientView.append("(front)");
@@ -393,7 +390,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                     boolean rightCard;
                     do {
                         boardCardChosen = Integer.parseInt(stdIn.readLine());
-                        System.out.println("Il player ha deciso di giocare la propria carta sulla carta numero " + boardCardChosen);
                         gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
                         cornerChosen = stdIn.readLine();
                         if(cornerChosen.equals("clean")) {
