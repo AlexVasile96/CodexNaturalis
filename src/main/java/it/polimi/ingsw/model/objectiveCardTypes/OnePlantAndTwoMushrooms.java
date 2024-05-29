@@ -34,7 +34,7 @@ public class OnePlantAndTwoMushrooms
                                     }
                                 }
                             }
-                            //SE CIò NON è VERO, ALLORA TUTTI E 4 I SECOND FIRST PLACEMENT DEVONO ESSERE FUNGO(?)
+
                         }
                         else  if(nodes[row-2][column].getSecondPlacement()==seed2  && !nodes[row-2][column].isAlreadyChecked()){
                             if(nodes[row-3][column].getSecondPlacement()==seed2 && !nodes[row-3][column].isAlreadyChecked() ) {
