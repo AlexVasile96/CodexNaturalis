@@ -979,27 +979,23 @@ public class GameSceneController {
                     if(clientView.getPlayerScore()>=20)
                     {
                         showAlert("GAME FINISHED", "NOW THE WINNER WILL BE ANNOUNCED!");
-                        try {
-                            System.out.println(in.readLine()); //Fine turno
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        System.out.println("Game finally ended for everybody!");
-                        try {
-                            System.out.println(in.readLine()); //ENDGAME?;
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        EndGameScene endGameScene= new EndGameScene(primaryStage,out,socket,in,clientView, controller);
-                        try {
-                            endGameScene.endGame();
-                            controller.quit(primaryStage);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
 
                     }
                 });
+
+                if(clientView.getPlayerScore()>=20)
+                {
+                    EndGameScene endGameScene= new EndGameScene(primaryStage,out,socket,in,clientView, controller);
+                    try {
+                        System.out.println(in.readLine()); //Fine turno
+                        System.out.println(in.readLine()); //ENDGAME?;
+                        System.out.println("Game finally ended for everybody!");
+                        endGameScene.endGame();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                else{
                     // Update the turn state
                     updateTurnState(true);
                     try {
@@ -1011,11 +1007,13 @@ public class GameSceneController {
                         updateGUI();
                         // Setup game actions
                         setupGameActions();
-                    } catch (SocketTimeoutException e) {
+                    }
+                     catch (SocketTimeoutException e) {
                         handleDisconnection();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }
 
             } catch (SocketTimeoutException e) {
                 handleDisconnection();

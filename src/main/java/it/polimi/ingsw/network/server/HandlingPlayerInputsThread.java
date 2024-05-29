@@ -91,7 +91,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     try {
                         noPersistenceLogin();
                         for (Player player : playersList) {
-                            player.setPlayerScore(10);
+                            player.setPlayerScore(19);
                         }
                     } catch (InterruptedException e) {
                         handleClientDisconnection();
