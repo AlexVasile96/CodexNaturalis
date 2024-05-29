@@ -1,13 +1,10 @@
 package model;
 
-import model.card.ResourceCard;
-import model.card.ResourceUpdater;
-import model.game.*;
+import it.polimi.ingsw.model.card.ResourceCard;
+import it.polimi.ingsw.model.card.ResourceUpdater;
+import it.polimi.ingsw.model.game.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 class ResourceUpdaterTest {
     //initialization

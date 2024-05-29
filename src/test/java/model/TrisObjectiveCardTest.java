@@ -1,7 +1,7 @@
 package model;
 
-import model.game.*;
-import model.objectiveCardTypes.TrisObjectiveCard;
+import it.polimi.ingsw.model.game.*;
+import it.polimi.ingsw.model.objectiveCardTypes.TrisObjectiveCard;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

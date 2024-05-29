@@ -1,13 +1,15 @@
 package model;
 
-import model.card.Card;
-import model.card.GoldCardConstructor;
-import model.card.ResourceCardConstructor;
-import model.deck.GoldDeck;
-import model.deck.ResourceDeck;
-import model.game.Board;
-import model.game.Dot;
-import model.game.Player;
+import it.polimi.ingsw.exceptions.AlredyInException;
+import it.polimi.ingsw.exceptions.IllegalAddException;
+import it.polimi.ingsw.model.card.Card;
+import it.polimi.ingsw.model.card.GoldCardConstructor;
+import it.polimi.ingsw.model.card.ResourceCardConstructor;
+import it.polimi.ingsw.model.deck.GoldDeck;
+import it.polimi.ingsw.model.deck.ResourceDeck;
+import it.polimi.ingsw.model.game.Board;
+import it.polimi.ingsw.model.game.Dot;
+import it.polimi.ingsw.model.game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -61,12 +63,12 @@ class ResourceDeckTest {
 
         //trying to insert a gold card in the resource deck
         Card illegalCard = goldDeck.drawCard(player);
-        assertThrows(exceptions.IllegalAddException.class, () -> resourceDeck.addCard(illegalCard));
+        assertThrows(IllegalAddException.class, () -> resourceDeck.addCard(illegalCard));
 
         //trying to insert a duplicate
         Card cartaBomba3 = resourceDeck.drawCard(player2);
         resourceDeck.addCard(duplicateCard);
-        assertThrows(exceptions.AlredyInException.class, () -> resourceDeck.addCard(duplicateCard));
+        assertThrows(AlredyInException.class, () -> resourceDeck.addCard(duplicateCard));
 
     }
 }

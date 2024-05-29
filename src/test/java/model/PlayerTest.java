@@ -1,12 +1,12 @@
 package model;
 
-import model.card.*;
-import model.deck.Deck;
-import model.deck.GoldDeck;
-import model.deck.ResourceDeck;
-import model.game.Board;
-import model.game.Dot;
-import model.game.Player;
+import it.polimi.ingsw.model.card.*;
+import it.polimi.ingsw.model.deck.Deck;
+import it.polimi.ingsw.model.deck.GoldDeck;
+import it.polimi.ingsw.model.deck.ResourceDeck;
+import it.polimi.ingsw.model.game.Board;
+import it.polimi.ingsw.model.game.Dot;
+import it.polimi.ingsw.model.game.Player;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
