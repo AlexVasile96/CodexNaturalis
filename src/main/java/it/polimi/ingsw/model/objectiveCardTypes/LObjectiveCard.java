@@ -12,7 +12,7 @@ public class LObjectiveCard implements ExtendExtendExtend {
            onePlantAndTwoMushrooms(board,player,seed1,seed2);
        }
        else if(seed1==SpecificSeed.MUSHROOM && seed2==SpecificSeed.ANIMAL){
-           oneMushAndTwoPlants(board,player,seed1,seed2);
+           oneMushAndTwoAnimals(board,player,seed1,seed2);
        }
        else if(seed1== SpecificSeed.ANIMAL && seed2==SpecificSeed.INSECT)
        {
@@ -41,18 +41,21 @@ return false;
        onePlantAndTwoMushrooms.realCheck(board,player,seed1,seed2);
        return true;
     }
-    private void oneMushAndTwoPlants(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){
-        OneMushAndTwoPlants oneMushAndTwoPlants= new OneMushAndTwoPlants();
-        oneMushAndTwoPlants.realCheck(board,player,seed1,seed2);
+    public boolean oneMushAndTwoAnimals(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){
+        oneMushAndTwoAnimals oneMushAndTwoAnimals = new oneMushAndTwoAnimals();
+        oneMushAndTwoAnimals.realCheck(board,player,seed1,seed2);
+        return true;
     }
-    private void oneAnimalAndTwoInsects(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){
+    public boolean oneAnimalAndTwoInsects(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){
         OneAnimalAndTwoInsects oneAnimalAndTwoInsects= new OneAnimalAndTwoInsects();
         oneAnimalAndTwoInsects.realCheck(board, player, seed1, seed2);
+        return true;
     }
 
-    private void oneInsectAndTwoPlants(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){
+    public boolean oneInsectAndTwoPlants(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2){
         OneInsectAndTwoPlants oneInsectAndTwoPlants= new OneInsectAndTwoPlants();
         oneInsectAndTwoPlants.realCheck(board, player, seed1, seed2);
+        return true;
     }
 
 }

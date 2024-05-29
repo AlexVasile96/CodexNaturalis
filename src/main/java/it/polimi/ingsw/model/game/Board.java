@@ -191,6 +191,18 @@ public class Board {
                     LObjectiveCard lObjectiveCard = new LObjectiveCard();
                     finalResult = lObjectiveCard.onePlantAndTwoMushrooms(this,player,SpecificSeed.PLANT,SpecificSeed.MUSHROOM);
                 }
+                if(card.getId()==92){
+                    LObjectiveCard lObjectiveCard = new LObjectiveCard();
+                    finalResult = lObjectiveCard.oneInsectAndTwoPlants(this,player,SpecificSeed.INSECT,SpecificSeed.PLANT);
+                }
+                if(card.getId()==93){
+                    LObjectiveCard lObjectiveCard = new LObjectiveCard();
+                    finalResult = lObjectiveCard.oneMushAndTwoAnimals(this,player,SpecificSeed.MUSHROOM,SpecificSeed.ANIMAL);
+                }
+                if(card.getId()==94){
+                    LObjectiveCard lObjectiveCard = new LObjectiveCard();
+                    finalResult = lObjectiveCard.oneAnimalAndTwoInsects(this,player,SpecificSeed.ANIMAL,SpecificSeed.INSECT);
+                }
 
                 break;
             case "MIX":
@@ -325,17 +337,11 @@ public class Board {
     public void setNodes(Node[][] nodes) {
         this.nodes = nodes;
     }
-    public void setInitialCard(InitialCard initialCard) {
-        this.initialCard = initialCard;
-    }
     public void setCardsOnTheBoardList(ArrayList<Card> cardsOnTheBoardList) {
         this.cardsOnTheBoardList = cardsOnTheBoardList;
     }
     public void setNumOfEmpty(int numOfEmpty) {
         this.numOfEmpty = numOfEmpty;
-    }
-    public void setInitEmptyValue(SpecificSeed initEmptyValue) {
-        this.initEmptyValue = initEmptyValue;
     }
     public Node[][] getNodes() {
         return nodes;
@@ -348,9 +354,6 @@ public class Board {
     }
     public int getNumOfEmpty() {
         return numOfEmpty;
-    }
-    public SpecificSeed getInitEmptyValue() {
-        return initEmptyValue;
     }
     public Node getNode(int x, int y) { //getnode method
         return nodes[x][y];
@@ -376,7 +379,6 @@ public class Board {
             }
         }
         board.setNodes(nodes);
-
         JsonArray cardsOnTheBoardArray = jsonObject.getAsJsonArray("cardsOnTheBoard");
         List<Card> cardsOnTheBoardList = new ArrayList<>();
         for (int i = 0; i < cardsOnTheBoardArray.size(); i++) {
@@ -426,18 +428,7 @@ public class Board {
             return 0;
         }
     }
-    public Map<SpecificSeed, Integer> countActualSeeds() {
-        Map<SpecificSeed, Integer> seedCountMap = new HashMap<>();
-        for (int i = 0; i < nodes.length; i++) {
-            for (int j = 0; j < nodes[i].length; j++) {
-                SpecificSeed seed = nodes[i][j].getSpecificNodeSeed();
-                if (seed != SpecificSeed.EMPTY) {
-                    seedCountMap.put(seed, seedCountMap.getOrDefault(seed, 0) + 1);
-                }
-            }
-        }
-        return seedCountMap;
-    }
+
 
 }
 
