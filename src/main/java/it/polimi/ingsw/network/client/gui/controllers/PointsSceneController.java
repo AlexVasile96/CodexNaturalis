@@ -47,7 +47,7 @@ public class PointsSceneController {
     }
 
     public int getScore() throws IOException {
-        out.println("showPoints"); //this.out is null
+        out.println("showPoints");
         String stringa = in.readLine();
         if(stringa.equals("Unknown command.")) {
             return 25;

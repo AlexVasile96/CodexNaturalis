@@ -30,6 +30,7 @@ public class EndGameScene {
     private BufferedReader in;
     private ClientView clientView;
     private Controller controller;
+    private String winnerPlayer;
 
     public EndGameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, Controller controller) {
         this.primaryStage = primaryStage;
@@ -41,6 +42,14 @@ public class EndGameScene {
     }
 
     public void endGame() throws IOException {
+        String waitForCall = in.readLine();
+        do {
+            System.out.println(waitForCall);
+            waitForCall = in.readLine();
+            if(waitForCall.equals("Suspance...")) {
+                winnerPlayer = in.readLine();
+            }
+        } while (!waitForCall.equals("exit"));
         Platform.runLater(() -> {
             try {
                 StackPane root = new StackPane();
@@ -81,7 +90,7 @@ public class EndGameScene {
                 });
 
                 delay.setOnFinished(event -> {
-                    winner.setText("The winner is: Eli");
+                    winner.setText("The winner is: "+ winnerPlayer);
                 });
                 delay.play();
             } catch (Exception e) {
@@ -89,11 +98,7 @@ public class EndGameScene {
             }
         });
 
-        String waitForCall = in.readLine();
-        do {
-            System.out.println(waitForCall);
-            waitForCall = in.readLine();
-        } while (!waitForCall.equals("exit"));
+
     }
 
     private void showAlert(String title, String message) {
