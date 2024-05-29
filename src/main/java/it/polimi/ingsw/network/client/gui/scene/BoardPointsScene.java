@@ -63,11 +63,6 @@ public class BoardPointsScene {
     private int getScore() throws IOException {
         out.println("showPoints");
         String stringa = in.readLine();
-        if(stringa.equals("Unknown command.")) {
-            return 25;
-        }
-        System.out.println(stringa);
-
         return Integer.parseInt(stringa);
     }
 
@@ -156,6 +151,10 @@ public class BoardPointsScene {
         if(playerScore >= 0 && playerScore < checkpoints.size()){
             checkpoints.get(playerScore).setVisible(true);
             checkpoints.get(playerScore).setFill(dotColor);
+        }
+        if(playerScore >= checkpoints.size()){
+            checkpoints.get(30).setVisible(true);
+            checkpoints.get(30).setFill(dotColor);
         }
     }
 }

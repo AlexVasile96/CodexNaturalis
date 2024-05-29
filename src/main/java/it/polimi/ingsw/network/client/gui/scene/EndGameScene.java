@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.client.gui.scene;
 import it.polimi.ingsw.network.client.gui.controllers.Controller;
 import it.polimi.ingsw.view.ClientView;
 import javafx.animation.PauseTransition;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -31,6 +32,15 @@ public class EndGameScene {
     private ClientView clientView;
     private Controller controller;
     private String winnerPlayer;
+    private String playerOnePoints;
+    private String playerTwoPoints;
+    private String playerThreePoints;
+    private String playerFourPoints;
+    Text playerOne = new Text(null);
+    Text playerTwo = new Text(null);
+    Text playerThree = new Text(null);
+    Text playerFour = new Text(null);
+    String waitForCall;
 
     public EndGameScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView, Controller controller) {
         this.primaryStage = primaryStage;
@@ -42,12 +52,27 @@ public class EndGameScene {
     }
 
     public void endGame() throws IOException {
-        String waitForCall = in.readLine();
+        waitForCall = in.readLine();
         do {
             System.out.println(waitForCall);
             waitForCall = in.readLine();
             if(waitForCall.equals("Suspance...")) {
                 winnerPlayer = in.readLine();
+                in.readLine(); //Points:
+                playerOnePoints = in.readLine() + " ";
+                playerTwoPoints = in.readLine() + " ";
+                playerThreePoints = in.readLine() + " ";
+                if(playerThreePoints.equals("exit ")) {
+                    playerThreePoints = null;
+                    waitForCall = "exit";
+                    break;
+                }
+                playerFourPoints = in.readLine() + " ";
+                if(playerFourPoints.equals("exit ")) {
+                    playerFourPoints = null;
+                    waitForCall = "exit";
+                    break;
+                }
             }
         } while (!waitForCall.equals("exit"));
         Platform.runLater(() -> {
@@ -61,12 +86,29 @@ public class EndGameScene {
                 root.setBackground(new Background(backgroundImage));
 
                 winner.setFill(Color.WHITE);
-                // Imposta la dimensione del carattere
                 winner.setFont(new Font(24));
-                // Aggiungi un'ombra al testo per migliorare la visibilità
                 winner.setStyle("-fx-effect: dropshadow(one-pass-box, black, 8, 0, 0, 0);");
+                playerOne.setFill(Color.WHITE);
+                playerTwo.setFill(Color.WHITE);
+                playerThree.setFill(Color.WHITE);
+                playerFour.setFill(Color.WHITE);
+                playerOne.setFont(new Font(15));
+                playerTwo.setFont(new Font(15));
+                playerThree.setFont(new Font(15));
+                playerFour.setFont(new Font(15));
+                playerOne.setStyle("-fx-effect: dropshadow(one-pass-box, black, 8, 0, 0, 0);");
+                playerTwo.setStyle("-fx-effect: dropshadow(one-pass-box, black, 8, 0, 0, 0);");
+                playerThree.setStyle("-fx-effect: dropshadow(one-pass-box, black, 8, 0, 0, 0);");
+                playerFour.setStyle("-fx-effect: dropshadow(one-pass-box, black, 8, 0, 0, 0);");
 
-                root.getChildren().add(winner);
+                VBox vbox = new VBox();
+                HBox hbox = new HBox();
+                StackPane.setAlignment(vbox, Pos.CENTER);
+
+                hbox.getChildren().addAll(playerOne, playerTwo, playerThree, playerFour);
+
+                vbox.getChildren().addAll(winner, hbox);
+                root.getChildren().add(vbox);
 
                 primaryStage.setScene(new Scene(root, 800, 533));
                 primaryStage.setTitle("Winner");
@@ -90,23 +132,37 @@ public class EndGameScene {
 
                 delay.setOnFinished(event -> {
                     winner.setText("The winner is: "+ winnerPlayer);
+                    playerOne.setText(playerOnePoints);
+                    playerTwo.setText(playerTwoPoints);
+                    playerThree.setText(playerThreePoints);
+                    playerFour.setText(playerFourPoints);
                 });
                 delay.play();
+
+                PauseTransition quitDelay = new PauseTransition(Duration.seconds(9.25));
+                quitDelay.setOnFinished(event -> {
+                    if(clientView.getUserName().equals(winnerPlayer)){
+                        try {
+                            controller.quit(primaryStage);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    else {
+                        try {
+                            in.readLine();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+                quitDelay.play();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
 
 
-    }
-
-    private void showAlert(String title, String message) {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle(title);
-            alert.setHeaderText(null);
-            alert.setContentText(message);
-            alert.showAndWait();
-        });
     }
 }
