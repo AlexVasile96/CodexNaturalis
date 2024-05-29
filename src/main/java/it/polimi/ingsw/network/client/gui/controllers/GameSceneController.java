@@ -608,16 +608,19 @@ public class GameSceneController {
                                     handCard1View.setImage(drawnCardImage);
                                     pathHandCard1 = "/ImmaginiCodex/CarteFront/" + checkType(idTopCard) + "/" + idTopCard + ".png";
                                     idHandCard1 = idTopCard;
+                                    System.out.println("carta pescata: "+idTopCard);
                                     break;
                                 case 1:
                                     handCard2View.setImage(drawnCardImage);
                                     pathHandCard2 = "/ImmaginiCodex/CarteFront/" + checkType(idTopCard) + "/" + idTopCard + ".png";
                                     idHandCard2 = idTopCard;
+                                    System.out.println("carta pescata: "+idTopCard);
                                     break;
                                 case 2:
                                     handCard3View.setImage(drawnCardImage);
                                     pathHandCard3 = "/ImmaginiCodex/CarteFront/" + checkType(idTopCard) + "/" + idTopCard + ".png";
                                     idHandCard3 = idTopCard;
+                                    System.out.println("carta pescata: "+idTopCard);
                                     break;
                             }
                             // Update the images of the well cards and decks
