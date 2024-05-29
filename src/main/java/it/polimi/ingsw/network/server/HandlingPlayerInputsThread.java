@@ -35,7 +35,6 @@ public class HandlingPlayerInputsThread implements Runnable {
     private Socket clientSocket;
     private String userName;
     private static int index = 0;
-    private static int whichplayerAreYou = 0;
     private static Player winningPlayer = new Player(null, 0, Dot.BLACK, null);
     private static HandlingPlayerInputsThread firstClient = null;
     private static HandlingPlayerInputsThread secondClient = null;
@@ -43,16 +42,15 @@ public class HandlingPlayerInputsThread implements Runnable {
     private static HandlingPlayerInputsThread fourthClient = null;
     private static CountDownLatch setupLatch;
     private static volatile boolean isGameQuit = false;
-    boolean allPlayersLoaded = false;
     private boolean clientPersisted=false;
-    private static int numPlayers = -1; // Numero di giocatori scelto dal primo client
-    private static final Object lock = new Object(); // Oggetto di sincronizzazione
+    private static int numPlayers = -1; // Number of players chosen by the first client
+    private static final Object lock = new Object(); //Synchronized object
 
-    public HandlingPlayerInputsThread(Socket socket, List<Player> playersinTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException {
+    public HandlingPlayerInputsThread(Socket socket, List<Player> playersInTheGame, List<HandlingPlayerInputsThread> clients, ServerLobby lobby, Game game) throws IOException {
         this.clientSocket = socket;
         stdIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new PrintWriter(clientSocket.getOutputStream(), true);
-        playersList = playersinTheGame;
+        playersList = playersInTheGame;
         this.clients = clients;
         synchronized (HandlingPlayerInputsThread.class) {
             if (gameController == null) {
@@ -65,7 +63,6 @@ public class HandlingPlayerInputsThread implements Runnable {
         this.game = game;
         checkGameInizialization = false;
         if (firstClient == null) {
-            System.out.println("Sono il primo thread");
             firstClient = this;
         } else if (secondClient==null) {
             secondClient=this;
@@ -86,12 +83,10 @@ public class HandlingPlayerInputsThread implements Runnable {
     public void run() {
         synchronized (this) {
             try {
-                clientSocket.setSoTimeout(180000); //REMEMBER TO SET THI TO 120000
-                whichplayerAreYou++;
+                clientSocket.setSoTimeout(180000);
                 String clientSaysHello = stdIn.readLine();
                 System.out.println("Client says " + clientSaysHello);
                 threadPlayer = loginEachClient();
-
                 if(!clientPersisted)
                 {
                     try {
@@ -152,8 +147,8 @@ public class HandlingPlayerInputsThread implements Runnable {
 
         private void startGame() throws IOException, InterruptedException {
         String messageFromClient;
-        boolean endturnphase = false;
-        while (!endturnphase) {
+        boolean endTurnPhase = false;
+        while (!endTurnPhase) {
             if(currentPlayer.isHasThePlayerGot20Points() ){ //Printing results after having chosen the winning player
                 System.out.println("------------\nEND OF GAME!\n------------");
                 sendMessageToAllClients("END OF GAME!");

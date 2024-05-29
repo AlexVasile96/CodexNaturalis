@@ -131,7 +131,6 @@ public class Command { //Command Client sends to Server
             case "STARTGUI":
                 return "STARTGUI";
             default:
-                System.out.println("Something gone wrong");
                 System.out.println("Unknown command received: " + commandString);
                 return "Unknown command.";
         }

@@ -26,7 +26,7 @@ public class BoardPoints {
             }
         }
 
-        // Rimuove le voci con valori pari a zero
+        // Remove the values equals to 0
         seedCountMap.entrySet().removeIf(entry -> entry.getValue() == 0);
         seedCountMap.remove(SpecificSeed.EMPTY);
         seedCountMap.remove(SpecificSeed.NOTTOBEPLACEDON);

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.game;
 
 import com.google.gson.JsonObject;
-import it.polimi.ingsw.exceptions.InvalidCornerException;
 import it.polimi.ingsw.model.card.*;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -12,7 +11,7 @@ import it.polimi.ingsw.view.ClientView;
 import java.util.*;
 
 public class Player implements Observable {
-    private String nickName;
+    private final String nickName;
     private int playerScore;
     private int index;
     private Dot dot;
@@ -24,9 +23,7 @@ public class Player implements Observable {
     private boolean hasThePlayerAlreadyPLacedACard= false;
     private boolean isThePlayerDeckStarted=false;
     private boolean hasThePlayerGot20Points=false;
-    private boolean noMoreTurns = false;
 
-    //private boolean hasThePlayerPlacedACard=false;
     public Player(String nickName, int playerScore, Dot dot, Board board){ //PLAYER CONSTRUCTOR
         this.nickName = nickName;
         this.playerScore = playerScore;
@@ -63,39 +60,39 @@ public class Player implements Observable {
         deck.drawCard(this);
         return "card drawn correctly from Gold deck";
     }
-    public void chooseCardFromWell(List<Card>cardwell, ResourceDeck rc, GoldDeck gd) {
+    public void chooseCardFromWell(List<Card>cardWell, ResourceDeck rc, GoldDeck gd) {
         Scanner scanner = new Scanner(System.in);
         if (this.playerCards.size() < 3) {
-            if (cardwell.isEmpty()) {
+            if (cardWell.isEmpty()) {
                 return; //empty well
             }
             try {
-                for (Card card : cardwell) {
+                for (Card card : cardWell) {
                     System.out.println(card);
                 }
-                Card drownCard= choosingTheSpecificCardFromTheWell(scanner, cardwell); //Choosing the card and saving it in drowncard
-                fillingTheWellWithTheCorrectCard(drownCard,rc,gd, cardwell);           //Filling The Well
+                Card drownCard= choosingTheSpecificCardFromTheWell(scanner, cardWell); //Choosing the card and saving it
+                fillingTheWellWithTheCorrectCard(drownCard,rc,gd, cardWell);           //Filling The Well
                 playerCards.add(drownCard);                                             //Adding the card to the player hand
             } catch (Exception e) {
-                throw new IllegalStateException("Well is empty"); // Eccezione specifica
+                throw new IllegalStateException("Well is empty"); // Specific exception
             }
         }
         else {
             System.out.println("Player's deck already has 3 cards\n");
         }
     }
-    public String chooseCardFromWellForServer(List<Card>cardwell, int index, ResourceDeck rc, GoldDeck gd) {
+    public String chooseCardFromWellForServer(List<Card>cardWell, int index, ResourceDeck rc, GoldDeck gd) {
         if (this.playerCards.size() < 3) {
-            if (cardwell.isEmpty()) {
+            if (cardWell.isEmpty()) {
                 System.out.println("Well is empty");
                 return "Well is empty"; //empty well
             }
             try {
-                for (Card card : cardwell) {
+                for (Card card : cardWell) {
                     System.out.println(card);
                 }
-                Card drownCard = choosingTheSpecificCardFromTheWellForServer(index, cardwell); //Choosing the card and saving it in drowncard
-                fillingTheWellWithTheCorrectCard(drownCard,rc,gd, cardwell);           //Filling The Well
+                Card drownCard = choosingTheSpecificCardFromTheWellForServer(index, cardWell); //Choosing the card and saving it
+                fillingTheWellWithTheCorrectCard(drownCard,rc,gd, cardWell);           //Filling The Well
                 playerCards.add(drownCard);                                             //Adding the card to the player hand
             } catch (Exception e) {
                 throw new IllegalStateException("Error in the try-catch statement of ChooseCardFromWellServer"); //Specific exception
@@ -113,7 +110,6 @@ public class Player implements Observable {
             Card card = secretCards.get(i);
             System.out.println((i + 1) + ". " + card);
         }
-
         Scanner scanner = new Scanner(System.in);
         boolean validIndex = false;
         while(!validIndex){
@@ -146,7 +142,7 @@ public class Player implements Observable {
             card.getBR().setSpecificCornerSeed(SpecificSeed.EMPTY,card.getBR().getCardSeed());
         } else {
             card.setCardBack(false);                                                       //CARD IS ON ITS ORIGINAL CONFIGURATION
-            card.getTL().setSpecificCornerSeed(card.getTLBack().getSpecificCornerSeed(),card.getTL().getCardSeed()); //BACKUPPING ALL CORNERS
+            card.getTL().setSpecificCornerSeed(card.getTLBack().getSpecificCornerSeed(),card.getTL().getCardSeed()); //BACK UPPING ALL CORNERS
             card.getTR().setSpecificCornerSeed(card.getTRBack().getSpecificCornerSeed(),card.getTR().getCardSeed());
             card.getBL().setSpecificCornerSeed(card.getBLBack().getSpecificCornerSeed(),card.getBL().getCardSeed());
             card.getBR().setSpecificCornerSeed(card.getBRBack().getSpecificCornerSeed(), card.getBR().getCardSeed());
@@ -167,37 +163,29 @@ public class Player implements Observable {
         System.out.println("card existence:"+ checkIfTheCardExist(cardIndex)+ "  (if zero-> doesn't exists)");                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
         boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
         if(selectedCardFromTheDeck.isCardBack()) return true;
-        if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return false;
-        return true;
+        return canIPLaceTheGoldCard || selectedCardFromTheDeck.getId() <= 40;
     }
 
     public boolean checkTheGoldCardForGui(int cardIndex)
     {
         Card selectedCardFromTheDeck = chooseCard(cardIndex);
-        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
-        return canIPLaceTheGoldCard;
+        return isTheCardGold(selectedCardFromTheDeck);
     }
 
     public Card gettingCardsFromTheBoard(Board board, int cardChosenONTheBoard)
     {
-        Card initialCard = board.getCardsOnTheBoardList().getFirst();               //putting inside initialCard the firstPlacedCard on the board
+        Card initialCard = board.getCardsOnTheBoardList().getFirst();            //putting inside initialCard the firstPlacedCard on the board
         List<Card> cardsPlayerCanChooseFrom = board.getCardsOnTheBoardList();   //VISUALIZING ALL THE CARDS ON THE BOARD SO THE PLAYER CAN CHOOSE ONE OF THEM
         return cardsPlayerCanChooseFrom.get(cardChosenONTheBoard);
     }
-    public String isTheCardChosenTheInitialcard( Card cardPlayerChoose, InitialCard initialCard){
+    public String isTheCardChosenTheInitialCard(Card cardPlayerChoose, InitialCard initialCard){
 
         if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
             List<Corner> availableCorners = creatingCorners(initialCard);
-            //cardChosenIsTheInitialcard(initialCard,availableCorners);
-            return freeScornerosi(availableCorners, cardPlayerChoose);
+            return freeCornersOnTheBoard(availableCorners, cardPlayerChoose);
         } else {                                                        //CARD CHOSEN ISN'T THE INITIAL CARD
-            /*List<Corner> availableCorners= creatingCornersForNotInitialcard(cardPlayerChoose);
-            List<Corner> corner= creatingCornersForNotInitialcard(cardPlayerChoose);
-            cardChosenIsNotTheInitialcard(availableCorners,corner);
-            return freeScornerosi(availableCorners, cardPlayerChoose);*/
-
-            List<Corner> availableCorners= creatingCornersForNotInitialcardMomoVersion(cardPlayerChoose);
-            return freeScornerosi(availableCorners, cardPlayerChoose);
+            List<Corner> availableCorners= creatingCornersForNotInitialCard(cardPlayerChoose);
+            return freeCornersOnTheBoard(availableCorners, cardPlayerChoose);
         }
 
     }
@@ -244,15 +232,14 @@ public class Player implements Observable {
             default:
                 throw new IllegalStateException("Unexpected value: " + selectedCorner);
         }
-        decreasingAllTheValuesOfTheCornerPlaced(selectedCardFromTheDeck); //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
+        decreasingAllTheValuesOfTheCornerPlaced(selectedCardFromTheDeck); //DECREASING ALL VALUE COUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
         selectedCardFromTheDeck.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new incremented index
         board.getCardsOnTheBoardList().add(selectedCardFromTheDeck); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
         this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
         board.setNumOfEmpty(board.getNumOfEmpty() - 3);
         updatingPoints(selectedCardFromTheDeck); //Updating player Points
-        if (playerScore >= 20) {                                            //EndGame if the playerpoints=>20 points
+        if (playerScore >= 20) {                                            //EndGame if the player points=>20 points
             System.out.println("Player " + getNickName() + "has reached 20 points!\n");
-            EndGame endGame = new EndGame();
         }
     }
 
@@ -284,7 +271,7 @@ public class Player implements Observable {
             default:
                 throw new IllegalStateException("Unexpected value: " + selectedCorner);
         }
-        decreasingAllTheValuesOfTheCornerPlaced(selectedCardFromTheDeck); //DECRESING ALL VALUECOUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
+        decreasingAllTheValuesOfTheCornerPlaced(selectedCardFromTheDeck); //DECREASING ALL VALUE COUNTER BECAUSE ALL CORNERS ARE GOING TO BE PLACED ON THE BOARD
         selectedCardFromTheDeck.setIndexOnTheBoard(board.getCardsOnTheBoardList().size() + 1); // Add the card to the board with a new incremented index
         board.getCardsOnTheBoardList().add(selectedCardFromTheDeck); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
         this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
@@ -299,21 +286,7 @@ public class Player implements Observable {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     //METHODS INVOKED FROM THE PREVIOUS METHODS
-
-
 
     private int checkIfTheCardExist(int cardIndex)
     {
@@ -327,8 +300,8 @@ public class Player implements Observable {
     {
         System.out.println(selectedCard);
         if (selectedCard instanceof GoldCard)
-            return board.placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing()); //Checking gold card requirments
-        else return true; //If the card is not a gold card, i can proceed
+            return board.placeGoldCard(((GoldCard) selectedCard).getRequirementsForPlacing()); //Checking gold card requirements
+        else return true; //If the card is not a gold card, I can proceed
     }
 
 
@@ -365,7 +338,7 @@ public class Player implements Observable {
         return availableCorners;
     }
 
-    private List<Corner> creatingCornersForNotInitialcardMomoVersion(Card cardPlayerChoose){
+    private List<Corner> creatingCornersForNotInitialCard(Card cardPlayerChoose){
         List<Corner> availableCorners = new ArrayList<>();                          //CREATING CORNERS THAT WILL BE DISPLAYED TO THE PLAYER
 
         if(IsTheTLCornerUsable(cardPlayerChoose.getTL().getSpecificCornerSeed(), cardPlayerChoose.getTL().getValueCounter(), cardPlayerChoose.getNode().getCoordX(), cardPlayerChoose.getNode().getCoordY())) {
@@ -383,129 +356,36 @@ public class Player implements Observable {
         return availableCorners;
     }
 
-    private boolean IsTheTLCornerUsable(SpecificSeed seed, int valueCounter, int x, int y) {//A POSTO
-        SpecificSeed nord = board.getNode(x-1, y).getSpecificNodeSeed();
-        SpecificSeed est = board.getNode(x, y-1).getSpecificNodeSeed();
-        SpecificSeed nordEst = board.getNode(x-1, y-1).getSpecificNodeSeed();
-        if(seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter >0 && nord != SpecificSeed.NOTTOBEPLACEDON && est != SpecificSeed.NOTTOBEPLACEDON && nordEst != SpecificSeed.NOTTOBEPLACEDON){
-            return true;
-        }
-        return false;
+    private boolean IsTheTLCornerUsable(SpecificSeed seed, int valueCounter, int x, int y) {
+        SpecificSeed north = board.getNode(x-1, y).getSpecificNodeSeed();
+        SpecificSeed east = board.getNode(x, y-1).getSpecificNodeSeed();
+        SpecificSeed northEast = board.getNode(x-1, y-1).getSpecificNodeSeed();
+        return seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && north != SpecificSeed.NOTTOBEPLACEDON && east != SpecificSeed.NOTTOBEPLACEDON && northEast != SpecificSeed.NOTTOBEPLACEDON;
     }
 
     private boolean IsTheTRCornerUsable(SpecificSeed seed, int valueCounter, int x, int y) {
-        SpecificSeed ovest= board.getNode(x, y+1).getSpecificNodeSeed();
-        SpecificSeed nord = board.getNode(x-1, y).getSpecificNodeSeed();
-        SpecificSeed nordOvest = board.getNode(x-1, y+1).getSpecificNodeSeed();
-        if(seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && ovest != SpecificSeed.NOTTOBEPLACEDON && nord != SpecificSeed.NOTTOBEPLACEDON && nordOvest != SpecificSeed.NOTTOBEPLACEDON) {
-            return true;
-        }
-        return false;
+        SpecificSeed west= board.getNode(x, y+1).getSpecificNodeSeed();
+        SpecificSeed north = board.getNode(x-1, y).getSpecificNodeSeed();
+        SpecificSeed northWest = board.getNode(x-1, y+1).getSpecificNodeSeed();
+        return seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && west != SpecificSeed.NOTTOBEPLACEDON && north != SpecificSeed.NOTTOBEPLACEDON && northWest != SpecificSeed.NOTTOBEPLACEDON;
     }
 
     private boolean IsTheBLCornerUsable(SpecificSeed seed, int valueCounter, int x, int y) {
-        SpecificSeed est = board.getNode(x, y-1).getSpecificNodeSeed();
+        SpecificSeed east = board.getNode(x, y-1).getSpecificNodeSeed();
         SpecificSeed sud = board.getNode(x+1, y).getSpecificNodeSeed();
-        SpecificSeed sudEst = board.getNode(x+1, y-1).getSpecificNodeSeed();
-        if(seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && est != SpecificSeed.NOTTOBEPLACEDON && sud != SpecificSeed.NOTTOBEPLACEDON && sudEst != SpecificSeed.NOTTOBEPLACEDON) {
-            return true;
-        }
-        return false;
+        SpecificSeed sudEast = board.getNode(x+1, y-1).getSpecificNodeSeed();
+        return seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && east != SpecificSeed.NOTTOBEPLACEDON && sud != SpecificSeed.NOTTOBEPLACEDON && sudEast != SpecificSeed.NOTTOBEPLACEDON;
     }
 
-    private boolean IsTheBRCornerUsable(SpecificSeed seed, int valueCounter, int x, int y) {//a posto
+    private boolean IsTheBRCornerUsable(SpecificSeed seed, int valueCounter, int x, int y) {
         SpecificSeed sud = board.getNode(x+1, y).getSpecificNodeSeed();
-        SpecificSeed ovest = board.getNode(x, y+1).getSpecificNodeSeed();
-        SpecificSeed sudOvest = board.getNode(x+1, y+1).getSpecificNodeSeed();
-        if(seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && sud != SpecificSeed.NOTTOBEPLACEDON && ovest != SpecificSeed.NOTTOBEPLACEDON && sudOvest != SpecificSeed.NOTTOBEPLACEDON) {
-            return true;
-        }
-        return false;
+        SpecificSeed west = board.getNode(x, y+1).getSpecificNodeSeed();
+        SpecificSeed sudWest = board.getNode(x+1, y+1).getSpecificNodeSeed();
+        return seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && sud != SpecificSeed.NOTTOBEPLACEDON && west != SpecificSeed.NOTTOBEPLACEDON && sudWest != SpecificSeed.NOTTOBEPLACEDON;
     }
 
-
-    private void cardChosenIsTheInitialcard(InitialCard initialCard,List<Corner> availableCorners )
-    {
-        if(initialCard.isCardBack()){
-            List<Corner> initialCardCorners = new ArrayList<>();       //THEN ELIMINATING NOTTOBEPLACEDON CORNERS FROM PLAYER DISPLAYER &&CORNER WHOSE VALUE IS 0
-            initialCardCorners.add(initialCard.getTLIBack());
-            initialCardCorners.add(initialCard.getTRIBack());
-            initialCardCorners.add(initialCard.getBLIBack());
-            initialCardCorners.add(initialCard.getBRIBack());
-            for (int i = initialCardCorners.size() - 1; i >= 0; i--) {
-                if (initialCardCorners.get(i).getSpecificCornerSeed() == SpecificSeed.NOTTOBEPLACEDON || initialCardCorners.get(i).getValueCounter() == 0) {
-                    availableCorners.remove(i);
-                }
-            }
-        }
-        else {
-            List<Corner> initialCardCorners = new ArrayList<>();       //THEN ELIMINATING NOTTOBEPLACEDON CORNERS FROM PLAYER DISPLAYER &&CORNER WHOSE VALUE IS 0
-            initialCardCorners.add(initialCard.getTL());
-            initialCardCorners.add(initialCard.getTR());
-            initialCardCorners.add(initialCard.getBL());
-            initialCardCorners.add(initialCard.getBR());
-            for (int i = initialCardCorners.size() - 1; i >= 0; i--) {
-                if (initialCardCorners.get(i).getSpecificCornerSeed() == SpecificSeed.NOTTOBEPLACEDON || initialCardCorners.get(i).getValueCounter() == 0) {
-                    availableCorners.remove(i);
-                }
-            }
-        }
-    }
-    private void cardChosenIsNotTheInitialcard(List<Corner> availableCorners, List<Corner> corner) {
-        for (int i = corner.size() - 1; i >= 0; i--) {
-            if (corner.get(i).getSpecificCornerSeed() == SpecificSeed.NOTTOBEPLACEDON || corner.get(i).getValueCounter() == 0) { //SAMECHECK
-                availableCorners.remove(i);
-                corner.remove(i);
-            }
-        }
-    }
-
-
-
-
-
-    private String freeCornersOfTheSelectedCard(List<Corner> availableCorners, Card cardPlayerChoose, Scanner scanner){
-        Map<Corner, String> cornerLabels = new HashMap<>();      //PUTTING THE CORRECT CORNERLABEL TO THE CORRECT CORNER
-        if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()==1){
-            cornerLabels.put(((InitialCard) cardPlayerChoose).getTLIBack(), "TLBack");
-            cornerLabels.put(((InitialCard) cardPlayerChoose).getTRIBack(), "TRBack");
-            cornerLabels.put(((InitialCard) cardPlayerChoose).getBLIBack(), "BLBack");
-            cornerLabels.put(((InitialCard) cardPlayerChoose).getBRIBack(), "BRBack");}
-        else if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()!=1)
-        {
-            cornerLabels.put(cardPlayerChoose.getTLBack(), "TLBack");
-            cornerLabels.put(cardPlayerChoose.getTRBack(), "TRBack");
-            cornerLabels.put(cardPlayerChoose.getBLBack(), "BLBack");
-            cornerLabels.put(cardPlayerChoose.getBRBack(), "BRBack");
-        }
-        else if(!cardPlayerChoose.isCardBack())
-        {
-            cornerLabels.put(cardPlayerChoose.getTL(), "TL");
-            cornerLabels.put(cardPlayerChoose.getTR(), "TR");
-            cornerLabels.put(cardPlayerChoose.getBL(), "BL");
-            cornerLabels.put(cardPlayerChoose.getBR(), "BR");
-        }
-
-        System.out.println("Free Corners of the selected card "); //DISPLAYING THE POSSIBLE CORNERS
-        for (int i = 0; i < availableCorners.size(); i++) {
-            Corner corner = availableCorners.get(i);
-            String cornerLabel = cornerLabels.get(corner);
-            System.out.println((i + 1) + ". " + corner + " -> " + cornerLabel + "|Please press " +cornerLabel + " to select the corner ");
-        }
-        System.out.print("Choose the corner you want to place the card on: ");
-        String selectedCorner = scanner.next().toUpperCase();
-        try{
-            if (!selectedCorner.equals("TL") && !selectedCorner.equals("TR") && !selectedCorner.equals("BL") && !selectedCorner.equals("BR")) {
-                throw new InvalidCornerException("Invalid corner selection.");
-            }
-        }  catch (InvalidCornerException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        return selectedCorner;
-    }
-    private String freeScornerosi(List<Corner> availableCorners, Card cardPlayerChoose){
-        Map<Corner, String> cornerLabels = new HashMap<>();                                 //PUTTING THE CORRECT CORNERLABEL TO THE CORRECT CORNER
+    private String freeCornersOnTheBoard(List<Corner> availableCorners, Card cardPlayerChoose){
+        Map<Corner, String> cornerLabels = new HashMap<>();                                 //PUTTING THE CORRECT CORNER LABEL TO THE CORRECT CORNER
         if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()==1){
             cornerLabels.put(((InitialCard) cardPlayerChoose).getTLIBack(), "TL");
             cornerLabels.put(((InitialCard) cardPlayerChoose).getTRIBack(), "TR");
@@ -526,32 +406,31 @@ public class Player implements Observable {
             cornerLabels.put(cardPlayerChoose.getBL(), "BL");
             cornerLabels.put(cardPlayerChoose.getBR(), "BR");
         }
-        StringBuilder options = new StringBuilder(); // Stringa contenente le opzioni disponibili
+        StringBuilder options = new StringBuilder(); // String that contains the possible options
         options.append("Free Corners of the selected card\n");
 
         for (int i = 0; i < availableCorners.size(); i++) {
             Corner corner = availableCorners.get(i);
             String cornerLabel = cornerLabels.get(corner);
-            options.append(cornerLabel).append("\n");//mi serve nel serverconnection per permettergli di selezionare
+            options.append(cornerLabel).append("\n");
             options.append((i + 1)).append(". ").append(corner).append(" -> ").append(cornerLabel).append("|Please press ").append(cornerLabel).append(" to select the corner\n");
         }
         options.append("\nend");
-        //System.out.println(options);
         return options.toString();
-
-
-
 
     }
 
 
-
-
+    /**
+     *
+     * @param x is the x coordinate on the board
+     * @param y is the y coordinate on the board
+     * @param selectedCardFromTheDeck is the deck on which we want to place our card
+     */
 
     private void playYourCardOnTheTopLeftCorner(int x,int y, Card selectedCardFromTheDeck)
     {
         selectedCardFromTheDeck.getBR().setValueCounter(selectedCardFromTheDeck.getBR().getValueCounter()-1); //PLACED CORNER, I CANNOT PUT ANY OTHER THING ON THIS CORNER
-
 
         board.getNode(x - 1, y - 1).setSpecificNodeSeed(selectedCardFromTheDeck.getTL().getSpecificCornerSeed());//SETTING THE NODE
         if (board.getNode(x - 1, y - 1).getValueCounter() == 2) {
@@ -593,6 +472,13 @@ public class Player implements Observable {
         }
         board.getNode(x, y).setValueCounter(board.getNode(x, y).getValueCounter() - 1); // Decrease the value
     }
+
+    /**
+     *
+     * @param x is the x coordinate on the board
+     * @param y is the y coordinate on the board
+     * @param selectedCardFromTheDeck is the deck on which we want to place our card
+     */
 
     private void playYourCardOnTheTopRightCorner(int x,int y, Card selectedCardFromTheDeck)
     {
@@ -636,6 +522,15 @@ public class Player implements Observable {
         }
         board.getNode(x, y + 2).setValueCounter(board.getNode(x, y + 2).getValueCounter() - 1); // Decrease the value
     }
+
+    /**
+     *
+     * @param x is the x coordinate on the board
+     * @param y is the y coordinate on the board
+     * @param selectedCardFromTheDeck is the deck on which we want to place our card
+     */
+
+
     private void playYourCardOnTheBottomLeftCorner(int x,int y, Card selectedCardFromTheDeck){
         selectedCardFromTheDeck.getTR().setValueCounter(selectedCardFromTheDeck.getTR().getValueCounter()-1);
 
@@ -680,6 +575,15 @@ public class Player implements Observable {
         }
         board.getNode(x + 2, y).setValueCounter(board.getNode(x + 2, y).getValueCounter() - 1); // Decrease the value
     }
+
+    /**
+     *
+     * @param x is the x coordinate on the board
+     * @param y is the y coordinate on the board
+     * @param selectedCardFromTheDeck is the deck on which we want to place our card
+     */
+
+
     private void playYourCardOnTheBottomRightCorner(int x,int y, Card selectedCardFromTheDeck){
         selectedCardFromTheDeck.getTL().setValueCounter(selectedCardFromTheDeck.getTL().getValueCounter()-1);
 
@@ -742,11 +646,11 @@ public class Player implements Observable {
     }
     private void updatingPoints(Card selectedCardFromTheDeck)
     {
-        if (selectedCardFromTheDeck.getId() < 41 && selectedCardFromTheDeck.getId() > 0) { //carta risorsa
+        if (selectedCardFromTheDeck.getId() < 41 && selectedCardFromTheDeck.getId() > 0) { //resource card
             ResourceUpdater resourceUpdater = new ResourceUpdater();
             resourceUpdater.updatePlayerPoints(selectedCardFromTheDeck, this, board);
 
-        } else if (selectedCardFromTheDeck.getId() < 81 && selectedCardFromTheDeck.getId() > 40) {
+        } else if (selectedCardFromTheDeck.getId() < 81 && selectedCardFromTheDeck.getId() > 40) { //gold card
             GoldUpdater updater = new GoldUpdater();
             updater.updatePlayerPoints((GoldCard) selectedCardFromTheDeck, this, board);
         }
@@ -754,32 +658,32 @@ public class Player implements Observable {
     }
 
 
-    public Card choosingTheSpecificCardFromTheWell(Scanner scanner, List<Card>cardwell){
+    public Card choosingTheSpecificCardFromTheWell(Scanner scanner, List<Card>cardWell){
         System.out.print("Select a card from the well ");
         int selectedCardIndex = scanner.nextInt();
-        if (selectedCardIndex < 1 || selectedCardIndex > cardwell.size()) {
+        if (selectedCardIndex < 1 || selectedCardIndex > cardWell.size()) {
             System.out.println("Not valid index");
             return null;
         }
         int realIndex = selectedCardIndex - 1;
-        return cardwell.remove(realIndex);
+        return cardWell.remove(realIndex);
 
     }
-    public Card choosingTheSpecificCardFromTheWellForServer(int index, List<Card>cardwell){
-        if (index < 0 || index > cardwell.size()-1) {
+    public Card choosingTheSpecificCardFromTheWellForServer(int index, List<Card>cardWell){
+        if (index < 0 || index > cardWell.size()-1) {
             System.out.println("Not valid index");
             return null;
         }
-        return cardwell.remove(index);
+        return cardWell.remove(index);
 
     }
-    private void  fillingTheWellWithTheCorrectCard(Card drownCard, ResourceDeck rc,GoldDeck gd, List<Card>cardwell)
+    private void fillingTheWellWithTheCorrectCard(Card drownCard, ResourceDeck rc,GoldDeck gd, List<Card>cardWell)
     {
         if (drownCard.getId() >= 1 && drownCard.getId() <= 40) {
-            rc.drawCard(cardwell);
+            rc.drawCard(cardWell);
         }
         if (drownCard.getId() >= 41 && drownCard.getId() <= 80) {
-            gd.drawCard(cardwell);
+            gd.drawCard(cardWell);
         }
     }
     public Card chooseCard(int index) {
@@ -812,9 +716,6 @@ public class Player implements Observable {
     public List<Card> getPlayerCards() {
         return playerCards;
     }
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
     public void setPlayerScore(int playerScore) {
         this.playerScore = playerScore;
     }
@@ -841,9 +742,6 @@ public class Player implements Observable {
     }
     public boolean isCardBack() {
         return isCardBack;
-    }
-    public void setCardBack(boolean cardBack) {
-        isCardBack = cardBack;
     }
     public ObjectiveCard getSecretChosenCard() {
         return secretChosenCard;
@@ -905,7 +803,6 @@ public class Player implements Observable {
 
 
     public boolean isHasThePlayerGot20Points() {
-        boolean test = hasThePlayerGot20Points;
         return hasThePlayerGot20Points;
     }
 
@@ -913,13 +810,6 @@ public class Player implements Observable {
         this.hasThePlayerGot20Points = hasThePlayerGot20Points;
     }
 
-    public void noMoreTurns() {
-        this.noMoreTurns = true;
-    }
-
-    public boolean getNoMoreTurns() {
-        return noMoreTurns;
-    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

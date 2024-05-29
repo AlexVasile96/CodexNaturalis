@@ -9,8 +9,8 @@ public class Corner extends Node{
     private int y;
     private SpecificSeed cardSeed;
 
-    public Corner(SpecificSeed specificNodeSeed, int coordX, int coordY, SpecificSeed type) {
-        super(specificNodeSeed, coordX, coordY, null);
+    public Corner(SpecificSeed specificNodeSeed, int cordX, int cordY, SpecificSeed type) {
+        super(specificNodeSeed, cordX, cordY, null);
         this.isThisCornerFree=true;
         this.specificCornerSeed=specificNodeSeed;
        this.cardSeed=type;
@@ -33,7 +33,6 @@ public class Corner extends Node{
     }
     public String toString() {
         return " " +
-                //"isThisCornerFree=" + isThisCornerFree +
                 specificCornerSeed
                 ;
     }
@@ -72,7 +71,6 @@ public class Corner extends Node{
         jsonObject.addProperty("isThisCornerFree", isThisCornerFree);
         return jsonObject;
     }
-
 
     public SpecificSeed getCardSeed() {
         return cardSeed;

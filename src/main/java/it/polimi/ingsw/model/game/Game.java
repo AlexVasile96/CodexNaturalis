@@ -2,12 +2,10 @@ package it.polimi.ingsw.model.game;
 
 import com.google.gson.*;
 import it.polimi.ingsw.model.card.*;
-import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.model.deck.GoldDeck;
 import it.polimi.ingsw.model.deck.InitialCardDeck;
 import it.polimi.ingsw.model.deck.ObjectiveDeck;
 import it.polimi.ingsw.model.deck.ResourceDeck;
-import it.polimi.ingsw.view.ClientView;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -30,7 +28,6 @@ public class Game{
     private List<String> dots;
     private Card selectedCardFromTheDeck = null;
     private Card cPchoose = null;
-    private List<Player> playersFromDisk;
     private final Semaphore semaphore = new Semaphore(1);
     private int totalNumberOfPLayer=0;
     private boolean endGame = false;
@@ -131,7 +128,6 @@ public class Game{
         } else {
             //Card chosen is not the initial card
             player.playCard(player.getBoard(), cardindex, cardChosenOnTheBoard, selectedCardFromTheDeck, cPchoose, selectedCorner);
-            //player.getClientView().update(player);
             return "Carta piazzata correttamente";
         }
     }
@@ -194,7 +190,6 @@ public class Game{
     public String showYourspecificSeeds(Player player) {
         BoardPoints boardPoints = new BoardPoints();
         String yourSpecificSeeds = boardPoints.countPoints(player.getBoard()).toString();
-        System.out.println(yourSpecificSeeds);
         return yourSpecificSeeds;
     }
 
@@ -225,7 +220,6 @@ public class Game{
      */
     public synchronized String firstCommonObjectiveCardId() {
         int id = firstObjectiveCommonCard.getId();
-        System.out.println(id);
         return String.valueOf(id);
     }
 
@@ -376,7 +370,6 @@ public class Game{
         try {
             semaphore.acquire();
             List<Card> cardToSendToServer = player.getPlayerCards();
-            System.out.println("STAMPANDO LE CARTE");
             System.out.println(player.getPlayerCards().getFirst());
             System.out.println(player.getPlayerCards().get(1));
             System.out.println(player.getPlayerCards().getLast());
@@ -406,7 +399,7 @@ public class Game{
         InitialCard initialCard = (InitialCard) player.getBoard().getCardsOnTheBoardList().getFirst();
         selectedCardFromTheDeck = player.checkingTheChosencard(cardIndex);
         cPchoose = player.gettingCardsFromTheBoard(player.getBoard(), cardChosenOnTheBoard);
-        String result = player.isTheCardChosenTheInitialcard(cPchoose, initialCard);
+        String result = player.isTheCardChosenTheInitialCard(cPchoose, initialCard);
         System.out.println(result);
         return result;
     }
@@ -460,29 +453,8 @@ public class Game{
         return result;
     }
 
-
-    public void chooseSecretCard(Player player, List<ObjectiveCard> secretCards) {
-    }
-
-
-    public void turnYourCard(Card card) {
-
-    }
-
-
-
     public int getPlayerScore(Player player) {
         return player.getPlayerScore();
-    }
-
-
-    public String getNickName(Player player) {
-        return player.getNickName();
-    }
-
-
-    public List<Card> getPlayerCards(Player player) {
-        return player.getPlayerCards();
     }
 
     public void updateSingleClientView(Player player) {
@@ -499,45 +471,15 @@ public class Game{
         this.players = players;
     }
 
-    public ResourceDeck getResourceDeck() {
-        return resourceDeck;
-    }
-
-    public void setResourceDeck(ResourceDeck resourceDeck) {
-        this.resourceDeck = resourceDeck;
-    }
-
-    public GoldDeck getGoldDeck() {
-        return goldDeck;
-    }
-
-    public void setGoldDeck(GoldDeck goldDeck) {
-        this.goldDeck = goldDeck;
-    }
-
     public InitialCardDeck getInitialCardDeck() {
         return initialCardDeck;
     }
 
-    public void setInitialCardDeck(InitialCardDeck initialCardDeck) {
-        this.initialCardDeck = initialCardDeck;
-    }
 
     public ObjectiveDeck getObjectiveDeck() {
         return objectiveDeck;
     }
 
-    public void setObjectiveDeck(ObjectiveDeck objectiveDeck) {
-        this.objectiveDeck = objectiveDeck;
-    }
-
-    public int getCurrentPlayerIndex() {
-        return currentPlayerIndex;
-    }
-
-    public void setCurrentPlayerIndex(int currentPlayerIndex) {
-        this.currentPlayerIndex = currentPlayerIndex;
-    }
 
     public String getCurrentPlayer() {
         return currentPlayer;
@@ -567,10 +509,6 @@ public class Game{
         return dots.contains(stringa);
     }
 
-    public List<Card> getWell() {
-        return well;
-    }
-
     //PRIVATE METHODS INSIDE GAME
 
     private void initializeWell() {
@@ -593,7 +531,6 @@ public class Game{
             }
         });
     }
-
 
 
     private synchronized void commonObjectiveCards() {
@@ -671,66 +608,6 @@ void saveEachPlayerInGame(Path path) {
     }
 }
 
-    public Player loadPlayer(String nickname) {
-        Path path = getDefaultPlayers();
-        try (Reader reader = new FileReader(path.toString())) {
-            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
-            JsonArray playersArray = jsonObject.getAsJsonArray("players");
-
-            for (JsonElement element : playersArray) {
-                JsonObject playerObject = element.getAsJsonObject();
-                if (playerObject.get("nickname").getAsString().equals(nickname)) {
-                    int score = playerObject.get("score").getAsInt();
-                    Dot dot = Dot.values()[playerObject.get("dot").getAsInt()];
-
-                    JsonArray playerDeckArray = playerObject.getAsJsonArray("player_deck");
-                    List<Card> playerDeck = new ArrayList<>();
-                    for (JsonElement cardElement : playerDeckArray) {
-                        JsonObject cardObject = cardElement.getAsJsonObject();
-                        String cardType = cardObject.get("cardType").getAsString();
-                        Card card = switch (cardType) {
-                            case "GoldCard" -> GoldCard.fromJson(cardObject);
-                            case "ResourceCard" -> ResourceCard.fromJsonObject(cardObject);
-                            case "ObjectiveCard" -> ObjectiveCard.fromJsonObject(cardObject);
-                            case "InitialCard" -> InitialCard.fromJsonObject(cardObject);
-                            default -> Card.fromJson(cardObject);
-                        };
-
-                        if (card != null) {
-                            playerDeck.add(card);
-                            System.out.println(card);
-                        } else {
-                            System.err.println("Skipping invalid card in player deck: " + cardObject);
-                        }
-                    }
-
-                    Board board = Board.fromJson(playerObject.get("board").getAsJsonObject());
-                    ObjectiveCard secretChosenCard = null;
-                    if (playerObject.has("secretChosenCard")) {
-                        JsonObject secretCardObject = playerObject.get("secretChosenCard").getAsJsonObject();
-                        secretChosenCard = ObjectiveCard.fromJsonObject(secretCardObject);
-                        System.out.println(secretChosenCard);
-                    }
-
-                    Player player = new Player(nickname, score, dot, board);
-                    player.setPlayerCards((ArrayList<Card>) playerDeck);
-                    player.setSecretChosenCard(secretChosenCard);
-                    if (playerObject.has("clientView")) {
-                        JsonObject clientViewObject = playerObject.get("clientView").getAsJsonObject();
-                        ClientView clientView = ClientView.fromJsonObject(clientViewObject);
-                        player.setClientView(clientView);
-                    }
-                    System.out.println(player);
-                    System.out.println(player.getClientView());
-                    return player;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
     void savePlayers() {
         saveEachPlayerInGame(getDefaultPlayers());
@@ -740,25 +617,6 @@ void saveEachPlayerInGame(Path path) {
     private Path getDefaultPlayers() {
         return Paths.get("src/main/resources/saveplayers.json");
     }
-    public List<String> loadPlayerNicknames() {
-        List<String> playerNicknames = new ArrayList<>();
-        Path path = getDefaultPlayers();
-        try (Reader reader = new FileReader(path.toString())) {
-            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
-            JsonArray playersArray = jsonObject.getAsJsonArray("players");
-
-            for (JsonElement element : playersArray) {
-                JsonObject playerObject = element.getAsJsonObject();
-                String nickname = playerObject.get("nickname").getAsString();
-                playerNicknames.add(nickname);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return playerNicknames;
-    }
-
-
 
     public int getTotalNumberOfPLayer() {
         return totalNumberOfPLayer;
@@ -792,21 +650,6 @@ void saveEachPlayerInGame(Path path) {
            else return "NO";
     }
 
-    public boolean areAllPlayersLoaded(List<String> expectedPlayerNicknames) {
-        for (String nickname : expectedPlayerNicknames) {
-            boolean playerLoaded = false;
-            for (Player player : players) {
-                if (player.getNickName().equals(nickname)) {
-                    playerLoaded = true;
-                    break;
-                }
-            }
-            if (!playerLoaded) {
-                return false;
-            }
-        }
-        return true;
-    }
 
 
     private Path getDefaultGameStatusPath() {
@@ -879,42 +722,6 @@ void saveEachPlayerInGame(Path path) {
         return Paths.get(home);
     }
 
-    public void saveCurrentPlayerToJson() {
-        Path path = getCurrentPlayerPath();
-        JsonObject currentPlayerObject = new JsonObject();
-
-        // Aggiungi un controllo per assicurarti che currentPlayer non sia nullo o vuoto
-        if (currentPlayer == null || currentPlayer.isEmpty()) {
-            System.out.println("currentPlayer is null or empty");
-            return;
-        }
-
-        currentPlayerObject.addProperty("currentPlayer", currentPlayingPLayer.getNickName());
-
-        try (FileWriter fileWriter = new FileWriter(path.toString())) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String jsonOutput = gson.toJson(currentPlayerObject);
-            fileWriter.write(jsonOutput);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String loadCurrentPlayerFromJson() {
-        Path path = getCurrentPlayerPath();
-
-        try (FileReader reader = new FileReader(path.toString())) {
-            JsonObject currentPlayerObject = JsonParser.parseReader(reader).getAsJsonObject();
-            currentPlayer = currentPlayerObject.get("currentPlayer").getAsString();
-            System.out.println("Current player loaded: " + currentPlayer); // Aggiungi un messaggio di debug
-            return currentPlayer;
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
     public void saveCurrentPlayingPlayerToJson() {
         Path path = getCurrentPlayerPath();
         JsonObject currentPlayerObject = new JsonObject();
@@ -1004,14 +811,6 @@ void saveEachPlayerInGame(Path path) {
         }
         return currentPlayingPLayer;
     }
-    public synchronized void addPersistedPlayer(Player player) {
-        // Aggiungi il player alla lista dei giocatori se non è già presente
-        if (players.stream().noneMatch(p -> p.getNickName().equals(player.getNickName()))) {
-            players.add(player);
-            System.out.println("Player " + player.getNickName() + " added to the game.");
-        } else {
-            System.out.println("Player " + player.getNickName() + " already exists in the game.");
-        }
-    }
+
 }
 

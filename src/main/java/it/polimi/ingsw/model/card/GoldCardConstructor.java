@@ -45,8 +45,7 @@ public class GoldCardConstructor implements CardConstructor {
                 for (int j = 0; j < requirementsArray.length(); j++) {
                     requirements.add(SpecificSeed.valueOf(requirementsArray.getString(j)));
                 }
-                GoldCard cards = new GoldCard(id, type, value, multiplier, TL, TR, BL, BR, requirements); // Creating all the resource cards
-                System.out.println(cards);
+                GoldCard cards = new GoldCard(id, type, value, multiplier, TL, TR, BL, BR, requirements); // Creating all the resource card
                 goldCards.add(cards); // Adding card to the ArrayList previously created
             }
 
