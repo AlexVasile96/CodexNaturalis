@@ -29,6 +29,7 @@ public class ResourceDeck implements Deck{
             if (player.getPlayerCards().size() < 3) {
                 Card drownCard = resourceCards.removeFirst();
                 player.getPlayerCards().add(drownCard);
+                System.out.println("New Player's deck: " + player.getPlayerCards());
                 return drownCard;
             }
         } catch(Exception e) {
