@@ -60,11 +60,6 @@ public class Card {
                     ", BR=" + BR ;
         } //TO-STRING METHOD
 
-        public String printCardRedably() {
-            return "Card-> id=" + id + ", value=" + valueWhenPlaced + ", type=" + type + ", Corners:\n     TL=" + TL + ", TR=" + TR+
-                    "\n     BL=" + BL + ", BR=" + BR ;
-        }
-
 
         //GETTER AND SETTER
 
@@ -95,9 +90,7 @@ public class Card {
         public void setType(SpecificSeed type) {
             this.type = type;
         }
-        public void setValueWhenPlaced(int valueWhenPlaced) {
-            this.valueWhenPlaced = valueWhenPlaced;
-        }
+
         public void setTL(Corner TL) {
             this.TL = TL;
         }

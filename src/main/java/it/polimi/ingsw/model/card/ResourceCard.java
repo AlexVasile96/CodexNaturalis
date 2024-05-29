@@ -41,14 +41,6 @@ public class ResourceCard extends Card{
                 ", BR=" + BR ;
     } //TO-STRING METHOD
 
-    @Override
-    public String printCardRedably() {
-        return "Resource Card-> id=" + id + ", value=" + valueWhenPlaced + ", type=" + type + ", Corners:\n     TL=" + TL + ", TR=" + TR+
-                "\n     BL=" + BL + ", BR=" + BR ;
-    }
-
-
-
     public JsonObject toJsonObject() {
         JsonObject jsonObject = super.toJsonObject(); // Call the parent class method to get common properties
         jsonObject.addProperty("cardType", "ResourceCard"); // Add cardType property

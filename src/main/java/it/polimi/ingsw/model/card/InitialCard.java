@@ -28,7 +28,7 @@ public class InitialCard extends Card{
         this.TRBack = new Corner(SpecificSeed.EMPTY,0,0,type);
         this.BLBack = new Corner(SpecificSeed.EMPTY,0,0,type);
         this.BRBack = new Corner(SpecificSeed.EMPTY,0,0,type);
-        //BACKUPORIGINAL CORNERS
+        //BACKUP ORIGINAL CORNERS
         this.TLBack.setSpecificCornerSeed(TL.getSpecificCornerSeed(),type);
         this.TRBack.setSpecificCornerSeed(TR.getSpecificCornerSeed(),type);
         this.BLBack.setSpecificCornerSeed(BL.getSpecificCornerSeed(),type);
@@ -70,40 +70,8 @@ public class InitialCard extends Card{
 
     //GETTER AND SETTER
 
-    public void setTL(Corner TL) {
-        this.TL = TL;
-    }
-    public void setTR(Corner TR) {
-        this.TR = TR;
-    }
-    public void setBL(Corner BL) {
-        this.BL = BL;
-    }
-    public void setBR(Corner BR) {
-        this.BR = BR;
-    }
-    public int getId() {
-        return id;
-    }
-    public Corner getTL() {
-        return TL;
-    }
-    public Corner getTR() {
-        return TR;
-    }
-    public Corner getBL() {
-        return BL;
-    }
-    public Corner getBR() {
-        return BR;
-    }
-
     public Corner getTLIBack() {
         return TLIBack;
-    }
-
-    public void setTIBack(Corner TLIBack) {
-        this.TLIBack = TLIBack;
     }
 
     public Corner getTRIBack() {
@@ -146,11 +114,6 @@ public class InitialCard extends Card{
     }
     public List<SpecificSeed> getAttributes() {
         return attributes;
-    }
-
-
-    public void setAttributes(List<SpecificSeed> attributes) {
-        this.attributes = attributes;
     }
 
     @Override

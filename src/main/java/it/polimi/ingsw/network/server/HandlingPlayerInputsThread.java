@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.server;
 
-import com.google.gson.JsonObject;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.TurnController;
 import it.polimi.ingsw.exceptions.*;
@@ -394,7 +393,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                         System.out.println(cornerChosen);
                         gameController.readCommand("playCard", player, cardChosenFromHisDeck, boardCardChosen, cornerChosen);
                     }while (!rightCard);
-                    forClientView.append("\n(" + chosenCard.getNode().getCoordY() + " " + chosenCard.getNode().getCoordX() + ")");
+                    forClientView.append("\n(" + chosenCard.getNode().getCordY() + " " + chosenCard.getNode().getCordX() + ")");
                     sendMessageToAllClients(String.valueOf(forClientView));
                     String resultForClientViewInGame= stdIn.readLine();
                     player.getClientView().addCardOnTheBoard(resultForClientViewInGame); // Aggiornamento della ClientView

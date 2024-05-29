@@ -16,7 +16,6 @@ public class ObjectiveCard extends Card{
     public ObjectiveCard(int id, SpecificSeed type, int value, Corner TL, Corner TR, Corner BL, Corner BR, int numberOfWhenTheGameEnds, ObjectiveSpecificTypeOfCard objectiveSpecificTypeOfCard) {
         super(id, type, value, TL, TR, BL, BR);
         this.value = value;
-        this.specificSeedType = type;
         this.id = id;
         this.specificSeedType = type;
         this.numberOfWhenTheGameEnds = numberOfWhenTheGameEnds;
@@ -99,7 +98,7 @@ public class ObjectiveCard extends Card{
         return objectiveCard;
     }
 
-    // METODO toJsonObject
+    //toJsonObject
     @Override
     public JsonObject toJsonObject() {
         JsonObject jsonObject = super.toJsonObject(); // calls the superclass' method

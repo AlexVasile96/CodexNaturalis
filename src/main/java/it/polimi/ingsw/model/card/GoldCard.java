@@ -15,7 +15,7 @@ public class GoldCard extends Card{
     private Node node;
     private boolean isCardBack;
 
-    private List<SpecificSeed> requirementsForPlacing; //This is a list of different SpecifcSeeds needed to place the Gold card on the Board
+    private List<SpecificSeed> requirementsForPlacing; //This is a list of different SpecificSeeds needed to place the Gold card on the Board
     private SpecificSeed multiplier;
     public GoldCard(int id, SpecificSeed type, int value, SpecificSeed multiplier, Corner TL, Corner TR, Corner BL, Corner BR, List<SpecificSeed> requirements) {
         super(id, type, value, TL, TR, BL, BR);
@@ -26,7 +26,7 @@ public class GoldCard extends Card{
         Corner TRBack = new Corner(SpecificSeed.EMPTY, 0, 0,type);
         Corner BLBack = new Corner(SpecificSeed.EMPTY, 0, 0,type);
         Corner BRBack = new Corner(SpecificSeed.EMPTY, 0, 0,type);
-        //BACKUPORIGINAL CORNERS
+        //BACKUP ORIGINAL CORNERS
         TLBack.setSpecificCornerSeed(TL.getSpecificCornerSeed(),type);
         TRBack.setSpecificCornerSeed(TR.getSpecificCornerSeed(),type);
         BLBack.setSpecificCornerSeed(BL.getSpecificCornerSeed(),type);
@@ -43,12 +43,7 @@ public class GoldCard extends Card{
                 ", TR=" + getTR() +
                 ", BL=" + getBL() +
                 ", BR=" + getBR() +
-                ", REQUISITI=" + requirementsForPlacing;
-    }
-
-    public String printCardRedably() {
-        return "Gold Card-> id=" + id + ", value=" + valueWhenPlaced + ", type=" + type + ", REQUISITI -->" + requirementsForPlacing + ", Corners:\n     TL=" + TL + ", TR=" + TR+
-                "\n     BL=" + BL + ", BR=" + BR ;
+                ", REQUIREMENTS=" + requirementsForPlacing;
     }
 
     @Override

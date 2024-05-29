@@ -15,11 +15,6 @@ public class InitialCardDeck implements Deck {
     @Override
     public void shuffle() {
     }
-    public void printDeck() {
-        for (Card card : initialCards) {
-            System.out.println(card);
-        }
-    }
     @Override
     public Card drawCard(Player player) {
         return null;
@@ -40,16 +35,11 @@ public class InitialCardDeck implements Deck {
     public InitialCard firstCardForPlayer(Player player)
     {
         Collections.shuffle(initialCards);
-        InitialCard drownCard = (InitialCard) initialCards.remove(0);
-        return drownCard;
+        return (InitialCard) initialCards.removeFirst();
     }
     public InitialCard firstCardInitialGame(){
         Collections.shuffle(initialCards);
-        InitialCard drownCard = (InitialCard) initialCards.remove(0);
-        return drownCard;
-    }
-    public List<Card> getInitialCards() {
-        return initialCards;
+        return (InitialCard) initialCards.removeFirst();
     }
 
     //needed for testing

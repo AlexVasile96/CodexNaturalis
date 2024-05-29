@@ -2,21 +2,23 @@ package it.polimi.ingsw.model.game;
 
 import com.google.gson.JsonObject;
 
+import java.util.Objects;
+
 public class Node {
     private SpecificSeed specificNodeSeed;
     private Corner corner;
-    private int coordX;
-    private int coordY;
+    private int cordX;
+    private int cordY;
     private int valueCounter;
     private  SpecificSeed firstPlacement;
     private  SpecificSeed secondPlacement;
     private boolean alreadyChecked;
     private SpecificSeed cardType;
 
-    public Node(SpecificSeed specificNodeSeed, int coordX, int coordY, SpecificSeed cardType){
+    public Node(SpecificSeed specificNodeSeed, int cordX, int cordY, SpecificSeed cardType){
         this.specificNodeSeed=specificNodeSeed;
-        this.coordX=coordX;
-        this.coordY=coordY;
+        this.cordX = cordX;
+        this.cordY = cordY;
         this.valueCounter=2;
         this.firstPlacement= SpecificSeed.EMPTY;
         this.secondPlacement= SpecificSeed.EMPTY;
@@ -28,12 +30,12 @@ public class Node {
         return specificNodeSeed;
     }
 
-    public int getCoordX() {
-        return coordX;
+    public int getCordX() {
+        return cordX;
     }
 
-    public int getCoordY() {
-        return coordY;
+    public int getCordY() {
+        return cordY;
     }
 
     public int getValueCounter() {
@@ -53,14 +55,6 @@ public class Node {
 
     public void setValueCounter(int valueCounter) {
         this.valueCounter = valueCounter;
-    }
-
-    public void setCoordX(int coordX) {
-        this.coordX = coordX;
-    }
-
-    public void setCoordY(int coordY) {
-        this.coordY = coordY;
     }
 
     public SpecificSeed getFirstPlacement() {
@@ -86,9 +80,6 @@ public class Node {
     public void setAlreadyChecked(boolean alreadyChecked) {
         this.alreadyChecked = alreadyChecked;
     }
-    public int getRow() {
-        return coordY;
-    }
 
 
 
@@ -101,15 +92,15 @@ public class Node {
     }
     public static Node fromJsonObject(JsonObject jsonObject) {
         SpecificSeed specificNodeSeed = SpecificSeed.valueOf(jsonObject.get("specificNodeSeed").getAsString());
-        int coordX = jsonObject.get("coordX").getAsInt();
-        int coordY = jsonObject.get("coordY").getAsInt();
+        int cordX = jsonObject.get("cordX").getAsInt();
+        int cordY = jsonObject.get("cordY").getAsInt();
         int valueCounter = jsonObject.get("valueCounter").getAsInt();
         SpecificSeed firstPlacement = SpecificSeed.valueOf(jsonObject.get("firstPlacement").getAsString());
         SpecificSeed secondPlacement = SpecificSeed.valueOf(jsonObject.get("secondPlacement").getAsString());
         boolean alreadyChecked = jsonObject.get("alreadyChecked").getAsBoolean();
         SpecificSeed cardType = SpecificSeed.valueOf(jsonObject.get("cardType").getAsString());
 
-        Node node = new Node(specificNodeSeed, coordX, coordY,cardType);
+        Node node = new Node(specificNodeSeed, cordX, cordY,cardType);
         node.setValueCounter(valueCounter);
         node.setFirstPlacement(firstPlacement);
         node.setSecondPlacement(secondPlacement);
@@ -121,30 +112,16 @@ public class Node {
     public JsonObject toJsonObject() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("specificNodeSeed", specificNodeSeed.toString());
-        jsonObject.addProperty("coordX", coordX);
-        jsonObject.addProperty("coordY", coordY);
+        jsonObject.addProperty("cordX", cordX);
+        jsonObject.addProperty("cordY", cordY);
         jsonObject.addProperty("valueCounter", valueCounter);
-        if (firstPlacement != null) {
-            jsonObject.addProperty("firstPlacement", firstPlacement.toString());
-        } else {
-            jsonObject.addProperty("firstPlacement", SpecificSeed.EMPTY.toString());
-        }
+        jsonObject.addProperty("firstPlacement", Objects.requireNonNullElse(firstPlacement, SpecificSeed.EMPTY).toString());
 
-        if (secondPlacement != null) {
-            jsonObject.addProperty("secondPlacement", secondPlacement.toString());
-        } else {
-            jsonObject.addProperty("secondPlacement", SpecificSeed.EMPTY.toString());
-        }
-
+        jsonObject.addProperty("secondPlacement", Objects.requireNonNullElse(secondPlacement, SpecificSeed.EMPTY).toString());
         jsonObject.addProperty("alreadyChecked", alreadyChecked);
-
-        if (cardType != null) {
-            jsonObject.addProperty("cardType", cardType.toString());
-        } else {
-            jsonObject.addProperty("cardType", SpecificSeed.EMPTY.toString());
-        }
+        jsonObject.addProperty("cardType", Objects.requireNonNullElse(cardType, SpecificSeed.EMPTY).toString());
 
         return jsonObject;
     }
-    }
+}
 

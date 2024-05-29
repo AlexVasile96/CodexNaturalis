@@ -23,18 +23,13 @@ public class GoldDeck implements Deck {
     public void shuffle() {
         Collections.shuffle(goldCards);
     } //METHOD TO SHUFFLE THE CARDS
-    public void printDeck() {
-        for (Card card : goldCards) {
-            System.out.println(card);
-        }
-    }
     public synchronized Card drawCard(Player player) {
         if (goldCards.isEmpty()) {
             return null;
         }
         try {
             if(player.getPlayerCards().size()<3) {
-                Card drownCard = goldCards.remove(0);
+                Card drownCard = goldCards.removeFirst();
                 player.getPlayerCards().add(drownCard);
                 return drownCard;
             }
@@ -76,7 +71,7 @@ public class GoldDeck implements Deck {
             return null; //empty deck
         }
         try {
-            Card drownCard = goldCards.remove(0);
+            Card drownCard = goldCards.removeFirst();
             well.add(drownCard);
             return well;
         } catch(Exception e) {
@@ -100,19 +95,15 @@ public class GoldDeck implements Deck {
     }
 
     public synchronized String sendIdCardToGui(){
-        return String.valueOf(goldCards.get(0).getId()); //I take the id of the resource card and give it to the GUI
+        return String.valueOf(goldCards.getFirst().getId()); //I take the id of the resource card and give it to the GUI
     }
     public synchronized void drawCardForGoldGui ()
     {
-        goldCards.remove(0);
+        goldCards.removeFirst();
         System.out.println(goldCards.getFirst());
     }
     public List<Card> getRemainingCards() {
         return new ArrayList<>(this.goldCards); // Assuming that 'deck' is the list of the remaining cards
-    }
-
-    public void setRemainingCards(List<Card> cards) {
-        this.goldCards = new ArrayList<>(cards);
     }
     public JsonArray toJson() {
         JsonArray jsonArray = new JsonArray();

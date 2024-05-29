@@ -192,8 +192,8 @@ public class Player implements Observable {
 
     public void playInitCardOnBoard(Board board, int cardIndex, Card selectedCardFromTheDeck, InitialCard cardPlayerChoose, String selectedCorner)
     {
-        int x = cardPlayerChoose.getNode().getCoordX(); //SAVING THE TOP LEFT CORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
-        int y = cardPlayerChoose.getNode().getCoordY();
+        int x = cardPlayerChoose.getNode().getCordX(); //SAVING THE TOP LEFT CORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
+        int y = cardPlayerChoose.getNode().getCordY();
         switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECTLY
             case "TL":
                 if(cardPlayerChoose.getIndexOnTheBoard()==1 && cardPlayerChoose.isCardBack())
@@ -245,8 +245,8 @@ public class Player implements Observable {
 
 
     public void playCard(Board board, int cardIndex, int cardChosenONTheBoard,Card selectedCardFromTheDeck, Card cardPlayerChoose, String selectedCorner) { //METHOD TO PLACE THE CARD CHOSEN BEFORE ON THE BOARD
-        int x = cardPlayerChoose.getNode().getCoordX(); //SAVING THE TOP LEFT CORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
-        int y = cardPlayerChoose.getNode().getCoordY();
+        int x = cardPlayerChoose.getNode().getCordX(); //SAVING THE TOP LEFT CORDS OF THE CARD THE PLAYER DECIDED TO PLACE THE SELECTED CARD ON
+        int y = cardPlayerChoose.getNode().getCordY();
         switch (selectedCorner) { //SWITCH CASE TO PLACE THE CARD CORRECTLY
             case "TL":
                 cardPlayerChoose.getTL().setValueCounter(cardPlayerChoose.getTL().getValueCounter()-1);
@@ -309,29 +309,29 @@ public class Player implements Observable {
         List<Corner> availableCorners = new ArrayList<>();                          //CREATING CORNERS THAT WILL BE DISPLAYED TO THE PLAYER
         if(cardPlayerChoose.isCardBack()&& cardPlayerChoose.getIndexOnTheBoard()==1)
         {
-            if(IsTheTLCornerUsable(cardPlayerChoose.getTLIBack().getSpecificCornerSeed(), cardPlayerChoose.getNode().getValueCounter(), cardPlayerChoose.getNode().getCoordX(), cardPlayerChoose.getNode().getCoordY())) {
+            if(IsTheTLCornerUsable(cardPlayerChoose.getTLIBack().getSpecificCornerSeed(), cardPlayerChoose.getNode().getValueCounter(), cardPlayerChoose.getNode().getCordX(), cardPlayerChoose.getNode().getCordY())) {
                 availableCorners.add(cardPlayerChoose.getTLIBack());
             }
-            if(IsTheTRCornerUsable(cardPlayerChoose.getTRIBack().getSpecificCornerSeed(), board.getNode(cardPlayerChoose.getNode().getCoordX(), cardPlayerChoose.getNode().getCoordY()+1).getValueCounter(), cardPlayerChoose.getNode().getCoordX(), cardPlayerChoose.getNode().getCoordY()+1)) {
+            if(IsTheTRCornerUsable(cardPlayerChoose.getTRIBack().getSpecificCornerSeed(), board.getNode(cardPlayerChoose.getNode().getCordX(), cardPlayerChoose.getNode().getCordY()+1).getValueCounter(), cardPlayerChoose.getNode().getCordX(), cardPlayerChoose.getNode().getCordY()+1)) {
                 availableCorners.add(cardPlayerChoose.getTRIBack());
             }
-            if(IsTheBLCornerUsable(cardPlayerChoose.getBLIBack().getSpecificCornerSeed(), board.getNode(cardPlayerChoose.getNode().getCoordX()+1, cardPlayerChoose.getNode().getCoordY()).getValueCounter(), cardPlayerChoose.getNode().getCoordX()+1, cardPlayerChoose.getNode().getCoordY())) {
+            if(IsTheBLCornerUsable(cardPlayerChoose.getBLIBack().getSpecificCornerSeed(), board.getNode(cardPlayerChoose.getNode().getCordX()+1, cardPlayerChoose.getNode().getCordY()).getValueCounter(), cardPlayerChoose.getNode().getCordX()+1, cardPlayerChoose.getNode().getCordY())) {
                 availableCorners.add(cardPlayerChoose.getBLIBack());
             }
-            if(IsTheBRCornerUsable(cardPlayerChoose.getBRIBack().getSpecificCornerSeed(), board.getNode(cardPlayerChoose.getNode().getCoordX()+1, cardPlayerChoose.getNode().getCoordY()+1).getValueCounter(), cardPlayerChoose.getNode().getCoordX()+1, cardPlayerChoose.getNode().getCoordY()+1)) {
+            if(IsTheBRCornerUsable(cardPlayerChoose.getBRIBack().getSpecificCornerSeed(), board.getNode(cardPlayerChoose.getNode().getCordX()+1, cardPlayerChoose.getNode().getCordY()+1).getValueCounter(), cardPlayerChoose.getNode().getCordX()+1, cardPlayerChoose.getNode().getCordY()+1)) {
                 availableCorners.add(cardPlayerChoose.getBRIBack());
             }
         }else{
-            if(IsTheTLCornerUsable(cardPlayerChoose.getTL().getSpecificCornerSeed(), cardPlayerChoose.getTL().getValueCounter(), cardPlayerChoose.getNode().getCoordX(), cardPlayerChoose.getNode().getCoordY())) {
+            if(IsTheTLCornerUsable(cardPlayerChoose.getTL().getSpecificCornerSeed(), cardPlayerChoose.getTL().getValueCounter(), cardPlayerChoose.getNode().getCordX(), cardPlayerChoose.getNode().getCordY())) {
                 availableCorners.add(cardPlayerChoose.getTL());
             }
-            if(IsTheTRCornerUsable(cardPlayerChoose.getTR().getSpecificCornerSeed(), cardPlayerChoose.getTR().getValueCounter(), cardPlayerChoose.getNode().getCoordX(), cardPlayerChoose.getNode().getCoordY()+1)) {
+            if(IsTheTRCornerUsable(cardPlayerChoose.getTR().getSpecificCornerSeed(), cardPlayerChoose.getTR().getValueCounter(), cardPlayerChoose.getNode().getCordX(), cardPlayerChoose.getNode().getCordY()+1)) {
                 availableCorners.add(cardPlayerChoose.getTR());
             }
-            if(IsTheBLCornerUsable(cardPlayerChoose.getBL().getSpecificCornerSeed(), cardPlayerChoose.getBL().getValueCounter(), cardPlayerChoose.getNode().getCoordX()+1, cardPlayerChoose.getNode().getCoordY())) {
+            if(IsTheBLCornerUsable(cardPlayerChoose.getBL().getSpecificCornerSeed(), cardPlayerChoose.getBL().getValueCounter(), cardPlayerChoose.getNode().getCordX()+1, cardPlayerChoose.getNode().getCordY())) {
                 availableCorners.add(cardPlayerChoose.getBL());
             }
-            if(IsTheBRCornerUsable(cardPlayerChoose.getBR().getSpecificCornerSeed(), cardPlayerChoose.getBR().getValueCounter(), cardPlayerChoose.getNode().getCoordX()+1, cardPlayerChoose.getNode().getCoordY()+1)) {
+            if(IsTheBRCornerUsable(cardPlayerChoose.getBR().getSpecificCornerSeed(), cardPlayerChoose.getBR().getValueCounter(), cardPlayerChoose.getNode().getCordX()+1, cardPlayerChoose.getNode().getCordY()+1)) {
                 availableCorners.add(cardPlayerChoose.getBR());
             }
         }
@@ -341,16 +341,16 @@ public class Player implements Observable {
     private List<Corner> creatingCornersForNotInitialCard(Card cardPlayerChoose){
         List<Corner> availableCorners = new ArrayList<>();                          //CREATING CORNERS THAT WILL BE DISPLAYED TO THE PLAYER
 
-        if(IsTheTLCornerUsable(cardPlayerChoose.getTL().getSpecificCornerSeed(), cardPlayerChoose.getTL().getValueCounter(), cardPlayerChoose.getNode().getCoordX(), cardPlayerChoose.getNode().getCoordY())) {
+        if(IsTheTLCornerUsable(cardPlayerChoose.getTL().getSpecificCornerSeed(), cardPlayerChoose.getTL().getValueCounter(), cardPlayerChoose.getNode().getCordX(), cardPlayerChoose.getNode().getCordY())) {
             availableCorners.add(cardPlayerChoose.getTL());
         }
-        if(IsTheTRCornerUsable(cardPlayerChoose.getTR().getSpecificCornerSeed(), cardPlayerChoose.getTR().getValueCounter(), cardPlayerChoose.getNode().getCoordX(), cardPlayerChoose.getNode().getCoordY()+1)) {
+        if(IsTheTRCornerUsable(cardPlayerChoose.getTR().getSpecificCornerSeed(), cardPlayerChoose.getTR().getValueCounter(), cardPlayerChoose.getNode().getCordX(), cardPlayerChoose.getNode().getCordY()+1)) {
             availableCorners.add(cardPlayerChoose.getTR());
         }
-        if(IsTheBLCornerUsable(cardPlayerChoose.getBL().getSpecificCornerSeed(), cardPlayerChoose.getBL().getValueCounter(), cardPlayerChoose.getNode().getCoordX()+1, cardPlayerChoose.getNode().getCoordY())) {
+        if(IsTheBLCornerUsable(cardPlayerChoose.getBL().getSpecificCornerSeed(), cardPlayerChoose.getBL().getValueCounter(), cardPlayerChoose.getNode().getCordX()+1, cardPlayerChoose.getNode().getCordY())) {
             availableCorners.add(cardPlayerChoose.getBL());
         }
-        if(IsTheBRCornerUsable(cardPlayerChoose.getBR().getSpecificCornerSeed(), cardPlayerChoose.getBR().getValueCounter(), cardPlayerChoose.getNode().getCoordX()+1, cardPlayerChoose.getNode().getCoordY()+1)) {
+        if(IsTheBRCornerUsable(cardPlayerChoose.getBR().getSpecificCornerSeed(), cardPlayerChoose.getBR().getValueCounter(), cardPlayerChoose.getNode().getCordX()+1, cardPlayerChoose.getNode().getCordY()+1)) {
             availableCorners.add(cardPlayerChoose.getBR());
         }
         return availableCorners;

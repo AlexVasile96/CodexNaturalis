@@ -60,7 +60,7 @@ public class ClientView {
             int cardNumber = 1;
         for (Card card : player.getBoard().getCardsOnTheBoardList()) {
             String cardType = (card instanceof InitialCard) ? "Initial Card" : card.getType().toString();
-            String cardString = cardNumber + "->" + cardType + ": (" + card.getNode().getCoordY() + " " + card.getNode().getCoordX() + ") " + (card.isCardBack() ? "(back)" : "(front)");
+            String cardString = cardNumber + "->" + cardType + ": (" + card.getNode().getCordY() + " " + card.getNode().getCordX() + ") " + (card.isCardBack() ? "(back)" : "(front)");
             this.cardsOnTheBoard.add(cardString);
             cardNumber++;
         }

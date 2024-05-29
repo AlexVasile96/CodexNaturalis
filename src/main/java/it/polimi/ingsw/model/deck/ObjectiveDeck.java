@@ -20,19 +20,12 @@ public class ObjectiveDeck implements Deck {
         Collections.shuffle(objectiveCards);
     }
 
-    public void printDeck() {
-        for (Card card : objectiveCards) {
-            System.out.println(card);
-        }
-    }
-
     public ObjectiveCard firstCardForEachPlayer () {
         if (objectiveCards.isEmpty()) {
             throw new EmptyDeckException("Objective Deck is empty");
         }
         try {
-            //ObjectiveCard drownCard = (ObjectiveCard) objectiveCards.remove(0);
-            return (ObjectiveCard) objectiveCards.remove(0); //return drownCard;
+            return (ObjectiveCard) objectiveCards.removeFirst(); //return drownCard;
         } catch (Exception e){
             throw new UnknownWhyException("Operation Failed", e);
         }
@@ -44,7 +37,7 @@ public class ObjectiveDeck implements Deck {
     }
 
     public ObjectiveCard drawCard(Player player){
-        return (ObjectiveCard) objectiveCards.remove(0); //return drownCard;
+        return (ObjectiveCard) objectiveCards.removeFirst(); //return drownCard;
     }
 
     public synchronized ObjectiveCard drawObjectiveCard(){
@@ -52,25 +45,15 @@ public class ObjectiveDeck implements Deck {
             return null;
         }
         try {
-            return (ObjectiveCard)objectiveCards.remove(0);
+            return (ObjectiveCard)objectiveCards.removeFirst();
         } catch(Exception e) {
-            throw new AlreadyThreeCardsException("Operation Failed",e); // Eccezione specifica
+            throw new AlreadyThreeCardsException("Operation Failed",e); // Specific Exception
         }
     }
 
     @Override
     public void addCard(Card card) {
 
-    }
-
-    public List<Card> getInitialCards() {
-        return objectiveCards;
-    }
-    public List<Card> getObjectiveCards() {
-        return objectiveCards;
-    }
-    public void setObjectiveCards(List<Card> objectiveCards) {
-        this.objectiveCards = objectiveCards;
     }
 
     //serve per il test

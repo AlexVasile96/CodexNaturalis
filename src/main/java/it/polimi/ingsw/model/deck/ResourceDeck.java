@@ -20,11 +20,6 @@ public class ResourceDeck implements Deck{
     public void shuffle() {
         Collections.shuffle(resourceCards);
     }
-    public void printDeck() {
-        for (Card card : resourceCards) {
-            System.out.println(card);
-        }
-    }
     @Override
     public synchronized Card drawCard(Player player) {  //DRAWING CARD FROM THE DECK
         if (resourceCards.isEmpty()) {
@@ -32,12 +27,12 @@ public class ResourceDeck implements Deck{
         }
         try {
             if (player.getPlayerCards().size() < 3) {
-                Card drownCard = resourceCards.remove(0);
+                Card drownCard = resourceCards.removeFirst();
                 player.getPlayerCards().add(drownCard);
                 return drownCard;
             }
         } catch(Exception e) {
-            throw new AlreadyThreeCardsException("Player already has 3 cards in his deck", e); // Eccezione specifica
+            throw new AlreadyThreeCardsException("Player already has 3 cards in his deck", e); // Specific Exception
         }
         return null;
     }
@@ -46,16 +41,16 @@ public class ResourceDeck implements Deck{
             return null; //empty deck
         }
         try {
-                Card drownCard = resourceCards.remove(0);
+                Card drownCard = resourceCards.removeFirst();
                 well.add(drownCard);
                 return well;
         } catch(Exception e) {
-            throw new UnreachableWell("Coudn't place card in the well",e); // Eccezione specifica
+            throw new UnreachableWell("Couldn't place card in the well",e); //Specific Exception
         }
     }
 
     public void addCard(Card card) {
-        //check if the deck already reached it's full capacity
+        //check if the deck already reached its full capacity
         if (isDeckFull()) {
             throw new FullDeckException("Deck already has 40 cards");
         }
@@ -102,9 +97,7 @@ public class ResourceDeck implements Deck{
     public synchronized String sendIdCardToGui(){
         return String.valueOf(resourceCards.getFirst().getId()); //I take the id of the resource card and give it to the GUI
     }
-    public Card returnFirstCard(){
-        return resourceCards.getFirst();
-    }
+
     public synchronized void drawCardForGui ()
     {
         resourceCards.removeFirst();
@@ -127,11 +120,9 @@ public class ResourceDeck implements Deck{
         }
         return new ResourceDeck(cards);
     }
-    public void setRemainingCards(List<Card> cards) {
-        this.resourceCards = new ArrayList<>(cards);
-    }
+
     public List<Card> getRemainingCards() {
-        return new ArrayList<>(this.resourceCards); // Supponendo che `deck` sia una lista delle carte rimanenti
+        return new ArrayList<>(this.resourceCards);
     }
 
     public synchronized void putCardOnTopOfDeck(int i) {
