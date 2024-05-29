@@ -350,10 +350,10 @@ public class Game{
 
     public String showAllPoints() {
         StringBuilder stamp = new StringBuilder();
-        for (Player playerz : players) {
-            stamp.append(playerz.getNickName());
+        for (Player player : players) {
+            stamp.append(player.getNickName());
             stamp.append(" current Point: ");
-            stamp.append(showPoints(playerz));
+            stamp.append(showPoints(player));
             stamp.append("\n--------------------------------------------------\n");
         }
         stamp.append("exit");

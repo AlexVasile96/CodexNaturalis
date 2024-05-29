@@ -1,8 +1,10 @@
 package it.polimi.ingsw.network.client.gui.scene;
 
+import it.polimi.ingsw.network.client.gui.controllers.PointsSceneController;
 import it.polimi.ingsw.view.ClientView;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -27,9 +29,18 @@ public class BoardPointsScene {
     private BufferedReader in;
     private int playerScore;
     private ClientView clientView;
-    String dot;
+    String firstPlayerName;
+    int firstPlayerScore;
+    String secondPlayerName;
+    int secondPlayerScore;
+    String thirdPlayerName;
+    int thirdPlayerScore;
+    String fourthPlayerName;
+    int fourthPlayerScore;
     List<Circle> checkpoints = new ArrayList<>();
+    List<Label> labels = new ArrayList<>();
     Color dotColor;
+    String[] allScores = new String[16];
 
     //Initializing scene
     public BoardPointsScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) throws IOException {
@@ -40,41 +51,13 @@ public class BoardPointsScene {
         this.clientView = clientView;
     }
 
-    //managing player's selection
-    private void getDotColor(){
-        dot = clientView.getDot().toString();
-        System.out.println("Il dot è: "+dot);
-        if(dot.contains("RED")){
-            dot = "RED";
-        }
-        if(dot.contains("GREEN")){
-            dot = "GREEN";
-        }
-        if(dot.contains("BLUE")){
-            dot = "BLUE";
-        }
-        if(dot.contains("YELLOW")){
-            dot = "YELLOW";
-        }
-        dotColor = Color.web(dot);
-    }
-
-    private int getScore() throws IOException {
-        out.println("showPoints");
-        String stringa = in.readLine();
-        if(stringa.equals("Unknown command.")) {
-            return 25;
-        }
-        System.out.println(stringa);
-
-        return Integer.parseInt(stringa);
-    }
+    PointsSceneController controller = new PointsSceneController(primaryStage, out, socket, in, clientView);
 
     //creating the popup that shows the player's points
     public void popupBoardPoints() throws IOException {
         Stage popupStage = new Stage();
 
-        playerScore = getScore();
+        playerScore = controller.getScore();
 
         popupStage.setTitle("Board Points");
         popupStage.setResizable(false);
@@ -95,10 +78,13 @@ public class BoardPointsScene {
 
         closeButton.setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-font-weight: bold;"); // Stile CSS per il pulsante
 
-        getDotColor();
+        controller.getDotColor();
         createCheckpoints();
+        createLabels();
         positionCheckpoints();
-        updateCheckpoint();
+        allScores = controller.getAllScores();
+        getPlayerAndScore();
+        updateCheckpoints();
         System.out.println(playerScore);
 
         paneForButton.getChildren().addAll(closeButton);
@@ -120,6 +106,11 @@ public class BoardPointsScene {
             Circle circle = new Circle();
             circle.setRadius(34.5);
             checkpoints.add(circle);
+        }
+    }
+    private void createLabels(){
+        for(int i = 0;i<30;i++){
+            Label label = new Label();
         }
     }
     private void positionCheckpoints(){
@@ -145,9 +136,19 @@ public class BoardPointsScene {
             if (i < positions.length) {
                 checkpoints.get(i).setCenterX(positions[i][0]);
                 checkpoints.get(i).setCenterY(positions[i][1]);
+                labels.get(i).setLayoutX(positions[i][0]);
+                labels.get(i).setLayoutY(positions[i][1]);
             }
         }
     }
+    private void updateCheckpoints(){
+        updateCheckpoint();
+        updateCheckpointFirst();
+        updateCheckpointSecond();
+        updateCheckpointThird();
+        updateCheckpointFourth();
+    }
+
     private void updateCheckpoint(){
         for(Circle circle : checkpoints){
             circle.setVisible(false);
@@ -157,4 +158,65 @@ public class BoardPointsScene {
             checkpoints.get(playerScore).setFill(dotColor);
         }
     }
+
+    private void updateCheckpointFirst(){
+        if(!firstPlayerName.equals(clientView.getUserName())){
+            if(firstPlayerScore >= 0 && playerScore < checkpoints.size()){
+                checkpoints.get(firstPlayerScore).setVisible(true);
+                checkpoints.get(firstPlayerScore).setFill(Color.BLACK);
+                labels.get(firstPlayerScore).setText(firstPlayerName);
+            }
+        }
+    }
+    private void updateCheckpointSecond(){
+        if(!secondPlayerName.equals(clientView.getUserName())){
+            if(secondPlayerScore >= 0 && playerScore < checkpoints.size()){
+                checkpoints.get(secondPlayerScore).setVisible(true);
+                checkpoints.get(secondPlayerScore).setFill(Color.BLACK);
+                labels.get(secondPlayerScore).setText(secondPlayerName);
+            }
+        }
+    }
+    private void updateCheckpointThird(){
+        if(!thirdPlayerName.equals(clientView.getUserName())){
+            if(thirdPlayerScore >= 0 && playerScore < checkpoints.size()){
+                checkpoints.get(thirdPlayerScore).setVisible(true);
+                checkpoints.get(thirdPlayerScore).setFill(Color.BLACK);
+                labels.get(thirdPlayerScore).setText(thirdPlayerName);
+            }
+        }
+    }
+    private void updateCheckpointFourth(){
+        if(!fourthPlayerName.equals(clientView.getUserName())){
+            if(fourthPlayerScore >= 0 && playerScore < checkpoints.size()){
+                checkpoints.get(fourthPlayerScore).setVisible(true);
+                checkpoints.get(fourthPlayerScore).setFill(Color.BLACK);
+                labels.get(fourthPlayerScore).setText(fourthPlayerName);
+            }
+        }
+    }
+
+
+    private void getPlayerAndScore(){
+        firstPlayerName = allScores[0];
+        firstPlayerScore = Integer.parseInt(allScores[2]);
+        secondPlayerName = allScores[4];
+        secondPlayerScore = Integer.parseInt(allScores[6]);
+        thirdPlayerName = allScores[8];
+        if(!thirdPlayerName.equals(null)){
+            thirdPlayerScore = Integer.parseInt(allScores[10]);
+            fourthPlayerName = allScores[12];
+            if(!fourthPlayerName.equals(null)) {
+                fourthPlayerScore = Integer.parseInt(allScores[14]);
+            }
+            else{
+                return;
+            }
+        }
+        else{
+            return;
+        }
+    }
+
+
 }
