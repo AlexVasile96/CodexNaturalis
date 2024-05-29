@@ -146,7 +146,7 @@ public class GameSceneController {
         isCurrentPlayerTurn = clientView.getUserName().equals(currentPlayerNickname);
 
         // Set a socket timeout of 2 minutes
-        socket.setSoTimeout(120000);
+        socket.setSoTimeout(180000);
     }
 
     /**

@@ -20,7 +20,7 @@ public class ChatClient {
             System.out.print("Enter your name: ");
             String clientName = stdIn.readLine();
             out.println(clientName);
-
+            System.out.println("Type @ + the player username if you want to send a private message");
             // Thread per ricevere messaggi
             Thread receiveMessages = new Thread(() -> {
                 try {
@@ -36,10 +36,15 @@ public class ChatClient {
             });
             receiveMessages.start();
 
-            // Leggere e inviare messaggi
             String userInput;
             while ((userInput = stdIn.readLine()) != null) {
-                out.println(userInput);
+                if (userInput.startsWith("@")) {
+                    // Messaggio privato
+                    out.println(userInput);
+                } else {
+                    // Messaggio pubblico
+                    out.println(userInput);
+                }
             }
 
         } catch (IOException e) {

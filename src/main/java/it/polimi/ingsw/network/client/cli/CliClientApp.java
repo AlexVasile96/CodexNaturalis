@@ -13,9 +13,9 @@ import java.net.Socket;
 public class CliClientApp {
 
     public static void main(String[] args) throws Exception {
-        // Avvia il client di chat in un nuovo processo
         try {
-            Process process = Runtime.getRuntime().exec("cmd /c start java ChatClient");
+            String classpath = "target/classes";
+            Process process = Runtime.getRuntime().exec("cmd /c start java -cp " + classpath + " it.polimi.ingsw.network.client.cli.ChatClient");
             process.waitFor();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -56,5 +56,3 @@ public class CliClientApp {
         }
     }
 }
-
-

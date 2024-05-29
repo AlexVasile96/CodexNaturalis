@@ -12,13 +12,8 @@ public class TurnController {
         this.players = players;
         this.currentPlayerIndex = 0;
     }
-
     public List<Player> getPlayers() {
         return players;
-    }
-
-    public int getCurrentPlayerIndex() {
-        return currentPlayerIndex;
     }
 
     public Player getCurrentPlayer() {
@@ -33,8 +28,7 @@ public class TurnController {
         if (players.contains(player)) {
             this.currentPlayerIndex = players.indexOf(player);
         } else {
-            System.out.println("Giocatore non trovato: " + player);
-            System.out.println("Lista dei giocatori: " + players);
+
             throw new IllegalArgumentException("Player not found in the list");
         }
     }

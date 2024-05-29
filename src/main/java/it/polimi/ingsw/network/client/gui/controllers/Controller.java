@@ -24,7 +24,7 @@ public class Controller {
         this.in = in;
         this.out = out;
         this.socket=socket;
-        this.socket.setSoTimeout(60000);
+        this.socket.setSoTimeout(180000);
         this.clientView=clientView;
     }
 
