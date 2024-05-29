@@ -97,24 +97,22 @@ public class ChatServer {
 
 
         private void handleDisconnection() {
-            Platform.runLater(() -> {
-                // Show an alert indicating the disconnection
-                try {
-                    // Save game progress
-                    // Close resources
-                    if (in != null) in.close();
-                    if (out != null) out.close();
-                    if (socket != null) socket.close();
-                    // Exit the application
-                    Platform.exit();
-                    System.exit(0);
-                } catch (SocketTimeoutException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    // Throw a runtime exception if an IOException occurs
-                    throw new RuntimeException(e);
-                }
-            });
+            // Show an alert indicating the disconnection
+            try {
+                // Save game progress
+                // Close resources
+                if (in != null) in.close();
+                if (out != null) out.close();
+                if (socket != null) socket.close();
+                // Exit the application
+                Platform.exit();
+                System.exit(0);
+            } catch (SocketTimeoutException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                // Throw a runtime exception if an IOException occurs
+                throw new RuntimeException(e);
+            }
         }
 
     }
