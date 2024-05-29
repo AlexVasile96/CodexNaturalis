@@ -586,6 +586,7 @@ public class ServerConnection implements Runnable {
         sendMessageToServer("status");
         // Gets the current player's score from the server
         String points = in.readLine();
+        if(points.equals("")) points = in.readLine();
         // Prints the current player's score
         System.out.println("You have obtained: " + points + " points!");
         // Updates the player's score in the client view
