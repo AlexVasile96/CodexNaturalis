@@ -276,10 +276,7 @@ public class Player implements Observable {
         board.getCardsOnTheBoardList().add(selectedCardFromTheDeck); //ADDING THE CARD TO THE LIST THAT CONTAINS ALL THE CARDS ON THE BOARD
         this.playerCards.remove(cardIndex); //REMOVING THE CARD THE PLAYER PLACED FROM HIS HAND
         board.setNumOfEmpty(board.getNumOfEmpty() - 3);
-        if(!selectedCardFromTheDeck.isCardBack())
-        {
-            updatingPoints(selectedCardFromTheDeck); //Updating player Points
-        }
+        updatingPoints(selectedCardFromTheDeck); //Updating player Points
 
         if (playerScore >= 20) {
             System.out.println("Player " + getNickName() + "has reached 20 points!\n");
@@ -644,17 +641,18 @@ public class Player implements Observable {
             selectedCardFromTheDeck.getBL().setValueCounter(selectedCardFromTheDeck.getBL().getValueCounter()-1);
         }
     }
-    private void updatingPoints(Card selectedCardFromTheDeck)
-    {
-        if (selectedCardFromTheDeck.getId() < 41 && selectedCardFromTheDeck.getId() > 0) { //resource card
-            ResourceUpdater resourceUpdater = new ResourceUpdater();
-            resourceUpdater.updatePlayerPoints(selectedCardFromTheDeck, this, board);
+    private void updatingPoints(Card selectedCardFromTheDeck) {
+        if(!board.getCardsOnTheBoardList().getLast().isCardBack()) {
+            if (selectedCardFromTheDeck.getId() < 41 && selectedCardFromTheDeck.getId() > 0) { //resource card
+                ResourceUpdater resourceUpdater = new ResourceUpdater();
+                resourceUpdater.updatePlayerPoints(selectedCardFromTheDeck, this, board);
 
-        } else if (selectedCardFromTheDeck.getId() < 81 && selectedCardFromTheDeck.getId() > 40) { //gold card
-            GoldUpdater updater = new GoldUpdater();
-            updater.updatePlayerPoints((GoldCard) selectedCardFromTheDeck, this, board);
+            } else if (selectedCardFromTheDeck.getId() < 81 && selectedCardFromTheDeck.getId() > 40) { //gold card
+                GoldUpdater updater = new GoldUpdater();
+                updater.updatePlayerPoints((GoldCard) selectedCardFromTheDeck, this, board);
+            }
+            System.out.println("Your new score is " + playerScore + " points");
         }
-        System.out.println("Your new score is " + playerScore + " points");
     }
 
 
