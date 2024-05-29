@@ -4,10 +4,7 @@ import com.google.gson.*;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
-import it.polimi.ingsw.network.client.gui.scene.BoardPointsScene;
-import it.polimi.ingsw.network.client.gui.scene.ChatScene;
-import it.polimi.ingsw.network.client.gui.scene.EndGameScene;
-import it.polimi.ingsw.network.client.gui.scene.ShowObjectiveScene;
+import it.polimi.ingsw.network.client.gui.scene.*;
 import it.polimi.ingsw.view.ClientView;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -882,13 +879,10 @@ public class GameSceneController {
 
         showAllPoints.setOnMouseClicked(e -> {
             if(isCurrentPlayerTurn) {
-                out.println("showAllPoints");
+
                 try {
-                    String string = in.readLine();
-                    System.out.println(string);
-                    while (!string.equals("exit")) {
-                        System.out.println(in.readLine());
-                    }
+                    ShowAllPointsScene allPointsScene = new ShowAllPointsScene(primaryStage, out, socket, in, clientView);
+                    allPointsScene.showAllPointsPopup();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
