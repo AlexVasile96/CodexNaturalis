@@ -1786,11 +1786,11 @@ public class GameSceneController {
     private synchronized void playerDeck() throws IOException {
         out.println("deckId");
         idHandCard1 = in.readLine();
-        System.out.println("first card of deck:" + idHandCard1);
+        System.out.println("first card of deck: " + idHandCard1);
         idHandCard2 = in.readLine();
-        System.out.println("Second card of deck:" + idHandCard2);
+        System.out.println("Second card of deck: " + idHandCard2);
         idHandCard3 = in.readLine();
-        System.out.println("Third card of deck:" + idHandCard3);
+        System.out.println("Third card of deck: " + idHandCard3);
     }
 
     /**
@@ -2095,9 +2095,9 @@ public class GameSceneController {
         System.out.println(SharedObjectsInGui.getIdCard2());
         System.out.println(SharedObjectsInGui.getIdCard3());
         System.out.println(SharedObjectsInGui.getIdCard4());
-        System.out.println("Carta 1 del deck" + idHandCard1);
-        System.out.println("Carta 2 del deck" + idHandCard2);
-        System.out.println("Carta 3 del deck" + idHandCard3);
+        System.out.println("Carta 1 del deck " + idHandCard1);
+        System.out.println("Carta 2 del deck " + idHandCard2);
+        System.out.println("Carta 3 del deck " + idHandCard3);
         newPathAfterUpdate();
         updateResourceDeckTopCard();
         updatedGoldDeckTopCard();
