@@ -1,6 +1,6 @@
 package model;
 
-import it.polimi.ingsw.exceptions.AlredyInException;
+import it.polimi.ingsw.exceptions.AlreadyInException;
 import it.polimi.ingsw.exceptions.IllegalAddException;
 import it.polimi.ingsw.model.card.Card;
 import it.polimi.ingsw.model.card.GoldCardConstructor;
@@ -12,9 +12,6 @@ import it.polimi.ingsw.model.game.Dot;
 import it.polimi.ingsw.model.game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -66,7 +63,7 @@ class GoldDeckTest {
         //try to insert a duplicate
         Card cartaBomba3 = goldDeck.drawCard(player2);
         goldDeck.addCard(card1);
-        assertThrows(AlredyInException.class, () -> goldDeck.addCard(card1));
+        assertThrows(AlreadyInException.class, () -> goldDeck.addCard(card1));
 
     }
 }

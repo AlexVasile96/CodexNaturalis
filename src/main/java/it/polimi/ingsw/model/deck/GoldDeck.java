@@ -2,10 +2,10 @@ package it.polimi.ingsw.model.deck;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import it.polimi.ingsw.exceptions.AlredyInException;
-import it.polimi.ingsw.exceptions.FullDeckExeption;
+import it.polimi.ingsw.exceptions.AlreadyInException;
+import it.polimi.ingsw.exceptions.FullDeckException;
 import it.polimi.ingsw.exceptions.IllegalAddException;
-import it.polimi.ingsw.exceptions.UknownWhyException;
+import it.polimi.ingsw.exceptions.UnknownWhyException;
 import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.model.card.GoldCard;
 import it.polimi.ingsw.model.card.Card;
@@ -45,7 +45,7 @@ public class GoldDeck implements Deck {
     }
     public void addCard(Card card) {
         if(isDeckFull()){
-            throw new FullDeckExeption("Deck is full");
+            throw new FullDeckException("Deck is full");
         }
 
         // Check if the card belongs to the gold deck
@@ -55,14 +55,14 @@ public class GoldDeck implements Deck {
 
         // Check if card is already in the deck
         for (Card card2 : goldCards) {
-            if (alreadyInDeck(card.getId(),card2.getId())) throw new AlredyInException("Card is already present in the deck");
+            if (alreadyInDeck(card.getId(),card2.getId())) throw new AlreadyInException("Card is already present in the deck");
         }
 
         // try to add the card
         try {
             goldCards.add(card);
         } catch(Exception e) {
-            throw new UknownWhyException("AddCard failed", e);
+            throw new UnknownWhyException("AddCard failed", e);
         }
     }
 

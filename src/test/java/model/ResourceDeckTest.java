@@ -1,6 +1,6 @@
 package model;
 
-import it.polimi.ingsw.exceptions.AlredyInException;
+import it.polimi.ingsw.exceptions.AlreadyInException;
 import it.polimi.ingsw.exceptions.IllegalAddException;
 import it.polimi.ingsw.model.card.Card;
 import it.polimi.ingsw.model.card.GoldCardConstructor;
@@ -68,7 +68,7 @@ class ResourceDeckTest {
         //trying to insert a duplicate
         Card cartaBomba3 = resourceDeck.drawCard(player2);
         resourceDeck.addCard(duplicateCard);
-        assertThrows(AlredyInException.class, () -> resourceDeck.addCard(duplicateCard));
+        assertThrows(AlreadyInException.class, () -> resourceDeck.addCard(duplicateCard));
 
     }
 }

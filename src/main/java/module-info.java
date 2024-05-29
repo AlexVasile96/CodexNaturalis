@@ -8,7 +8,6 @@ module com.example.proj{
     requires java.desktop;
 
     opens it.polimi.ingsw.network.client.gui to javafx.fxml;
-    opens it.polimi.ingsw.model to javafx.fxml;
     exports it.polimi.ingsw.network.client.gui;
     opens it.polimi.ingsw.network.server to com.google.gson;
     opens it.polimi.ingsw.network.client to com.google.gson;

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.deck;
 import it.polimi.ingsw.exceptions.AlreadyThreeCardsException;
 import it.polimi.ingsw.exceptions.EmptyDeckException;
-import it.polimi.ingsw.exceptions.UknownWhyException;
+import it.polimi.ingsw.exceptions.UnknownWhyException;
 import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.model.card.Card;
 import it.polimi.ingsw.model.card.ObjectiveCard;
@@ -34,7 +34,7 @@ public class ObjectiveDeck implements Deck {
             //ObjectiveCard drownCard = (ObjectiveCard) objectiveCards.remove(0);
             return (ObjectiveCard) objectiveCards.remove(0); //return drownCard;
         } catch (Exception e){
-            throw new UknownWhyException("Operation Failed", e);
+            throw new UnknownWhyException("Operation Failed", e);
         }
     }
 

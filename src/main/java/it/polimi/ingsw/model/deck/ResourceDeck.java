@@ -50,14 +50,14 @@ public class ResourceDeck implements Deck{
                 pozzo.add(drownCard);
                 return pozzo;
         } catch(Exception e) {
-            throw new PozzoUnrechableExeption("Coudn't place card in the well",e); // Eccezione specifica
+            throw new UnreachableWell("Coudn't place card in the well",e); // Eccezione specifica
         }
     }
 
     public void addCard(Card card) {
         //check if the deck already reached it's full capacity
         if (isDeckFull()) {
-            throw new FullDeckExeption("Deck already has 40 cards");
+            throw new FullDeckException("Deck already has 40 cards");
         }
 
         // Check if the card belongs to the resource deck
@@ -67,14 +67,14 @@ public class ResourceDeck implements Deck{
 
         // check if the card is already in the deck
         for (Card card2 : resourceCards) {
-            if (alreadyInDeck(card.getId(), card2.getId())) throw new AlredyInException("Card is already in the deck");
+            if (alreadyInDeck(card.getId(), card2.getId())) throw new AlreadyInException("Card is already in the deck");
         }
 
         // try to add the card
         try {
             resourceCards.add(card);
         } catch(Exception e) {
-            throw new UknownWhyException("Can't add the card", e);
+            throw new UnknownWhyException("Can't add the card", e);
         }
     }
     @Override
