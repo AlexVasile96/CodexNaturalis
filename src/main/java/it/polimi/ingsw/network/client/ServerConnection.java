@@ -14,9 +14,6 @@ import java.net.SocketTimeoutException;
 public class ServerConnection implements Runnable {
     private static int index=0;
     private Socket socket;
-    private Socket chatSocket;  // Socket used to send messages to other clients
-    private BufferedReader chatIn; // BufferedReader per i messaggi di chat
-    private PrintWriter chatOut; // PrintWriter per i messaggi di chat
     private ClientView clientView;
     private final BufferedReader in;
     private final BufferedReader stdin;
@@ -97,7 +94,6 @@ public class ServerConnection implements Runnable {
             System.out.println("Connection with server has been closed, thank you for playing Codex!");
         } else {
             try {
-                // exitFromGame();
                 in.close();
                 out.close();
                 socket.close();
@@ -333,8 +329,8 @@ public class ServerConnection implements Runnable {
     private void showYourSpecificSeed() throws IOException {
         sendMessageToServer("showYourSpecificSeed"); // Send request to the server
         System.out.println("Your specific seeds: ");
-        String yourseeds = in.readLine(); // Read the specific seeds from the server
-        System.out.println(yourseeds); // Print the specific seeds
+        String yourSeeds = in.readLine(); // Read the specific seeds from the server
+        System.out.println(yourSeeds); // Print the specific seeds
     }
 
     /**

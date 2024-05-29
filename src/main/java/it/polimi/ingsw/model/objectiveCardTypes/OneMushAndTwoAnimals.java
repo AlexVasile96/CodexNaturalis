@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.game.Node;
 import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.model.game.SpecificSeed;
 
-public class oneMushAndTwoAnimals {
+public class OneMushAndTwoAnimals {
     public void realCheck(Board board, Player player, SpecificSeed seed1, SpecificSeed seed2) {
         Node[][] nodes = board.getNodes();
         int rows = nodes.length;

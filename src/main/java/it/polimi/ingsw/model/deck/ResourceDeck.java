@@ -41,14 +41,14 @@ public class ResourceDeck implements Deck{
         }
         return null;
     }
-    public List<Card> drawCard(List<Card> pozzo) { //METHOD TO PLACE CARDS ON THE WELL
+    public List<Card> drawCard(List<Card> well) { //METHOD TO PLACE CARDS ON THE WELL
         if (resourceCards.isEmpty()) {
             return null; //empty deck
         }
         try {
                 Card drownCard = resourceCards.remove(0);
-                pozzo.add(drownCard);
-                return pozzo;
+                well.add(drownCard);
+                return well;
         } catch(Exception e) {
             throw new UnreachableWell("Coudn't place card in the well",e); // Eccezione specifica
         }

@@ -23,14 +23,9 @@ public class StairsObjectiveCard implements ExtendExtendExtend {
         else{
             checkIfDiagonalMadeByANIMALOrMUSHROOM(nodes, rows, cols, seed, player); // Check if a diagonal pattern made by ANIMAL or MUSHROOM is present
         }
-        checkVariable = resetCheckvariable(nodes, rows, cols); // Reset the check variable after pattern checks
+        checkVariable = resetCheckVariable(nodes, rows, cols); // Reset the check variable after pattern checks
 
         return checkVariable; // Return whether the pattern is found
-    }
-
-    @Override
-    public boolean checkPattern(Board board, SpecificSeed seed, Player player, SpecificSeed specificSeed) {
-        return false;
     }
 
     // Method to check if a diagonal pattern made by INSECT or PLANT is present
@@ -112,7 +107,7 @@ public class StairsObjectiveCard implements ExtendExtendExtend {
         System.out.println("New player score is " + player.getPlayerScore());
     }
 
-    public boolean resetCheckvariable(Node[][] nodes, int rows, int cols) {
+    public boolean resetCheckVariable(Node[][] nodes, int rows, int cols) {
         for (int row = 0; row < rows - 2; row++) {
             for (int columns = 0; columns < cols - 2; columns++) {
                 nodes[row][columns].setAlreadyChecked(false);

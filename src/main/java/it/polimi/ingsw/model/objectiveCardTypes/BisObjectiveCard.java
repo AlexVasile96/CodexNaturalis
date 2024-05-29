@@ -3,11 +3,7 @@ import it.polimi.ingsw.model.game.Board;
 import it.polimi.ingsw.model.game.BoardPoints;
 import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.model.game.SpecificSeed;
-
-import java.io.IOException;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class BisObjectiveCard implements ExtendExtendExtend {
 
@@ -31,21 +27,6 @@ public class BisObjectiveCard implements ExtendExtendExtend {
         }
     }
 
-    public String getNumOfSpecificSeedString(SpecificSeed seed) throws IOException {
-        String seedToString = seed.toString();
-        String regex = seedToString + "=(\\d{1,2})"; // Modifica la regex per catturare una o due cifre
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(seedToString);
-
-        if (matcher.find()) {
-            String matchedGroup = matcher.group(1); // Ottieni il gruppo catturato
-            if (matchedGroup.length() == 1 || matchedGroup.length() == 2) {
-                return matchedGroup;
-            }
-        }
-
-        return null;
-    }
 
     /*
     Get the number of given SpecificSeed on the board
@@ -63,8 +44,4 @@ public class BisObjectiveCard implements ExtendExtendExtend {
         player.setPlayerScore(player.getPlayerScore()+((numberOfSpecificSeed/2)*2));
     }
 
-    @Override
-    public boolean checkPattern(Board board, SpecificSeed seed, Player player, SpecificSeed specificSeed) {
-        return false;
-    }
 }

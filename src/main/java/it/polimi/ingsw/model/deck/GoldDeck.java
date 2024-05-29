@@ -71,14 +71,14 @@ public class GoldDeck implements Deck {
         return null;
     }
     @Override
-    public synchronized List<Card> drawCard(List<Card> pozzo) {
+    public synchronized List<Card> drawCard(List<Card> well) {
         if (goldCards.isEmpty()) {
             return null; //empty deck
         }
         try {
             Card drownCard = goldCards.remove(0);
-            pozzo.add(drownCard);
-            return pozzo;
+            well.add(drownCard);
+            return well;
         } catch(Exception e) {
             throw new IllegalStateException("Player already has 3 card in his deck"); // Specific Exception
         }

@@ -33,7 +33,7 @@ public class InitialCardDeck implements Deck {
     }
 
     @Override
-    public List<Card> drawCard(List<Card> pozzo) {
+    public List<Card> drawCard(List<Card> well) {
         return null;
     }
 

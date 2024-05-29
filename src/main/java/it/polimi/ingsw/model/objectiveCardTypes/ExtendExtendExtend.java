@@ -5,6 +5,6 @@ import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.model.game.SpecificSeed;
 
 public interface ExtendExtendExtend { //   INTERFACED IMPLEMENTED BY THE SPECIFIC OBJECTIVE CARD TYPE
-    public boolean checkPattern(Board board, SpecificSeed seed, Player player);
-    public boolean checkPattern(Board board, SpecificSeed seed, Player player, SpecificSeed specificSeed);
+    boolean checkPattern(Board board, SpecificSeed seed, Player player);
+
 }

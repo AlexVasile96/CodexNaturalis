@@ -34,10 +34,4 @@ Add 2 points for every triplet of the given SpecificSeed to player's score
     public void updatePlayersScore(int numberOfSpecificSeed, Player player){
         player.setPlayerScore(player.getPlayerScore()+((numberOfSpecificSeed/3)*2));
     }
-
-
-    @Override
-    public boolean checkPattern(Board board, SpecificSeed seed, Player player, SpecificSeed specificSeed) {
-        return false;
-    }
 }

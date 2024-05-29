@@ -6,7 +6,6 @@ import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.model.game.SpecificSeed;
 
 public class MixObjectiveCard implements ExtendExtendExtend {
-    private final int pointsForEachMicObjectiveCard = 3;
     // Method to check the pattern on the board
     @Override
     public boolean checkPattern(Board board, SpecificSeed seed, Player player) {
@@ -16,24 +15,21 @@ public class MixObjectiveCard implements ExtendExtendExtend {
     }
 
     //Count the 3 particular seed, keep the lowest number of the seeds (ex if I got 2 3 3, keep 2), do 2x3
-
     // Method to add points to the player based on the counts of seed types
+
     private boolean addMixObjectiveCardPointsToPlayer(int[] counterOfMinimumPoints, Player player) {
         // Find the minimum count among the three seed types
-        int minimo = counterOfMinimumPoints[0];
-        if (counterOfMinimumPoints[1] < minimo) {
-            minimo = counterOfMinimumPoints[1];
+        int minimum = counterOfMinimumPoints[0];
+        if (counterOfMinimumPoints[1] < minimum) {
+            minimum = counterOfMinimumPoints[1];
         }
-        if (counterOfMinimumPoints[2] < minimo) {
-            minimo = counterOfMinimumPoints[2];
+        if (counterOfMinimumPoints[2] < minimum) {
+            minimum = counterOfMinimumPoints[2];
         }
-
-        int points = minimo * pointsForEachMicObjectiveCard; // Calculate points based on the minimum count and add to player's score
+        int pointsForEachMicObjectiveCard = 3;
+        int points = minimum * pointsForEachMicObjectiveCard; // Calculate points based on the minimum count and add to player's score
         player.setPlayerScore(player.getPlayerScore() + points);
         return true;
     }
-    @Override
-    public boolean checkPattern(Board board, SpecificSeed seed, Player player, SpecificSeed specificSeed) {
-        return false;
-    }
+
 }
