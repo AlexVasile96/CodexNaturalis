@@ -1015,6 +1015,8 @@ public class GameSceneController {
                         handleDisconnection();
                     } catch (IOException e) {
                         e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
 
             } catch (SocketTimeoutException e) {
@@ -1035,6 +1037,9 @@ public class GameSceneController {
             try {
                 // Save game progress
                 savePath();
+                synchronized (this){
+                    notifyAll();
+                }
                 // Close resources
                 if (in != null) in.close();
                 if (out != null) out.close();
@@ -2086,7 +2091,11 @@ public class GameSceneController {
      *
      * @throws IOException If an I/O error occurs.
      */
-    private void updateGUI() throws IOException {
+    private void updateGUI() throws IOException, InterruptedException {
+        synchronized (this)
+        {
+            wait();
+        }
         load();
         System.out.println(SharedObjectsInGui.getIdCard1());
         System.out.println(SharedObjectsInGui.getIdCard2());
