@@ -1015,8 +1015,6 @@ public class GameSceneController {
                         handleDisconnection();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
                     }
 
             } catch (SocketTimeoutException e) {
@@ -1037,9 +1035,6 @@ public class GameSceneController {
             try {
                 // Save game progress
                 savePath();
-                synchronized (this){
-                    notifyAll();
-                }
                 // Close resources
                 if (in != null) in.close();
                 if (out != null) out.close();
@@ -2091,16 +2086,17 @@ public class GameSceneController {
      *
      * @throws IOException If an I/O error occurs.
      */
-    private void updateGUI() throws IOException, InterruptedException {
-        synchronized (this)
-        {
-            wait();
-        }
+    private void updateGUI() throws IOException {
         load();
+        initializeWell();
         System.out.println(SharedObjectsInGui.getIdCard1());
         System.out.println(SharedObjectsInGui.getIdCard2());
         System.out.println(SharedObjectsInGui.getIdCard3());
         System.out.println(SharedObjectsInGui.getIdCard4());
+        System.out.println("Well 1: " +SharedObjectsInGui.getIdCard1());
+        System.out.println("Well 2: " +SharedObjectsInGui.getIdCard2());
+        System.out.println("Well 3: " +SharedObjectsInGui.getIdCard3());
+        System.out.println("Well 4: " +SharedObjectsInGui.getIdCard4());
         System.out.println("Carta 1 del deck " + idHandCard1);
         System.out.println("Carta 2 del deck " + idHandCard2);
         System.out.println("Carta 3 del deck " + idHandCard3);
@@ -2207,10 +2203,6 @@ public class GameSceneController {
             JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
             idTopCardResourceDeck = jsonObject.get("idTopResourceCardDeck").getAsString();
             idTopCardGoldDeck = jsonObject.get("idTopGoldCardDeck").getAsString();
-            SharedObjectsInGui.setIdCard1(jsonObject.get("idCard1").getAsString());
-            SharedObjectsInGui.setIdCard2(jsonObject.get("idCard2").getAsString());
-            SharedObjectsInGui.setIdCard3(jsonObject.get("idCard3").getAsString());
-            SharedObjectsInGui.setIdCard4(jsonObject.get("idCard4").getAsString());
             System.out.println("File loaded successfully.");
         } catch (IOException e) {
             e.printStackTrace();
