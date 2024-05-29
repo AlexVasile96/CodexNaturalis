@@ -16,7 +16,6 @@ public class OnePlantAndTwoMushrooms
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < cols; column++)
             {
-                SpecificSeed seed= SpecificSeed.MUSHROOM;
                     //  SE IL PRIMO PLACEMENT è PIANTA E IL SECONDO FUNGO O VICEVERSA
                     if((nodes[row][column].getFirstPlacement()==seed1 && nodes[row][column].getSecondPlacement()==seed2) ||
                             (nodes[row][column].getFirstPlacement()==seed2 && nodes[row][column].getSecondPlacement()==seed1)){ ///26-26 ok

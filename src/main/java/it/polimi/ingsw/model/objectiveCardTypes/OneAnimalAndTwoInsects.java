@@ -15,7 +15,6 @@ public class OneAnimalAndTwoInsects {
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < cols; column++)
             {
-                SpecificSeed seed= SpecificSeed.MUSHROOM;
                 //  SE IL PRIMO PLACEMENT è Animal E IL SECONDO Insetto O VICEVERSA
                 if((nodes[row][column].getFirstPlacement()==seed1 && nodes[row][column].getSecondPlacement()==seed2) ||
                         (nodes[row][column].getFirstPlacement()==seed2 && nodes[row][column].getSecondPlacement()==seed1)){
