@@ -42,9 +42,6 @@ public class ServerConnection implements Runnable {
         this.out= new PrintWriter(socket.getOutputStream(), true);
         this.stdin= new BufferedReader(new InputStreamReader(System.in));
         this.player=new Player(null,0,null,null );
-        // this.chatSocket = new Socket("localhost", 12346);
-    //        this.chatOut = new PrintWriter(chatSocket.getOutputStream(), true);
-//        this.chatIn = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
     }
 
     /**
@@ -55,7 +52,7 @@ public class ServerConnection implements Runnable {
     public void run() {
     String command;
     try {
-        socket.setSoTimeout(60000); // Sets the socket timeout to 60 seconds
+        socket.setSoTimeout(180000); // Sets the socket timeout to 60 seconds
         System.out.println("Welcome! I'm the server, please type anything to start the conversation!\n");
         while (!isTheWhileActive) {
             try {
@@ -109,17 +106,15 @@ public class ServerConnection implements Runnable {
                 e.printStackTrace();
             }
         }
-    } catch (InterruptedException e) {
-        throw new RuntimeException(e);
     } catch (SocketException e) {
         System.out.println("Timeout: the server did not respond within 60 seconds.");
         // Handle the socket closure or other necessary actions
         // Close the socket and exit the thread, if necessary
         isTheWhileActive = true; // Exit the main loop
-    } catch (IOException e) {
+    } catch (InterruptedException | IOException e) {
         throw new RuntimeException(e);
     }
-}
+    }
 
 
 
@@ -203,7 +198,7 @@ public class ServerConnection implements Runnable {
             return;
         }
 
-        // Inform the player if it's the last turn and they haven't placed a card yet
+
         if (lastTurn && !player.isHasThePlayerAlreadyPLacedACard()) {
             System.out.println("-----------------------------------------------------------\n" + winningPlayer + " has reached 20Pts! This is the last turn!\n-----------------------------------------------------------");
         }
@@ -800,19 +795,16 @@ public class ServerConnection implements Runnable {
             sendMessageToServer("showYourCardDeck");
             System.out.println("Your Deck:");
             System.out.println("--------------------------------------------------------------------------------------");
-            receivingPrintingUpdatingCards();
-            System.out.println("--------------------------------------------------------------------------------------");
-            showWell();
         } else {
             System.out.println("Operation failed");
             System.out.println("Server says: " + result);
             System.out.println("Your Deck:");
             System.out.println("--------------------------------------------------------------------------------------");
             sendMessageToServer("showYourCardDeck");
-            receivingPrintingUpdatingCards();
-            System.out.println("--------------------------------------------------------------------------------------");
-            showWell();
         }
+        receivingPrintingUpdatingCards();
+        System.out.println("--------------------------------------------------------------------------------------");
+        showWell();
     }
 
     /**
@@ -899,7 +891,6 @@ public class ServerConnection implements Runnable {
      * @throws IOException If an input/output error occurs while communicating with the server.
      */
     private void takingTheInitialCard() throws IOException {
-        boolean hasTheCardAlreadyBeenTurn = false; // Flag to check if the card has already been turned
         String firstCard = in.readLine(); // Gets the first card from the server
         String FrontalCorners = in.readLine(); // Gets the front corners of the card from the server
         String BackCorners = in.readLine(); // Gets the back corners of the card from the server
@@ -1104,15 +1095,13 @@ public class ServerConnection implements Runnable {
 
     private void noPersistenceLogin() throws IOException {
         System.out.println(in.readLine()); // All clients connected
-        String whatIsYourIndex=null;
-        int gameSize=0;
+        String whatIsYourIndex;
+        int gameSize;
         gameSize= Integer.parseInt(in.readLine());
         whatIsYourIndex=in.readLine();
         if(Integer.parseInt(whatIsYourIndex)<=gameSize) {
             assigningSecretCard(); // Choosing the secret Card
             takingTheInitialCard(); // Taking the initial Card
-            //String waitingAllClientsTOChooseInitialcard = in.readLine(); // All clients chose
-            // System.out.println(waitingAllClientsTOChooseInitialcard);
             System.out.println("Login phase ended!");
             waitAllPlayers();
         }
@@ -1148,14 +1137,15 @@ public class ServerConnection implements Runnable {
     }
     private void waitAllPlayers() throws IOException {
         String message=in.readLine();
-            if (message.equals("All clients chose the init Card")) {
+        switch (message) {
+            case "All clients chose the init Card" -> {
                 System.out.println(message);
-                handleInitiCardChoice();
+                handleInitCardChoice();
             }
-            else if (message.equals("SETUPFINISHED")) {
+            case "SETUPFINISHED" -> {
                 System.out.println(message);
                 currentPlayer = in.readLine();
-                System.out.println("Current Player:" +currentPlayer);
+                System.out.println("Current Player:" + currentPlayer);
                 String nextPlayer = in.readLine();
                 System.out.println("Next PLayer is:" + nextPlayer);
 
@@ -1167,21 +1157,19 @@ public class ServerConnection implements Runnable {
                     waitAllPlayers();
                 }
             }
-            else if(message.equals("STARTGUI"))
-            {
-                System.out.println("All clients logged!");
-            }
-            else{
+            case "STARTGUI" -> System.out.println("All clients logged!");
+            default -> {
                 System.out.println("Not your turn yet, please wait...");
                 waitAllPlayers();
             }
+        }
 
     }
 
     private void gameDataElaboration() throws IOException {
         System.out.println("Initializing game data for client: " + clientView.getUserName());
-        out.println("updateLoggedPlayers");                                         //+1 dei logged players
-        System.out.println("Server says: " + in.readLine());                                         //Update loggedPlayers
+        out.println("updateLoggedPlayers");
+        System.out.println("Server says: " + in.readLine());
         out.println("howManyPlayers");
         loggedInPlayers= Integer.parseInt(in.readLine());
         System.out.println("Logged in players: " + loggedInPlayers);
@@ -1190,7 +1178,7 @@ public class ServerConnection implements Runnable {
         System.out.println("Total PLayers in the game: " + totalPlayers);
         if (loggedInPlayers<totalPlayers) {
             out.println("SETUPFINISHED");
-            System.out.println(in.readLine()); //stampo la setupfinished
+            System.out.println(in.readLine());
             System.out.println("First Player in game is "+ in.readLine());
             System.out.println("Next player to setup is " + in.readLine());
         }
@@ -1209,7 +1197,7 @@ public class ServerConnection implements Runnable {
         }
     }
 
-    private void handleInitiCardChoice() throws IOException {
+    private void handleInitCardChoice() throws IOException {
         currentPlayer = in.readLine(); // Who is the current player?
         System.out.println("CurrentPlayerNickname is: " + currentPlayer);
         if (in.readLine().equals("You are the first client")) {

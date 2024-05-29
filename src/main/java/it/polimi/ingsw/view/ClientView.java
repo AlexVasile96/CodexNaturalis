@@ -68,10 +68,6 @@ public class ClientView {
 
     }
 
-    public int getIndex() {
-        return index;
-    }
-
     public void setIndex(int index) {
         this.index = index;
     }
@@ -159,7 +155,6 @@ public class ClientView {
         JsonArray cardsOnTheBoardArray = new JsonArray();
         for (String card : cardsOnTheBoard) {
             cardsOnTheBoardArray.add(card);
-            System.out.println("AGGIUNTA CARTA DELLA CLIENT VIEW: " + card);
         }
         jsonObject.add("cardsOnTheBoard", cardsOnTheBoardArray);
 

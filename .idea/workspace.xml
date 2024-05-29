@@ -9,19 +9,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Jar fixed latest versinoe w/Alex">
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Player class updates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/TurnController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/TurnController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/ServerConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/ServerConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/cli/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/cli/ChatClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/cli/CliClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/cli/CliClientApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/cli/StartChat.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/GameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/GameSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/EndGameScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/EndGameScene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/HandlingPlayerInputsThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/HandlingPlayerInputsThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/view/ClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/view/ClientView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/currentplayer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/currentplayer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/gameSize.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gameSize.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,13 +140,26 @@
       <command value="mvn clean package" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.CliClientApp">
+  <component name="RunManager" selected="Application.GUI">
     <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.network.client.cli.CliClientApp" />
       <module name="proj" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="it.polimi.ingsw.network.client.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Codex" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.codex.Codex" />
+      <module name="proj" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.polimi.ingsw.codex.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -160,22 +176,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GoldDeckTest.cannotDrawMoreThanThree" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="proj" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="model" />
-      <option name="MAIN_CLASS_NAME" value="model.GoldDeckTest" />
-      <option name="METHOD_NAME" value="cannotDrawMoreThanThree" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -199,19 +199,19 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Application.Codex" />
       <item itemvalue="Application.GUI" />
       <item itemvalue="Application.CliClientApp" />
       <item itemvalue="JAR Application.proj.jar" />
       <item itemvalue="JUnit.model in proj" />
-      <item itemvalue="JUnit.GoldDeckTest.cannotDrawMoreThanThree" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.CliClientApp" />
         <item itemvalue="Application.GUI" />
+        <item itemvalue="Application.CliClientApp" />
+        <item itemvalue="Application.Codex" />
         <item itemvalue="JAR Application.proj.jar" />
         <item itemvalue="JUnit.model in proj" />
-        <item itemvalue="JUnit.GoldDeckTest.cannotDrawMoreThanThree" />
       </list>
     </recent_temporary>
   </component>
@@ -261,7 +261,7 @@
       <workItem from="1716923775615" duration="1458000" />
       <workItem from="1716926491278" duration="1989000" />
       <workItem from="1716930486079" duration="240000" />
-      <workItem from="1716967127009" duration="3354000" />
+      <workItem from="1716967127009" duration="6368000" />
     </task>
     <task id="LOCAL-00001" summary="English translation">
       <option name="closed" value="true" />
@@ -607,7 +607,23 @@
       <option name="project" value="LOCAL" />
       <updated>1716930710119</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="EndGame For Gui + gameController fix update">
+      <option name="closed" value="true" />
+      <created>1716970793992</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1716970793992</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Player class updates">
+      <option name="closed" value="true" />
+      <created>1716971522517</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1716971522517</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -625,8 +641,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="EndGame for GUI" />
-    <MESSAGE value="Resource card now can be placed on their back without clicking on them a second time" />
     <MESSAGE value="Last gold card update" />
     <MESSAGE value="Not to be placed on" />
     <MESSAGE value="commit to pietro" />
@@ -650,7 +664,9 @@
     <MESSAGE value="OnePlantAndTwoMushrooms" />
     <MESSAGE value="Marco palese mi ha aiutato a fare il pom (not working rn)" />
     <MESSAGE value="Jar fixed latest versinoe w/Alex" />
-    <option name="LAST_COMMIT_MESSAGE" value="Jar fixed latest versinoe w/Alex" />
+    <MESSAGE value="EndGame For Gui + gameController fix update" />
+    <MESSAGE value="Player class updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Player class updates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -710,26 +726,6 @@
           <line>43</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java</url>
-          <line>290</line>
-          <option name="timeStamp" value="49" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java</url>
-          <line>286</line>
-          <option name="timeStamp" value="50" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java</url>
-          <line>260</line>
-          <option name="timeStamp" value="52" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java</url>
-          <line>261</line>
-          <option name="timeStamp" value="53" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/test/java/model/BoardTest.java</url>
           <line>145</line>
@@ -747,24 +743,6 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java</url>
-          <line>259</line>
-          <properties class="it.polimi.ingsw.model.game.Player" method="playCard">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java</url>
-          <line>317</line>
-          <properties class="it.polimi.ingsw.model.game.Player" method="checkIfTheCardExist">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="54" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
