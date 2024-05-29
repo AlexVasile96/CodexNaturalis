@@ -1,18 +1,15 @@
 package it.polimi.ingsw.model.game;
 
 import com.google.gson.JsonObject;
-import it.polimi.ingsw.exceptions.InvalidCornerException;
 import it.polimi.ingsw.model.card.*;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import it.polimi.ingsw.model.deck.GoldDeck;
 import it.polimi.ingsw.model.deck.ResourceDeck;
 import it.polimi.ingsw.view.ClientView;
 
 import java.util.*;
 
-public class Player implements Observable {
-    private String nickName;
+public class Player {
+    private final String nickName;
     private int playerScore;
     private int index;
     private Dot dot;
@@ -24,7 +21,6 @@ public class Player implements Observable {
     private boolean hasThePlayerAlreadyPLacedACard= false;
     private boolean isThePlayerDeckStarted=false;
     private boolean hasThePlayerGot20Points=false;
-    private boolean noMoreTurns = false;
 
     //private boolean hasThePlayerPlacedACard=false;
     public Player(String nickName, int playerScore, Dot dot, Board board){ //PLAYER CONSTRUCTOR
@@ -167,15 +163,13 @@ public class Player implements Observable {
         System.out.println("card existence:"+ checkIfTheCardExist(cardIndex)+ "  (if zero-> doesn't exists)");                                         //CHECKING IF THE CARD TRULY EXISTS->OKAY
         boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
         if(selectedCardFromTheDeck.isCardBack()) return true;
-        if(!canIPLaceTheGoldCard && selectedCardFromTheDeck.getId()>40) return false;
-        return true;
+        return canIPLaceTheGoldCard || selectedCardFromTheDeck.getId() <= 40;
     }
 
     public boolean checkTheGoldCardForGui(int cardIndex)
     {
         Card selectedCardFromTheDeck = chooseCard(cardIndex);
-        boolean canIPLaceTheGoldCard= isTheCardGold(selectedCardFromTheDeck);   //CHECKING IF THE CARD IS GOLD && requirements are respected->OKAY
-        return canIPLaceTheGoldCard;
+        return isTheCardGold(selectedCardFromTheDeck);
     }
 
     public Card gettingCardsFromTheBoard(Board board, int cardChosenONTheBoard)
@@ -189,15 +183,11 @@ public class Player implements Observable {
         if (cardPlayerChoose.getId() == initialCard.getId()) {        //THE  CARD CHOSEN ON THE BOARD IS THE INITIAL CARD AND WE HAVE TO DELETE THE CORNERS NOT AVAILABLE
             List<Corner> availableCorners = creatingCorners(initialCard);
             cardChosenIsTheInitialcard(initialCard,availableCorners);
-            return freeScornerosi(availableCorners, cardPlayerChoose);
+            return freeCornersOnTheBoard(availableCorners, cardPlayerChoose);
         } else {                                                        //CARD CHOSEN ISN'T THE INITIAL CARD
-            /*List<Corner> availableCorners= creatingCornersForNotInitialcard(cardPlayerChoose);
-            List<Corner> corner= creatingCornersForNotInitialcard(cardPlayerChoose);
-            cardChosenIsNotTheInitialcard(availableCorners,corner);
-            return freeScornerosi(availableCorners, cardPlayerChoose);*/
 
             List<Corner> availableCorners= creatingCornersForNotInitialcardMomoVersion(cardPlayerChoose);
-            return freeScornerosi(availableCorners, cardPlayerChoose);
+            return freeCornersOnTheBoard(availableCorners, cardPlayerChoose);
         }
 
     }
@@ -252,7 +242,6 @@ public class Player implements Observable {
         updatingPoints(selectedCardFromTheDeck); //Updating player Points
         if (playerScore >= 20) {                                            //EndGame if the playerpoints=>20 points
             System.out.println("Player " + getNickName() + "has reached 20 points!\n");
-            EndGame endGame = new EndGame();
         }
     }
 
@@ -357,24 +346,6 @@ public class Player implements Observable {
         return availableCorners;
     }
 
-    private List<Corner> creatingCornersForNotInitialcard(Card cardPlayerChoose){
-        List<Corner> availableCorners = new ArrayList<>();                          //CREATING CORNERS THAT WILL BE DISPLAYED TO THE PLAYER
-
-     if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()!=1)
-        {
-            availableCorners.add(cardPlayerChoose.getTL());
-            availableCorners.add(cardPlayerChoose.getTR());
-            availableCorners.add(cardPlayerChoose.getBL());
-            availableCorners.add(cardPlayerChoose.getBR());
-        }
-        else if(!cardPlayerChoose.isCardBack()){
-            availableCorners.add(cardPlayerChoose.getTL());
-            availableCorners.add(cardPlayerChoose.getTR());
-            availableCorners.add(cardPlayerChoose.getBL());
-            availableCorners.add(cardPlayerChoose.getBR());
-        }
-        return availableCorners;
-    }
 
     private List<Corner> creatingCornersForNotInitialcardMomoVersion(Card cardPlayerChoose){
         List<Corner> availableCorners = new ArrayList<>();                          //CREATING CORNERS THAT WILL BE DISPLAYED TO THE PLAYER
@@ -398,40 +369,28 @@ public class Player implements Observable {
         SpecificSeed nord = board.getNode(x-1, y).getSpecificNodeSeed();
         SpecificSeed est = board.getNode(x, y-1).getSpecificNodeSeed();
         SpecificSeed nordEst = board.getNode(x-1, y-1).getSpecificNodeSeed();
-        if(seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter >0 && nord != SpecificSeed.NOTTOBEPLACEDON && est != SpecificSeed.NOTTOBEPLACEDON && nordEst != SpecificSeed.NOTTOBEPLACEDON){
-            return true;
-        }
-        return false;
+        return seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && nord != SpecificSeed.NOTTOBEPLACEDON && est != SpecificSeed.NOTTOBEPLACEDON && nordEst != SpecificSeed.NOTTOBEPLACEDON;
     }
 
     private boolean IsTheTRCornerUsable(SpecificSeed seed, int valueCounter, int x, int y) {
         SpecificSeed ovest= board.getNode(x, y+1).getSpecificNodeSeed();
         SpecificSeed nord = board.getNode(x-1, y).getSpecificNodeSeed();
         SpecificSeed nordOvest = board.getNode(x-1, y+1).getSpecificNodeSeed();
-        if(seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && ovest != SpecificSeed.NOTTOBEPLACEDON && nord != SpecificSeed.NOTTOBEPLACEDON && nordOvest != SpecificSeed.NOTTOBEPLACEDON) {
-            return true;
-        }
-        return false;
+        return seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && ovest != SpecificSeed.NOTTOBEPLACEDON && nord != SpecificSeed.NOTTOBEPLACEDON && nordOvest != SpecificSeed.NOTTOBEPLACEDON;
     }
 
     private boolean IsTheBLCornerUsable(SpecificSeed seed, int valueCounter, int x, int y) {
         SpecificSeed est = board.getNode(x, y-1).getSpecificNodeSeed();
         SpecificSeed sud = board.getNode(x+1, y).getSpecificNodeSeed();
         SpecificSeed sudEst = board.getNode(x+1, y-1).getSpecificNodeSeed();
-        if(seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && est != SpecificSeed.NOTTOBEPLACEDON && sud != SpecificSeed.NOTTOBEPLACEDON && sudEst != SpecificSeed.NOTTOBEPLACEDON) {
-            return true;
-        }
-        return false;
+        return seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && est != SpecificSeed.NOTTOBEPLACEDON && sud != SpecificSeed.NOTTOBEPLACEDON && sudEst != SpecificSeed.NOTTOBEPLACEDON;
     }
 
     private boolean IsTheBRCornerUsable(SpecificSeed seed, int valueCounter, int x, int y) {//a posto
         SpecificSeed sud = board.getNode(x+1, y).getSpecificNodeSeed();
         SpecificSeed ovest = board.getNode(x, y+1).getSpecificNodeSeed();
         SpecificSeed sudOvest = board.getNode(x-1, y-1).getSpecificNodeSeed();
-        if(seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && sud != SpecificSeed.NOTTOBEPLACEDON && ovest != SpecificSeed.NOTTOBEPLACEDON && sudOvest != SpecificSeed.NOTTOBEPLACEDON) {
-            return true;
-        }
-        return false;
+        return seed != SpecificSeed.NOTTOBEPLACEDON && valueCounter > 0 && sud != SpecificSeed.NOTTOBEPLACEDON && ovest != SpecificSeed.NOTTOBEPLACEDON && sudOvest != SpecificSeed.NOTTOBEPLACEDON;
     }
 
 
@@ -462,60 +421,9 @@ public class Player implements Observable {
             }
         }
     }
-    private void cardChosenIsNotTheInitialcard(List<Corner> availableCorners, List<Corner> corner) {
-        for (int i = corner.size() - 1; i >= 0; i--) {
-            if (corner.get(i).getSpecificCornerSeed() == SpecificSeed.NOTTOBEPLACEDON || corner.get(i).getValueCounter() == 0) { //SAMECHECK
-                availableCorners.remove(i);
-                corner.remove(i);
-            }
-        }
-    }
 
 
-
-
-
-    private String freeCornersOfTheSelectedCard(List<Corner> availableCorners, Card cardPlayerChoose, Scanner scanner){
-        Map<Corner, String> cornerLabels = new HashMap<>();      //PUTTING THE CORRECT CORNERLABEL TO THE CORRECT CORNER
-        if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()==1){
-            cornerLabels.put(((InitialCard) cardPlayerChoose).getTLIBack(), "TLBack");
-            cornerLabels.put(((InitialCard) cardPlayerChoose).getTRIBack(), "TRBack");
-            cornerLabels.put(((InitialCard) cardPlayerChoose).getBLIBack(), "BLBack");
-            cornerLabels.put(((InitialCard) cardPlayerChoose).getBRIBack(), "BRBack");}
-        else if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()!=1)
-        {
-            cornerLabels.put(cardPlayerChoose.getTLBack(), "TLBack");
-            cornerLabels.put(cardPlayerChoose.getTRBack(), "TRBack");
-            cornerLabels.put(cardPlayerChoose.getBLBack(), "BLBack");
-            cornerLabels.put(cardPlayerChoose.getBRBack(), "BRBack");
-        }
-        else if(!cardPlayerChoose.isCardBack())
-        {
-            cornerLabels.put(cardPlayerChoose.getTL(), "TL");
-            cornerLabels.put(cardPlayerChoose.getTR(), "TR");
-            cornerLabels.put(cardPlayerChoose.getBL(), "BL");
-            cornerLabels.put(cardPlayerChoose.getBR(), "BR");
-        }
-
-        System.out.println("Free Corners of the selected card "); //DISPLAYING THE POSSIBLE CORNERS
-        for (int i = 0; i < availableCorners.size(); i++) {
-            Corner corner = availableCorners.get(i);
-            String cornerLabel = cornerLabels.get(corner);
-            System.out.println((i + 1) + ". " + corner + " -> " + cornerLabel + "|Please press " +cornerLabel + " to select the corner ");
-        }
-        System.out.print("Choose the corner you want to place the card on: ");
-        String selectedCorner = scanner.next().toUpperCase();
-        try{
-            if (!selectedCorner.equals("TL") && !selectedCorner.equals("TR") && !selectedCorner.equals("BL") && !selectedCorner.equals("BR")) {
-                throw new InvalidCornerException("Invalid corner selection.");
-            }
-        }  catch (InvalidCornerException e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-        return selectedCorner;
-    }
-    private String freeScornerosi(List<Corner> availableCorners, Card cardPlayerChoose){
+    private String freeCornersOnTheBoard(List<Corner> availableCorners, Card cardPlayerChoose){
         Map<Corner, String> cornerLabels = new HashMap<>();                                 //PUTTING THE CORRECT CORNERLABEL TO THE CORRECT CORNER
         if(cardPlayerChoose.isCardBack() && cardPlayerChoose.getIndexOnTheBoard()==1){
             cornerLabels.put(((InitialCard) cardPlayerChoose).getTLIBack(), "TL");
@@ -547,12 +455,7 @@ public class Player implements Observable {
             options.append((i + 1)).append(". ").append(corner).append(" -> ").append(cornerLabel).append("|Please press ").append(cornerLabel).append(" to select the corner\n");
         }
         options.append("\nend");
-        //System.out.println(options);
         return options.toString();
-
-
-
-
     }
 
 
@@ -823,9 +726,6 @@ public class Player implements Observable {
     public List<Card> getPlayerCards() {
         return playerCards;
     }
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
     public void setPlayerScore(int playerScore) {
         this.playerScore = playerScore;
     }
@@ -853,20 +753,11 @@ public class Player implements Observable {
     public boolean isCardBack() {
         return isCardBack;
     }
-    public void setCardBack(boolean cardBack) {
-        isCardBack = cardBack;
-    }
     public ObjectiveCard getSecretChosenCard() {
         return secretChosenCard;
     }
     public void setSecretChosenCard(ObjectiveCard secretChosenCard) {
         this.secretChosenCard = secretChosenCard;
-    }
-    @Override
-    public void addListener(InvalidationListener invalidationListener) {
-    }
-    @Override
-    public void removeListener(InvalidationListener invalidationListener) {
     }
 
 
@@ -913,23 +804,12 @@ public class Player implements Observable {
         return jsonObject;
     }
 
-
-
     public boolean isHasThePlayerGot20Points() {
-        boolean test = hasThePlayerGot20Points;
         return hasThePlayerGot20Points;
     }
 
     public void setHasThePlayerGot20Points(boolean hasThePlayerGot20Points) {
         this.hasThePlayerGot20Points = hasThePlayerGot20Points;
-    }
-
-    public void noMoreTurns() {
-        this.noMoreTurns = true;
-    }
-
-    public boolean getNoMoreTurns() {
-        return noMoreTurns;
     }
     @Override
     public boolean equals(Object o) {
