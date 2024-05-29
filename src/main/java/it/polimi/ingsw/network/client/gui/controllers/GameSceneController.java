@@ -954,6 +954,7 @@ public class GameSceneController {
                         EndGameScene endGameScene= new EndGameScene(primaryStage,out,socket,in,clientView, controller);
                         try {
                             endGameScene.endGame();
+                            controller.quit(primaryStage);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

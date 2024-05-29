@@ -5,7 +5,6 @@ import it.polimi.ingsw.exceptions.InvalidCornerException;
 import it.polimi.ingsw.model.card.*;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import it.polimi.ingsw.model.card.*;
 import it.polimi.ingsw.model.deck.GoldDeck;
 import it.polimi.ingsw.model.deck.ResourceDeck;
 import it.polimi.ingsw.view.ClientView;

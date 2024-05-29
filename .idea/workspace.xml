@@ -9,7 +9,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Jar fixed latest versinoe w/Alex" />
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Jar fixed latest versinoe w/Alex">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/ServerConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/ServerConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/GameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/GameSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/EndGameScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/EndGameScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/HandlingPlayerInputsThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/HandlingPlayerInputsThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/currentplayer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/currentplayer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/gamestatus.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gamestatus.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/saveplayers.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/saveplayers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,7 +47,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/PietroCallandrone/IS24-LB05.git&quot;,
-    &quot;accountId&quot;: &quot;79d27218-8d9f-4caf-92da-4612ca7f2ac9&quot;
+    &quot;accountId&quot;: &quot;66b03c10-d4a3-43d0-a6c5-1104829d0c1d&quot;
   }
 }</component>
   <component name="ProblemsViewState">
@@ -49,70 +62,70 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ChatServer.executor&quot;: &quot;Run&quot;,
-    &quot;Application.CliClientApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Codex.executor&quot;: &quot;Run&quot;,
-    &quot;Application.GUI.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ServerMain.executor&quot;: &quot;Run&quot;,
-    &quot;Application.it.polimi.ingsw.network.client.cli.CliClientApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.it.polimi.ingsw.network.client.gui.GUI.executor&quot;: &quot;Debug&quot;,
-    &quot;JAR Application.json-20240303.jar.executor&quot;: &quot;Run&quot;,
-    &quot;JAR Application.proj.jar.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.All in proj (1).executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.All in proj (2).executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.All in proj.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.BisObjectiveCardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardPointsTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.generalStairsTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.placeInitialCard.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.test4MushroomsInStairs.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.test4PLANTInStairs.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithMixObjective.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithStairsObjective.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithTRISObjective.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.BoardTest.testMushroomMushroomInsect.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testTWODifferentstairs.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testTWODifferentstairsANIMAL.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testTWODifferentstairsMUSHROOM.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testTWODifferentstairsPLANT.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GoldDeckTest.cannotDrawMoreThanThree.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GoldDeckTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.InitialCardDeckTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ObjectiveDeckTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PlayerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ResourceDeckTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ResourceUpdaterTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StairsObjectiveCardTest.checkPattern.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StairsObjectiveCardTest.checkPattern2.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.StairsObjectiveCardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrisObjectiveCardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.model in proj.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.proj [clean,package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.proj [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.proj [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.proj [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.proj [test].executor&quot;: &quot;Debug&quot;,
-    &quot;Maven.proj [validate].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ChatServer.executor": "Run",
+    "Application.CliClientApp.executor": "Run",
+    "Application.Codex.executor": "Run",
+    "Application.GUI.executor": "Run",
+    "Application.ServerMain.executor": "Run",
+    "Application.it.polimi.ingsw.network.client.cli.CliClientApp.executor": "Run",
+    "Application.it.polimi.ingsw.network.client.gui.GUI.executor": "Debug",
+    "JAR Application.json-20240303.jar.executor": "Run",
+    "JAR Application.proj.jar.executor": "Run",
+    "JUnit.All in proj (1).executor": "Coverage",
+    "JUnit.All in proj (2).executor": "Coverage",
+    "JUnit.All in proj.executor": "Coverage",
+    "JUnit.BisObjectiveCardTest.executor": "Run",
+    "JUnit.BoardPointsTest.executor": "Run",
+    "JUnit.BoardTest.executor": "Run",
+    "JUnit.BoardTest.generalStairsTest.executor": "Run",
+    "JUnit.BoardTest.placeInitialCard.executor": "Run",
+    "JUnit.BoardTest.test4MushroomsInStairs.executor": "Run",
+    "JUnit.BoardTest.test4PLANTInStairs.executor": "Run",
+    "JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective.executor": "Run",
+    "JUnit.BoardTest.testCreateSpecificSecretCardWithMixObjective.executor": "Run",
+    "JUnit.BoardTest.testCreateSpecificSecretCardWithStairsObjective.executor": "Run",
+    "JUnit.BoardTest.testCreateSpecificSecretCardWithTRISObjective.executor": "Debug",
+    "JUnit.BoardTest.testMushroomMushroomInsect.executor": "Run",
+    "JUnit.BoardTest.testTWODifferentstairs.executor": "Run",
+    "JUnit.BoardTest.testTWODifferentstairsANIMAL.executor": "Run",
+    "JUnit.BoardTest.testTWODifferentstairsMUSHROOM.executor": "Run",
+    "JUnit.BoardTest.testTWODifferentstairsPLANT.executor": "Run",
+    "JUnit.GoldDeckTest.cannotDrawMoreThanThree.executor": "Run",
+    "JUnit.GoldDeckTest.executor": "Run",
+    "JUnit.InitialCardDeckTest.executor": "Run",
+    "JUnit.ObjectiveDeckTest.executor": "Run",
+    "JUnit.PlayerTest.executor": "Run",
+    "JUnit.ResourceDeckTest.executor": "Run",
+    "JUnit.ResourceUpdaterTest.executor": "Run",
+    "JUnit.StairsObjectiveCardTest.checkPattern.executor": "Run",
+    "JUnit.StairsObjectiveCardTest.checkPattern2.executor": "Debug",
+    "JUnit.StairsObjectiveCardTest.executor": "Run",
+    "JUnit.TrisObjectiveCardTest.executor": "Run",
+    "JUnit.model in proj.executor": "Run",
+    "Maven.proj [clean,package].executor": "Run",
+    "Maven.proj [clean].executor": "Run",
+    "Maven.proj [compile].executor": "Run",
+    "Maven.proj [package].executor": "Run",
+    "Maven.proj [test].executor": "Debug",
+    "Maven.proj [validate].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\pitca\IdeaProjects\progettone\src\main\java\it\polimi\ingsw" />
@@ -124,7 +137,7 @@
       <command value="mvn clean package" />
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.CliClientApp">
     <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.network.client.cli.CliClientApp" />
       <module name="proj" />
@@ -138,17 +151,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GoldDeckTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.network.client.gui.GUI" />
       <module name="proj" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="model.*" />
+          <option name="PATTERN" value="it.polimi.ingsw.network.client.gui.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="model" />
-      <option name="MAIN_CLASS_NAME" value="model.GoldDeckTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -188,27 +199,27 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Application.GUI" />
       <item itemvalue="Application.CliClientApp" />
       <item itemvalue="JAR Application.proj.jar" />
       <item itemvalue="JUnit.model in proj" />
-      <item itemvalue="JUnit.GoldDeckTest" />
       <item itemvalue="JUnit.GoldDeckTest.cannotDrawMoreThanThree" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.CliClientApp" />
+        <item itemvalue="Application.GUI" />
         <item itemvalue="JAR Application.proj.jar" />
         <item itemvalue="JUnit.model in proj" />
         <item itemvalue="JUnit.GoldDeckTest.cannotDrawMoreThanThree" />
-        <item itemvalue="JUnit.GoldDeckTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
       </set>
     </attachedChunks>
   </component>
@@ -249,6 +260,8 @@
       <workItem from="1716920282215" duration="2296000" />
       <workItem from="1716923775615" duration="1458000" />
       <workItem from="1716926491278" duration="1989000" />
+      <workItem from="1716930486079" duration="240000" />
+      <workItem from="1716967127009" duration="3354000" />
     </task>
     <task id="LOCAL-00001" summary="English translation">
       <option name="closed" value="true" />
@@ -586,7 +599,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716929811647</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Jar fixed latest versinoe w/Alex">
+      <option name="closed" value="true" />
+      <created>1716930710119</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1716930710119</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -645,18 +666,13 @@
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Game.java</url>
-          <line>202</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/HandlingPlayerInputsThread.java</url>
-          <line>180</line>
+          <line>177</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/HandlingPlayerInputsThread.java</url>
-          <line>486</line>
+          <line>446</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -694,23 +710,25 @@
           <line>43</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Game.java</url>
-          <line>200</line>
-          <properties class="it.polimi.ingsw.model.game.Game">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="10" />
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java</url>
+          <line>290</line>
+          <option name="timeStamp" value="49" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/Command.java</url>
-          <line>7</line>
-          <properties class="it.polimi.ingsw.controller.Command">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="14" />
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java</url>
+          <line>286</line>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java</url>
+          <line>260</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java</url>
+          <line>261</line>
+          <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/test/java/model/BoardTest.java</url>
@@ -724,11 +742,29 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/StairsObjectiveCard.java</url>
           <line>36</line>
-          <properties class="it.polimi.ingsw.model.objectiveCardTypes.StairsObjectiveCard">
+          <properties class="it.polimi.ingsw.model.objectiveCardTypes.StairsObjectiveCard" method="checkIfDiagonalMadeByINSECTOrPLANT">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java</url>
+          <line>259</line>
+          <properties class="it.polimi.ingsw.model.game.Player" method="playCard">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java</url>
+          <line>317</line>
+          <properties class="it.polimi.ingsw.model.game.Player" method="checkIfTheCardExist">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="54" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
