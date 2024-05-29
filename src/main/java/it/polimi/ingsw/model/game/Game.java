@@ -161,7 +161,7 @@ public class Game{
         System.out.println("Suspance...");
         finalText.append("Suspance...\n");
         System.out.println(winner.getNickName());
-        finalText.append(">>>>>>>>>>>>>>>>>>>>>>>>"+winner.getNickName()+"<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
+        finalText.append(winner.getNickName());
         finalText.append("Points:\n");
         for (Player player : players) {
             finalText.append(player.getNickName() + "-> " + player.getPlayerScore()+"\n");

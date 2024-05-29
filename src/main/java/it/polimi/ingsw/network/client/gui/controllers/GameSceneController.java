@@ -2221,7 +2221,7 @@ public class GameSceneController {
         int x = getX(cardOnTheBoard);
         int y = getY(cardOnTheBoard);
 
-        if (cornerSelected.equals("BR")) {
+        if (cornerSelected!=null &&cornerSelected.equals("BR")) {
             int newX = x; //TR
             int newY = y+2;
             Node targetNode = searchForNode(newX, newY);
@@ -2238,7 +2238,7 @@ public class GameSceneController {
             checkIfTheNodeIsPlaceable(targetNode);
             if(isNotToBePlacedon) return;
         }
-        if(cornerSelected.equals("TR")){
+        if(cornerSelected!=null && cornerSelected.equals("TR")){
             int newX = x - 2; //TL
             int newY = y;
             Node targetNode = searchForNode(newX, newY);
@@ -2255,7 +2255,7 @@ public class GameSceneController {
             checkIfTheNodeIsPlaceable(targetNode);
             if(isNotToBePlacedon) return;
         }
-        if(cornerSelected.equals("TL")){
+        if(cornerSelected!=null &&cornerSelected.equals("TL")){
             int newX = x - 2; //TR
             int newY = y;
             Node targetNode = searchForNode(newX, newY);
@@ -2272,7 +2272,7 @@ public class GameSceneController {
             checkIfTheNodeIsPlaceable(targetNode);
             if(isNotToBePlacedon) return;
         }
-        if(cornerSelected.equals("BL")){
+        if(cornerSelected!=null && cornerSelected.equals("BL")){
             int newX = x; //TL
             int newY = y-2;
             Node targetNode = searchForNode(newX, newY);
