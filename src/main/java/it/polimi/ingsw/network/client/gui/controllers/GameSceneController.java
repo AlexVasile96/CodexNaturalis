@@ -2092,15 +2092,15 @@ public class GameSceneController {
      * @throws IOException If an I/O error occurs.
      */
     private void updateGUI() throws IOException, InterruptedException {
-        synchronized (this)
-        {
-            wait();
-        }
         load();
         System.out.println(SharedObjectsInGui.getIdCard1());
         System.out.println(SharedObjectsInGui.getIdCard2());
         System.out.println(SharedObjectsInGui.getIdCard3());
         System.out.println(SharedObjectsInGui.getIdCard4());
+        System.out.println("prima carta del well"+SharedObjectsInGui.getIdCard1());
+        System.out.println("seconda carta del well"+SharedObjectsInGui.getIdCard2());
+        System.out.println("terza carta del well"+SharedObjectsInGui.getIdCard3());
+        System.out.println("quarta carta del well"+SharedObjectsInGui.getIdCard4());
         System.out.println("Carta 1 del deck " + idHandCard1);
         System.out.println("Carta 2 del deck " + idHandCard2);
         System.out.println("Carta 3 del deck " + idHandCard3);
