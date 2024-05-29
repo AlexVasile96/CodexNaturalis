@@ -1,17 +1,41 @@
 package it.polimi.ingsw.network.server;
 
 import javafx.application.Platform;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
 public class ChatServer {
+    static int portNumber;
     private static Map<String, ClientHandler> clientHandlers = Collections.synchronizedMap(new HashMap<>());
 
     public static void main(String[] args) throws IOException {
+        try {
+            InputStream inputStream = ChatServer.class.getClassLoader().getResourceAsStream("chatServer.json");
+            if (inputStream == null) {
+                throw new RuntimeException("Resource not found: chatServer.json");
+            }
+
+            JSONObject jsonObject = new JSONObject(new JSONTokener(inputStream));
+            JSONArray hostAndPortArray = jsonObject.getJSONArray("hostandport");
+            for (int i = 0; i < hostAndPortArray.length(); i++) {
+                JSONObject hostAndPort = hostAndPortArray.getJSONObject(i);
+                String hostName = hostAndPort.getString("hostName");
+                portNumber = hostAndPort.getInt("portNumber");
+                System.out.println("HostName: " + hostName);
+                System.out.println("PortNumber: " + portNumber);
+            }
+
+            inputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println("Chat server started...");
-        ServerSocket serverSocket = new ServerSocket(12346); // Porta diversa dal server di gioco
+        ServerSocket serverSocket = new ServerSocket(portNumber); // Porta diversa dal server di gioco
         try {
             while (true) {
                 new ClientHandler(serverSocket.accept()).start();
