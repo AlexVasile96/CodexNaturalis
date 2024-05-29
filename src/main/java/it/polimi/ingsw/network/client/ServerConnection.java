@@ -263,6 +263,7 @@ public class ServerConnection implements Runnable {
      *
      * @throws IOException if an I/O error occurs while reading from the input stream.
      */
+
     private void showAllPoints() throws IOException {
         sendMessageToServer("showAllPoints"); // Send request to the server
         String messageFromServer = in.readLine(); // Read the first line from the server
