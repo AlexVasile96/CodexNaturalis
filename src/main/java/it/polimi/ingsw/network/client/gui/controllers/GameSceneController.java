@@ -117,6 +117,7 @@ public class GameSceneController {
     private ChatScene chatScene;
     private ChatController chatController;
 
+
     /**
      * Initializes the game data and sets up the initial stage, socket connections, and view components.
      *
