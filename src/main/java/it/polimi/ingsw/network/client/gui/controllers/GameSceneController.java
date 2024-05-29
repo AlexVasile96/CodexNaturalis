@@ -641,9 +641,6 @@ public class GameSceneController {
                             else {
                                 initializeWell();
                                 recreatingPath();
-
-
-                                // Update the top cards of the resource and gold decks
                                 updateResourceDeckTopCard();
                                 updatedGoldDeckTopCard();
                                 haveToDraw = false;
@@ -1002,7 +999,7 @@ public class GameSceneController {
                         }
 
                     }
-
+                });
                     // Update the turn state
                     updateTurnState(true);
                     try {
@@ -1019,7 +1016,7 @@ public class GameSceneController {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                });
+
             } catch (SocketTimeoutException e) {
                 handleDisconnection();
             } catch (IOException e) {

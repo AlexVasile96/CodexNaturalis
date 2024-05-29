@@ -10,21 +10,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Code cleanup">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_17_50__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_17_50__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_18_57__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_18_57__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_23_24__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_23_24__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_14_21__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_14_21__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_14_46__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_14_46__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_02__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_02__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_08__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_08__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_15__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_15__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_20__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_20__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_28__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_28__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_40__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_40__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_45__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_45__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_16_10__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_16_10__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_16_47__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_16_47__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_17_32__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_17_32__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_17_33__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_17_33__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_09_31__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_09_31__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_11_01__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_11_01__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_12_04__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_12_04__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_14_33__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_14_33__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/GoldCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/GoldCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/InitialCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/InitialCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/ObjectiveCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/ObjectiveCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/ResourceCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/card/ResourceCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/deck/GoldDeck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/deck/GoldDeck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/deck/InitialCardDeck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/deck/InitialCardDeck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/deck/ObjectiveDeck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/deck/ObjectiveDeck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/deck/ResourceDeck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/deck/ResourceDeck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/HandlingPlayerInputsThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/HandlingPlayerInputsThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/view/ClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/view/ClientView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/gameSize.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/gameSize.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,71 +72,71 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ChatServer.executor": "Run",
-    "Application.CliClientApp.executor": "Run",
-    "Application.Codex.executor": "Run",
-    "Application.GUI.executor": "Run",
-    "Application.ServerMain.executor": "Run",
-    "Application.it.polimi.ingsw.network.client.cli.CliClientApp.executor": "Run",
-    "Application.it.polimi.ingsw.network.client.gui.GUI.executor": "Debug",
-    "JAR Application.json-20240303.jar.executor": "Run",
-    "JAR Application.proj.jar.executor": "Run",
-    "JUnit.All in proj (1).executor": "Coverage",
-    "JUnit.All in proj (2).executor": "Coverage",
-    "JUnit.All in proj.executor": "Coverage",
-    "JUnit.BisObjectiveCardTest.executor": "Run",
-    "JUnit.BoardPointsTest.executor": "Run",
-    "JUnit.BoardTest.executor": "Run",
-    "JUnit.BoardTest.generalStairsTest.executor": "Run",
-    "JUnit.BoardTest.placeInitialCard.executor": "Run",
-    "JUnit.BoardTest.test4MushroomsInStairs.executor": "Run",
-    "JUnit.BoardTest.test4PLANTInStairs.executor": "Run",
-    "JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective.executor": "Run",
-    "JUnit.BoardTest.testCreateSpecificSecretCardWithMixObjective.executor": "Run",
-    "JUnit.BoardTest.testCreateSpecificSecretCardWithStairsObjective.executor": "Run",
-    "JUnit.BoardTest.testCreateSpecificSecretCardWithTRISObjective.executor": "Debug",
-    "JUnit.BoardTest.testMushroomMushroomInsect.executor": "Run",
-    "JUnit.BoardTest.testTWODifferentstairs.executor": "Run",
-    "JUnit.BoardTest.testTWODifferentstairsANIMAL.executor": "Run",
-    "JUnit.BoardTest.testTWODifferentstairsMUSHROOM.executor": "Run",
-    "JUnit.BoardTest.testTWODifferentstairsPLANT.executor": "Run",
-    "JUnit.GoldDeckTest.cannotDrawMoreThanThree.executor": "Run",
-    "JUnit.GoldDeckTest.executor": "Run",
-    "JUnit.InitialCardDeckTest.executor": "Run",
-    "JUnit.ObjectiveDeckTest.executor": "Run",
-    "JUnit.PlayerTest.executor": "Run",
-    "JUnit.ResourceDeckTest.executor": "Run",
-    "JUnit.ResourceUpdaterTest.executor": "Run",
-    "JUnit.StairsObjectiveCardTest.checkPattern.executor": "Run",
-    "JUnit.StairsObjectiveCardTest.checkPattern2.executor": "Debug",
-    "JUnit.StairsObjectiveCardTest.executor": "Run",
-    "JUnit.TrisObjectiveCardTest.executor": "Run",
-    "JUnit.game in proj.executor": "Run",
-    "JUnit.model in proj.executor": "Run",
-    "Maven.proj [clean,package].executor": "Run",
-    "Maven.proj [clean].executor": "Run",
-    "Maven.proj [compile].executor": "Run",
-    "Maven.proj [package].executor": "Run",
-    "Maven.proj [test].executor": "Debug",
-    "Maven.proj [validate].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ChatServer.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CliClientApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Codex.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ServerMain.executor&quot;: &quot;Run&quot;,
+    &quot;Application.it.polimi.ingsw.network.client.cli.CliClientApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.it.polimi.ingsw.network.client.gui.GUI.executor&quot;: &quot;Debug&quot;,
+    &quot;JAR Application.json-20240303.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.proj.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in proj (1).executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.All in proj (2).executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.All in proj.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.BisObjectiveCardTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardPointsTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.generalStairsTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.placeInitialCard.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.test4MushroomsInStairs.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.test4PLANTInStairs.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithMixObjective.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithStairsObjective.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithTRISObjective.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.BoardTest.testMushroomMushroomInsect.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testTWODifferentstairs.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testTWODifferentstairsANIMAL.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testTWODifferentstairsMUSHROOM.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BoardTest.testTWODifferentstairsPLANT.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GoldDeckTest.cannotDrawMoreThanThree.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GoldDeckTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.InitialCardDeckTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ObjectiveDeckTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PlayerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ResourceDeckTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ResourceUpdaterTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StairsObjectiveCardTest.checkPattern.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StairsObjectiveCardTest.checkPattern2.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.StairsObjectiveCardTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TrisObjectiveCardTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.game in proj.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.model in proj.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.proj [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.proj [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.proj [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.proj [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.proj [test].executor&quot;: &quot;Debug&quot;,
+    &quot;Maven.proj [validate].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\pitca\IdeaProjects\progettone\src\main\java\it\polimi\ingsw" />
@@ -141,7 +148,7 @@
       <command value="mvn clean package" />
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.GUI">
     <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.network.client.cli.CliClientApp" />
       <module name="proj" />
@@ -264,6 +271,7 @@
       <workItem from="1716930486079" duration="240000" />
       <workItem from="1716967127009" duration="11253000" />
       <workItem from="1716985487321" duration="3909000" />
+      <workItem from="1716997726465" duration="789000" />
     </task>
     <task id="LOCAL-00004" summary="Almost finished the english translation">
       <option name="closed" value="true" />
