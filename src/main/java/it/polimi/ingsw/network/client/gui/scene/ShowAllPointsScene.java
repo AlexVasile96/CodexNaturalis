@@ -57,21 +57,44 @@ public class ShowAllPointsScene {
     }
 
     private void showAllPts() throws IOException {
-        out.println("showAllPoints");
-        String string = in.readLine();
+//        out.println("showAllPoints");
+//        String string = in.readLine();
+//        counter = 0;
+//        while (!string.equals("exit")) {
+//            if (counter == 0) {
+//                playerOneLabel.setText(string);
+//            } else if (counter == 1) {
+//                playerTwoLabel.setText(string);
+//            } else if (counter == 2) {
+//                playerThreeLabel.setText(string);
+//            } else if (counter == 3) {
+//                playerFourLabel.setText(string);
+//            }
+//            counter++;
+//            string = in.readLine();
+//        }
+        out.println("showAllPoints"); // Send request to the server
+        String messageFromServer = in.readLine(); // Read the first line from the server
         counter = 0;
-        while (!string.equals("exit")) {
-            if (counter == 0) {
-                playerOneLabel.setText(string);
-            } else if (counter == 1) {
-                playerTwoLabel.setText(string);
-            } else if (counter == 2) {
-                playerThreeLabel.setText(string);
-            } else if (counter == 3) {
-                playerFourLabel.setText(string);
+        do {
+            System.out.println(messageFromServer); // Print the server message
+            messageFromServer = in.readLine();// Read the next line from the server
+            if(counter == 0) {
+                playerOneLabel.setText(messageFromServer);
+                counter++;
+            }if(counter == 1) {
+                playerTwoLabel.setText(messageFromServer);
+                counter++;
             }
-            counter++;
-            string = in.readLine();
-        }
+            if(counter == 2) {
+                playerThreeLabel.setText(messageFromServer);
+                counter++;
+            }
+            if(counter == 0) {
+                playerFourLabel.setText(messageFromServer);
+                counter++;
+            }
+        } while (!messageFromServer.equals("exit")); // Continue until "exit" is received
+
     }
 }
