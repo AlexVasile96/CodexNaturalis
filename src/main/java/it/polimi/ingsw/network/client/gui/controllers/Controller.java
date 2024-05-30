@@ -272,6 +272,7 @@ public class Controller {
         String message;
         try {
             while (!(message = in.readLine()).equals(playerNickname)) {
+                socket.setSoTimeout(180000);
                 switch (message) {
                     case "You smashed 20 points!! now everybody got one last turn":
                         setEndgame(true);

@@ -138,7 +138,7 @@ public class EndGameScene {
                 });
                 delay.play();
 
-                PauseTransition quitDelay = new PauseTransition(Duration.seconds(9.25));
+                PauseTransition quitDelay = new PauseTransition(Duration.seconds(20));
                 quitDelay.setOnFinished(event -> {
                     if(clientView.getUserName().equals(winnerPlayer)){
                         try {
