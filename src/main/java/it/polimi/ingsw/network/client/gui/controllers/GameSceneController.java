@@ -59,7 +59,6 @@ public class GameSceneController {
     Button showObjective = new Button("Show Objective");
     private Button endTurn = new Button("End turn");
     private Button showAllPoints = new Button("See all point");
-    private Button showAllSeeds = new Button("See all seeds");
     private Button quit = new Button("Quit");
     private Boolean haveToDraw = false;
     private Boolean haveToPlay = true;
@@ -85,7 +84,6 @@ public class GameSceneController {
     Label chosenCardToPlace = new Label();
     Label chosenCardToBePlacedOn = new Label();
     Label chosenCorner = new Label();
-    Label chosenDeckOrWell = new Label();
     private List<CardView> allCardViews = new ArrayList<>();
     private static CardView clickedCardView;
     private Map<CardView, Integer> cardIndices = new HashMap<>();
@@ -367,11 +365,9 @@ public class GameSceneController {
             chosenCardToPlace.setStyle("-fx-text-fill: white;");
             chosenCardToBePlacedOn.setStyle("-fx-text-fill: white;");
             chosenCorner.setStyle("-fx-text-fill: white;");
-            chosenDeckOrWell.setStyle("-fx-text-fill: white;");
 
             // Add labels to the second column
-            secondColumnOfSecondRow.getChildren().addAll(chosenCardToPlace, chosenCardToBePlacedOn, chosenCorner, chosenDeckOrWell);
-            chosenDeckOrWell.setText("Drawing from: " + wellOrDeck);
+            secondColumnOfSecondRow.getChildren().addAll(chosenCardToPlace, chosenCardToBePlacedOn, chosenCorner);
 
             // Add UI elements to the layout
             layout.setRight(vboxGame);
@@ -842,26 +838,6 @@ public class GameSceneController {
                 // Alert if it's not the current player's turn
                 showAlert("Not your turn", "It's not your turn yet.");
             }
-        });
-
-        showAllSeeds.setOnMouseClicked(e ->{
-            if(isCurrentPlayerTurn) {
-                out.println("showAllSpecificSeed");
-                try {
-                    String string = in.readLine();
-                    showAlert("Specific seeds", string);
-                    while (!string.equals("exit")) {
-                        in.readLine();
-                    }
-                }catch (IOException ex){
-                    throw new RuntimeException(ex);
-                }
-            }else {
-                // Alert if it's not the current player's turn
-                showAlert("Not your turn", "It's not your turn yet.");
-            }
-
-
         });
 
         showObjective.setOnMouseClicked(e -> {
@@ -1993,7 +1969,6 @@ public class GameSceneController {
         buttonContainer.add(quit, 0, 4);
         buttonContainer.add(chat, 1, 4);
         buttonContainer.add(showAllPoints, 0, 5);
-        buttonContainer.add(showAllSeeds, 1,5);
         double buttonsWidth = 120.00;
         for (var node : buttonContainer.getChildren()) {
             if (node instanceof Button) {
