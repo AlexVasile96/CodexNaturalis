@@ -237,7 +237,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         int size = Integer.parseInt(integerString);
         if (size == 1) {
             System.out.println(userName + " chose card number: " + size);
-            threadPlayer.setSecretChosenCard(secretCards.get(0));
+            threadPlayer.setSecretChosenCard(secretCards.getFirst());
         } else {
             System.out.println(userName + " chose card number: " + size);
             threadPlayer.setSecretChosenCard(secretCards.get(size - 1));
@@ -433,7 +433,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                         System.out.println("Client message wrong ,messageFromClient: " + messageFromClient);
                     }
                 }
-                default -> gameController.readCommand(messageFromClient, player, 0, 0, cornerChosen);
+                default -> gameController.readCommand(messageFromClient, player, 0, 0, null);
             }
         }
     }
@@ -565,8 +565,6 @@ public class HandlingPlayerInputsThread implements Runnable {
     }
     public void handleClientDisconnection() throws IOException {
         System.out.println("Thanks for playing codex.");
-//        System.out.println("Connection closed with client " + threadPlayer.getNickName());
-//        System.out.println("Thank you " + threadPlayer.getNickName() + " for playing Codex!");
         out.println("ALL_CLIENTS_QUIT");
         clients.remove(this);
         if (threadPlayer != null) {
