@@ -62,8 +62,8 @@ public class BoardPointsScene {
 
     private int getScore() throws IOException {
         out.println("showPoints");
-        String stringa = in.readLine();
-        return Integer.parseInt(stringa);
+        String string = in.readLine();
+        return Integer.parseInt(string);
     }
 
     //creating the popup that shows the player's points
@@ -85,9 +85,7 @@ public class BoardPointsScene {
         boardImageView.setFitWidth(479);
 
         Button closeButton = new Button("Close");
-        closeButton.setOnAction(e -> {
-            popupStage.close();
-        });
+        closeButton.setOnAction(e -> popupStage.close());
 
         closeButton.setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-font-weight: bold;"); // Stile CSS per il pulsante
 

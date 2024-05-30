@@ -46,7 +46,6 @@ public class LobbyController {
                 while ((message = in.readLine()) != null) {
                     if (message.equals("All clients connected")) {
                         Platform.runLater(() -> {
-                            System.out.println("All clients are connected, choosing secret cards...");
                             String whatIsYourIndex=null;
                             int gameSize=0;
                             try {
@@ -72,31 +71,23 @@ public class LobbyController {
                         break;
                     } else if (message.equals("All clients chose the init Card")) {
                         Platform.runLater(() -> {
-                            System.out.println("All clients chose the initial card, starting game...");
                             handleInitCardChoice();
                         });
                         break;
                     } else if (message.equals("SETUPFINISHED")) {
-                        System.out.println(message);
                         currentPlayerNickname = in.readLine();
-                        System.out.println("Current Player:" +currentPlayerNickname);
                         String nextPlayer = in.readLine();
-                        System.out.println("Next PLayer is:" + nextPlayer);
 
                             if (nextPlayer.equals(clientview.getUserName())) {
-                                System.out.println("Setup finished, starting game...");
                                 handleSetupFinished(currentPlayerNickname);
                             } else {
-                                System.out.println("Not your turn, waiting for setup...");
                                waitAllPlayers();
                             }
                             break;
                     }
                     else if(message.equals("STARTGUI"))
                     {
-                        System.out.println("All clients logged!");
-                        //executor.shutdown();
-
+                        System.out.println("All clients logged");
                     }
 
                 }
@@ -109,11 +100,9 @@ public class LobbyController {
     private void handleInitCardChoice() {
         try {
             currentPlayerNickname= in.readLine();
-            System.out.println("CurrentPlayerNickname is: " + currentPlayerNickname);
             if (in.readLine().equals("You are the first client")) {
                 synchronized (LobbyController.class) {
                     if (gameScene == null) {
-                        System.out.println("Initializing GameScene for the first client.");
                         gameScene = new GameScene(primaryStage, out, socket, in, initCardId, clientview, currentPlayerNickname, true,isFront);
                         primaryStage.setTitle("Codex");
                     }
@@ -122,12 +111,9 @@ public class LobbyController {
             } else {
                 synchronized (LobbyController.class) {
                     if (gameScene == null) {
-                        System.out.println("Initializing GameScene for other clients.");
-                        //gameScene = new GameScene(primaryStage, out, socket, in, initCardId, clientview, currentPlayerNickname, false,isFront);
                         primaryStage.setTitle("Codex");
                     }
                 }
-                System.out.println("Waiting for game to start...");
                 waitAllPlayers();
             }
         } catch (IOException e) {
@@ -141,13 +127,10 @@ public class LobbyController {
             System.out.println("Sono qua");
             synchronized (LobbyController.class) {
                 if (gameScene == null) {
-                    System.out.println("Initializing GameScene in setup finished.");
                     gameScene = new GameScene(primaryStage, out, socket, in, initCardId, clientview, currentPlayerNickname, false,isFront);
                 }
             }
-            System.out.println("Ready to start");
             gameScene.game(false);
-            //executor.shutdownNow();
 
         } catch (IOException e) {
             handleDisconnection();
