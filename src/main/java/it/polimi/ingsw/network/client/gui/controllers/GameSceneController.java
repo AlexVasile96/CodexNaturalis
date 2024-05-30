@@ -352,6 +352,9 @@ public class GameSceneController {
             decks.setPadding(paddingDecks);
             decks.getChildren().addAll(SharedObjectsInGui.getTopCardResourceDeckView(), SharedObjectsInGui.getTopCardGoldDeckView());
 
+            chat.setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-font-weight: bold;");
+            chat.setPrefWidth(120.00);
+
             // Initialize and disable the button container
             buttonContainer.setHgap(2);
             buttonContainer.setVgap(2);
@@ -540,6 +543,8 @@ public class GameSceneController {
                     allBoardsScene.showAllBoards();
                 }catch (SocketException | SocketTimeoutException exe){
                     handleDisconnection();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
             else {
@@ -1979,12 +1984,12 @@ public class GameSceneController {
         buttonContainer.add(flipCardToFront, 0, 1);
         buttonContainer.add(flipCardToBack, 1, 1);
         buttonContainer.add(seeYourPoints, 0, 2);
-        buttonContainer.add(seeYourSpecificSeeds, 1, 2);
+        buttonContainer.add(showAllPoints, 1, 2);
         buttonContainer.add(showObjective, 0, 3);
-        buttonContainer.add(endTurn, 1, 3);
-        buttonContainer.add(quit, 0, 4);
-        buttonContainer.add(showAllPoints, 1, 4);
+        buttonContainer.add(seeYourSpecificSeeds, 1, 3);
+        buttonContainer.add(endTurn, 0, 4);
         buttonContainer.add(showAllBoards, 1, 4);
+        buttonContainer.add(quit, 0, 5);
         double buttonsWidth = 120.00;
         for (var node : buttonContainer.getChildren()) {
             if (node instanceof Button) {
