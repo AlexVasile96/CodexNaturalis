@@ -1,15 +1,42 @@
 package it.polimi.ingsw.network.client.cli;
 
+import it.polimi.ingsw.network.server.ChatServer;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 
 public class ChatClient {
-    public static void main(String[] args) {
-        String host = "localhost";
-        int port = 12346;
 
-        try (Socket socket = new Socket(host, port);
+    static String hostName;
+    static int portNumber;
+
+    public static void main(String[] args) {
+        try {
+            InputStream inputStream = ChatServer.class.getClassLoader().getResourceAsStream("chatServer.json");
+            if (inputStream == null) {
+                throw new RuntimeException("Resource not found: chatServer.json");
+            }
+
+            JSONObject jsonObject = new JSONObject(new JSONTokener(inputStream));
+            JSONArray hostAndPortArray = jsonObject.getJSONArray("hostandport");
+            for (int i = 0; i < hostAndPortArray.length(); i++) {
+                JSONObject hostAndPort = hostAndPortArray.getJSONObject(i);
+                hostName = hostAndPort.getString("hostName");
+                portNumber = hostAndPort.getInt("portNumber");
+                System.out.println("HostName: " + hostName);
+                System.out.println("PortNumber: " + portNumber);
+            }
+
+            inputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try (Socket socket = new Socket(hostName, portNumber);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
              BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
