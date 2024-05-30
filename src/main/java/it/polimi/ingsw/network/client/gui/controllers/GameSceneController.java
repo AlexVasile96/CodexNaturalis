@@ -137,7 +137,6 @@ public class GameSceneController {
         this.socket = socket;
         this.in = in;
         this.currentPlayerNickname = currentPlayerNickname;
-        System.out.println("Current player in initData is:" + currentPlayerNickname);
         this.clientView = clientView;
 
         // Initialize the controller with the input stream, output stream, and socket
@@ -279,23 +278,14 @@ public class GameSceneController {
             // Increment the card index for the initial card and add it to the card indices map
             nextCardIndex++; // 1 for initial card
             cardIndices.put(tlCardView, nextCardIndex);
-            System.out.println("Added TL CardView with index: " + nextCardIndex);
             cardIndices.put(tcCardView, nextCardIndex);
-            System.out.println("Added TC CardView with index: " + nextCardIndex);
             cardIndices.put(trCardView, nextCardIndex);
-            System.out.println("Added TR CardView with index: " + nextCardIndex);
             cardIndices.put(lcCardView, nextCardIndex);
-            System.out.println("Added LC CardView with index: " + nextCardIndex);
             cardIndices.put(ccCardView, nextCardIndex);
-            System.out.println("Added CC CardView with index: " + nextCardIndex);
             cardIndices.put(rcCardView, nextCardIndex);
-            System.out.println("Added RC CardView with index: " + nextCardIndex);
             cardIndices.put(blCardView, nextCardIndex);
-            System.out.println("Added BL CardView with index: " + nextCardIndex);
             cardIndices.put(bcCardView, nextCardIndex);
-            System.out.println("Added BC CardView with index: " + nextCardIndex);
             cardIndices.put(brCardView, nextCardIndex);
-            System.out.println("Added BR CardView with index: " + nextCardIndex);
 
             // Enable interaction with some card regions
             tlImageView.setPickOnBounds(true);
@@ -426,10 +416,6 @@ public class GameSceneController {
 
             if (cardIndex != null) {
                 indexCardToBePlacedOn = cardIndex;
-                System.out.println("Card Clicked: indexCardToBePlacedOn = " + indexCardToBePlacedOn + ", cornerSelected = " + cornerSelected);
-            } else {
-                // If card index is not found, log a message
-                System.out.println("Card Clicked: cardIndex not found, cornerSelected = " + cornerSelected);
             }
 
             // Update UI labels with selected corner and index
@@ -470,10 +456,8 @@ public class GameSceneController {
                         // Check if the card is flipped to "front"
                         if (!isFlipped) {
                             out.println("goldGui" + indexCardToPlace.toString());
-                            System.out.println("goldGui" + indexCardToPlace.toString());
                             try {
                                 canIPlaceTheGoldCard = in.readLine();
-                                System.out.println("Server response is: " + canIPlaceTheGoldCard);
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
@@ -606,29 +590,24 @@ public class GameSceneController {
                                     handCard1View.setImage(drawnCardImage);
                                     pathHandCard1 = "/ImmaginiCodex/CarteFront/" + checkType(idTopCard) + "/" + idTopCard + ".png";
                                     idHandCard1 = idTopCard;
-                                    System.out.println("carta pescata: "+idTopCard);
                                     break;
                                 case 1:
                                     handCard2View.setImage(drawnCardImage);
                                     pathHandCard2 = "/ImmaginiCodex/CarteFront/" + checkType(idTopCard) + "/" + idTopCard + ".png";
                                     idHandCard2 = idTopCard;
-                                    System.out.println("carta pescata: "+idTopCard);
                                     break;
                                 case 2:
                                     handCard3View.setImage(drawnCardImage);
                                     pathHandCard3 = "/ImmaginiCodex/CarteFront/" + checkType(idTopCard) + "/" + idTopCard + ".png";
                                     idHandCard3 = idTopCard;
-                                    System.out.println("carta pescata: "+idTopCard);
                                     break;
                             }
                             // Update the images of the well cards and decks
 
                             if(clientView.getPlayerScore()>=20&& !Controller.isEndgame()){ //One player reached 20 points, so all clients have one last turn and then the game will end
                                     firstWellCard();
-                                    String youSmashed20Points= in.readLine();
-                                    System.out.println(youSmashed20Points);
-                                    String nextPlayer= in.readLine();
-                                    System.out.println(nextPlayer);
+                                    in.readLine(); //you smashed 20 points
+                                    in.readLine(); //next player
                                     currentPlayerNickname=controller.finalEnd();
                                     updateTurnState(currentPlayerNickname.equals(clientView.getUserName()));
                                     haveToPlay = true;
@@ -664,7 +643,6 @@ public class GameSceneController {
             if (isCurrentPlayerTurn) {
                 // Set the card to be flipped to the back
                 isFlipped = true;
-                System.out.println("The card has been flipped to the back");
                 // Switch statement to handle flipping each card
                 switch (indexCardToPlace) {
                     case 0:
@@ -672,11 +650,8 @@ public class GameSceneController {
                         handCard1View.setId("Back");
                         if (handCard1View.getId() == null || handCard1View.getId().equals("Front")) {
                             pathChosen = pathHandCard1;
-                            System.out.println("Front");
                         } else {
                             pathChosen = pathFlipped;
-                            System.out.println(pathChosen);
-                            System.out.println("Back");
                         }
                         break;
                     case 1:
@@ -684,11 +659,8 @@ public class GameSceneController {
                         handCard2View.setId("Back");
                         if (handCard2View.getId() == null || handCard2View.getId().equals("Front")) {
                             pathChosen = pathHandCard1;
-                            System.out.println("Front");
                         } else {
                             pathChosen = pathFlipped;
-                            System.out.println(pathChosen);
-                            System.out.println("Back");
                         }
                         break;
                     case 2:
@@ -697,11 +669,8 @@ public class GameSceneController {
                         handCard2View.setId("Back");
                         if (handCard3View.getId() == null || handCard3View.getId().equals("Front")) {
                             pathChosen = pathHandCard1;
-                            System.out.println("Front");
                         } else {
                             pathChosen = pathFlipped;
-                            System.out.println(pathChosen);
-                            System.out.println("Back");
                         }
                         break;
                     default:
@@ -721,7 +690,6 @@ public class GameSceneController {
             if (isCurrentPlayerTurn) {
                 // Set the card to be flipped to the front
                 isFlipped = false;
-                System.out.println("The card has been flipped to the front");
                 // Switch statement to handle flipping each card
                 switch (indexCardToPlace) {
                     case 0:
@@ -756,18 +724,13 @@ public class GameSceneController {
                 // Check if the card is flipped or not and set the path accordingly
                 if (handCard1View.getId() == null || handCard1View.getId().equals("Front")) {
                     pathChosen = pathHandCard1;
-                    System.out.println("Front");
                 } else {
                     pathChosen = pathFlipped;
-                    System.out.println(pathChosen);
-                    System.out.println("Back");
                 }
 
                 // Determine if the selected card is a ResourceCard or a GoldCard
                 if (Integer.parseInt(idHandCard1) < 41) {
-                    System.out.println("ResourceCard");
                 } else {
-                    System.out.println("GoldCard");
                     indexForGold = idHandCard1;
                 }
             } else {
@@ -786,18 +749,13 @@ public class GameSceneController {
                 // Check if the card is flipped or not and set the path accordingly
                 if (handCard2View.getId() == null || handCard2View.getId().equals("Front")) {
                     pathChosen = pathHandCard2;
-                    System.out.println("Front");
                 } else {
                     pathChosen = pathFlipped;
-                    System.out.println(pathChosen);
-                    System.out.println("Back");
                 }
 
                 // Determine if the selected card is a ResourceCard or a GoldCard
                 if (Integer.parseInt(idHandCard2) < 41) {
-                    System.out.println("ResourceCard");
                 } else {
-                    System.out.println("GoldCard");
                     indexForGold = idHandCard2;
                 }
             } else {
@@ -815,18 +773,13 @@ public class GameSceneController {
                 // Check if the card is flipped or not and set the path accordingly
                 if (handCard3View.getId() == null || handCard3View.getId().equals("Front")) {
                     pathChosen = pathHandCard3;
-                    System.out.println("Front");
                 } else {
                     pathChosen = pathFlipped;
-                    System.out.println(pathChosen);
-                    System.out.println("Back");
                 }
 
                 // Determine if the selected card is a ResourceCard or a GoldCard
                 if (Integer.parseInt(idHandCard3) < 41) {
-                    System.out.println("ResourceCard");
                 } else {
-                    System.out.println("GoldCard");
                     indexForGold = idHandCard3;
                 }
             } else {
@@ -897,10 +850,9 @@ public class GameSceneController {
                 out.println("showAllSpecificSeed");
                 try {
                     String string = in.readLine();
-                    System.out.println(string);
                     showAlert("Specific seeds", string);
                     while (!string.equals("exit")) {
-                        System.out.println(in.readLine());
+                        in.readLine();
                     }
                 }catch (IOException ex){
                     throw new RuntimeException(ex);
@@ -977,9 +929,8 @@ public class GameSceneController {
                 {
                     EndGameScene endGameScene= new EndGameScene(primaryStage,out,socket,in,clientView, controller);
                     try {
-                        System.out.println(in.readLine()); //end of turn
-                        System.out.println(in.readLine()); //ENDGAME?
-                        System.out.println("Game finally ended for everybody!");
+                        in.readLine(); //end of turn
+                        in.readLine(); //ENDGAME?
                         endGameScene.endGame();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -990,7 +941,7 @@ public class GameSceneController {
                     updateTurnState(true);
                     try {
                         // Output a message indicating that the turn has ended
-                        System.out.println(in.readLine()); // Fine turno
+                        in.readLine(); // Fine turno
 
                         // Update the GUI
                         updateGUI();
@@ -1303,7 +1254,6 @@ public class GameSceneController {
 
         // Loading the image for the card
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathChosen)));
-        System.out.println(pathChosen);
 
         // Getting the coordinates for placing the card on the board
         int x = getX(cardOnTheBoard);
@@ -1698,7 +1648,6 @@ public class GameSceneController {
     private synchronized void firstWellCard() throws IOException {
         out.println("firstWellId");
         SharedObjectsInGui.setIdCard1(in.readLine());
-        System.out.println(SharedObjectsInGui.getIdCard1());
     }
 
     /**
@@ -1753,8 +1702,6 @@ public class GameSceneController {
     private void checkTypeWellCards() {
         SharedObjectsInGui.setWellPathOne(createPathForFrontCards(SharedObjectsInGui.getIdCard1()));
         SharedObjectsInGui.setWellPathSecond(createPathForFrontCards(SharedObjectsInGui.getIdCard2()));
-        System.out.println(SharedObjectsInGui.getWellPathOne());
-        System.out.println(SharedObjectsInGui.getWellPathSecond());
         SharedObjectsInGui.setWellPathThird(createPathForFrontCards(SharedObjectsInGui.getIdCard3()));
         SharedObjectsInGui.setWellPathForth(createPathForFrontCards(SharedObjectsInGui.getIdCard4()));
     }
@@ -1770,11 +1717,9 @@ public class GameSceneController {
     private synchronized void playerDeck() throws IOException {
         out.println("deckId");
         idHandCard1 = in.readLine();
-        System.out.println("first card of deck: " + idHandCard1);
         idHandCard2 = in.readLine();
-        System.out.println("Second card of deck: " + idHandCard2);
         idHandCard3 = in.readLine();
-        System.out.println("Third card of deck: " + idHandCard3);
+
     }
 
     /**
@@ -1983,7 +1928,6 @@ public class GameSceneController {
         secondWellCard();
         thirdWellCard();
         fourthWellCard();
-        System.out.println("Arrivo qua prima di crashare");
         checkTypeWellCards();
     }
 
@@ -1996,9 +1940,7 @@ public class GameSceneController {
         out.println("firstCardResourceGui");
         String newTopCardResourceDeckId = in.readLine();
         idTopCardResourceDeck = newTopCardResourceDeckId;
-        System.out.println(newTopCardResourceDeckId);
         String newPathResource = "/ImmaginiCodex/CarteBack/Resource/" + newTopCardResourceDeckId + ".png";
-        System.out.println(newPathResource);
         Image newTopCardResourceDeckImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPathResource)));
         SharedObjectsInGui.getTopCardResourceDeckView().setImage(newTopCardResourceDeckImage);
         SharedObjectsInGui.setPathResourceDeck(newPathResource);
@@ -2014,7 +1956,6 @@ public class GameSceneController {
         out.println("firstCardGoldGui");
         String newTopCardGoldDeckId = in.readLine();
         idTopCardGoldDeck = newTopCardGoldDeckId;
-        System.out.println(newTopCardGoldDeckId);
         String newPathGold = "/ImmaginiCodex/CarteBack/Gold/" + newTopCardGoldDeckId + ".png";
         Image newTopCardGoldImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(newPathGold)));
         SharedObjectsInGui.getTopCardGoldDeckView().setImage(newTopCardGoldImage);
@@ -2076,17 +2017,6 @@ public class GameSceneController {
     private void updateGUI() throws IOException {
         load();
         initializeWell();
-        System.out.println(SharedObjectsInGui.getIdCard1());
-        System.out.println(SharedObjectsInGui.getIdCard2());
-        System.out.println(SharedObjectsInGui.getIdCard3());
-        System.out.println(SharedObjectsInGui.getIdCard4());
-        System.out.println("Well 1: " +SharedObjectsInGui.getIdCard1());
-        System.out.println("Well 2: " +SharedObjectsInGui.getIdCard2());
-        System.out.println("Well 3: " +SharedObjectsInGui.getIdCard3());
-        System.out.println("Well 4: " +SharedObjectsInGui.getIdCard4());
-        System.out.println("Carta 1 del deck " + idHandCard1);
-        System.out.println("Carta 2 del deck " + idHandCard2);
-        System.out.println("Carta 3 del deck " + idHandCard3);
         newPathAfterUpdate();
         updateResourceDeckTopCard();
         updatedGoldDeckTopCard();
@@ -2099,11 +2029,8 @@ public class GameSceneController {
         playerDeck();
         checkTypePlayerDeck();
         pathHandCard1 = "/ImmaginiCodex/CarteFront/" + typeHandCard1 + "/" + idHandCard1 + ".png";
-        System.out.println(pathHandCard1);
         pathHandCard2 = "/ImmaginiCodex/CarteFront/" + typeHandCard2 + "/" + idHandCard2 + ".png";
-        System.out.println(pathHandCard2);
         pathHandCard3 = "/ImmaginiCodex/CarteFront/" + typeHandCard3 + "/" + idHandCard3 + ".png";
-        System.out.println(pathHandCard3);
         handCard1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard1)));
         handCard2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard2)));
         handCard3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathHandCard3)));
@@ -2119,12 +2046,10 @@ public class GameSceneController {
         String Path1 = "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard1() + ".png";
         SharedObjectsInGui.setWellCard1(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Path1))));
         SharedObjectsInGui.getWellCard1View().setImage(SharedObjectsInGui.getWellCard1());
-        System.out.println(Path1);
 
         String Path2 = "/ImmaginiCodex/CarteFront/Resource/" + SharedObjectsInGui.getIdCard2() + ".png";
         SharedObjectsInGui.setWellCard2(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Path2))));
         SharedObjectsInGui.getWellCard2View().setImage(SharedObjectsInGui.getWellCard2());
-        System.out.println(Path2);
 
         String Path3 = "/ImmaginiCodex/CarteFront/Gold/" + SharedObjectsInGui.getIdCard3() + ".png";
         SharedObjectsInGui.setWellCard3(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Path3))));
@@ -2144,7 +2069,6 @@ public class GameSceneController {
     private void waitUntilLastMessage() throws IOException {
         String messageFromServer = in.readLine();
         while (!messageFromServer.equals("STARTGUI")) {
-            System.out.println("Server says " + messageFromServer);
             messageFromServer = in.readLine();
             if (messageFromServer.equals("One client decided to quit, so the game will end for every player.")) {
                 try {
@@ -2155,7 +2079,6 @@ public class GameSceneController {
                 }
             }
         }
-        System.out.println("Game finally starting!");
     }
 
     /**
@@ -2174,7 +2097,6 @@ public class GameSceneController {
         try (FileWriter file = new FileWriter(path.toFile())) {
             Gson gson = new Gson();
             gson.toJson(sharedElementsObject, file);
-            System.out.println("File saved successfully.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -2190,7 +2112,6 @@ public class GameSceneController {
             JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
             idTopCardResourceDeck = jsonObject.get("idTopResourceCardDeck").getAsString();
             idTopCardGoldDeck = jsonObject.get("idTopGoldCardDeck").getAsString();
-            System.out.println("File loaded successfully.");
         } catch (IOException e) {
             e.printStackTrace();
         }

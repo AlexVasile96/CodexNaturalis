@@ -32,21 +32,16 @@ public class Controller {
 
     public void playCardClick(int indexCardToBePlacedOn, int indexCardToPlace, String cornerSelected, String isTheCardFlipped) throws IOException {
         if (indexCardToBePlacedOn == 100 || indexCardToPlace == 100 || cornerSelected == null) { //This if prevents player to place card without choosing any card or corner
-            System.out.println("You have not selected any card to place or to be placed on or the corner");
         } else {
-            System.out.println("Client decided to place a card");
             out.println("playCard"); //sends to server the message to start the playCard method
             try {
                 out.println(indexCardToPlace); //Sending to server the index of the card we want to place
                 String canIContinueOrGoldCArdNotPLaceable = in.readLine(); //Server says we can continue
                 if (canIContinueOrGoldCArdNotPLaceable.equals("Gold Card not placeable")) {
-                    String messageFromServer = in.readLine();
-                    System.out.println("gold card requires: " + messageFromServer);
-                    messageFromServer = in.readLine();
-                    System.out.println("you got: " + messageFromServer);
-                    System.out.println("You can:\n1-> choose another card\n2-> turn the card");
+                    in.readLine();
+                    in.readLine();
                     out.println(2);
-                    System.out.println(in.readLine());
+                    in.readLine();
                 } else {
                     if (isTheCardFlipped == null || isTheCardFlipped.equals("Front")) {
                         out.println(2); //My card is not flipped
@@ -72,7 +67,6 @@ public class Controller {
                     check = false;
                     messageFromServer = in.readLine();
                 } while (!messageFromServer.equals("end"));
-                System.out.print("Choose the corner you want to place the card on: ");
                 switch (cornerSelected) {
                     case "TL":
                         out.println("TL");
@@ -91,13 +85,10 @@ public class Controller {
                         break;
                 }
 
-                System.out.println(in.readLine()); //card correctly placed
-                String typeCard = in.readLine(); //For server purposes
-                String isBack = in.readLine(); //For server purposes
-                String coordinate = in.readLine();//For server purposes
-                System.out.println(typeCard);//For server purposes
-                System.out.println(isBack);//For server purposes
-                System.out.println(coordinate);//For server purposes
+                in.readLine(); //card correctly placed
+                in.readLine(); //For server purposes
+                in.readLine(); //For server purposes
+                in.readLine();//For server purposes
                 out.println("typeCard");
 
             } catch (SocketTimeoutException | SocketException e) {
@@ -111,7 +102,6 @@ public class Controller {
     public void drawCard(String wellOrDeck, String selectedDeck, Integer indexSelectedCard) throws IOException {
         try{
         out.println("drawCard");
-        System.out.println("You chose to draw a card!");
         if (wellOrDeck.equals("deck")) {
             out.println(wellOrDeck);
             if (selectedDeck.equals("resource")) {
@@ -128,29 +118,19 @@ public class Controller {
         } else if (wellOrDeck.equals("well")) {
             out.println("well");
             out.println("showWell");
-            System.out.println("Which card from the well do you want to draw?");
-            System.out.println("------------------------------------------------------------------------------------------");
-            System.out.println("Select '0' for"+in.readLine()); //cards in the well
-            System.out.println("Select '1' for"+in.readLine());
-            System.out.println("Select '2' for"+in.readLine());
-            System.out.println("Select '3' for"+in.readLine());
-            in.readLine();//space for network purpose
-            System.out.println("------------------------------------------------------------------------------------------");
+            in.readLine(); //cards in the well
+            in.readLine();
+            in.readLine();
+            in.readLine();
+            in.readLine(); //space for network purpose
             out.println(indexSelectedCard);
 
             //handling server responses
             String result = in.readLine();
             if(result.equals("operation performed correctly")) {
-                System.out.println("Operation 'Draw card from Well' performed correctly");
                 out.println("showYourCardDeck");
-                System.out.println("Your Deck:" );
-                System.out.println("--------------------------------------------------------------------------------------");
                 receivingAndPrintingCards();
-                System.out.println("--------------------------------------------------------------------------------------");
                 showWell();
-            }
-            else{
-                System.out.println("Operation failed");
             }
          }
 
@@ -209,10 +189,10 @@ public class Controller {
     private void showWell() {
         out.println("showWell");
         try {
-            System.out.println(in.readLine()); // first well card
-            System.out.println(in.readLine()); // second well card
-            System.out.println(in.readLine()); // third well card
-            System.out.println(in.readLine()); // fourth well card
+            in.readLine(); // first well card
+            in.readLine(); // second well card
+            in.readLine(); // third well card
+            in.readLine(); // fourth well card
             in.readLine(); // space
 
         } catch (SocketTimeoutException | SocketException e) {
@@ -225,7 +205,7 @@ public class Controller {
     public void quit(Stage primaryStage) throws IOException {
         out.println("quit");
         try {
-            System.out.println(in.readLine()); // ALL_CLIENTS_QUIT
+            in.readLine(); // ALL_CLIENTS_QUIT
             QuitScene quitScene = new QuitScene();
             quitScene.quit(primaryStage);
             in.close();
@@ -255,9 +235,7 @@ public class Controller {
     public String finalEnd() {
         out.println("endTurn");
         try {
-            System.out.println("Your turn ended");
             String nextPlayerNickname = in.readLine();
-            System.out.println(nextPlayerNickname);
             Platform.runLater(()-> showAlert("Your turn ended!", "Your turn ended! Now it's "+ nextPlayerNickname + " turn!"));
             out.flush();
             return nextPlayerNickname;
@@ -271,10 +249,8 @@ public class Controller {
         out.println("endTurn");
         try {
             String nextPlayerNickname = in.readLine();
-            System.out.println(nextPlayerNickname);
             Platform.runLater(()-> showAlert("Your turn ended!", "Your turn ended! Now it's "+ nextPlayerNickname + " turn!"));
-            String update = in.readLine();
-            System.out.println(update);
+            in.readLine();
             out.flush();
             return nextPlayerNickname;
         } catch (SocketTimeoutException | SocketException e) {
@@ -294,11 +270,8 @@ public class Controller {
 
     public void waitForTurn(String playerNickname, Stage primaryStage) throws IOException {
         String message;
-        System.out.println("Waiting for server to say my name");
         try {
             while (!(message = in.readLine()).equals(playerNickname)) {
-                System.out.println("Received message while waiting for turn: " + message);
-
                 switch (message) {
                     case "You smashed 20 points!! now everybody got one last turn":
                         setEndgame(true);
@@ -316,11 +289,9 @@ public class Controller {
                         break;
 
                     default:
-                        System.out.println("Not your turn, please wait");
                         break;
                 }
             }
-            System.out.println("It's now " + playerNickname + "'s turn");
             Platform.runLater(() -> showAlert("It's your turn!", "Time to play some codex!"));
         } catch (SocketTimeoutException | SocketException e) {
             handleDisconnection();
@@ -329,7 +300,6 @@ public class Controller {
 
 
     private void handleDisconnection() {
-        System.out.println("Client disconnected or crashed.");
         try {
             if (in != null) in.close();
             if (out != null) out.close();
