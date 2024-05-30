@@ -313,7 +313,7 @@ public class GameSceneController {
             layout.setStyle("-fx-background-color: #212121;");
 
             // Create a VBox for the game UI elements
-            VBox vboxGame = new VBox();
+            VBox vboxGame = new VBox(0);
             vboxGame.setFillWidth(true);
 
             Insets padding = new Insets(10, 10, 10, 10);
@@ -352,14 +352,11 @@ public class GameSceneController {
             decks.setPadding(paddingDecks);
             decks.getChildren().addAll(SharedObjectsInGui.getTopCardResourceDeckView(), SharedObjectsInGui.getTopCardGoldDeckView());
 
-            chat.setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-font-weight: bold;");
-            chat.setPrefWidth(120.00);
-
             // Initialize and disable the button container
             buttonContainer.setHgap(2);
             buttonContainer.setVgap(2);
             creatingButtons();
-            vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, buttonContainer, chat);
+            vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, buttonContainer);
             buttonContainer.setDisable(true);
 
             // Create the second column VBox
@@ -1987,9 +1984,10 @@ public class GameSceneController {
         buttonContainer.add(showAllPoints, 1, 2);
         buttonContainer.add(showObjective, 0, 3);
         buttonContainer.add(seeYourSpecificSeeds, 1, 3);
-        buttonContainer.add(endTurn, 0, 4);
-        buttonContainer.add(showAllBoards, 1, 4);
+        buttonContainer.add(showAllBoards, 0, 4);
+        buttonContainer.add(chat, 1, 4);
         buttonContainer.add(quit, 0, 5);
+        buttonContainer.add(endTurn, 1, 5);
         double buttonsWidth = 120.00;
         for (var node : buttonContainer.getChildren()) {
             if (node instanceof Button) {
