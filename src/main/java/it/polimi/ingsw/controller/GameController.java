@@ -136,23 +136,6 @@ public synchronized void waitingForPLayers() throws InterruptedException {
         }
     }
 
-    public synchronized void removePlayer(Player player) {
-        // Remove players from player's map
-        players.remove(player.getNickName());
-        clients.removeIf(client -> client.getThreadPlayer().equals(player));
-        currentNumsOfPlayers--;
-        sendMessageToAllClients(player.getNickName() + " has disconnected.");
-
-        // Check if there is any client still active
-        if (players.isEmpty()) {
-            setGameOver(true);
-            sendMessageToAllClients("All players have disconnected. Game over.");
-        }
-    }
-
-
-
-
     public int getNumOfPlayers() {
         return players.size();
     }

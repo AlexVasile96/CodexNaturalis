@@ -570,7 +570,6 @@ public class HandlingPlayerInputsThread implements Runnable {
         clients.remove(this);
         if (threadPlayer != null) {
             playersList.remove(threadPlayer);
-            gameController.removePlayer(threadPlayer);
         }
         closeResources();
 
