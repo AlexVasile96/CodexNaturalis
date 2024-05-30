@@ -24,7 +24,7 @@ public class ShowAllPointsScene {
     private Label playerTwoLabel;
     private Label playerThreeLabel;
     private Label playerFourLabel;
-    private int counter = 0;
+    private String waitForCall;
 
     public ShowAllPointsScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) throws IOException {
         this.primaryStage = primaryStage;
@@ -57,44 +57,30 @@ public class ShowAllPointsScene {
     }
 
     private void showAllPts() throws IOException {
-//        out.println("showAllPoints");
-//        String string = in.readLine();
-//        counter = 0;
-//        while (!string.equals("exit")) {
-//            if (counter == 0) {
-//                playerOneLabel.setText(string);
-//            } else if (counter == 1) {
-//                playerTwoLabel.setText(string);
-//            } else if (counter == 2) {
-//                playerThreeLabel.setText(string);
-//            } else if (counter == 3) {
-//                playerFourLabel.setText(string);
-//            }
-//            counter++;
-//            string = in.readLine();
-//        }
-        out.println("showAllPoints"); // Send request to the server
-        String messageFromServer = in.readLine(); // Read the first line from the server
-        counter = 0;
+        waitForCall = in.readLine();
         do {
-            System.out.println(messageFromServer); // Print the server message
-            messageFromServer = in.readLine();// Read the next line from the server
-            if(counter == 0) {
-                playerOneLabel.setText(messageFromServer);
-                counter++;
-            }if(counter == 1) {
-                playerTwoLabel.setText(messageFromServer);
-                counter++;
+            System.out.println(waitForCall);
+            waitForCall = in.readLine();
+            playerOneLabel.setText(in.readLine() + " " + in.readLine() + " " + in.readLine() + " " + in.readLine());
+            in.readLine();
+            playerTwoLabel.setText(in.readLine() + " " + in.readLine() + " " + in.readLine() + " " + in.readLine());
+            in.readLine();
+            playerThreeLabel.setText(in.readLine() + " " + in.readLine() + " " + in.readLine() + " " + in.readLine());
+            in.readLine();
+            if(playerThreeLabel.equals("exit ")) {
+                playerThreeLabel = null;
+                waitForCall = "exit";
+                break;
             }
-            if(counter == 2) {
-                playerThreeLabel.setText(messageFromServer);
-                counter++;
-            }
-            if(counter == 0) {
-                playerFourLabel.setText(messageFromServer);
-                counter++;
-            }
-        } while (!messageFromServer.equals("exit")); // Continue until "exit" is received
+            playerFourLabel.setText(in.readLine() + " " + in.readLine() + " " + in.readLine() + " " + in.readLine());
+            in.readLine();
+                if(playerFourLabel.equals("exit ")) {
+                    playerFourLabel = null;
+                    waitForCall = "exit";
+                    break;
+                }
+            }while (!waitForCall.equals("exit"));
 
     }
+
 }
