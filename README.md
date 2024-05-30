@@ -38,7 +38,7 @@
 |RESILIENCE|⛔|
 |PERSISTENCE|⛔|
 
-Legenda <br>
+<b>Legenda</b> <br>
 ✅: Implemented  ⛔: Not implemented ⚙️ Testing    ⏱ Developing
 
 <b>Team</b> <br>
