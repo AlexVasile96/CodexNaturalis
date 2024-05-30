@@ -9,30 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="buttonContainer">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_17_50__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_17_50__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_18_57__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_18_57__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_23_24__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_05_2024_23_24__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_14_21__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_14_21__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_14_46__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_14_46__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_02__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_02__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_08__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_08__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_15__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_15__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_20__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_20__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_28__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_28__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_40__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_40__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_45__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_15_45__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_16_10__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_16_10__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_16_47__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_16_47__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_17_32__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_17_32__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_17_33__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_05_2024_17_33__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_09_31__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_09_31__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_11_01__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_11_01__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_12_04__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_12_04__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_14_33__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_05_2024_14_33__Changes_.xml" afterDir="false" />
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="SHowllBoardsforgui">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Deliverables/UML.png" beforeDir="false" afterPath="$PROJECT_DIR$/Deliverables/UML.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/HandlingPlayerInputsThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/server/HandlingPlayerInputsThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,12 +35,12 @@
     &quot;assignee&quot;: &quot;AlexVasile96&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/PietroCallandrone/IS24-LB05.git",
-    "accountId": "f7d956ab-d44a-4b8f-8b75-ffdd9af35e43"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/PietroCallandrone/IS24-LB05.git&quot;,
+    &quot;accountId&quot;: &quot;66b03c10-d4a3-43d0-a6c5-1104829d0c1d&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -118,6 +97,7 @@
     "JUnit.StairsObjectiveCardTest.executor": "Run",
     "JUnit.TrisObjectiveCardTest.executor": "Run",
     "JUnit.game in proj.executor": "Run",
+    "JUnit.it.polimi.ingsw.model in proj.executor": "Coverage",
     "JUnit.model in proj.executor": "Run",
     "Maven.proj [clean,package].executor": "Run",
     "Maven.proj [clean].executor": "Run",
@@ -129,7 +109,6 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/tommy/Desktop/IS24-LB05/Deliverables",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -143,9 +122,6 @@
   }
 }]]></component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\tommy\Desktop\IS24-LB05\Deliverables" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\pitca\IdeaProjects\progettone\src\main\java\it\polimi\ingsw" />
     </key>
@@ -156,7 +132,7 @@
       <command value="mvn clean package" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.Codex">
+  <component name="RunManager" selected="JUnit.All in proj">
     <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.network.client.cli.CliClientApp" />
       <module name="proj" />
@@ -196,18 +172,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="game in proj" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in proj" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="proj" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/src/test/java/model/game" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="model in proj" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="it.polimi.ingsw.model in proj" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="proj" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/src/test/java/model" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.polimi.ingsw.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="it.polimi.ingsw.model" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -216,16 +198,16 @@
       <item itemvalue="Application.Codex" />
       <item itemvalue="Application.GUI" />
       <item itemvalue="Application.CliClientApp" />
-      <item itemvalue="JUnit.game in proj" />
-      <item itemvalue="JUnit.model in proj" />
+      <item itemvalue="JUnit.All in proj" />
+      <item itemvalue="JUnit.it.polimi.ingsw.model in proj" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in proj" />
+        <item itemvalue="JUnit.it.polimi.ingsw.model in proj" />
         <item itemvalue="Application.Codex" />
         <item itemvalue="Application.GUI" />
         <item itemvalue="Application.CliClientApp" />
-        <item itemvalue="JUnit.model in proj" />
-        <item itemvalue="JUnit.game in proj" />
       </list>
     </recent_temporary>
   </component>
@@ -281,8 +263,8 @@
       <workItem from="1717007914642" duration="4731000" />
       <workItem from="1717068192721" duration="657000" />
       <workItem from="1717071540833" duration="6262000" />
-      <workItem from="1717078672470" duration="1485000" />
-      <workItem from="1717081707337" duration="894000" />
+      <workItem from="1717078672470" duration="2157000" />
+      <workItem from="1717081638491" duration="590000" />
     </task>
     <task id="LOCAL-00019" summary="fIXED ADVANCED FUNCTION (CHAT-&gt; THE CLIENT USED TO VISUALIZE THE SAME MESSAGE TWICE)">
       <option name="closed" value="true" />
@@ -668,13 +650,13 @@
       <option name="project" value="LOCAL" />
       <updated>1717079300781</updated>
     </task>
-    <task id="LOCAL-00067" summary="buttonContainer">
+    <task id="LOCAL-00067" summary="SHowllBoardsforgui">
       <option name="closed" value="true" />
-      <created>1717080652711</created>
+      <created>1717080356362</created>
       <option name="number" value="00067" />
       <option name="presentableId" value="LOCAL-00067" />
       <option name="project" value="LOCAL" />
-      <updated>1717080652711</updated>
+      <updated>1717080356362</updated>
     </task>
     <option name="localTasksCounter" value="68" />
     <servers />
@@ -718,8 +700,8 @@
     <MESSAGE value="Systemout and code cleanup" />
     <MESSAGE value="ShowALlpointsForGUi" />
     <MESSAGE value="Code cleanUp" />
-    <MESSAGE value="buttonContainer" />
-    <option name="LAST_COMMIT_MESSAGE" value="buttonContainer" />
+    <MESSAGE value="SHowllBoardsforgui" />
+    <option name="LAST_COMMIT_MESSAGE" value="SHowllBoardsforgui" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -796,7 +778,11 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj__1_.ic" NAME="All in proj (1) Coverage Results" MODIFIED="1716630710868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
-    <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj.ic" NAME="All in proj Coverage Results" MODIFIED="1716641301667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj__2_.ic" NAME="All in proj (2) Coverage Results" MODIFIED="1716630886224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IS24_LB05$All_in_proj.ic" NAME="All in proj Coverage Results" MODIFIED="1717082098079" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj.ic" NAME="All in proj Coverage Results" MODIFIED="1716641301667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IS24_LB05$it_polimi_ingsw_model_in_proj.ic" NAME="it.polimi.ingsw.model in proj Coverage Results" MODIFIED="1717082069871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>it.polimi.ingsw.model.*</FILTER>
+    </SUITE>
   </component>
 </project>
