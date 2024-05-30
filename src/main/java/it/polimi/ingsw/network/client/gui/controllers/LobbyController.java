@@ -43,51 +43,49 @@ public class LobbyController {
         executor.execute(() -> {
             try {
                 String message;
+                label:
                 while ((message = in.readLine()) != null) {
-                    if (message.equals("All clients connected")) {
-                        Platform.runLater(() -> {
-                            String whatIsYourIndex=null;
-                            int gameSize=0;
-                            try {
-                                gameSize= Integer.parseInt(in.readLine());
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                            try {
-                                whatIsYourIndex=in.readLine();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                            if(Integer.parseInt(whatIsYourIndex)<=gameSize) {
-                                SecretCardScene secretCardSceneHandler = new SecretCardScene();
-                                secretCardSceneHandler.chooseSecretCard(primaryStage, out, socket, in, clientview);
-                            }
-                            else{
-                                System.out.println("Number of player is already full");
-                                handleDisconnection();
-                            }
+                    switch (message) {
+                        case "All clients connected":
+                            Platform.runLater(() -> {
+                                String whatIsYourIndex;
+                                int gameSize;
+                                try {
+                                    gameSize = Integer.parseInt(in.readLine());
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                try {
+                                    whatIsYourIndex = in.readLine();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                if (Integer.parseInt(whatIsYourIndex) <= gameSize) {
+                                    SecretCardScene secretCardSceneHandler = new SecretCardScene();
+                                    secretCardSceneHandler.chooseSecretCard(primaryStage, out, socket, in, clientview);
+                                } else {
+                                    System.out.println("Number of player is already full");
+                                    handleDisconnection();
+                                }
 
-                        });
-                        break;
-                    } else if (message.equals("All clients chose the init Card")) {
-                        Platform.runLater(() -> {
-                            handleInitCardChoice();
-                        });
-                        break;
-                    } else if (message.equals("SETUPFINISHED")) {
-                        currentPlayerNickname = in.readLine();
-                        String nextPlayer = in.readLine();
+                            });
+                            break label;
+                        case "All clients chose the init Card":
+                            Platform.runLater(this::handleInitCardChoice);
+                            break label;
+                        case "SETUPFINISHED":
+                            currentPlayerNickname = in.readLine();
+                            String nextPlayer = in.readLine();
 
                             if (nextPlayer.equals(clientview.getUserName())) {
                                 handleSetupFinished(currentPlayerNickname);
                             } else {
-                               waitAllPlayers();
+                                waitAllPlayers();
                             }
+                            break label;
+                        case "STARTGUI":
+                            System.out.println("All clients logged");
                             break;
-                    }
-                    else if(message.equals("STARTGUI"))
-                    {
-                        System.out.println("All clients logged");
                     }
 
                 }
@@ -139,7 +137,7 @@ public class LobbyController {
     private void handleDisconnection() {
         Platform.runLater(() -> {
             // Show an alert indicating the disconnection
-            showAlert("Disconnection", "Lobby is full.");
+            showAlert();
             try {
                 // Close resources
                 if (in != null) in.close();
@@ -158,15 +156,12 @@ public class LobbyController {
     }
     /**
      * Shows an alert with the given title and message.
-     *
-     * @param title   The title of the alert.
-     * @param message The message to be displayed in the alert.
      */
-    private void showAlert(String title, String message) {
+    private void showAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
+        alert.setTitle("Disconnection");
         alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setContentText("Lobby is full.");
         alert.showAndWait();
     }
 

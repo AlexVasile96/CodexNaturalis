@@ -6,7 +6,6 @@ import it.polimi.ingsw.view.ClientView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -47,7 +46,7 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        loginButton.setDisable(true); //disabling login button unless client has insert his username
+        loginButton.setDisable(true); //disabling login button unless client has inserted his username
         usernameField.textProperty().addListener((observable, oldValue, newValue) -> checkFields());        //Listener to see if the field has been completed
         toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> checkFields());
     }
@@ -60,7 +59,7 @@ public class LoginController {
     }
 
     @FXML
-    public void loginButtonClicked(ActionEvent event) throws IOException {
+    public void loginButtonClicked() {
         new Thread(() -> {
             try {
 
@@ -75,13 +74,13 @@ public class LoginController {
 
                         if (dot == null) {
                             loginLabel.setText("Choose a dot color");
-                            loginLabel.setStyle("-fx-font-size: 20px;" + // Dimensione del font
-                                    "-fx-font-family: Arial;" + // Famiglia del font
-                                    "-fx-text-fill: #EF8156;" + // Colore del testo
-                                    "-fx-padding: 10px;" + // Spaziatura interna
-                                    "-fx-border-color: #EF8156;" + // Colore del bordo
-                                    "-fx-border-width: 1px;" + // Spessore del bordo
-                                    "-fx-border-radius: 5px;"); // Arrotondamento del bordo
+                            loginLabel.setStyle("-fx-font-size: 20px;" +
+                                    "-fx-font-family: Arial;" +
+                                    "-fx-text-fill: #EF8156;" +
+                                    "-fx-padding: 10px;" +
+                                    "-fx-border-color: #EF8156;" +
+                                    "-fx-border-width: 1px;" +
+                                    "-fx-border-radius: 5px;");
                         }
                     });
                     return;
@@ -100,13 +99,13 @@ public class LoginController {
                 if (whatServerSays.equals("Username already taken. Please choose another username:")) {
                     Platform.runLater(() -> {
                         loginLabel.setText("Username already taken. Please choose another username:");
-                        loginLabel.setStyle("-fx-font-size: 20px;" + // Dimensione del font
-                                "-fx-font-family: Arial;" + // Famiglia del font
-                                "-fx-text-fill: #EF8156;" + // Colore del testo
-                                "-fx-padding: 10px;" + // Spaziatura interna
-                                "-fx-border-color: #EF8156;" + // Colore del bordo
-                                "-fx-border-width: 1px;" + // Spessore del bordo
-                                "-fx-border-radius: 5px;"); // Arrotondamento del bordo
+                        loginLabel.setStyle("-fx-font-size: 20px;" +
+                                "-fx-font-family: Arial;" +
+                                "-fx-text-fill: #EF8156;" +
+                                "-fx-padding: 10px;" +
+                                "-fx-border-color: #EF8156;" +
+                                "-fx-border-width: 1px;" +
+                                "-fx-border-radius: 5px;");
                         usernameField.clear();
                     });
                     return;
@@ -144,9 +143,7 @@ public class LoginController {
                     });
                 }
                 else {
-                    Platform.runLater(()->{
-                        showAlert("Someone is online!","Please wait until the first client chooses the number of players!");
-                    });
+                    Platform.runLater(()-> showAlert("Someone is online!","Please wait until the first client chooses the number of players!"));
                     in.readLine();
                     LobbyScene lobbySceneHandler = new LobbyScene();
                     in.readLine();

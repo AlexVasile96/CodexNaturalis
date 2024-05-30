@@ -356,9 +356,8 @@ public class GameSceneController {
             buttonContainer.setHgap(2);
             buttonContainer.setVgap(2);
             creatingButtons();
-            vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, buttonContainer);
+            vboxGame.getChildren().addAll(gridPaneForWellCards, decks, decksText, buttonContainer, chat);
             buttonContainer.setDisable(true);
-            chat.setDisable(false);
 
             // Create the second column VBox
             VBox secondColumnOfSecondRow = new VBox();
@@ -843,8 +842,6 @@ public class GameSceneController {
             }
         });
 
-
-
         showAllPoints.setOnMouseClicked(e -> {
             if(isCurrentPlayerTurn) {
                 try {
@@ -1003,7 +1000,6 @@ public class GameSceneController {
      */
     private void enableOrDisableGameActions() {
         buttonContainer.setDisable(!isCurrentPlayerTurn);
-        chat.setDisable(false);
     }
 
     /**
@@ -1987,8 +1983,7 @@ public class GameSceneController {
         buttonContainer.add(showObjective, 0, 3);
         buttonContainer.add(endTurn, 1, 3);
         buttonContainer.add(quit, 0, 4);
-        buttonContainer.add(chat, 1, 4);
-        buttonContainer.add(showAllPoints, 0, 5);
+        buttonContainer.add(showAllPoints, 1, 4);
         buttonContainer.add(showAllBoards, 1, 4);
         double buttonsWidth = 120.00;
         for (var node : buttonContainer.getChildren()) {

@@ -7,7 +7,6 @@ import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.game.Game;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,28 +22,21 @@ public class ServerLobby {
         this.game=game;
     }
 
-    public synchronized GameController login(String username, PrintWriter userOut) throws UnknownPlayerNumberException, UsernameAlreadyExistsException, IOException {
+    public synchronized GameController login() throws UnknownPlayerNumberException, UsernameAlreadyExistsException, IOException {
         if (currentGames.isEmpty() || currentGames.getFirst().getNumOfPlayers() >= 4) {
-            GameController newGame = new GameController(username, userOut, clients, socket, game);
+            GameController newGame = new GameController(clients, socket, game);
             currentGames.add(newGame);
             return newGame;
         } else {
             GameController game = currentGames.getFirst();
             try {
-                //game.addPlayer(username, userOut);
                 return game;
             } catch (GameFullException ignored) {
-                // Il gioco è pieno, quindi non aggiungere il giocatore
                 return null;
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
             }
         }
     }
-    public void abortGame(GameController controller) {
-        // This method will implement game abortion logic when needed.
-    }
+
 }
 
 
