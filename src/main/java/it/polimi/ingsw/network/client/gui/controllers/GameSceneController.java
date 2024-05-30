@@ -53,7 +53,6 @@ public class GameSceneController {
     private Button flipCardToFront = new Button("Flip Card to front");
     private Button drawCard = new Button("Draw card");
     private Button seeYourSpecificSeeds = new Button("See your seeds");
-    private Button seeOtherPlayersBoards = new Button("See other players boards");
     private Button seeYourPoints = new Button("See your points");
     private Button chat = new Button("Chat");
     Button showObjective = new Button("Show Objective");
@@ -641,7 +640,9 @@ public class GameSceneController {
                         } else {
                             showAlert("Action not allowed", "You have to choose a card to draw");
                         }
-                    } catch (IOException ex) {
+                    } catch (SocketTimeoutException | SocketException exx) {
+                        handleDisconnection(); }
+                    catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 } else {
@@ -808,7 +809,9 @@ public class GameSceneController {
                     // Retrieve and display the specific seeds of the current player
                     String yourSeeds = controller.showSpecificSeed();
                     showAlert("Your seeds at the moment", yourSeeds);
-                } catch (IOException ex) {
+                }catch (SocketTimeoutException | SocketException exx) {
+                    handleDisconnection(); }
+                    catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             } else {
@@ -824,7 +827,9 @@ public class GameSceneController {
                     // Display the points of the current player
                     boardPointsScene = new BoardPointsScene(primaryStage, out, socket, in, clientView);
                     boardPointsScene.popupBoardPoints();
-                } catch (IOException ex) {
+                }catch (SocketTimeoutException | SocketException exx) {
+                    handleDisconnection(); }
+                catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             } else {
@@ -834,22 +839,16 @@ public class GameSceneController {
             }
         });
 
-        seeOtherPlayersBoards.setOnMouseClicked(e -> {
-            if (isCurrentPlayerTurn) {
-                // Display an alert indicating that the action is currently not implemented
-                showAlert("Action unavailable", "This action is currently not implemented.");
-            } else {
-                // Alert if it's not the current player's turn
-                showAlert("Not your turn", "It's not your turn yet.");
-            }
-        });
 
         showAllPoints.setOnMouseClicked(e -> {
             if(isCurrentPlayerTurn) {
                 try {
                     ShowAllPointsScene allPointsScene = new ShowAllPointsScene(primaryStage, out, socket, in, clientView);
                     allPointsScene.showAllPointsPopup();
-                } catch (IOException ex) {
+
+                }catch (SocketTimeoutException | SocketException exx) {
+                    handleDisconnection(); }
+                catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }else {
@@ -868,7 +867,8 @@ public class GameSceneController {
                     secretId = controller.secretCard();
                     objectiveScene.popupObjectiveScene(firstCommonId, secondCommonId, secretId);
 
-                } catch (IOException ex ) {
+                } catch (SocketTimeoutException | SocketException exx) {
+                    handleDisconnection(); }catch (IOException ex ) {
                     throw new RuntimeException(ex);
                 }
             } else {
@@ -902,7 +902,8 @@ public class GameSceneController {
                     // Exit the application
                     Platform.exit();
                     System.exit(0);
-                } catch (IOException ex) {
+                }
+                catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }
@@ -941,14 +942,14 @@ public class GameSceneController {
                         // Setup game actions
                         setupGameActions();
                     }
-                     catch (SocketTimeoutException e) {
+                    catch (SocketTimeoutException | SocketException e) {
                         handleDisconnection();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
-            } catch (SocketTimeoutException e) {
+            } catch (SocketTimeoutException | SocketException e) {
                 handleDisconnection();
             } catch (IOException e) {
                 e.printStackTrace();
