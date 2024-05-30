@@ -2,12 +2,10 @@
 
 
 
+![codex](https://github.com/PietroCallandrone/IS24-LB05/assets/145578607/8ff52f6e-4636-48d4-a86f-c7d0458f29f9)
 
 
 
-
-
-![image](https://github.com/PietroCallandrone/IS24-LB05/assets/139533466/f9826d44-9131-4da4-b36d-bd68aee2de4b)
 
 
 
