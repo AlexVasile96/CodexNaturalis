@@ -49,7 +49,7 @@ public class ShowAllBoardsScene {
     }
 
     private void showBoards() throws IOException {
-        out.println("showAllBoards");
+        out.println("showEachPlayerBoard");
         waitForCall = in.readLine();
         do {
             allBoards.setText(allBoards.getText() + "\n" + waitForCall);

@@ -16,10 +16,8 @@ public class OnePlantAndTwoMushrooms
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < cols; column++)
             {
-                    //  SE IL PRIMO PLACEMENT è PIANTA E IL SECONDO FUNGO O VICEVERSA
                     if((nodes[row][column].getFirstPlacement()==seed1 && nodes[row][column].getSecondPlacement()==seed2) ||
                             (nodes[row][column].getFirstPlacement()==seed2 && nodes[row][column].getSecondPlacement()==seed1)){ ///26-26 ok
-                        //SE TUTTI E 4 I FIRST PLACEMENT SOPRA LA CARTA SONO FUNGO, ALLORA LA CARTA OBIETTIVO è VALIDA
                         if(nodes[row-2][column].getFirstPlacement()==seed2  && !nodes[row-2][column].isAlreadyChecked()){ //26 24-
                             if(nodes[row-3][column].getFirstPlacement()==seed2 && !nodes[row-3][column].isAlreadyChecked() ) {
                                 if ((nodes[row - 3][column - 1].getFirstPlacement() == seed2 ||nodes[row - 3][column - 1].getSecondPlacement() == seed2) && !nodes[row - 3][column - 1].isAlreadyChecked()) {

@@ -18,8 +18,8 @@ public class ChooseNumOfPlayersScene {
     //Initializing scene
     public void createChooseNumOfPlayersScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/model/ChooseNumberOfPlayers.fxml"));
-        Pane root = loader.load(); // Carica il file FXML e ottiene il suo root (un Pane)
-        ChooseNumOfPlayersController controller = loader.getController(); // Ottiene il controller dal FXMLLoader
+        Pane root = loader.load();
+        ChooseNumOfPlayersController controller = loader.getController();
         controller.initData(primaryStage, out, socket, in, clientView);
         Image loginBackground = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/ImmaginiCodex/sfondoSchermataLogin.png")));
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);

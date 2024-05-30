@@ -9,7 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="ShowALlpointsForGUi" />
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Code cleanUp">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/ObjectiveSpecificTypeOfCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/ObjectiveSpecificTypeOfCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OneAnimalAndTwoInsects.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OneAnimalAndTwoInsects.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OneInsectAndTwoPlants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OneInsectAndTwoPlants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OnePlantAndTwoMushrooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OnePlantAndTwoMushrooms.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/GameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/GameSceneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/ChooseNumOfPlayersScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/ChooseNumOfPlayersScene.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -252,15 +262,7 @@
       <workItem from="1717007914642" duration="4731000" />
       <workItem from="1717068192721" duration="657000" />
       <workItem from="1717071540833" duration="6262000" />
-      <workItem from="1717078672470" duration="330000" />
-    </task>
-    <task id="LOCAL-00017" summary="Persistenza della cli quasi finita (da gestire la endturn)">
-      <option name="closed" value="true" />
-      <created>1716766549290</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1716766549290</updated>
+      <workItem from="1717078672470" duration="1485000" />
     </task>
     <task id="LOCAL-00018" summary="chat adavnced function implemented w/thomas">
       <option name="closed" value="true" />
@@ -646,7 +648,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717078961806</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Code cleanUp">
+      <option name="closed" value="true" />
+      <created>1717079300781</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1717079300781</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -664,7 +674,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed Codex class-&gt; now the chat starts correctly" />
     <MESSAGE value="Fixed stairsobjectivetest" />
     <MESSAGE value="Stairs objective cards correctly fixed w/momo" />
     <MESSAGE value="EndGame for Gui" />
@@ -689,7 +698,8 @@
     <MESSAGE value="updated json" />
     <MESSAGE value="Systemout and code cleanup" />
     <MESSAGE value="ShowALlpointsForGUi" />
-    <option name="LAST_COMMIT_MESSAGE" value="ShowALlpointsForGUi" />
+    <MESSAGE value="Code cleanUp" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code cleanUp" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -701,7 +711,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Game.java</url>
-          <line>186</line>
+          <line>185</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

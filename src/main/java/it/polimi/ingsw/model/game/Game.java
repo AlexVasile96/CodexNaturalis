@@ -110,7 +110,7 @@ public class Game{
     }
 
 
-    public String playCard(Player player, int cardindex, int cardChosenOnTheBoard, String selectedCorner) {
+    public String playCard(Player player, int cardIndex, int cardChosenOnTheBoard, String selectedCorner) {
         if (cPchoose.getId() >= 81 && cPchoose.getId() <= 86) {
 
             //Card is the initial Card
@@ -118,13 +118,13 @@ public class Game{
             helpcard.setIndexOnTheBoard(cPchoose.getIndexOnTheBoard());
             helpcard.setNode(cPchoose.getNode());
             helpcard.setCardBack(cPchoose.isCardBack());
-            player.playInitCardOnBoard(player.getBoard(), cardindex, selectedCardFromTheDeck, helpcard, selectedCorner);
+            player.playInitCardOnBoard(player.getBoard(), cardIndex, selectedCardFromTheDeck, helpcard, selectedCorner);
             player.getClientView().update(player);
 
             return "Carta piazzata correttamente";
         } else {
             //Card chosen is not the initial card
-            player.playCard(player.getBoard(), cardindex, cardChosenOnTheBoard, selectedCardFromTheDeck, cPchoose, selectedCorner);
+            player.playCard(player.getBoard(), cardIndex, cardChosenOnTheBoard, selectedCardFromTheDeck, cPchoose, selectedCorner);
             return "Carta piazzata correttamente";
         }
     }
@@ -177,10 +177,9 @@ public class Game{
     }
 
 
-    public String showYourspecificSeeds(Player player) {
+    public String showYourSpecificSeeds(Player player) {
         BoardPoints boardPoints = new BoardPoints();
-        String yourSpecificSeeds = boardPoints.countPoints(player.getBoard()).toString();
-        return yourSpecificSeeds;
+        return boardPoints.countPoints(player.getBoard()).toString();
     }
 
 
@@ -354,10 +353,10 @@ public class Game{
 
     public String showAllSpecificSeed() {
         StringBuilder stamp = new StringBuilder();
-        for (Player playerz : players) {
-            stamp.append(playerz.getNickName());
+        for (Player playersInList : players) {
+            stamp.append(playersInList.getNickName());
             stamp.append(" current Seed:\n");
-            stamp.append(showYourspecificSeeds(playerz));
+            stamp.append(showYourSpecificSeeds(playersInList));
             stamp.append("\n");
         }
         stamp.append("exit");
@@ -503,8 +502,8 @@ public class Game{
         dots.remove(string);
     }
 
-    public synchronized boolean isInDots(String stringa) {
-        return dots.contains(stringa);
+    public synchronized boolean isInDots(String string) {
+        return dots.contains(string);
     }
 
     //PRIVATE METHODS INSIDE GAME
@@ -636,7 +635,6 @@ void saveEachPlayerInGame(Path path) {
         System.out.println("Check is " + check);
            if(check)
            {
-               System.out.println("Check is: "+ check);
                return "OKAY";
            }
            else return "NO";
@@ -717,8 +715,6 @@ void saveEachPlayerInGame(Path path) {
     public void saveCurrentPlayingPlayerToJson() {
         Path path = getCurrentPlayerPath();
         JsonObject currentPlayerObject = new JsonObject();
-
-        // Controlla se currentPlayingPLayer non è nullo
         if (currentPlayingPLayer == null) {
             System.out.println("currentPlayingPLayer is null");
             return;
@@ -795,8 +791,7 @@ void saveEachPlayerInGame(Path path) {
             currentPlayingPLayer = new Player(nickname, score, dot, board);
             currentPlayingPLayer.setPlayerCards((ArrayList<Card>) playerDeck);
             currentPlayingPLayer.setSecretChosenCard(secretChosenCard);
-
-            System.out.println("Current player loaded: " + currentPlayingPLayer); // Aggiungi un messaggio di debug
+            System.out.println("Current player loaded: " + currentPlayingPLayer);
             return currentPlayingPLayer;
         } catch (IOException e) {
             e.printStackTrace();

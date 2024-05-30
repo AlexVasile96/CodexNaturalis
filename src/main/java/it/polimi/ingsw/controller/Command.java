@@ -72,7 +72,7 @@ public class Command { //Command Client sends to Server
                 return  allboards;
             case "showYourSpecificSeed":
                 String allStrings;
-                allStrings= game.showYourspecificSeeds(player);
+                allStrings= game.showYourSpecificSeeds(player);
                 return allStrings;
             case "showAllSpecificSeed":
                 String allseeds;
