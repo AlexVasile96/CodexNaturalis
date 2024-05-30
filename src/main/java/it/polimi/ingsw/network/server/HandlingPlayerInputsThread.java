@@ -208,7 +208,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 index++;
                 player.setIndex(index);
             }
-            gameController = lobby.login(request, out);
+            gameController = lobby.login();
             setGameSize(player);
         } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
             System.err.println(e.getMessage());
@@ -312,11 +312,11 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("Received command: " + messageFromClient);
             switch (messageFromClient) {
                 case"updateLoggedPlayers"->{
-                    gameController.setLoggingPlayers(gameController.getLogginPlayers()+1);
+                    gameController.setLoggingPlayers(gameController.getLoggingPlayers()+1);
                     sendMessageToAllClients("Login Players updated correctly");
                 }
                 case"howManyPlayers"->{
-                    int size= gameController.getLogginPlayers();
+                    int size= gameController.getLoggingPlayers();
                     sendMessageToAllClients(String.valueOf(size));
                 }
                 case"SETUPFINISHED"->{

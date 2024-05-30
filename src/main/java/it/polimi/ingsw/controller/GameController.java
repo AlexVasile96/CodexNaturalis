@@ -34,11 +34,10 @@ public class GameController {
 
     //CONSTRUCTORS
 
-    public GameController(String username, PrintWriter userOut, List<HandlingPlayerInputsThread> clients, Socket socket, Game game) throws IOException {
+    public GameController(List<HandlingPlayerInputsThread> clients, Socket socket, Game game) throws IOException {
         this.players = new HashMap<>();
         this.size = 0;
         this.isGameOver = false;
-        //players.put(username, userOut);
         this.game=game;
         this.clients=clients;
         this.out= new PrintWriter(socket.getOutputStream(), true);
@@ -57,25 +56,22 @@ public class GameController {
         if (game != null) {
             Command command = new Command();
             String result;
-            switch (commandString) {
-                case "playCard":
-                    if (!isCornerAlreadyChosen) {
-                        String cornersAvailable = command.runCommand(game, commandString, player, size, numbers, cornerChosen);
-                        sendMessageToAllClients(cornersAvailable); // Sending to the client the available corners
-                        isCornerAlreadyChosen = true;
-                    } else if(cornerChosen.equals("clean")){
-                        isCornerAlreadyChosen = false;
-                        command.runCommand(game, commandString, player, size, numbers, cornerChosen);
-                    } else {
-                        String cornersChosen = command.runCommand(game, commandString, player, size, numbers, cornerChosen);
-                        sendMessageToAllClients(cornersChosen);
-                        isCornerAlreadyChosen = false;
-                    }
-                    break;
-                default:
-                    result = command.runCommand(game, commandString, player, size, numbers, cornerChosen);
-                    sendMessageToAllClients(result);
-                    break;
+            if (commandString.equals("playCard")) {
+                if (!isCornerAlreadyChosen) {
+                    String cornersAvailable = command.runCommand(game, commandString, player, size, numbers, cornerChosen);
+                    sendMessageToAllClients(cornersAvailable); // Sending to the client the available corners
+                    isCornerAlreadyChosen = true;
+                } else if (cornerChosen.equals("clean")) {
+                    isCornerAlreadyChosen = false;
+                    command.runCommand(game, commandString, player, size, numbers, cornerChosen);
+                } else {
+                    String cornersChosen = command.runCommand(game, commandString, player, size, numbers, cornerChosen);
+                    sendMessageToAllClients(cornersChosen);
+                    isCornerAlreadyChosen = false;
+                }
+            } else {
+                result = command.runCommand(game, commandString, player, size, numbers, cornerChosen);
+                sendMessageToAllClients(result);
             }
         }
     }
@@ -190,9 +186,6 @@ public synchronized void waitingForPLayers() throws InterruptedException {
         sizeLatch.countDown();
     }
 
-    public void setGameOver(boolean gameOver) {
-        isGameOver = gameOver;
-    }
     public void setSizeSet(boolean sizeSet) {
         isSizeSet = sizeSet;
     }
@@ -220,7 +213,7 @@ public synchronized void waitingForPLayers() throws InterruptedException {
         this.playerChoseinitialcard = playerChoseInitialCard;
     }
 
-    public int getLogginPlayers() {
+    public int getLoggingPlayers() {
         return logginPlayers;
     }
 
