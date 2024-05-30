@@ -832,7 +832,6 @@ public class GameSceneController {
 
         showAllPoints.setOnMouseClicked(e -> {
             if(isCurrentPlayerTurn) {
-
                 try {
                     ShowAllPointsScene allPointsScene = new ShowAllPointsScene(primaryStage, out, socket, in, clientView);
                     allPointsScene.showAllPointsPopup();

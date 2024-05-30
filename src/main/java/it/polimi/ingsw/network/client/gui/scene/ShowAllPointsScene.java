@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.client.gui.scene;
 
 import it.polimi.ingsw.view.ClientView;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -11,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Stack;
 
 public class ShowAllPointsScene {
 
@@ -20,11 +20,11 @@ public class ShowAllPointsScene {
     private PrintWriter out;
     private BufferedReader in;
     private Socket socket;
-    Label playerOneLabel = new Label("Player One");
-    Label playerTwoLabel = new Label("Player Two");
-    Label playerThreeLabel = new Label("Player Three");
-    Label playerFourLabel = new Label("Player Four");
-    int counter=0;
+    private Label playerOneLabel;
+    private Label playerTwoLabel;
+    private Label playerThreeLabel;
+    private Label playerFourLabel;
+    private int counter = 0;
 
     public ShowAllPointsScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) throws IOException {
         this.primaryStage = primaryStage;
@@ -37,41 +37,41 @@ public class ShowAllPointsScene {
     public void showAllPointsPopup() throws IOException {
         Stage popupStage = new Stage();
         popupStage.setTitle("Board Points");
-        popupStage.setResizable(false);
+        popupStage.setResizable(true);
         popupStage.initModality(Modality.WINDOW_MODAL); //prevents the interactions with the primary window while the popup is running
+
+        playerOneLabel = new Label();
+        playerTwoLabel = new Label();
+        playerThreeLabel = new Label();
+        playerFourLabel = new Label();
 
         StackPane root = new StackPane();
         VBox vbox = new VBox(10);
-        sucasuca();
+        showAllPts();
         vbox.getChildren().addAll(playerOneLabel, playerTwoLabel, playerThreeLabel, playerFourLabel);
         root.getChildren().add(vbox);
+        Scene scene = new Scene(root, 400,400);
+        popupStage.setScene(scene);
+        popupStage.show();
 
     }
 
-    private void sucasuca() throws IOException {
+    private void showAllPts() throws IOException {
         out.println("showAllPoints");
         String string = in.readLine();
-
+        counter = 0;
         while (!string.equals("exit")) {
-
-            if(counter==0){
+            if (counter == 0) {
                 playerOneLabel.setText(string);
-            }
-            if(counter==1){
+            } else if (counter == 1) {
                 playerTwoLabel.setText(string);
-            }
-            if(counter==2 && !string.equals("exit")){
+            } else if (counter == 2) {
                 playerThreeLabel.setText(string);
-            }
-            if(counter==3 && !string.equals("exit")){
+            } else if (counter == 3) {
                 playerFourLabel.setText(string);
-            }
-            else{
-                System.out.println("suca");
             }
             counter++;
             string = in.readLine();
         }
-        System.out.println("sucasuca");
     }
 }
