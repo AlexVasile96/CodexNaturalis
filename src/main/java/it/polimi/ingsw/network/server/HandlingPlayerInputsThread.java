@@ -193,7 +193,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             while (isUsernameTaken(request)) {
                 sendMessageToClient("Username already taken. Please choose another username:");
                 System.out.println("Username already taken. Please choose another username:");
-                System.out.println("Waiting for new Username");
+                System.out.println("Waiting for new Username...");
                 request = stdIn.readLine();
                 System.out.println("Received new username: " + request);
             }
@@ -209,14 +209,11 @@ public class HandlingPlayerInputsThread implements Runnable {
                 player.setIndex(index);
             }
             gameController = lobby.login(request, out);
-            System.out.println("Current numb of players: " + gameController.getCurrentNumsOfPlayers());
-            int size = setGameSize(player);
-            System.out.println(size);
+            setGameSize(player);
         } catch (IOException | UsernameAlreadyExistsException | UnknownPlayerNumberException e) {
             System.err.println(e.getMessage());
             handleClientDisconnection();
         }
-        System.out.println(gameController);
         return player;
     }
 
@@ -232,8 +229,6 @@ public class HandlingPlayerInputsThread implements Runnable {
         secretCards.add(secondCard);
         int firstId = firstCard.getId();
         int secondID = secondCard.getId();
-        System.out.println(firstId);
-        System.out.println(secondID);
         sendMessageToClient(String.valueOf(firstCard));
         sendMessageToClient(String.valueOf(secondCard));
         sendMessageToClient(String.valueOf(firstId));
@@ -242,12 +237,10 @@ public class HandlingPlayerInputsThread implements Runnable {
         int size = Integer.parseInt(integerString);
         if (size == 1) {
             System.out.println(userName + " chose card number: " + size);
-            threadPlayer.setSecretChosenCard(secretCards.get(size - 1));
-            System.out.println(threadPlayer.toString());
+            threadPlayer.setSecretChosenCard(secretCards.get(0));
         } else {
             System.out.println(userName + " chose card number: " + size);
             threadPlayer.setSecretChosenCard(secretCards.get(size - 1));
-            System.out.println(threadPlayer.toString());
         }
     }
 
@@ -308,7 +301,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             } else sendMessageToClient("Color chosen correctly:");
         } while (!game.isInDots(message));
         dot = Dot.valueOf(message);
-        System.out.println("Client color chosen is " + message);
+        System.out.println("Client chose color " + message);
         game.removeDot(message);
         return dot;
     }
@@ -350,7 +343,6 @@ public class HandlingPlayerInputsThread implements Runnable {
                     StringBuilder forClientView = new StringBuilder();
                     do {
                         cardChosenFromHisDeck = Integer.parseInt(stdIn.readLine());
-                        System.out.println("Player chose card number " + cardChosenFromHisDeck);
                         if (player.checkingTheChosenCardForGoldPurpose(cardChosenFromHisDeck)) {
                             sendMessageToAllClients("puoi procedere");
                         } else {

@@ -67,8 +67,7 @@ public class MainMenuController {
                 Scene loginScene = new Scene(root, 800, 600);
                 primaryStage.setScene(loginScene);
                 primaryStage.setTitle("Login");
-                String serverResponse = in.readLine(); //HELLO YOU HAVE TO LOG IN PLEASEY INSERT YOUR USERNAME
-                System.out.println(serverResponse);
+                in.readLine(); //HELLO YOU HAVE TO LOG IN PLEASEY INSERT YOUR USERNAME
                 LoginScene loginSceneHandler = new LoginScene();
                 loginSceneHandler.showLoginScene(primaryStage, out, socket, in, clientview);
             } catch (IOException e) {

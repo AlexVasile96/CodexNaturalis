@@ -5,7 +5,6 @@ import it.polimi.ingsw.view.ClientView;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
@@ -114,11 +113,11 @@ public class EndGameScene {
                 primaryStage.setTitle("Winner");
                 primaryStage.show();
 
-                String drumRollSound = getClass().getResource("/Sounds/DrumRollSound.mp3").toString();
+                String drumRollSound = Objects.requireNonNull(getClass().getResource("/Sounds/DrumRollSound.mp3")).toString();
                 Media drumSoundMedia = new Media(drumRollSound);
                 MediaPlayer drumRollPlayer = new MediaPlayer(drumSoundMedia);
 
-                String yeah = getClass().getResource("/Sounds/CSI.mp3").toString();
+                String yeah = Objects.requireNonNull(getClass().getResource("/Sounds/CSI.mp3")).toString();
                 Media yeahMedia = new Media(yeah);
                 MediaPlayer yeahPlayer = new MediaPlayer(yeahMedia);
 

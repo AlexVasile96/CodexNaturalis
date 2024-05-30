@@ -20,15 +20,14 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Objects;
 public class SecretCardScene {
-    private Scene chooseSecretObjectiveScene;
     @FXML
     public ImageView chosenObj;
 
-    private void showAlert(String title, String message) {
+    private void showAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
+        alert.setTitle("Game full");
         alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setContentText("Lobby full, try again later");
         alert.showAndWait();
     }
 
@@ -36,8 +35,7 @@ public class SecretCardScene {
         Platform.runLater(() -> {
             try {
                 String firstObjectiveCard= in.readLine();
-                String secondObjectoveCard= in.readLine();
-                System.out.println("Secret card printed");
+                String secondObjectiveCard= in.readLine();
                 String firstCardId = in.readLine();
                 String secondCardId = in.readLine();
                 String pathObj1 = "/ImmaginiCodex/CarteFront/Objective/" + firstCardId + ".png";
@@ -81,12 +79,11 @@ public class SecretCardScene {
                     try {
                         out.println(1);
                         chosenObj = obiettivo1;
-                        System.out.println("Choose first card");
                         InitCardScene initCardSceneHandler = new InitCardScene();
                         clientView.setObjectiveCard(firstObjectiveCard);
                         primaryStage.setScene(initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in, clientView));
                     } catch (Exception action) {
-                        showAlert("Game full", "Lobby full, try again later");
+                        showAlert();
                         System.exit(0);
                     }
                 });
@@ -94,12 +91,11 @@ public class SecretCardScene {
                     try {
                         out.println(2);
                         chosenObj = obiettivo2;
-                        System.out.println("Choose second card");
                         InitCardScene initCardSceneHandler = new InitCardScene();
-                        clientView.setObjectiveCard(secondObjectoveCard);
+                        clientView.setObjectiveCard(secondObjectiveCard);
                         primaryStage.setScene(initCardSceneHandler.chooseInitCard(primaryStage, out, socket, in, clientView));
                     } catch (Exception action) {
-                        showAlert("Game full", "Lobby full, try again later");
+                        showAlert();
                         System.exit(0);
                     }
                 });

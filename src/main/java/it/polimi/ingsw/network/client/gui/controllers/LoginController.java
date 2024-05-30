@@ -68,7 +68,6 @@ public class LoginController {
                 if (username.isEmpty() || dot == null) {
                     Platform.runLater(() -> {
                         if (username.isEmpty()) {
-                            System.out.println("Username necessary");
                             loginLabel.setText("Write your username");
                         }
 
@@ -81,7 +80,6 @@ public class LoginController {
                                     "-fx-border-color: #EF8156;" + // Colore del bordo
                                     "-fx-border-width: 1px;" + // Spessore del bordo
                                     "-fx-border-radius: 5px;"); // Arrotondamento del bordo
-                            System.out.println("Choose your dot color please");
                         }
                     });
                     return;
@@ -96,7 +94,7 @@ public class LoginController {
                 } catch (IOException e) {
                     handleDisconnection();
                 }
-                System.out.println(whatServerSays);
+                assert whatServerSays != null;
                 if (whatServerSays.equals("Username already taken. Please choose another username:")) {
                     Platform.runLater(() -> {
                         loginLabel.setText("Username already taken. Please choose another username:");
@@ -113,8 +111,8 @@ public class LoginController {
                 }
 
                 clientView.setUserName(username);
-                System.out.println("This clientview username is: " + clientView.getUserName());
-                System.out.println(in.readLine()); //Choose the color of
+
+                in.readLine(); //Choose the color of
                 String realChosenDot = ((RadioButton) dot).getText();
                 clientView.setDot(Dot.valueOf(realChosenDot));
                 out.println(realChosenDot);
@@ -133,7 +131,6 @@ public class LoginController {
                     return;
                 }
                 String mexFromS= in.readLine();
-                System.out.println(mexFromS);
                 if(mexFromS.equals("Choose the number of players(2-4): ")) {
                     Platform.runLater(() -> {
                         ChooseNumOfPlayersScene chooseNumOfPlayersScene = new ChooseNumOfPlayersScene();
@@ -148,9 +145,9 @@ public class LoginController {
                     Platform.runLater(()->{
                         showAlert("Someone is online!","Please wait until the first client chooses the number of players!");
                     });
-                    System.out.println(in.readLine());
+                    in.readLine();
                     LobbyScene lobbySceneHandler = new LobbyScene();
-                    System.out.println(in.readLine());
+                    in.readLine();
                     lobbySceneHandler.createLobbyScene(primaryStage, out, socket, in, clientView, null, 0);
                 }
             } catch (Exception e) {

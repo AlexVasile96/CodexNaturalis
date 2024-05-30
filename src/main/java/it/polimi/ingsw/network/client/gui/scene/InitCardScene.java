@@ -40,15 +40,12 @@ public class InitCardScene {
         initText.setFill(Color.WHITE); // Cambia il colore del testo
         initText.setFont(Font.font("Arial", FontWeight.BOLD, 20)); // Cambia il font e la dimensione del testo
 
-        System.out.println("1");
-        System.out.println(in.readLine());
-        System.out.println(in.readLine());
-        System.out.println(in.readLine());
+
+        in.readLine(); //FIRST PART OF THE INIT CARD
+        in.readLine(); //Second part of the init card
+        in.readLine(); //Third part of the init card
         id = in.readLine();
-        System.out.println(id);
-        System.out.println("Ho letto tutte e 4 le cards");
         String pathInit = "/ImmaginiCodex/CarteFront/Init/" +id + ".png";
-        System.out.println(pathInit);
         Image initImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathInit)));
         ImageView initCard = new ImageView(initImage);
 
@@ -115,10 +112,10 @@ public class InitCardScene {
             } catch (Exception ex) {
                 Platform.runLater(() -> {
                     // Show an alert indicating the disconnection
-                    showAlert("Disconnection", "Lobby is full.");
+                    showAlert();
                     try {
                         // Close resources
-                        if (in != null) in.close();
+                        in.close();
                         if (out != null) out.close();
                         if (socket != null) socket.close();
                         // Exit the application
@@ -136,11 +133,11 @@ public class InitCardScene {
         });
         return initCardScene;
     }
-    private void showAlert(String title, String message) {
+    private void showAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
+        alert.setTitle("Disconnection");
         alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setContentText("Lobby is full.");
         alert.showAndWait();
     }
 
