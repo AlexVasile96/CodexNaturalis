@@ -161,7 +161,5 @@ public class EndGameScene {
                 e.printStackTrace();
             }
         });
-
-
     }
 }

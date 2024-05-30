@@ -20,8 +20,6 @@ public class ChatController {
     private BufferedReader in;
     private String clientName;
     private String lastSentMessage; // Variabile per tenere traccia dell'ultimo messaggio inviato
-    String hostName;
-    int portNumber;
 
     public ChatController(ChatScene chatWindow, String clientName) {
         this.chatWindow = chatWindow;
@@ -30,28 +28,7 @@ public class ChatController {
 
     public void start() {
         try {
-            try {
-                InputStream inputStream = ChatServer.class.getClassLoader().getResourceAsStream("chatServer.json");
-                if (inputStream == null) {
-                    throw new RuntimeException("Resource not found: chatServer.json");
-                }
-
-                JSONObject jsonObject = new JSONObject(new JSONTokener(inputStream));
-                JSONArray hostAndPortArray = jsonObject.getJSONArray("hostandport");
-                for (int i = 0; i < hostAndPortArray.length(); i++) {
-                    JSONObject hostAndPort = hostAndPortArray.getJSONObject(i);
-                    hostName = hostAndPort.getString("hostName");
-                    portNumber = hostAndPort.getInt("portNumber");
-                    System.out.println("HostName: " + hostName);
-                    System.out.println("PortNumber: " + portNumber);
-                }
-
-                inputStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            socket = new Socket(hostName, portNumber); // Connettersi al server
+            socket = new Socket("192.168.1.2", 12346); // Connettersi al server
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 

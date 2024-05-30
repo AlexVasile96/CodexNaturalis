@@ -10,44 +10,23 @@ import java.net.Socket;
 import java.net.SocketException;
 
 public class ChatClient {
-
-    static String hostName;
-    static int portNumber;
-
     public static void main(String[] args) {
-        try {
-            InputStream inputStream = ChatServer.class.getClassLoader().getResourceAsStream("chatServer.json");
-            if (inputStream == null) {
-                throw new RuntimeException("Resource not found: chatServer.json");
-            }
+        String host = "192.168.1.2";
+        int port = 12346;
 
-            JSONObject jsonObject = new JSONObject(new JSONTokener(inputStream));
-            JSONArray hostAndPortArray = jsonObject.getJSONArray("hostandport");
-            for (int i = 0; i < hostAndPortArray.length(); i++) {
-                JSONObject hostAndPort = hostAndPortArray.getJSONObject(i);
-                hostName = hostAndPort.getString("hostName");
-                portNumber = hostAndPort.getInt("portNumber");
-                System.out.println("HostName: " + hostName);
-                System.out.println("PortNumber: " + portNumber);
-            }
-
-            inputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try (Socket socket = new Socket(hostName, portNumber);
+        try (Socket socket = new Socket(host, port);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
              BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
 
             System.out.println("Connected to chat server");
 
+            // Invia il nome del client
             System.out.print("Enter your name: ");
             String clientName = stdIn.readLine();
             out.println(clientName);
             System.out.println("Type @ + the player username if you want to send a private message");
-            // Thread to receive messages
+            // Thread per ricevere messaggi
             Thread receiveMessages = new Thread(() -> {
                 try {
                     String message;
@@ -65,10 +44,10 @@ public class ChatClient {
             String userInput;
             while ((userInput = stdIn.readLine()) != null) {
                 if (userInput.startsWith("@")) {
-                    // Private message
+                    // Messaggio privato
                     out.println(userInput);
                 } else {
-                    // Public message
+                    // Messaggio pubblico
                     out.println(userInput);
                 }
             }
@@ -77,7 +56,7 @@ public class ChatClient {
             e.printStackTrace();
         }
 
-
+        // Aggiungi una pausa prima di chiudere
         System.out.println("Press Enter to exit...");
         try {
             System.in.read();
