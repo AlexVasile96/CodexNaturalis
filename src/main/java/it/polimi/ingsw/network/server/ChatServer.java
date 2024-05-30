@@ -35,13 +35,10 @@ public class ChatServer {
             e.printStackTrace();
         }
         System.out.println("Chat server started...");
-        ServerSocket serverSocket = new ServerSocket(portNumber); // Porta diversa dal server di gioco
-        try {
+        try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
             while (true) {
                 new ClientHandler(serverSocket.accept()).start();
             }
-        } finally {
-            serverSocket.close();
         }
     }
 
@@ -60,7 +57,7 @@ public class ChatServer {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
 
-                // Riceve il nome del client
+                // Receiving client name
                 clientName = in.readLine();
                 synchronized (clientHandlers) {
                     clientHandlers.put(clientName, this);
@@ -72,7 +69,7 @@ public class ChatServer {
                     while ((message = in.readLine()) != null) {
                         System.out.println(clientName + ": " + message);
                         if (message.startsWith("@")) {
-                            // Messaggio privato
+                            // Private Message
                             int spaceIndex = message.indexOf(' ');
                             if (spaceIndex != -1) {
                                 String targetClientName = message.substring(1, spaceIndex);
@@ -80,10 +77,10 @@ public class ChatServer {
                                 sendPrivateMessage(targetClientName, privateMessage);
                             }
                         } else {
-                            // Messaggio pubblico
+                            // Public Message
                             synchronized (clientHandlers) {
                                 for (ClientHandler handler : clientHandlers.values()) {
-                                    if (handler != this) { // Evita di inviare il messaggio al mittente
+                                    if (handler != this) { //ChatServer doesn't send the same message to the sender
                                         handler.out.println(clientName + ": " + message);
                                     }
                                 }

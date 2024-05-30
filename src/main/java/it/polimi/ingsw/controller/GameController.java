@@ -53,27 +53,27 @@ public class GameController {
     }
 
 
-    public synchronized void readCommand(String commandString, Player player, int size, int paolo, String cornerChosen) {
+    public synchronized void readCommand(String commandString, Player player, int size, int numbers, String cornerChosen) {
         if (game != null) {
             Command command = new Command();
             String result;
             switch (commandString) {
                 case "playCard":
                     if (!isCornerAlreadyChosen) {
-                        String cornersAvailable = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
-                        sendMessageToAllClients(cornersAvailable); // Mando al client i corners disponibili
+                        String cornersAvailable = command.runCommand(game, commandString, player, size, numbers, cornerChosen);
+                        sendMessageToAllClients(cornersAvailable); // Sending to the client the available corners
                         isCornerAlreadyChosen = true;
                     } else if(cornerChosen.equals("clean")){
                         isCornerAlreadyChosen = false;
-                        command.runCommand(game, commandString, player, size, paolo, cornerChosen);
+                        command.runCommand(game, commandString, player, size, numbers, cornerChosen);
                     } else {
-                        String cornersChosen = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
+                        String cornersChosen = command.runCommand(game, commandString, player, size, numbers, cornerChosen);
                         sendMessageToAllClients(cornersChosen);
                         isCornerAlreadyChosen = false;
                     }
                     break;
                 default:
-                    result = command.runCommand(game, commandString, player, size, paolo, cornerChosen);
+                    result = command.runCommand(game, commandString, player, size, numbers, cornerChosen);
                     sendMessageToAllClients(result);
                     break;
             }
@@ -204,7 +204,7 @@ public synchronized void waitingForPLayers() throws InterruptedException {
 
     public void setSize(int size) {
         this.size = size;
-        sizeLatch.countDown(); // Sblocca il thread che sta aspettando la dimensione del gioco
+        sizeLatch.countDown();
     }
 
     public void setGameOver(boolean gameOver) {
@@ -229,10 +229,6 @@ public synchronized void waitingForPLayers() throws InterruptedException {
         GameController.winningPlayer = winningPlayer;
     }
 
-    public int getCurrentNumsOfPlayers() {
-        return currentNumsOfPlayers;
-    }
-
     public int getPlayerChoseinitialcard() {
         return playerChoseinitialcard;
     }
@@ -253,8 +249,8 @@ public synchronized void waitingForPLayers() throws InterruptedException {
         GameController.isTheFirstPlayer = isTheFirstPlayer;
     }
 
-    public void setLogginPlayers(int logginPlayers) {
-        this.logginPlayers = logginPlayers;
+    public void setLoggingPlayers(int loginPlayers) {
+        this.logginPlayers = loginPlayers;
     }
 
     public void saveGameSizeToJson() {

@@ -28,7 +28,7 @@ public class HandlingPlayerInputsThread implements Runnable {
     public BufferedReader stdIn;
     public PrintWriter out;
     private final List<HandlingPlayerInputsThread> clients;
-    private static boolean checkGameInizialization;
+    private static boolean checkGameInitialization;
     private final ServerLobby lobby;
     private static List<Player> playersList;
     private Socket clientSocket;
@@ -60,7 +60,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         this.lobby = lobby;
         this.userName = null;
         this.game = game;
-        checkGameInizialization = false;
+        checkGameInitialization = false;
         if (firstClient == null) {
             firstClient = this;
         } else if (secondClient==null) {
@@ -246,7 +246,7 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     /**
      * method to set the correct game size. Only the first client can set the number of players, other clients will wait until he has finished
-     * @param player-> i'll add him to the playerlist if the login goes well
+     * @param player-> I'll add him to the player list if the login goes well
      */
 
     private synchronized int setGameSize(Player player) throws NoSuchElementException, InterruptedException, IOException {
@@ -260,7 +260,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     sendMessageToClient("Players number correctly chosen.");
                     gameController.choosePlayerNumber(numPlayers);
                     gameController.setSizeSet(true);
-                    setupLatch = new CountDownLatch(numPlayers); // Inizializza il CountDownLatch con il numero di giocatori scelto
+                    setupLatch = new CountDownLatch(numPlayers); //Initializing CountDown with the correct numbers of player chosen
                     currentPlayer=this.getThreadPlayer();
                     playersList.add(player);
                     lock.notifyAll(); // unlocking all the clients waiting
@@ -276,7 +276,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                 sendMessageToClient("There's already someone online! Please wait");
                 while (numPlayers == -1) {
                     try {
-                        lock.wait(); // Waiting until gamesiz is set
+                        lock.wait(); // Waiting until game size is set
 
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
@@ -312,7 +312,7 @@ public class HandlingPlayerInputsThread implements Runnable {
             System.out.println("Received command: " + messageFromClient);
             switch (messageFromClient) {
                 case"updateLoggedPlayers"->{
-                    gameController.setLogginPlayers(gameController.getLogginPlayers()+1);
+                    gameController.setLoggingPlayers(gameController.getLogginPlayers()+1);
                     sendMessageToAllClients("Login Players updated correctly");
                 }
                 case"howManyPlayers"->{
@@ -371,7 +371,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                         } else forClientView.append("(front)");
                     } else forClientView.append("(back)");
 
-                    //For cicle to chose the correct card
+                    //For to choose the correct card
                     int boardCardChosen;
                     boolean rightCard;
                     do {
@@ -388,7 +388,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                     forClientView.append("\n(" + chosenCard.getNode().getCordY() + " " + chosenCard.getNode().getCordX() + ")");
                     sendMessageToAllClients(String.valueOf(forClientView));
                     String resultForClientViewInGame= stdIn.readLine();
-                    player.getClientView().addCardOnTheBoard(resultForClientViewInGame); // Aggiornamento della ClientView
+                    player.getClientView().addCardOnTheBoard(resultForClientViewInGame); // Updating clientView Information
                     player.getClientView().update(player);
                     messageFromClient = stdIn.readLine();
                     System.out.println("message from client->" + messageFromClient);//showWell
@@ -410,7 +410,7 @@ public class HandlingPlayerInputsThread implements Runnable {
                         sendMessageToAllClients("You smashed 20 points!! now everybody got one last turn");
                         sendMessageToAllClients(userName);
                         messageFromClient = stdIn.readLine();
-                        runCommand(messageFromClient, threadPlayer);//endturn
+                        runCommand(messageFromClient, threadPlayer);//end of turn
                     }
                 }
                 case "drawCard" -> {
@@ -440,7 +440,7 @@ public class HandlingPlayerInputsThread implements Runnable {
 
     private void initializeCards() {
         game.assignResourcesAndGoldCardsToPlayers();
-        checkGameInizialization = true;
+        checkGameInitialization = true;
         System.out.println(game.cardsInDeck());
         System.out.println(game.goldsInDeck());
     }
@@ -499,7 +499,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         try {
             if (currentPlayer != turnController.getCurrentPlayer()) {
                 System.out.println("Current players is "+ currentPlayer);
-                System.out.println("Current player in turncontroller is " + turnController.getCurrentPlayer());
+                System.out.println("Next Player will be " + turnController.getCurrentPlayer());
                 throw new turnPlayerErrorException("Current player not correct");
             }
             turnController.nextTurn();
@@ -604,7 +604,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         handlingTurns(playersList);
         addingPlayersToTheGame();
         synchronized (this) {
-            if (!checkGameInizialization) {
+            if (!checkGameInitialization) {
                 initializeCards();
             }
         }
