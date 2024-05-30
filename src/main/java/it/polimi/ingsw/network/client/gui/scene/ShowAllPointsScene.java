@@ -51,9 +51,10 @@ public class ShowAllPointsScene {
 
     private void showAllPts() throws IOException {
         out.println("showAllPoints");
+        waitForCall = in.readLine();
         do {
+            playerPoints.setText(playerPoints.getText() + "\n" + waitForCall);
             waitForCall = in.readLine();
-            playerPoints.setText(playerPoints.getText() + " " + waitForCall);
         }while(!waitForCall.equals("exit"));
     }
 
