@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -20,11 +21,8 @@ public class ShowAllPointsScene {
     private PrintWriter out;
     private BufferedReader in;
     private Socket socket;
-    private Label playerOneLabel;
-    private Label playerTwoLabel;
-    private Label playerThreeLabel;
-    private Label playerFourLabel;
     private String waitForCall;
+    Text playerPoints = new Text();
 
     public ShowAllPointsScene(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView clientView) throws IOException {
         this.primaryStage = primaryStage;
@@ -40,15 +38,10 @@ public class ShowAllPointsScene {
         popupStage.setResizable(true);
         popupStage.initModality(Modality.WINDOW_MODAL); //prevents the interactions with the primary window while the popup is running
 
-        playerOneLabel = new Label();
-        playerTwoLabel = new Label();
-        playerThreeLabel = new Label();
-        playerFourLabel = new Label();
-
         StackPane root = new StackPane();
         VBox vbox = new VBox(10);
         showAllPts();
-        vbox.getChildren().addAll(playerOneLabel, playerTwoLabel, playerThreeLabel, playerFourLabel);
+        vbox.getChildren().addAll(playerPoints);
         root.getChildren().add(vbox);
         Scene scene = new Scene(root, 400,400);
         popupStage.setScene(scene);
@@ -60,26 +53,8 @@ public class ShowAllPointsScene {
         out.println("showAllPoints");
         do {
             waitForCall = in.readLine();
-            playerOneLabel.setText(waitForCall);
-            waitForCall = in.readLine();
-            playerTwoLabel.setText(waitForCall);
-            waitForCall = in.readLine();
-            playerThreeLabel.setText( waitForCall);
-            if(playerThreeLabel.equals("exit")) {
-                playerThreeLabel = null;
-                waitForCall = "exit";
-                break;
-            }
-            waitForCall = in.readLine();
-            playerFourLabel.setText(waitForCall);
-            in.readLine();
-                if(playerFourLabel.equals("exit")) {
-                    playerFourLabel = null;
-                    waitForCall = "exit";
-                    break;
-                }
-            }while (!waitForCall.equals("exit"));
-
+            playerPoints.setText(playerPoints.getText() + " " + waitForCall);
+        }while(!waitForCall.equals("exit"));
     }
 
 }
