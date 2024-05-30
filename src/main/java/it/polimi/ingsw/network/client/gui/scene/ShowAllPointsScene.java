@@ -57,24 +57,23 @@ public class ShowAllPointsScene {
     }
 
     private void showAllPts() throws IOException {
-        waitForCall = in.readLine();
+        out.println("showAllPoints");
         do {
-            System.out.println(waitForCall);
             waitForCall = in.readLine();
-            playerOneLabel.setText(in.readLine() + " " + in.readLine() + " " + in.readLine() + " " + in.readLine());
-            in.readLine();
-            playerTwoLabel.setText(in.readLine() + " " + in.readLine() + " " + in.readLine() + " " + in.readLine());
-            in.readLine();
-            playerThreeLabel.setText(in.readLine() + " " + in.readLine() + " " + in.readLine() + " " + in.readLine());
-            in.readLine();
-            if(playerThreeLabel.equals("exit ")) {
+            playerOneLabel.setText(waitForCall);
+            waitForCall = in.readLine();
+            playerTwoLabel.setText(waitForCall);
+            waitForCall = in.readLine();
+            playerThreeLabel.setText( waitForCall);
+            if(playerThreeLabel.equals("exit")) {
                 playerThreeLabel = null;
                 waitForCall = "exit";
                 break;
             }
-            playerFourLabel.setText(in.readLine() + " " + in.readLine() + " " + in.readLine() + " " + in.readLine());
+            waitForCall = in.readLine();
+            playerFourLabel.setText(waitForCall);
             in.readLine();
-                if(playerFourLabel.equals("exit ")) {
+                if(playerFourLabel.equals("exit")) {
                     playerFourLabel = null;
                     waitForCall = "exit";
                     break;
