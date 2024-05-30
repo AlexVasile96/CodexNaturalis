@@ -564,8 +564,9 @@ public class HandlingPlayerInputsThread implements Runnable {
         return false;
     }
     public void handleClientDisconnection() throws IOException {
-        System.out.println("Connection closed with client " + threadPlayer.getNickName());
-        System.out.println("Thank you " + threadPlayer.getNickName() + " for playing Codex!");
+        System.out.println("Thanks for playing codex.");
+//        System.out.println("Connection closed with client " + threadPlayer.getNickName());
+//        System.out.println("Thank you " + threadPlayer.getNickName() + " for playing Codex!");
         out.println("ALL_CLIENTS_QUIT");
         clients.remove(this);
         if (threadPlayer != null) {

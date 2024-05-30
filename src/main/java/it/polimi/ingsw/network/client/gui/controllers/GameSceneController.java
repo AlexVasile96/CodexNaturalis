@@ -948,6 +948,7 @@ public class GameSceneController {
             try {
                 // Save game progress
                 savePath();
+                System.out.println("Someone quit, thank you for playing codex");
                 // Close resources
                 if (in != null) in.close();
                 if (out != null) out.close();
