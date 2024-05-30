@@ -81,11 +81,8 @@ public class Game{
     public synchronized void assignResourcesAndGoldCardsToPlayers() {
         for (Player player : players) {
             player.drawResourceCard(resourceDeck);
-            System.out.println(player.getPlayerCards().getFirst());
             player.drawResourceCard(resourceDeck);
-            System.out.println(player.getPlayerCards().get(1));
             player.drawGoldCard(goldDeck);
-            System.out.println(player.getPlayerCards().getLast());
         }
     }
 
@@ -143,17 +140,10 @@ public class Game{
         System.out.println("/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\nUpdating each player points to see who is the real winner!");
         System.out.println(players);
         for (Player player : players) {
-            System.out.println("Calcolando punti per " + player);
-            System.out.println(player.getNickName());
-            System.out.println(player.getPlayerScore());
             ObjectiveCard secretCard = player.getSecretChosenCard();
-            System.out.println("secret");
             player.getBoard().createSpecificSecretCard(secretCard, player); //secret player card
             player.getBoard().createSpecificSecretCard(firstObjectiveCommonCard, player);
-            System.out.println("common1");
             player.getBoard().createSpecificSecretCard(secondObjectiveCommonCard, player);
-            System.out.println("common2");
-            System.out.println(player.getPlayerScore());
         }
         Player winner = calculateWinner(players);
         System.out.println("And the winner is...........");
@@ -525,11 +515,6 @@ public class Game{
         goldDeck.drawCard(well);
         goldDeck.drawCard(well);
         sortWell();
-        System.out.println("Cards in the well: ");
-        for (Card card : well) {
-            System.out.println(card);
-        }
-        System.out.println("\n");
     }
     private void sortWell() {
         Collections.sort(well, new Comparator<Card>() {
@@ -544,8 +529,7 @@ public class Game{
     private synchronized void commonObjectiveCards() {
         this.firstObjectiveCommonCard = objectiveDeck.firstCardForEachPlayer(); //common objective cards
         this.secondObjectiveCommonCard = objectiveDeck.firstCardForEachPlayer();
-        System.out.println("First common objective card is " + firstObjectiveCommonCard);
-        System.out.println("Second common objective card is " + secondObjectiveCommonCard);
+
     }
 
     private void initializeDots() {

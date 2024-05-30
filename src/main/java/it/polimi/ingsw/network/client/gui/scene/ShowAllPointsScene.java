@@ -57,22 +57,6 @@ public class ShowAllPointsScene {
     }
 
     private void showAllPts() throws IOException {
-//        out.println("showAllPoints");
-//        String string = in.readLine();
-//        counter = 0;
-//        while (!string.equals("exit")) {
-//            if (counter == 0) {
-//                playerOneLabel.setText(string);
-//            } else if (counter == 1) {
-//                playerTwoLabel.setText(string);
-//            } else if (counter == 2) {
-//                playerThreeLabel.setText(string);
-//            } else if (counter == 3) {
-//                playerFourLabel.setText(string);
-//            }
-//            counter++;
-//            string = in.readLine();
-//        }
         out.println("showAllPoints"); // Send request to the server
         String messageFromServer = in.readLine(); // Read the first line from the server
         counter = 0;
