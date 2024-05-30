@@ -31,7 +31,7 @@
 |MULTI MATCH|⛔|
 |CHAT|✅|
 |RESILIENCE|⛔|
-|PERSISTENCE|⏱|
+|PERSISTENCE|⛔|
 
 Legenda <br>
 ✅: Implemented  ⛔: Not implemented ⚙️ Testing    ⏱ Developing
