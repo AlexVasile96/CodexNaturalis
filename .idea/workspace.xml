@@ -9,16 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="Code cleanUp">
+    <list default="true" id="31de4065-5a63-45bf-93d5-bb5ac557dbf5" name="Changes" comment="SHowllBoardsforgui">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/controller/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/ObjectiveSpecificTypeOfCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/game/ObjectiveSpecificTypeOfCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OneAnimalAndTwoInsects.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OneAnimalAndTwoInsects.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OneInsectAndTwoPlants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OneInsectAndTwoPlants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OnePlantAndTwoMushrooms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/objectiveCardTypes/OnePlantAndTwoMushrooms.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/GameSceneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/controllers/GameSceneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/ChooseNumOfPlayersScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/client/gui/scene/ChooseNumOfPlayersScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sharedElementsInGui.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,71 +55,72 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ChatServer.executor&quot;: &quot;Run&quot;,
-    &quot;Application.CliClientApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Codex.executor&quot;: &quot;Run&quot;,
-    &quot;Application.GUI.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ServerMain.executor&quot;: &quot;Run&quot;,
-    &quot;Application.it.polimi.ingsw.network.client.cli.CliClientApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.it.polimi.ingsw.network.client.gui.GUI.executor&quot;: &quot;Debug&quot;,
-    &quot;JAR Application.json-20240303.jar.executor&quot;: &quot;Run&quot;,
-    &quot;JAR Application.proj.jar.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.All in proj (1).executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.All in proj (2).executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.All in proj.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.BisObjectiveCardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardPointsTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.generalStairsTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.placeInitialCard.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.test4MushroomsInStairs.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.test4PLANTInStairs.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithMixObjective.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithStairsObjective.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testCreateSpecificSecretCardWithTRISObjective.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.BoardTest.testMushroomMushroomInsect.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testTWODifferentstairs.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testTWODifferentstairsANIMAL.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testTWODifferentstairsMUSHROOM.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BoardTest.testTWODifferentstairsPLANT.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GoldDeckTest.cannotDrawMoreThanThree.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GoldDeckTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.InitialCardDeckTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ObjectiveDeckTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PlayerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ResourceDeckTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ResourceUpdaterTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StairsObjectiveCardTest.checkPattern.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StairsObjectiveCardTest.checkPattern2.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.StairsObjectiveCardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrisObjectiveCardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.game in proj.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.model in proj.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.proj [clean,package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.proj [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.proj [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.proj [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.proj [test].executor&quot;: &quot;Debug&quot;,
-    &quot;Maven.proj [validate].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ChatServer.executor": "Run",
+    "Application.CliClientApp.executor": "Run",
+    "Application.Codex.executor": "Run",
+    "Application.GUI.executor": "Run",
+    "Application.ServerMain.executor": "Run",
+    "Application.it.polimi.ingsw.network.client.cli.CliClientApp.executor": "Run",
+    "Application.it.polimi.ingsw.network.client.gui.GUI.executor": "Debug",
+    "JAR Application.json-20240303.jar.executor": "Run",
+    "JAR Application.proj.jar.executor": "Run",
+    "JUnit.All in proj (1).executor": "Coverage",
+    "JUnit.All in proj (2).executor": "Coverage",
+    "JUnit.All in proj.executor": "Coverage",
+    "JUnit.BisObjectiveCardTest.executor": "Run",
+    "JUnit.BoardPointsTest.executor": "Run",
+    "JUnit.BoardTest.executor": "Run",
+    "JUnit.BoardTest.generalStairsTest.executor": "Run",
+    "JUnit.BoardTest.placeInitialCard.executor": "Run",
+    "JUnit.BoardTest.test4MushroomsInStairs.executor": "Run",
+    "JUnit.BoardTest.test4PLANTInStairs.executor": "Run",
+    "JUnit.BoardTest.testCreateSpecificSecretCardWithLObjective.executor": "Run",
+    "JUnit.BoardTest.testCreateSpecificSecretCardWithMixObjective.executor": "Run",
+    "JUnit.BoardTest.testCreateSpecificSecretCardWithStairsObjective.executor": "Run",
+    "JUnit.BoardTest.testCreateSpecificSecretCardWithTRISObjective.executor": "Debug",
+    "JUnit.BoardTest.testMushroomMushroomInsect.executor": "Run",
+    "JUnit.BoardTest.testTWODifferentstairs.executor": "Run",
+    "JUnit.BoardTest.testTWODifferentstairsANIMAL.executor": "Run",
+    "JUnit.BoardTest.testTWODifferentstairsMUSHROOM.executor": "Run",
+    "JUnit.BoardTest.testTWODifferentstairsPLANT.executor": "Run",
+    "JUnit.GoldDeckTest.cannotDrawMoreThanThree.executor": "Run",
+    "JUnit.GoldDeckTest.executor": "Run",
+    "JUnit.InitialCardDeckTest.executor": "Run",
+    "JUnit.ObjectiveDeckTest.executor": "Run",
+    "JUnit.PlayerTest.executor": "Run",
+    "JUnit.ResourceDeckTest.executor": "Run",
+    "JUnit.ResourceUpdaterTest.executor": "Run",
+    "JUnit.StairsObjectiveCardTest.checkPattern.executor": "Run",
+    "JUnit.StairsObjectiveCardTest.checkPattern2.executor": "Debug",
+    "JUnit.StairsObjectiveCardTest.executor": "Run",
+    "JUnit.TrisObjectiveCardTest.executor": "Run",
+    "JUnit.game in proj.executor": "Run",
+    "JUnit.it.polimi.ingsw.model in proj.executor": "Coverage",
+    "JUnit.model in proj.executor": "Run",
+    "Maven.proj [clean,package].executor": "Run",
+    "Maven.proj [clean].executor": "Run",
+    "Maven.proj [compile].executor": "Run",
+    "Maven.proj [package].executor": "Run",
+    "Maven.proj [test].executor": "Debug",
+    "Maven.proj [validate].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\pitca\IdeaProjects\progettone\src\main\java\it\polimi\ingsw" />
@@ -137,7 +132,7 @@
       <command value="mvn clean package" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.Codex">
+  <component name="RunManager" selected="JUnit.All in proj">
     <configuration name="CliClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.network.client.cli.CliClientApp" />
       <module name="proj" />
@@ -177,18 +172,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="game in proj" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in proj" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="proj" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/src/test/java/model/game" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="model in proj" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="it.polimi.ingsw.model in proj" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="proj" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/src/test/java/model" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.polimi.ingsw.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="it.polimi.ingsw.model" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -197,16 +198,16 @@
       <item itemvalue="Application.Codex" />
       <item itemvalue="Application.GUI" />
       <item itemvalue="Application.CliClientApp" />
-      <item itemvalue="JUnit.game in proj" />
-      <item itemvalue="JUnit.model in proj" />
+      <item itemvalue="JUnit.All in proj" />
+      <item itemvalue="JUnit.it.polimi.ingsw.model in proj" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in proj" />
+        <item itemvalue="JUnit.it.polimi.ingsw.model in proj" />
         <item itemvalue="Application.Codex" />
         <item itemvalue="Application.GUI" />
         <item itemvalue="Application.CliClientApp" />
-        <item itemvalue="JUnit.model in proj" />
-        <item itemvalue="JUnit.game in proj" />
       </list>
     </recent_temporary>
   </component>
@@ -262,15 +263,8 @@
       <workItem from="1717007914642" duration="4731000" />
       <workItem from="1717068192721" duration="657000" />
       <workItem from="1717071540833" duration="6262000" />
-      <workItem from="1717078672470" duration="1485000" />
-    </task>
-    <task id="LOCAL-00018" summary="chat adavnced function implemented w/thomas">
-      <option name="closed" value="true" />
-      <created>1716810536535</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1716810536535</updated>
+      <workItem from="1717078672470" duration="2157000" />
+      <workItem from="1717081638491" duration="590000" />
     </task>
     <task id="LOCAL-00019" summary="fIXED ADVANCED FUNCTION (CHAT-&gt; THE CLIENT USED TO VISUALIZE THE SAME MESSAGE TWICE)">
       <option name="closed" value="true" />
@@ -656,7 +650,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717079300781</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="SHowllBoardsforgui">
+      <option name="closed" value="true" />
+      <created>1717080356362</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1717080356362</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -674,7 +676,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed stairsobjectivetest" />
     <MESSAGE value="Stairs objective cards correctly fixed w/momo" />
     <MESSAGE value="EndGame for Gui" />
     <MESSAGE value="Sincronizzazione corretta fra cli e gui, ora i client possono startare tranquillamente e senza doversi attendere l'un l'altro" />
@@ -699,7 +700,8 @@
     <MESSAGE value="Systemout and code cleanup" />
     <MESSAGE value="ShowALlpointsForGUi" />
     <MESSAGE value="Code cleanUp" />
-    <option name="LAST_COMMIT_MESSAGE" value="Code cleanUp" />
+    <MESSAGE value="SHowllBoardsforgui" />
+    <option name="LAST_COMMIT_MESSAGE" value="SHowllBoardsforgui" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -776,7 +778,11 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj__1_.ic" NAME="All in proj (1) Coverage Results" MODIFIED="1716630710868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
-    <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj.ic" NAME="All in proj Coverage Results" MODIFIED="1716641301667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj__2_.ic" NAME="All in proj (2) Coverage Results" MODIFIED="1716630886224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IS24_LB05$All_in_proj.ic" NAME="All in proj Coverage Results" MODIFIED="1717082098079" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IS24_LB05_v7$All_in_proj.ic" NAME="All in proj Coverage Results" MODIFIED="1716641301667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/IS24_LB05$it_polimi_ingsw_model_in_proj.ic" NAME="it.polimi.ingsw.model in proj Coverage Results" MODIFIED="1717082069871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>it.polimi.ingsw.model.*</FILTER>
+    </SUITE>
   </component>
 </project>
