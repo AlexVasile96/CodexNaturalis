@@ -60,6 +60,7 @@ public class GameSceneController {
     private Button endTurn = new Button("End turn");
     private Button showAllPoints = new Button("See all point");
     private Button quit = new Button("Quit");
+    private Button showAllBoards = new Button("Show all boards");
     private Boolean haveToDraw = false;
     private Boolean haveToPlay = true;
     private String chosenDeckForDrawingNewCard = null;
@@ -77,6 +78,7 @@ public class GameSceneController {
     private String currentPlayerNickname;
     private ClientView clientView;
     private BoardPointsScene boardPointsScene;
+    private ShowAllBoardsScene showAllBoardsScene;
     private boolean isCurrentPlayerTurn = false;
     private ScrollPane cardsOntheBoardScrollPane;
     private GridPane gameBoard;
@@ -532,6 +534,21 @@ public class GameSceneController {
             }
         });
 
+        showAllBoards.setOnMouseClicked(e ->{
+            if(isCurrentPlayerTurn){
+                try {
+                    ShowAllBoardsScene allBoardsScene = new ShowAllBoardsScene(primaryStage, out, socket, in, clientView);
+                    allBoardsScene.showAllBoards();
+                }catch (SocketException | SocketTimeoutException exe){
+                    handleDisconnection();
+                }
+            }
+            else {
+                showAlert("Not your turn", "It's not your turn yet.");
+            }
+        });
+
+
         // Action for ending the turn
         endTurn.setOnMouseClicked(e -> {
             if (isCurrentPlayerTurn) {
@@ -825,6 +842,8 @@ public class GameSceneController {
                 showAlert("Not your turn", "It's not your turn yet.");
             }
         });
+
+
 
         showAllPoints.setOnMouseClicked(e -> {
             if(isCurrentPlayerTurn) {
@@ -1970,6 +1989,7 @@ public class GameSceneController {
         buttonContainer.add(quit, 0, 4);
         buttonContainer.add(chat, 1, 4);
         buttonContainer.add(showAllPoints, 0, 5);
+        buttonContainer.add(showAllBoards, 1, 4);
         double buttonsWidth = 120.00;
         for (var node : buttonContainer.getChildren()) {
             if (node instanceof Button) {

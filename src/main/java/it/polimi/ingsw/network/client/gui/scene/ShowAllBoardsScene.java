@@ -29,7 +29,9 @@ public class ShowAllBoardsScene {
         this.socket = socket;
         this.in = in;
         this.clientView = clientView;
+    }
 
+    public void showAllBoards() throws IOException {
         Stage popupStage = new Stage();
         popupStage.setTitle("All boards");
         popupStage.setResizable(true);
@@ -37,7 +39,7 @@ public class ShowAllBoardsScene {
 
         StackPane root = new StackPane();
         VBox vbox = new VBox(10);
-        showAllBoards();
+        showBoards();
         vbox.getChildren().addAll(allBoards);
         root.getChildren().add(vbox);
         Scene scene = new Scene(root, 400,400);
@@ -46,7 +48,7 @@ public class ShowAllBoardsScene {
 
     }
 
-    private void showAllBoards() throws IOException {
+    private void showBoards() throws IOException {
         out.println("showAllBoards");
         waitForCall = in.readLine();
         do {
