@@ -27,7 +27,7 @@ public class SecretCardScene {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game full");
         alert.setHeaderText(null);
-        alert.setContentText("Lobby full, try again later");
+        alert.setContentText("Something gone wrong, try again later");
         alert.showAndWait();
     }
 

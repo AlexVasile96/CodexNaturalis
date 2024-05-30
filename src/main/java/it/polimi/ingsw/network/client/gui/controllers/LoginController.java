@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 public class LoginController {
@@ -34,12 +35,13 @@ public class LoginController {
     public ToggleGroup toggleGroup;
     private ClientView clientView= new ClientView();
 
-    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView cl) {
+    public void initData(Stage primaryStage, PrintWriter out, Socket socket, BufferedReader in, ClientView cl) throws SocketException {
         this.primaryStage = primaryStage;
         this.out = out;
         this.socket = socket;
         this.in=in;
         this.clientView=cl;
+        this.socket.setSoTimeout(60000);
 
     }
 

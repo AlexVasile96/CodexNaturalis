@@ -445,7 +445,7 @@ public class HandlingPlayerInputsThread implements Runnable {
         System.out.println(game.goldsInDeck());
     }
 
-    private void addingPlayersToTheGame() throws InterruptedException, IOException {
+    private void addingPlayersToTheGame() throws  IOException {
         try {
             for (Player playerInGame : playersList) {
                 game.addPlayer(playerInGame);

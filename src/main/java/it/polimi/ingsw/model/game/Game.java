@@ -346,7 +346,7 @@ public class Game{
             stamp.append(" has: ");
             stamp.append(showPoints(player));
             stamp.append(" points\n");
-            stamp.append("\n--------------------------------------------------\n");
+            stamp.append("--------------------------------------------------\n");
         }
         stamp.append("exit");
         return String.valueOf(stamp);
