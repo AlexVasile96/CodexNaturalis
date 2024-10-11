@@ -12,7 +12,7 @@
 
 <h1>Tabella voto</h1>
 
-|Requititi|Voto massimo|Realizzazione|
+|Requisiti|Voto massimo|Realizzazione|
 |---------|------------|-------------|
 |Regole semplificate + comunicazione + CLI|18|✅|
 |Regole complete + comunicazione + CLI|21|✅|
